@@ -84,3 +84,4 @@ Hold-out-4 detection (digit 4 unseen during embedding), 4-vs-rest AUC:
 Aggressive separation (repulsion) is best for closed-set accuracy but worse at
 placing an *unseen* class in its own region — a closed-set vs open-set trade-off.
 SupCon leads on both protocols here.
+# SuperSig
