@@ -1,4 +1,5 @@
 """Convolutional backbone and supervised CNN shared across all experiments."""
+import torch
 import torch.nn as nn
 
 from .config import EMB_DIM, N_CLASSES
@@ -59,6 +60,37 @@ class CIFARBackbone(nn.Module):
             nn.Flatten(),
             nn.Linear(128 * 4 * 4, 256), nn.ReLU(),
             nn.Linear(256, emb_dim),
+        )
+
+    def forward(self, x):
+        return self.head(self.features(x))
+
+
+class CIFARResNetBackbone(nn.Module):
+    """
+    CIFAR-pretrained ResNet -> `emb_dim` embedding.
+
+    Loads a ResNet trained on CIFAR at 32x32 resolution from torch.hub
+    (chenyaofo/pytorch-cifar-models), drops its classification layer, and adds a
+    small projection head to `emb_dim`.  The whole network remains trainable, so
+    the embedding objective fine-tunes the pretrained features.
+
+    `pretrain` selects the pretraining dataset: "cifar10" (matches the task, but
+    note the weights have seen every CIFAR-10 class, including any hold-out) or
+    "cifar100" (disjoint label set -- a cleaner initialization for hold-out
+    studies).
+    """
+
+    def __init__(self, emb_dim=EMB_DIM, arch="resnet20", pretrain="cifar10"):
+        super().__init__()
+        net = torch.hub.load("chenyaofo/pytorch-cifar-models", f"{pretrain}_{arch}",
+                             pretrained=True, trust_repo=True)
+        feat_dim = net.fc.in_features
+        net.fc = nn.Identity()
+        self.features = net
+        self.head = nn.Sequential(
+            nn.Linear(feat_dim, 128), nn.ReLU(),
+            nn.Linear(128, emb_dim),
         )
 
     def forward(self, x):
