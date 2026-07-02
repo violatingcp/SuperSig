@@ -11,20 +11,21 @@ import numpy as np
 import torch
 import torch.nn as nn
 
-from nllreg.config import plot_path, EMB_DIM, HOLDOUT
-from nllreg.data import build_holdout_loaders
-from nllreg.models import ConvBackbone
-from nllreg.losses import make_anchors
-from nllreg.train import (
+from supersig.config import plot_path, EMB_DIM, HOLDOUT
+from supersig.data import build_holdout_loaders
+from supersig.models import ConvBackbone
+from supersig.losses import make_anchors
+from supersig.train import (
     train_sigreg_classwise, train_binary_probe, collect_binary_scores, collect_embeddings,
 )
-from nllreg.plotting import plot_binary_roc, plot_corner
+from supersig.plotting import plot_binary_roc, plot_corner
 import matplotlib.pyplot as plt
 
 
-def run_mode(mode, emb_loader, probe_loader, test_loader, ssl_ep, probe_ep):
-    print(f"\n===== MODE: {mode} (embedding trained WITHOUT digit {HOLDOUT}) =====")
-    means = make_anchors().clone()
+def run_mode(mode, emb_loader, probe_loader, test_loader, ssl_ep, probe_ep, scale=6.0):
+    tag = "" if scale == 6.0 else f"_s{scale:g}"
+    print(f"\n===== MODE: {mode} scale={scale:g} (embedding trained WITHOUT digit {HOLDOUT}) =====")
+    means = make_anchors(scale).clone()
     backbone = ConvBackbone()
     train_sigreg_classwise(backbone, emb_loader, ssl_ep, means,
                            learn_means=True, mode=mode)
@@ -35,19 +36,21 @@ def run_mode(mode, emb_loader, probe_loader, test_loader, ssl_ep, probe_ep):
     scores, ytrue = collect_binary_scores(backbone, head, test_loader)
     fpr, tpr, roc_auc = plot_binary_roc(
         scores, ytrue,
-        f"Hold-out-{HOLDOUT} detection ROC ({mode})",
-        plot_path(f"roc_holdout4_{mode}.png"), label=mode)
+        f"Hold-out-{HOLDOUT} detection ROC ({mode}, scale={scale:g})",
+        plot_path(f"roc_holdout4_{mode}{tag}.png"), label=mode)
 
     embs, ylab = collect_embeddings(backbone, test_loader)
     is4 = (ylab == HOLDOUT).astype(int)
-    plot_corner(embs, is4, plot_path(f"corner_holdout4_{mode}.png"),
-                title=f"Hold-out-{HOLDOUT} latent ({mode}): 1=digit {HOLDOUT} (unseen), 0=rest")
+    plot_corner(embs, is4, plot_path(f"corner_holdout4_{mode}{tag}.png"),
+                title=f"Hold-out-{HOLDOUT} latent ({mode}, scale={scale:g}): 1=digit {HOLDOUT} (unseen), 0=rest")
     return fpr, tpr, roc_auc
 
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--mode", choices=["learnmeans", "repulse", "both"], default="both")
+    ap.add_argument("--anchor-scale", type=float, default=6.0,
+                    help="initial spacing of the class means")
     ap.add_argument("--quick", action="store_true")
     ap.add_argument("--ssl-epochs", type=int, default=None)
     ap.add_argument("--probe-epochs", type=int, default=None)
@@ -59,7 +62,8 @@ def main():
 
     emb_loader, probe_loader, test_loader = build_holdout_loaders(quick=args.quick)
     modes = ["repulse", "learnmeans"] if args.mode == "both" else [args.mode]
-    results = {m: run_mode(m, emb_loader, probe_loader, test_loader, ssl_ep, probe_ep)
+    results = {m: run_mode(m, emb_loader, probe_loader, test_loader, ssl_ep, probe_ep,
+                           scale=args.anchor_scale)
                for m in modes}
 
     if len(results) > 1:

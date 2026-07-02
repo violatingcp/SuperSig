@@ -6,11 +6,11 @@ import numpy as np
 import torch
 import torch.nn as nn
 
-from nllreg.config import plot_path, EMB_DIM, N_CLASSES
-from nllreg.data import get_loaders, two_view_loader
-from nllreg.models import ConvBackbone
-from nllreg.train import train_sigreg_ssl, train_linear_probe, collect_probs, collect_embeddings
-from nllreg.plotting import plot_roc, plot_corner
+from supersig.config import plot_path, EMB_DIM, N_CLASSES
+from supersig.data import get_loaders, two_view_loader
+from supersig.models import ConvBackbone
+from supersig.train import train_sigreg_ssl, train_linear_probe, collect_probs, collect_embeddings
+from supersig.plotting import plot_roc, plot_corner
 
 
 def main():

@@ -12,14 +12,14 @@ import numpy as np
 import torch
 import torch.nn as nn
 
-from nllreg.config import plot_path, EMB_DIM, N_CLASSES
-from nllreg.data import get_loaders
-from nllreg.models import ConvBackbone
-from nllreg.losses import make_anchors
-from nllreg.train import (
+from supersig.config import plot_path, EMB_DIM, N_CLASSES
+from supersig.data import get_loaders
+from supersig.models import ConvBackbone
+from supersig.losses import make_anchors
+from supersig.train import (
     train_sigreg_classwise, train_linear_probe, collect_probs, collect_embeddings,
 )
-from nllreg.plotting import plot_roc, plot_corner
+from supersig.plotting import plot_roc, plot_corner
 
 TITLES = {
     "fixed": "fixed anchors",
@@ -31,6 +31,8 @@ TITLES = {
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--mode", choices=list(TITLES), default="fixed")
+    ap.add_argument("--anchor-scale", type=float, default=6.0,
+                    help="initial spacing of the class means")
     ap.add_argument("--quick", action="store_true")
     ap.add_argument("--ssl-epochs", type=int, default=None)
     ap.add_argument("--probe-epochs", type=int, default=None)
@@ -39,10 +41,11 @@ def main():
     torch.manual_seed(args.seed); np.random.seed(args.seed)
     ssl_ep = args.ssl_epochs or (2 if args.quick else 8)
     probe_ep = args.probe_epochs or (1 if args.quick else 4)
+    tag = "" if args.anchor_scale == 6.0 else f"_s{args.anchor_scale:g}"
 
     train_loader, test_loader = get_loaders(batch_size=256, quick=args.quick)
 
-    means = make_anchors().clone()
+    means = make_anchors(args.anchor_scale).clone()
     backbone = ConvBackbone()
     train_sigreg_classwise(backbone, train_loader, ssl_ep, means,
                            learn_means=(args.mode != "fixed"), mode=args.mode)
@@ -51,12 +54,12 @@ def main():
     train_linear_probe(backbone, head, train_loader, probe_ep)
     probs, labels = collect_probs(lambda x: head(backbone(x)), test_loader)
     plot_roc(probs, labels,
-             f"Class-conditional SIGReg ({TITLES[args.mode]}) + linear head ROC",
-             plot_path(f"roc_sigreg_{args.mode}_linear.png"))
+             f"Class-conditional SIGReg ({TITLES[args.mode]}, scale={args.anchor_scale:g}) ROC",
+             plot_path(f"roc_sigreg_{args.mode}{tag}_linear.png"))
 
     embs, elab = collect_embeddings(backbone, test_loader)
-    plot_corner(embs, elab, plot_path(f"corner_sigreg_{args.mode}_16d.png"),
-                title=f"Class-conditional SIGReg ({TITLES[args.mode]}) 16-dim latent")
+    plot_corner(embs, elab, plot_path(f"corner_sigreg_{args.mode}{tag}_16d.png"),
+                title=f"Class-conditional SIGReg ({TITLES[args.mode]}, scale={args.anchor_scale:g}) latent")
 
 
 if __name__ == "__main__":

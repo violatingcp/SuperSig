@@ -1,4 +1,4 @@
-# NLLReg
+# SuperSig
 
 Learning structured 16-dimensional MNIST embeddings with **SIGReg** (Sketched
 Isotropic Gaussian Regularization) and **supervised contrastive learning (SupCon /
@@ -31,7 +31,7 @@ Two evaluation protocols:
 ## Layout
 
 ```
-nllreg/            importable library
+supersig/          importable library
   config.py        paths, constants, device
   models.py        ConvBackbone, SupervisedCNN
   losses.py        sigreg, class-conditional sigreg, separation/repulsion, supcon
@@ -84,4 +84,3 @@ Hold-out-4 detection (digit 4 unseen during embedding), 4-vs-rest AUC:
 Aggressive separation (repulsion) is best for closed-set accuracy but worse at
 placing an *unseen* class in its own region — a closed-set vs open-set trade-off.
 SupCon leads on both protocols here.
-# SuperSig

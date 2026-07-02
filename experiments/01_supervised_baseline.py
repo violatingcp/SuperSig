@@ -5,11 +5,11 @@ import argparse
 import numpy as np
 import torch
 
-from nllreg.config import plot_path
-from nllreg.data import get_loaders
-from nllreg.models import SupervisedCNN
-from nllreg.train import train_supervised, collect_probs
-from nllreg.plotting import plot_roc
+from supersig.config import plot_path
+from supersig.data import get_loaders
+from supersig.models import SupervisedCNN
+from supersig.train import train_supervised, collect_probs
+from supersig.plotting import plot_roc
 
 
 def main():
