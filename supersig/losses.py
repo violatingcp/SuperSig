@@ -59,12 +59,24 @@ def classwise_sigreg_loss(z, y, means, n_slices=64):
 # --------------------------------------------------------------------------- #
 # Class-mean geometry                                                          #
 # --------------------------------------------------------------------------- #
-def make_anchors(scale=ANCHOR_SCALE):
-    """One fixed, well-separated anchor per class (scaled standard basis vectors)."""
-    anchors = torch.zeros(N_CLASSES, EMB_DIM, device=DEVICE)
-    for c in range(N_CLASSES):
-        anchors[c, c] = scale
-    return anchors
+def make_anchors(scale=ANCHOR_SCALE, emb_dim=EMB_DIM, n_classes=N_CLASSES):
+    """
+    One fixed, well-separated anchor per class, each with norm `scale`.
+
+    If `emb_dim >= n_classes` the anchors are scaled standard basis vectors
+    (mutually orthogonal).  Otherwise (e.g. 8 dims for 10 classes) orthogonal
+    axes do not exist, so we fall back to deterministic unit-norm random
+    directions scaled to `scale` -- still distinct and reasonably spread out.
+    """
+    if emb_dim >= n_classes:
+        anchors = torch.zeros(n_classes, emb_dim, device=DEVICE)
+        for c in range(n_classes):
+            anchors[c, c] = scale
+        return anchors
+    g = torch.Generator().manual_seed(0)                    # deterministic
+    v = torch.randn(n_classes, emb_dim, generator=g)
+    v = torch.nn.functional.normalize(v, dim=1) * scale
+    return v.to(DEVICE)
 
 
 def _pairwise(means):

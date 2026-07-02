@@ -75,6 +75,7 @@ def train_sigreg_classwise(backbone, loader, epochs, means,
     else:
         means.requires_grad_(False)
     opt = torch.optim.Adam(params, lr=lr)
+    means0 = means.detach().clone()          # reference for drift diagnostic
     backbone.train()
     for ep in range(epochs):
         reg_run, aux_run, n = 0.0, 0.0, 0
@@ -95,7 +96,7 @@ def train_sigreg_classwise(backbone, loader, epochs, means,
             aux_run += float(aux) * x.size(0)
             n += x.size(0)
         dmin, dmean = mean_geometry(means.detach())
-        drift = (means.detach() - make_anchors()).norm().item()
+        drift = (means.detach() - means0).norm().item()
         print(f"  [sigreg-{mode}] epoch {ep+1}/{epochs}  sigreg={reg_run/n:.4f}  "
               f"aux={aux_run/n:.4f}  min_dist={dmin:.2f}  mean_dist={dmean:.2f}  drift={drift:.3f}")
 

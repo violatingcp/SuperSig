@@ -93,3 +93,56 @@ def two_view_loader(batch_size=256, quick=False, labeled=False, holdout=None):
     print(f"  two-view embedding-train images{tag}: {len(ds)}")
     return DataLoader(ds, batch_size=batch_size, shuffle=True, num_workers=2,
                       drop_last=labeled)
+
+
+# =========================================================================== #
+# CIFAR-10 loaders (plain, two-view augmented, hold-out)                      #
+# =========================================================================== #
+CIFAR_NORM = transforms.Normalize((0.4914, 0.4822, 0.4465), (0.247, 0.243, 0.261))
+CIFAR_TF_PLAIN = transforms.Compose([transforms.ToTensor(), CIFAR_NORM])
+CIFAR_TF_AUG = transforms.Compose([
+    transforms.RandomResizedCrop(32, scale=(0.5, 1.0)),
+    transforms.RandomHorizontalFlip(),
+    transforms.ColorJitter(0.4, 0.4, 0.4, 0.1),
+    transforms.ToTensor(), CIFAR_NORM,
+])
+
+
+def get_cifar_loaders(batch_size=256, quick=False, limit=None):
+    train = datasets.CIFAR10(DATA_DIR, train=True, download=True, transform=CIFAR_TF_PLAIN)
+    test = datasets.CIFAR10(DATA_DIR, train=False, download=True, transform=CIFAR_TF_PLAIN)
+    if quick:
+        train, test = Subset(train, range(4000)), Subset(test, range(2000))
+    elif limit:
+        train = Subset(train, range(limit))
+    return (DataLoader(train, batch_size=batch_size, shuffle=True, num_workers=2),
+            DataLoader(test, batch_size=batch_size, shuffle=False, num_workers=2))
+
+
+def build_cifar_holdout_loaders(batch_size=256, quick=False, holdout=HOLDOUT, limit=None):
+    train_full = datasets.CIFAR10(DATA_DIR, train=True, download=True, transform=CIFAR_TF_PLAIN)
+    test = datasets.CIFAR10(DATA_DIR, train=False, download=True, transform=CIFAR_TF_PLAIN)
+    targets = list(train_full.targets)
+    n_train = 8000 if quick else (limit or len(train_full))
+    base_idx = list(range(n_train))
+    emb_idx = [i for i in base_idx if targets[i] != holdout]
+    if quick:
+        test = Subset(test, range(3000))
+    emb_ds, probe_ds = Subset(train_full, emb_idx), Subset(train_full, base_idx)
+    print(f"  CIFAR embedding-train images (no {holdout}): {len(emb_ds)}   "
+          f"probe-train images (all): {len(probe_ds)}")
+    return (DataLoader(emb_ds, batch_size=batch_size, shuffle=True, num_workers=2),
+            DataLoader(probe_ds, batch_size=batch_size, shuffle=True, num_workers=2),
+            DataLoader(test, batch_size=batch_size, shuffle=False, num_workers=2))
+
+
+def cifar_two_view_loader(batch_size=256, quick=False, labeled=False, holdout=None, limit=None):
+    raw = datasets.CIFAR10(DATA_DIR, train=True, download=True, transform=None)
+    n = 8000 if quick else (limit or len(raw))
+    tgt = list(raw.targets)
+    idx = [i for i in range(n) if (holdout is None or tgt[i] != holdout)]
+    base = Subset(raw, idx)
+    ds = TwoViewLabeledMNIST(base, CIFAR_TF_AUG) if labeled else TwoViewMNIST(base, CIFAR_TF_AUG)
+    tag = "" if holdout is None else f" (no {holdout})"
+    print(f"  CIFAR two-view embedding-train images{tag}: {len(ds)}")
+    return DataLoader(ds, batch_size=batch_size, shuffle=True, num_workers=2, drop_last=labeled)

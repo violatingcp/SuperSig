@@ -37,3 +37,29 @@ class SupervisedCNN(nn.Module):
 
     def forward(self, x):
         return self.classifier(self.backbone(x))
+
+
+class CIFARBackbone(nn.Module):
+    """Convolutional feature extractor for 3x32x32 CIFAR images -> `emb_dim` embedding."""
+
+    def __init__(self, emb_dim=EMB_DIM):
+        super().__init__()
+        def block(cin, cout):
+            return nn.Sequential(
+                nn.Conv2d(cin, cout, 3, padding=1), nn.BatchNorm2d(cout), nn.ReLU(),
+                nn.Conv2d(cout, cout, 3, padding=1), nn.BatchNorm2d(cout), nn.ReLU(),
+                nn.MaxPool2d(2),
+            )
+        self.features = nn.Sequential(
+            block(3, 32),      # 32 -> 16
+            block(32, 64),     # 16 -> 8
+            block(64, 128),    # 8 -> 4
+        )
+        self.head = nn.Sequential(
+            nn.Flatten(),
+            nn.Linear(128 * 4 * 4, 256), nn.ReLU(),
+            nn.Linear(256, emb_dim),
+        )
+
+    def forward(self, x):
+        return self.head(self.features(x))
