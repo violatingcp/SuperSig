@@ -90,7 +90,10 @@ def train_sigreg_classwise(backbone, loader, epochs, means,
                 aux = REP_WEIGHT * repulsion_loss(means) + SHRINK_WEIGHT * shrink_loss(means)
             else:
                 aux = torch.zeros((), device=DEVICE)
-            (reg + aux).backward()
+            loss = reg + aux
+            if not loss.requires_grad:      # batch too small for any class: skip
+                continue
+            loss.backward()
             opt.step()
             reg_run += reg.item() * x.size(0)
             aux_run += float(aux) * x.size(0)
@@ -119,6 +122,24 @@ def train_supcon(backbone, loader, epochs, temp=0.1, lr=1e-3):
             run += loss.item() * v1.size(0)
             n += v1.size(0)
         print(f"  [supcon] epoch {ep+1}/{epochs}  loss={run/n:.4f}")
+
+
+def train_supcon_plain(backbone, loader, epochs, temp=0.1, lr=1e-3):
+    """SupCon on single un-augmented views: positives are same-class samples only."""
+    opt = torch.optim.Adam(backbone.parameters(), lr=lr)
+    backbone.train()
+    for ep in range(epochs):
+        run, n = 0.0, 0
+        for x, y in loader:
+            x, y = x.to(DEVICE), y.to(DEVICE)
+            opt.zero_grad()
+            z = F.normalize(backbone(x), dim=1)
+            loss = supcon_loss(z, y, temp=temp)
+            loss.backward()
+            opt.step()
+            run += loss.item() * x.size(0)
+            n += x.size(0)
+        print(f"  [supcon-plain] epoch {ep+1}/{epochs}  loss={run/n:.4f}")
 
 
 # --------------------------------------------------------------------------- #
