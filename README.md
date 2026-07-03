@@ -153,7 +153,8 @@ What the ablations established, in order:
 |-----------|--------------------|--------------------|
 | SIGReg+proto, 32-dim | 0.9670 | 0.6716 |
 | SupCon (aug), 32-dim | 0.9825 | 0.7469 |
-| SIGReg+proto, 100-dim | 0.9822 | 0.9127 |
+| SIGReg+proto, 100-dim, 3σ seed | 0.9822 | 0.9127 |
+| SIGReg+proto, 100-dim, 5σ seed | 0.9833 | 0.9198 |
 | SupCon (aug), 100-dim | 0.9853 | 0.9245 |
 | SIGReg+proto, 200-dim | 0.9832 | 0.9306 |
 | SupCon (aug), 200-dim | 0.9849 | 0.9414 |
@@ -165,7 +166,10 @@ near-parity with augmented SupCon.  Going further to 200 dims adds only ~2 more
 holdout points for both methods — width saturates once it reaches the class count.
 At 100 dims the minimum mean distance does *not* grow (semantically confusable
 pairs stay ~4σ apart regardless; 200 dims stretches them to ~5.5σ); what width
-mainly buys is average spacing and vacant directions for unseen classes.  CIFAR-100 also requires
+mainly buys is average spacing and vacant directions for unseen classes.  Seeding
+the means 5σ apart instead of 3σ (still 100-dim) preserves a wider final geometry
+(min ~6.3σ) and adds ~0.7 holdout points — the repulsion never fully rescues pairs
+that start close, so a generous seed helps when the dimension allows one.  CIFAR-100 also requires
 a class-balanced batch sampler (25 classes × 24 samples) so each batch carries
 enough per-class samples for the sliced-Wasserstein statistic.
 

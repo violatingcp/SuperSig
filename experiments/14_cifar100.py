@@ -55,6 +55,7 @@ from supersig.train import (
 from supersig.plotting import plot_corner
 
 EMB_DIM = 32          # overridden by --emb-dim
+SEED_TAG = ""         # set to "_s<pair-dist>" for non-default seeding
 N_CLASSES = 100
 CORNER_DIMS = 10
 DATASET = "cifar100"
@@ -105,7 +106,7 @@ def inclusive(method, ssl_ep, probe_ep, args):
     sel = elab < 10                       # corner plot readable with 10 classes only
     tag = method.replace("+", "_")
     plot_corner(embs[sel][:, :CORNER_DIMS], elab[sel],
-                plot_path(f"corner_cifar100_{EMB_DIM}d_{tag}_inclusive.png"),
+                plot_path(f"corner_cifar100_{EMB_DIM}d{SEED_TAG}_{tag}_inclusive.png"),
                 title=f"CIFAR-100 {method} latent dims 0-{CORNER_DIMS-1} (classes 0-9 shown)")
     return micro_roc(probs, labels)
 
@@ -132,7 +133,7 @@ def holdout(method, ssl_ep, probe_ep, args, holdout_name):
     embs, elab = collect_embeddings(backbone, test_loader)
     ish = (elab == args.holdout).astype(int)
     tag = method.replace("+", "_")
-    plot_corner(embs[:, :CORNER_DIMS], ish, plot_path(f"corner_cifar100_{EMB_DIM}d_{tag}_holdout.png"),
+    plot_corner(embs[:, :CORNER_DIMS], ish, plot_path(f"corner_cifar100_{EMB_DIM}d{SEED_TAG}_{tag}_holdout.png"),
                 title=f"CIFAR-100 {method} latent dims 0-{CORNER_DIMS-1} (holdout): "
                       f"1={holdout_name} (unseen), 0=rest")
     return fpr, tpr, a
@@ -166,9 +167,13 @@ def main():
     ap.add_argument("--alpha", type=float, default=1.0)
     ap.add_argument("--classes-per-batch", type=int, default=25)
     ap.add_argument("--per-class", type=int, default=24)
+    ap.add_argument("--methods", default="sigreg+proto,supcon",
+                    help="comma-separated subset of: sigreg+proto,supcon")
     args = ap.parse_args()
-    global EMB_DIM
+    global EMB_DIM, SEED_TAG
     EMB_DIM = args.emb_dim
+    if args.pair_dist != 3.0:
+        SEED_TAG = f"_s{args.pair_dist:g}"
     torch.manual_seed(args.seed); np.random.seed(args.seed)
     ssl_ep = args.ssl_epochs or (2 if args.quick else 10)
     probe_ep = args.probe_epochs or (1 if args.quick else 5)
@@ -178,14 +183,14 @@ def main():
           f"n_classes={N_CLASSES}  holdout={args.holdout} ({holdout_name})  "
           f"pair-dist={args.pair_dist}  alpha={args.alpha}")
 
-    methods = ["sigreg+proto", "supcon"]
+    methods = [m.strip() for m in args.methods.split(",") if m.strip()]
     inc = {m: inclusive(m, ssl_ep, probe_ep, args) for m in methods}
     hold = {m: holdout(m, ssl_ep, probe_ep, args, holdout_name) for m in methods}
 
     overlay(inc, "CIFAR-100 inclusive (100-way, micro-AUC): SIGReg+proto vs SupCon",
-            f"roc_cifar100_{EMB_DIM}d_inclusive.png")
+            f"roc_cifar100_{EMB_DIM}d{SEED_TAG}_inclusive.png")
     overlay(hold, f"CIFAR-100 hold-out '{holdout_name}' vs rest: SIGReg+proto vs SupCon",
-            f"roc_cifar100_{EMB_DIM}d_holdout.png")
+            f"roc_cifar100_{EMB_DIM}d{SEED_TAG}_holdout.png")
 
     print("\n===== CIFAR-100 SUMMARY =====")
     for m in methods:
