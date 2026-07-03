@@ -3,7 +3,7 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 
-from .config import DEVICE, HOLDOUT
+from .config import DEVICE, HOLDOUT, N_CLASSES
 from .losses import (
     classwise_sigreg_loss, sigreg_loss, separation_loss,
     repulsion_loss, shrink_loss, mean_geometry, make_anchors, supcon_loss,
@@ -122,6 +122,62 @@ def train_supcon(backbone, loader, epochs, temp=0.1, lr=1e-3):
             run += loss.item() * v1.size(0)
             n += v1.size(0)
         print(f"  [supcon] epoch {ep+1}/{epochs}  loss={run/n:.4f}")
+
+
+def train_sigreg_hybrid(backbone, loader, epochs, means, mode="repulse",
+                        disc="supcon", alpha=1.0, temp=0.1, lr=1e-3, margin=3.0,
+                        rep_weight=REP_WEIGHT):
+    """
+    Classwise SIGReg + mean-geometry regularizer + a discriminative term.
+
+    disc="supcon" : SupCon on the L2-normalised embeddings (plain single views).
+    disc="ce"     : cross-entropy through a jointly trained linear head, which is
+                    discarded afterwards (the frozen probe is trained separately).
+    disc="proto"  : cross-entropy of the Gaussian model's own posterior,
+                    logits = -||z - mean_c||^2 / 2 (no extra parameters).
+    disc="hinge"  : purely geometric, CE-free: relu(margin - ||z - mean_wrong||)^2
+                    keeps every sample at least `margin` sigma from wrong means.
+    Mean-geometry `mode` follows train_sigreg_classwise (means always learnable).
+    """
+    means.requires_grad_(True)
+    params = list(backbone.parameters()) + [means]
+    head = None
+    if disc == "ce":
+        head = torch.nn.Linear(means.size(1), N_CLASSES).to(DEVICE)
+        params += list(head.parameters())
+    opt = torch.optim.Adam(params, lr=lr)
+    backbone.train()
+    for ep in range(epochs):
+        reg_run, disc_run, n = 0.0, 0.0, 0
+        for x, y in loader:
+            x, y = x.to(DEVICE), y.to(DEVICE)
+            opt.zero_grad()
+            z = backbone(x)
+            reg = classwise_sigreg_loss(z, y, means)
+            if mode == "learnmeans":
+                aux = BETA_SEP * separation_loss(means)
+            elif mode == "repulse":
+                aux = rep_weight * repulsion_loss(means) + SHRINK_WEIGHT * shrink_loss(means)
+            else:
+                aux = torch.zeros((), device=DEVICE)
+            if disc == "supcon":
+                d = supcon_loss(F.normalize(z, dim=1), y, temp=temp)
+            elif disc == "ce":
+                d = F.cross_entropy(head(z), y)
+            elif disc == "proto":
+                d = F.cross_entropy(-0.5 * torch.cdist(z, means).pow(2), y)
+            else:  # "hinge"
+                dist = torch.cdist(z, means)
+                dist = dist + F.one_hot(y, means.size(0)).float() * 1e6  # mask own class
+                d = F.relu(margin - dist).pow(2).mean()
+            (reg + aux + alpha * d).backward()
+            opt.step()
+            reg_run += reg.item() * x.size(0)
+            disc_run += d.item() * x.size(0)
+            n += x.size(0)
+        dmin, dmean = mean_geometry(means.detach())
+        print(f"  [sigreg+{disc}] epoch {ep+1}/{epochs}  sigreg={reg_run/n:.4f}  "
+              f"{disc}={disc_run/n:.4f}  min_dist={dmin:.2f}  mean_dist={dmean:.2f}")
 
 
 def train_supcon_plain(backbone, loader, epochs, temp=0.1, lr=1e-3):

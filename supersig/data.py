@@ -96,9 +96,10 @@ def two_view_loader(batch_size=256, quick=False, labeled=False, holdout=None):
 
 
 # =========================================================================== #
-# CIFAR-10 loaders (plain, two-view augmented, hold-out)                      #
+# CIFAR-10 / CIFAR-100 loaders (plain, two-view augmented, hold-out)          #
 # =========================================================================== #
 CIFAR_NORM = transforms.Normalize((0.4914, 0.4822, 0.4465), (0.247, 0.243, 0.261))
+CIFAR100_NORM = transforms.Normalize((0.5071, 0.4865, 0.4409), (0.2673, 0.2564, 0.2762))
 CIFAR_TF_PLAIN = transforms.Compose([transforms.ToTensor(), CIFAR_NORM])
 CIFAR_TF_AUG = transforms.Compose([
     transforms.RandomResizedCrop(32, scale=(0.5, 1.0)),
@@ -108,9 +109,73 @@ CIFAR_TF_AUG = transforms.Compose([
 ])
 
 
-def get_cifar_loaders(batch_size=256, quick=False, limit=None):
-    train = datasets.CIFAR10(DATA_DIR, train=True, download=True, transform=CIFAR_TF_PLAIN)
-    test = datasets.CIFAR10(DATA_DIR, train=False, download=True, transform=CIFAR_TF_PLAIN)
+def _cifar_spec(dataset):
+    """(dataset class, plain transform, two-view aug transform) for a CIFAR variant."""
+    if dataset == "cifar100":
+        cls, norm = datasets.CIFAR100, CIFAR100_NORM
+    else:
+        cls, norm = datasets.CIFAR10, CIFAR_NORM
+    plain = transforms.Compose([transforms.ToTensor(), norm])
+    aug = transforms.Compose([
+        transforms.RandomResizedCrop(32, scale=(0.5, 1.0)),
+        transforms.RandomHorizontalFlip(),
+        transforms.ColorJitter(0.4, 0.4, 0.4, 0.1),
+        transforms.ToTensor(), norm,
+    ])
+    return cls, plain, aug
+
+
+class BalancedBatchSampler(torch.utils.data.Sampler):
+    """
+    Batches of `n_classes` randomly chosen classes x `n_per_class` samples each.
+
+    Guarantees every class present in a batch has enough samples for the
+    per-class SIGReg statistic (cf. losses.MIN_PER_CLASS), which random batches
+    cannot provide when the number of classes is large (e.g. CIFAR-100).
+    """
+
+    def __init__(self, targets, n_classes=25, n_per_class=24):
+        targets = torch.as_tensor(targets)
+        self.classes = torch.unique(targets)
+        self.idx_by_class = {int(c): torch.nonzero(targets == c).flatten()
+                             for c in self.classes}
+        self.n_classes = min(n_classes, len(self.classes))
+        self.n_per_class = n_per_class
+        self.n_batches = max(1, len(targets) // (self.n_classes * n_per_class))
+
+    def __iter__(self):
+        for _ in range(self.n_batches):
+            cs = self.classes[torch.randperm(len(self.classes))[:self.n_classes]]
+            batch = []
+            for c in cs:
+                idx = self.idx_by_class[int(c)]
+                batch += idx[torch.randint(len(idx), (self.n_per_class,))].tolist()
+            yield batch
+
+    def __len__(self):
+        return self.n_batches
+
+
+def cifar_balanced_loader(dataset="cifar10", holdout=None, quick=False, limit=None,
+                          classes_per_batch=25, per_class=24):
+    """Plain-transform loader with class-balanced batches (optionally minus `holdout`)."""
+    cls, plain, _ = _cifar_spec(dataset)
+    ds = cls(DATA_DIR, train=True, download=True, transform=plain)
+    targets = list(ds.targets)
+    n = 8000 if quick else (limit or len(ds))
+    idx = [i for i in range(n) if holdout is None or targets[i] != holdout]
+    sub = Subset(ds, idx)
+    sampler = BalancedBatchSampler([targets[i] for i in idx], classes_per_batch, per_class)
+    tag = "" if holdout is None else f" (no {holdout})"
+    print(f"  {dataset} balanced loader{tag}: {len(sub)} images, "
+          f"{len(sampler)} batches of {sampler.n_classes}x{per_class}")
+    return DataLoader(sub, batch_sampler=sampler, num_workers=2)
+
+
+def get_cifar_loaders(batch_size=256, quick=False, limit=None, dataset="cifar10"):
+    cls, plain, _ = _cifar_spec(dataset)
+    train = cls(DATA_DIR, train=True, download=True, transform=plain)
+    test = cls(DATA_DIR, train=False, download=True, transform=plain)
     if quick:
         train, test = Subset(train, range(4000)), Subset(test, range(2000))
     elif limit:
@@ -119,9 +184,11 @@ def get_cifar_loaders(batch_size=256, quick=False, limit=None):
             DataLoader(test, batch_size=batch_size, shuffle=False, num_workers=2))
 
 
-def build_cifar_holdout_loaders(batch_size=256, quick=False, holdout=HOLDOUT, limit=None):
-    train_full = datasets.CIFAR10(DATA_DIR, train=True, download=True, transform=CIFAR_TF_PLAIN)
-    test = datasets.CIFAR10(DATA_DIR, train=False, download=True, transform=CIFAR_TF_PLAIN)
+def build_cifar_holdout_loaders(batch_size=256, quick=False, holdout=HOLDOUT, limit=None,
+                                dataset="cifar10"):
+    cls, plain, _ = _cifar_spec(dataset)
+    train_full = cls(DATA_DIR, train=True, download=True, transform=plain)
+    test = cls(DATA_DIR, train=False, download=True, transform=plain)
     targets = list(train_full.targets)
     n_train = 8000 if quick else (limit or len(train_full))
     base_idx = list(range(n_train))
@@ -136,13 +203,15 @@ def build_cifar_holdout_loaders(batch_size=256, quick=False, holdout=HOLDOUT, li
             DataLoader(test, batch_size=batch_size, shuffle=False, num_workers=2))
 
 
-def cifar_two_view_loader(batch_size=256, quick=False, labeled=False, holdout=None, limit=None):
-    raw = datasets.CIFAR10(DATA_DIR, train=True, download=True, transform=None)
+def cifar_two_view_loader(batch_size=256, quick=False, labeled=False, holdout=None, limit=None,
+                          dataset="cifar10"):
+    cls, _, aug = _cifar_spec(dataset)
+    raw = cls(DATA_DIR, train=True, download=True, transform=None)
     n = 8000 if quick else (limit or len(raw))
     tgt = list(raw.targets)
     idx = [i for i in range(n) if (holdout is None or tgt[i] != holdout)]
     base = Subset(raw, idx)
-    ds = TwoViewLabeledMNIST(base, CIFAR_TF_AUG) if labeled else TwoViewMNIST(base, CIFAR_TF_AUG)
+    ds = TwoViewLabeledMNIST(base, aug) if labeled else TwoViewMNIST(base, aug)
     tag = "" if holdout is None else f" (no {holdout})"
     print(f"  CIFAR two-view embedding-train images{tag}: {len(ds)}")
     return DataLoader(ds, batch_size=batch_size, shuffle=True, num_workers=2, drop_last=labeled)
