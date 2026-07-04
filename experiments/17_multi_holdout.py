@@ -104,17 +104,22 @@ def main():
                for m in ["sigreg+ce", "supcon"]}
 
     k = len(holdouts)
+    per_class_legend = k <= 4          # beyond that the legend drowns the plot
     plt.figure(figsize=(7, 7))
     for i, (m, res) in enumerate(results.items()):
         fpr, tpr, a = res["combined"]
         plt.plot(fpr, tpr, color=f"C{i}", lw=2.5, label=f"{m} combined (AUC={a:.4f})")
         for j, c in enumerate(holdouts):
             fpr, tpr, a = res[c]
-            plt.plot(fpr, tpr, color=f"C{i}", lw=1, ls=["--", ":", "-."][j % 3],
-                     alpha=0.8, label=f"{m} {names[c]} (AUC={a:.4f})")
+            lbl = f"{m} {names[c]} (AUC={a:.4f})" if per_class_legend else \
+                  (f"{m} per-class" if j == 0 else None)
+            plt.plot(fpr, tpr, color=f"C{i}", lw=0.8,
+                     ls=["--", ":", "-."][j % 3] if per_class_legend else "-",
+                     alpha=0.8 if per_class_legend else 0.25, label=lbl)
     plt.plot([0, 1], [0, 1], color="grey", lw=1, ls=":")
     plt.xlabel("False positive rate"); plt.ylabel("True positive rate")
-    plt.title(f"CIFAR-100 hold-out {k} classes ({', '.join(hnames)}) vs rest")
+    title_names = ", ".join(hnames) if per_class_legend else f"{k} classes"
+    plt.title(f"CIFAR-100 hold-out {title_names} vs rest")
     plt.legend(loc="lower right", fontsize=9); plt.tight_layout()
     out = f"roc_cifar100_{EMB_DIM}d_hold{k}.png"
     plt.savefig(plot_path(out), dpi=150); plt.close()

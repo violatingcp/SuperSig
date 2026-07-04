@@ -185,11 +185,26 @@ rest, plus per-class restricted AUCs from the same binary score):
 | beaver, rose, dolphin | SIGReg+CE | 0.8828 | beaver 0.8264, dolphin 0.9285, rose 0.8934 |
 | beaver, rose, dolphin | SupCon (aug) | **0.8984** | beaver 0.8569, dolphin 0.9453, rose 0.8929 |
 
-Detection degrades as more classes are held out (beaver alone: 0.9488 → with
-rose: 0.8646 → with rose+dolphin: 0.8264 for SIGReg+CE) — each unseen class both
-crowds the vacant latent space and forces one binary probe to cover a more
-heterogeneous positive set.  SIGReg+CE wins at k=2, SupCon degrades more
-gracefully and edges ahead at k=3.
+Scaling to larger unseen sets (k=10: every 10th class from index 4; k=20: every
+5th — nested supersets, combined AUC):
+
+| k held out | SIGReg+CE | SupCon (aug) |
+|-----------:|-----------|--------------|
+| 1 (beaver) | **0.9488** | 0.9245 |
+| 2 | **0.9078** | 0.8872 |
+| 3 | 0.8828 | **0.8984** |
+| 10 | 0.8152 | **0.8224** |
+| 20 | 0.7023 | **0.7423** |
+
+Detection degrades steadily with k — each unseen class both crowds the vacant
+latent space and makes the single binary probe's positive set more
+heterogeneous.  SIGReg+CE wins for small unseen sets (k ≤ 2) but SupCon degrades
+more gracefully and pulls ahead from k = 3, by 4 points at k = 20: SIGReg's
+open-set advantage rests on explicit vacant structure around the class means,
+which fills up as the unseen fraction of the label space grows.  Per-class AUCs
+(printed by experiment 17) span ~0.5–0.95 at k = 20: visually distinctive unseen
+classes (cockroach, wardrobe, spider) stay easy; classes with in-distribution
+lookalikes (fox, possum, cattle, tractor) approach chance.
 
 100 classes need room: at 32 dims the means cannot be orthogonal, repulsion can
 only push them to ~4σ minimum spacing, and both methods lose ~20 AUC points on
