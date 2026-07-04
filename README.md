@@ -223,7 +223,39 @@ large k both variants gain 1.5–2 points and close most of the gap to SupCon
 k = 1), where plain-image CE remains the best configuration in the study.
 Within-class augmentation variance seems to act as a regularizer exactly when
 many unseen classes crowd the latent, and as noise when one vacant region
-suffices.  (Single-seed numbers; ±1 point differences are within noise.)  Per-class AUCs
+suffices.  (Single-seed numbers; ±1 point differences are within noise.)
+
+### Probe-free novelty from the Gaussian latent (experiment 18) — negative result
+
+Hypothesis: the probed evaluation never uses SIGReg's structure, so grading it
+"on its own exam" — novelty = low likelihood under every seen-class Gaussian,
+no probe — should reveal the constraint's real value.  It does not:
+
+| k | proto lik / typ | CE lik / typ | SupCon cos / typ | (best probed) |
+|--:|-----------------|--------------|------------------|---------------|
+| 1 | 0.38 / 0.62 | 0.54 / 0.45 | **0.69** / 0.50 | 0.9488 |
+| 3 | 0.46 / 0.54 | 0.48 / 0.43 | **0.65** / 0.49 | 0.8984 |
+| 10 | 0.56 / 0.44 | 0.50 / 0.49 | **0.66** / 0.51 | 0.8224 |
+| 20 | 0.59 / 0.41 | 0.51 / 0.47 | **0.70** / 0.55 | 0.7423 |
+
+Two failure modes, both instructive:
+1. **Naive max-likelihood inverts** (0.38 at k=1): in 100 dims class members
+   live on the √d ≈ 10σ typical shell while means sit 7–10σ apart, so novel
+   points *between* clusters are closer to seen means than real members are —
+   the Nalisnick-style "generative models assign higher likelihood to OOD"
+   pathology, reproduced in this latent.
+2. **The typicality correction (distance from the nearest shell) barely
+   helps**: unseen classes do not land in vacant space — the backbone
+   generalises them *onto the shells of related seen classes* (beaver embeds
+   into otter's Gaussian).  Their displacement is directional, not radial, so
+   an isotropic score is blind to it while a linear probe finds it easily —
+   which is why the probed numbers are so much higher.
+
+SupCon's angular nearest-centroid score is the only serviceable probe-free
+signal (0.65–0.70 at every k; at k=20 it nearly matches its own probe).
+Conclusion: the unit-covariance Gaussian prior does not by itself yield a
+usable novelty density; capturing the directional displacement (e.g. empirical
+per-class covariances / Mahalanobis scores) would be the next thing to try.  Per-class AUCs
 (printed by experiment 17) span ~0.5–0.95 at k = 20: visually distinctive unseen
 classes (cockroach, wardrobe, spider) stay easy; classes with in-distribution
 lookalikes (fox, possum, cattle, tractor) approach chance.
