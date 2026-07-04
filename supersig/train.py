@@ -143,7 +143,7 @@ def train_sigreg_hybrid(backbone, loader, epochs, means, mode="repulse",
     params = list(backbone.parameters()) + [means]
     head = None
     if disc == "ce":
-        head = torch.nn.Linear(means.size(1), N_CLASSES).to(DEVICE)
+        head = torch.nn.Linear(means.size(1), means.size(0)).to(DEVICE)
         params += list(head.parameters())
     opt = torch.optim.Adam(params, lr=lr)
     backbone.train()

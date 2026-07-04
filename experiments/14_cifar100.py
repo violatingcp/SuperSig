@@ -67,16 +67,16 @@ def micro_roc(probs, labels):
     return fpr, tpr, auc(fpr, tpr)
 
 
-def sigreg_backbone(loader, ssl_ep, args):
+def sigreg_backbone(loader, ssl_ep, args, disc="proto"):
     scale = args.pair_dist / math.sqrt(2.0)
     means = make_anchors(scale, emb_dim=EMB_DIM, n_classes=N_CLASSES).clone()
     dmin, dmean = mean_geometry(means)
-    rep_w = REP_WEIGHT * 45.0 / (N_CLASSES * (N_CLASSES - 1) / 2)
+    rep_w = REP_WEIGHT * 45.0 / (N_CLASSES * (N_CLASSES - 1) / 2) * args.rep_scale
     print(f"  seed means: norm={scale:.3f}  pairwise min={dmin:.3f} mean={dmean:.3f}  "
-          f"rep_weight={rep_w:.4f}")
+          f"rep_weight={rep_w:.4f}  disc={disc}")
     backbone = CIFARResNetBackbone(EMB_DIM, arch=args.arch, pretrain=args.pretrain).to(DEVICE)
     train_sigreg_hybrid(backbone, loader, ssl_ep, means, mode="repulse",
-                        disc="proto", alpha=args.alpha, rep_weight=rep_w)
+                        disc=disc, alpha=args.alpha, rep_weight=rep_w)
     return backbone
 
 
@@ -90,11 +90,11 @@ def inclusive(method, ssl_ep, probe_ep, args):
     print(f"\n=== CIFAR-100 inclusive: {method} ===")
     train_loader, test_loader = get_cifar_loaders(quick=args.quick, limit=args.limit,
                                                   dataset=DATASET)
-    if method == "sigreg+proto":
+    if method.startswith("sigreg+"):
         emb_loader = cifar_balanced_loader(DATASET, quick=args.quick, limit=args.limit,
                                            classes_per_batch=args.classes_per_batch,
                                            per_class=args.per_class)
-        backbone = sigreg_backbone(emb_loader, ssl_ep, args)
+        backbone = sigreg_backbone(emb_loader, ssl_ep, args, disc=method.split("+", 1)[1])
     else:
         backbone = supcon_backbone(
             cifar_two_view_loader(quick=args.quick, labeled=True, limit=args.limit,
@@ -115,12 +115,12 @@ def holdout(method, ssl_ep, probe_ep, args, holdout_name):
     print(f"\n=== CIFAR-100 holdout ({holdout_name}): {method} ===")
     _, probe_loader, test_loader = build_cifar_holdout_loaders(
         quick=args.quick, holdout=args.holdout, limit=args.limit, dataset=DATASET)
-    if method == "sigreg+proto":
+    if method.startswith("sigreg+"):
         emb_loader = cifar_balanced_loader(DATASET, holdout=args.holdout, quick=args.quick,
                                            limit=args.limit,
                                            classes_per_batch=args.classes_per_batch,
                                            per_class=args.per_class)
-        backbone = sigreg_backbone(emb_loader, ssl_ep, args)
+        backbone = sigreg_backbone(emb_loader, ssl_ep, args, disc=method.split("+", 1)[1])
     else:
         backbone = supcon_backbone(
             cifar_two_view_loader(quick=args.quick, labeled=True, holdout=args.holdout,
@@ -168,12 +168,17 @@ def main():
     ap.add_argument("--classes-per-batch", type=int, default=25)
     ap.add_argument("--per-class", type=int, default=24)
     ap.add_argument("--methods", default="sigreg+proto,supcon",
-                    help="comma-separated subset of: sigreg+proto,supcon")
+                    help="comma-separated: sigreg+proto, sigreg+ce, supcon")
+    ap.add_argument("--rep-scale", type=float, default=1.0,
+                    help="multiplier on the (pair-count-rescaled) repulsion weight")
+    ap.add_argument("--out-tag", default="",
+                    help="extra tag appended to output plot filenames")
     args = ap.parse_args()
     global EMB_DIM, SEED_TAG
     EMB_DIM = args.emb_dim
     if args.pair_dist != 3.0:
         SEED_TAG = f"_s{args.pair_dist:g}"
+    SEED_TAG += args.out_tag
     torch.manual_seed(args.seed); np.random.seed(args.seed)
     ssl_ep = args.ssl_epochs or (2 if args.quick else 10)
     probe_ep = args.probe_epochs or (1 if args.quick else 5)

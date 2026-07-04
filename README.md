@@ -155,6 +155,9 @@ What the ablations established, in order:
 | SupCon (aug), 32-dim | 0.9825 | 0.7469 |
 | SIGReg+proto, 100-dim, 3σ seed | 0.9822 | 0.9127 |
 | SIGReg+proto, 100-dim, 5σ seed | 0.9833 | 0.9198 |
+| SIGReg+proto, 100-dim, 5σ, repulsion ×3 | 0.9829 | 0.9339 |
+| SIGReg+proto, 100-dim, 5σ, repulsion ×10 | 0.9821 | 0.9371 |
+| **SIGReg+CE (linear head), 100-dim, 5σ** | **0.9828** | **0.9488** |
 | SupCon (aug), 100-dim | 0.9853 | 0.9245 |
 | SIGReg+proto, 200-dim | 0.9832 | 0.9306 |
 | SupCon (aug), 200-dim | 0.9849 | 0.9414 |
@@ -169,7 +172,15 @@ pairs stay ~4σ apart regardless; 200 dims stretches them to ~5.5σ); what width
 mainly buys is average spacing and vacant directions for unseen classes.  Seeding
 the means 5σ apart instead of 3σ (still 100-dim) preserves a wider final geometry
 (min ~6.3σ) and adds ~0.7 holdout points — the repulsion never fully rescues pairs
-that start close, so a generous seed helps when the dimension allows one.  CIFAR-100 also requires
+that start close, so a generous seed helps when the dimension allows one.
+
+Pushing further at 100-dim/5σ: stronger repulsion (×3/×10) widens the *average*
+mean spacing to ~10σ and adds 1.4–1.7 holdout points, but leaves the hard-pair
+minimum (~6σ) untouched and degrades the SIGReg/proto losses — mild gains,
+saturating.  Swapping the proto term for a jointly-trained **linear-head CE**
+(discarded after training) is the bigger win on the open-set task: 0.9488
+beaver-holdout AUC, **beating augmented SupCon (0.9245)** with no augmentation,
+at the cost of the head's extra parameters and a hair of inclusive AUC.  CIFAR-100 also requires
 a class-balanced batch sampler (25 classes × 24 samples) so each batch carries
 enough per-class samples for the sliced-Wasserstein statistic.
 
