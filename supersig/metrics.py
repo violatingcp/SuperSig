@@ -69,3 +69,42 @@ def classwise_gaussianity(embs, labels, **kw):
     import numpy as np
     return {int(c): sliced_gaussianity(embs[labels == c], **kw)
             for c in np.unique(labels)}
+
+
+@torch.no_grad()
+def mahalanobis_novelty(tr_embs, tr_lab, te_embs, seen, shrink=0.1, device=None):
+    """
+    Lee-et-al-style novelty scores from empirically fitted seen-class Gaussians.
+
+    Returns (tied_scores, perclass_scores, (eig_min, eig_med, eig_max)) where the
+    eigenvalues are of the pooled within-class covariance -- all ~1 iff the
+    latent is a true unit-Mahalanobis space.
+    """
+    import numpy as np
+    dev = device or DEVICE
+    zt = torch.as_tensor(tr_embs, dtype=torch.float32).to(dev)
+    z = torch.as_tensor(te_embs, dtype=torch.float32).to(dev)
+    d = zt.size(1)
+    mus, diffs, chols = [], [], []
+    for c in seen:
+        zc = zt[torch.as_tensor(np.asarray(tr_lab) == c).to(dev)]
+        mu = zc.mean(0)
+        mus.append(mu)
+        diffs.append(zc - mu)
+        S = (zc - mu).t() @ (zc - mu) / max(len(zc) - 1, 1)
+        S = (1 - shrink) * S + shrink * (torch.trace(S) / d) * torch.eye(d, device=dev)
+        chols.append(torch.linalg.cholesky(S))
+    D = torch.cat(diffs)
+    S_tied = D.t() @ D / max(len(D) - 1, 1) + 1e-3 * torch.eye(d, device=dev)
+    L_tied = torch.linalg.cholesky(S_tied)
+
+    def min_m2(Ls):
+        m2 = []
+        for mu, L in zip(mus, Ls):
+            w = torch.linalg.solve_triangular(L, (z - mu).t(), upper=False)
+            m2.append((w ** 2).sum(0))
+        return torch.stack(m2).min(0).values.sqrt().cpu().numpy()
+
+    evals = torch.linalg.eigvalsh(S_tied)
+    eigs = (evals.min().item(), evals.median().item(), evals.max().item())
+    return min_m2([L_tied] * len(mus)), min_m2(chols), eigs

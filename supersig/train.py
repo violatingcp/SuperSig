@@ -83,7 +83,7 @@ def train_sigreg_classwise(backbone, loader, epochs, means,
             x, y = x.to(DEVICE), y.to(DEVICE)
             opt.zero_grad()
             z = backbone(x)
-            reg = classwise_sigreg_loss(z, y, means)
+            reg = classwise_sigreg_loss(z, y, means, n_slices=n_slices)
             if mode == "learnmeans":
                 aux = BETA_SEP * separation_loss(means)
             elif mode == "repulse":
@@ -126,7 +126,7 @@ def train_supcon(backbone, loader, epochs, temp=0.1, lr=1e-3):
 
 def train_sigreg_hybrid(backbone, loader, epochs, means, mode="repulse",
                         disc="supcon", alpha=1.0, temp=0.1, lr=1e-3, margin=3.0,
-                        rep_weight=REP_WEIGHT):
+                        rep_weight=REP_WEIGHT, sigreg_weight=1.0, n_slices=64):
     """
     Classwise SIGReg + mean-geometry regularizer + a discriminative term.
 
@@ -153,7 +153,7 @@ def train_sigreg_hybrid(backbone, loader, epochs, means, mode="repulse",
             x, y = x.to(DEVICE), y.to(DEVICE)
             opt.zero_grad()
             z = backbone(x)
-            reg = classwise_sigreg_loss(z, y, means)
+            reg = classwise_sigreg_loss(z, y, means, n_slices=n_slices)
             if mode == "learnmeans":
                 aux = BETA_SEP * separation_loss(means)
             elif mode == "repulse":
@@ -170,7 +170,7 @@ def train_sigreg_hybrid(backbone, loader, epochs, means, mode="repulse",
                 dist = torch.cdist(z, means)
                 dist = dist + F.one_hot(y, means.size(0)).float() * 1e6  # mask own class
                 d = F.relu(margin - dist).pow(2).mean()
-            (reg + aux + alpha * d).backward()
+            (sigreg_weight * reg + aux + alpha * d).backward()
             opt.step()
             reg_run += reg.item() * x.size(0)
             disc_run += d.item() * x.size(0)

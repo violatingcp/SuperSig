@@ -292,7 +292,33 @@ Findings:
 To actually reach the no-empirical-estimate regime, the within-class second
 moments need stronger enforcement than the current recipe provides: a larger
 SIGReg weight relative to the discriminative term, more slices / larger
-per-class batches, or explicit per-class whitening.  Per-class AUCs
+per-class batches, or explicit per-class whitening.
+
+### Tuning by the eigenspectrum (experiment 20) — the trade-off is strictly bad
+
+Sweeping the enforcement knobs (SIGReg weight w ∈ {1,5,20,100}, 64→256 slices,
+24→48 samples/class) against the eigenspectrum target:
+
+| w | eig median | k=1 probed (proto/CE) | k=1 mahal-pc | k=20 probed | k=20 mahal-pc |
+|--:|-----------|------------------------|--------------|-------------|----------------|
+| 1 | 0.014 | 0.9198 / 0.9488 | 0.50 / 0.58 | 0.694 / 0.702 | 0.67 / 0.68 |
+| 10 | ~0.03 | 0.8561 / 0.8671 | 0.48 / 0.48 | 0.678 / 0.681 | 0.64 / 0.60 |
+| 100 | ~0.03 | 0.6019 / 0.5777 | 0.51 / 0.46 | 0.603 / 0.585 | 0.52 / 0.52 |
+
+The spectrum median saturates at ~0.03 (never approaching 1) regardless of
+weight, while **both** metric families degrade monotonically — at w=100 the
+probed AUC collapses ~35 points and even the Mahalanobis score falls to chance,
+because a latent shaped mostly by the Gaussianization term stops encoding
+class-discriminative structure at all.  The min eigenvalue stays pinned at
+0.001 for every method *including SupCon*: 500 images of a CIFAR class do not
+contain 100 independent directions of variability, so full-rank unit
+within-class covariance at d=100 cannot be produced by any loss weight — the
+class clouds are intrinsically low-rank.  w=1 dominates every measured cell.
+
+Routes that could genuinely reach the self-calibrated ("no empirical
+estimate") Mahalanobis space: size the latent to the classes' intrinsic
+dimension (d ≈ 16–32, where full-rank unit covariance is attainable), or make
+unit covariance structural (a per-class whitening layer) rather than penalised.  Per-class AUCs
 (printed by experiment 17) span ~0.5–0.95 at k = 20: visually distinctive unseen
 classes (cockroach, wardrobe, spider) stay easy; classes with in-distribution
 lookalikes (fox, possum, cattle, tractor) approach chance.
