@@ -173,6 +173,23 @@ that start close, so a generous seed helps when the dimension allows one.  CIFAR
 a class-balanced batch sampler (25 classes × 24 samples) so each batch carries
 enough per-class samples for the sliced-Wasserstein statistic.
 
+### Per-class Gaussianity metric (experiment 15)
+
+`supersig/metrics.py` provides a **calibrated sliced-Wasserstein Gaussianity
+ratio**: project a class's embeddings onto random unit directions, standardize
+each 1-D projection (shape only — location/scale removed), average the squared
+W2 distance to the standard-normal quantiles over directions, and divide by the
+same statistic on true N(0, I) samples of identical (n, d).  Ratio 1 = as
+Gaussian as a finite sample can look.  Validated on synthetic data (Gaussian
+≈ 1, bimodal ≈ 49×, t₃ tails ≈ 9×, lognormal ≈ 47×); blind to CLT-Gaussianizing
+products (e.g. uniform cube), which don't arise here.
+
+On the trained CIFAR-10 latents (test set, per-class mean over 10 classes):
+**SIGReg+proto 2.6×** vs **SupCon 25.5×** — SIGReg classes are near-Gaussian
+(worst: cat 4.2×, mild positive skew), SupCon's are strongly non-Gaussian
+(20–35×), confirming the embeddings differ in exactly the way the objectives
+prescribe.  See `plots/gaussianity_cifar10.png`.
+
 ### Final recipe
 
 **Classwise SIGReg + learnable means seeded 3σ apart + inverse-square repulsion
