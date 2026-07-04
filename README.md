@@ -255,7 +255,44 @@ SupCon's angular nearest-centroid score is the only serviceable probe-free
 signal (0.65–0.70 at every k; at k=20 it nearly matches its own probe).
 Conclusion: the unit-covariance Gaussian prior does not by itself yield a
 usable novelty density; capturing the directional displacement (e.g. empirical
-per-class covariances / Mahalanobis scores) would be the next thing to try.  Per-class AUCs
+per-class covariances / Mahalanobis scores) would be the next thing to try.
+
+### Empirical Mahalanobis & the "true Mahalanobis space" test (experiment 19)
+
+The design goal was a latent that *is* a Mahalanobis space — every class
+N(μ_c, I), no empirical covariance needed.  Fitting the seen classes
+empirically (Lee et al. 2018 style; tied and shrunken per-class covariances)
+and diagnosing the actual within-class second moments:
+
+| k | proto tied/per-class | CE tied/per-class | SupCon tied/per-class | (SupCon cosine) |
+|--:|----------------------|-------------------|-----------------------|-----------------|
+| 1 | 0.43 / 0.50 | 0.51 / 0.58 | 0.44 / 0.55 | 0.69 |
+| 3 | 0.50 / 0.53 | 0.51 / 0.55 | 0.45 / 0.55 | 0.65 |
+| 10 | 0.57 / 0.64 | 0.55 / 0.63 | 0.47 / 0.58 | 0.66 |
+| 20 | 0.60 / **0.67** | 0.60 / **0.68** | 0.48 / 0.61 | 0.70 |
+
+Findings:
+1. **The latent is not a true Mahalanobis space.**  Pooled within-class
+   covariance eigenvalues are ~0.001 / ~0.02 / 1–5 (min/median/max) against the
+   1/1/1 ideal — the class clouds are radially collapsed pancakes, ~50× tighter
+   than the unit target in the median direction, with a few stretched axes.
+   Strikingly, SupCon (no Gaussian constraint at all) shows the *same*
+   anisotropy: the sliced-Wasserstein term is too weak against the
+   discriminative shrinkage pressure to control second moments in 100 dims
+   with ~24 samples/class/batch.
+2. Empirical Mahalanobis stays at chance for small k (the unseen class embeds
+   *inside* the empirical distribution of a related seen class — separable by
+   a labeled hyperplane, invisible to any density), but becomes the best
+   probe-free score for SIGReg at large k (0.67–0.68 at k=20, within ~2 points
+   of the probes), and there SIGReg beats SupCon's Mahalanobis.
+3. Supervised probes dominate at small k because they are supervised — they
+   see labeled examples of the unseen class; no density method gets that
+   information.
+
+To actually reach the no-empirical-estimate regime, the within-class second
+moments need stronger enforcement than the current recipe provides: a larger
+SIGReg weight relative to the discriminative term, more slices / larger
+per-class batches, or explicit per-class whitening.  Per-class AUCs
 (printed by experiment 17) span ~0.5–0.95 at k = 20: visually distinctive unseen
 classes (cockroach, wardrobe, spider) stay easy; classes with in-distribution
 lookalikes (fox, possum, cattle, tractor) approach chance.
