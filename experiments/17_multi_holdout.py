@@ -50,7 +50,7 @@ def build_backbone(method, holdouts, ssl_ep, args):
                              n_classes=N_CLASSES).clone()
         rep_w = REP_WEIGHT * 45.0 / (N_CLASSES * (N_CLASSES - 1) / 2)
         loader = cifar_balanced_loader(DATASET, holdout=holdouts, quick=args.quick,
-                                       limit=args.limit)
+                                       limit=args.limit, augment=args.augment)
         train_sigreg_hybrid(backbone, loader, ssl_ep, means, mode="repulse",
                             disc=method.split("+", 1)[1], alpha=1.0, rep_weight=rep_w)
     else:
@@ -96,6 +96,8 @@ def main():
                     help="comma-separated: sigreg+ce, sigreg+proto, supcon")
     ap.add_argument("--out-tag", default="",
                     help="extra tag appended to the output plot filename")
+    ap.add_argument("--augment", action="store_true",
+                    help="augmentation layer in front of the sigreg embedding training")
     args = ap.parse_args()
     ssl_ep = args.ssl_epochs or (2 if args.quick else 10)
     probe_ep = args.probe_epochs or (1 if args.quick else 5)

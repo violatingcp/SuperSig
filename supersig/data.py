@@ -166,10 +166,16 @@ class BalancedBatchSampler(torch.utils.data.Sampler):
 
 
 def cifar_balanced_loader(dataset="cifar10", holdout=None, quick=False, limit=None,
-                          classes_per_batch=25, per_class=24):
-    """Plain-transform loader with class-balanced batches (optionally minus `holdout`)."""
-    cls, plain, _ = _cifar_spec(dataset)
-    ds = cls(DATA_DIR, train=True, download=True, transform=plain)
+                          classes_per_batch=25, per_class=24, augment=False):
+    """
+    Class-balanced-batch loader (optionally minus `holdout`).
+
+    augment=True swaps the plain transform for the SupCon augmentation stack
+    (RandomResizedCrop + flip + color jitter) -- an augmentation layer in front
+    of the network during embedding training.
+    """
+    cls, plain, aug = _cifar_spec(dataset)
+    ds = cls(DATA_DIR, train=True, download=True, transform=aug if augment else plain)
     targets = list(ds.targets)
     n = 8000 if quick else (limit or len(ds))
     hs = _holdout_set(holdout)

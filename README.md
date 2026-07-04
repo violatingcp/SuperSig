@@ -203,7 +203,27 @@ more gracefully and pulls ahead from k = 3, by 4 points at k = 20: SIGReg's
 open-set advantage rests on explicit vacant structure around the class means,
 which fills up as the unseen fraction of the label space grows.  SIGReg+proto
 tracks CE in parallel ~1–3 points below it at every k — the crossover is a
-property of the SIGReg framework, not of the CE head.  Per-class AUCs
+property of the SIGReg framework, not of the CE head.
+
+With an **augmentation layer in front** of the SIGReg embedding training
+(`--augment`: the SupCon crop/flip/jitter stack on every training image;
+probes/eval stay on plain images):
+
+| k held out | proto plain → aug | CE plain → aug | SupCon (aug) |
+|-----------:|-------------------|----------------|--------------|
+| 1 | 0.9198 → **0.9359** | 0.9488 → 0.9251 | 0.9245 |
+| 2 | 0.8912 → 0.8891 | 0.9078 → 0.8855 | 0.8872 |
+| 3 | 0.8715 → 0.8589 | 0.8828 → 0.8707 | 0.8984 |
+| 10 | 0.7940 → 0.8105 | 0.8152 → 0.8119 | 0.8224 |
+| 20 | 0.6938 → 0.7093 | 0.7023 → **0.7234** | 0.7423 |
+
+Augmentation helps SIGReg where the vacant-structure mechanism is weakest — at
+large k both variants gain 1.5–2 points and close most of the gap to SupCon
+(0.7234 vs 0.7423 at k = 20) — but *hurts* the CE hybrid at small k (−2.4 at
+k = 1), where plain-image CE remains the best configuration in the study.
+Within-class augmentation variance seems to act as a regularizer exactly when
+many unseen classes crowd the latent, and as noise when one vacant region
+suffices.  (Single-seed numbers; ±1 point differences are within noise.)  Per-class AUCs
 (printed by experiment 17) span ~0.5–0.95 at k = 20: visually distinctive unseen
 classes (cockroach, wardrobe, spider) stay easy; classes with in-distribution
 lookalikes (fox, possum, cattle, tractor) approach chance.
