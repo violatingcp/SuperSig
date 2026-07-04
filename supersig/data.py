@@ -109,6 +109,15 @@ CIFAR_TF_AUG = transforms.Compose([
 ])
 
 
+def _holdout_set(holdout):
+    """Normalize a holdout spec (None, int, or iterable of ints) to a set."""
+    if holdout is None:
+        return set()
+    if isinstance(holdout, int):
+        return {holdout}
+    return set(holdout)
+
+
 def _cifar_spec(dataset):
     """(dataset class, plain transform, two-view aug transform) for a CIFAR variant."""
     if dataset == "cifar100":
@@ -163,7 +172,8 @@ def cifar_balanced_loader(dataset="cifar10", holdout=None, quick=False, limit=No
     ds = cls(DATA_DIR, train=True, download=True, transform=plain)
     targets = list(ds.targets)
     n = 8000 if quick else (limit or len(ds))
-    idx = [i for i in range(n) if holdout is None or targets[i] != holdout]
+    hs = _holdout_set(holdout)
+    idx = [i for i in range(n) if targets[i] not in hs]
     sub = Subset(ds, idx)
     sampler = BalancedBatchSampler([targets[i] for i in idx], classes_per_batch, per_class)
     tag = "" if holdout is None else f" (no {holdout})"
@@ -192,7 +202,8 @@ def build_cifar_holdout_loaders(batch_size=256, quick=False, holdout=HOLDOUT, li
     targets = list(train_full.targets)
     n_train = 8000 if quick else (limit or len(train_full))
     base_idx = list(range(n_train))
-    emb_idx = [i for i in base_idx if targets[i] != holdout]
+    hs = _holdout_set(holdout)
+    emb_idx = [i for i in base_idx if targets[i] not in hs]
     if quick:
         test = Subset(test, range(3000))
     emb_ds, probe_ds = Subset(train_full, emb_idx), Subset(train_full, base_idx)
@@ -209,7 +220,8 @@ def cifar_two_view_loader(batch_size=256, quick=False, labeled=False, holdout=No
     raw = cls(DATA_DIR, train=True, download=True, transform=None)
     n = 8000 if quick else (limit or len(raw))
     tgt = list(raw.targets)
-    idx = [i for i in range(n) if (holdout is None or tgt[i] != holdout)]
+    hs = _holdout_set(holdout)
+    idx = [i for i in range(n) if tgt[i] not in hs]
     base = Subset(raw, idx)
     ds = TwoViewLabeledMNIST(base, aug) if labeled else TwoViewMNIST(base, aug)
     tag = "" if holdout is None else f" (no {holdout})"

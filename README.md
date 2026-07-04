@@ -54,6 +54,9 @@ experiments/       runnable scripts (write figures to plots/)
   12_cifar_hybrid.py       SIGReg + CE / SupCon discriminative term
   13_cifar_noce.py         head-free (proto) and CE-free (hinge) variants
   14_cifar100.py           CIFAR-100, --emb-dim 32|100|200
+  15_gaussianity.py        per-class Gaussianity metric, CIFAR-10
+  16_gaussianity100.py     Gaussianity of the CIFAR-100 table configs
+  17_multi_holdout.py      hold out 2-3 classes at once
 plots/             all generated figures
 ```
 
@@ -149,18 +152,44 @@ What the ablations established, in order:
 
 ### CIFAR-100 (experiment 14) — latent width matters
 
-| Embedding | Inclusive micro-AUC | Beaver-holdout AUC |
-|-----------|--------------------|--------------------|
-| SIGReg+proto, 32-dim | 0.9670 | 0.6716 |
-| SupCon (aug), 32-dim | 0.9825 | 0.7469 |
-| SIGReg+proto, 100-dim, 3σ seed | 0.9822 | 0.9127 |
-| SIGReg+proto, 100-dim, 5σ seed | 0.9833 | 0.9198 |
-| SIGReg+proto, 100-dim, 5σ, repulsion ×3 | 0.9829 | 0.9339 |
-| SIGReg+proto, 100-dim, 5σ, repulsion ×10 | 0.9821 | 0.9371 |
-| **SIGReg+CE (linear head), 100-dim, 5σ** | **0.9828** | **0.9488** |
-| SupCon (aug), 100-dim | 0.9853 | 0.9245 |
-| SIGReg+proto, 200-dim | 0.9832 | 0.9306 |
-| SupCon (aug), 200-dim | 0.9849 | 0.9414 |
+| Embedding | Inclusive micro-AUC | Beaver-holdout AUC | Gaussianity |
+|-----------|--------------------|--------------------|-------------|
+| SIGReg+proto, 32-dim | 0.9670 | 0.6716 | — |
+| SupCon (aug), 32-dim | 0.9825 | 0.7469 | — |
+| SIGReg+proto, 100-dim, 3σ seed | 0.9822 | 0.9127 | — |
+| SIGReg+proto, 100-dim, 5σ seed | 0.9833 | 0.9198 | 1.21 |
+| SIGReg+proto, 100-dim, 5σ, repulsion ×3 | 0.9829 | 0.9339 | 1.26 |
+| SIGReg+proto, 100-dim, 5σ, repulsion ×10 | 0.9821 | 0.9371 | 1.28 |
+| **SIGReg+CE (linear head), 100-dim, 5σ** | **0.9828** | **0.9488** | **1.24** |
+| SupCon (aug), 100-dim | 0.9853 | 0.9245 | 1.68 |
+| SIGReg+proto, 200-dim | 0.9832 | 0.9306 | — |
+| SupCon (aug), 200-dim | 0.9849 | 0.9414 | — |
+
+The last column is the mean per-class Gaussianity ratio (experiment 16; 1 = as
+Gaussian as a finite sample can look; test set has only 100 images/class so
+ratios are compressed relative to the CIFAR-10 numbers — compare within the
+column only).  Stronger repulsion monotonically costs Gaussianity (1.21 → 1.28);
+the linear-head CE costs almost none (1.24) while gaining the most holdout AUC;
+SupCon is the least Gaussian (1.68).  Backbones are checkpointed to
+checkpoints/ by experiment 16 for metric reuse.
+
+### Multi-class holdout (experiment 17)
+
+Holding out a *set* of classes (100-dim, 5σ seed; combined = any unseen class vs
+rest, plus per-class restricted AUCs from the same binary score):
+
+| Held out | Method | Combined | Per-class |
+|----------|--------|----------|-----------|
+| beaver, rose | SIGReg+CE | **0.9078** | beaver 0.8646, rose 0.9511 |
+| beaver, rose | SupCon (aug) | 0.8872 | beaver 0.8654, rose 0.9089 |
+| beaver, rose, dolphin | SIGReg+CE | 0.8828 | beaver 0.8264, dolphin 0.9285, rose 0.8934 |
+| beaver, rose, dolphin | SupCon (aug) | **0.8984** | beaver 0.8569, dolphin 0.9453, rose 0.8929 |
+
+Detection degrades as more classes are held out (beaver alone: 0.9488 → with
+rose: 0.8646 → with rose+dolphin: 0.8264 for SIGReg+CE) — each unseen class both
+crowds the vacant latent space and forces one binary probe to cover a more
+heterogeneous positive set.  SIGReg+CE wins at k=2, SupCon degrades more
+gracefully and edges ahead at k=3.
 
 100 classes need room: at 32 dims the means cannot be orthogonal, repulsion can
 only push them to ~4σ minimum spacing, and both methods lose ~20 AUC points on

@@ -229,8 +229,15 @@ def train_linear_probe(backbone, head, loader, epochs, lr=1e-3):
         print(f"  [linear probe] epoch {ep+1}/{epochs}  loss={run/tot:.4f}  acc={correct/tot:.4f}")
 
 
+def _pos_mask(y, positive):
+    """Boolean mask of `y` in `positive` (an int or an iterable of ints)."""
+    if isinstance(positive, int):
+        return y == positive
+    return torch.isin(y, torch.as_tensor(sorted(positive), device=y.device))
+
+
 def train_binary_probe(backbone, head, loader, epochs, positive=HOLDOUT, lr=1e-3):
-    """Freeze backbone, train a 2-way (positive vs rest) linear head."""
+    """Freeze backbone, train a 2-way (positive-set vs rest) linear head."""
     _freeze(backbone)
     opt = torch.optim.Adam(head.parameters(), lr=lr)
     for ep in range(epochs):
@@ -238,7 +245,7 @@ def train_binary_probe(backbone, head, loader, epochs, positive=HOLDOUT, lr=1e-3
         head.train()
         for x, y in loader:
             x = x.to(DEVICE)
-            yb = (y == positive).long().to(DEVICE)
+            yb = _pos_mask(y, positive).long().to(DEVICE)
             with torch.no_grad():
                 z = backbone(x)
             opt.zero_grad()
@@ -272,7 +279,7 @@ def collect_binary_scores(backbone, head, loader, positive=HOLDOUT):
     for x, y in loader:
         p = F.softmax(head(backbone(x.to(DEVICE))), dim=1)[:, 1]
         scores.append(p.cpu().numpy())
-        labels.append((y == positive).long().numpy())
+        labels.append(_pos_mask(y, positive).long().numpy())
     return np.concatenate(scores), np.concatenate(labels)
 
 
