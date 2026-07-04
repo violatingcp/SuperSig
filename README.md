@@ -188,20 +188,22 @@ rest, plus per-class restricted AUCs from the same binary score):
 Scaling to larger unseen sets (k=10: every 10th class from index 4; k=20: every
 5th — nested supersets, combined AUC):
 
-| k held out | SIGReg+CE | SupCon (aug) |
-|-----------:|-----------|--------------|
-| 1 (beaver) | **0.9488** | 0.9245 |
-| 2 | **0.9078** | 0.8872 |
-| 3 | 0.8828 | **0.8984** |
-| 10 | 0.8152 | **0.8224** |
-| 20 | 0.7023 | **0.7423** |
+| k held out | SIGReg+proto | SIGReg+CE | SupCon (aug) |
+|-----------:|--------------|-----------|--------------|
+| 1 (beaver) | 0.9198 | **0.9488** | 0.9245 |
+| 2 | 0.8912 | **0.9078** | 0.8872 |
+| 3 | 0.8715 | 0.8828 | **0.8984** |
+| 10 | 0.7940 | 0.8152 | **0.8224** |
+| 20 | 0.6938 | 0.7023 | **0.7423** |
 
 Detection degrades steadily with k — each unseen class both crowds the vacant
 latent space and makes the single binary probe's positive set more
 heterogeneous.  SIGReg+CE wins for small unseen sets (k ≤ 2) but SupCon degrades
 more gracefully and pulls ahead from k = 3, by 4 points at k = 20: SIGReg's
 open-set advantage rests on explicit vacant structure around the class means,
-which fills up as the unseen fraction of the label space grows.  Per-class AUCs
+which fills up as the unseen fraction of the label space grows.  SIGReg+proto
+tracks CE in parallel ~1–3 points below it at every k — the crossover is a
+property of the SIGReg framework, not of the CE head.  Per-class AUCs
 (printed by experiment 17) span ~0.5–0.95 at k = 20: visually distinctive unseen
 classes (cockroach, wardrobe, spider) stay easy; classes with in-distribution
 lookalikes (fox, possum, cattle, tractor) approach chance.

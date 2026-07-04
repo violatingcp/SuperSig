@@ -45,14 +45,14 @@ DATASET = "cifar100"
 
 def build_backbone(method, holdouts, ssl_ep, args):
     backbone = CIFARResNetBackbone(EMB_DIM, arch=args.arch, pretrain=args.pretrain).to(DEVICE)
-    if method == "sigreg+ce":
+    if method.startswith("sigreg+"):
         means = make_anchors(PAIR_DIST / math.sqrt(2.0), emb_dim=EMB_DIM,
                              n_classes=N_CLASSES).clone()
         rep_w = REP_WEIGHT * 45.0 / (N_CLASSES * (N_CLASSES - 1) / 2)
         loader = cifar_balanced_loader(DATASET, holdout=holdouts, quick=args.quick,
                                        limit=args.limit)
         train_sigreg_hybrid(backbone, loader, ssl_ep, means, mode="repulse",
-                            disc="ce", alpha=1.0, rep_weight=rep_w)
+                            disc=method.split("+", 1)[1], alpha=1.0, rep_weight=rep_w)
     else:
         train_supcon(backbone, cifar_two_view_loader(
             quick=args.quick, labeled=True, holdout=holdouts,
@@ -92,6 +92,10 @@ def main():
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--arch", default="resnet20")
     ap.add_argument("--pretrain", default="cifar100")
+    ap.add_argument("--methods", default="sigreg+ce,supcon",
+                    help="comma-separated: sigreg+ce, sigreg+proto, supcon")
+    ap.add_argument("--out-tag", default="",
+                    help="extra tag appended to the output plot filename")
     args = ap.parse_args()
     ssl_ep = args.ssl_epochs or (2 if args.quick else 10)
     probe_ep = args.probe_epochs or (1 if args.quick else 5)
@@ -100,8 +104,9 @@ def main():
     hnames = [names[c] for c in holdouts]
     print(f"device={DEVICE}  emb_dim={EMB_DIM}  holdouts={holdouts} ({', '.join(hnames)})")
 
+    methods = [m.strip() for m in args.methods.split(",") if m.strip()]
     results = {m: run_method(m, set(holdouts), ssl_ep, probe_ep, args)
-               for m in ["sigreg+ce", "supcon"]}
+               for m in methods}
 
     k = len(holdouts)
     per_class_legend = k <= 4          # beyond that the legend drowns the plot
@@ -121,7 +126,7 @@ def main():
     title_names = ", ".join(hnames) if per_class_legend else f"{k} classes"
     plt.title(f"CIFAR-100 hold-out {title_names} vs rest")
     plt.legend(loc="lower right", fontsize=9); plt.tight_layout()
-    out = f"roc_cifar100_{EMB_DIM}d_hold{k}.png"
+    out = f"roc_cifar100_{EMB_DIM}d_hold{k}{args.out_tag}.png"
     plt.savefig(plot_path(out), dpi=150); plt.close()
     print(f"\n  saved {plot_path(out)}")
 
