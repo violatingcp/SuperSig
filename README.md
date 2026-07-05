@@ -115,6 +115,34 @@ class 4 = "deer" on CIFAR-10, "beaver" on CIFAR-100).  Caveat: the pretrained
 weights saw the held-out class during supervised pretraining (`--pretrain` can
 select a label-disjoint init).
 
+### The series at a glance
+
+| # | Study | Setup | Headline numbers (probed AUC unless noted) | Takeaway |
+|--:|-------|-------|--------------------------------------------|----------|
+| 09 | CIFAR-10 baseline | 32d, pretrained ResNet, deer holdout | SIGReg 0.965/0.841 · SupCon 0.992/0.929 (incl/holdout) | SupCon leads both protocols |
+| 10 | Ablations | drop hinge; drop SupCon's augs | no-hinge ≈ same; SupCon-noaug 0.990/0.914 | hinge droppable; SupCon's edge is the **loss**, not augs |
+| 11 | Repulsive means | 3σ seed + inverse-square repulsion | 0.982/0.851; free 3σ collapses (0.77/0.71) | adaptive geometry beats static; collapse is real |
+| 12 | + discriminative term | linear-head CE / SupCon term | CE 0.992/0.924 · SupCon-term 0.989/0.886 | CE hybrid ties augmented SupCon, no augs |
+| 13 | Head-free variants | Gaussian-posterior "proto"; wrong-mean hinge | proto 0.992/0.911 · hinge 0.979/0.874 | the model classifies itself; zero extra params |
+| 14 | CIFAR-100 + width | 32d → 100d → 200d | holdout 0.67 → 0.91 → 0.93 (proto) | latent width ≥ n_classes is essential; saturates after |
+| 14 | Seeds & repulsion | 5σ seed; rep ×3/×10; CE | 5σ +0.7; rep ×3 +1.4; **CE 0.9488 beats SupCon-aug 0.9245** | wide seed + CE = best CIFAR-100 holdout |
+| 15/16 | Gaussianity metric | calibrated sliced-W2 ratio (1 = Gaussian) | CIFAR-10: SIGReg 2.6× vs SupCon 25.5×; CIFAR-100: 1.21–1.28 vs 1.68 | SIGReg classes really are Gaussian (in shape) |
+| 17 | Multi-class holdout | k = 1→20 unseen classes | CE 0.949→0.702 · SupCon 0.925→0.742 (crossover at k≈3) | SIGReg wins few-unseen; SupCon degrades more gracefully |
+| 17 | Augmentation layer | SupCon aug stack on SIGReg inputs | +1.5–2 pts at k≥10; −2.4 at k=1 (CE) | helps exactly where invariance matters |
+| 18 | Probe-free novelty | score = model's own likelihood | naive **inverts** (0.38); typicality ~chance | Nalisnick OOD pathology reproduced; novel points sit *on* seen shells |
+| 19 | Empirical Mahalanobis | fitted per-class covariances | chance at small k; 0.67–0.68 at k=20; **eig spectrum 0.001/0.02/1–5** | latent is not unit-Mahalanobis; class clouds are low-rank pancakes |
+| 20 | Eigenspectrum tuning (100d) | SIGReg weight ×1→×100 | eig med stuck ~0.03; both metrics degrade monotonically | can't fix by loss weight; w=1 dominates |
+| 20 | 16d CIFAR-100 | w=20, 256 slices | eig med ≈ 1 but detection ~chance | self-calibration and 100-class detection are incompatible |
+| 20 | **16d CIFAR-10 (native regime)** | 10 classes, w=20 | probed 0.88; **probe-free 0.80–0.78, ≥ fitted Mahalanobis, beats own probe at k=3** | the "true Mahalanobis space" design realized |
+| 20 | SupCon reference (16d) | same suite | probed 0.92–0.90; probe-free 0.81→0.71 | SupCon owns probes; SIGReg owns probe-free at k≥2 |
+| 21 | Factorized two-stage | SSL trunk (no labels) + heads; leakage-free | frozen: bottleneck; SSL-SIGReg + fine-tune: probed 0.82–0.72, probe-free ~0.75 stable, best eigenspectra | augmentations factorize nuisance; no dead directions |
+
+Final recipes: **probed / few unseen** → repulsive floating means (5σ seed) +
+linear-head CE, width ≥ n_classes, w=1.  **Probe-free / calibrated** → width ≈
+intrinsic class dim (~16), w=20, proto term; score novelty by distance to the
+learned means, no probe, no fitting.  **Leakage-free** → SIGReg-SSL
+pretraining, fine-tune with the trunk floating.
+
 ### CIFAR-10, 32-dim latent
 
 | Embedding | Inclusive micro-AUC | Deer-holdout AUC |
