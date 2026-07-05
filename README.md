@@ -450,7 +450,17 @@ them probe-free; SIGReg's probe-free score is the most stable in the study
 initialization yields the healthiest eigenspectra of the whole series
 (min 0.02–0.03, median 0.84–0.97 — no dead directions).  The homogeneous
 pipeline (global SIGReg pretraining → class-conditional SIGReg fine-tuning)
-composes cleanly.  Per-class AUCs
+composes cleanly.
+
+5× longer stage 1 (100 SSL epochs) does **not** close the probed gap — all
+probed/probe-free changes are within single-seed noise (SIGReg probed
+0.81/0.72/0.73; SupCon actually drifts down) — so the residual 3–6 points vs
+the supervised-pretrained init are attributable to supervised feature shaping
+(and its leakage), not SSL budget: the leakage-free numbers are the fair ones.
+What longer SSL *does* buy is calibration: the SIGReg eigenspectrum floor
+rises monotonically (0.017 → 0.07–0.11), putting every within-class direction
+within one order of magnitude of unit variance for the first time in the
+series.  Per-class AUCs
 (printed by experiment 17) span ~0.5–0.95 at k = 20: visually distinctive unseen
 classes (cockroach, wardrobe, spider) stay easy; classes with in-distribution
 lookalikes (fox, possum, cattle, tractor) approach chance.
