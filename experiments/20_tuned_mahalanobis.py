@@ -46,15 +46,20 @@ from supersig.train import (
 from supersig.metrics import mahalanobis_novelty
 
 EMB_DIM = 100         # overridden by --emb-dim
-N_CLASSES = 100
+N_CLASSES = 100       # overridden by --dataset
 PAIR_DIST = 5.0
 DATASET = "cifar100"
 
-HOLDOUT_SETS = {
-    1: [4], 2: [4, 70], 3: [4, 30, 70],
-    10: [4, 14, 24, 34, 44, 54, 64, 74, 84, 94],
-    20: [4 + 5 * i for i in range(20)],
+HOLDOUT_SETS_ALL = {
+    "cifar100": {
+        1: [4], 2: [4, 70], 3: [4, 30, 70],
+        10: [4, 14, 24, 34, 44, 54, 64, 74, 84, 94],
+        20: [4 + 5 * i for i in range(20)],
+    },
+    # deer; deer+truck; deer+truck+airplane
+    "cifar10": {1: [4], 2: [4, 9], 3: [0, 4, 9]},
 }
+HOLDOUT_SETS = HOLDOUT_SETS_ALL["cifar100"]
 # untuned references (exps 17/19), sigreg_weight=1, n_slices=64, per_class=24
 REF = {
     "sigreg+proto": {"probed": {1: 0.9198, 2: 0.8912, 3: 0.8715, 10: 0.7940, 20: 0.6938},
@@ -164,8 +169,8 @@ def mode_full(args):
     for k in ks:
         for m in methods:
             r = res[m][k]
-            ref_p = REF[m]["probed"][k] if EMB_DIM == 100 else float("nan")
-            ref_m = REF[m]["mahal"][k] if EMB_DIM == 100 else float("nan")
+            ref_p = REF[m]["probed"][k] if (EMB_DIM, DATASET) == (100, "cifar100") else float("nan")
+            ref_m = REF[m]["mahal"][k] if (EMB_DIM, DATASET) == (100, "cifar100") else float("nan")
             print(f"{k:>4}{m:>14}{r['probed']:>9.4f}{ref_p:>8.4f}"
                   f"{r['percls']:>10.4f}{ref_m:>8.4f}"
                   f"{r['unit']:>7.4f}{r['eigs'][1]:>9.3f}")
@@ -178,15 +183,15 @@ def mode_full(args):
                  label=f"{m} Mahalanobis pc (tuned)")
         plt.plot(ks, [res[m][k]["unit"] for k in ks], f"C{i}:v", lw=1.2, alpha=0.8,
                  label=f"{m} unit-cov (tuned)")
-        if EMB_DIM == 100:
+        if (EMB_DIM, DATASET) == (100, "cifar100"):
             plt.plot(ks, [REF[m]["probed"][k] for k in ks], f"C{i}--s", lw=1, alpha=0.5,
                      label=f"{m} probed (untuned)")
     plt.xscale("log"); plt.xticks(ks, [str(k) for k in ks])
     plt.xlabel("classes held out (k)"); plt.ylabel("unseen-vs-rest AUC")
     plt.title("CIFAR-100 novelty with eigenspectrum-tuned SIGReg")
     plt.legend(fontsize=8); plt.grid(alpha=0.3); plt.tight_layout()
-    plt.savefig(plot_path(f"novelty_tuned_cifar100_{EMB_DIM}d.png"), dpi=150); plt.close()
-    print(f"\n  saved {plot_path(f'novelty_tuned_cifar100_{EMB_DIM}d.png')}")
+    plt.savefig(plot_path(f"novelty_tuned_{DATASET}_{EMB_DIM}d.png"), dpi=150); plt.close()
+    print(f"\n  saved {plot_path(f'novelty_tuned_{DATASET}_{EMB_DIM}d.png')}")
     print("Done.")
 
 
@@ -199,15 +204,22 @@ def main():
     ap.add_argument("--probe-epochs", type=int, default=None)
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--arch", default="resnet20")
-    ap.add_argument("--pretrain", default="cifar100")
+    ap.add_argument("--pretrain", default=None,
+                    help="hub pretraining dataset (default: same as --dataset)")
+    ap.add_argument("--dataset", default="cifar100", choices=["cifar10", "cifar100"])
     ap.add_argument("--ks", default="1,2,3,10,20")
     ap.add_argument("--emb-dim", type=int, default=100)
     ap.add_argument("--sigreg-weight", type=float, default=20.0)
     ap.add_argument("--n-slices", type=int, default=256)
     ap.add_argument("--per-class", type=int, default=24)
     args = ap.parse_args()
-    global EMB_DIM
+    global EMB_DIM, DATASET, N_CLASSES, HOLDOUT_SETS
     EMB_DIM = args.emb_dim
+    DATASET = args.dataset
+    N_CLASSES = 100 if DATASET == "cifar100" else 10
+    HOLDOUT_SETS = HOLDOUT_SETS_ALL[DATASET]
+    if args.pretrain is None:
+        args.pretrain = DATASET
     if args.mode == "tune":
         mode_tune(args)
     else:
