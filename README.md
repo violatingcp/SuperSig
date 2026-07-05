@@ -318,7 +318,37 @@ class clouds are intrinsically low-rank.  w=1 dominates every measured cell.
 Routes that could genuinely reach the self-calibrated ("no empirical
 estimate") Mahalanobis space: size the latent to the classes' intrinsic
 dimension (d ≈ 16–32, where full-rank unit covariance is attainable), or make
-unit covariance structural (a per-class whitening layer) rather than penalised.  Per-class AUCs
+unit covariance structural (a per-class whitening layer) rather than penalised.
+
+### 16-dim latent: self-calibration achieved, detection lost (experiment 20)
+
+At d=16 the eigenspectrum becomes genuinely tunable — the intrinsic-dimension
+diagnosis was right:
+
+| Config (d=16, 5-epoch sweep) | eig min / med / max |
+|------------------------------|---------------------|
+| w=1 (baseline) | 0.077 / 0.321 / 0.717 |
+| w=5 | 0.146 / 0.633 / 1.106 |
+| **w=20, 256 slices** | **0.216 / 0.872 / 1.708** |
+| w=100, 256 slices | 0.213 / 0.882 / 1.832 |
+
+The full suite at d=16, w=20 (proto & CE, k=1–20) shows per-cell spectra of
+~0.4–0.5 / 0.9–1.1 / 1.5–2.4 — an approximately *true* unit-Mahalanobis space,
+and as self-calibration predicts, the unit-covariance score matches or beats
+the empirical Mahalanobis fit (e.g. 0.60 vs 0.51 at k=1 for CE).  But
+detection collapses everywhere: probed AUC 0.25–0.59 (inverted at k=1),
+probe-free ~0.45–0.57 — far below the 100-dim numbers (0.92–0.95 probed at
+k=1).  100 classes in 16 dimensions with a 20:1 Gaussianisation:discrimination
+ratio leaves too little separability for any detector.
+
+**The structural conclusion of the whole series:** the "true Mahalanobis
+space" and strong open-set detection are in direct tension when the class
+count exceeds the feasible latent dimension.  Unit within-class covariance is
+only fillable at d ≈ intrinsic class dimensionality (~16), while separating
+100 classes (and giving unseen ones room) demands d ≥ 100.  The design as
+originally envisioned is self-consistent only when n_classes ≲ d ≈ intrinsic
+dim — e.g. CIFAR-10 at d=16, the regime the MNIST/CIFAR-10 studies happened to
+live in.  Per-class AUCs
 (printed by experiment 17) span ~0.5–0.95 at k = 20: visually distinctive unseen
 classes (cockroach, wardrobe, spider) stay easy; classes with in-distribution
 lookalikes (fox, possum, cattle, tractor) approach chance.

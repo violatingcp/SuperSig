@@ -45,7 +45,7 @@ from supersig.train import (
 )
 from supersig.metrics import mahalanobis_novelty
 
-EMB_DIM = 100
+EMB_DIM = 100         # overridden by --emb-dim
 N_CLASSES = 100
 PAIR_DIST = 5.0
 DATASET = "cifar100"
@@ -164,8 +164,10 @@ def mode_full(args):
     for k in ks:
         for m in methods:
             r = res[m][k]
-            print(f"{k:>4}{m:>14}{r['probed']:>9.4f}{REF[m]['probed'][k]:>8.4f}"
-                  f"{r['percls']:>10.4f}{REF[m]['mahal'][k]:>8.4f}"
+            ref_p = REF[m]["probed"][k] if EMB_DIM == 100 else float("nan")
+            ref_m = REF[m]["mahal"][k] if EMB_DIM == 100 else float("nan")
+            print(f"{k:>4}{m:>14}{r['probed']:>9.4f}{ref_p:>8.4f}"
+                  f"{r['percls']:>10.4f}{ref_m:>8.4f}"
                   f"{r['unit']:>7.4f}{r['eigs'][1]:>9.3f}")
 
     plt.figure(figsize=(8, 5.5))
@@ -176,14 +178,15 @@ def mode_full(args):
                  label=f"{m} Mahalanobis pc (tuned)")
         plt.plot(ks, [res[m][k]["unit"] for k in ks], f"C{i}:v", lw=1.2, alpha=0.8,
                  label=f"{m} unit-cov (tuned)")
-        plt.plot(ks, [REF[m]["probed"][k] for k in ks], f"C{i}--s", lw=1, alpha=0.5,
-                 label=f"{m} probed (untuned)")
+        if EMB_DIM == 100:
+            plt.plot(ks, [REF[m]["probed"][k] for k in ks], f"C{i}--s", lw=1, alpha=0.5,
+                     label=f"{m} probed (untuned)")
     plt.xscale("log"); plt.xticks(ks, [str(k) for k in ks])
     plt.xlabel("classes held out (k)"); plt.ylabel("unseen-vs-rest AUC")
     plt.title("CIFAR-100 novelty with eigenspectrum-tuned SIGReg")
     plt.legend(fontsize=8); plt.grid(alpha=0.3); plt.tight_layout()
-    plt.savefig(plot_path("novelty_tuned_cifar100.png"), dpi=150); plt.close()
-    print(f"\n  saved {plot_path('novelty_tuned_cifar100.png')}")
+    plt.savefig(plot_path(f"novelty_tuned_cifar100_{EMB_DIM}d.png"), dpi=150); plt.close()
+    print(f"\n  saved {plot_path(f'novelty_tuned_cifar100_{EMB_DIM}d.png')}")
     print("Done.")
 
 
@@ -198,10 +201,13 @@ def main():
     ap.add_argument("--arch", default="resnet20")
     ap.add_argument("--pretrain", default="cifar100")
     ap.add_argument("--ks", default="1,2,3,10,20")
+    ap.add_argument("--emb-dim", type=int, default=100)
     ap.add_argument("--sigreg-weight", type=float, default=20.0)
     ap.add_argument("--n-slices", type=int, default=256)
     ap.add_argument("--per-class", type=int, default=24)
     args = ap.parse_args()
+    global EMB_DIM
+    EMB_DIM = args.emb_dim
     if args.mode == "tune":
         mode_tune(args)
     else:
