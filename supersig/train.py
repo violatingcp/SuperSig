@@ -180,6 +180,25 @@ def train_sigreg_hybrid(backbone, loader, epochs, means, mode="repulse",
               f"{disc}={disc_run/n:.4f}  min_dist={dmin:.2f}  mean_dist={dmean:.2f}")
 
 
+def train_simclr(backbone, loader, epochs, temp=0.5, lr=1e-3):
+    """Unsupervised SimCLR (NT-Xent): positives are only the other augmented view."""
+    opt = torch.optim.Adam(backbone.parameters(), lr=lr)
+    backbone.train()
+    for ep in range(epochs):
+        run, n = 0.0, 0
+        for v1, v2 in loader:
+            v1, v2 = v1.to(DEVICE), v2.to(DEVICE)
+            opt.zero_grad()
+            z = F.normalize(backbone(torch.cat([v1, v2])), dim=1)
+            inst = torch.arange(v1.size(0), device=DEVICE)
+            loss = supcon_loss(z, torch.cat([inst, inst]), temp=temp)
+            loss.backward()
+            opt.step()
+            run += loss.item() * v1.size(0)
+            n += v1.size(0)
+        print(f"  [simclr] epoch {ep+1}/{epochs}  loss={run/n:.4f}")
+
+
 def train_supcon_plain(backbone, loader, epochs, temp=0.1, lr=1e-3):
     """SupCon on single un-augmented views: positives are same-class samples only."""
     opt = torch.optim.Adam(backbone.parameters(), lr=lr)

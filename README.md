@@ -393,7 +393,36 @@ column the ordering flips with k: SupCon's cosine score falls (0.81 → 0.72 →
 overtaking at k ≥ 2 and beating its own probe at k=3.  Each method is best at
 the game it was designed for: contrastive + probe for supervised detection,
 Gaussian latent + own likelihood when no probe (no labels for the unseen) is
-available.  Per-class AUCs
+available.
+
+### Two-stage factorization (experiment 21)
+
+Idea: the class labels are too coarse — end-to-end SIGReg crushes within-class
+nuisance diversity (background, pose, color) into the class Gaussian.
+Factorize: stage 1 learns an augmentation-invariant trunk with **no labels**
+(SimCLR, or LeJEPA-style invariance + global SIGReg via `--stage1 sigreg`);
+stage 2 trains the class-conditional SIGReg / SupCon latent on top (`--finetune`
+leaves the trunk floating; default freezes it).  This also removes the
+supervised-pretraining leakage caveat: the held-out class is never seen in any
+form.
+
+| k | | SIGReg probed / free | SupCon probed / free |
+|--:|---|----------------------|----------------------|
+| — | *frozen SimCLR trunk (20 ep)* | 0.75 / 0.58 · 0.77 / 0.62 · 0.71 / 0.56 | 0.81 / 0.65 · 0.75 / 0.62 · 0.80 / 0.64 |
+| 1 | SSL-SIGReg init + fine-tune | 0.8225 / 0.7428 | 0.8937 / 0.7665 |
+| 2 | SSL-SIGReg init + fine-tune | 0.6919 / **0.7477** | 0.8541 / 0.6971 |
+| 3 | SSL-SIGReg init + fine-tune | 0.7242 / **0.7479** | 0.8653 / 0.7432 |
+
+Findings: a *frozen* 20-epoch SSL trunk bottlenecks both methods (SimCLR needs
+far longer to match fine-tuned features).  With the trunk **floating**
+(fine-tuned from the SSL-SIGReg init) the leakage-free pipeline lands within
+3–6 probed points of the supervised-pretrained end-to-end runs and matches
+them probe-free; SIGReg's probe-free score is the most stable in the study
+(~0.75 at every k, above its own probe for k ≥ 2), and the SSL-SIGReg
+initialization yields the healthiest eigenspectra of the whole series
+(min 0.02–0.03, median 0.84–0.97 — no dead directions).  The homogeneous
+pipeline (global SIGReg pretraining → class-conditional SIGReg fine-tuning)
+composes cleanly.  Per-class AUCs
 (printed by experiment 17) span ~0.5–0.95 at k = 20: visually distinctive unseen
 classes (cockroach, wardrobe, spider) stay easy; classes with in-distribution
 lookalikes (fox, possum, cattle, tractor) approach chance.
