@@ -452,6 +452,16 @@ initialization yields the healthiest eigenspectra of the whole series
 pipeline (global SIGReg pretraining → class-conditional SIGReg fine-tuning)
 composes cleanly.
 
+5× longer stage 1 (100 SSL epochs) does **not** close the probed gap — all
+probed/probe-free changes are within single-seed noise (SIGReg probed
+0.81/0.72/0.73; SupCon actually drifts down) — so the residual 3–6 points vs
+the supervised-pretrained init are attributable to supervised feature shaping
+(and its leakage), not SSL budget: the leakage-free numbers are the fair ones.
+What longer SSL *does* buy is calibration: the SIGReg eigenspectrum floor
+rises monotonically (0.017 → 0.07–0.11), putting every within-class direction
+within one order of magnitude of unit variance for the first time in the
+series.
+
 ### Dual-space concatenation (experiment 22) — best architecture in the series
 
 Train BOTH spaces on the same input and concatenate: a 64-dim SSL space
@@ -503,15 +513,32 @@ complementary partner (synergies up to +8.4 vs +1–3) and clearly better for
 probe-free/Mahalanobis scoring (0.70–0.76 vs 0.52–0.67) — its globally
 Gaussian space supports density corrections that SimCLR's does not.
 
-5× longer stage 1 (100 SSL epochs) does **not** close the probed gap — all
-probed/probe-free changes are within single-seed noise (SIGReg probed
-0.81/0.72/0.73; SupCon actually drifts down) — so the residual 3–6 points vs
-the supervised-pretrained init are attributable to supervised feature shaping
-(and its leakage), not SSL budget: the leakage-free numbers are the fair ones.
-What longer SSL *does* buy is calibration: the SIGReg eigenspectrum floor
-rises monotonically (0.017 → 0.07–0.11), putting every within-class direction
-within one order of magnitude of unit variance for the first time in the
-series.  Per-class AUCs
+### Discovered anchors (experiment 23) — open-world class discovery
+
+After supervised training (16d tuned recipe), the FULL train set is embedded
+as unlabeled data.  In the self-calibrated space Mahalanobis clustering is
+plain k-means, and the model's own geometry supplies every decision: outlier
+pool = points beyond the 0.95-quantile shell of every seen mean; cluster count
+= BIC under unit-variance Gaussians; new anchors = the cluster centers.  The
+pool is pseudo-labeled by cluster and training continues with the extended
+anchor set.
+
+| k held out | pool purity | k̂ | novelty AUC before → **after** | discovered-anchor AUC per class |
+|--:|---|---|---|---|
+| 1 | 0.48 | 4 | 0.7349 → **0.9322** | deer 0.926 |
+| 2 | 0.61 | 4 | 0.7484 → **0.9217** | deer 0.945, truck 0.984 |
+| 3 | 0.74 | 4 | 0.7330 → **0.9119** | airplane 0.938, deer 0.946, truck 0.956 |
+
+**The strongest label-free result in the series.**  Discovery + fine-tuning
+lifts probe-free novelty by ~18 points, beating the trained probes at every k
+(e.g. 0.9322 vs 0.8804 at k=1), and each held-out class ends up owning a
+discovered anchor that detects it at 0.93–0.98 AUC — classes nobody ever
+labeled become first-class citizens of the Gaussian latent.  BIC over-clusters
+(k̂=4 regardless of true k, since seen-class outliers add structure), but the
+surplus anchors are harmless — the genuine classes claim their own.  Only
+~40–50 % of the novel class sits beyond the initial shell threshold, yet
+fine-tuning onto the discovered anchor pulls in the rest of the distribution.
+  Per-class AUCs
 (printed by experiment 17) span ~0.5–0.95 at k = 20: visually distinctive unseen
 classes (cockroach, wardrobe, spider) stay easy; classes with in-distribution
 lookalikes (fox, possum, cattle, tractor) approach chance.
