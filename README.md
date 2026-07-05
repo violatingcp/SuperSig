@@ -371,7 +371,29 @@ estimate needed, exactly as designed — and at k=3 the probe-free model
 density *outperforms the trained probe*.  Probed AUC costs only a few points
 vs the untuned 32-dim recipe (0.88 vs 0.91 at k=1).  The residual weakness is
 the min eigenvalue (~0.004): a few latent directions carry no within-class
-variance even at d=16.  Per-class AUCs
+variance even at d=16.
+
+SupCon reference at the same width (two-view aug; probe-free score = nearest-
+centroid cosine):
+
+| k | | SIGReg proto (tuned) | SIGReg CE (tuned) | SupCon (aug) |
+|--:|---|---------------------|-------------------|--------------|
+| 1 | probed | 0.8804 | 0.8258 | **0.9210** |
+| 1 | probe-free | 0.8002 | 0.7331 | **0.8127** |
+| 2 | probed | 0.7659 | 0.7236 | **0.9040** |
+| 2 | probe-free | **0.7386** | 0.6934 | 0.7239 |
+| 3 | probed | 0.7339 | 0.7456 | **0.8982** |
+| 3 | probe-free | **0.7813** | 0.7736 | 0.7060 |
+
+SupCon's probed detection barely degrades with k (0.92 → 0.90 → 0.90) and
+dominates the tuned SIGReg by up to 15 points — the w=20 Gaussianisation
+deliberately trades probed performance for calibration.  On the probe-free
+column the ordering flips with k: SupCon's cosine score falls (0.81 → 0.72 →
+0.71) while SIGReg's self-calibrated density holds (0.80 → 0.74 → 0.78),
+overtaking at k ≥ 2 and beating its own probe at k=3.  Each method is best at
+the game it was designed for: contrastive + probe for supervised detection,
+Gaussian latent + own likelihood when no probe (no labels for the unseen) is
+available.  Per-class AUCs
 (printed by experiment 17) span ~0.5–0.95 at k = 20: visually distinctive unseen
 classes (cockroach, wardrobe, spider) stay easy; classes with in-distribution
 lookalikes (fox, possum, cattle, tractor) approach chance.

@@ -36,11 +36,13 @@ from sklearn.metrics import roc_auc_score
 from supersig.config import plot_path, DEVICE
 from supersig.data import (
     get_cifar_loaders, build_cifar_holdout_loaders, cifar_balanced_loader,
+    cifar_two_view_loader,
 )
 from supersig.models import CIFARResNetBackbone
 from supersig.losses import make_anchors
+import torch.nn.functional as F
 from supersig.train import (
-    train_sigreg_hybrid, train_binary_probe, collect_binary_scores,
+    train_sigreg_hybrid, train_supcon, train_binary_probe, collect_binary_scores,
     collect_embeddings, REP_WEIGHT,
 )
 from supersig.metrics import mahalanobis_novelty
@@ -82,6 +84,11 @@ TUNE_GRID = [
 def train_sigreg(disc, holdouts, ssl_ep, args, w, slices, per_class):
     torch.manual_seed(args.seed); np.random.seed(args.seed)
     backbone = CIFARResNetBackbone(EMB_DIM, arch=args.arch, pretrain=args.pretrain).to(DEVICE)
+    if disc == "supcon-ref":            # augmented SupCon reference, no means
+        train_supcon(backbone, cifar_two_view_loader(
+            quick=args.quick, labeled=True, holdout=holdouts or None,
+            limit=args.limit, dataset=DATASET), ssl_ep)
+        return backbone, None
     means = make_anchors(PAIR_DIST / math.sqrt(2.0), emb_dim=EMB_DIM,
                          n_classes=N_CLASSES).clone()
     rep_w = REP_WEIGHT * 45.0 / (N_CLASSES * (N_CLASSES - 1) / 2)
@@ -124,7 +131,7 @@ def mode_full(args):
     ssl_ep = args.ssl_epochs or (2 if args.quick else 10)
     probe_ep = args.probe_epochs or (1 if args.quick else 5)
     ks = [int(x) for x in args.ks.split(",")]
-    methods = ["sigreg+proto", "sigreg+ce"]
+    methods = [m.strip() for m in args.methods.split(",") if m.strip()]
     res = {m: {} for m in methods}
     w, slices, pc = args.sigreg_weight, args.n_slices, args.per_class
     print(f"full mode: sigreg_weight={w}  n_slices={slices}  per_class={pc}")
@@ -133,8 +140,8 @@ def mode_full(args):
         seen = [c for c in range(N_CLASSES) if c not in holdouts]
         for m in methods:
             print(f"\n=== k={k}: {m} (tuned) ===")
-            backbone, means = train_sigreg(m.split("+", 1)[1], holdouts, ssl_ep,
-                                           args, w, slices, pc)
+            disc = m.split("+", 1)[1] if m.startswith("sigreg+") else "supcon-ref"
+            backbone, means = train_sigreg(disc, holdouts, ssl_ep, args, w, slices, pc)
             # probed metric
             _, probe_loader, _ = build_cifar_holdout_loaders(
                 quick=args.quick, holdout=holdouts, limit=args.limit, dataset=DATASET)
@@ -150,7 +157,15 @@ def mode_full(args):
             tied, percls, eigs = mahalanobis_novelty(tr_embs[keep], tr_lab[keep],
                                                      te_embs, seen)
             z = torch.as_tensor(te_embs, device=DEVICE)
-            unit = torch.cdist(z, means.detach()[seen]).min(1).values.cpu().numpy()
+            if means is not None:
+                unit = torch.cdist(z, means.detach()[seen]).min(1).values.cpu().numpy()
+            else:                       # supcon: nearest-centroid cosine (exp-18 score)
+                zt = F.normalize(torch.as_tensor(tr_embs[keep], device=DEVICE), dim=1)
+                lab = tr_lab[keep]
+                cents = F.normalize(torch.stack(
+                    [zt[torch.as_tensor(lab == c, device=DEVICE)].mean(0) for c in seen]), dim=1)
+                zn = F.normalize(z, dim=1)
+                unit = (1.0 - (zn @ cents.t()).max(1).values).cpu().numpy()
             is_unseen = np.isin(te_lab, list(holdouts)).astype(int)
             res[m][k] = {
                 "probed": probed,
@@ -207,6 +222,8 @@ def main():
     ap.add_argument("--pretrain", default=None,
                     help="hub pretraining dataset (default: same as --dataset)")
     ap.add_argument("--dataset", default="cifar100", choices=["cifar10", "cifar100"])
+    ap.add_argument("--methods", default="sigreg+proto,sigreg+ce",
+                    help="comma-separated: sigreg+proto, sigreg+ce, supcon")
     ap.add_argument("--ks", default="1,2,3,10,20")
     ap.add_argument("--emb-dim", type=int, default=100)
     ap.add_argument("--sigreg-weight", type=float, default=20.0)
