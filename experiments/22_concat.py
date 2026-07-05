@@ -39,13 +39,13 @@ from supersig.data import (
 from supersig.models import CIFARResNetBackbone
 from supersig.losses import make_anchors
 from supersig.train import (
-    train_sigreg_ssl, train_supcon, train_sigreg_hybrid, collect_embeddings,
-    REP_WEIGHT,
+    train_sigreg_ssl, train_simclr, train_supcon, train_sigreg_hybrid,
+    collect_embeddings, REP_WEIGHT,
 )
 from supersig.metrics import mahalanobis_novelty
 
 SUP_DIM = 16
-SSL_DIM = 64
+SSL_DIM = 64          # overridden by --ssl-dim
 N_CLASSES = 10
 PAIR_DIST = 5.0
 DATASET = "cifar10"
@@ -103,7 +103,12 @@ def main():
     ap.add_argument("--ks", default="1,2,3")
     ap.add_argument("--sigreg-weight", type=float, default=20.0)
     ap.add_argument("--n-slices", type=int, default=256)
+    ap.add_argument("--ssl-obj", choices=["sigreg", "simclr"], default="sigreg")
+    ap.add_argument("--ssl-dim", type=int, default=64)
+    ap.add_argument("--out-tag", default="")
     args = ap.parse_args()
+    global SSL_DIM
+    SSL_DIM = args.ssl_dim
     ssl_ep = args.ssl_epochs or (2 if args.quick else 20)
     head_ep = args.head_epochs or (1 if args.quick else 10)
     ks = [int(x) for x in args.ks.split(",")]
@@ -118,13 +123,17 @@ def main():
     for k in ks:
         holdouts = set(HOLDOUT_SETS[k])
         seen = [c for c in range(N_CLASSES) if c not in holdouts]
-        print(f"\n===== k={k}: SSL trunk (sigreg-ssl, no {sorted(holdouts)}) =====")
+        print(f"\n===== k={k}: SSL trunk ({args.ssl_obj}, {SSL_DIM}d, no {sorted(holdouts)}) =====")
         torch.manual_seed(args.seed); np.random.seed(args.seed)
         trunk = CIFARResNetBackbone(SSL_DIM, arch=args.arch,
                                     pretrain=args.pretrain).to(DEVICE)
-        train_sigreg_ssl(trunk, cifar_two_view_loader(
-            quick=args.quick, labeled=False, holdout=holdouts,
-            limit=args.limit, dataset=DATASET), ssl_ep)
+        ssl_loader = cifar_two_view_loader(quick=args.quick, labeled=False,
+                                           holdout=holdouts, limit=args.limit,
+                                           dataset=DATASET)
+        if args.ssl_obj == "simclr":
+            train_simclr(trunk, ssl_loader, ssl_ep)
+        else:
+            train_sigreg_ssl(trunk, ssl_loader, ssl_ep)
         tr_ssl, tr_lab = collect_embeddings(trunk, train_eval_loader)
         te_ssl, te_lab = collect_embeddings(trunk, test_loader)
         tr_pos = np.isin(tr_lab, list(holdouts)).astype(int)
@@ -194,7 +203,7 @@ def main():
                   f"concat={r['cat_free']:.4f}  (concat mahal-pc={r['cat_mahal']:.4f})")
             print(f"  concat eig min/med/max={eigs[0]:.3f}/{eigs[1]:.3f}/{eigs[2]:.3f}")
 
-    print("\n===== CONCAT SUMMARY =====")
+    print(f"\n===== CONCAT SUMMARY (ssl={args.ssl_obj}, {SSL_DIM}d) =====")
     print(f"{'k':>3}{'method':>14}{'probed s/ssl/cat':>26}{'free s/ssl/cat':>26}")
     for k in ks:
         for m in methods:
@@ -216,8 +225,8 @@ def main():
     plt.xlabel("classes held out (k)"); plt.ylabel("unseen-vs-rest AUC")
     plt.title("CIFAR-10: concatenated SSL + supervised spaces")
     plt.legend(fontsize=8); plt.grid(alpha=0.3); plt.tight_layout()
-    plt.savefig(plot_path("novelty_concat_cifar10.png"), dpi=150); plt.close()
-    print(f"\n  saved {plot_path('novelty_concat_cifar10.png')}")
+    plt.savefig(plot_path(f"novelty_concat_cifar10{args.out_tag}.png"), dpi=150); plt.close()
+    print(f"\n  saved {plot_path(f'novelty_concat_cifar10{args.out_tag}.png')}")
     print("Done.")
 
 

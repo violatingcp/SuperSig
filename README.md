@@ -480,6 +480,29 @@ Caveat: probes are linear; some of the concat gain is simply more usable
 dimensions — but the parts were probed at their own widths, so the synergy is
 real.
 
+**Equal-dimension variant (16 + 16 = 32d) and SSL-objective comparison**
+(`--ssl-obj sigreg|simclr --ssl-dim 16`), concat probed / (synergy over best
+part) / concat-Mahalanobis:
+
+| k | branch | SIGReg-SSL trunk | SimCLR trunk |
+|--:|--------|------------------|--------------|
+| 1 | sigreg | 0.8976 (+6.7) / 0.70 | 0.9013 (+1.1) / 0.67 |
+| 1 | supcon | 0.9205 (+4.7) / 0.69 | 0.9266 (+0.5) / 0.52 |
+| 2 | sigreg | 0.8165 (+8.4) / 0.71 | 0.8287 (+2.5) / 0.66 |
+| 2 | supcon | 0.8935 (+2.1) / 0.67 | 0.8937 (+3.6) / 0.57 |
+| 3 | sigreg | 0.7732 (+6.2) / 0.74 | 0.8002 (+5.7) / 0.64 |
+| 3 | supcon | 0.8755 (+0.0) / 0.76 | 0.8905 (+1.0) / 0.61 |
+
+At equal (halved) width the concat still beats both parts almost everywhere —
+the synergy is complementarity, not dimension count (the 32d concat is within
+1–2 points of the 80d version except SupCon k=1).  The two SSL objectives play
+different roles: **SimCLR** yields the stronger individual spaces (its init
+lifts the supervised branch: 0.8899 vs 0.8303 at k=1) and slightly higher
+absolute concat probed AUC in every cell, while **SIGReg-SSL** is the more
+complementary partner (synergies up to +8.4 vs +1–3) and clearly better for
+probe-free/Mahalanobis scoring (0.70–0.76 vs 0.52–0.67) — its globally
+Gaussian space supports density corrections that SimCLR's does not.
+
 5× longer stage 1 (100 SSL epochs) does **not** close the probed gap — all
 probed/probe-free changes are within single-seed noise (SIGReg probed
 0.81/0.72/0.73; SupCon actually drifts down) — so the residual 3–6 points vs
