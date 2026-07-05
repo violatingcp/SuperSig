@@ -452,6 +452,34 @@ initialization yields the healthiest eigenspectra of the whole series
 pipeline (global SIGReg pretraining → class-conditional SIGReg fine-tuning)
 composes cleanly.
 
+### Dual-space concatenation (experiment 22) — best architecture in the series
+
+Train BOTH spaces on the same input and concatenate: a 64-dim SSL space
+(SIGReg-SSL trunk: augmentation invariance + global N(0,I), no labels) and a
+16-dim supervised space (a copy of the trunk fine-tuned with tuned
+SIGReg+proto or SupCon), evaluated as [sup ; ssl] (80-dim).  Leakage-free.
+
+| k | method | probed sup / ssl / **concat** | free: sup / concat-Mahal |
+|--:|--------|-------------------------------|--------------------------|
+| 1 | sigreg | 0.8451 / 0.8261 / **0.9083** | 0.7352 / **0.7483** |
+| 1 | supcon | 0.9111 / 0.8261 / **0.9390** | 0.7651 / 0.6854 |
+| 2 | sigreg | 0.6431 / 0.7799 / **0.8113** | 0.6812 / **0.7084** |
+| 2 | supcon | 0.8677 / 0.7799 / **0.8999** | 0.7109 / 0.6989 |
+| 3 | sigreg | 0.7714 / 0.7800 / **0.8460** | 0.7333 / **0.7805** |
+| 3 | supcon | 0.8768 / 0.7800 / **0.8953** | 0.7204 / 0.7461 |
+
+Concatenation beats both parts probed in **every** cell (+2 to +15 points):
+the two spaces have decorrelated failure modes — a novel class hiding inside a
+seen-class Gaussian in the supervised space is still displaced in the SSL
+space, and vice versa.  SupCon+concat (0.939 / 0.900 / 0.895) beats even the
+leakage-*tainted* end-to-end numbers at every k — the best detection in the
+series, with no asterisk.  Probe-free: raw concat center-distance is dragged
+down by the SSL half (shell pathology), but concat **Mahalanobis** repairs it
+and beats the sup-only free score in every SIGReg cell (0.75 / 0.71 / 0.78).
+Caveat: probes are linear; some of the concat gain is simply more usable
+dimensions — but the parts were probed at their own widths, so the synergy is
+real.
+
 5× longer stage 1 (100 SSL epochs) does **not** close the probed gap — all
 probed/probe-free changes are within single-seed noise (SIGReg probed
 0.81/0.72/0.73; SupCon actually drifts down) — so the residual 3–6 points vs
