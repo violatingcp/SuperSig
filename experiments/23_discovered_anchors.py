@@ -48,7 +48,9 @@ from supersig.data import (
 )
 from supersig.models import CIFARResNetBackbone
 from supersig.losses import make_anchors
-from supersig.train import train_sigreg_hybrid, collect_embeddings, REP_WEIGHT
+from supersig.train import (
+    train_sigreg_hybrid, train_supcon, collect_embeddings, REP_WEIGHT,
+)
 from torch.utils.data import DataLoader, Dataset
 
 EMB_DIM = 16
@@ -58,6 +60,21 @@ DATASET = "cifar10"
 HOLDOUT_SETS = {1: [4], 2: [4, 9], 3: [0, 4, 9]}
 CIFAR_CLASSES = ["airplane", "automobile", "bird", "cat", "deer",
                  "dog", "frog", "horse", "ship", "truck"]
+
+
+class PseudoTwoView(Dataset):
+    """Two augmented views + externally supplied (pseudo-)labels, for SupCon."""
+
+    def __init__(self, base_raw, aug, indices, labels):
+        self.base, self.aug = base_raw, aug
+        self.indices, self.labels = indices, labels
+
+    def __len__(self):
+        return len(self.indices)
+
+    def __getitem__(self, i):
+        img, _ = self.base[self.indices[i]]
+        return self.aug(img), self.aug(img), int(self.labels[i])
 
 
 class PseudoDataset(Dataset):
@@ -102,6 +119,24 @@ def bic_select(X, kmax=4, seed=0):
     return best[0], best[2], best[3]
 
 
+def whiten_fn(tr_embs, tr_lab, seen):
+    """Empirical tied-covariance whitening for the SupCon space (Mahalanobis)."""
+    zt = torch.as_tensor(tr_embs, dtype=torch.float32, device=DEVICE)
+    mus, diffs = {}, []
+    for c in seen:
+        zc = zt[torch.as_tensor(tr_lab == c, device=DEVICE)]
+        mus[c] = zc.mean(0)
+        diffs.append(zc - mus[c])
+    D = torch.cat(diffs)
+    S = D.t() @ D / max(len(D) - 1, 1) + 1e-3 * torch.eye(zt.size(1), device=DEVICE)
+    L = torch.linalg.cholesky(S)
+
+    def W(x):
+        x = torch.as_tensor(x, dtype=torch.float32, device=DEVICE)
+        return torch.linalg.solve_triangular(L, x.t(), upper=False).t()
+    return W, mus
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--quick", action="store_true")
@@ -116,6 +151,9 @@ def main():
     ap.add_argument("--n-slices", type=int, default=256)
     ap.add_argument("--tau-quantile", type=float, default=0.95)
     ap.add_argument("--kmax", type=int, default=4)
+    ap.add_argument("--space", choices=["sigreg", "supcon"], default="sigreg",
+                    help="supcon: empirical whitened-Mahalanobis version")
+    ap.add_argument("--out-tag", default="")
     args = ap.parse_args()
     ssl_ep = args.ssl_epochs or (2 if args.quick else 10)
     ft_ep = args.ft_epochs or (1 if args.quick else 5)
@@ -140,19 +178,32 @@ def main():
         torch.manual_seed(args.seed); np.random.seed(args.seed)
         backbone = CIFARResNetBackbone(EMB_DIM, arch=args.arch,
                                        pretrain=args.pretrain).to(DEVICE)
-        means = make_anchors(PAIR_DIST / math.sqrt(2.0), emb_dim=EMB_DIM,
-                             n_classes=N_CLASSES).clone()
+        means = None
         rep_w = REP_WEIGHT
-        train_sigreg_hybrid(backbone, cifar_balanced_loader(
-            DATASET, holdout=holdouts, quick=args.quick, limit=args.limit),
-            ssl_ep, means, mode="repulse", disc="proto", alpha=1.0,
-            rep_weight=rep_w, sigreg_weight=args.sigreg_weight,
-            n_slices=args.n_slices)
+        if args.space == "sigreg":
+            means = make_anchors(PAIR_DIST / math.sqrt(2.0), emb_dim=EMB_DIM,
+                                 n_classes=N_CLASSES).clone()
+            train_sigreg_hybrid(backbone, cifar_balanced_loader(
+                DATASET, holdout=holdouts, quick=args.quick, limit=args.limit),
+                ssl_ep, means, mode="repulse", disc="proto", alpha=1.0,
+                rep_weight=rep_w, sigreg_weight=args.sigreg_weight,
+                n_slices=args.n_slices)
+        else:
+            from supersig.data import cifar_two_view_loader
+            train_supcon(backbone, cifar_two_view_loader(
+                quick=args.quick, labeled=True, holdout=holdouts,
+                limit=args.limit, dataset=DATASET), ssl_ep)
 
         # 2. discovery on the full train set treated as unlabeled
         tr_embs, tr_lab = collect_embeddings(backbone, train_eval_loader)
-        z = torch.as_tensor(tr_embs, device=DEVICE)
-        seen_means = means.detach()[seen]
+        if args.space == "sigreg":
+            z = torch.as_tensor(tr_embs, device=DEVICE)
+            seen_means = means.detach()[seen]
+        else:                       # whitened-Mahalanobis coordinates
+            W, mus = whiten_fn(tr_embs, tr_lab, seen)
+            z = W(tr_embs)
+            seen_means = torch.stack([mus[c] for c in seen])
+            seen_means = W(seen_means.cpu().numpy())
         dmin = torch.cdist(z, seen_means).min(1).values
         is_seen_lab = np.isin(tr_lab, seen)
         tau = torch.quantile(dmin[torch.as_tensor(is_seen_lab, device=DEVICE)],
@@ -165,31 +216,63 @@ def main():
               f"BIC k-hat={khat}  (true k={k})")
 
         # 3. fine-tune with discovered anchors + pseudo-labels
-        new_means = torch.cat([means.detach(), centers.detach()], dim=0)
         pool_idx = np.where(pool)[0]
         pseudo = N_CLASSES + assign.cpu().numpy()
         lab_idx = np.where(is_seen_lab)[0]
         ft_idx = np.concatenate([lab_idx, pool_idx])
         ft_lab = np.concatenate([tr_lab[lab_idx], pseudo])
-        ds = PseudoDataset(base, ft_idx, ft_lab)
-        sampler = BalancedBatchSampler(list(ft_lab), n_classes=len(seen) + khat,
-                                       n_per_class=24)
-        ft_loader = DataLoader(ds, batch_sampler=sampler, num_workers=2)
-        train_sigreg_hybrid(backbone, ft_loader, ft_ep, new_means, mode="repulse",
-                            disc="proto", alpha=1.0, rep_weight=rep_w,
-                            sigreg_weight=args.sigreg_weight, n_slices=args.n_slices)
+        if args.space == "sigreg":
+            new_means = torch.cat([means.detach(), centers.detach()], dim=0)
+            ds = PseudoDataset(base, ft_idx, ft_lab)
+            sampler = BalancedBatchSampler(list(ft_lab), n_classes=len(seen) + khat,
+                                           n_per_class=24)
+            ft_loader = DataLoader(ds, batch_sampler=sampler, num_workers=2)
+            train_sigreg_hybrid(backbone, ft_loader, ft_ep, new_means, mode="repulse",
+                                disc="proto", alpha=1.0, rep_weight=rep_w,
+                                sigreg_weight=args.sigreg_weight,
+                                n_slices=args.n_slices)
+        else:
+            raw = cls(DATA_DIR, train=True, download=True, transform=None)
+            _, _, aug = _cifar_spec(DATASET)
+            ds = PseudoTwoView(raw, aug, ft_idx, ft_lab)
+            ft_loader = DataLoader(ds, batch_size=256, shuffle=True,
+                                   num_workers=2, drop_last=True)
+            train_supcon(backbone, ft_loader, ft_ep)
 
-        # 4. evaluate on test
+        # 4. evaluate on test (whitened coordinates for supcon, recomputed)
         te_embs, te_lab = collect_embeddings(backbone, test_loader)
-        zt = torch.as_tensor(te_embs, device=DEVICE)
-        d_seen = torch.cdist(zt, new_means.detach()[seen]).min(1).values
-        d_new = torch.cdist(zt, new_means.detach()[N_CLASSES:]).min(1).values
+        if args.space == "sigreg":
+            zt = torch.as_tensor(te_embs, device=DEVICE)
+            base_seen = seen_means
+            m_seen = new_means.detach()[seen]
+            m_new = new_means.detach()[N_CLASSES:]
+        else:
+            tr2, tl2 = collect_embeddings(backbone, train_eval_loader)
+            W2, mus2 = whiten_fn(tr2, tl2, seen)
+            zt = W2(te_embs)
+            z2 = W2(tr2)
+            m_seen = torch.stack([mus2[c] for c in seen])
+            m_seen = W2(m_seen.cpu().numpy())
+            m_new = torch.stack([z2[torch.as_tensor(
+                (np.isin(np.arange(len(tl2)), pool_idx)) &
+                np.isin(np.arange(len(tl2)),
+                        pool_idx[assign.cpu().numpy() == j]), device=DEVICE)].mean(0)
+                for j in range(khat)])
+            # before-score baseline in the ORIGINAL whitened frame
+            base_seen = seen_means
+            zt_before = W(te_embs)
         is_unseen = np.isin(te_lab, list(holdouts)).astype(int)
-        before = roc_auc_score(is_unseen, dmin_test := torch.cdist(
-            zt, seen_means).min(1).values.cpu().numpy())
+        if args.space == "sigreg":
+            before = roc_auc_score(is_unseen, torch.cdist(
+                zt, base_seen).min(1).values.cpu().numpy())
+        else:
+            before = roc_auc_score(is_unseen, torch.cdist(
+                zt_before, base_seen).min(1).values.cpu().numpy())
+        d_seen = torch.cdist(zt, m_seen).min(1).values
+        d_new = torch.cdist(zt, m_new).min(1).values
         after = roc_auc_score(is_unseen, (d_seen - d_new).cpu().numpy())
         per_class = {}
-        d_each = torch.cdist(zt, new_means.detach()[N_CLASSES:])
+        d_each = torch.cdist(zt, m_new)
         for c in sorted(holdouts):
             counts = [int(((te_lab == c) & (d_each.argmin(1).cpu().numpy() == j)
                            & (d_new < d_seen).cpu().numpy()).sum())
@@ -222,8 +305,8 @@ def main():
     plt.xlabel("classes held out (k)"); plt.ylabel("AUC")
     plt.title("CIFAR-10 16d: anchors discovered from unlabeled data")
     plt.legend(fontsize=9); plt.grid(alpha=0.3); plt.tight_layout()
-    plt.savefig(plot_path("discovered_anchors_cifar10.png"), dpi=150); plt.close()
-    print(f"\n  saved {plot_path('discovered_anchors_cifar10.png')}")
+    plt.savefig(plot_path(f"discovered_anchors_cifar10{args.out_tag}.png"), dpi=150); plt.close()
+    print(f"\n  saved {plot_path(f'discovered_anchors_cifar10{args.out_tag}.png')}")
     print("Done.")
 
 

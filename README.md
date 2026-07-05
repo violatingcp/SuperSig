@@ -231,7 +231,10 @@ more gracefully and pulls ahead from k = 3, by 4 points at k = 20: SIGReg's
 open-set advantage rests on explicit vacant structure around the class means,
 which fills up as the unseen fraction of the label space grows.  SIGReg+proto
 tracks CE in parallel ~1–3 points below it at every k — the crossover is a
-property of the SIGReg framework, not of the CE head.
+property of the SIGReg framework, not of the CE head.  Per-class AUCs span
+~0.5–0.95 at k = 20: visually distinctive unseen classes (cockroach, wardrobe,
+spider) stay easy; classes with in-distribution lookalikes (fox, possum,
+cattle, tractor) approach chance.
 
 With an **augmentation layer in front** of the SIGReg embedding training
 (`--augment`: the SupCon crop/flip/jitter stack on every training image;
@@ -538,10 +541,30 @@ labeled become first-class citizens of the Gaussian latent.  BIC over-clusters
 surplus anchors are harmless — the genuine classes claim their own.  Only
 ~40–50 % of the novel class sits beyond the initial shell threshold, yet
 fine-tuning onto the discovered anchor pulls in the rest of the distribution.
-  Per-class AUCs
-(printed by experiment 17) span ~0.5–0.95 at k = 20: visually distinctive unseen
-classes (cockroach, wardrobe, spider) stay easy; classes with in-distribution
-lookalikes (fox, possum, cattle, tractor) approach chance.
+
+**Same clustering on the SupCon space** (`--space supcon`): everything the
+SIGReg space provides must be estimated — empirical tied-covariance whitening
+for the Mahalanobis coordinates, empirical centroids for the means, and the
+discovered clusters become new SupCon pseudo-classes:
+
+| k | space | pool purity | before → after | per-class anchors |
+|--:|-------|-------------|----------------|--------------------|
+| 1 | SIGReg | 0.48 | 0.735 → **0.932** | deer 0.926 |
+| 1 | SupCon | **0.001** | 0.269 → 0.787 | deer 0.913 |
+| 2 | SIGReg | 0.61 | 0.748 → **0.922** | 0.945 / 0.984 |
+| 2 | SupCon | 0.43 | 0.390 → 0.858 | 0.768 / 0.867 |
+| 3 | SIGReg | 0.74 | 0.733 → **0.912** | 0.938 / 0.946 / 0.956 |
+| 3 | SupCon | 0.21 | 0.300 → 0.849 | 0.844 / 0.805 / 0.693 |
+
+SIGReg wins every metric at every k.  The SupCon pipeline fails at step 1: its
+outlier pool is erratic (purity 0.001 at k=1 — the whitened tail is pure
+seen-class noise, since whitening amplifies the near-dead covariance
+directions) and its before-scores are inverted.  Fine-tuning partially rescues
+it through an accidental "other-bucket" effect (outlier pseudo-classes attract
+anything unlike the seen classes), but the discovered anchors are far less
+faithful to the true novel classes.  Open-world discovery is where the
+self-calibrated geometry is genuinely load-bearing, not merely elegant.
+
 
 100 classes need room: at 32 dims the means cannot be orthogonal, repulsion can
 only push them to ~4σ minimum spacing, and both methods lose ~20 AUC points on
