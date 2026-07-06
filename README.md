@@ -585,6 +585,24 @@ reaches the tail, BIC tracks the true class count well (k̂ = 12 / 22 vs 10 /
 detected at 0.88–0.96 label-free — broadly better than the probed per-class
 tail at the same k.
 
+**Iterating the loop (experiment 24, `--rounds 2`)**: round 2 pools against
+ALL current anchors with a recalibrated threshold, refreshes every pooled
+point's pseudo-label to its nearest discovered anchor, and fine-tunes again.
+
+| dataset / k | round 1 → 2: pool purity | margin AUC | mean anchor AUC |
+|---|---|---|---|
+| C10 k=1–3 | 0.47–0.74 → 0.06–0.31 | ~stable (0.91–0.94) | ~stable (0.89–0.95) |
+| C100 k=10 | 0.095 → 0.138 | 0.605 → **0.694** | 0.661 → **0.755** |
+| C100 k=20 | 0.268 → 0.296 | 0.646 → **0.713** | 0.805 → 0.768 |
+
+Where round 1 already succeeded (CIFAR-10) the second round finds an
+almost-empty, low-purity pool and changes nothing — iteration is safe.  Where
+round 1 was partial (CIFAR-100) the loop is genuinely self-improving: +9
+points margin and anchor AUC at k=10, +7 margin at k=20.  The k=20 per-class
+dip (0.805 → 0.768) exposes the one design gap: each round appends k̂ new
+anchors without merging, so 44 anchors fragment 20 classes — anchor
+merge/pruning is the natural next refinement.
+
 
 100 classes need room: at 32 dims the means cannot be orthogonal, repulsion can
 only push them to ~4σ minimum spacing, and both methods lose ~20 AUC points on
