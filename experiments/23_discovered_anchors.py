@@ -53,11 +53,17 @@ from supersig.train import (
 )
 from torch.utils.data import DataLoader, Dataset
 
-EMB_DIM = 16
+EMB_DIM = 16          # auto per dataset unless --emb-dim
 N_CLASSES = 10
 PAIR_DIST = 5.0
 DATASET = "cifar10"
-HOLDOUT_SETS = {1: [4], 2: [4, 9], 3: [0, 4, 9]}
+HOLDOUT_SETS_ALL = {
+    "cifar10": {1: [4], 2: [4, 9], 3: [0, 4, 9]},
+    "cifar100": {1: [4], 2: [4, 70], 3: [4, 30, 70],
+                 10: [4, 14, 24, 34, 44, 54, 64, 74, 84, 94],
+                 20: [4 + 5 * i for i in range(20)]},
+}
+HOLDOUT_SETS = HOLDOUT_SETS_ALL["cifar10"]
 CIFAR_CLASSES = ["airplane", "automobile", "bird", "cat", "deer",
                  "dog", "frog", "horse", "ship", "truck"]
 
@@ -154,7 +160,24 @@ def main():
     ap.add_argument("--space", choices=["sigreg", "supcon"], default="sigreg",
                     help="supcon: empirical whitened-Mahalanobis version")
     ap.add_argument("--out-tag", default="")
+    ap.add_argument("--dataset", choices=["cifar10", "cifar100"], default="cifar10")
+    ap.add_argument("--emb-dim", type=int, default=None)
     args = ap.parse_args()
+    global DATASET, N_CLASSES, HOLDOUT_SETS, EMB_DIM, CIFAR_CLASSES
+    DATASET = args.dataset
+    if DATASET == "cifar100":
+        N_CLASSES = 100
+        HOLDOUT_SETS = HOLDOUT_SETS_ALL["cifar100"]
+        EMB_DIM = args.emb_dim or 100
+        args.pretrain = "cifar100" if args.pretrain == "cifar10" else args.pretrain
+        if args.sigreg_weight == 20.0:
+            args.sigreg_weight = 1.0      # tuned weight is CIFAR-10-specific (exp 20)
+            args.n_slices = 64
+        from torchvision import datasets as _tvd
+        from supersig.config import DATA_DIR as _dd
+        CIFAR_CLASSES = _tvd.CIFAR100(_dd, train=False, download=True).classes
+    else:
+        EMB_DIM = args.emb_dim or 16
     ssl_ep = args.ssl_epochs or (2 if args.quick else 10)
     ft_ep = args.ft_epochs or (1 if args.quick else 5)
     ks = [int(x) for x in args.ks.split(",")]
@@ -179,7 +202,7 @@ def main():
         backbone = CIFARResNetBackbone(EMB_DIM, arch=args.arch,
                                        pretrain=args.pretrain).to(DEVICE)
         means = None
-        rep_w = REP_WEIGHT
+        rep_w = REP_WEIGHT * 45.0 / (N_CLASSES * (N_CLASSES - 1) / 2)
         if args.space == "sigreg":
             means = make_anchors(PAIR_DIST / math.sqrt(2.0), emb_dim=EMB_DIM,
                                  n_classes=N_CLASSES).clone()
@@ -210,8 +233,9 @@ def main():
                              args.tau_quantile)
         pool = (dmin > tau).cpu().numpy()
         pool_purity = (~is_seen_lab[pool]).mean() if pool.any() else float("nan")
+        kmax = max(args.kmax, k + 2)
         khat, centers, assign = bic_select(z[torch.as_tensor(pool, device=DEVICE)],
-                                           kmax=args.kmax, seed=args.seed)
+                                           kmax=kmax, seed=args.seed)
         print(f"  pool: {pool.sum()} pts (tau={tau:.2f}, purity={pool_purity:.3f})  "
               f"BIC k-hat={khat}  (true k={k})")
 
@@ -224,7 +248,8 @@ def main():
         if args.space == "sigreg":
             new_means = torch.cat([means.detach(), centers.detach()], dim=0)
             ds = PseudoDataset(base, ft_idx, ft_lab)
-            sampler = BalancedBatchSampler(list(ft_lab), n_classes=len(seen) + khat,
+            n_pb = len(seen) + khat if N_CLASSES == 10 else 25
+            sampler = BalancedBatchSampler(list(ft_lab), n_classes=n_pb,
                                            n_per_class=24)
             ft_loader = DataLoader(ds, batch_sampler=sampler, num_workers=2)
             train_sigreg_hybrid(backbone, ft_loader, ft_ep, new_means, mode="repulse",
@@ -305,8 +330,8 @@ def main():
     plt.xlabel("classes held out (k)"); plt.ylabel("AUC")
     plt.title("CIFAR-10 16d: anchors discovered from unlabeled data")
     plt.legend(fontsize=9); plt.grid(alpha=0.3); plt.tight_layout()
-    plt.savefig(plot_path(f"discovered_anchors_cifar10{args.out_tag}.png"), dpi=150); plt.close()
-    print(f"\n  saved {plot_path(f'discovered_anchors_cifar10{args.out_tag}.png')}")
+    plt.savefig(plot_path(f"discovered_anchors_{DATASET}{args.out_tag}.png"), dpi=150); plt.close()
+    print(f"\n  saved {plot_path(f'discovered_anchors_{DATASET}{args.out_tag}.png')}")
     print("Done.")
 
 

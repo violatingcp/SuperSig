@@ -565,6 +565,26 @@ anything unlike the seen classes), but the discovered anchors are far less
 faithful to the true novel classes.  Open-world discovery is where the
 self-calibrated geometry is genuinely load-bearing, not merely elegant.
 
+**CIFAR-100 (100-dim, w=1, `--dataset cifar100`)** — the uncalibrated regime.
+Pool purity / after-margin / mean per-class discovered-anchor AUC:
+
+| k | SIGReg space | SupCon space |
+|--:|--------------|--------------|
+| 1 | 0.001 / 0.49 / 0.69 | 0.001 / 0.69 / 0.73 |
+| 3 | 0.011 / 0.49 / 0.42 | 0.011 / 0.62 / 0.59 |
+| 10 | 0.123 / 0.67 / **0.78** | 0.041 / 0.71 / 0.71 |
+| 20 | 0.289 / 0.67 / **0.83** | 0.097 / 0.67 / 0.72 |
+
+At small k discovery fails in BOTH spaces (pool purity ~0: at 100 dims novel
+points sit inside the seen shells, per exp 18, so the distance tail is noise) —
+the CIFAR-10 small-k success required the self-calibrated space, which cannot
+exist at 100 classes.  At large k the mechanism recovers: enough novel mass
+reaches the tail, BIC tracks the true class count well (k̂ = 12 / 22 vs 10 /
+20), and the SIGReg space yields clearly more faithful per-class anchors
+(0.78 / 0.83 vs 0.71 / 0.72; 3× the pool purity), with a dozen k=20 classes
+detected at 0.88–0.96 label-free — broadly better than the probed per-class
+tail at the same k.
+
 
 100 classes need room: at 32 dims the means cannot be orthogonal, repulsion can
 only push them to ~4σ minimum spacing, and both methods lose ~20 AUC points on
