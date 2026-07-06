@@ -611,6 +611,27 @@ label-free margin of the series after round 2 (0.708); k=20 is a wash (margin
 outweighs the crowding penalty for discovery, at a third of the compute —
 though neither width approaches the calibrated CIFAR-10 regime.
 
+**Discovery in the concatenated space (experiment 25)**: dual 32-dim spaces
+(frozen SIGReg-SSL trunk + supervised SIGReg branch), anchors =
+[learned mean ; SSL centroid], pooling/BIC/k-means on the 64-dim joint
+distance, rounds as exp 24.  Round-2 results vs the sup-only 32d loop:
+
+| k | concat: purity / margin / anchors | sup-only 32d |
+|--:|-----------------------------------|--------------|
+| 1 | 0.008 / 0.675 / **0.799** | — (best prior C100 k=1: 0.73) |
+| 3 | 0.035 / 0.519 / 0.733 | — |
+| 10 | 0.121 / 0.661 / 0.781 | 0.212 / **0.708** / 0.740 |
+| 20 | 0.174 / 0.598 / **0.805** | 0.289 / **0.646** / 0.779 |
+
+The hoped-for small-k rescue does not happen: the concat pool is as empty as
+the sup-only one (purity ~0.01 at k ≤ 3) — at 100 classes the SSL space also
+embeds a lone novel class among its semantic neighbours, so the decorrelated
+failure modes that powered the CIFAR-10 concat are much weaker here.  What the
+concat does buy is anchor fidelity (best C100 per-class anchors at k=1 and
+k=20: 0.799 / 0.805) at some cost in combined margin.  The single-novel-class-
+at-scale problem remains open.
+
+
 
 100 classes need room: at 32 dims the means cannot be orthogonal, repulsion can
 only push them to ~4σ minimum spacing, and both methods lose ~20 AUC points on
