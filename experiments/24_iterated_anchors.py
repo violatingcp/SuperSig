@@ -101,11 +101,16 @@ def main():
     ap.add_argument("--ks", default=None)
     ap.add_argument("--tau-quantile", type=float, default=0.95)
     ap.add_argument("--kmax", type=int, default=4)
+    ap.add_argument("--emb-dim", type=int, default=None)
+    ap.add_argument("--sigreg-weight", type=float, default=None)
+    ap.add_argument("--out-tag", default="")
     args = ap.parse_args()
     ds_name = args.dataset
     n_classes = 100 if ds_name == "cifar100" else 10
-    emb_dim = 100 if ds_name == "cifar100" else 16
+    emb_dim = args.emb_dim or (100 if ds_name == "cifar100" else 16)
     w, slices = (1.0, 64) if ds_name == "cifar100" else (20.0, 256)
+    if args.sigreg_weight is not None:
+        w = args.sigreg_weight
     pretrain = ds_name
     holdout_sets = HOLDOUT_SETS_ALL[ds_name]
     ks = [int(x) for x in (args.ks or ("1,2,3" if ds_name == "cifar10"
@@ -223,8 +228,8 @@ def main():
     plt.xlabel("discovery round"); plt.ylabel("AUC")
     plt.title(f"{ds_name}: iterated anchor discovery")
     plt.legend(fontsize=9); plt.grid(alpha=0.3); plt.tight_layout()
-    plt.savefig(plot_path(f"iterated_anchors_{ds_name}.png"), dpi=150); plt.close()
-    print(f"\n  saved {plot_path(f'iterated_anchors_{ds_name}.png')}")
+    plt.savefig(plot_path(f"iterated_anchors_{ds_name}{args.out_tag}.png"), dpi=150); plt.close()
+    print(f"\n  saved {plot_path(f'iterated_anchors_{ds_name}{args.out_tag}.png')}")
     print("Done.")
 
 

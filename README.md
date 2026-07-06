@@ -603,6 +603,14 @@ dip (0.805 → 0.768) exposes the one design gap: each round appends k̂ new
 anchors without merging, so 44 anchors fragment 20 classes — anchor
 merge/pruning is the natural next refinement.
 
+At a smaller width (`--emb-dim 32`, same CIFAR-100 protocol) discovery is as
+good or better despite the anchor crowding: k=10 round 1 pool purity 0.142 vs
+0.095 at 100d and mean anchor AUC 0.789 vs 0.661, with the best CIFAR-100
+label-free margin of the series after round 2 (0.708); k=20 is a wash (margin
+0.65 flat, anchors 0.73 → 0.78).  The better-conditioned covariance at 32d
+outweighs the crowding penalty for discovery, at a third of the compute —
+though neither width approaches the calibrated CIFAR-10 regime.
+
 
 100 classes need room: at 32 dims the means cannot be orthogonal, repulsion can
 only push them to ~4σ minimum spacing, and both methods lose ~20 AUC points on
