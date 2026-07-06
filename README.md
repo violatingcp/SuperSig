@@ -611,6 +611,19 @@ label-free margin of the series after round 2 (0.708); k=20 is a wash (margin
 outweighs the crowding penalty for discovery, at a third of the compute —
 though neither width approaches the calibrated CIFAR-10 regime.
 
+**Anchor merging between rounds (`--merge-dist`)** — a null result with a
+diagnosis: at a 3σ threshold, ZERO merges fire across every block of both
+datasets, because the fine-tuning **repulsion actively maintains ≥3σ spacing
+between all anchors, duplicates included** — redundant anchors covering one
+class get pushed into distinct sub-regions instead of collapsing, so
+distance-based merging cannot identify them.  Metrics are unchanged within
+run variance (CUDA nondeterminism gives ±3–5 points on CIFAR-100 repeats).
+Side findings from the 3-round runs: k=10 converges by round 2 (round-3 pool
+purity collapses to 0.06); k=20 keeps finding novelty through round 3 (purity
+holds at ~0.24, anchors 0.81–0.82).  Fixing fragmentation needs a different
+lever — exempting discovered-anchor pairs from repulsion, or merging by
+member co-assignment rather than distance.
+
 **Discovery in the concatenated space (experiment 25)**: dual 32-dim spaces
 (frozen SIGReg-SSL trunk + supervised SIGReg branch), anchors =
 [learned mean ; SSL centroid], pooling/BIC/k-means on the 64-dim joint

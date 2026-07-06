@@ -102,6 +102,8 @@ def main():
     ap.add_argument("--tau-quantile", type=float, default=0.95)
     ap.add_argument("--kmax", type=int, default=4)
     ap.add_argument("--emb-dim", type=int, default=None)
+    ap.add_argument("--merge-dist", type=float, default=0.0,
+                    help="merge discovered anchors closer than this (0 = off)")
     ap.add_argument("--sigreg-weight", type=float, default=None)
     ap.add_argument("--out-tag", default="")
     args = ap.parse_args()
@@ -167,8 +169,37 @@ def main():
                                           kmax=kmax, seed=args.seed + r)
             cur_means = torch.cat([cur_means, centers.detach()], dim=0)
             pooled |= pool
-            # refresh pseudo-labels: nearest discovered anchor for every pooled pt
             disc = cur_means[n_classes:]
+            # merge discovered anchors closer than --merge-dist (weighted by members)
+            if args.merge_dist > 0 and disc.size(0) > 1:
+                memb = torch.cdist(z[torch.as_tensor(pooled, device=DEVICE)],
+                                   disc).argmin(1)
+                counts = torch.bincount(memb, minlength=disc.size(0)).float() + 1e-6
+                parent = list(range(disc.size(0)))
+
+                def find(a):
+                    while parent[a] != a:
+                        parent[a] = parent[parent[a]]
+                        a = parent[a]
+                    return a
+
+                dmat = torch.cdist(disc, disc)
+                for i in range(disc.size(0)):
+                    for j in range(i + 1, disc.size(0)):
+                        if dmat[i, j] < args.merge_dist:
+                            parent[find(i)] = find(j)
+                groups = {}
+                for i in range(disc.size(0)):
+                    groups.setdefault(find(i), []).append(i)
+                merged = torch.stack([
+                    (disc[g] * counts[g, None]).sum(0) / counts[g].sum()
+                    for g in [torch.as_tensor(v, device=DEVICE)
+                              for v in groups.values()]])
+                if merged.size(0) < disc.size(0):
+                    print(f"    merged {disc.size(0)} -> {merged.size(0)} anchors")
+                cur_means = torch.cat([cur_means[:n_classes], merged], dim=0)
+                disc = cur_means[n_classes:]
+            # refresh pseudo-labels: nearest discovered anchor for every pooled pt
             p_idx = np.where(pooled)[0]
             p_lab = n_classes + torch.cdist(
                 z[torch.as_tensor(pooled, device=DEVICE)], disc).argmin(1).cpu().numpy()
