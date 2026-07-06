@@ -104,6 +104,8 @@ def main():
     ap.add_argument("--emb-dim", type=int, default=None)
     ap.add_argument("--merge-dist", type=float, default=0.0,
                     help="merge discovered anchors closer than this (0 = off)")
+    ap.add_argument("--exempt-repulsion", action="store_true",
+                    help="discovered-discovered anchor pairs do not repel")
     ap.add_argument("--sigreg-weight", type=float, default=None)
     ap.add_argument("--out-tag", default="")
     args = ap.parse_args()
@@ -213,7 +215,9 @@ def main():
                                    batch_sampler=sampler, num_workers=2)
             train_sigreg_hybrid(backbone, ft_loader, ft_ep, cur_means,
                                 mode="repulse", disc="proto", alpha=1.0,
-                                rep_weight=rep_w, sigreg_weight=w, n_slices=slices)
+                                rep_weight=rep_w, sigreg_weight=w, n_slices=slices,
+                                rep_exempt_from=n_classes if args.exempt_repulsion
+                                else None)
             cur_means = cur_means.detach()
 
             te_embs, te_lab = collect_embeddings(backbone, test_loader)

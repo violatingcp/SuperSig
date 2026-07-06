@@ -91,9 +91,21 @@ def separation_loss(means, margin=MEANS_MARGIN):
     return torch.clamp(margin - pair_d, min=0.0).pow(2).mean()
 
 
-def repulsion_loss(means):
-    """Inverse-square repulsion between every pair of class means (Coulomb-like)."""
-    return (1.0 / (_pairwise(means).pow(2) + REPULSE_EPS)).sum()
+def repulsion_loss(means, exempt_from=None):
+    """
+    Inverse-square repulsion between every pair of class means (Coulomb-like).
+
+    exempt_from: if set, pairs where BOTH means have index >= exempt_from are
+    excluded (e.g. discovered anchors may collapse onto each other while still
+    being repelled from the original class means).
+    """
+    d = torch.cdist(means, means)
+    iu = torch.triu_indices(means.size(0), means.size(0), offset=1)
+    vals = 1.0 / (d[iu[0], iu[1]].pow(2) + REPULSE_EPS)
+    if exempt_from is not None:
+        keep = ~((iu[0] >= exempt_from) & (iu[1] >= exempt_from))
+        vals = vals[keep]
+    return vals.sum()
 
 
 def shrink_loss(means):

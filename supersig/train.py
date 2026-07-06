@@ -83,7 +83,7 @@ def train_sigreg_classwise(backbone, loader, epochs, means,
             x, y = x.to(DEVICE), y.to(DEVICE)
             opt.zero_grad()
             z = backbone(x)
-            reg = classwise_sigreg_loss(z, y, means, n_slices=n_slices)
+            reg = classwise_sigreg_loss(z, y, means)
             if mode == "learnmeans":
                 aux = BETA_SEP * separation_loss(means)
             elif mode == "repulse":
@@ -126,7 +126,8 @@ def train_supcon(backbone, loader, epochs, temp=0.1, lr=1e-3):
 
 def train_sigreg_hybrid(backbone, loader, epochs, means, mode="repulse",
                         disc="supcon", alpha=1.0, temp=0.1, lr=1e-3, margin=3.0,
-                        rep_weight=REP_WEIGHT, sigreg_weight=1.0, n_slices=64):
+                        rep_weight=REP_WEIGHT, sigreg_weight=1.0, n_slices=64,
+                        rep_exempt_from=None):
     """
     Classwise SIGReg + mean-geometry regularizer + a discriminative term.
 
@@ -157,7 +158,8 @@ def train_sigreg_hybrid(backbone, loader, epochs, means, mode="repulse",
             if mode == "learnmeans":
                 aux = BETA_SEP * separation_loss(means)
             elif mode == "repulse":
-                aux = rep_weight * repulsion_loss(means) + SHRINK_WEIGHT * shrink_loss(means)
+                aux = (rep_weight * repulsion_loss(means, exempt_from=rep_exempt_from)
+                       + SHRINK_WEIGHT * shrink_loss(means))
             else:
                 aux = torch.zeros((), device=DEVICE)
             if disc == "supcon":

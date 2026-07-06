@@ -624,6 +624,27 @@ holds at ~0.24, anchors 0.81–0.82).  Fixing fragmentation needs a different
 lever — exempting discovered-anchor pairs from repulsion, or merging by
 member co-assignment rather than distance.
 
+**Repulsion exemption (`--exempt-repulsion`)** — the lever works.  Discovered–
+discovered pairs contribute no repulsion (they may collapse under the shared
+SIGReg pull) while seen–seen and seen–discovered pairs keep the full term.
+CIFAR-10 round-2 results, exempt vs plain:
+
+| k | margin | mean anchor AUC |
+|--:|--------|-----------------|
+| 1 | 0.9191 vs 0.9345 | **0.9549** vs 0.8939 |
+| 2 | **0.9286** vs 0.9132 | **0.9525** vs 0.9461 |
+| 3 | **0.9243** vs 0.9173 | **0.9407** vs 0.9289 |
+
+Freed from mutual repulsion, the surplus anchors huddle AROUND the novel class
+instead of partitioning it — per-class anchor fidelity improves at every k
+(+6 points at k=1, the best discovery numbers in the series) with margins
+equal or better.  On CIFAR-100 32d the exemption is neutral at k=10 and
+mildly positive at k=20, where the first merge events of the study finally
+fire (43 → 41 anchors) and the pool purity peaks at 0.365 (prior best ~0.29).
+Distance-based merging turns out to be mostly unnecessary once the exemption
+is in place: clustering-around-the-class, not collapse-and-merge, is what
+actually repairs fragmentation.
+
 **Discovery in the concatenated space (experiment 25)**: dual 32-dim spaces
 (frozen SIGReg-SSL trunk + supervised SIGReg branch), anchors =
 [learned mean ; SSL centroid], pooling/BIC/k-means on the 64-dim joint
