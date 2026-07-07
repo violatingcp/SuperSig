@@ -57,6 +57,15 @@ experiments/       runnable scripts (write figures to plots/)
   15_gaussianity.py        per-class Gaussianity metric, CIFAR-10
   16_gaussianity100.py     Gaussianity of the CIFAR-100 table configs
   17_multi_holdout.py      hold out 2-3 classes at once
+  18_likelihood_novelty.py probe-free novelty: likelihood & typicality
+  19_mahalanobis.py        empirical Mahalanobis + eigenspectrum diagnostic
+  20_tuned_mahalanobis.py  eigenspectrum tuning; 16d suites; --dataset/--methods
+  21_factorized.py         SSL trunk + heads (--stage1, --finetune)
+  22_concat.py             dual-space concatenation (--ssl-obj, --ssl-dim)
+  23_discovered_anchors.py open-world anchor discovery (--space, --dataset)
+  24_iterated_anchors.py   iterated discovery (--rounds, --merge-dist,
+                           --exempt-repulsion)
+  25_concat_discovery.py   discovery in the concatenated space
 plots/             all generated figures
 ```
 
@@ -136,12 +145,25 @@ select a label-disjoint init).
 | 20 | **16d CIFAR-10 (native regime)** | 10 classes, w=20 | probed 0.88; **probe-free 0.80–0.78, ≥ fitted Mahalanobis, beats own probe at k=3** | the "true Mahalanobis space" design realized |
 | 20 | SupCon reference (16d) | same suite | probed 0.92–0.90; probe-free 0.81→0.71 | SupCon owns probes; SIGReg owns probe-free at k≥2 |
 | 21 | Factorized two-stage | SSL trunk (no labels) + heads; leakage-free | frozen: bottleneck; SSL-SIGReg + fine-tune: probed 0.82–0.72, probe-free ~0.75 stable, best eigenspectra | augmentations factorize nuisance; no dead directions |
+| 22 | Dual-space concat | [sup 16d ; SSL 64d], leakage-free | concat beats both parts probed in every cell; SupCon+concat **0.939/0.900/0.895** | decorrelated failure modes; best detection in series |
+| 22 | Equal-dim + SSL objectives | 16+16=32d; SIGReg-SSL vs SimCLR | synergy survives at half width; SimCLR = stronger parts, SIGReg-SSL = better partner & probe-free | complementarity, not dimension count |
+| 23 | **Discovered anchors** (C10) | cluster unlabeled outliers → new anchors → fine-tune | probe-free novelty 0.73 → **0.93**; per-class anchors 0.93–0.98, zero labels | unlabeled classes become first-class citizens of the latent |
+| 23 | Same on SupCon space | empirical whitened Mahalanobis | pool purity 0.001 at k=1; SIGReg wins every metric | self-calibration is load-bearing, not elegant |
+| 23 | Discovery on CIFAR-100 | 100d, w=1 | small k fails (pool purity ~0); k=10/20 recovers, k̂ tracks true count, anchors 0.78–0.83 | needs calibration OR novel mass |
+| 24 | Iterated discovery | 2–3 rounds, pseudo-label refresh | C10: converged (safe); C100 k=10: margin/anchors **+9 pts** each | self-improving where round 1 was partial |
+| 24 | Smaller dim (C100 32d) | same loop at 32d | k=10 purity/anchors better than 100d; best C100 margin 0.708 | conditioning beats crowding, at ⅓ compute |
+| 24 | Anchor merging (3σ) | union-find between rounds | **zero merges fire** — repulsion keeps duplicates ≥3σ apart | null result with mechanism |
+| 24 | **Repulsion exemption** | discovered–discovered pairs don't repel | C10 anchors best-in-series (k=1: **0.955** vs 0.894); first merges + record C100 pool purity 0.365 | surplus anchors huddle around the class instead of partitioning it |
+| 25 | Concat-space discovery (C100) | dual 32d spaces, joint pooling | no small-k rescue (SSL space also hides lone novelty); best C100 anchors k=1/20: 0.80/0.81 | single-novel-class-at-scale stays open |
 
 Final recipes: **probed / few unseen** → repulsive floating means (5σ seed) +
 linear-head CE, width ≥ n_classes, w=1.  **Probe-free / calibrated** → width ≈
 intrinsic class dim (~16), w=20, proto term; score novelty by distance to the
 learned means, no probe, no fitting.  **Leakage-free** → SIGReg-SSL
-pretraining, fine-tune with the trunk floating.
+pretraining, fine-tune with the trunk floating.  **Open-world discovery** →
+the calibrated recipe + iterated pool/BIC/k-means anchor discovery with
+repulsion-exempt discovered anchors (`24_iterated_anchors.py
+--exempt-repulsion`); stop when pool purity collapses.
 
 ### CIFAR-10, 32-dim latent
 
