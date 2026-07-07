@@ -38,6 +38,9 @@ supersig/          importable library
   data.py          plain / two-view / hold-out / class-balanced loaders
                    (MNIST, CIFAR-10, CIFAR-100)
   train.py         training loops (incl. sigreg hybrids) + eval collectors
+  metrics.py       Gaussianity ratio, Mahalanobis novelty + eigenspectrum
+  recipes.py       SETTLED per-dataset defaults; supervised_embedding()
+  discovery.py     open-world anchor discovery loop (run_discovery)
   plotting.py      ROC and corner-plot helpers
 experiments/       runnable scripts (write figures to plots/)
   01_supervised_baseline.py
@@ -66,6 +69,7 @@ experiments/       runnable scripts (write figures to plots/)
   24_iterated_anchors.py   iterated discovery (--rounds, --merge-dist,
                            --exempt-repulsion)
   25_concat_discovery.py   discovery in the concatenated space
+  26_default_pipeline.py   THE SETTLED DEFAULT: recipe embedding + discovery
 plots/             all generated figures
 ```
 
@@ -86,6 +90,18 @@ python experiments/09_cifar_resnet32.py            # 32-dim, pretrained ResNet
 python experiments/11_cifar_repulse.py             # repulsive means, 3-sigma seed
 python experiments/13_cifar_noce.py                # proto / hinge variants
 python experiments/14_cifar100.py --emb-dim 100    # CIFAR-100, wide latent
+
+# THE SETTLED DEFAULT (see supersig/recipes.py for the converged config)
+python experiments/26_default_pipeline.py                        # CIFAR-10
+python experiments/26_default_pipeline.py --dataset cifar100 --ks 10,20
+```
+
+New tests should build on the library surface rather than copying experiment
+code:
+
+```python
+from supersig.recipes import supervised_embedding, recipe, RECIPES
+from supersig.discovery import run_discovery
 ```
 
 ## Results (full runs, MNIST test set)
