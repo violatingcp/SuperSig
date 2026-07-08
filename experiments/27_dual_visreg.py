@@ -37,9 +37,13 @@ import numpy as np
 import torch
 from torch.utils.data import DataLoader
 from torchvision import datasets
+from sklearn.decomposition import PCA
 from sklearn.metrics import roc_auc_score
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
 
-from supersig.config import DATA_DIR, DEVICE
+from supersig.config import DATA_DIR, DEVICE, plot_path
 from supersig.data import (get_cifar_loaders, get_loaders, cifar_balanced_loader,
                            mnist_balanced_loader, _cifar_spec, TF_PLAIN)
 from supersig.losses import DualSuperVisReg, make_anchors
@@ -47,6 +51,7 @@ from supersig.models import CIFARResNetBackbone, ConvBackbone
 from supersig.recipes import supervised_embedding, recipe
 from supersig.discovery import run_discovery
 from supersig.metrics import gaussianity_summary
+from supersig.plotting import plot_corner
 from supersig.train import train_dual_visreg, train_sigreg_hybrid, collect_embeddings
 
 HOLDOUT_SETS = {1: [4], 2: [4, 9], 3: [0, 4, 9]}
@@ -77,6 +82,34 @@ def print_gauss_table(spaces):
     for label, key, fmt in GAUSS_ROWS:
         print(f"  {label:<26}"
               + "".join(f"{spaces[n][key]:>16{fmt}}" for n in spaces))
+
+
+def plot_latent_overview(spaces, holdouts, names, out_path):
+    """
+    2x2 PCA scatter of the four spaces (default/dual x pre/ft).  Each panel is
+    PCA-projected independently; seen classes in tab10, holdouts as black x.
+    """
+    fig, axes = plt.subplots(2, 2, figsize=(13, 12))
+    cmap = plt.get_cmap("tab10")
+    for ax, (name, (embs, lab)) in zip(axes.flat, spaces.items()):
+        p = PCA(n_components=2).fit_transform(embs)
+        for c in range(10):
+            m = lab == c
+            if c in holdouts:
+                ax.scatter(p[m, 0], p[m, 1], s=6, c="k", marker="x",
+                           alpha=0.5, label=f"{names[c]} (holdout)")
+            else:
+                ax.scatter(p[m, 0], p[m, 1], s=3, color=cmap(c % 10),
+                           alpha=0.35, label=names[c])
+        ax.set_title(name)
+        ax.set_xlabel("PC 1"); ax.set_ylabel("PC 2")
+    handles, labels = axes.flat[0].get_legend_handles_labels()
+    fig.legend(handles, labels, loc="upper center", ncol=10, fontsize=8,
+               markerscale=3, bbox_to_anchor=(0.5, 1.0))
+    fig.suptitle("Latent spaces: test embeddings, PCA per panel", y=0.955)
+    fig.tight_layout(rect=(0, 0, 1, 0.94))
+    fig.savefig(out_path, dpi=150); plt.close(fig)
+    print(f"  saved {out_path}")
 
 
 def make_backbone(dataset, cfg):
@@ -159,6 +192,8 @@ def main():
     ap.add_argument("--limit", type=int, default=None)
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--global-scale", type=float, default=10.0)
+    ap.add_argument("--plots", action="store_true",
+                    help="save PCA overview + corner plots of all four spaces")
     args = ap.parse_args()
     ds = args.dataset
     ks = [int(x) for x in args.ks.split(",")]
@@ -199,8 +234,8 @@ def main():
                                           seen, holdouts)
             print(f"  pre-discovery: seen nearest-mean acc={acc:.4f}  "
                   f"novelty AUC={auc:.4f}")
-            embs, lab = collect_embeddings(backbone, test_loader)
-            g_pre = gaussianity_summary(embs, lab, seen, seed=args.seed)
+            e_pre, l_pre = collect_embeddings(backbone, test_loader)
+            g_pre = gaussianity_summary(e_pre, l_pre, seen, seed=args.seed)
             ft_epochs = 1 if args.quick else cfg["ft_epochs"]
             _, history = run_discovery(
                 backbone, means, base_ds=base,
@@ -209,14 +244,27 @@ def main():
                 rep_weight=cfg["rep_weight"], sigreg_weight=cfg["sigreg_weight"],
                 n_slices=cfg["n_slices"], rounds=args.rounds,
                 ft_epochs=ft_epochs, names=names, seed=args.seed)
-            embs, lab = collect_embeddings(backbone, test_loader)
-            g_ft = gaussianity_summary(embs, lab, seen, seed=args.seed)
+            e_ft, l_ft = collect_embeddings(backbone, test_loader)
+            g_ft = gaussianity_summary(e_ft, l_ft, seen, seed=args.seed)
             summary[k][arm] = dict(acc=acc, auc=auc, history=history,
-                                   gauss={"pre": g_pre, "ft": g_ft})
+                                   gauss={"pre": g_pre, "ft": g_ft},
+                                   embs={"pre": (e_pre, l_pre),
+                                         "ft": (e_ft, l_ft)})
         print(f"\n  --- gaussianity (seen classes, test set) k={k} ---")
         print_gauss_table({f"{arm}/{sp}": summary[k][arm]["gauss"][sp]
                            for arm in ("default", "dual")
                            for sp in ("pre", "ft")})
+        if args.plots:
+            spaces = {f"{arm}/{sp}": summary[k][arm]["embs"][sp]
+                      for arm in ("default", "dual") for sp in ("pre", "ft")}
+            plot_latent_overview(spaces, holdouts, names,
+                                 plot_path(f"latent_{ds}_exp27_k{k}.png"))
+            for name, (embs, lab) in spaces.items():
+                plot_corner(embs[:, :6], lab,
+                            plot_path(f"corner_{ds}_exp27_k{k}_"
+                                      f"{name.replace('/', '_')}.png"),
+                            title=f"{ds} exp27 {name} (first 6 of "
+                                  f"{embs.shape[1]} dims)")
 
     print(f"\n===== DUAL-VISREG vs DEFAULT SUMMARY [{ds}] =====")
     for k in ks:
