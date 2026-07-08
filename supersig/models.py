@@ -83,8 +83,10 @@ class CIFARResNetBackbone(nn.Module):
 
     def __init__(self, emb_dim=EMB_DIM, arch="resnet20", pretrain="cifar10"):
         super().__init__()
-        net = torch.hub.load("chenyaofo/pytorch-cifar-models", f"{pretrain}_{arch}",
-                             pretrained=True, trust_repo=True)
+        scratch = pretrain in (None, "none")
+        net = torch.hub.load("chenyaofo/pytorch-cifar-models",
+                             f"{'cifar10' if scratch else pretrain}_{arch}",
+                             pretrained=not scratch, trust_repo=True)
         feat_dim = net.fc.in_features
         net.fc = nn.Identity()
         self.features = net
