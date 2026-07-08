@@ -72,6 +72,55 @@ def classwise_gaussianity(embs, labels, **kw):
 
 
 @torch.no_grad()
+def gaussianity_summary(embs, labels, classes, n_slices=256, n_null=16, seed=0):
+    """
+    Aggregate per-class Gaussianity / geometry metrics of an embedding space.
+
+    For each class in `classes` (rows of `embs` selected by `labels`) compute
+    the empirical covariance eigenspectrum, the per-dimension RMS (sqrt of the
+    mean variance -- ~1 in a calibrated latent), the largest off-diagonal
+    correlation, and the calibrated sliced-Wasserstein shape statistics, then
+    aggregate across classes.  Centroid distances are between the empirical
+    class means; `separation` divides the closest centroid pair by the mean
+    class RMS (how many sigma apart the two nearest classes sit).
+    """
+    import numpy as np
+    z = torch.as_tensor(embs, dtype=torch.float32).to(DEVICE)
+    labels = np.asarray(labels)
+    eig_all, rms, corr_max, cond = [], [], [], []
+    ratios, skews, kurts, mus = [], [], [], []
+    for c in classes:
+        zc = z[torch.as_tensor(labels == c).to(DEVICE)]
+        mu = zc.mean(0)
+        mus.append(mu)
+        X = zc - mu
+        S = X.t() @ X / max(len(zc) - 1, 1)
+        ev = torch.linalg.eigvalsh(S)
+        eig_all += ev.tolist()
+        cond.append((ev.max() / ev.min().clamp_min(1e-12)).item())
+        rms.append(X.pow(2).mean().sqrt().item())
+        Xn = X / (X.std(0) + 1e-12)
+        C = Xn.t() @ Xn / max(len(zc) - 1, 1)
+        off = C - torch.diag(torch.diag(C))
+        corr_max.append(off.abs().max().item())
+        g = sliced_gaussianity(zc, n_slices=n_slices, n_null=n_null, seed=seed)
+        ratios.append(g["ratio"]); skews.append(g["skew"]); kurts.append(g["ex_kurtosis"])
+    M = torch.stack(mus)
+    iu = torch.triu_indices(len(classes), len(classes), offset=1)
+    pdist = torch.cdist(M, M)[iu[0], iu[1]]
+    return {
+        "eig_min": min(eig_all), "eig_max": max(eig_all),
+        "eig_cond_max": max(cond),
+        "rms_min": min(rms), "rms_mean": float(np.mean(rms)), "rms_max": max(rms),
+        "corr_max": max(corr_max),
+        "sw_ratio_mean": float(np.mean(ratios)), "sw_ratio_max": max(ratios),
+        "skew_mean": float(np.mean(skews)), "kurt_mean": float(np.mean(kurts)),
+        "cdist_min": pdist.min().item(), "cdist_mean": pdist.mean().item(),
+        "separation": pdist.min().item() / (float(np.mean(rms)) + 1e-12),
+    }
+
+
+@torch.no_grad()
 def mahalanobis_novelty(tr_embs, tr_lab, te_embs, seen, shrink=0.1, device=None):
     """
     Lee-et-al-style novelty scores from empirically fitted seen-class Gaussians.

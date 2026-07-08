@@ -11,7 +11,12 @@ Head-to-head embedding comparison with the discovery machinery held fixed:
 
 Both arms are evaluated pre-discovery (nearest-mean accuracy on seen test
 classes, novelty AUC from distance to the nearest seen mean) and through the
-standard discovery rounds (purity / margin AUC / mean per-anchor AUC).  The
+standard discovery rounds (purity / margin AUC / mean per-anchor AUC).  A
+Gaussianity table (per-class covariance eigenspectrum range, per-dim class
+RMS, worst inter-dimension correlation, calibrated sliced-Wasserstein shape
+ratio, centroid separation; supersig.metrics.gaussianity_summary) is printed
+for each arm in both the pre-trained space (after embedding training) and the
+clustered fine-tuned space (after the discovery rounds).  The
 dual arm has no trained anchor for the holdout rows, so those rows are filled
 with the default fixed anchors -- same structural treatment as the default
 arm, where the holdout anchor also never sees data.
@@ -41,11 +46,37 @@ from supersig.losses import DualSuperVisReg, make_anchors
 from supersig.models import CIFARResNetBackbone, ConvBackbone
 from supersig.recipes import supervised_embedding, recipe
 from supersig.discovery import run_discovery
+from supersig.metrics import gaussianity_summary
 from supersig.train import train_dual_visreg, train_sigreg_hybrid, collect_embeddings
 
 HOLDOUT_SETS = {1: [4], 2: [4, 9], 3: [0, 4, 9]}
 CIFAR_NAMES = ["airplane", "automobile", "bird", "cat", "deer",
                "dog", "frog", "horse", "ship", "truck"]
+
+GAUSS_ROWS = [
+    ("eig min (class cov)", "eig_min", ".3f"),
+    ("eig max (class cov)", "eig_max", ".3f"),
+    ("eig cond worst", "eig_cond_max", ".1f"),
+    ("class RMS min", "rms_min", ".3f"),
+    ("class RMS mean", "rms_mean", ".3f"),
+    ("class RMS max", "rms_max", ".3f"),
+    ("max |corr| (worst class)", "corr_max", ".3f"),
+    ("SW ratio mean", "sw_ratio_mean", ".2f"),
+    ("SW ratio worst", "sw_ratio_max", ".2f"),
+    ("|skew| mean", "skew_mean", ".3f"),
+    ("|ex-kurt| mean", "kurt_mean", ".3f"),
+    ("centroid dist min", "cdist_min", ".2f"),
+    ("centroid dist mean", "cdist_mean", ".2f"),
+    ("separation (min d/RMS)", "separation", ".2f"),
+]
+
+
+def print_gauss_table(spaces):
+    """spaces: {column name: gaussianity_summary dict} printed metric-per-row."""
+    print(f"  {'metric':<26}" + "".join(f"{n:>16}" for n in spaces))
+    for label, key, fmt in GAUSS_ROWS:
+        print(f"  {label:<26}"
+              + "".join(f"{spaces[n][key]:>16{fmt}}" for n in spaces))
 
 
 def make_backbone(dataset, cfg):
@@ -168,6 +199,8 @@ def main():
                                           seen, holdouts)
             print(f"  pre-discovery: seen nearest-mean acc={acc:.4f}  "
                   f"novelty AUC={auc:.4f}")
+            embs, lab = collect_embeddings(backbone, test_loader)
+            g_pre = gaussianity_summary(embs, lab, seen, seed=args.seed)
             ft_epochs = 1 if args.quick else cfg["ft_epochs"]
             _, history = run_discovery(
                 backbone, means, base_ds=base,
@@ -176,7 +209,14 @@ def main():
                 rep_weight=cfg["rep_weight"], sigreg_weight=cfg["sigreg_weight"],
                 n_slices=cfg["n_slices"], rounds=args.rounds,
                 ft_epochs=ft_epochs, names=names, seed=args.seed)
-            summary[k][arm] = dict(acc=acc, auc=auc, history=history)
+            embs, lab = collect_embeddings(backbone, test_loader)
+            g_ft = gaussianity_summary(embs, lab, seen, seed=args.seed)
+            summary[k][arm] = dict(acc=acc, auc=auc, history=history,
+                                   gauss={"pre": g_pre, "ft": g_ft})
+        print(f"\n  --- gaussianity (seen classes, test set) k={k} ---")
+        print_gauss_table({f"{arm}/{sp}": summary[k][arm]["gauss"][sp]
+                           for arm in ("default", "dual")
+                           for sp in ("pre", "ft")})
 
     print(f"\n===== DUAL-VISREG vs DEFAULT SUMMARY [{ds}] =====")
     for k in ks:
