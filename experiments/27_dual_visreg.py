@@ -112,11 +112,11 @@ def plot_latent_overview(spaces, holdouts, names, out_path):
     print(f"  saved {out_path}")
 
 
-def make_backbone(dataset, cfg):
+def make_backbone(dataset, cfg, scratch=False):
     if dataset == "mnist":
-        return ConvBackbone(cfg["emb_dim"]).to(DEVICE)
+        return ConvBackbone(cfg["emb_dim"]).to(DEVICE)   # always random init
     return CIFARResNetBackbone(cfg["emb_dim"], arch=cfg["arch"],
-                               pretrain="cifar10").to(DEVICE)
+                               pretrain="none" if scratch else "cifar10").to(DEVICE)
 
 
 def balanced_loader(dataset, holdouts, quick, limit):
@@ -126,11 +126,14 @@ def balanced_loader(dataset, holdouts, quick, limit):
                                  limit=limit)
 
 
-def default_embedding(dataset, holdouts, cfg, quick=False, limit=None, seed=0):
+def default_embedding(dataset, holdouts, cfg, quick=False, limit=None, seed=0,
+                      scratch=False):
     """The exp-26 recipe embedding (classwise SIGReg + proto + repulsed means)."""
     if dataset == "cifar10":
         backbone, means, _ = supervised_embedding(
-            "cifar10", holdouts=holdouts, quick=quick, limit=limit, seed=seed)
+            "cifar10", holdouts=holdouts, quick=quick, limit=limit, seed=seed,
+            pretrain="none" if scratch else None,
+            ssl_epochs=cfg["ssl_epochs"])
         return backbone, means
     torch.manual_seed(seed); np.random.seed(seed)
     backbone = make_backbone(dataset, cfg)
@@ -147,10 +150,10 @@ def default_embedding(dataset, holdouts, cfg, quick=False, limit=None, seed=0):
 
 
 def dual_embedding(dataset, holdouts, cfg, quick=False, limit=None, seed=0,
-                   train_eval_loader=None, global_scale=10.0):
+                   train_eval_loader=None, global_scale=10.0, scratch=False):
     """Train a fresh backbone with DualSuperVisReg; return (backbone, means)."""
     torch.manual_seed(seed); np.random.seed(seed)
-    backbone = make_backbone(dataset, cfg)
+    backbone = make_backbone(dataset, cfg, scratch=scratch)
     loss_fn = DualSuperVisReg(num_classes=cfg["n_classes"] - len(holdouts),
                               embed_dim=cfg["emb_dim"],
                               num_projections=cfg["n_slices"],
@@ -194,10 +197,17 @@ def main():
     ap.add_argument("--global-scale", type=float, default=10.0)
     ap.add_argument("--plots", action="store_true",
                     help="save PCA overview + corner plots of all four spaces")
+    ap.add_argument("--scratch", action="store_true",
+                    help="random-init backbone (no torch.hub pretrained weights;"
+                         " MNIST's ConvBackbone is always random-init)")
+    ap.add_argument("--epochs", type=int, default=None,
+                    help="override ssl_epochs (useful for from-scratch runs)")
     args = ap.parse_args()
     ds = args.dataset
     ks = [int(x) for x in args.ks.split(",")]
     cfg = recipe("cifar10")              # MNIST reuses the cifar10 recipe
+    if args.epochs:
+        cfg["ssl_epochs"] = args.epochs
     names = [str(d) for d in range(10)] if ds == "mnist" else CIFAR_NAMES
 
     if ds == "mnist":
@@ -212,7 +222,8 @@ def main():
     train_eval_loader = DataLoader(train_loader.dataset, batch_size=256,
                                    shuffle=False, num_workers=2)
 
-    print(f"recipe [{ds}]: " + "  ".join(f"{k}={v}" for k, v in cfg.items()))
+    print(f"recipe [{ds}]{' [scratch]' if args.scratch else ''}: "
+          + "  ".join(f"{k}={v}" for k, v in cfg.items()))
     summary = {}
     for k in ks:
         holdouts = set(HOLDOUT_SETS[k])
@@ -224,12 +235,12 @@ def main():
             if arm == "default":
                 backbone, means = default_embedding(
                     ds, holdouts, cfg, quick=args.quick, limit=args.limit,
-                    seed=args.seed)
+                    seed=args.seed, scratch=args.scratch)
             else:
                 backbone, means = dual_embedding(
                     ds, holdouts, cfg, quick=args.quick, limit=args.limit,
                     seed=args.seed, train_eval_loader=train_eval_loader,
-                    global_scale=args.global_scale)
+                    global_scale=args.global_scale, scratch=args.scratch)
             acc, auc = pre_discovery_eval(backbone, means, test_loader,
                                           seen, holdouts)
             print(f"  pre-discovery: seen nearest-mean acc={acc:.4f}  "
@@ -255,13 +266,14 @@ def main():
                            for arm in ("default", "dual")
                            for sp in ("pre", "ft")})
         if args.plots:
+            tag = f"{ds}_exp27{'_scratch' if args.scratch else ''}_k{k}"
             spaces = {f"{arm}/{sp}": summary[k][arm]["embs"][sp]
                       for arm in ("default", "dual") for sp in ("pre", "ft")}
             plot_latent_overview(spaces, holdouts, names,
-                                 plot_path(f"latent_{ds}_exp27_k{k}.png"))
+                                 plot_path(f"latent_{tag}.png"))
             for name, (embs, lab) in spaces.items():
                 plot_corner(embs[:, :6], lab,
-                            plot_path(f"corner_{ds}_exp27_k{k}_"
+                            plot_path(f"corner_{tag}_"
                                       f"{name.replace('/', '_')}.png"),
                             title=f"{ds} exp27 {name} (first 6 of "
                                   f"{embs.shape[1]} dims)")

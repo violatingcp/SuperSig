@@ -78,7 +78,8 @@ class CIFARResNetBackbone(nn.Module):
     `pretrain` selects the pretraining dataset: "cifar10" (matches the task, but
     note the weights have seen every CIFAR-10 class, including any hold-out) or
     "cifar100" (disjoint label set -- a cleaner initialization for hold-out
-    studies).
+    studies).  None or "none" builds the same architecture with random init
+    (training from scratch).
     """
 
     def __init__(self, emb_dim=EMB_DIM, arch="resnet20", pretrain="cifar10"):
