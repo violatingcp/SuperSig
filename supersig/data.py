@@ -95,6 +95,24 @@ def two_view_loader(batch_size=256, quick=False, labeled=False, holdout=None):
                       drop_last=labeled)
 
 
+def mnist_balanced_loader(holdout=None, quick=False, limit=None,
+                          classes_per_batch=10, per_class=24):
+    """Class-balanced-batch MNIST loader (optionally minus `holdout`),
+    mirroring cifar_balanced_loader for the shared training loops."""
+    ds = datasets.MNIST(DATA_DIR, train=True, download=True, transform=TF_PLAIN)
+    targets = [int(t) for t in ds.targets]
+    n = 8000 if quick else (limit or len(ds))
+    hs = _holdout_set(holdout)
+    idx = [i for i in range(n) if targets[i] not in hs]
+    sub = Subset(ds, idx)
+    sampler = BalancedBatchSampler([targets[i] for i in idx],
+                                   classes_per_batch, per_class)
+    tag = "" if holdout is None else f" (no {holdout})"
+    print(f"  mnist balanced loader{tag}: {len(sub)} images, "
+          f"{len(sampler)} batches of {sampler.n_classes}x{per_class}")
+    return DataLoader(sub, batch_sampler=sampler, num_workers=2)
+
+
 # =========================================================================== #
 # CIFAR-10 / CIFAR-100 loaders (plain, two-view augmented, hold-out)          #
 # =========================================================================== #

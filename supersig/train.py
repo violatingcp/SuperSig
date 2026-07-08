@@ -182,6 +182,35 @@ def train_sigreg_hybrid(backbone, loader, epochs, means, mode="repulse",
               f"{disc}={disc_run/n:.4f}  min_dist={dmin:.2f}  mean_dist={dmean:.2f}")
 
 
+def train_dual_visreg(backbone, loader, epochs, loss_fn, lr=1e-3):
+    """
+    Train with DualSuperVisReg alone: no learnable means, no repulsion, no
+    discriminative term -- class geometry comes entirely from the dual
+    (local + global) Gaussian objective.  `loss_fn` is a DualSuperVisReg
+    instance already on DEVICE.
+    """
+    opt = torch.optim.Adam(backbone.parameters(), lr=lr)
+    backbone.train()
+    for ep in range(epochs):
+        runs = {"total": 0.0, "global": 0.0, "local": 0.0}
+        n = 0
+        for x, y in loader:
+            x, y = x.to(DEVICE), y.to(DEVICE)
+            opt.zero_grad()
+            z = backbone(x)
+            loss, parts = loss_fn(z, y)
+            if not loss.requires_grad:      # batch too small for any class: skip
+                continue
+            loss.backward()
+            opt.step()
+            runs["total"] += loss.item() * x.size(0)
+            runs["global"] += parts["global_loss"].item() * x.size(0)
+            runs["local"] += parts["local_loss"].item() * x.size(0)
+            n += x.size(0)
+        print(f"  [dual-visreg] epoch {ep+1}/{epochs}  total={runs['total']/n:.4f}  "
+              f"global={runs['global']/n:.4f}  local={runs['local']/n:.4f}")
+
+
 def train_simclr(backbone, loader, epochs, temp=0.5, lr=1e-3):
     """Unsupervised SimCLR (NT-Xent): positives are only the other augmented view."""
     opt = torch.optim.Adam(backbone.parameters(), lr=lr)
