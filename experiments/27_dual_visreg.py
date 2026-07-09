@@ -133,7 +133,7 @@ def default_embedding(dataset, holdouts, cfg, quick=False, limit=None, seed=0,
         backbone, means, _ = supervised_embedding(
             "cifar10", holdouts=holdouts, quick=quick, limit=limit, seed=seed,
             pretrain="none" if scratch else None,
-            ssl_epochs=cfg["ssl_epochs"])
+            ssl_epochs=cfg["ssl_epochs"], emb_dim=cfg["emb_dim"])
         return backbone, means
     torch.manual_seed(seed); np.random.seed(seed)
     backbone = make_backbone(dataset, cfg)
@@ -202,10 +202,12 @@ def main():
                          " MNIST's ConvBackbone is always random-init)")
     ap.add_argument("--epochs", type=int, default=None,
                     help="override ssl_epochs (useful for from-scratch runs)")
+    ap.add_argument("--emb-dim", type=int, default=None,
+                    help="override the recipe embedding dimension (default 16)")
     args = ap.parse_args()
     ds = args.dataset
     ks = [int(x) for x in args.ks.split(",")]
-    cfg = recipe("cifar10")              # MNIST reuses the cifar10 recipe
+    cfg = recipe("cifar10", emb_dim=args.emb_dim)   # MNIST reuses this recipe
     if args.epochs:
         cfg["ssl_epochs"] = args.epochs
     names = [str(d) for d in range(10)] if ds == "mnist" else CIFAR_NAMES
@@ -266,7 +268,8 @@ def main():
                            for arm in ("default", "dual")
                            for sp in ("pre", "ft")})
         if args.plots:
-            tag = f"{ds}_exp27{'_scratch' if args.scratch else ''}_k{k}"
+            tag = (f"{ds}_exp27{'_scratch' if args.scratch else ''}"
+                   f"{f'_{args.emb_dim}d' if args.emb_dim else ''}_k{k}")
             spaces = {f"{arm}/{sp}": summary[k][arm]["embs"][sp]
                       for arm in ("default", "dual") for sp in ("pre", "ft")}
             plot_latent_overview(spaces, holdouts, names,
@@ -275,7 +278,8 @@ def main():
                 plot_corner(embs[:, :6], lab,
                             plot_path(f"corner_{tag}_"
                                       f"{name.replace('/', '_')}.png"),
-                            title=f"{ds} exp27 {name} (first 6 of "
+                            title=f"{ds} exp27 {name} (first "
+                                  f"{min(6, embs.shape[1])} of "
                                   f"{embs.shape[1]} dims)")
 
     print(f"\n===== DUAL-VISREG vs DEFAULT SUMMARY [{ds}] =====")
