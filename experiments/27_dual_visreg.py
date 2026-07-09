@@ -119,11 +119,12 @@ def make_backbone(dataset, cfg, scratch=False):
                                pretrain="none" if scratch else "cifar10").to(DEVICE)
 
 
-def balanced_loader(dataset, holdouts, quick, limit):
+def balanced_loader(dataset, holdouts, quick, limit, per_class=24):
     if dataset == "mnist":
-        return mnist_balanced_loader(holdout=holdouts, quick=quick, limit=limit)
+        return mnist_balanced_loader(holdout=holdouts, quick=quick, limit=limit,
+                                     per_class=per_class)
     return cifar_balanced_loader("cifar10", holdout=holdouts, quick=quick,
-                                 limit=limit)
+                                 limit=limit, per_class=per_class)
 
 
 def default_embedding(dataset, holdouts, cfg, quick=False, limit=None, seed=0,
@@ -150,15 +151,20 @@ def default_embedding(dataset, holdouts, cfg, quick=False, limit=None, seed=0,
 
 
 def dual_embedding(dataset, holdouts, cfg, quick=False, limit=None, seed=0,
-                   train_eval_loader=None, global_scale=10.0, scratch=False):
-    """Train a fresh backbone with DualSuperVisReg; return (backbone, means)."""
+                   train_eval_loader=None, global_scale=None, scratch=False,
+                   per_class=24):
+    """Train a fresh backbone with DualSuperVisReg; return (backbone, means).
+
+    Loss hyperparameters (projections, scales, term weights) follow the
+    DualSuperVisReg defaults unless global_scale is given explicitly.
+    """
     torch.manual_seed(seed); np.random.seed(seed)
     backbone = make_backbone(dataset, cfg, scratch=scratch)
+    kw = {} if global_scale is None else {"global_scale": global_scale}
     loss_fn = DualSuperVisReg(num_classes=cfg["n_classes"] - len(holdouts),
-                              embed_dim=cfg["emb_dim"],
-                              num_projections=cfg["n_slices"],
-                              global_scale=global_scale).to(DEVICE)
-    loader = balanced_loader(dataset, holdouts, quick, limit)
+                              embed_dim=cfg["emb_dim"], **kw).to(DEVICE)
+    loader = balanced_loader(dataset, holdouts, quick, limit,
+                             per_class=per_class)
     train_dual_visreg(backbone, loader, cfg["ssl_epochs"], loss_fn)
 
     # Anchor-free training: read the class means off the (seen) training data.
@@ -194,7 +200,11 @@ def main():
     ap.add_argument("--quick", action="store_true")
     ap.add_argument("--limit", type=int, default=None)
     ap.add_argument("--seed", type=int, default=0)
-    ap.add_argument("--global-scale", type=float, default=10.0)
+    ap.add_argument("--global-scale", type=float, default=None,
+                    help="override DualSuperVisReg.global_scale (default: class default)")
+    ap.add_argument("--dual-per-class", type=int, default=24,
+                    help="samples per class per batch for dual-arm training "
+                         "(batch = n_seen_classes x this)")
     ap.add_argument("--plots", action="store_true",
                     help="save PCA overview + corner plots of all four spaces")
     ap.add_argument("--scratch", action="store_true",
@@ -242,7 +252,8 @@ def main():
                 backbone, means = dual_embedding(
                     ds, holdouts, cfg, quick=args.quick, limit=args.limit,
                     seed=args.seed, train_eval_loader=train_eval_loader,
-                    global_scale=args.global_scale, scratch=args.scratch)
+                    global_scale=args.global_scale, scratch=args.scratch,
+                    per_class=args.dual_per_class)
             acc, auc = pre_discovery_eval(backbone, means, test_loader,
                                           seen, holdouts)
             print(f"  pre-discovery: seen nearest-mean acc={acc:.4f}  "
