@@ -19,9 +19,14 @@ AUC, gaussianity table, discovery-with-clustering, latent plots):
            to z - mean_y (means frozen): the class atom explains the class
            component, the residual is shaped into one augment-invariant
            N(0, I) -- one matching-pursuit step past the class atoms.
+  supres : the mirror image -- a supervised network on the residual of the
+           augmentation pretraining.  Start from the trained ssl trunk, means
+           initialized at its labeled class centroids, then classwise SIGReg
+           + proto (which shapes the per-class residual z - mean_y around
+           learnable means).
 
     python experiments/28_concat_residual.py                    # CIFAR-10
-    python experiments/28_concat_residual.py --dataset mnist
+    python experiments/28_concat_residual.py --dataset mnist --emb-dim 16
 """
 import os, sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -275,6 +280,10 @@ def main():
                                  pretrain="cifar10")).to(DEVICE)
     train_sigreg_ssl(trunk, tv_loader, ssl_ep)
 
+    ssl_tr, tr_lab = collect_embeddings(trunk, train_eval_loader)
+    tr_seen = np.isin(tr_lab, seen)
+    ssl_cents = class_centroids(ssl_tr[tr_seen], tr_lab[tr_seen], seen)
+
     # ----- res: SSL on the supervised residual ------------------------------
     print("\n----- space: res (SSL on the supervised residual) -----")
     torch.manual_seed(args.seed + 2); np.random.seed(args.seed + 2)
@@ -282,15 +291,29 @@ def main():
     train_sigreg_residual_ssl(res, tv_lab_loader, res_ep, means_sup,
                               n_slices=cfg["n_slices"])
 
+    # ----- supres: supervised network on the ssl residual -------------------
+    print("\n----- space: supres (supervised on the ssl residual) -----")
+    torch.manual_seed(args.seed + 3); np.random.seed(args.seed + 3)
+    supres = copy.deepcopy(trunk)
+    means_supres = fill_means(ssl_cents, seen, cfg).clone()
+    supres_loader = (mnist_balanced_loader(holdout=holdouts, quick=args.quick)
+                     if ds == "mnist" else
+                     cifar_balanced_loader("cifar10", holdout=holdouts,
+                                           quick=args.quick, limit=args.limit))
+    train_sigreg_hybrid(supres, supres_loader, cfg["ssl_epochs"], means_supres,
+                        mode="repulse", disc="proto", alpha=1.0,
+                        rep_weight=cfg["rep_weight"],
+                        sigreg_weight=cfg["sigreg_weight"],
+                        n_slices=cfg["n_slices"])
+    means_supres = means_supres.detach()
+
     # ----- assemble spaces and anchors --------------------------------------
     sup_te, te_lab = collect_embeddings(sup, test_loader)
     ssl_te, _ = collect_embeddings(trunk, test_loader)
     res_te, _ = collect_embeddings(res, test_loader)
+    supres_te, _ = collect_embeddings(supres, test_loader)
     cat_te = np.concatenate([sup_te, ssl_te], axis=1)
 
-    ssl_tr, tr_lab = collect_embeddings(trunk, train_eval_loader)
-    tr_seen = np.isin(tr_lab, seen)
-    ssl_cents = class_centroids(ssl_tr[tr_seen], tr_lab[tr_seen], seen)
     res_tr, _ = collect_embeddings(res, train_eval_loader)
     res_cents = class_centroids(res_tr[tr_seen], tr_lab[tr_seen], seen)
 
@@ -299,12 +322,14 @@ def main():
         "ssl": ssl_cents,
         "concat": torch.cat([means_sup[seen], ssl_cents], dim=1),
         "res": res_cents,
+        "supres": means_supres[seen],
     }
-    tests = {"sup": sup_te, "ssl": ssl_te, "concat": cat_te, "res": res_te}
+    tests = {"sup": sup_te, "ssl": ssl_te, "concat": cat_te, "res": res_te,
+             "supres": supres_te}
 
     print("\n----- pre-discovery metrics -----")
     pre = {}
-    for name in ("sup", "ssl", "concat", "res"):
+    for name in tests:
         acc, auc = anchor_eval(tests[name], te_lab, anchors[name], seen, holdouts)
         pre[name] = (acc, auc)
         print(f"  [{name:6s}] seen nearest-anchor acc={acc:.4f}  "
@@ -354,9 +379,17 @@ def main():
         rep_weight=cfg["rep_weight"], sigreg_weight=cfg["sigreg_weight"],
         n_slices=cfg["n_slices"], rounds=args.rounds, ft_epochs=ft_ep,
         names=names, seed=args.seed)
+    print("\n----- discovery: supres -----")
+    _, hist["supres"] = run_discovery(
+        copy.deepcopy(supres), means_supres.clone(), base_ds=base,
+        train_eval_loader=train_eval_loader, test_loader=test_loader,
+        seen=seen, holdouts=holdouts, dataset_name=ds,
+        rep_weight=cfg["rep_weight"], sigreg_weight=cfg["sigreg_weight"],
+        n_slices=cfg["n_slices"], rounds=args.rounds, ft_epochs=ft_ep,
+        names=names, seed=args.seed)
 
     print(f"\n===== EXP28 SUMMARY [{ds}, {cfg['emb_dim']}d] =====")
-    for name in ("sup", "ssl", "concat", "res"):
+    for name in ("sup", "ssl", "concat", "res", "supres"):
         acc, auc = pre[name]
         print(f"  [{name:6s}] pre: acc={acc:.4f} novelty-AUC={auc:.4f}")
         for h in hist[name]:
