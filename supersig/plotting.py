@@ -46,6 +46,45 @@ def plot_binary_roc(scores, y_true, title, out_path, label="model"):
     return fpr, tpr, roc_auc
 
 
+def plot_latent_panels(spaces, holdouts, names, out_path, title=None):
+    """
+    Grid of PCA scatters, one panel per named space.
+
+    spaces: {panel name: (embs, labels)}; each panel is PCA-projected
+    independently.  Classes use tab10; `holdouts` are drawn as black x.
+    """
+    from sklearn.decomposition import PCA
+
+    n = len(spaces)
+    ncols = 2
+    nrows = (n + ncols - 1) // ncols
+    fig, axes = plt.subplots(nrows, ncols, figsize=(6.5 * ncols, 6 * nrows))
+    axes = np.atleast_1d(axes).ravel()
+    cmap = plt.get_cmap("tab10")
+    for ax, (name, (embs, lab)) in zip(axes, spaces.items()):
+        p = PCA(n_components=2).fit_transform(embs)
+        for c in np.unique(lab):
+            m = lab == c
+            if c in holdouts:
+                ax.scatter(p[m, 0], p[m, 1], s=6, c="k", marker="x",
+                           alpha=0.5, label=f"{names[c]} (holdout)")
+            else:
+                ax.scatter(p[m, 0], p[m, 1], s=3, color=cmap(int(c) % 10),
+                           alpha=0.35, label=names[c])
+        ax.set_title(name)
+        ax.set_xlabel("PC 1"); ax.set_ylabel("PC 2")
+    for ax in axes[n:]:
+        ax.axis("off")
+    handles, labels = axes[0].get_legend_handles_labels()
+    fig.legend(handles, labels, loc="upper center", ncol=10, fontsize=8,
+               markerscale=3, bbox_to_anchor=(0.5, 1.0))
+    fig.suptitle(title or "Latent spaces: test embeddings, PCA per panel",
+                 y=0.955)
+    fig.tight_layout(rect=(0, 0, 1, 0.94))
+    fig.savefig(out_path, dpi=150); plt.close(fig)
+    print(f"  saved {out_path}")
+
+
 def plot_corner(embs, labels, out_path, title=None, max_per_class=400):
     """Corner plot of the latent space with points/contours colored by class label."""
     import corner

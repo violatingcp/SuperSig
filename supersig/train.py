@@ -182,6 +182,38 @@ def train_sigreg_hybrid(backbone, loader, epochs, means, mode="repulse",
               f"{disc}={disc_run/n:.4f}  min_dist={dmin:.2f}  mean_dist={dmean:.2f}")
 
 
+def train_sigreg_residual_ssl(backbone, two_view_labeled_loader, epochs, means,
+                              lam=1.0, lr=1e-3, n_slices=64):
+    """
+    SSL on the supervised-SIGReg residual (matching-pursuit style, exp 28).
+
+    Two augmented views per image; invariance between the view embeddings and
+    SIGReg on the residual z - mean_y pooled across the whole batch, with the
+    class means FROZEN.  The class atom (mean) explains the class component;
+    the training shapes what the atom cannot explain into a single augment-
+    invariant N(0, I) cloud.
+    """
+    means = means.detach()
+    opt = torch.optim.Adam(backbone.parameters(), lr=lr)
+    backbone.train()
+    for ep in range(epochs):
+        inv_run, reg_run, n = 0.0, 0.0, 0
+        for v1, v2, y in two_view_labeled_loader:
+            v1, v2, y = v1.to(DEVICE), v2.to(DEVICE), y.to(DEVICE)
+            opt.zero_grad()
+            z1, z2 = backbone(v1), backbone(v2)
+            inv = F.mse_loss(z1, z2)
+            reg = 0.5 * (sigreg_loss(z1 - means[y], n_slices=n_slices)
+                         + sigreg_loss(z2 - means[y], n_slices=n_slices))
+            (inv + lam * reg).backward()
+            opt.step()
+            inv_run += inv.item() * v1.size(0)
+            reg_run += reg.item() * v1.size(0)
+            n += v1.size(0)
+        print(f"  [sigreg-residual] epoch {ep+1}/{epochs}  inv={inv_run/n:.4f}  "
+              f"res-sigreg={reg_run/n:.4f}")
+
+
 def train_dual_visreg(backbone, loader, epochs, loss_fn, lr=1e-3):
     """
     Train with DualSuperVisReg alone: no learnable means, no repulsion, no
