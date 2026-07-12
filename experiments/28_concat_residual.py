@@ -157,7 +157,7 @@ def run_concat_discovery(sup, trunk, means_sup, ssl_cents, *, base, dim,
         lab_idx = np.where(is_seen_lab)[0]
         ft_idx = np.concatenate([lab_idx, p_idx])
         ft_lab = np.concatenate([tr_lab[lab_idx], p_lab])
-        n_pb = len(seen) + disc_ssl.size(0)
+        n_pb = len(seen) + disc_ssl.size(0) if n_classes <= 10 else 25
         sampler = BalancedBatchSampler(list(ft_lab), n_classes=n_pb,
                                        n_per_class=24)
         ft_loader = DataLoader(PseudoDataset(base, ft_idx, ft_lab),
@@ -209,7 +209,8 @@ def run_concat_discovery(sup, trunk, means_sup, ssl_cents, *, base, dim,
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--dataset", choices=["cifar10", "mnist"], default="cifar10")
+    ap.add_argument("--dataset", choices=["cifar10", "cifar100", "mnist"],
+                    default="cifar10")
     ap.add_argument("--holdout", type=int, default=4)
     ap.add_argument("--rounds", type=int, default=2)
     ap.add_argument("--quick", action="store_true")
@@ -221,13 +222,18 @@ def main():
     ap.add_argument("--plots", action="store_true")
     args = ap.parse_args()
     ds = args.dataset
-    cfg = recipe("cifar10", emb_dim=args.emb_dim)
+    cfg = recipe("cifar10" if ds == "mnist" else ds, emb_dim=args.emb_dim)
     ssl_ep = args.ssl_epochs or (2 if args.quick else 20)
     res_ep = args.res_epochs or (2 if args.quick else 10)
     ft_ep = 1 if args.quick else cfg["ft_epochs"]
     holdouts = {args.holdout}
     seen = [c for c in range(cfg["n_classes"]) if c not in holdouts]
-    names = [str(d) for d in range(10)] if ds == "mnist" else CIFAR_NAMES
+    if ds == "mnist":
+        names = [str(d) for d in range(10)]
+    elif ds == "cifar100":
+        names = datasets.CIFAR100(DATA_DIR, train=False, download=True).classes
+    else:
+        names = CIFAR_NAMES
 
     if ds == "mnist":
         train_loader, test_loader = get_loaders(batch_size=256, quick=args.quick)
@@ -239,13 +245,16 @@ def main():
                                         holdout=args.holdout)
     else:
         train_loader, test_loader = get_cifar_loaders(quick=args.quick,
-                                                      limit=args.limit)
-        cls, plain, _ = _cifar_spec("cifar10")
+                                                      limit=args.limit,
+                                                      dataset=ds)
+        cls, plain, _ = _cifar_spec(ds)
         base = cls(DATA_DIR, train=True, download=True, transform=plain)
         tv_loader = cifar_two_view_loader(quick=args.quick, labeled=False,
-                                          holdout=holdouts, limit=args.limit)
+                                          holdout=holdouts, limit=args.limit,
+                                          dataset=ds)
         tv_lab_loader = cifar_two_view_loader(quick=args.quick, labeled=True,
-                                              holdout=holdouts, limit=args.limit)
+                                              holdout=holdouts,
+                                              limit=args.limit, dataset=ds)
     train_eval_loader = DataLoader(train_loader.dataset, batch_size=256,
                                    shuffle=False, num_workers=2)
     print(f"exp28 [{ds}] emb_dim={cfg['emb_dim']} holdout={sorted(holdouts)} "
@@ -253,9 +262,9 @@ def main():
 
     # ----- sup: settled supervised embedding --------------------------------
     print("\n----- space: sup (supervised SIGReg, exp-26 recipe) -----")
-    if ds == "cifar10":
+    if ds != "mnist":
         sup, means_sup, _ = supervised_embedding(
-            "cifar10", holdouts=holdouts, quick=args.quick, limit=args.limit,
+            ds, holdouts=holdouts, quick=args.quick, limit=args.limit,
             seed=args.seed, emb_dim=cfg["emb_dim"])
     else:
         torch.manual_seed(args.seed); np.random.seed(args.seed)
@@ -277,7 +286,7 @@ def main():
     torch.manual_seed(args.seed + 1); np.random.seed(args.seed + 1)
     trunk = (ConvBackbone(cfg["emb_dim"]) if ds == "mnist" else
              CIFARResNetBackbone(cfg["emb_dim"], arch=cfg["arch"],
-                                 pretrain="cifar10")).to(DEVICE)
+                                 pretrain=ds)).to(DEVICE)
     train_sigreg_ssl(trunk, tv_loader, ssl_ep)
 
     ssl_tr, tr_lab = collect_embeddings(trunk, train_eval_loader)
@@ -298,7 +307,7 @@ def main():
     means_supres = fill_means(ssl_cents, seen, cfg).clone()
     supres_loader = (mnist_balanced_loader(holdout=holdouts, quick=args.quick)
                      if ds == "mnist" else
-                     cifar_balanced_loader("cifar10", holdout=holdouts,
+                     cifar_balanced_loader(ds, holdout=holdouts,
                                            quick=args.quick, limit=args.limit))
     train_sigreg_hybrid(supres, supres_loader, cfg["ssl_epochs"], means_supres,
                         mode="repulse", disc="proto", alpha=1.0,
@@ -342,9 +351,18 @@ def main():
 
     if args.plots:
         tag = f"{ds}_exp28_{cfg['emb_dim']}d"
-        plot_latent_panels({n: (tests[n], te_lab) for n in tests}, holdouts,
-                           names, plot_path(f"latent_{tag}.png"),
-                           title=f"exp28 [{ds}]: sup / ssl / concat / res")
+        if cfg["n_classes"] > 10:
+            # too many classes for per-class colors: seen vs holdout only
+            plot_lab = np.isin(te_lab, list(holdouts)).astype(int)
+            plot_spaces = {n: (tests[n], plot_lab) for n in tests}
+            plot_holdouts, plot_names = {1}, ["seen", "holdout"]
+        else:
+            plot_spaces = {n: (tests[n], te_lab) for n in tests}
+            plot_holdouts, plot_names = holdouts, names
+        plot_latent_panels(plot_spaces, plot_holdouts, plot_names,
+                           plot_path(f"latent_{tag}.png"),
+                           title=f"exp28 [{ds}]: sup / ssl / concat / res "
+                                 f"/ supres")
 
     # ----- discovery with clustering in each space --------------------------
     # run_discovery fine-tunes the backbone in place: give each loop a copy.
