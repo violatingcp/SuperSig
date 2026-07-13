@@ -212,6 +212,9 @@ def main():
     ap.add_argument("--dataset", choices=["cifar10", "cifar100", "mnist"],
                     default="cifar10")
     ap.add_argument("--holdout", type=int, default=4)
+    ap.add_argument("--holdouts", default=None,
+                    help="comma list of holdout classes (overrides --holdout;"
+                         " cifar only -- the mnist two-view loader takes one)")
     ap.add_argument("--rounds", type=int, default=2)
     ap.add_argument("--quick", action="store_true")
     ap.add_argument("--limit", type=int, default=None)
@@ -226,7 +229,10 @@ def main():
     ssl_ep = args.ssl_epochs or (2 if args.quick else 20)
     res_ep = args.res_epochs or (2 if args.quick else 10)
     ft_ep = 1 if args.quick else cfg["ft_epochs"]
-    holdouts = {args.holdout}
+    holdouts = ({int(x) for x in args.holdouts.split(",")}
+                if args.holdouts else {args.holdout})
+    if ds == "mnist" and len(holdouts) > 1:
+        ap.error("--holdouts with multiple classes is cifar-only")
     seen = [c for c in range(cfg["n_classes"]) if c not in holdouts]
     if ds == "mnist":
         names = [str(d) for d in range(10)]
@@ -350,7 +356,8 @@ def main():
     print_gauss_table(gauss)
 
     if args.plots:
-        tag = f"{ds}_exp28_{cfg['emb_dim']}d"
+        tag = (f"{ds}_exp28_{cfg['emb_dim']}d"
+               + (f"_k{len(holdouts)}" if len(holdouts) > 1 else ""))
         if cfg["n_classes"] > 10:
             # too many classes for per-class colors: seen vs holdout only
             plot_lab = np.isin(te_lab, list(holdouts)).astype(int)
