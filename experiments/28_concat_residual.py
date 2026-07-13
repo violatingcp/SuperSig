@@ -42,7 +42,8 @@ from sklearn.metrics import roc_auc_score
 from supersig.config import DATA_DIR, DEVICE, plot_path
 from supersig.data import (get_cifar_loaders, get_loaders, cifar_two_view_loader,
                            two_view_loader, cifar_balanced_loader,
-                           mnist_balanced_loader, BalancedBatchSampler,
+                           mnist_balanced_loader, cifar_two_view_balanced_loader,
+                           mnist_two_view_balanced_loader, BalancedBatchSampler,
                            _cifar_spec, TF_PLAIN)
 from supersig.losses import make_anchors
 from supersig.models import CIFARResNetBackbone, ConvBackbone
@@ -223,6 +224,12 @@ def main():
     ap.add_argument("--ssl-epochs", type=int, default=None)
     ap.add_argument("--res-epochs", type=int, default=None)
     ap.add_argument("--plots", action="store_true")
+    ap.add_argument("--arms", default=None,
+                    help="comma subset of sup,ssl,concat,res,supres "
+                         "(default: all; dependencies are trained silently)")
+    ap.add_argument("--res-classwise", action="store_true",
+                    help="classwise residual SIGReg for the res arm "
+                         "(uses a class-balanced two-view loader)")
     args = ap.parse_args()
     ds = args.dataset
     cfg = recipe("cifar10" if ds == "mnist" else ds, emb_dim=args.emb_dim)
@@ -263,12 +270,20 @@ def main():
                                               limit=args.limit, dataset=ds)
     train_eval_loader = DataLoader(train_loader.dataset, batch_size=256,
                                    shuffle=False, num_workers=2)
+    arms = (args.arms.split(",") if args.arms
+            else ["sup", "ssl", "concat", "res", "supres"])
+    need_sup = bool({"sup", "concat", "res"} & set(arms))
+    need_ssl = bool({"ssl", "concat", "supres"} & set(arms))
     print(f"exp28 [{ds}] emb_dim={cfg['emb_dim']} holdout={sorted(holdouts)} "
-          f"ssl_ep={ssl_ep} res_ep={res_ep}")
+          f"ssl_ep={ssl_ep} res_ep={res_ep} arms={','.join(arms)}"
+          f"{' res-classwise' if args.res_classwise else ''}")
 
     # ----- sup: settled supervised embedding --------------------------------
-    print("\n----- space: sup (supervised SIGReg, exp-26 recipe) -----")
-    if ds != "mnist":
+    if need_sup:
+        print("\n----- space: sup (supervised SIGReg, exp-26 recipe) -----")
+    if not need_sup:
+        pass
+    elif ds != "mnist":
         sup, means_sup, _ = supervised_embedding(
             ds, holdouts=holdouts, quick=args.quick, limit=args.limit,
             seed=args.seed, emb_dim=cfg["emb_dim"])
@@ -285,62 +300,81 @@ def main():
                             rep_weight=cfg["rep_weight"],
                             sigreg_weight=cfg["sigreg_weight"],
                             n_slices=cfg["n_slices"])
-    means_sup = means_sup.detach()
+    if need_sup:
+        means_sup = means_sup.detach()
 
     # ----- ssl: unlabeled two-view SIGReg -----------------------------------
-    print("\n----- space: ssl (unlabeled SIGReg + augmentations) -----")
-    torch.manual_seed(args.seed + 1); np.random.seed(args.seed + 1)
-    trunk = (ConvBackbone(cfg["emb_dim"]) if ds == "mnist" else
-             CIFARResNetBackbone(cfg["emb_dim"], arch=cfg["arch"],
-                                 pretrain=ds)).to(DEVICE)
-    train_sigreg_ssl(trunk, tv_loader, ssl_ep)
-
-    ssl_tr, tr_lab = collect_embeddings(trunk, train_eval_loader)
-    tr_seen = np.isin(tr_lab, seen)
-    ssl_cents = class_centroids(ssl_tr[tr_seen], tr_lab[tr_seen], seen)
+    if need_ssl:
+        print("\n----- space: ssl (unlabeled SIGReg + augmentations) -----")
+        torch.manual_seed(args.seed + 1); np.random.seed(args.seed + 1)
+        trunk = (ConvBackbone(cfg["emb_dim"]) if ds == "mnist" else
+                 CIFARResNetBackbone(cfg["emb_dim"], arch=cfg["arch"],
+                                     pretrain=ds)).to(DEVICE)
+        train_sigreg_ssl(trunk, tv_loader, ssl_ep)
+        ssl_tr, ssl_lab = collect_embeddings(trunk, train_eval_loader)
+        m = np.isin(ssl_lab, seen)
+        ssl_cents = class_centroids(ssl_tr[m], ssl_lab[m], seen)
 
     # ----- res: SSL on the supervised residual ------------------------------
-    print("\n----- space: res (SSL on the supervised residual) -----")
-    torch.manual_seed(args.seed + 2); np.random.seed(args.seed + 2)
-    res = copy.deepcopy(sup)
-    train_sigreg_residual_ssl(res, tv_lab_loader, res_ep, means_sup,
-                              n_slices=cfg["n_slices"])
+    if "res" in arms:
+        print("\n----- space: res (SSL on the supervised residual"
+              f"{', classwise' if args.res_classwise else ''}) -----")
+        torch.manual_seed(args.seed + 2); np.random.seed(args.seed + 2)
+        res = copy.deepcopy(sup)
+        if args.res_classwise:
+            res_loader = (mnist_two_view_balanced_loader(
+                              holdout=holdouts, quick=args.quick)
+                          if ds == "mnist" else
+                          cifar_two_view_balanced_loader(
+                              ds, holdout=holdouts, quick=args.quick,
+                              limit=args.limit))
+        else:
+            res_loader = tv_lab_loader
+        train_sigreg_residual_ssl(res, res_loader, res_ep, means_sup,
+                                  n_slices=cfg["n_slices"],
+                                  classwise=args.res_classwise)
 
     # ----- supres: supervised network on the ssl residual -------------------
-    print("\n----- space: supres (supervised on the ssl residual) -----")
-    torch.manual_seed(args.seed + 3); np.random.seed(args.seed + 3)
-    supres = copy.deepcopy(trunk)
-    means_supres = fill_means(ssl_cents, seen, cfg).clone()
-    supres_loader = (mnist_balanced_loader(holdout=holdouts, quick=args.quick)
-                     if ds == "mnist" else
-                     cifar_balanced_loader(ds, holdout=holdouts,
-                                           quick=args.quick, limit=args.limit))
-    train_sigreg_hybrid(supres, supres_loader, cfg["ssl_epochs"], means_supres,
-                        mode="repulse", disc="proto", alpha=1.0,
-                        rep_weight=cfg["rep_weight"],
-                        sigreg_weight=cfg["sigreg_weight"],
-                        n_slices=cfg["n_slices"])
-    means_supres = means_supres.detach()
+    if "supres" in arms:
+        print("\n----- space: supres (supervised on the ssl residual) -----")
+        torch.manual_seed(args.seed + 3); np.random.seed(args.seed + 3)
+        supres = copy.deepcopy(trunk)
+        means_supres = fill_means(ssl_cents, seen, cfg).clone()
+        supres_loader = (mnist_balanced_loader(holdout=holdouts,
+                                               quick=args.quick)
+                         if ds == "mnist" else
+                         cifar_balanced_loader(ds, holdout=holdouts,
+                                               quick=args.quick,
+                                               limit=args.limit))
+        train_sigreg_hybrid(supres, supres_loader, cfg["ssl_epochs"],
+                            means_supres, mode="repulse", disc="proto",
+                            alpha=1.0, rep_weight=cfg["rep_weight"],
+                            sigreg_weight=cfg["sigreg_weight"],
+                            n_slices=cfg["n_slices"])
+        means_supres = means_supres.detach()
 
     # ----- assemble spaces and anchors --------------------------------------
-    sup_te, te_lab = collect_embeddings(sup, test_loader)
-    ssl_te, _ = collect_embeddings(trunk, test_loader)
-    res_te, _ = collect_embeddings(res, test_loader)
-    supres_te, _ = collect_embeddings(supres, test_loader)
-    cat_te = np.concatenate([sup_te, ssl_te], axis=1)
-
-    res_tr, _ = collect_embeddings(res, train_eval_loader)
-    res_cents = class_centroids(res_tr[tr_seen], tr_lab[tr_seen], seen)
-
-    anchors = {
-        "sup": means_sup[seen],
-        "ssl": ssl_cents,
-        "concat": torch.cat([means_sup[seen], ssl_cents], dim=1),
-        "res": res_cents,
-        "supres": means_supres[seen],
-    }
-    tests = {"sup": sup_te, "ssl": ssl_te, "concat": cat_te, "res": res_te,
-             "supres": supres_te}
+    anchors, tests = {}, {}
+    if need_sup:
+        sup_te, te_lab = collect_embeddings(sup, test_loader)
+    if need_ssl:
+        ssl_te, te_lab = collect_embeddings(trunk, test_loader)
+    if "sup" in arms:
+        anchors["sup"], tests["sup"] = means_sup[seen], sup_te
+    if "ssl" in arms:
+        anchors["ssl"], tests["ssl"] = ssl_cents, ssl_te
+    if "concat" in arms:
+        anchors["concat"] = torch.cat([means_sup[seen], ssl_cents], dim=1)
+        tests["concat"] = np.concatenate([sup_te, ssl_te], axis=1)
+    if "res" in arms:
+        res_tr, res_lab = collect_embeddings(res, train_eval_loader)
+        m = np.isin(res_lab, seen)
+        res_cents = class_centroids(res_tr[m], res_lab[m], seen)
+        res_te, te_lab = collect_embeddings(res, test_loader)
+        anchors["res"], tests["res"] = res_cents, res_te
+    if "supres" in arms:
+        supres_te, te_lab = collect_embeddings(supres, test_loader)
+        anchors["supres"], tests["supres"] = means_supres[seen], supres_te
 
     print("\n----- pre-discovery metrics -----")
     pre = {}
@@ -357,7 +391,8 @@ def main():
 
     if args.plots:
         tag = (f"{ds}_exp28_{cfg['emb_dim']}d"
-               + (f"_k{len(holdouts)}" if len(holdouts) > 1 else ""))
+               + (f"_k{len(holdouts)}" if len(holdouts) > 1 else "")
+               + ("_resc" if args.res_classwise else ""))
         if cfg["n_classes"] > 10:
             # too many classes for per-class colors: seen vs holdout only
             plot_lab = np.isin(te_lab, list(holdouts)).astype(int)
@@ -368,53 +403,46 @@ def main():
             plot_holdouts, plot_names = holdouts, names
         plot_latent_panels(plot_spaces, plot_holdouts, plot_names,
                            plot_path(f"latent_{tag}.png"),
-                           title=f"exp28 [{ds}]: sup / ssl / concat / res "
-                                 f"/ supres")
+                           title=f"exp28 [{ds}]: " + " / ".join(tests))
 
     # ----- discovery with clustering in each space --------------------------
     # run_discovery fine-tunes the backbone in place: give each loop a copy.
+    disc_kw = dict(base_ds=base, train_eval_loader=train_eval_loader,
+                   test_loader=test_loader, seen=seen, holdouts=holdouts,
+                   dataset_name=ds, rep_weight=cfg["rep_weight"],
+                   sigreg_weight=cfg["sigreg_weight"],
+                   n_slices=cfg["n_slices"], rounds=args.rounds,
+                   ft_epochs=ft_ep, names=names, seed=args.seed)
     hist = {}
-    print("\n----- discovery: sup -----")
-    _, hist["sup"] = run_discovery(
-        copy.deepcopy(sup), means_sup.clone(), base_ds=base,
-        train_eval_loader=train_eval_loader,
-        test_loader=test_loader, seen=seen, holdouts=holdouts, dataset_name=ds,
-        rep_weight=cfg["rep_weight"], sigreg_weight=cfg["sigreg_weight"],
-        n_slices=cfg["n_slices"], rounds=args.rounds, ft_epochs=ft_ep,
-        names=names, seed=args.seed)
-    print("\n----- discovery: ssl (centroid anchors) -----")
-    _, hist["ssl"] = run_discovery(
-        copy.deepcopy(trunk), fill_means(ssl_cents, seen, cfg), base_ds=base,
-        train_eval_loader=train_eval_loader, test_loader=test_loader,
-        seen=seen, holdouts=holdouts, dataset_name=ds,
-        rep_weight=cfg["rep_weight"], sigreg_weight=cfg["sigreg_weight"],
-        n_slices=cfg["n_slices"], rounds=args.rounds, ft_epochs=ft_ep,
-        names=names, seed=args.seed)
-    print("\n----- discovery: concat (ft sup branch only) -----")
-    hist["concat"] = run_concat_discovery(
-        copy.deepcopy(sup), trunk, means_sup.clone(), ssl_cents, base=base,
-        dim=cfg["emb_dim"], train_eval_loader=train_eval_loader,
-        test_loader=test_loader, seen=seen, holdouts=holdouts, cfg=cfg,
-        rounds=args.rounds, ft_epochs=ft_ep, names=names, seed=args.seed)
-    print("\n----- discovery: res (centroid anchors) -----")
-    _, hist["res"] = run_discovery(
-        copy.deepcopy(res), fill_means(res_cents, seen, cfg), base_ds=base,
-        train_eval_loader=train_eval_loader, test_loader=test_loader,
-        seen=seen, holdouts=holdouts, dataset_name=ds,
-        rep_weight=cfg["rep_weight"], sigreg_weight=cfg["sigreg_weight"],
-        n_slices=cfg["n_slices"], rounds=args.rounds, ft_epochs=ft_ep,
-        names=names, seed=args.seed)
-    print("\n----- discovery: supres -----")
-    _, hist["supres"] = run_discovery(
-        copy.deepcopy(supres), means_supres.clone(), base_ds=base,
-        train_eval_loader=train_eval_loader, test_loader=test_loader,
-        seen=seen, holdouts=holdouts, dataset_name=ds,
-        rep_weight=cfg["rep_weight"], sigreg_weight=cfg["sigreg_weight"],
-        n_slices=cfg["n_slices"], rounds=args.rounds, ft_epochs=ft_ep,
-        names=names, seed=args.seed)
+    if "sup" in arms:
+        print("\n----- discovery: sup -----")
+        _, hist["sup"] = run_discovery(copy.deepcopy(sup), means_sup.clone(),
+                                       **disc_kw)
+    if "ssl" in arms:
+        print("\n----- discovery: ssl (centroid anchors) -----")
+        _, hist["ssl"] = run_discovery(copy.deepcopy(trunk),
+                                       fill_means(ssl_cents, seen, cfg),
+                                       **disc_kw)
+    if "concat" in arms:
+        print("\n----- discovery: concat (ft sup branch only) -----")
+        hist["concat"] = run_concat_discovery(
+            copy.deepcopy(sup), trunk, means_sup.clone(), ssl_cents, base=base,
+            dim=cfg["emb_dim"], train_eval_loader=train_eval_loader,
+            test_loader=test_loader, seen=seen, holdouts=holdouts, cfg=cfg,
+            rounds=args.rounds, ft_epochs=ft_ep, names=names, seed=args.seed)
+    if "res" in arms:
+        print("\n----- discovery: res (centroid anchors) -----")
+        _, hist["res"] = run_discovery(copy.deepcopy(res),
+                                       fill_means(res_cents, seen, cfg),
+                                       **disc_kw)
+    if "supres" in arms:
+        print("\n----- discovery: supres -----")
+        _, hist["supres"] = run_discovery(copy.deepcopy(supres),
+                                          means_supres.clone(), **disc_kw)
 
     print(f"\n===== EXP28 SUMMARY [{ds}, {cfg['emb_dim']}d] =====")
-    for name in ("sup", "ssl", "concat", "res", "supres"):
+    for name in [a for a in ("sup", "ssl", "concat", "res", "supres")
+                 if a in arms]:
         acc, auc = pre[name]
         print(f"  [{name:6s}] pre: acc={acc:.4f} novelty-AUC={auc:.4f}")
         for h in hist[name]:

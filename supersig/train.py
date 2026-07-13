@@ -183,19 +183,27 @@ def train_sigreg_hybrid(backbone, loader, epochs, means, mode="repulse",
 
 
 def train_sigreg_residual_ssl(backbone, two_view_labeled_loader, epochs, means,
-                              lam=1.0, lr=1e-3, n_slices=64):
+                              lam=1.0, lr=1e-3, n_slices=64, classwise=False):
     """
     SSL on the supervised-SIGReg residual (matching-pursuit style, exp 28).
 
     Two augmented views per image; invariance between the view embeddings and
-    SIGReg on the residual z - mean_y pooled across the whole batch, with the
-    class means FROZEN.  The class atom (mean) explains the class component;
-    the training shapes what the atom cannot explain into a single augment-
-    invariant N(0, I) cloud.
+    SIGReg on the residual z - mean_y with the class means FROZEN.  The class
+    atom (mean) explains the class component; the training shapes what the
+    atom cannot explain into an augment-invariant N(0, I).
+
+    classwise=False pools the residuals of the whole batch into one cloud.
+    That constrains only the MIXTURE, leaving two degenerate solutions for the
+    invariance term (per-class point masses when a k-atom mixture can fake a
+    Gaussian; near-constant embeddings whose residual spread comes from the
+    frozen -mean_y offsets) -- both observed at high dim / many classes.
+    classwise=True applies SIGReg per class (needs a class-balanced loader),
+    so every class must individually be N(0, I) around its atom.
     """
     means = means.detach()
     opt = torch.optim.Adam(backbone.parameters(), lr=lr)
     backbone.train()
+    tag = "sigreg-residual-cw" if classwise else "sigreg-residual"
     for ep in range(epochs):
         inv_run, reg_run, n = 0.0, 0.0, 0
         for v1, v2, y in two_view_labeled_loader:
@@ -203,14 +211,18 @@ def train_sigreg_residual_ssl(backbone, two_view_labeled_loader, epochs, means,
             opt.zero_grad()
             z1, z2 = backbone(v1), backbone(v2)
             inv = F.mse_loss(z1, z2)
-            reg = 0.5 * (sigreg_loss(z1 - means[y], n_slices=n_slices)
-                         + sigreg_loss(z2 - means[y], n_slices=n_slices))
+            if classwise:
+                reg = 0.5 * (classwise_sigreg_loss(z1, y, means, n_slices=n_slices)
+                             + classwise_sigreg_loss(z2, y, means, n_slices=n_slices))
+            else:
+                reg = 0.5 * (sigreg_loss(z1 - means[y], n_slices=n_slices)
+                             + sigreg_loss(z2 - means[y], n_slices=n_slices))
             (inv + lam * reg).backward()
             opt.step()
             inv_run += inv.item() * v1.size(0)
             reg_run += reg.item() * v1.size(0)
             n += v1.size(0)
-        print(f"  [sigreg-residual] epoch {ep+1}/{epochs}  inv={inv_run/n:.4f}  "
+        print(f"  [{tag}] epoch {ep+1}/{epochs}  inv={inv_run/n:.4f}  "
               f"res-sigreg={reg_run/n:.4f}")
 
 

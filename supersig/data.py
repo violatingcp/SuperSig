@@ -206,6 +206,45 @@ def cifar_balanced_loader(dataset="cifar10", holdout=None, quick=False, limit=No
     return DataLoader(sub, batch_sampler=sampler, num_workers=2)
 
 
+def cifar_two_view_balanced_loader(dataset="cifar10", holdout=None, quick=False,
+                                   limit=None, classes_per_batch=25,
+                                   per_class=24):
+    """Class-balanced two-view labeled loader (per-class SSL statistics,
+    e.g. classwise residual SIGReg, need enough samples per class per batch)."""
+    cls, _, aug = _cifar_spec(dataset)
+    raw = cls(DATA_DIR, train=True, download=True, transform=None)
+    n = 8000 if quick else (limit or len(raw))
+    tgt = list(raw.targets)
+    hs = _holdout_set(holdout)
+    idx = [i for i in range(n) if tgt[i] not in hs]
+    base = Subset(raw, idx)
+    ds = TwoViewLabeledMNIST(base, aug)
+    sampler = BalancedBatchSampler([tgt[i] for i in idx], classes_per_batch,
+                                   per_class)
+    tag = "" if holdout is None else f" (no {holdout})"
+    print(f"  {dataset} balanced two-view loader{tag}: {len(ds)} images, "
+          f"{len(sampler)} batches of {sampler.n_classes}x{per_class}")
+    return DataLoader(ds, batch_sampler=sampler, num_workers=2)
+
+
+def mnist_two_view_balanced_loader(holdout=None, quick=False,
+                                   classes_per_batch=10, per_class=24):
+    """MNIST counterpart of cifar_two_view_balanced_loader."""
+    raw = datasets.MNIST(DATA_DIR, train=True, download=True, transform=None)
+    n = 8000 if quick else len(raw)
+    tgt = [int(t) for t in raw.targets]
+    hs = _holdout_set(holdout)
+    idx = [i for i in range(n) if tgt[i] not in hs]
+    base = Subset(raw, idx)
+    ds = TwoViewLabeledMNIST(base, TF_AUG)
+    sampler = BalancedBatchSampler([tgt[i] for i in idx], classes_per_batch,
+                                   per_class)
+    tag = "" if holdout is None else f" (no {holdout})"
+    print(f"  mnist balanced two-view loader{tag}: {len(ds)} images, "
+          f"{len(sampler)} batches of {sampler.n_classes}x{per_class}")
+    return DataLoader(ds, batch_sampler=sampler, num_workers=2)
+
+
 def get_cifar_loaders(batch_size=256, quick=False, limit=None, dataset="cifar10"):
     cls, plain, _ = _cifar_spec(dataset)
     train = cls(DATA_DIR, train=True, download=True, transform=plain)
