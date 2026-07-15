@@ -1,0 +1,143 @@
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+recipe [cifar10]: n_classes=10  emb_dim=4  sigreg_weight=20.0  n_slices=256  pair_dist=5.0  ssl_epochs=10  ft_epochs=5  arch=resnet20  rep_weight=20.0
+
+===== k=1 (deer) =====
+
+----- arm: default -----
+Using cache found in /home/pharris/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+  cifar10 balanced loader (no {4}): 45000 images, 208 batches of 9x24
+  [sigreg+proto] epoch 1/10  sigreg=0.4514  proto=0.8313  min_dist=1.65  mean_dist=5.02
+  [sigreg+proto] epoch 2/10  sigreg=0.1445  proto=0.4814  min_dist=1.99  mean_dist=5.40
+  [sigreg+proto] epoch 3/10  sigreg=0.1332  proto=0.3670  min_dist=2.30  mean_dist=5.74
+  [sigreg+proto] epoch 4/10  sigreg=0.1301  proto=0.3105  min_dist=2.59  mean_dist=6.05
+  [sigreg+proto] epoch 5/10  sigreg=0.1349  proto=0.2925  min_dist=2.85  mean_dist=6.33
+  [sigreg+proto] epoch 6/10  sigreg=0.1332  proto=0.2507  min_dist=3.09  mean_dist=6.60
+  [sigreg+proto] epoch 7/10  sigreg=0.1314  proto=0.2141  min_dist=3.32  mean_dist=6.86
+  [sigreg+proto] epoch 8/10  sigreg=0.1365  proto=0.2185  min_dist=3.54  mean_dist=7.10
+  [sigreg+proto] epoch 9/10  sigreg=0.1339  proto=0.1972  min_dist=3.75  mean_dist=7.33
+  [sigreg+proto] epoch 10/10  sigreg=0.1272  proto=0.1627  min_dist=3.95  mean_dist=7.56
+  pre-discovery: seen nearest-mean acc=0.8628  novelty AUC=0.7190
+  [sigreg+proto] epoch 1/5  sigreg=0.2279  proto=0.8239  min_dist=3.45  mean_dist=7.06
+  [sigreg+proto] epoch 2/5  sigreg=0.1948  proto=0.6810  min_dist=3.58  mean_dist=7.36
+  [sigreg+proto] epoch 3/5  sigreg=0.1904  proto=0.6215  min_dist=3.70  mean_dist=7.64
+  [sigreg+proto] epoch 4/5  sigreg=0.2017  proto=0.6309  min_dist=3.83  mean_dist=7.90
+  [sigreg+proto] epoch 5/5  sigreg=0.2108  proto=0.6423  min_dist=3.94  mean_dist=8.14
+  round 1: pool=3636 purity=0.381 k-hat=4 anchors=4  margin=0.8976  mean-anchor=0.9107  deer=0.911
+    merged 8 -> 7 anchors
+  [sigreg+proto] epoch 1/5  sigreg=0.2720  proto=1.0301  min_dist=1.34  mean_dist=7.97
+  [sigreg+proto] epoch 2/5  sigreg=0.2435  proto=0.9423  min_dist=1.61  mean_dist=8.16
+  [sigreg+proto] epoch 3/5  sigreg=0.2467  proto=0.9095  min_dist=1.83  mean_dist=8.35
+  [sigreg+proto] epoch 4/5  sigreg=0.2564  proto=0.9202  min_dist=2.02  mean_dist=8.54
+  [sigreg+proto] epoch 5/5  sigreg=0.2621  proto=0.9195  min_dist=2.19  mean_dist=8.71
+  round 2: pool=2527 purity=0.110 k-hat=4 anchors=7  margin=0.8902  mean-anchor=0.9215  deer=0.922
+
+----- arm: dual -----
+Using cache found in /home/pharris/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+  cifar10 balanced loader (no {4}): 45000 images, 208 batches of 9x24
+  [dual-visreg] epoch 1/10  total=61.3936  global=246.5581  local=12.0819
+  [dual-visreg] epoch 2/10  total=60.6593  global=237.9336  local=13.0725
+  [dual-visreg] epoch 3/10  total=62.0661  global=250.8524  local=11.8956
+  [dual-visreg] epoch 4/10  total=61.7219  global=246.2410  local=12.4737
+  [dual-visreg] epoch 5/10  total=62.2294  global=250.0736  local=12.2146
+  [dual-visreg] epoch 6/10  total=62.7378  global=253.2947  local=12.0789
+  [dual-visreg] epoch 7/10  total=63.0059  global=256.4375  local=11.7184
+  [dual-visreg] epoch 8/10  total=63.4974  global=258.2181  local=11.8537
+  [dual-visreg] epoch 9/10  total=66.6230  global=283.0527  local=10.0125
+  [dual-visreg] epoch 10/10  total=68.7485  global=302.9353  local=8.1614
+  pre-discovery: seen nearest-mean acc=0.2443  novelty AUC=0.3435
+    merged 4 -> 3 anchors
+  [sigreg+proto] epoch 1/5  sigreg=0.5269  proto=2.0192  min_dist=0.02  mean_dist=5.63
+  [sigreg+proto] epoch 2/5  sigreg=0.2725  proto=1.7270  min_dist=0.02  mean_dist=5.76
+  [sigreg+proto] epoch 3/5  sigreg=0.2238  proto=1.6412  min_dist=0.03  mean_dist=5.88
+  [sigreg+proto] epoch 4/5  sigreg=0.2001  proto=1.5887  min_dist=0.03  mean_dist=6.02
+  [sigreg+proto] epoch 5/5  sigreg=0.1951  proto=1.5588  min_dist=0.04  mean_dist=6.15
+  round 1: pool=2250 purity=0.000 k-hat=4 anchors=3  margin=0.4077  mean-anchor=0.5075  deer=0.507
+    merged 7 -> 5 anchors
+  [sigreg+proto] epoch 1/5  sigreg=0.1906  proto=1.6369  min_dist=0.16  mean_dist=5.90
+  [sigreg+proto] epoch 2/5  sigreg=0.1761  proto=1.5697  min_dist=0.21  mean_dist=6.07
+  [sigreg+proto] epoch 3/5  sigreg=0.1790  proto=1.5496  min_dist=0.24  mean_dist=6.23
+  [sigreg+proto] epoch 4/5  sigreg=0.1825  proto=1.5426  min_dist=0.27  mean_dist=6.38
+  [sigreg+proto] epoch 5/5  sigreg=0.1865  proto=1.5423  min_dist=0.29  mean_dist=6.53
+  round 2: pool=2444 purity=0.079 k-hat=4 anchors=5  margin=0.5096  mean-anchor=0.5525  deer=0.553
+
+  --- gaussianity (seen classes, test set) k=1 ---
+  metric                         default/pre      default/ft        dual/pre         dual/ft
+  eig min (class cov)                  0.634           0.381          -0.000           0.002
+  eig max (class cov)                  6.903          13.500          19.935           6.652
+  eig cond worst                        10.9            25.7    9709870080.0           762.3
+  class RMS min                        1.085           1.265           0.000           0.969
+  class RMS mean                       1.308           1.554           0.522           1.092
+  class RMS max                        1.625           2.072           2.376           1.528
+  max |corr| (worst class)             0.691           0.789           1.000           0.978
+  SW ratio mean                        23.87           33.54          466.18           10.61
+  SW ratio worst                       27.84           37.64         1031.46           30.44
+  |skew| mean                          0.749           0.903          12.082           0.361
+  |ex-kurt| mean                       1.271           1.988         313.918           0.660
+  centroid dist min                     4.04            5.53            0.00            0.17
+  centroid dist mean                    6.82            8.63            2.92            3.56
+  separation (min d/RMS)                3.09            3.56            0.00            0.15
+  saved /home/pharris/sigreg/SuperSig/plots/latent_cifar10_exp27_4d_k1.png
+  saved /home/pharris/sigreg/SuperSig/plots/corner_cifar10_exp27_4d_k1_default_pre.png
+  saved /home/pharris/sigreg/SuperSig/plots/corner_cifar10_exp27_4d_k1_default_ft.png
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+  saved /home/pharris/sigreg/SuperSig/plots/corner_cifar10_exp27_4d_k1_dual_pre.png
+  saved /home/pharris/sigreg/SuperSig/plots/corner_cifar10_exp27_4d_k1_dual_ft.png
+
+===== DUAL-VISREG vs DEFAULT SUMMARY [cifar10] =====
+  k=1 [default] pre: acc=0.8628 novelty-AUC=0.7190
+          round 1: purity=0.381 anchors=4  margin=0.8976  mean-anchor=0.9107
+          round 2: purity=0.110 anchors=7  margin=0.8902  mean-anchor=0.9215
+  k=1 [dual   ] pre: acc=0.2443 novelty-AUC=0.3435
+          round 1: purity=0.000 anchors=3  margin=0.4077  mean-anchor=0.5075
+          round 2: purity=0.079 anchors=5  margin=0.5096  mean-anchor=0.5525
+Done.

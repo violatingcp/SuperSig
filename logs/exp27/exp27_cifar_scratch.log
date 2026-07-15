@@ -1,0 +1,240 @@
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+recipe [cifar10] [scratch]: n_classes=10  emb_dim=16  sigreg_weight=20.0  n_slices=256  pair_dist=5.0  ssl_epochs=20  ft_epochs=5  arch=resnet20  rep_weight=20.0
+
+===== k=1 (deer) =====
+
+----- arm: default -----
+Using cache found in /home/pharris/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+  cifar10 balanced loader (no {4}): 45000 images, 208 batches of 9x24
+  [sigreg+proto] epoch 1/20  sigreg=0.5815  proto=2.8136  min_dist=5.08  mean_dist=5.52
+  [sigreg+proto] epoch 2/20  sigreg=0.2725  proto=2.5095  min_dist=5.04  mean_dist=6.03
+  [sigreg+proto] epoch 3/20  sigreg=0.2107  proto=2.1512  min_dist=5.10  mean_dist=6.51
+  [sigreg+proto] epoch 4/20  sigreg=0.1905  proto=1.8834  min_dist=5.23  mean_dist=6.98
+  [sigreg+proto] epoch 5/20  sigreg=0.1802  proto=1.6305  min_dist=5.37  mean_dist=7.43
+  [sigreg+proto] epoch 6/20  sigreg=0.1782  proto=1.5080  min_dist=5.55  mean_dist=7.87
+  [sigreg+proto] epoch 7/20  sigreg=0.1758  proto=1.3718  min_dist=5.72  mean_dist=8.29
+  [sigreg+proto] epoch 8/20  sigreg=0.1722  proto=1.2218  min_dist=5.90  mean_dist=8.69
+  [sigreg+proto] epoch 9/20  sigreg=0.1717  proto=1.1319  min_dist=6.11  mean_dist=9.07
+  [sigreg+proto] epoch 10/20  sigreg=0.1732  proto=1.0545  min_dist=6.33  mean_dist=9.42
+  [sigreg+proto] epoch 11/20  sigreg=0.1726  proto=0.9795  min_dist=6.54  mean_dist=9.75
+  [sigreg+proto] epoch 12/20  sigreg=0.1679  proto=0.8571  min_dist=6.73  mean_dist=10.07
+  [sigreg+proto] epoch 13/20  sigreg=0.1669  proto=0.7676  min_dist=6.93  mean_dist=10.37
+  [sigreg+proto] epoch 14/20  sigreg=0.1669  proto=0.7237  min_dist=7.09  mean_dist=10.65
+  [sigreg+proto] epoch 15/20  sigreg=0.1624  proto=0.6380  min_dist=7.25  mean_dist=10.93
+  [sigreg+proto] epoch 16/20  sigreg=0.1616  proto=0.5506  min_dist=7.42  mean_dist=11.19
+  [sigreg+proto] epoch 17/20  sigreg=0.1581  proto=0.5098  min_dist=7.62  mean_dist=11.45
+  [sigreg+proto] epoch 18/20  sigreg=0.1572  proto=0.5004  min_dist=7.78  mean_dist=11.69
+  [sigreg+proto] epoch 19/20  sigreg=0.1587  proto=0.4452  min_dist=7.95  mean_dist=11.92
+  [sigreg+proto] epoch 20/20  sigreg=0.1593  proto=0.4361  min_dist=8.11  mean_dist=12.13
+  pre-discovery: seen nearest-mean acc=0.7609  novelty AUC=0.6216
+  [sigreg+proto] epoch 1/5  sigreg=0.2026  proto=1.7281  min_dist=4.70  mean_dist=10.74
+  [sigreg+proto] epoch 2/5  sigreg=0.1882  proto=1.5017  min_dist=4.95  mean_dist=11.16
+  [sigreg+proto] epoch 3/5  sigreg=0.1897  proto=1.4645  min_dist=5.15  mean_dist=11.53
+  [sigreg+proto] epoch 4/5  sigreg=0.1888  proto=1.3836  min_dist=5.32  mean_dist=11.88
+  [sigreg+proto] epoch 5/5  sigreg=0.1939  proto=1.4297  min_dist=5.49  mean_dist=12.20
+  round 1: pool=2966 purity=0.241 k-hat=4 anchors=4  margin=0.7306  mean-anchor=0.8023  deer=0.802
+  [sigreg+proto] epoch 1/5  sigreg=0.3017  proto=2.8969  min_dist=3.78  mean_dist=11.85
+  [sigreg+proto] epoch 2/5  sigreg=0.2538  proto=2.3857  min_dist=4.27  mean_dist=12.16
+  [sigreg+proto] epoch 3/5  sigreg=0.2436  proto=2.2142  min_dist=4.67  mean_dist=12.46
+  [sigreg+proto] epoch 4/5  sigreg=0.2459  proto=2.1951  min_dist=4.95  mean_dist=12.72
+  [sigreg+proto] epoch 5/5  sigreg=0.2404  proto=2.0635  min_dist=5.05  mean_dist=12.97
+  round 2: pool=2451 purity=0.082 k-hat=4 anchors=8  margin=0.7285  mean-anchor=0.7839  deer=0.784
+
+----- arm: dual -----
+Using cache found in /home/pharris/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+  cifar10 balanced loader (no {4}): 45000 images, 208 batches of 9x24
+  [dual-visreg] epoch 1/20  total=69.5738  global=311.1160  local=7.3506
+  [dual-visreg] epoch 2/20  total=65.7553  global=282.1898  local=9.3173
+  [dual-visreg] epoch 3/20  total=65.2067  global=277.7171  local=9.6633
+  [dual-visreg] epoch 4/20  total=64.6960  global=272.4740  local=10.2012
+  [dual-visreg] epoch 5/20  total=64.6675  global=272.3504  local=10.1974
+  [dual-visreg] epoch 6/20  total=64.6307  global=271.9652  local=10.2376
+  [dual-visreg] epoch 7/20  total=64.4168  global=270.0139  local=10.4140
+  [dual-visreg] epoch 8/20  total=64.1807  global=267.5064  local=10.6794
+  [dual-visreg] epoch 9/20  total=64.8256  global=272.7948  local=10.2667
+  [dual-visreg] epoch 10/20  total=65.2696  global=276.5113  local=9.9673
+  [dual-visreg] epoch 11/20  total=65.6796  global=279.2720  local=9.8252
+  [dual-visreg] epoch 12/20  total=66.5256  global=286.0204  local=9.3215
+  [dual-visreg] epoch 13/20  total=66.1708  global=282.4899  local=9.6728
+  [dual-visreg] epoch 14/20  total=67.0359  global=289.0713  local=9.2217
+  [dual-visreg] epoch 15/20  total=66.6436  global=285.9222  local=9.4591
+  [dual-visreg] epoch 16/20  total=67.9096  global=295.8530  local=8.7390
+  [dual-visreg] epoch 17/20  total=67.9713  global=296.3953  local=8.6923
+  [dual-visreg] epoch 18/20  total=68.1059  global=296.9825  local=8.7094
+  [dual-visreg] epoch 19/20  total=67.4531  global=291.5974  local=9.1336
+  [dual-visreg] epoch 20/20  total=67.5016  global=292.4222  local=9.0172
+  pre-discovery: seen nearest-mean acc=0.3321  novelty AUC=0.3408
+  [sigreg+proto] epoch 1/5  sigreg=0.6104  proto=4.8970  min_dist=0.05  mean_dist=12.27
+  [sigreg+proto] epoch 2/5  sigreg=0.3354  proto=2.9495  min_dist=0.07  mean_dist=12.26
+  [sigreg+proto] epoch 3/5  sigreg=0.3120  proto=2.6771  min_dist=0.09  mean_dist=12.26
+  [sigreg+proto] epoch 4/5  sigreg=0.2813  proto=2.4151  min_dist=0.10  mean_dist=12.28
+  [sigreg+proto] epoch 5/5  sigreg=0.2598  proto=2.3481  min_dist=0.11  mean_dist=12.29
+  round 1: pool=2254 purity=0.002 k-hat=4 anchors=4  margin=0.4380  mean-anchor=0.5094  deer=0.509
+  [sigreg+proto] epoch 1/5  sigreg=0.2563  proto=2.4926  min_dist=0.43  mean_dist=12.31
+  [sigreg+proto] epoch 2/5  sigreg=0.2445  proto=2.3872  min_dist=0.57  mean_dist=12.48
+  [sigreg+proto] epoch 3/5  sigreg=0.2386  proto=2.3793  min_dist=0.66  mean_dist=12.65
+  [sigreg+proto] epoch 4/5  sigreg=0.2324  proto=2.3223  min_dist=0.75  mean_dist=12.81
+  [sigreg+proto] epoch 5/5  sigreg=0.2335  proto=2.3041  min_dist=0.82  mean_dist=12.96
+  round 2: pool=2438 purity=0.077 k-hat=4 anchors=8  margin=0.4479  mean-anchor=0.6666  deer=0.667
+
+  --- gaussianity (seen classes, test set) k=1 ---
+  metric                         default/pre      default/ft        dual/pre         dual/ft
+  eig min (class cov)                  0.003           0.004          -0.000           0.000
+  eig max (class cov)                 12.767          19.774          58.711          21.190
+  eig cond worst                      3252.4          4562.3  549825609728.0        428070.0
+  class RMS min                        1.108           1.344           0.032           0.939
+  class RMS mean                       1.210           1.451           0.625           1.103
+  class RMS max                        1.341           1.605           2.119           1.435
+  max |corr| (worst class)             0.895           0.896           1.000           0.999
+  SW ratio mean                        14.46           23.24          601.56           20.97
+  SW ratio worst                       17.94           33.63          902.34           39.33
+  |skew| mean                          0.532           0.689          14.534           0.623
+  |ex-kurt| mean                       0.703           1.348         357.090           1.743
+  centroid dist min                     4.64            5.46            0.01            0.49
+  centroid dist mean                    9.51           12.21            6.66            7.71
+  separation (min d/RMS)                3.83            3.76            0.01            0.45
+  saved /home/pharris/sigreg/SuperSig/plots/latent_cifar10_exp27_scratch_k1.png
+  saved /home/pharris/sigreg/SuperSig/plots/corner_cifar10_exp27_scratch_k1_default_pre.png
+  saved /home/pharris/sigreg/SuperSig/plots/corner_cifar10_exp27_scratch_k1_default_ft.png
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+  saved /home/pharris/sigreg/SuperSig/plots/corner_cifar10_exp27_scratch_k1_dual_pre.png
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+  saved /home/pharris/sigreg/SuperSig/plots/corner_cifar10_exp27_scratch_k1_dual_ft.png
+
+===== DUAL-VISREG vs DEFAULT SUMMARY [cifar10] =====
+  k=1 [default] pre: acc=0.7609 novelty-AUC=0.6216
+          round 1: purity=0.241 anchors=4  margin=0.7306  mean-anchor=0.8023
+          round 2: purity=0.082 anchors=8  margin=0.7285  mean-anchor=0.7839
+  k=1 [dual   ] pre: acc=0.3321 novelty-AUC=0.3408
+          round 1: purity=0.002 anchors=4  margin=0.4380  mean-anchor=0.5094
+          round 2: purity=0.077 anchors=8  margin=0.4479  mean-anchor=0.6666
+Done.

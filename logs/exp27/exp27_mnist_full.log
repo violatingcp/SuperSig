@@ -1,0 +1,67 @@
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+recipe [mnist]: n_classes=10  emb_dim=16  sigreg_weight=20.0  n_slices=256  pair_dist=5.0  ssl_epochs=10  ft_epochs=5  arch=resnet20  rep_weight=20.0
+
+===== k=1 (4) =====
+
+----- arm: default -----
+  mnist balanced loader (no {4}): 54158 images, 250 batches of 9x24
+  [sigreg+proto] epoch 1/10  sigreg=0.2420  proto=0.5260  min_dist=5.60  mean_dist=5.67
+  [sigreg+proto] epoch 2/10  sigreg=0.1382  proto=0.1848  min_dist=6.15  mean_dist=6.28
+  [sigreg+proto] epoch 3/10  sigreg=0.1313  proto=0.1247  min_dist=6.66  mean_dist=6.89
+  [sigreg+proto] epoch 4/10  sigreg=0.1278  proto=0.0929  min_dist=7.14  mean_dist=7.48
+  [sigreg+proto] epoch 5/10  sigreg=0.1255  proto=0.0826  min_dist=7.54  mean_dist=8.05
+  [sigreg+proto] epoch 6/10  sigreg=0.1234  proto=0.0638  min_dist=7.92  mean_dist=8.59
+  [sigreg+proto] epoch 7/10  sigreg=0.1224  proto=0.0530  min_dist=8.28  mean_dist=9.10
+  [sigreg+proto] epoch 8/10  sigreg=0.1216  proto=0.0490  min_dist=8.62  mean_dist=9.58
+  [sigreg+proto] epoch 9/10  sigreg=0.1230  proto=0.0401  min_dist=8.94  mean_dist=10.02
+  [sigreg+proto] epoch 10/10  sigreg=0.1214  proto=0.0297  min_dist=9.25  mean_dist=10.45
+  pre-discovery: seen nearest-mean acc=0.9897  novelty AUC=0.8166
+  [sigreg+proto] epoch 1/5  sigreg=0.1530  proto=0.7590  min_dist=3.40  mean_dist=9.43
+  [sigreg+proto] epoch 2/5  sigreg=0.1445  proto=0.6167  min_dist=3.53  mean_dist=10.00
+  [sigreg+proto] epoch 3/5  sigreg=0.1438  proto=0.5580  min_dist=3.65  mean_dist=10.53
+  [sigreg+proto] epoch 4/5  sigreg=0.1447  proto=0.5007  min_dist=3.77  mean_dist=11.01
+  [sigreg+proto] epoch 5/5  sigreg=0.1440  proto=0.5043  min_dist=3.89  mean_dist=11.46
+  round 1: pool=5719 purity=0.526 k-hat=4 anchors=4  margin=0.9901  mean-anchor=0.9938  4=0.994
+  [sigreg+proto] epoch 1/5  sigreg=0.2528  proto=1.8588  min_dist=3.80  mean_dist=10.92
+  [sigreg+proto] epoch 2/5  sigreg=0.2064  proto=1.3200  min_dist=3.85  mean_dist=11.34
+  [sigreg+proto] epoch 3/5  sigreg=0.1970  proto=1.1284  min_dist=3.83  mean_dist=11.72
+  [sigreg+proto] epoch 4/5  sigreg=0.1906  proto=1.0020  min_dist=3.85  mean_dist=12.08
+  [sigreg+proto] epoch 5/5  sigreg=0.1922  proto=0.9810  min_dist=3.87  mean_dist=12.41
+  round 2: pool=2972 purity=0.089 k-hat=4 anchors=8  margin=0.9943  mean-anchor=0.9973  4=0.997
+
+----- arm: dual -----
+  mnist balanced loader (no {4}): 54158 images, 250 batches of 9x24
+  [dual-visreg] epoch 1/10  total=60.4355  global=235.8437  local=13.2668
+  [dual-visreg] epoch 2/10  total=58.7401  global=219.2978  local=14.8805
+  [dual-visreg] epoch 3/10  total=59.8340  global=228.6245  local=14.1091
+  [dual-visreg] epoch 4/10  total=61.9116  global=245.9240  local=12.7268
+  [dual-visreg] epoch 5/10  total=62.9224  global=251.8516  local=12.5521
+  [dual-visreg] epoch 6/10  total=62.4197  global=245.4293  local=13.3338
+  [dual-visreg] epoch 7/10  total=62.7552  global=237.8802  local=15.1792
+  [dual-visreg] epoch 8/10  total=81.8943  global=333.1004  local=15.2742
+  [dual-visreg] epoch 9/10  total=81.9771  global=355.6222  local=10.8527
+  [dual-visreg] epoch 10/10  total=74.5256  global=296.7846  local=15.1687
+  pre-discovery: seen nearest-mean acc=0.2334  novelty AUC=0.4378
+  [sigreg+proto] epoch 1/5  sigreg=0.8738  proto=3.3038  min_dist=0.02  mean_dist=11.91
+  [sigreg+proto] epoch 2/5  sigreg=0.8597  proto=3.2887  min_dist=0.02  mean_dist=11.90
+  [sigreg+proto] epoch 3/5  sigreg=0.8385  proto=3.0253  min_dist=0.02  mean_dist=11.88
+  [sigreg+proto] epoch 4/5  sigreg=0.8223  proto=2.9839  min_dist=0.03  mean_dist=11.86
+  [sigreg+proto] epoch 5/5  sigreg=0.8192  proto=3.0553  min_dist=0.03  mean_dist=11.83
+  round 1: pool=2710 purity=0.001 k-hat=4 anchors=4  margin=0.4433  mean-anchor=0.5557  4=0.556
+    merged 8 -> 6 anchors
+  [sigreg+proto] epoch 1/5  sigreg=0.7650  proto=2.9877  min_dist=0.17  mean_dist=12.14
+  [sigreg+proto] epoch 2/5  sigreg=0.7093  proto=3.2394  min_dist=0.25  mean_dist=12.24
+  [sigreg+proto] epoch 3/5  sigreg=0.5973  proto=3.3978  min_dist=0.31  mean_dist=12.30
+  [sigreg+proto] epoch 4/5  sigreg=0.5349  proto=3.2457  min_dist=0.36  mean_dist=12.36
+  [sigreg+proto] epoch 5/5  sigreg=0.5128  proto=3.1690  min_dist=0.40  mean_dist=12.41
+  round 2: pool=2758 purity=0.018 k-hat=4 anchors=6  margin=0.8143  mean-anchor=0.8842  4=0.884
+
+===== DUAL-VISREG vs DEFAULT SUMMARY [mnist] =====
+  k=1 [default] pre: acc=0.9897 novelty-AUC=0.8166
+          round 1: purity=0.526 anchors=4  margin=0.9901  mean-anchor=0.9938
+          round 2: purity=0.089 anchors=8  margin=0.9943  mean-anchor=0.9973
+  k=1 [dual   ] pre: acc=0.2334 novelty-AUC=0.4378
+          round 1: purity=0.001 anchors=4  margin=0.4433  mean-anchor=0.5557
+          round 2: purity=0.018 anchors=6  margin=0.8143  mean-anchor=0.8842
+Done.

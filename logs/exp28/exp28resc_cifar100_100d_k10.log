@@ -1,0 +1,73 @@
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+  CIFAR two-view embedding-train images (no {64, 34, 4, 74, 44, 14, 84, 54, 24, 94}): 45000
+  CIFAR two-view embedding-train images (no {64, 34, 4, 74, 44, 14, 84, 54, 24, 94}): 45000
+exp28 [cifar100] emb_dim=100 holdout=[4, 14, 24, 34, 44, 54, 64, 74, 84, 94] ssl_ep=20 res_ep=10 arms=res res-classwise
+
+----- space: sup (supervised SIGReg, exp-26 recipe) -----
+Using cache found in /home/pharris/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+  cifar100 balanced loader (no {64, 34, 4, 74, 44, 14, 84, 54, 24, 94}): 45000 images, 75 batches of 25x24
+  [sigreg+proto] epoch 1/10  sigreg=0.7588  proto=3.0562  min_dist=5.07  mean_dist=5.16
+  [sigreg+proto] epoch 2/10  sigreg=0.6300  proto=1.5257  min_dist=5.15  mean_dist=5.35
+  [sigreg+proto] epoch 3/10  sigreg=0.5677  proto=1.1268  min_dist=5.22  mean_dist=5.59
+  [sigreg+proto] epoch 4/10  sigreg=0.5304  proto=0.9531  min_dist=5.36  mean_dist=5.92
+  [sigreg+proto] epoch 5/10  sigreg=0.5051  proto=0.8397  min_dist=5.47  mean_dist=6.34
+  [sigreg+proto] epoch 6/10  sigreg=0.4947  proto=0.7921  min_dist=5.59  mean_dist=6.81
+  [sigreg+proto] epoch 7/10  sigreg=0.4876  proto=0.7447  min_dist=5.67  mean_dist=7.30
+  [sigreg+proto] epoch 8/10  sigreg=0.4858  proto=0.7025  min_dist=5.74  mean_dist=7.77
+  [sigreg+proto] epoch 9/10  sigreg=0.4902  proto=0.6856  min_dist=5.81  mean_dist=8.23
+  [sigreg+proto] epoch 10/10  sigreg=0.4980  proto=0.6546  min_dist=5.88  mean_dist=8.65
+
+----- space: res (SSL on the supervised residual, classwise) -----
+  cifar100 balanced two-view loader (no {64, 34, 4, 74, 44, 14, 84, 54, 24, 94}): 45000 images, 75 batches of 25x24
+  [sigreg-residual-cw] epoch 1/10  inv=0.1777  res-sigreg=0.4617
+  [sigreg-residual-cw] epoch 2/10  inv=0.1500  res-sigreg=0.3997
+  [sigreg-residual-cw] epoch 3/10  inv=0.1430  res-sigreg=0.3785
+  [sigreg-residual-cw] epoch 4/10  inv=0.1402  res-sigreg=0.3634
+  [sigreg-residual-cw] epoch 5/10  inv=0.1385  res-sigreg=0.3541
+  [sigreg-residual-cw] epoch 6/10  inv=0.1356  res-sigreg=0.3463
+  [sigreg-residual-cw] epoch 7/10  inv=0.1352  res-sigreg=0.3386
+  [sigreg-residual-cw] epoch 8/10  inv=0.1348  res-sigreg=0.3320
+  [sigreg-residual-cw] epoch 9/10  inv=0.1334  res-sigreg=0.3270
+  [sigreg-residual-cw] epoch 10/10  inv=0.1325  res-sigreg=0.3226
+
+----- pre-discovery metrics -----
+  [res   ] seen nearest-anchor acc=0.3549  novelty AUC=0.5133
+
+----- gaussianity (seen classes, test set) -----
+  metric                               res
+  eig min (class cov)               -0.000
+  eig max (class cov)               24.665
+  eig cond worst            22164596064256.0
+  class RMS min                      0.605
+  class RMS mean                     0.725
+  class RMS max                      0.827
+  max |corr| (worst class)           0.930
+  SW ratio mean                       1.51
+  SW ratio worst                      3.08
+  |skew| mean                        0.286
+  |ex-kurt| mean                     0.476
+  centroid dist min                   1.66
+  centroid dist mean                  6.14
+  separation (min d/RMS)              2.29
+  saved /home/pharris/sigreg/SuperSig/plots/latent_cifar100_exp28_100d_k10_resc.png
+
+----- discovery: res (centroid anchors) -----
+  [sigreg+proto] epoch 1/5  sigreg=0.4938  proto=3.9614  min_dist=2.08  mean_dist=7.40
+  [sigreg+proto] epoch 2/5  sigreg=0.5738  proto=2.8850  min_dist=2.69  mean_dist=7.97
+  [sigreg+proto] epoch 3/5  sigreg=0.6076  proto=2.3827  min_dist=3.23  mean_dist=8.49
+  [sigreg+proto] epoch 4/5  sigreg=0.6373  proto=2.1117  min_dist=3.69  mean_dist=8.97
+  [sigreg+proto] epoch 5/5  sigreg=0.6540  proto=1.9274  min_dist=4.07  mean_dist=9.40
+  round 1: pool=2529 purity=0.110 k-hat=12 anchors=12  margin=0.5777  mean-anchor=0.6717  
+  [sigreg+proto] epoch 1/5  sigreg=0.6633  proto=2.2584  min_dist=4.52  mean_dist=9.97
+  [sigreg+proto] epoch 2/5  sigreg=0.6815  proto=1.7068  min_dist=4.90  mean_dist=10.47
+  [sigreg+proto] epoch 3/5  sigreg=0.6998  proto=1.5335  min_dist=5.13  mean_dist=10.93
+  [sigreg+proto] epoch 4/5  sigreg=0.7318  proto=1.5250  min_dist=5.33  mean_dist=11.34
+  [sigreg+proto] epoch 5/5  sigreg=0.7473  proto=1.4375  min_dist=5.49  mean_dist=11.71
+  round 2: pool=2693 purity=0.165 k-hat=11 anchors=23  margin=0.6884  mean-anchor=0.8035  
+
+===== EXP28 SUMMARY [cifar100, 100d] =====
+  [res   ] pre: acc=0.3549 novelty-AUC=0.5133
+          round 1: purity=0.110 anchors=12  margin=0.5777  mean-anchor=0.6717
+          round 2: purity=0.165 anchors=23  margin=0.6884  mean-anchor=0.8035
+Done.

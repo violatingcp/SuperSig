@@ -1,0 +1,181 @@
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+  CIFAR two-view embedding-train images (no {4}): 49500
+  CIFAR two-view embedding-train images (no {4}): 49500
+exp28 [cifar100] emb_dim=32 holdout=[4] ssl_ep=20 res_ep=10
+
+----- space: sup (supervised SIGReg, exp-26 recipe) -----
+Using cache found in /home/pharris/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+  cifar100 balanced loader (no {4}): 49500 images, 82 batches of 25x24
+  [sigreg+proto] epoch 1/10  sigreg=0.9169  proto=3.6498  min_dist=3.74  mean_dist=5.46
+  [sigreg+proto] epoch 2/10  sigreg=0.7826  proto=2.5096  min_dist=4.05  mean_dist=5.90
+  [sigreg+proto] epoch 3/10  sigreg=0.7654  proto=2.0539  min_dist=4.30  mean_dist=6.30
+  [sigreg+proto] epoch 4/10  sigreg=0.7721  proto=1.7636  min_dist=4.54  mean_dist=6.68
+  [sigreg+proto] epoch 5/10  sigreg=0.7898  proto=1.6320  min_dist=4.74  mean_dist=7.03
+  [sigreg+proto] epoch 6/10  sigreg=0.7989  proto=1.4539  min_dist=4.95  mean_dist=7.35
+  [sigreg+proto] epoch 7/10  sigreg=0.8029  proto=1.2888  min_dist=5.14  mean_dist=7.66
+  [sigreg+proto] epoch 8/10  sigreg=0.8319  proto=1.2873  min_dist=5.32  mean_dist=7.95
+  [sigreg+proto] epoch 9/10  sigreg=0.8433  proto=1.1718  min_dist=5.47  mean_dist=8.23
+  [sigreg+proto] epoch 10/10  sigreg=0.8547  proto=1.1530  min_dist=5.61  mean_dist=8.49
+
+----- space: ssl (unlabeled SIGReg + augmentations) -----
+Using cache found in /home/pharris/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+  [sigreg-ssl] epoch 1/20  inv=0.0997  sigreg=0.1213
+  [sigreg-ssl] epoch 2/20  inv=0.0907  sigreg=0.0775
+  [sigreg-ssl] epoch 3/20  inv=0.0855  sigreg=0.0700
+  [sigreg-ssl] epoch 4/20  inv=0.0821  sigreg=0.0656
+  [sigreg-ssl] epoch 5/20  inv=0.0805  sigreg=0.0630
+  [sigreg-ssl] epoch 6/20  inv=0.0789  sigreg=0.0602
+  [sigreg-ssl] epoch 7/20  inv=0.0768  sigreg=0.0586
+  [sigreg-ssl] epoch 8/20  inv=0.0755  sigreg=0.0574
+  [sigreg-ssl] epoch 9/20  inv=0.0745  sigreg=0.0554
+  [sigreg-ssl] epoch 10/20  inv=0.0737  sigreg=0.0541
+  [sigreg-ssl] epoch 11/20  inv=0.0729  sigreg=0.0534
+  [sigreg-ssl] epoch 12/20  inv=0.0725  sigreg=0.0529
+  [sigreg-ssl] epoch 13/20  inv=0.0711  sigreg=0.0511
+  [sigreg-ssl] epoch 14/20  inv=0.0707  sigreg=0.0511
+  [sigreg-ssl] epoch 15/20  inv=0.0708  sigreg=0.0506
+  [sigreg-ssl] epoch 16/20  inv=0.0691  sigreg=0.0495
+  [sigreg-ssl] epoch 17/20  inv=0.0690  sigreg=0.0492
+  [sigreg-ssl] epoch 18/20  inv=0.0685  sigreg=0.0485
+  [sigreg-ssl] epoch 19/20  inv=0.0682  sigreg=0.0474
+  [sigreg-ssl] epoch 20/20  inv=0.0682  sigreg=0.0478
+
+----- space: res (SSL on the supervised residual) -----
+  [sigreg-residual] epoch 1/10  inv=0.0146  res-sigreg=0.0301
+  [sigreg-residual] epoch 2/10  inv=0.0011  res-sigreg=0.0300
+  [sigreg-residual] epoch 3/10  inv=0.0015  res-sigreg=0.0285
+  [sigreg-residual] epoch 4/10  inv=0.0017  res-sigreg=0.0279
+  [sigreg-residual] epoch 5/10  inv=0.0018  res-sigreg=0.0272
+  [sigreg-residual] epoch 6/10  inv=0.0020  res-sigreg=0.0268
+  [sigreg-residual] epoch 7/10  inv=0.0020  res-sigreg=0.0267
+  [sigreg-residual] epoch 8/10  inv=0.0021  res-sigreg=0.0258
+  [sigreg-residual] epoch 9/10  inv=0.0021  res-sigreg=0.0261
+  [sigreg-residual] epoch 10/10  inv=0.0021  res-sigreg=0.0259
+
+----- space: supres (supervised on the ssl residual) -----
+  cifar100 balanced loader (no {4}): 49500 images, 82 batches of 25x24
+  [sigreg+proto] epoch 1/10  sigreg=0.3970  proto=3.1973  min_dist=1.18  mean_dist=4.78
+  [sigreg+proto] epoch 2/10  sigreg=0.3896  proto=2.7572  min_dist=1.51  mean_dist=5.19
+  [sigreg+proto] epoch 3/10  sigreg=0.4049  proto=2.6272  min_dist=1.77  mean_dist=5.56
+  [sigreg+proto] epoch 4/10  sigreg=0.4113  proto=2.4991  min_dist=2.01  mean_dist=5.91
+  [sigreg+proto] epoch 5/10  sigreg=0.4277  proto=2.4834  min_dist=2.23  mean_dist=6.22
+  [sigreg+proto] epoch 6/10  sigreg=0.4428  proto=2.3748  min_dist=2.43  mean_dist=6.52
+  [sigreg+proto] epoch 7/10  sigreg=0.4579  proto=2.2747  min_dist=2.61  mean_dist=6.80
+  [sigreg+proto] epoch 8/10  sigreg=0.4711  proto=2.2599  min_dist=2.79  mean_dist=7.06
+  [sigreg+proto] epoch 9/10  sigreg=0.4761  proto=2.1158  min_dist=2.95  mean_dist=7.30
+  [sigreg+proto] epoch 10/10  sigreg=0.4936  proto=2.0731  min_dist=3.11  mean_dist=7.54
+
+----- pre-discovery metrics -----
+  [sup   ] seen nearest-anchor acc=0.4745  novelty AUC=0.5969
+  [ssl   ] seen nearest-anchor acc=0.2151  novelty AUC=0.4547
+  [concat] seen nearest-anchor acc=0.4967  novelty AUC=0.5606
+  [res   ] seen nearest-anchor acc=0.2698  novelty AUC=0.3654
+  [supres] seen nearest-anchor acc=0.4281  novelty AUC=0.3339
+
+----- gaussianity (seen classes, test set) -----
+  metric                               sup           ssl        concat           res        supres
+  eig min (class cov)                0.001         0.000         0.000        -0.000         0.000
+  eig max (class cov)                7.662        11.178        12.797         0.543         8.042
+  eig cond worst                    4010.2      300922.5     1005392.8225315733504.0       42497.9
+  class RMS min                      0.438         0.436         0.437         0.052         0.533
+  class RMS mean                     0.618         0.707         0.665         0.081         0.643
+  class RMS max                      0.737         0.952         0.850         0.143         0.808
+  max |corr| (worst class)           0.879         0.965         0.965         0.991         0.919
+  SW ratio mean                       1.39          2.48          1.44          3.62          1.48
+  SW ratio worst                      2.25          7.02          2.71          7.10          3.31
+  |skew| mean                        0.273         0.415         0.282         0.561         0.292
+  |ex-kurt| mean                     0.486         0.696         0.471         1.292         0.486
+  centroid dist min                   0.77          0.56          1.09          0.05          0.71
+  centroid dist mean                  4.68          4.33          6.43          0.73          5.63
+  separation (min d/RMS)              1.24          0.79          1.64          0.57          1.11
+  saved /home/pharris/sigreg/SuperSig/plots/latent_cifar100_exp28_32d.png
+
+----- discovery: sup -----
+  [sigreg+proto] epoch 1/5  sigreg=0.9290  proto=1.9047  min_dist=5.44  mean_dist=8.81
+  [sigreg+proto] epoch 2/5  sigreg=0.9324  proto=1.5278  min_dist=5.67  mean_dist=9.16
+  [sigreg+proto] epoch 3/5  sigreg=0.9707  proto=1.4606  min_dist=5.89  mean_dist=9.47
+  [sigreg+proto] epoch 4/5  sigreg=0.9901  proto=1.3819  min_dist=6.09  mean_dist=9.76
+  [sigreg+proto] epoch 5/5  sigreg=1.0209  proto=1.3286  min_dist=6.27  mean_dist=10.02
+  round 1: pool=2493 purity=0.007 k-hat=4 anchors=4  margin=0.6333  mean-anchor=0.7210  beaver=0.721
+  [sigreg+proto] epoch 1/5  sigreg=1.0665  proto=3.1330  min_dist=4.62  mean_dist=10.08
+  [sigreg+proto] epoch 2/5  sigreg=1.0015  proto=2.2995  min_dist=4.84  mean_dist=10.31
+  [sigreg+proto] epoch 3/5  sigreg=0.9974  proto=1.9397  min_dist=5.04  mean_dist=10.53
+  [sigreg+proto] epoch 4/5  sigreg=0.9962  proto=1.7897  min_dist=5.23  mean_dist=10.75
+  [sigreg+proto] epoch 5/5  sigreg=0.9972  proto=1.6746  min_dist=5.44  mean_dist=10.96
+  round 2: pool=2501 purity=0.010 k-hat=4 anchors=8  margin=0.6459  mean-anchor=0.6538  beaver=0.654
+
+----- discovery: ssl (centroid anchors) -----
+  [sigreg+proto] epoch 1/5  sigreg=0.3987  proto=3.3692  min_dist=1.20  mean_dist=4.91
+  [sigreg+proto] epoch 2/5  sigreg=0.4025  proto=2.9948  min_dist=1.54  mean_dist=5.33
+  [sigreg+proto] epoch 3/5  sigreg=0.4055  proto=2.8692  min_dist=1.81  mean_dist=5.72
+  [sigreg+proto] epoch 4/5  sigreg=0.4240  proto=2.7639  min_dist=2.05  mean_dist=6.08
+  [sigreg+proto] epoch 5/5  sigreg=0.4531  proto=2.7724  min_dist=2.27  mean_dist=6.40
+  round 1: pool=2485 purity=0.004 k-hat=4 anchors=4  margin=0.4489  mean-anchor=0.7716  beaver=0.772
+  [sigreg+proto] epoch 1/5  sigreg=0.4863  proto=2.7660  min_dist=2.80  mean_dist=6.98
+  [sigreg+proto] epoch 2/5  sigreg=0.5267  proto=2.7524  min_dist=3.13  mean_dist=7.46
+  [sigreg+proto] epoch 3/5  sigreg=0.5785  proto=2.7321  min_dist=3.30  mean_dist=7.88
+  [sigreg+proto] epoch 4/5  sigreg=0.6224  proto=2.6382  min_dist=3.46  mean_dist=8.26
+  [sigreg+proto] epoch 5/5  sigreg=0.6636  proto=2.5767  min_dist=3.60  mean_dist=8.60
+  round 2: pool=2505 purity=0.012 k-hat=4 anchors=8  margin=0.5589  mean-anchor=0.7997  beaver=0.800
+
+----- discovery: concat (ft sup branch only) -----
+  [sigreg+proto] epoch 1/5  sigreg=0.9728  proto=2.4538  min_dist=2.02  mean_dist=8.75
+  [sigreg+proto] epoch 2/5  sigreg=0.9219  proto=1.8477  min_dist=2.04  mean_dist=9.09
+  [sigreg+proto] epoch 3/5  sigreg=0.9357  proto=1.7079  min_dist=2.07  mean_dist=9.41
+  [sigreg+proto] epoch 4/5  sigreg=0.9514  proto=1.5373  min_dist=2.08  mean_dist=9.70
+  [sigreg+proto] epoch 5/5  sigreg=0.9814  proto=1.4446  min_dist=2.09  mean_dist=9.97
+  round 1: pool=2487 purity=0.005 k-hat=4 anchors=4  margin=0.6379  mean-anchor=0.7133  beaver=0.713
+  [sigreg+proto] epoch 1/5  sigreg=1.0148  proto=3.0403  min_dist=1.66  mean_dist=10.03
+  [sigreg+proto] epoch 2/5  sigreg=0.9833  proto=2.3616  min_dist=1.67  mean_dist=10.27
+  [sigreg+proto] epoch 3/5  sigreg=0.9777  proto=2.1764  min_dist=1.69  mean_dist=10.51
+  [sigreg+proto] epoch 4/5  sigreg=0.9824  proto=1.9428  min_dist=1.73  mean_dist=10.73
+  [sigreg+proto] epoch 5/5  sigreg=0.9977  proto=1.8433  min_dist=1.77  mean_dist=10.94
+  round 2: pool=2499 purity=0.010 k-hat=4 anchors=8  margin=0.6657  mean-anchor=0.7063  beaver=0.706
+
+----- discovery: res (centroid anchors) -----
+    merged 4 -> 1 anchors
+  [sigreg+proto] epoch 1/5  sigreg=0.5751  proto=3.2296  min_dist=0.25  mean_dist=1.14
+  [sigreg+proto] epoch 2/5  sigreg=0.5541  proto=2.6990  min_dist=0.32  mean_dist=1.38
+  [sigreg+proto] epoch 3/5  sigreg=0.5445  proto=2.3939  min_dist=0.37  mean_dist=1.57
+  [sigreg+proto] epoch 4/5  sigreg=0.5282  proto=2.2052  min_dist=0.42  mean_dist=1.73
+  [sigreg+proto] epoch 5/5  sigreg=0.5062  proto=2.0552  min_dist=0.47  mean_dist=1.88
+  round 1: pool=2475 purity=0.000 k-hat=4 anchors=1  margin=0.3579  mean-anchor=0.5597  beaver=0.560
+  [sigreg+proto] epoch 1/5  sigreg=0.4380  proto=2.0429  min_dist=0.94  mean_dist=2.67
+  [sigreg+proto] epoch 2/5  sigreg=0.3909  proto=1.8192  min_dist=1.09  mean_dist=3.07
+  [sigreg+proto] epoch 3/5  sigreg=0.3750  proto=1.6675  min_dist=1.22  mean_dist=3.41
+  [sigreg+proto] epoch 4/5  sigreg=0.3578  proto=1.5486  min_dist=1.33  mean_dist=3.70
+  [sigreg+proto] epoch 5/5  sigreg=0.3538  proto=1.5126  min_dist=1.43  mean_dist=3.96
+  round 2: pool=2479 purity=0.002 k-hat=4 anchors=5  margin=0.3777  mean-anchor=0.5532  beaver=0.553
+
+----- discovery: supres -----
+  [sigreg+proto] epoch 1/5  sigreg=0.5443  proto=2.4002  min_dist=3.46  mean_dist=8.02
+  [sigreg+proto] epoch 2/5  sigreg=0.5736  proto=2.2077  min_dist=3.69  mean_dist=8.46
+  [sigreg+proto] epoch 3/5  sigreg=0.6199  proto=2.2034  min_dist=3.89  mean_dist=8.84
+  [sigreg+proto] epoch 4/5  sigreg=0.6630  proto=2.1416  min_dist=4.07  mean_dist=9.18
+  [sigreg+proto] epoch 5/5  sigreg=0.7021  proto=2.1615  min_dist=4.25  mean_dist=9.48
+  round 1: pool=2493 purity=0.007 k-hat=4 anchors=4  margin=0.5311  mean-anchor=0.7909  beaver=0.791
+  [sigreg+proto] epoch 1/5  sigreg=0.7060  proto=2.6502  min_dist=4.41  mean_dist=9.71
+  [sigreg+proto] epoch 2/5  sigreg=0.7334  proto=2.3904  min_dist=4.57  mean_dist=10.01
+  [sigreg+proto] epoch 3/5  sigreg=0.7596  proto=2.2575  min_dist=4.70  mean_dist=10.28
+  [sigreg+proto] epoch 4/5  sigreg=0.8020  proto=2.2342  min_dist=4.81  mean_dist=10.53
+  [sigreg+proto] epoch 5/5  sigreg=0.8311  proto=2.0753  min_dist=4.91  mean_dist=10.75
+  round 2: pool=2496 purity=0.008 k-hat=4 anchors=8  margin=0.6293  mean-anchor=0.8782  beaver=0.878
+
+===== EXP28 SUMMARY [cifar100, 32d] =====
+  [sup   ] pre: acc=0.4745 novelty-AUC=0.5969
+          round 1: purity=0.007 anchors=4  margin=0.6333  mean-anchor=0.7210
+          round 2: purity=0.010 anchors=8  margin=0.6459  mean-anchor=0.6538
+  [ssl   ] pre: acc=0.2151 novelty-AUC=0.4547
+          round 1: purity=0.004 anchors=4  margin=0.4489  mean-anchor=0.7716
+          round 2: purity=0.012 anchors=8  margin=0.5589  mean-anchor=0.7997
+  [concat] pre: acc=0.4967 novelty-AUC=0.5606
+          round 1: purity=0.005 anchors=4  margin=0.6379  mean-anchor=0.7133
+          round 2: purity=0.010 anchors=8  margin=0.6657  mean-anchor=0.7063
+  [res   ] pre: acc=0.2698 novelty-AUC=0.3654
+          round 1: purity=0.000 anchors=1  margin=0.3579  mean-anchor=0.5597
+          round 2: purity=0.002 anchors=5  margin=0.3777  mean-anchor=0.5532
+  [supres] pre: acc=0.4281 novelty-AUC=0.3339
+          round 1: purity=0.007 anchors=4  margin=0.5311  mean-anchor=0.7909
+          round 2: purity=0.008 anchors=8  margin=0.6293  mean-anchor=0.8782
+Done.

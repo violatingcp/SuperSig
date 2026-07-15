@@ -1,0 +1,107 @@
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+recipe [mnist]: n_classes=10  emb_dim=4  sigreg_weight=20.0  n_slices=256  pair_dist=5.0  ssl_epochs=10  ft_epochs=5  arch=resnet20  rep_weight=20.0
+
+===== k=1 (4) =====
+
+----- arm: default -----
+  mnist balanced loader (no {4}): 54158 images, 250 batches of 9x24
+  [sigreg+proto] epoch 1/10  sigreg=0.4500  proto=0.9253  min_dist=1.72  mean_dist=5.09
+  [sigreg+proto] epoch 2/10  sigreg=0.1477  proto=0.3829  min_dist=2.13  mean_dist=5.53
+  [sigreg+proto] epoch 3/10  sigreg=0.1342  proto=0.2634  min_dist=2.48  mean_dist=5.92
+  [sigreg+proto] epoch 4/10  sigreg=0.1346  proto=0.1995  min_dist=2.80  mean_dist=6.28
+  [sigreg+proto] epoch 5/10  sigreg=0.1323  proto=0.1495  min_dist=3.10  mean_dist=6.61
+  [sigreg+proto] epoch 6/10  sigreg=0.1258  proto=0.1160  min_dist=3.37  mean_dist=6.92
+  [sigreg+proto] epoch 7/10  sigreg=0.1295  proto=0.0917  min_dist=3.63  mean_dist=7.22
+  [sigreg+proto] epoch 8/10  sigreg=0.1300  proto=0.0786  min_dist=3.88  mean_dist=7.50
+  [sigreg+proto] epoch 9/10  sigreg=0.1256  proto=0.0630  min_dist=4.12  mean_dist=7.77
+  [sigreg+proto] epoch 10/10  sigreg=0.1279  proto=0.0525  min_dist=4.35  mean_dist=8.03
+  pre-discovery: seen nearest-mean acc=0.9835  novelty AUC=0.8942
+    merged 4 -> 3 anchors
+  [sigreg+proto] epoch 1/5  sigreg=0.1652  proto=0.3885  min_dist=3.13  mean_dist=7.41
+  [sigreg+proto] epoch 2/5  sigreg=0.1515  proto=0.3511  min_dist=3.15  mean_dist=7.77
+  [sigreg+proto] epoch 3/5  sigreg=0.1568  proto=0.3453  min_dist=3.16  mean_dist=8.11
+  [sigreg+proto] epoch 4/5  sigreg=0.1590  proto=0.3528  min_dist=3.20  mean_dist=8.42
+  [sigreg+proto] epoch 5/5  sigreg=0.1634  proto=0.3334  min_dist=3.24  mean_dist=8.71
+  round 1: pool=6789 purity=0.601 k-hat=4 anchors=3  margin=0.9851  mean-anchor=0.9908  4=0.991
+    merged 7 -> 5 anchors
+  [sigreg+proto] epoch 1/5  sigreg=0.2582  proto=0.7919  min_dist=3.08  mean_dist=8.66
+  [sigreg+proto] epoch 2/5  sigreg=0.2300  proto=0.6822  min_dist=3.03  mean_dist=8.93
+  [sigreg+proto] epoch 3/5  sigreg=0.2328  proto=0.6543  min_dist=3.01  mean_dist=9.18
+  [sigreg+proto] epoch 4/5  sigreg=0.2266  proto=0.6111  min_dist=3.00  mean_dist=9.43
+  [sigreg+proto] epoch 5/5  sigreg=0.2358  proto=0.6073  min_dist=3.02  mean_dist=9.66
+  round 2: pool=2849 purity=0.049 k-hat=4 anchors=5  margin=0.9876  mean-anchor=0.9873  4=0.987
+
+----- arm: dual -----
+  mnist balanced loader (no {4}): 54158 images, 83 batches of 9x72
+  [dual-visreg] epoch 1/10  total=165.1959  global=521.0639  local=8.8767
+  [dual-visreg] epoch 2/10  total=150.5584  global=446.8711  local=16.4971
+  [dual-visreg] epoch 3/10  total=147.2209  global=423.9791  local=20.0271
+  [dual-visreg] epoch 4/10  total=145.4274  global=410.9339  local=22.1472
+  [dual-visreg] epoch 5/10  total=143.9330  global=399.5972  local=24.0539
+  [dual-visreg] epoch 6/10  total=143.2950  global=393.2462  local=25.3211
+  [dual-visreg] epoch 7/10  total=142.5701  global=387.5504  local=26.3050
+  [dual-visreg] epoch 8/10  total=141.8594  global=382.0915  local=27.2319
+  [dual-visreg] epoch 9/10  total=141.5366  global=378.3082  local=28.0441
+  [dual-visreg] epoch 10/10  total=140.8184  global=372.6901  local=29.0114
+  pre-discovery: seen nearest-mean acc=0.9876  novelty AUC=0.8588
+  [sigreg+proto] epoch 1/5  sigreg=0.9451  proto=1.4199  min_dist=2.49  mean_dist=17.31
+  [sigreg+proto] epoch 2/5  sigreg=0.6007  proto=1.1232  min_dist=2.90  mean_dist=17.32
+  [sigreg+proto] epoch 3/5  sigreg=0.5009  proto=0.9547  min_dist=3.26  mean_dist=17.33
+  [sigreg+proto] epoch 4/5  sigreg=0.4349  proto=0.8334  min_dist=3.59  mean_dist=17.35
+  [sigreg+proto] epoch 5/5  sigreg=0.4304  proto=0.8402  min_dist=3.90  mean_dist=17.37
+  round 1: pool=5874 purity=0.539 k-hat=4 anchors=4  margin=0.9695  mean-anchor=0.9554  4=0.955
+    merged 8 -> 7 anchors
+  [sigreg+proto] epoch 1/5  sigreg=0.6131  proto=1.2820  min_dist=3.72  mean_dist=17.81
+  [sigreg+proto] epoch 2/5  sigreg=0.4258  proto=1.0539  min_dist=3.70  mean_dist=17.86
+  [sigreg+proto] epoch 3/5  sigreg=0.4256  proto=1.0547  min_dist=3.70  mean_dist=17.90
+  [sigreg+proto] epoch 4/5  sigreg=0.3887  proto=0.9400  min_dist=3.71  mean_dist=17.95
+  [sigreg+proto] epoch 5/5  sigreg=0.3938  proto=0.9286  min_dist=3.72  mean_dist=17.99
+  round 2: pool=2980 purity=0.091 k-hat=4 anchors=7  margin=0.9825  mean-anchor=0.9587  4=0.959
+
+  --- gaussianity (seen classes, test set) k=1 ---
+  metric                         default/pre      default/ft        dual/pre         dual/ft
+  eig min (class cov)                  0.600           0.476           0.653           0.270
+  eig max (class cov)                  1.602           3.974           5.578           6.696
+  eig cond worst                         2.4             7.6             7.5            14.9
+  class RMS min                        0.899           1.029           1.017           1.055
+  class RMS mean                       0.958           1.145           1.191           1.280
+  class RMS max                        1.024           1.224           1.496           1.557
+  max |corr| (worst class)             0.280           0.658           0.649           0.806
+  SW ratio mean                         8.85           14.75           54.22           43.81
+  SW ratio worst                       12.45           20.88          102.43           84.44
+  |skew| mean                          0.364           0.543           1.333           1.159
+  |ex-kurt| mean                       0.725           1.303           9.163           6.426
+  centroid dist min                     3.89            8.37            7.99            7.32
+  centroid dist mean                    7.90           11.91           20.10           19.91
+  separation (min d/RMS)                4.06            7.31            6.71            5.72
+  saved /home/pharris/sigreg/SuperSig/plots/latent_mnist_exp27_4d_k1.png
+  saved /home/pharris/sigreg/SuperSig/plots/corner_mnist_exp27_4d_k1_default_pre.png
+  saved /home/pharris/sigreg/SuperSig/plots/corner_mnist_exp27_4d_k1_default_ft.png
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+  saved /home/pharris/sigreg/SuperSig/plots/corner_mnist_exp27_4d_k1_dual_pre.png
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+WARNING:root:Too few points to create valid contours
+  saved /home/pharris/sigreg/SuperSig/plots/corner_mnist_exp27_4d_k1_dual_ft.png
+
+===== DUAL-VISREG vs DEFAULT SUMMARY [mnist] =====
+  k=1 [default] pre: acc=0.9835 novelty-AUC=0.8942
+          round 1: purity=0.601 anchors=3  margin=0.9851  mean-anchor=0.9908
+          round 2: purity=0.049 anchors=5  margin=0.9876  mean-anchor=0.9873
+  k=1 [dual   ] pre: acc=0.9876 novelty-AUC=0.8588
+          round 1: purity=0.539 anchors=4  margin=0.9695  mean-anchor=0.9554
+          round 2: purity=0.091 anchors=7  margin=0.9825  mean-anchor=0.9587
+Done.
