@@ -87,6 +87,32 @@ def evaluate_space(tr_embs, tr_lab, te_embs, te_lab, anchors, seen, holdouts):
                         "is_unseen": is_unseen})
 
 
+def linear_probe_novelty(tr, tr_lab, te, te_lab, holdouts, epochs=10, lr=1e-2):
+    """
+    One-layer NN novelty probe: nn.Linear(D, 2) trained holdout-vs-rest on
+    frozen train embeddings (the exps 04-08 binary-probe protocol).
+    Returns (auc, test scores, is_unseen).
+    """
+    Xtr = torch.as_tensor(np.ascontiguousarray(tr), dtype=torch.float32,
+                          device=DEVICE)
+    ytr = torch.as_tensor(np.isin(tr_lab, list(holdouts)).astype(np.int64),
+                          device=DEVICE)
+    Xte = torch.as_tensor(np.ascontiguousarray(te), dtype=torch.float32,
+                          device=DEVICE)
+    head = torch.nn.Linear(Xtr.size(1), 2).to(DEVICE)
+    opt = torch.optim.Adam(head.parameters(), lr=lr)
+    for _ in range(epochs):
+        perm = torch.randperm(len(Xtr), device=DEVICE)
+        for i in range(0, len(Xtr), 512):
+            idx = perm[i:i + 512]
+            loss = torch.nn.functional.cross_entropy(head(Xtr[idx]), ytr[idx])
+            opt.zero_grad(); loss.backward(); opt.step()
+    with torch.no_grad():
+        scores = torch.softmax(head(Xte), dim=1)[:, 1].cpu().numpy()
+    is_unseen = np.isin(te_lab, list(holdouts)).astype(int)
+    return float(roc_auc_score(is_unseen, scores)), scores, is_unseen
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--holdout", type=int, default=4)
@@ -310,43 +336,99 @@ def main():
                    sigreg_weight=cfg["sigreg_weight"], n_slices=cfg["n_slices"],
                    rounds=args.rounds, ft_epochs=ft_ep, names=CIFAR_NAMES,
                    seed=args.seed)
-    hist = {}
+    hist, ft = {}, {}
+    concat_kw = dict(base=base, dim=cfg["emb_dim"],
+                     train_eval_loader=train_eval_loader,
+                     test_loader=test_loader, seen=seen, holdouts=holdouts,
+                     cfg=cfg, rounds=args.rounds, ft_epochs=ft_ep,
+                     names=CIFAR_NAMES, seed=args.seed)
     print("\n----- discovery: sup->res (ft sup branch) -----")
+    bb = copy.deepcopy(sup)
     hist["sup->res"] = exp28.run_concat_discovery(
-        copy.deepcopy(sup), res, means_sup.clone(), res_cents, base=base,
-        dim=cfg["emb_dim"], train_eval_loader=train_eval_loader,
-        test_loader=test_loader, seen=seen, holdouts=holdouts, cfg=cfg,
-        rounds=args.rounds, ft_epochs=ft_ep, names=CIFAR_NAMES, seed=args.seed)
+        bb, res, means_sup.clone(), res_cents, **concat_kw)
+    ft["sup->res"] = (bb, res)
     print("\n----- discovery: ssl->supres (ft supres branch) -----")
+    bb = copy.deepcopy(supres)
     hist["ssl->supres"] = exp28.run_concat_discovery(
-        copy.deepcopy(supres), trunk, means_supres.clone(), ssl_cents,
-        base=base, dim=cfg["emb_dim"], train_eval_loader=train_eval_loader,
-        test_loader=test_loader, seen=seen, holdouts=holdouts, cfg=cfg,
-        rounds=args.rounds, ft_epochs=ft_ep, names=CIFAR_NAMES, seed=args.seed)
+        bb, trunk, means_supres.clone(), ssl_cents, **concat_kw)
+    ft["ssl->supres"] = (bb, trunk)
     print("\n----- discovery: joint -----")
-    _, hist["joint"] = run_discovery(copy.deepcopy(joint), means_joint.clone(),
-                                     **disc_kw)
+    bb = copy.deepcopy(joint)
+    _, hist["joint"] = run_discovery(bb, means_joint.clone(), **disc_kw)
+    ft["joint"] = (bb, None)
     print("\n----- discovery: sup -----")
-    _, hist["sup"] = run_discovery(copy.deepcopy(sup), means_sup.clone(),
-                                   **disc_kw)
+    bb = copy.deepcopy(sup)
+    _, hist["sup"] = run_discovery(bb, means_sup.clone(), **disc_kw)
+    ft["sup"] = (bb, None)
     print("\n----- discovery: supcon -----")
+    bb = copy.deepcopy(supcon)
     _, hist["supcon"] = run_discovery(
-        copy.deepcopy(supcon), exp28.fill_means(supcon_cents, seen, cfg),
-        **disc_kw)
+        bb, exp28.fill_means(supcon_cents, seen, cfg), **disc_kw)
+    ft["supcon"] = (bb, None)
     print("\n----- discovery: supcon+simclr (ft supcon branch) -----")
+    bb = copy.deepcopy(supcon)
     hist["supcon+simclr"] = exp28.run_concat_discovery(
-        copy.deepcopy(supcon), simclr,
-        exp28.fill_means(supcon_cents, seen, cfg), simclr_cents, base=base,
-        dim=cfg["emb_dim"], train_eval_loader=train_eval_loader,
-        test_loader=test_loader, seen=seen, holdouts=holdouts, cfg=cfg,
-        rounds=args.rounds, ft_epochs=ft_ep, names=CIFAR_NAMES, seed=args.seed)
+        bb, simclr, exp28.fill_means(supcon_cents, seen, cfg), simclr_cents,
+        **concat_kw)
+    ft["supcon+simclr"] = (bb, simclr)
+
+    # ----- one-layer NN novelty probe: pre vs post-discovery spaces ---------
+    aug_half = {"sup->res": (res_tr, res_te), "ssl->supres": (ssl_tr, ssl_te),
+                "supcon+simclr": (simclr_tr, simclr_te)}
+    print("\n===== 1-layer NN novelty probe (holdout-vs-rest) =====")
+    print(f"  {'space':<16}{'probe pre':>12}{'probe post':>12}")
+    probe = {}
+    for name in spaces:
+        tr_pre, te_pre = spaces[name][0], spaces[name][1]
+        bb, aug = ft[name]
+        tr_post, _ = collect_embeddings(bb, train_eval_loader)
+        te_post, _ = collect_embeddings(bb, test_loader)
+        if aug is not None:
+            tr_post = np.concatenate([tr_post, aug_half[name][0]], axis=1)
+            te_post = np.concatenate([te_post, aug_half[name][1]], axis=1)
+        a_pre, s_pre, isu = linear_probe_novelty(tr_pre, tr_lab, te_pre,
+                                                 te_lab, holdouts)
+        a_post, s_post, _ = linear_probe_novelty(tr_post, tr_lab, te_post,
+                                                 te_lab, holdouts)
+        probe[name] = dict(pre=a_pre, post=a_post, s_pre=s_pre, s_post=s_post,
+                           is_unseen=isu, te_post=te_post)
+        print(f"  {name:<16}{a_pre:>12.4f}{a_post:>12.4f}")
+
+    if args.plots:
+        colors = ["#2a78d6", "#1baf7a", "#eda100", "#008300", "#4a3aa7",
+                  "#e34948"]
+        plt.figure(figsize=(7.5, 7))
+        for (name, p), c in zip(probe.items(), colors):
+            fpr, tpr, _ = roc_curve(p["is_unseen"], p["s_post"])
+            plt.plot(fpr, tpr, color=c, lw=2,
+                     label=f"{name} post ({p['post']:.3f})")
+            fpr, tpr, _ = roc_curve(p["is_unseen"], p["s_pre"])
+            plt.plot(fpr, tpr, color=c, lw=1.2, ls="--", alpha=0.7,
+                     label=f"{name} pre ({p['pre']:.3f})")
+        plt.plot([0, 1], [0, 1], color="gray", lw=1, ls=":")
+        plt.xlabel("False positive rate"); plt.ylabel("True positive rate")
+        plt.title(f"exp29 1-layer-NN novelty probe ROC (holdout "
+                  f"{sorted(holdouts)}): solid = post-discovery, dashed = pre")
+        plt.legend(loc="lower right", fontsize=8)
+        plt.grid(alpha=0.25); plt.tight_layout()
+        plt.savefig(plot_path(f"exp29_probe_roc_{cfg['emb_dim']}d.png"), dpi=150)
+        plt.close()
+        print("  saved "
+              + plot_path(f"exp29_probe_roc_{cfg['emb_dim']}d.png"))
+        np.savez_compressed(
+            os.path.join("logs", "exp29", f"embs_post_{cfg['emb_dim']}d.npz"),
+            te_lab=te_lab,
+            **{f"{n}_te_post": probe[n]["te_post"].astype(np.float16)
+               for n in probe})
+        print(f"  saved logs/exp29/embs_post_{cfg['emb_dim']}d.npz")
 
     print(f"\n===== EXP29 SUMMARY [cifar10, {cfg['emb_dim']}d] =====")
     for name in spaces:
         r = perf[name]
         print(f"  [{name:<14}] acc={r['acc']:.4f} supAUC={r['sup_auc']:.4f} "
               f"eucl={r['eucl']:.4f} mahaT={r['maha_tied']:.4f} "
-              f"mahaPC={r['maha_pc']:.4f}")
+              f"mahaPC={r['maha_pc']:.4f} probe={probe[name]['pre']:.4f}"
+              f"/{probe[name]['post']:.4f}")
         for h in hist[name]:
             print(f"          round {h['round']}: purity={h['purity']:.3f} "
                   f"anchors={h['n_anchors']}  margin={h['margin']:.4f}  "
