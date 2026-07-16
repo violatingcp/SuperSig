@@ -344,12 +344,12 @@ def main():
                      names=CIFAR_NAMES, seed=args.seed)
     print("\n----- discovery: sup->res (ft sup branch) -----")
     bb = copy.deepcopy(sup)
-    hist["sup->res"] = exp28.run_concat_discovery(
+    hist["sup->res"], _ = exp28.run_concat_discovery(
         bb, res, means_sup.clone(), res_cents, **concat_kw)
     ft["sup->res"] = (bb, res)
     print("\n----- discovery: ssl->supres (ft supres branch) -----")
     bb = copy.deepcopy(supres)
-    hist["ssl->supres"] = exp28.run_concat_discovery(
+    hist["ssl->supres"], _ = exp28.run_concat_discovery(
         bb, trunk, means_supres.clone(), ssl_cents, **concat_kw)
     ft["ssl->supres"] = (bb, trunk)
     print("\n----- discovery: joint -----")
@@ -367,7 +367,7 @@ def main():
     ft["supcon"] = (bb, None)
     print("\n----- discovery: supcon+simclr (ft supcon branch) -----")
     bb = copy.deepcopy(supcon)
-    hist["supcon+simclr"] = exp28.run_concat_discovery(
+    hist["supcon+simclr"], _ = exp28.run_concat_discovery(
         bb, simclr, exp28.fill_means(supcon_cents, seen, cfg), simclr_cents,
         **concat_kw)
     ft["supcon+simclr"] = (bb, simclr)

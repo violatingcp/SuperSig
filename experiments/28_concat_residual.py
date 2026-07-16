@@ -205,7 +205,7 @@ def run_concat_discovery(sup, trunk, means_sup, ssl_cents, *, base, dim,
         print(f"  round {r}: pool={h['pool']} purity={h['purity']:.3f} "
               f"k-hat={h['khat']} anchors={h['n_anchors']}  "
               f"margin={h['margin']:.4f}  mean-anchor={h['mean_pc']:.4f}  {pc}")
-    return history
+    return history, dict(cur_means=cur_means, disc_ssl=disc_ssl)
 
 
 def main():
@@ -425,7 +425,7 @@ def main():
                                        **disc_kw)
     if "concat" in arms:
         print("\n----- discovery: concat (ft sup branch only) -----")
-        hist["concat"] = run_concat_discovery(
+        hist["concat"], _ = run_concat_discovery(
             copy.deepcopy(sup), trunk, means_sup.clone(), ssl_cents, base=base,
             dim=cfg["emb_dim"], train_eval_loader=train_eval_loader,
             test_loader=test_loader, seen=seen, holdouts=holdouts, cfg=cfg,
