@@ -72,6 +72,37 @@ def np_test_stats(D, R, M=16, steps=300, sigma0=None, sigma_ratio=10.0,
     return ts
 
 
+def krr_term(R, sigmas):
+    """Unbiased within-reference kernel means, one per bandwidth."""
+    with torch.no_grad():
+        d2 = torch.cdist(R, R).pow(2)
+        n = len(R)
+        out = []
+        for s in sigmas:
+            k = torch.exp(-d2 / (2 * s * s))
+            out.append(float((k.sum() - k.diagonal().sum()) / (n * (n - 1))))
+    return out
+
+
+def mmd2_multi_stats(D, R, sigmas, krr):
+    """
+    Unbiased multi-bandwidth MMD^2 between data D and reference R (Gaussian
+    kernels).  Same role as np_test_stats: one statistic per scale, to be
+    aggregated with aggregate_pvalues against toy-calibrated nulls.
+    """
+    with torch.no_grad():
+        dDD2 = torch.cdist(D, D).pow(2)
+        dDR2 = torch.cdist(D, R).pow(2)
+        n = len(D)
+        out = []
+        for s, krr_s in zip(sigmas, krr):
+            kDD = torch.exp(-dDD2 / (2 * s * s))
+            udd = (kDD.sum() - kDD.diagonal().sum()) / (n * (n - 1))
+            kdr = torch.exp(-dDR2 / (2 * s * s)).mean()
+            out.append(float(udd - 2 * kdr + krr_s))
+    return out
+
+
 def aggregate_pvalues(ts, null_ts):
     """
     Multi-scale aggregate score of one realization against per-sigma nulls.
