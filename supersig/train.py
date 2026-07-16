@@ -255,6 +255,45 @@ def train_dual_visreg(backbone, loader, epochs, loss_fn, lr=1e-3):
               f"global={runs['global']/n:.4f}  local={runs['local']/n:.4f}")
 
 
+def train_sigreg_hybrid_aug(backbone, two_view_labeled_loader, epochs, means,
+                            inv_weight=1.0, alpha=1.0, lr=1e-3,
+                            rep_weight=REP_WEIGHT, sigreg_weight=1.0,
+                            n_slices=64):
+    """
+    Supervised SIGReg hybrid with augmentation invariance IN PARALLEL (exp 29).
+
+    Same objective as train_sigreg_hybrid (classwise SIGReg + repulsed means +
+    proto term, averaged over the two augmented views) plus an invariance term
+    between the views.  One network, one optimizer, both signals at once.
+    """
+    means.requires_grad_(True)
+    opt = torch.optim.Adam(list(backbone.parameters()) + [means], lr=lr)
+    backbone.train()
+    for ep in range(epochs):
+        reg_run, disc_run, inv_run, n = 0.0, 0.0, 0.0, 0
+        for v1, v2, y in two_view_labeled_loader:
+            v1, v2, y = v1.to(DEVICE), v2.to(DEVICE), y.to(DEVICE)
+            opt.zero_grad()
+            z1, z2 = backbone(v1), backbone(v2)
+            reg = 0.5 * (classwise_sigreg_loss(z1, y, means, n_slices=n_slices)
+                         + classwise_sigreg_loss(z2, y, means, n_slices=n_slices))
+            aux = (rep_weight * repulsion_loss(means)
+                   + SHRINK_WEIGHT * shrink_loss(means))
+            d = 0.5 * (F.cross_entropy(-0.5 * torch.cdist(z1, means).pow(2), y)
+                       + F.cross_entropy(-0.5 * torch.cdist(z2, means).pow(2), y))
+            inv = F.mse_loss(z1, z2)
+            (sigreg_weight * reg + aux + alpha * d + inv_weight * inv).backward()
+            opt.step()
+            reg_run += reg.item() * v1.size(0)
+            disc_run += d.item() * v1.size(0)
+            inv_run += inv.item() * v1.size(0)
+            n += v1.size(0)
+        dmin, dmean = mean_geometry(means.detach())
+        print(f"  [sigreg+proto+aug] epoch {ep+1}/{epochs}  sigreg={reg_run/n:.4f}  "
+              f"proto={disc_run/n:.4f}  inv={inv_run/n:.4f}  "
+              f"min_dist={dmin:.2f}  mean_dist={dmean:.2f}")
+
+
 def train_simclr(backbone, loader, epochs, temp=0.5, lr=1e-3):
     """Unsupervised SimCLR (NT-Xent): positives are only the other augmented view."""
     opt = torch.optim.Adam(backbone.parameters(), lr=lr)
