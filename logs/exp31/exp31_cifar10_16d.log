@@ -1,0 +1,605 @@
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+exp31 [sparker] emb_dim=16 holdout=[4] alpha=0.05 N_D=5000 M=16 nulls=200/100 sig-toys=50
+
+===== training: sup =====
+Using cache found in /home/pharris/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+  cifar10 balanced loader (no {4}): 45000 images, 208 batches of 9x24
+  [sigreg+proto] epoch 1/10  sigreg=0.2948  proto=0.7526  min_dist=5.51  mean_dist=5.59
+  [sigreg+proto] epoch 2/10  sigreg=0.1332  proto=0.3536  min_dist=5.99  mean_dist=6.19
+  [sigreg+proto] epoch 3/10  sigreg=0.1281  proto=0.2680  min_dist=6.42  mean_dist=6.83
+  [sigreg+proto] epoch 4/10  sigreg=0.1275  proto=0.2408  min_dist=6.81  mean_dist=7.44
+  [sigreg+proto] epoch 5/10  sigreg=0.1280  proto=0.2130  min_dist=7.16  mean_dist=8.01
+  [sigreg+proto] epoch 6/10  sigreg=0.1270  proto=0.1933  min_dist=7.48  mean_dist=8.53
+  [sigreg+proto] epoch 7/10  sigreg=0.1291  proto=0.1692  min_dist=7.78  mean_dist=9.01
+  [sigreg+proto] epoch 8/10  sigreg=0.1314  proto=0.1693  min_dist=8.05  mean_dist=9.46
+  [sigreg+proto] epoch 9/10  sigreg=0.1305  proto=0.1377  min_dist=8.31  mean_dist=9.87
+  [sigreg+proto] epoch 10/10  sigreg=0.1314  proto=0.1263  min_dist=8.55  mean_dist=10.26
+
+===== training: res =====
+  cifar10 balanced two-view loader (no {4}): 45000 images, 208 batches of 9x24
+  [sigreg-residual-cw] epoch 1/10  inv=0.4130  res-sigreg=0.3634
+  [sigreg-residual-cw] epoch 2/10  inv=0.3167  res-sigreg=0.3062
+  [sigreg-residual-cw] epoch 3/10  inv=0.2896  res-sigreg=0.2902
+  [sigreg-residual-cw] epoch 4/10  inv=0.2770  res-sigreg=0.2797
+  [sigreg-residual-cw] epoch 5/10  inv=0.2682  res-sigreg=0.2737
+  [sigreg-residual-cw] epoch 6/10  inv=0.2548  res-sigreg=0.2657
+  [sigreg-residual-cw] epoch 7/10  inv=0.2520  res-sigreg=0.2629
+  [sigreg-residual-cw] epoch 8/10  inv=0.2451  res-sigreg=0.2576
+  [sigreg-residual-cw] epoch 9/10  inv=0.2420  res-sigreg=0.2556
+  [sigreg-residual-cw] epoch 10/10  inv=0.2366  res-sigreg=0.2512
+
+===== training: ssl =====
+Using cache found in /home/pharris/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+  CIFAR two-view embedding-train images (no {4}): 45000
+  [sigreg-ssl] epoch 1/20  inv=0.0743  sigreg=0.1401
+  [sigreg-ssl] epoch 2/20  inv=0.0702  sigreg=0.0790
+  [sigreg-ssl] epoch 3/20  inv=0.0676  sigreg=0.0700
+  [sigreg-ssl] epoch 4/20  inv=0.0650  sigreg=0.0641
+  [sigreg-ssl] epoch 5/20  inv=0.0623  sigreg=0.0614
+  [sigreg-ssl] epoch 6/20  inv=0.0620  sigreg=0.0575
+  [sigreg-ssl] epoch 7/20  inv=0.0603  sigreg=0.0560
+  [sigreg-ssl] epoch 8/20  inv=0.0599  sigreg=0.0539
+  [sigreg-ssl] epoch 9/20  inv=0.0588  sigreg=0.0514
+  [sigreg-ssl] epoch 10/20  inv=0.0582  sigreg=0.0495
+  [sigreg-ssl] epoch 11/20  inv=0.0573  sigreg=0.0483
+  [sigreg-ssl] epoch 12/20  inv=0.0564  sigreg=0.0468
+  [sigreg-ssl] epoch 13/20  inv=0.0556  sigreg=0.0450
+  [sigreg-ssl] epoch 14/20  inv=0.0561  sigreg=0.0449
+  [sigreg-ssl] epoch 15/20  inv=0.0550  sigreg=0.0442
+  [sigreg-ssl] epoch 16/20  inv=0.0544  sigreg=0.0436
+  [sigreg-ssl] epoch 17/20  inv=0.0537  sigreg=0.0423
+  [sigreg-ssl] epoch 18/20  inv=0.0538  sigreg=0.0423
+  [sigreg-ssl] epoch 19/20  inv=0.0524  sigreg=0.0410
+  [sigreg-ssl] epoch 20/20  inv=0.0522  sigreg=0.0397
+
+===== training: supres =====
+  cifar10 balanced loader (no {4}): 45000 images, 208 batches of 9x24
+  [sigreg+proto] epoch 1/10  sigreg=0.1340  proto=0.7585  min_dist=2.02  mean_dist=4.22
+  [sigreg+proto] epoch 2/10  sigreg=0.1164  proto=0.5418  min_dist=2.62  mean_dist=4.91
+  [sigreg+proto] epoch 3/10  sigreg=0.1120  proto=0.4348  min_dist=3.10  mean_dist=5.52
+  [sigreg+proto] epoch 4/10  sigreg=0.1109  proto=0.3638  min_dist=3.52  mean_dist=6.06
+  [sigreg+proto] epoch 5/10  sigreg=0.1117  proto=0.3360  min_dist=3.89  mean_dist=6.56
+  [sigreg+proto] epoch 6/10  sigreg=0.1118  proto=0.2787  min_dist=4.23  mean_dist=7.02
+  [sigreg+proto] epoch 7/10  sigreg=0.1123  proto=0.2482  min_dist=4.54  mean_dist=7.45
+  [sigreg+proto] epoch 8/10  sigreg=0.1127  proto=0.2235  min_dist=4.84  mean_dist=7.86
+  [sigreg+proto] epoch 9/10  sigreg=0.1134  proto=0.2058  min_dist=5.12  mean_dist=8.25
+  [sigreg+proto] epoch 10/10  sigreg=0.1135  proto=0.1791  min_dist=5.39  mean_dist=8.62
+
+===== training: joint =====
+Using cache found in /home/pharris/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+  cifar10 balanced two-view loader (no {4}): 45000 images, 208 batches of 9x24
+  [sigreg+proto+aug] epoch 1/10  sigreg=0.3157  proto=1.1848  inv=0.3959  min_dist=5.41  mean_dist=5.59
+  [sigreg+proto+aug] epoch 2/10  sigreg=0.1407  proto=0.7276  inv=0.4502  min_dist=5.87  mean_dist=6.18
+  [sigreg+proto+aug] epoch 3/10  sigreg=0.1404  proto=0.7023  inv=0.4636  min_dist=6.28  mean_dist=6.80
+  [sigreg+proto+aug] epoch 4/10  sigreg=0.1431  proto=0.7259  inv=0.4798  min_dist=6.63  mean_dist=7.39
+  [sigreg+proto+aug] epoch 5/10  sigreg=0.1502  proto=0.7942  inv=0.5028  min_dist=6.90  mean_dist=7.91
+  [sigreg+proto+aug] epoch 6/10  sigreg=0.1531  proto=0.8143  inv=0.5143  min_dist=7.10  mean_dist=8.39
+  [sigreg+proto+aug] epoch 7/10  sigreg=0.1595  proto=0.8531  inv=0.5352  min_dist=7.24  mean_dist=8.81
+  [sigreg+proto+aug] epoch 8/10  sigreg=0.1644  proto=0.8921  inv=0.5456  min_dist=7.35  mean_dist=9.19
+  [sigreg+proto+aug] epoch 9/10  sigreg=0.1643  proto=0.8673  inv=0.5483  min_dist=7.42  mean_dist=9.54
+  [sigreg+proto+aug] epoch 10/10  sigreg=0.1665  proto=0.8718  inv=0.5558  min_dist=7.45  mean_dist=9.85
+
+===== training: supcon =====
+Using cache found in /home/pharris/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+  CIFAR two-view embedding-train images (no {4}): 45000
+  [supcon] epoch 1/10  loss=4.7573
+  [supcon] epoch 2/10  loss=4.6692
+  [supcon] epoch 3/10  loss=4.6505
+  [supcon] epoch 4/10  loss=4.6191
+  [supcon] epoch 5/10  loss=4.6002
+  [supcon] epoch 6/10  loss=4.5903
+  [supcon] epoch 7/10  loss=4.5752
+  [supcon] epoch 8/10  loss=4.5688
+  [supcon] epoch 9/10  loss=4.5498
+  [supcon] epoch 10/10  loss=4.5432
+
+===== training: simclr =====
+Using cache found in /home/pharris/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+  CIFAR two-view embedding-train images (no {4}): 45000
+  [simclr] epoch 1/20  loss=4.7162
+  [simclr] epoch 2/20  loss=4.5877
+  [simclr] epoch 3/20  loss=4.5582
+  [simclr] epoch 4/20  loss=4.5391
+  [simclr] epoch 5/20  loss=4.5261
+  [simclr] epoch 6/20  loss=4.5201
+  [simclr] epoch 7/20  loss=4.5128
+  [simclr] epoch 8/20  loss=4.5072
+  [simclr] epoch 9/20  loss=4.5010
+  [simclr] epoch 10/20  loss=4.4976
+  [simclr] epoch 11/20  loss=4.4959
+  [simclr] epoch 12/20  loss=4.4938
+  [simclr] epoch 13/20  loss=4.4901
+  [simclr] epoch 14/20  loss=4.4869
+  [simclr] epoch 15/20  loss=4.4866
+  [simclr] epoch 16/20  loss=4.4840
+  [simclr] epoch 17/20  loss=4.4835
+  [simclr] epoch 18/20  loss=4.4809
+  [simclr] epoch 19/20  loss=4.4788
+  [simclr] epoch 20/20  loss=4.4777
+
+===== PRE-DISCOVERY sparker battery =====
+  [sup->res]
+    pre f=0.001: power=0.020 [0.003,0.064] (1/50)
+    pre f=0.003: power=0.060 [0.028,0.115] (3/50)
+    pre f=0.01: power=0.180 [0.124,0.251] (9/50)
+    pre f=0.03: power=0.960 [0.910,0.986] (48/50)
+    pre f=0.1: power=1.000 [0.964,1.000] (50/50)
+  [ssl->supres]
+    pre f=0.001: power=0.080 [0.042,0.138] (4/50)
+    pre f=0.003: power=0.060 [0.028,0.115] (3/50)
+    pre f=0.01: power=0.040 [0.014,0.090] (2/50)
+    pre f=0.03: power=0.340 [0.268,0.419] (17/50)
+    pre f=0.1: power=1.000 [0.964,1.000] (50/50)
+  [joint]
+    pre f=0.001: power=0.020 [0.003,0.064] (1/50)
+    pre f=0.003: power=0.020 [0.003,0.064] (1/50)
+    pre f=0.01: power=0.100 [0.058,0.162] (5/50)
+    pre f=0.03: power=0.980 [0.936,0.997] (49/50)
+    pre f=0.1: power=1.000 [0.964,1.000] (50/50)
+  [sup]
+    pre f=0.001: power=0.000 [0.000,0.036] (0/50)
+    pre f=0.003: power=0.080 [0.042,0.138] (4/50)
+    pre f=0.01: power=0.200 [0.141,0.273] (10/50)
+    pre f=0.03: power=1.000 [0.964,1.000] (50/50)
+    pre f=0.1: power=1.000 [0.964,1.000] (50/50)
+  [supcon]
+    pre f=0.001: power=0.060 [0.028,0.115] (3/50)
+    pre f=0.003: power=0.100 [0.058,0.162] (5/50)
+    pre f=0.01: power=0.440 [0.362,0.520] (22/50)
+    pre f=0.03: power=1.000 [0.964,1.000] (50/50)
+    pre f=0.1: power=1.000 [0.964,1.000] (50/50)
+  [supcon+simclr]
+    pre f=0.001: power=0.060 [0.028,0.115] (3/50)
+    pre f=0.003: power=0.060 [0.028,0.115] (3/50)
+    pre f=0.01: power=0.040 [0.014,0.090] (2/50)
+    pre f=0.03: power=1.000 [0.964,1.000] (50/50)
+    pre f=0.1: power=1.000 [0.964,1.000] (50/50)
+
+===== POST-DISCOVERY battery, f=0.001 (45 injected) =====
+  [sigreg+proto] epoch 1/5  sigreg=0.1621  proto=1.0653  min_dist=3.94  mean_dist=9.58
+  [sigreg+proto] epoch 2/5  sigreg=0.1503  proto=0.7986  min_dist=4.59  mean_dist=10.05
+  [sigreg+proto] epoch 3/5  sigreg=0.1504  proto=0.7515  min_dist=5.13  mean_dist=10.48
+  [sigreg+proto] epoch 4/5  sigreg=0.1537  proto=0.7704  min_dist=5.60  mean_dist=10.89
+  [sigreg+proto] epoch 5/5  sigreg=0.1577  proto=0.8544  min_dist=6.02  mean_dist=11.27
+  round 1: pool=2267 purity=0.007 k-hat=4 anchors=4  margin=0.8647  mean-anchor=0.9090  deer=0.909
+  [sigreg+proto] epoch 1/5  sigreg=0.2136  proto=1.7718  min_dist=1.92  mean_dist=10.85
+  [sigreg+proto] epoch 2/5  sigreg=0.1883  proto=1.4085  min_dist=2.34  mean_dist=11.19
+  [sigreg+proto] epoch 3/5  sigreg=0.1877  proto=1.3511  min_dist=2.54  mean_dist=11.51
+  [sigreg+proto] epoch 4/5  sigreg=0.1889  proto=1.3437  min_dist=2.74  mean_dist=11.81
+  [sigreg+proto] epoch 5/5  sigreg=0.1884  proto=1.3093  min_dist=2.93  mean_dist=12.09
+  round 2: pool=2256 purity=0.003 k-hat=4 anchors=8  margin=0.8406  mean-anchor=0.9098  deer=0.910
+  [sup->res] (post, f=0.001)
+    post f=0.001: power=0.000 [0.000,0.036] (0/50)
+  [sigreg+proto] epoch 1/5  sigreg=0.1425  proto=1.0132  min_dist=2.66  mean_dist=8.62
+  [sigreg+proto] epoch 2/5  sigreg=0.1344  proto=0.7821  min_dist=3.29  mean_dist=9.14
+  [sigreg+proto] epoch 3/5  sigreg=0.1366  proto=0.7116  min_dist=3.79  mean_dist=9.62
+  [sigreg+proto] epoch 4/5  sigreg=0.1411  proto=0.7340  min_dist=4.21  mean_dist=10.06
+  [sigreg+proto] epoch 5/5  sigreg=0.1437  proto=0.7359  min_dist=4.57  mean_dist=10.47
+  round 1: pool=2258 purity=0.004 k-hat=4 anchors=4  margin=0.6866  mean-anchor=0.7786  deer=0.779
+  [sigreg+proto] epoch 1/5  sigreg=0.1755  proto=1.3680  min_dist=3.76  mean_dist=9.88
+  [sigreg+proto] epoch 2/5  sigreg=0.1677  proto=1.2418  min_dist=3.93  mean_dist=10.34
+  [sigreg+proto] epoch 3/5  sigreg=0.1699  proto=1.2434  min_dist=4.10  mean_dist=10.75
+  [sigreg+proto] epoch 4/5  sigreg=0.1780  proto=1.3100  min_dist=4.26  mean_dist=11.13
+  [sigreg+proto] epoch 5/5  sigreg=0.1809  proto=1.2812  min_dist=4.42  mean_dist=11.49
+  round 2: pool=2259 purity=0.004 k-hat=4 anchors=8  margin=0.7573  mean-anchor=0.8473  deer=0.847
+  [ssl->supres] (post, f=0.001)
+    post f=0.001: power=0.020 [0.003,0.064] (1/50)
+  [sigreg+proto] epoch 1/5  sigreg=0.1905  proto=1.4637  min_dist=3.82  mean_dist=10.68
+  [sigreg+proto] epoch 2/5  sigreg=0.1651  proto=1.0850  min_dist=4.44  mean_dist=11.13
+  [sigreg+proto] epoch 3/5  sigreg=0.1613  proto=0.9748  min_dist=4.97  mean_dist=11.55
+  [sigreg+proto] epoch 4/5  sigreg=0.1616  proto=0.9147  min_dist=5.43  mean_dist=11.94
+  [sigreg+proto] epoch 5/5  sigreg=0.1621  proto=0.8937  min_dist=5.84  mean_dist=12.31
+  round 1: pool=2256 purity=0.003 k-hat=4 anchors=4  margin=0.8162  mean-anchor=0.8794  deer=0.879
+  [sigreg+proto] epoch 1/5  sigreg=0.2193  proto=1.8557  min_dist=3.61  mean_dist=11.70
+  [sigreg+proto] epoch 2/5  sigreg=0.1905  proto=1.4593  min_dist=4.15  mean_dist=12.05
+  [sigreg+proto] epoch 3/5  sigreg=0.1893  proto=1.4019  min_dist=4.33  mean_dist=12.39
+  [sigreg+proto] epoch 4/5  sigreg=0.1898  proto=1.3699  min_dist=4.45  mean_dist=12.70
+  [sigreg+proto] epoch 5/5  sigreg=0.1931  proto=1.4148  min_dist=4.58  mean_dist=12.99
+  round 2: pool=2255 purity=0.002 k-hat=4 anchors=8  margin=0.7952  mean-anchor=0.8783  deer=0.878
+  [joint] (post, f=0.001)
+    post f=0.001: power=0.060 [0.028,0.115] (3/50)
+  [sigreg+proto] epoch 1/5  sigreg=0.1728  proto=1.2401  min_dist=4.53  mean_dist=9.29
+  [sigreg+proto] epoch 2/5  sigreg=0.1554  proto=0.9790  min_dist=5.06  mean_dist=9.77
+  [sigreg+proto] epoch 3/5  sigreg=0.1575  proto=0.9108  min_dist=5.50  mean_dist=10.21
+  [sigreg+proto] epoch 4/5  sigreg=0.1590  proto=0.9385  min_dist=5.73  mean_dist=10.62
+  [sigreg+proto] epoch 5/5  sigreg=0.1625  proto=0.9633  min_dist=5.87  mean_dist=11.00
+  round 1: pool=2273 purity=0.010 k-hat=4 anchors=4  margin=0.8582  mean-anchor=0.9008  deer=0.901
+  [sigreg+proto] epoch 1/5  sigreg=0.2389  proto=2.0620  min_dist=2.32  mean_dist=10.85
+  [sigreg+proto] epoch 2/5  sigreg=0.1991  proto=1.5616  min_dist=2.84  mean_dist=11.17
+  [sigreg+proto] epoch 3/5  sigreg=0.1994  proto=1.5303  min_dist=3.26  mean_dist=11.48
+  [sigreg+proto] epoch 4/5  sigreg=0.1985  proto=1.4866  min_dist=3.63  mean_dist=11.76
+  [sigreg+proto] epoch 5/5  sigreg=0.2048  proto=1.5452  min_dist=3.94  mean_dist=12.02
+  round 2: pool=2256 purity=0.003 k-hat=4 anchors=8  margin=0.8335  mean-anchor=0.8407  deer=0.841
+  [sup] (post, f=0.001)
+    post f=0.001: power=0.020 [0.003,0.064] (1/50)
+  [sigreg+proto] epoch 1/5  sigreg=0.2302  proto=1.3183  min_dist=2.75  mean_dist=5.06
+  [sigreg+proto] epoch 2/5  sigreg=0.1435  proto=0.8198  min_dist=3.23  mean_dist=5.62
+  [sigreg+proto] epoch 3/5  sigreg=0.1397  proto=0.6553  min_dist=3.65  mean_dist=6.13
+  [sigreg+proto] epoch 4/5  sigreg=0.1369  proto=0.5965  min_dist=4.03  mean_dist=6.58
+  [sigreg+proto] epoch 5/5  sigreg=0.1366  proto=0.5821  min_dist=4.37  mean_dist=7.00
+  round 1: pool=2250 purity=0.000 k-hat=4 anchors=4  margin=0.3463  mean-anchor=0.6514  deer=0.651
+  [sigreg+proto] epoch 1/5  sigreg=0.1555  proto=1.0663  min_dist=2.97  mean_dist=7.22
+  [sigreg+proto] epoch 2/5  sigreg=0.1498  proto=0.9091  min_dist=3.45  mean_dist=7.72
+  [sigreg+proto] epoch 3/5  sigreg=0.1513  proto=0.8712  min_dist=3.84  mean_dist=8.18
+  [sigreg+proto] epoch 4/5  sigreg=0.1575  proto=0.9191  min_dist=4.19  mean_dist=8.60
+  [sigreg+proto] epoch 5/5  sigreg=0.1641  proto=0.9634  min_dist=4.51  mean_dist=8.99
+  round 2: pool=2255 purity=0.002 k-hat=4 anchors=8  margin=0.6050  mean-anchor=0.6524  deer=0.652
+  [supcon] (post, f=0.001)
+    post f=0.001: power=0.080 [0.042,0.138] (4/50)
+  [sigreg+proto] epoch 1/5  sigreg=0.2203  proto=1.2383  min_dist=2.68  mean_dist=5.17
+  [sigreg+proto] epoch 2/5  sigreg=0.1429  proto=0.7614  min_dist=3.09  mean_dist=5.75
+  [sigreg+proto] epoch 3/5  sigreg=0.1386  proto=0.6225  min_dist=3.46  mean_dist=6.26
+  [sigreg+proto] epoch 4/5  sigreg=0.1377  proto=0.5656  min_dist=3.79  mean_dist=6.73
+  [sigreg+proto] epoch 5/5  sigreg=0.1353  proto=0.5456  min_dist=4.11  mean_dist=7.16
+  round 1: pool=2250 purity=0.000 k-hat=4 anchors=4  margin=0.4498  mean-anchor=0.5837  deer=0.584
+  [sigreg+proto] epoch 1/5  sigreg=0.1521  proto=0.9863  min_dist=3.00  mean_dist=7.32
+  [sigreg+proto] epoch 2/5  sigreg=0.1475  proto=0.8628  min_dist=3.47  mean_dist=7.82
+  [sigreg+proto] epoch 3/5  sigreg=0.1514  proto=0.8654  min_dist=3.57  mean_dist=8.28
+  [sigreg+proto] epoch 4/5  sigreg=0.1580  proto=0.9029  min_dist=3.66  mean_dist=8.70
+  [sigreg+proto] epoch 5/5  sigreg=0.1609  proto=0.9206  min_dist=3.75  mean_dist=9.09
+  round 2: pool=2259 purity=0.004 k-hat=4 anchors=8  margin=0.5848  mean-anchor=0.7211  deer=0.721
+  [supcon+simclr] (post, f=0.001)
+    post f=0.001: power=0.020 [0.003,0.064] (1/50)
+
+===== POST-DISCOVERY battery, f=0.003 (135 injected) =====
+  [sigreg+proto] epoch 1/5  sigreg=0.1601  proto=1.0603  min_dist=4.31  mean_dist=9.71
+  [sigreg+proto] epoch 2/5  sigreg=0.1505  proto=0.8339  min_dist=4.86  mean_dist=10.17
+  [sigreg+proto] epoch 3/5  sigreg=0.1485  proto=0.7425  min_dist=4.85  mean_dist=10.60
+  [sigreg+proto] epoch 4/5  sigreg=0.1531  proto=0.8229  min_dist=4.88  mean_dist=10.99
+  [sigreg+proto] epoch 5/5  sigreg=0.1573  proto=0.8884  min_dist=4.95  mean_dist=11.35
+  round 1: pool=2307 purity=0.025 k-hat=4 anchors=4  margin=0.8799  mean-anchor=0.9084  deer=0.908
+  [sigreg+proto] epoch 1/5  sigreg=0.2091  proto=1.8514  min_dist=2.95  mean_dist=10.85
+  [sigreg+proto] epoch 2/5  sigreg=0.1865  proto=1.4702  min_dist=3.51  mean_dist=11.18
+  [sigreg+proto] epoch 3/5  sigreg=0.1835  proto=1.3836  min_dist=3.98  mean_dist=11.49
+  [sigreg+proto] epoch 4/5  sigreg=0.1896  proto=1.4136  min_dist=4.38  mean_dist=11.79
+  [sigreg+proto] epoch 5/5  sigreg=0.1881  proto=1.3809  min_dist=4.46  mean_dist=12.07
+  round 2: pool=2263 purity=0.006 k-hat=4 anchors=8  margin=0.8805  mean-anchor=0.9141  deer=0.914
+  [sup->res] (post, f=0.003)
+    post f=0.003: power=0.040 [0.014,0.090] (2/50)
+  [sigreg+proto] epoch 1/5  sigreg=0.1411  proto=1.0041  min_dist=2.67  mean_dist=8.63
+  [sigreg+proto] epoch 2/5  sigreg=0.1361  proto=0.7997  min_dist=3.29  mean_dist=9.11
+  [sigreg+proto] epoch 3/5  sigreg=0.1382  proto=0.7254  min_dist=3.79  mean_dist=9.57
+  [sigreg+proto] epoch 4/5  sigreg=0.1434  proto=0.7250  min_dist=4.22  mean_dist=9.99
+  [sigreg+proto] epoch 5/5  sigreg=0.1459  proto=0.7355  min_dist=4.59  mean_dist=10.39
+  round 1: pool=2260 purity=0.004 k-hat=4 anchors=4  margin=0.6419  mean-anchor=0.6582  deer=0.658
+  [sigreg+proto] epoch 1/5  sigreg=0.1784  proto=1.4795  min_dist=3.95  mean_dist=9.95
+  [sigreg+proto] epoch 2/5  sigreg=0.1670  proto=1.2791  min_dist=4.07  mean_dist=10.40
+  [sigreg+proto] epoch 3/5  sigreg=0.1714  proto=1.2827  min_dist=4.19  mean_dist=10.81
+  [sigreg+proto] epoch 4/5  sigreg=0.1748  proto=1.2783  min_dist=4.32  mean_dist=11.19
+  [sigreg+proto] epoch 5/5  sigreg=0.1844  proto=1.3606  min_dist=4.42  mean_dist=11.54
+  round 2: pool=2288 purity=0.017 k-hat=4 anchors=8  margin=0.7943  mean-anchor=0.8553  deer=0.855
+  [ssl->supres] (post, f=0.003)
+    post f=0.003: power=0.140 [0.090,0.207] (7/50)
+  [sigreg+proto] epoch 1/5  sigreg=0.1956  proto=1.4798  min_dist=3.88  mean_dist=10.67
+  [sigreg+proto] epoch 2/5  sigreg=0.1686  proto=1.0830  min_dist=4.51  mean_dist=11.12
+  [sigreg+proto] epoch 3/5  sigreg=0.1622  proto=0.9341  min_dist=5.05  mean_dist=11.55
+  [sigreg+proto] epoch 4/5  sigreg=0.1605  proto=0.8565  min_dist=5.53  mean_dist=11.94
+  [sigreg+proto] epoch 5/5  sigreg=0.1620  proto=0.8739  min_dist=5.96  mean_dist=12.30
+  round 1: pool=2268 purity=0.008 k-hat=4 anchors=4  margin=0.8155  mean-anchor=0.8579  deer=0.858
+    merged 8 -> 7 anchors
+  [sigreg+proto] epoch 1/5  sigreg=0.2183  proto=1.7103  min_dist=2.76  mean_dist=12.13
+  [sigreg+proto] epoch 2/5  sigreg=0.1958  proto=1.4637  min_dist=3.32  mean_dist=12.47
+  [sigreg+proto] epoch 3/5  sigreg=0.1958  proto=1.4008  min_dist=3.78  mean_dist=12.80
+  [sigreg+proto] epoch 4/5  sigreg=0.1962  proto=1.3912  min_dist=4.17  mean_dist=13.10
+  [sigreg+proto] epoch 5/5  sigreg=0.1971  proto=1.3774  min_dist=4.51  mean_dist=13.38
+  round 2: pool=2271 purity=0.009 k-hat=4 anchors=7  margin=0.7804  mean-anchor=0.8740  deer=0.874
+  [joint] (post, f=0.003)
+    post f=0.003: power=0.100 [0.058,0.162] (5/50)
+  [sigreg+proto] epoch 1/5  sigreg=0.1699  proto=1.2124  min_dist=4.86  mean_dist=9.35
+  [sigreg+proto] epoch 2/5  sigreg=0.1530  proto=0.9055  min_dist=5.32  mean_dist=9.85
+  [sigreg+proto] epoch 3/5  sigreg=0.1558  proto=0.8767  min_dist=5.72  mean_dist=10.30
+  [sigreg+proto] epoch 4/5  sigreg=0.1560  proto=0.8882  min_dist=6.06  mean_dist=10.72
+  [sigreg+proto] epoch 5/5  sigreg=0.1643  proto=0.9815  min_dist=6.36  mean_dist=11.10
+  round 1: pool=2300 purity=0.022 k-hat=4 anchors=4  margin=0.8359  mean-anchor=0.8682  deer=0.868
+  [sigreg+proto] epoch 1/5  sigreg=0.2331  proto=1.9320  min_dist=3.88  mean_dist=11.63
+  [sigreg+proto] epoch 2/5  sigreg=0.1991  proto=1.5164  min_dist=4.10  mean_dist=12.00
+  [sigreg+proto] epoch 3/5  sigreg=0.1904  proto=1.3601  min_dist=4.33  mean_dist=12.34
+  [sigreg+proto] epoch 4/5  sigreg=0.1952  proto=1.3935  min_dist=4.55  mean_dist=12.66
+  [sigreg+proto] epoch 5/5  sigreg=0.2000  proto=1.4355  min_dist=4.69  mean_dist=12.96
+  round 2: pool=2258 purity=0.004 k-hat=4 anchors=8  margin=0.8399  mean-anchor=0.8683  deer=0.868
+  [sup] (post, f=0.003)
+    post f=0.003: power=0.120 [0.074,0.184] (6/50)
+  [sigreg+proto] epoch 1/5  sigreg=0.2293  proto=1.3377  min_dist=2.76  mean_dist=5.06
+  [sigreg+proto] epoch 2/5  sigreg=0.1416  proto=0.7847  min_dist=3.23  mean_dist=5.62
+  [sigreg+proto] epoch 3/5  sigreg=0.1361  proto=0.6276  min_dist=3.65  mean_dist=6.13
+  [sigreg+proto] epoch 4/5  sigreg=0.1384  proto=0.5985  min_dist=4.03  mean_dist=6.58
+  [sigreg+proto] epoch 5/5  sigreg=0.1379  proto=0.5903  min_dist=4.37  mean_dist=7.00
+  round 1: pool=2250 purity=0.000 k-hat=4 anchors=4  margin=0.3711  mean-anchor=0.5622  deer=0.562
+  [sigreg+proto] epoch 1/5  sigreg=0.1510  proto=1.0494  min_dist=3.16  mean_dist=7.22
+  [sigreg+proto] epoch 2/5  sigreg=0.1453  proto=0.9119  min_dist=3.59  mean_dist=7.72
+  [sigreg+proto] epoch 3/5  sigreg=0.1495  proto=0.8979  min_dist=3.99  mean_dist=8.18
+  [sigreg+proto] epoch 4/5  sigreg=0.1536  proto=0.9087  min_dist=4.35  mean_dist=8.60
+  [sigreg+proto] epoch 5/5  sigreg=0.1586  proto=0.9338  min_dist=4.67  mean_dist=8.98
+  round 2: pool=2258 purity=0.004 k-hat=4 anchors=8  margin=0.6586  mean-anchor=0.8173  deer=0.817
+  [supcon] (post, f=0.003)
+    post f=0.003: power=0.040 [0.014,0.090] (2/50)
+  [sigreg+proto] epoch 1/5  sigreg=0.2222  proto=1.2313  min_dist=2.68  mean_dist=5.17
+  [sigreg+proto] epoch 2/5  sigreg=0.1399  proto=0.7594  min_dist=3.08  mean_dist=5.75
+  [sigreg+proto] epoch 3/5  sigreg=0.1397  proto=0.6218  min_dist=3.45  mean_dist=6.26
+  [sigreg+proto] epoch 4/5  sigreg=0.1366  proto=0.5628  min_dist=3.79  mean_dist=6.73
+  [sigreg+proto] epoch 5/5  sigreg=0.1366  proto=0.5530  min_dist=4.10  mean_dist=7.16
+  round 1: pool=2250 purity=0.000 k-hat=4 anchors=4  margin=0.4225  mean-anchor=0.5556  deer=0.556
+  [sigreg+proto] epoch 1/5  sigreg=0.1549  proto=1.0030  min_dist=3.06  mean_dist=7.27
+  [sigreg+proto] epoch 2/5  sigreg=0.1488  proto=0.8614  min_dist=3.52  mean_dist=7.77
+  [sigreg+proto] epoch 3/5  sigreg=0.1546  proto=0.8578  min_dist=3.90  mean_dist=8.22
+  [sigreg+proto] epoch 4/5  sigreg=0.1587  proto=0.9021  min_dist=4.25  mean_dist=8.64
+  [sigreg+proto] epoch 5/5  sigreg=0.1638  proto=0.9327  min_dist=4.57  mean_dist=9.02
+  round 2: pool=2256 purity=0.003 k-hat=4 anchors=8  margin=0.6140  mean-anchor=0.7380  deer=0.738
+  [supcon+simclr] (post, f=0.003)
+    post f=0.003: power=0.100 [0.058,0.162] (5/50)
+
+===== POST-DISCOVERY battery, f=0.01 (455 injected) =====
+  [sigreg+proto] epoch 1/5  sigreg=0.1616  proto=1.0667  min_dist=4.39  mean_dist=9.73
+  [sigreg+proto] epoch 2/5  sigreg=0.1505  proto=0.8339  min_dist=4.93  mean_dist=10.21
+  [sigreg+proto] epoch 3/5  sigreg=0.1515  proto=0.8004  min_dist=5.18  mean_dist=10.65
+  [sigreg+proto] epoch 4/5  sigreg=0.1561  proto=0.8277  min_dist=5.42  mean_dist=11.06
+  [sigreg+proto] epoch 5/5  sigreg=0.1585  proto=0.8439  min_dist=5.65  mean_dist=11.44
+  round 1: pool=2434 purity=0.076 k-hat=4 anchors=4  margin=0.8928  mean-anchor=0.9341  deer=0.934
+  [sigreg+proto] epoch 1/5  sigreg=0.2225  proto=1.9563  min_dist=3.99  mean_dist=10.82
+  [sigreg+proto] epoch 2/5  sigreg=0.1842  proto=1.4463  min_dist=4.14  mean_dist=11.18
+  [sigreg+proto] epoch 3/5  sigreg=0.1829  proto=1.3520  min_dist=4.29  mean_dist=11.51
+  [sigreg+proto] epoch 4/5  sigreg=0.1857  proto=1.3445  min_dist=4.44  mean_dist=11.83
+  [sigreg+proto] epoch 5/5  sigreg=0.1859  proto=1.3570  min_dist=4.57  mean_dist=12.12
+  round 2: pool=2284 purity=0.015 k-hat=4 anchors=8  margin=0.8751  mean-anchor=0.9339  deer=0.934
+  [sup->res] (post, f=0.01)
+    post f=0.01: power=0.300 [0.231,0.378] (15/50)
+  [sigreg+proto] epoch 1/5  sigreg=0.1413  proto=0.9754  min_dist=2.73  mean_dist=8.62
+  [sigreg+proto] epoch 2/5  sigreg=0.1358  proto=0.8088  min_dist=3.34  mean_dist=9.11
+  [sigreg+proto] epoch 3/5  sigreg=0.1400  proto=0.7443  min_dist=3.84  mean_dist=9.56
+  [sigreg+proto] epoch 4/5  sigreg=0.1436  proto=0.7488  min_dist=4.26  mean_dist=9.99
+  [sigreg+proto] epoch 5/5  sigreg=0.1457  proto=0.7220  min_dist=4.62  mean_dist=10.39
+  round 1: pool=2295 purity=0.020 k-hat=4 anchors=4  margin=0.6838  mean-anchor=0.7041  deer=0.704
+  [sigreg+proto] epoch 1/5  sigreg=0.1750  proto=1.4473  min_dist=3.78  mean_dist=9.88
+  [sigreg+proto] epoch 2/5  sigreg=0.1661  proto=1.2538  min_dist=3.98  mean_dist=10.33
+  [sigreg+proto] epoch 3/5  sigreg=0.1686  proto=1.2110  min_dist=4.18  mean_dist=10.74
+  [sigreg+proto] epoch 4/5  sigreg=0.1740  proto=1.2287  min_dist=4.34  mean_dist=11.12
+  [sigreg+proto] epoch 5/5  sigreg=0.1786  proto=1.2830  min_dist=4.48  mean_dist=11.47
+  round 2: pool=2329 purity=0.034 k-hat=4 anchors=8  margin=0.7565  mean-anchor=0.8281  deer=0.828
+  [ssl->supres] (post, f=0.01)
+    post f=0.01: power=0.220 [0.159,0.294] (11/50)
+  [sigreg+proto] epoch 1/5  sigreg=0.1845  proto=1.3218  min_dist=3.23  mean_dist=10.96
+  [sigreg+proto] epoch 2/5  sigreg=0.1664  proto=1.0325  min_dist=3.85  mean_dist=11.38
+  [sigreg+proto] epoch 3/5  sigreg=0.1623  proto=0.9229  min_dist=4.33  mean_dist=11.78
+  [sigreg+proto] epoch 4/5  sigreg=0.1623  proto=0.8755  min_dist=4.73  mean_dist=12.15
+  [sigreg+proto] epoch 5/5  sigreg=0.1635  proto=0.8495  min_dist=5.11  mean_dist=12.50
+  round 1: pool=2331 purity=0.035 k-hat=4 anchors=4  margin=0.8024  mean-anchor=0.8436  deer=0.844
+  [sigreg+proto] epoch 1/5  sigreg=0.1924  proto=1.5794  min_dist=3.90  mean_dist=11.65
+  [sigreg+proto] epoch 2/5  sigreg=0.1840  proto=1.4111  min_dist=4.29  mean_dist=11.99
+  [sigreg+proto] epoch 3/5  sigreg=0.1830  proto=1.3387  min_dist=4.49  mean_dist=12.33
+  [sigreg+proto] epoch 4/5  sigreg=0.1866  proto=1.3638  min_dist=4.66  mean_dist=12.64
+  [sigreg+proto] epoch 5/5  sigreg=0.1884  proto=1.3483  min_dist=4.82  mean_dist=12.94
+  round 2: pool=2303 purity=0.023 k-hat=4 anchors=8  margin=0.8327  mean-anchor=0.9095  deer=0.910
+  [joint] (post, f=0.01)
+    post f=0.01: power=0.180 [0.124,0.251] (9/50)
+  [sigreg+proto] epoch 1/5  sigreg=0.1668  proto=1.2012  min_dist=4.89  mean_dist=9.34
+  [sigreg+proto] epoch 2/5  sigreg=0.1541  proto=0.9188  min_dist=5.38  mean_dist=9.83
+  [sigreg+proto] epoch 3/5  sigreg=0.1559  proto=0.9041  min_dist=5.82  mean_dist=10.29
+  [sigreg+proto] epoch 4/5  sigreg=0.1576  proto=0.9056  min_dist=6.14  mean_dist=10.71
+  [sigreg+proto] epoch 5/5  sigreg=0.1599  proto=0.8964  min_dist=6.40  mean_dist=11.10
+  round 1: pool=2441 purity=0.078 k-hat=4 anchors=4  margin=0.8760  mean-anchor=0.9015  deer=0.901
+  [sigreg+proto] epoch 1/5  sigreg=0.2349  proto=2.1328  min_dist=2.74  mean_dist=10.65
+  [sigreg+proto] epoch 2/5  sigreg=0.2016  proto=1.6436  min_dist=3.31  mean_dist=11.00
+  [sigreg+proto] epoch 3/5  sigreg=0.1967  proto=1.5162  min_dist=3.78  mean_dist=11.32
+  [sigreg+proto] epoch 4/5  sigreg=0.1986  proto=1.5077  min_dist=4.18  mean_dist=11.62
+  [sigreg+proto] epoch 5/5  sigreg=0.2028  proto=1.5362  min_dist=4.54  mean_dist=11.89
+  round 2: pool=2284 purity=0.015 k-hat=4 anchors=8  margin=0.8750  mean-anchor=0.9096  deer=0.910
+  [sup] (post, f=0.01)
+    post f=0.01: power=0.380 [0.305,0.460] (19/50)
+  [sigreg+proto] epoch 1/5  sigreg=0.2256  proto=1.3321  min_dist=2.75  mean_dist=5.06
+  [sigreg+proto] epoch 2/5  sigreg=0.1406  proto=0.7774  min_dist=3.23  mean_dist=5.62
+  [sigreg+proto] epoch 3/5  sigreg=0.1382  proto=0.6497  min_dist=3.65  mean_dist=6.13
+  [sigreg+proto] epoch 4/5  sigreg=0.1370  proto=0.5944  min_dist=4.02  mean_dist=6.58
+  [sigreg+proto] epoch 5/5  sigreg=0.1370  proto=0.5976  min_dist=4.37  mean_dist=7.00
+  round 1: pool=2250 purity=0.000 k-hat=4 anchors=4  margin=0.3475  mean-anchor=0.3004  deer=0.300
+  [sigreg+proto] epoch 1/5  sigreg=0.1481  proto=1.0026  min_dist=3.43  mean_dist=7.14
+  [sigreg+proto] epoch 2/5  sigreg=0.1471  proto=0.9005  min_dist=3.85  mean_dist=7.65
+  [sigreg+proto] epoch 3/5  sigreg=0.1521  proto=0.8855  min_dist=4.22  mean_dist=8.12
+  [sigreg+proto] epoch 4/5  sigreg=0.1561  proto=0.9036  min_dist=4.57  mean_dist=8.55
+  [sigreg+proto] epoch 5/5  sigreg=0.1621  proto=0.9337  min_dist=4.90  mean_dist=8.95
+  round 2: pool=2309 purity=0.026 k-hat=4 anchors=8  margin=0.7136  mean-anchor=0.7918  deer=0.792
+  [supcon] (post, f=0.01)
+    post f=0.01: power=0.120 [0.074,0.184] (6/50)
+  [sigreg+proto] epoch 1/5  sigreg=0.2247  proto=1.2883  min_dist=2.71  mean_dist=5.04
+  [sigreg+proto] epoch 2/5  sigreg=0.1409  proto=0.7765  min_dist=3.17  mean_dist=5.61
+  [sigreg+proto] epoch 3/5  sigreg=0.1396  proto=0.6221  min_dist=3.59  mean_dist=6.11
+  [sigreg+proto] epoch 4/5  sigreg=0.1398  proto=0.5905  min_dist=3.96  mean_dist=6.57
+  [sigreg+proto] epoch 5/5  sigreg=0.1377  proto=0.5683  min_dist=4.31  mean_dist=7.00
+  round 1: pool=2251 purity=0.000 k-hat=4 anchors=4  margin=0.5120  mean-anchor=0.6260  deer=0.626
+  [sigreg+proto] epoch 1/5  sigreg=0.1474  proto=1.0132  min_dist=3.06  mean_dist=7.22
+  [sigreg+proto] epoch 2/5  sigreg=0.1453  proto=0.9073  min_dist=3.51  mean_dist=7.73
+  [sigreg+proto] epoch 3/5  sigreg=0.1479  proto=0.9000  min_dist=3.89  mean_dist=8.18
+  [sigreg+proto] epoch 4/5  sigreg=0.1539  proto=0.9318  min_dist=4.22  mean_dist=8.60
+  [sigreg+proto] epoch 5/5  sigreg=0.1601  proto=0.9692  min_dist=4.52  mean_dist=8.99
+  round 2: pool=2298 purity=0.021 k-hat=4 anchors=8  margin=0.7285  mean-anchor=0.8660  deer=0.866
+  [supcon+simclr] (post, f=0.01)
+    post f=0.01: power=0.080 [0.042,0.138] (4/50)
+
+===== POST-DISCOVERY battery, f=0.03 (1392 injected) =====
+  [sigreg+proto] epoch 1/5  sigreg=0.1613  proto=1.0877  min_dist=3.56  mean_dist=9.39
+  [sigreg+proto] epoch 2/5  sigreg=0.1489  proto=0.8327  min_dist=3.88  mean_dist=9.87
+  [sigreg+proto] epoch 3/5  sigreg=0.1522  proto=0.8331  min_dist=4.19  mean_dist=10.32
+  [sigreg+proto] epoch 4/5  sigreg=0.1550  proto=0.8364  min_dist=4.47  mean_dist=10.73
+  [sigreg+proto] epoch 5/5  sigreg=0.1576  proto=0.8448  min_dist=4.71  mean_dist=11.12
+  round 1: pool=2798 purity=0.196 k-hat=4 anchors=4  margin=0.9119  mean-anchor=0.9244  deer=0.924
+  [sigreg+proto] epoch 1/5  sigreg=0.2104  proto=1.7940  min_dist=3.21  mean_dist=10.64
+  [sigreg+proto] epoch 2/5  sigreg=0.1832  proto=1.3921  min_dist=3.77  mean_dist=11.00
+  [sigreg+proto] epoch 3/5  sigreg=0.1799  proto=1.2988  min_dist=4.25  mean_dist=11.34
+  [sigreg+proto] epoch 4/5  sigreg=0.1871  proto=1.3615  min_dist=4.43  mean_dist=11.65
+  [sigreg+proto] epoch 5/5  sigreg=0.1907  proto=1.3727  min_dist=4.55  mean_dist=11.94
+  round 2: pool=2297 purity=0.020 k-hat=4 anchors=8  margin=0.8962  mean-anchor=0.9173  deer=0.917
+  [sup->res] (post, f=0.03)
+    post f=0.03: power=0.980 [0.936,0.997] (49/50)
+  [sigreg+proto] epoch 1/5  sigreg=0.1438  proto=1.0603  min_dist=2.99  mean_dist=8.52
+  [sigreg+proto] epoch 2/5  sigreg=0.1332  proto=0.7861  min_dist=3.55  mean_dist=9.06
+  [sigreg+proto] epoch 3/5  sigreg=0.1389  proto=0.7678  min_dist=3.98  mean_dist=9.55
+  [sigreg+proto] epoch 4/5  sigreg=0.1411  proto=0.7546  min_dist=4.34  mean_dist=10.00
+  [sigreg+proto] epoch 5/5  sigreg=0.1449  proto=0.7679  min_dist=4.66  mean_dist=10.42
+  round 1: pool=2393 purity=0.060 k-hat=4 anchors=4  margin=0.7695  mean-anchor=0.8520  deer=0.852
+  [sigreg+proto] epoch 1/5  sigreg=0.1907  proto=1.6569  min_dist=3.46  mean_dist=10.03
+  [sigreg+proto] epoch 2/5  sigreg=0.1747  proto=1.3462  min_dist=4.00  mean_dist=10.47
+  [sigreg+proto] epoch 3/5  sigreg=0.1768  proto=1.3277  min_dist=4.43  mean_dist=10.88
+  [sigreg+proto] epoch 4/5  sigreg=0.1808  proto=1.3147  min_dist=4.81  mean_dist=11.25
+  [sigreg+proto] epoch 5/5  sigreg=0.1843  proto=1.3139  min_dist=5.02  mean_dist=11.59
+  round 2: pool=2420 purity=0.070 k-hat=4 anchors=8  margin=0.7930  mean-anchor=0.8486  deer=0.849
+  [ssl->supres] (post, f=0.03)
+    post f=0.03: power=0.960 [0.910,0.986] (48/50)
+  [sigreg+proto] epoch 1/5  sigreg=0.1837  proto=1.3070  min_dist=2.56  mean_dist=10.81
+  [sigreg+proto] epoch 2/5  sigreg=0.1662  proto=1.0613  min_dist=3.15  mean_dist=11.23
+  [sigreg+proto] epoch 3/5  sigreg=0.1642  proto=0.9318  min_dist=3.61  mean_dist=11.62
+  [sigreg+proto] epoch 4/5  sigreg=0.1632  proto=0.8912  min_dist=4.00  mean_dist=11.99
+  [sigreg+proto] epoch 5/5  sigreg=0.1632  proto=0.8543  min_dist=4.35  mean_dist=12.34
+  round 1: pool=2485 purity=0.095 k-hat=4 anchors=4  margin=0.8586  mean-anchor=0.9241  deer=0.924
+  [sigreg+proto] epoch 1/5  sigreg=0.1991  proto=1.6564  min_dist=3.60  mean_dist=12.03
+  [sigreg+proto] epoch 2/5  sigreg=0.1836  proto=1.3753  min_dist=4.14  mean_dist=12.38
+  [sigreg+proto] epoch 3/5  sigreg=0.1803  proto=1.2992  min_dist=4.59  mean_dist=12.72
+  [sigreg+proto] epoch 4/5  sigreg=0.1830  proto=1.3175  min_dist=4.79  mean_dist=13.03
+  [sigreg+proto] epoch 5/5  sigreg=0.1870  proto=1.3329  min_dist=4.92  mean_dist=13.33
+  round 2: pool=2330 purity=0.034 k-hat=4 anchors=8  margin=0.8375  mean-anchor=0.9300  deer=0.930
+  [joint] (post, f=0.03)
+    post f=0.03: power=1.000 [0.964,1.000] (50/50)
+  [sigreg+proto] epoch 1/5  sigreg=0.1661  proto=1.1534  min_dist=4.90  mean_dist=9.33
+  [sigreg+proto] epoch 2/5  sigreg=0.1522  proto=0.9086  min_dist=5.21  mean_dist=9.83
+  [sigreg+proto] epoch 3/5  sigreg=0.1516  proto=0.8265  min_dist=5.52  mean_dist=10.29
+  [sigreg+proto] epoch 4/5  sigreg=0.1571  proto=0.8802  min_dist=5.80  mean_dist=10.71
+  [sigreg+proto] epoch 5/5  sigreg=0.1590  proto=0.8885  min_dist=6.08  mean_dist=11.09
+  round 1: pool=2803 purity=0.197 k-hat=4 anchors=4  margin=0.9039  mean-anchor=0.9238  deer=0.924
+  [sigreg+proto] epoch 1/5  sigreg=0.2284  proto=1.9300  min_dist=3.29  mean_dist=11.03
+  [sigreg+proto] epoch 2/5  sigreg=0.1954  proto=1.5344  min_dist=3.82  mean_dist=11.37
+  [sigreg+proto] epoch 3/5  sigreg=0.1921  proto=1.4265  min_dist=4.24  mean_dist=11.70
+  [sigreg+proto] epoch 4/5  sigreg=0.1935  proto=1.4267  min_dist=4.59  mean_dist=12.00
+  [sigreg+proto] epoch 5/5  sigreg=0.1983  proto=1.4821  min_dist=4.90  mean_dist=12.29
+  round 2: pool=2317 purity=0.029 k-hat=4 anchors=8  margin=0.8858  mean-anchor=0.9178  deer=0.918
+  [sup] (post, f=0.03)
+    post f=0.03: power=1.000 [0.964,1.000] (50/50)
+  [sigreg+proto] epoch 1/5  sigreg=0.2291  proto=1.3376  min_dist=2.76  mean_dist=5.06
+  [sigreg+proto] epoch 2/5  sigreg=0.1420  proto=0.7898  min_dist=3.23  mean_dist=5.62
+  [sigreg+proto] epoch 3/5  sigreg=0.1384  proto=0.6374  min_dist=3.65  mean_dist=6.13
+  [sigreg+proto] epoch 4/5  sigreg=0.1380  proto=0.5916  min_dist=4.03  mean_dist=6.58
+  [sigreg+proto] epoch 5/5  sigreg=0.1365  proto=0.5701  min_dist=4.37  mean_dist=7.00
+  round 1: pool=2250 purity=0.000 k-hat=4 anchors=4  margin=0.3533  mean-anchor=0.3026  deer=0.303
+  [sigreg+proto] epoch 1/5  sigreg=0.1505  proto=1.0636  min_dist=3.02  mean_dist=7.11
+  [sigreg+proto] epoch 2/5  sigreg=0.1455  proto=0.9153  min_dist=3.50  mean_dist=7.62
+  [sigreg+proto] epoch 3/5  sigreg=0.1535  proto=0.9213  min_dist=3.91  mean_dist=8.08
+  [sigreg+proto] epoch 4/5  sigreg=0.1549  proto=0.9345  min_dist=4.27  mean_dist=8.50
+  [sigreg+proto] epoch 5/5  sigreg=0.1629  proto=0.9782  min_dist=4.59  mean_dist=8.89
+  round 2: pool=2353 purity=0.044 k-hat=4 anchors=8  margin=0.6530  mean-anchor=0.7936  deer=0.794
+  [supcon] (post, f=0.03)
+    post f=0.03: power=0.800 [0.727,0.859] (40/50)
+  [sigreg+proto] epoch 1/5  sigreg=0.2214  proto=1.2474  min_dist=2.68  mean_dist=5.17
+  [sigreg+proto] epoch 2/5  sigreg=0.1417  proto=0.7587  min_dist=3.09  mean_dist=5.75
+  [sigreg+proto] epoch 3/5  sigreg=0.1367  proto=0.6055  min_dist=3.45  mean_dist=6.27
+  [sigreg+proto] epoch 4/5  sigreg=0.1382  proto=0.5714  min_dist=3.79  mean_dist=6.73
+  [sigreg+proto] epoch 5/5  sigreg=0.1362  proto=0.5640  min_dist=4.10  mean_dist=7.16
+  round 1: pool=2250 purity=0.000 k-hat=4 anchors=4  margin=0.4586  mean-anchor=0.5989  deer=0.599
+  [sigreg+proto] epoch 1/5  sigreg=0.1506  proto=1.0418  min_dist=3.21  mean_dist=7.28
+  [sigreg+proto] epoch 2/5  sigreg=0.1463  proto=0.8512  min_dist=3.61  mean_dist=7.79
+  [sigreg+proto] epoch 3/5  sigreg=0.1501  proto=0.8440  min_dist=3.99  mean_dist=8.25
+  [sigreg+proto] epoch 4/5  sigreg=0.1561  proto=0.8754  min_dist=4.34  mean_dist=8.68
+  [sigreg+proto] epoch 5/5  sigreg=0.1650  proto=0.9538  min_dist=4.66  mean_dist=9.07
+  round 2: pool=2361 purity=0.047 k-hat=4 anchors=8  margin=0.7481  mean-anchor=0.8288  deer=0.829
+  [supcon+simclr] (post, f=0.03)
+    post f=0.03: power=0.660 [0.581,0.732] (33/50)
+
+===== POST-DISCOVERY battery, f=0.1 (5000 injected) =====
+  [sigreg+proto] epoch 1/5  sigreg=0.1560  proto=0.9886  min_dist=3.42  mean_dist=9.67
+  [sigreg+proto] epoch 2/5  sigreg=0.1495  proto=0.8013  min_dist=3.57  mean_dist=10.16
+  [sigreg+proto] epoch 3/5  sigreg=0.1523  proto=0.8346  min_dist=3.70  mean_dist=10.61
+  [sigreg+proto] epoch 4/5  sigreg=0.1533  proto=0.7924  min_dist=3.84  mean_dist=11.03
+  [sigreg+proto] epoch 5/5  sigreg=0.1568  proto=0.8324  min_dist=3.93  mean_dist=11.41
+  round 1: pool=4325 purity=0.480 k-hat=4 anchors=4  margin=0.9275  mean-anchor=0.9584  deer=0.958
+  [sigreg+proto] epoch 1/5  sigreg=0.2005  proto=1.7847  min_dist=2.04  mean_dist=10.75
+  [sigreg+proto] epoch 2/5  sigreg=0.1834  proto=1.4333  min_dist=2.30  mean_dist=11.10
+  [sigreg+proto] epoch 3/5  sigreg=0.1822  proto=1.3751  min_dist=2.52  mean_dist=11.43
+  [sigreg+proto] epoch 4/5  sigreg=0.1858  proto=1.4188  min_dist=2.68  mean_dist=11.74
+  [sigreg+proto] epoch 5/5  sigreg=0.1873  proto=1.4100  min_dist=2.87  mean_dist=12.04
+  round 2: pool=2540 purity=0.114 k-hat=4 anchors=8  margin=0.9277  mean-anchor=0.9538  deer=0.954
+  [sup->res] (post, f=0.1)
+    post f=0.1: power=1.000 [0.964,1.000] (50/50)
+  [sigreg+proto] epoch 1/5  sigreg=0.1404  proto=0.9893  min_dist=3.14  mean_dist=8.54
+  [sigreg+proto] epoch 2/5  sigreg=0.1348  proto=0.8146  min_dist=3.67  mean_dist=9.10
+  [sigreg+proto] epoch 3/5  sigreg=0.1364  proto=0.7365  min_dist=4.08  mean_dist=9.62
+  [sigreg+proto] epoch 4/5  sigreg=0.1400  proto=0.7276  min_dist=4.44  mean_dist=10.10
+  [sigreg+proto] epoch 5/5  sigreg=0.1452  proto=0.7568  min_dist=4.75  mean_dist=10.53
+  round 1: pool=2786 purity=0.192 k-hat=4 anchors=4  margin=0.8069  mean-anchor=0.8925  deer=0.893
+  [sigreg+proto] epoch 1/5  sigreg=0.1715  proto=1.3695  min_dist=3.36  mean_dist=10.02
+  [sigreg+proto] epoch 2/5  sigreg=0.1659  proto=1.2440  min_dist=3.54  mean_dist=10.49
+  [sigreg+proto] epoch 3/5  sigreg=0.1673  proto=1.2438  min_dist=3.72  mean_dist=10.92
+  [sigreg+proto] epoch 4/5  sigreg=0.1736  proto=1.2737  min_dist=3.89  mean_dist=11.31
+  [sigreg+proto] epoch 5/5  sigreg=0.1791  proto=1.2874  min_dist=4.04  mean_dist=11.68
+  round 2: pool=2537 purity=0.113 k-hat=4 anchors=8  margin=0.8194  mean-anchor=0.8398  deer=0.840
+  [ssl->supres] (post, f=0.1)
+    post f=0.1: power=1.000 [0.964,1.000] (50/50)
+  [sigreg+proto] epoch 1/5  sigreg=0.1834  proto=1.3895  min_dist=4.61  mean_dist=10.62
+  [sigreg+proto] epoch 2/5  sigreg=0.1632  proto=1.0609  min_dist=5.15  mean_dist=11.10
+  [sigreg+proto] epoch 3/5  sigreg=0.1601  proto=0.9323  min_dist=5.60  mean_dist=11.54
+  [sigreg+proto] epoch 4/5  sigreg=0.1613  proto=0.9218  min_dist=5.88  mean_dist=11.94
+  [sigreg+proto] epoch 5/5  sigreg=0.1603  proto=0.8590  min_dist=6.10  mean_dist=12.31
+  round 1: pool=3122 purity=0.279 k-hat=4 anchors=4  margin=0.9037  mean-anchor=0.9530  deer=0.953
+  [sigreg+proto] epoch 1/5  sigreg=0.2044  proto=1.6347  min_dist=3.80  mean_dist=11.95
+  [sigreg+proto] epoch 2/5  sigreg=0.1881  proto=1.4018  min_dist=3.90  mean_dist=12.32
+  [sigreg+proto] epoch 3/5  sigreg=0.1849  proto=1.3103  min_dist=4.01  mean_dist=12.68
+  [sigreg+proto] epoch 4/5  sigreg=0.1882  proto=1.3087  min_dist=4.12  mean_dist=13.01
+  [sigreg+proto] epoch 5/5  sigreg=0.1919  proto=1.3731  min_dist=4.22  mean_dist=13.31
+  round 2: pool=2377 purity=0.053 k-hat=4 anchors=8  margin=0.9049  mean-anchor=0.9606  deer=0.961
+  [joint] (post, f=0.1)
+    post f=0.1: power=1.000 [0.964,1.000] (50/50)
+  [sigreg+proto] epoch 1/5  sigreg=0.1618  proto=1.1259  min_dist=4.18  mean_dist=9.27
+  [sigreg+proto] epoch 2/5  sigreg=0.1516  proto=0.9042  min_dist=4.40  mean_dist=9.78
+  [sigreg+proto] epoch 3/5  sigreg=0.1542  proto=0.8384  min_dist=4.60  mean_dist=10.25
+  [sigreg+proto] epoch 4/5  sigreg=0.1579  proto=0.8628  min_dist=4.77  mean_dist=10.67
+  [sigreg+proto] epoch 5/5  sigreg=0.1592  proto=0.8554  min_dist=4.96  mean_dist=11.07
+  round 1: pool=4282 purity=0.475 k-hat=4 anchors=4  margin=0.9228  mean-anchor=0.9390  deer=0.939
+  [sigreg+proto] epoch 1/5  sigreg=0.2246  proto=1.9707  min_dist=2.35  mean_dist=10.87
+  [sigreg+proto] epoch 2/5  sigreg=0.1989  proto=1.6052  min_dist=2.88  mean_dist=11.22
+  [sigreg+proto] epoch 3/5  sigreg=0.1947  proto=1.4874  min_dist=3.30  mean_dist=11.54
+  [sigreg+proto] epoch 4/5  sigreg=0.1958  proto=1.4230  min_dist=3.65  mean_dist=11.85
+  [sigreg+proto] epoch 5/5  sigreg=0.1988  proto=1.4212  min_dist=3.96  mean_dist=12.13
+  round 2: pool=2430 purity=0.074 k-hat=4 anchors=8  margin=0.9174  mean-anchor=0.9210  deer=0.921
+  [sup] (post, f=0.1)
+    post f=0.1: power=1.000 [0.964,1.000] (50/50)
+  [sigreg+proto] epoch 1/5  sigreg=0.2221  proto=1.3233  min_dist=2.75  mean_dist=5.06
+  [sigreg+proto] epoch 2/5  sigreg=0.1411  proto=0.7795  min_dist=3.23  mean_dist=5.62
+  [sigreg+proto] epoch 3/5  sigreg=0.1376  proto=0.6495  min_dist=3.65  mean_dist=6.13
+  [sigreg+proto] epoch 4/5  sigreg=0.1392  proto=0.6025  min_dist=4.03  mean_dist=6.58
+  [sigreg+proto] epoch 5/5  sigreg=0.1393  proto=0.5958  min_dist=4.37  mean_dist=7.00
+  round 1: pool=2250 purity=0.000 k-hat=4 anchors=4  margin=0.3186  mean-anchor=0.5367  deer=0.537
+  [sigreg+proto] epoch 1/5  sigreg=0.1505  proto=1.0357  min_dist=2.94  mean_dist=7.19
+  [sigreg+proto] epoch 2/5  sigreg=0.1485  proto=0.9373  min_dist=3.42  mean_dist=7.69
+  [sigreg+proto] epoch 3/5  sigreg=0.1504  proto=0.9144  min_dist=3.84  mean_dist=8.14
+  [sigreg+proto] epoch 4/5  sigreg=0.1579  proto=0.9808  min_dist=4.23  mean_dist=8.56
+  [sigreg+proto] epoch 5/5  sigreg=0.1651  proto=1.0411  min_dist=4.58  mean_dist=8.94
+  round 2: pool=2631 purity=0.145 k-hat=4 anchors=8  margin=0.8174  mean-anchor=0.9231  deer=0.923
+  [supcon] (post, f=0.1)
+    post f=0.1: power=1.000 [0.964,1.000] (50/50)
+  [sigreg+proto] epoch 1/5  sigreg=0.2247  proto=1.2607  min_dist=2.84  mean_dist=5.09
+  [sigreg+proto] epoch 2/5  sigreg=0.1411  proto=0.7550  min_dist=3.26  mean_dist=5.65
+  [sigreg+proto] epoch 3/5  sigreg=0.1377  proto=0.6212  min_dist=3.65  mean_dist=6.16
+  [sigreg+proto] epoch 4/5  sigreg=0.1353  proto=0.5727  min_dist=4.01  mean_dist=6.62
+  [sigreg+proto] epoch 5/5  sigreg=0.1348  proto=0.5623  min_dist=4.34  mean_dist=7.04
+  round 1: pool=2255 purity=0.002 k-hat=4 anchors=4  margin=0.4052  mean-anchor=0.4113  deer=0.411
+  [sigreg+proto] epoch 1/5  sigreg=0.1446  proto=0.9516  min_dist=2.91  mean_dist=7.34
+  [sigreg+proto] epoch 2/5  sigreg=0.1452  proto=0.8670  min_dist=3.01  mean_dist=7.84
+  [sigreg+proto] epoch 3/5  sigreg=0.1498  proto=0.9083  min_dist=3.11  mean_dist=8.29
+  [sigreg+proto] epoch 4/5  sigreg=0.1565  proto=0.9367  min_dist=3.23  mean_dist=8.71
+  [sigreg+proto] epoch 5/5  sigreg=0.1637  proto=0.9962  min_dist=3.35  mean_dist=9.10
+  round 2: pool=2716 purity=0.172 k-hat=4 anchors=8  margin=0.7935  mean-anchor=0.8866  deer=0.887
+  [supcon+simclr] (post, f=0.1)
+    post f=0.1: power=1.000 [0.964,1.000] (50/50)
+
+===== EXP31 SPARKER POWER SUMMARY (alpha=0.05) =====
+  arm               kind    0.001    0.003     0.01     0.03      0.1
+  sup->res           pre    0.020    0.060    0.180    0.960    1.000
+  sup->res          post    0.000    0.040    0.300    0.980    1.000
+  ssl->supres        pre    0.080    0.060    0.040    0.340    1.000
+  ssl->supres       post    0.020    0.140    0.220    0.960    1.000
+  joint              pre    0.020    0.020    0.100    0.980    1.000
+  joint             post    0.060    0.100    0.180    1.000    1.000
+  sup                pre    0.000    0.080    0.200    1.000    1.000
+  sup               post    0.020    0.120    0.380    1.000    1.000
+  supcon             pre    0.060    0.100    0.440    1.000    1.000
+  supcon            post    0.080    0.040    0.120    0.800    1.000
+  supcon+simclr      pre    0.060    0.060    0.040    1.000    1.000
+  supcon+simclr     post    0.020    0.100    0.080    0.660    1.000
+  saved /home/pharris/sigreg/SuperSig/plots/exp31_sparker_power_16d.png
+Done.
