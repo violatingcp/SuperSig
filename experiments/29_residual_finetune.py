@@ -33,7 +33,10 @@ import math
 import numpy as np
 import torch
 from torch.utils.data import DataLoader
-from sklearn.metrics import roc_auc_score
+from sklearn.metrics import roc_auc_score, roc_curve
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
 
 from supersig.config import DATA_DIR, DEVICE, plot_path
 from supersig.data import (get_cifar_loaders, cifar_balanced_loader,
@@ -42,7 +45,7 @@ from supersig.data import (get_cifar_loaders, cifar_balanced_loader,
 from supersig.losses import make_anchors
 from supersig.models import CIFARResNetBackbone
 from supersig.metrics import gaussianity_summary, mahalanobis_novelty
-from supersig.plotting import plot_latent_panels
+from supersig.plotting import plot_latent_panels, plot_corner
 from supersig.recipes import supervised_embedding, recipe
 from supersig.discovery import run_discovery
 from supersig.train import (train_sigreg_ssl, train_sigreg_hybrid,
@@ -73,12 +76,15 @@ def evaluate_space(tr_embs, tr_lab, te_embs, te_lab, anchors, seen, holdouts):
     sup_auc = float(np.mean(aucs))
 
     is_unseen = np.isin(te_lab, list(holdouts)).astype(int)
-    eucl_auc = float(roc_auc_score(is_unseen, d.min(1).values.cpu().numpy()))
+    eucl_scores = d.min(1).values.cpu().numpy()
+    eucl_auc = float(roc_auc_score(is_unseen, eucl_scores))
     tied, perclass, eigs = mahalanobis_novelty(tr_embs, tr_lab, te_embs, seen)
     maha_tied = float(roc_auc_score(is_unseen, tied))
     maha_pc = float(roc_auc_score(is_unseen, perclass))
     return dict(acc=acc, sup_auc=sup_auc, eucl=eucl_auc,
-                maha_tied=maha_tied, maha_pc=maha_pc, eigs=eigs)
+                maha_tied=maha_tied, maha_pc=maha_pc, eigs=eigs,
+                scores={"eucl": eucl_scores, "maha_pc": perclass,
+                        "is_unseen": is_unseen})
 
 
 def main():
@@ -246,10 +252,56 @@ def main():
     exp28.print_gauss_table(gauss)
 
     if args.plots:
+        dim = cfg["emb_dim"]
         plot_latent_panels({n: (spaces[n][1], te_lab) for n in spaces},
                            holdouts, CIFAR_NAMES,
-                           plot_path(f"latent_cifar10_exp29_{cfg['emb_dim']}d.png"),
+                           plot_path(f"latent_cifar10_exp29_{dim}d.png"),
                            title="exp29 [cifar10]: " + " / ".join(spaces))
+
+        # all novelty ROC curves on one plot (validated reference palette)
+        colors = ["#2a78d6", "#1baf7a", "#eda100", "#008300", "#4a3aa7",
+                  "#e34948"]
+        plt.figure(figsize=(7.5, 7))
+        for (name, r), c in zip(perf.items(), colors):
+            s = r["scores"]
+            fpr, tpr, _ = roc_curve(s["is_unseen"], s["maha_pc"])
+            plt.plot(fpr, tpr, color=c, lw=2,
+                     label=f"{name} maha-PC ({r['maha_pc']:.3f})")
+            fpr, tpr, _ = roc_curve(s["is_unseen"], s["eucl"])
+            plt.plot(fpr, tpr, color=c, lw=1.2, ls="--", alpha=0.7,
+                     label=f"{name} eucl ({r['eucl']:.3f})")
+        plt.plot([0, 1], [0, 1], color="gray", lw=1, ls=":")
+        plt.xlabel("False positive rate"); plt.ylabel("True positive rate")
+        plt.title(f"exp29 novelty ROC (holdout {sorted(holdouts)}, "
+                  f"{dim}d): solid = Mahalanobis per-class, dashed = Euclidean")
+        plt.legend(loc="lower right", fontsize=8)
+        plt.grid(alpha=0.25); plt.tight_layout()
+        plt.savefig(plot_path(f"exp29_novelty_roc_{dim}d.png"), dpi=150)
+        plt.close()
+        print(f"  saved {plot_path(f'exp29_novelty_roc_{dim}d.png')}")
+
+        # corner plots: 16d spaces -> first 6 dims; concat -> 3 from each half
+        for name, (tr, te, anc) in spaces.items():
+            if te.shape[1] > dim:
+                sl = np.concatenate([te[:, :3], te[:, dim:dim + 3]], axis=1)
+                note = "dims 0-2 (sup) + 0-2 (aug)"
+            else:
+                sl = te[:, :6]
+                note = f"first 6 of {te.shape[1]} dims"
+            tag = name.replace("->", "_").replace("+", "_")
+            plot_corner(sl, te_lab,
+                        plot_path(f"corner_cifar10_exp29_{dim}d_{tag}.png"),
+                        title=f"exp29 {name} ({note})")
+
+        # embeddings archive so plots can be regenerated without retraining
+        os.makedirs(os.path.join("logs", "exp29"), exist_ok=True)
+        np.savez_compressed(
+            os.path.join("logs", "exp29", f"embs_{dim}d.npz"),
+            te_lab=te_lab,
+            **{f"{n}_te": spaces[n][1].astype(np.float16) for n in spaces},
+            **{f"{n}_anchors": spaces[n][2].detach().cpu().numpy()
+               for n in spaces})
+        print(f"  saved logs/exp29/embs_{dim}d.npz")
 
     # ----- discovery clustering --------------------------------------------
     disc_kw = dict(base_ds=base, train_eval_loader=train_eval_loader,
