@@ -72,6 +72,9 @@ def main():
     ap.add_argument("--n-d", type=int, default=5000)
     ap.add_argument("--kernels", type=int, default=16)
     ap.add_argument("--steps", type=int, default=300)
+    ap.add_argument("--sparker-sigma", type=float, default=1.0,
+                    help="fixed kernel width for SparKer (no annealing); "
+                         "0 restores the annealed median-heuristic schedule")
     args = ap.parse_args()
     ds = "cifar10"
     cfg16 = recipe(ds, emb_dim=args.dim_single)
@@ -87,6 +90,9 @@ def main():
     n_null_post = 20 if args.quick else 100
     n_sig_toys = 10 if args.quick else 50
     sparker_kw = dict(M=args.kernels, steps=args.steps)
+    if args.sparker_sigma > 0:      # fixed width, no annealing, single scale
+        sparker_kw.update(sigma0=args.sparker_sigma, sigma_ratio=1.0,
+                          n_checkpoints=1)
     torch.manual_seed(args.seed); np.random.seed(args.seed)
 
     train_loader, test_loader = get_cifar_loaders(quick=args.quick)

@@ -69,8 +69,13 @@ def run_test_battery(bg_pool, sig_pool, R, fractions, N_D, n_null, n_sig_toys,
     Null calibration + power per fraction in ONE fixed space.
     bg_pool/sig_pool/R: torch tensors on DEVICE.  Returns
     (powers, (lo, hi) bands, null aggregate threshold diagnostics).
+    sparker_kw may carry a fixed "sigma0" (e.g. 1.0 with sigma_ratio=1.0 and
+    n_checkpoints=1 for a fixed-width, no-annealing test); default is the
+    median-pairwise heuristic of the background pool.
     """
-    sigma0 = median_pairwise(bg_pool, seed=seed)
+    sparker_kw = dict(sparker_kw)
+    sigma0 = sparker_kw.pop("sigma0", None) or median_pairwise(bg_pool,
+                                                               seed=seed)
     rng = np.random.default_rng(seed)
     null_ts = []
     for i in range(n_null):
