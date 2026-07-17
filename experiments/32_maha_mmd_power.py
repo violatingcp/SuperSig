@@ -85,9 +85,11 @@ def battery(stats_fn, n_bg_pool, n_sig_pool, fractions, N_D, n_null,
 
 
 def make_stats_fns(tr, trl, te, tel, seen, holdout, seed):
-    """Build (maha_fn, mmd_fn, n_bg, n_sig) for one space."""
+    """Build (maha_fn, mmd_fn, n_bg, n_sig) for one space.
+    holdout: int or set/list of holdout classes."""
     bg_mask = np.isin(tel, seen)
-    sig_mask = tel == holdout
+    sig_mask = (tel == holdout if np.isscalar(holdout)
+                else np.isin(tel, list(holdout)))
     # mahalanobis: per-event scores precomputed once on the whole test pool
     _, pc, _ = mahalanobis_novelty(tr, trl, te, seen)
     s_bg, s_sig = pc[bg_mask], pc[sig_mask]
