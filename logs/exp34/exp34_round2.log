@@ -1,0 +1,161 @@
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+Using cache found in /home/pharris/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+exp34b [cifar100] round 2, holdout=[4], batch=99x24
+  round-1 refs: sup* (r1)=0.8968, ssl->supres* (r1)=0.9123, joint* (r1)=0.9078, supcon (r1)=0.9268, supcon+simclr (r1)=0.9394
+
+===== A: sup sigreg_weight below 1 (batch 2376) =====
+
+----- sup w0.5 -----
+  cifar100 balanced loader (no {4}): 49500 images, 20 batches of 99x24
+  [sigreg+proto] epoch 1/10  sigreg=0.9694  proto=3.8336  min_dist=3.46  mean_dist=5.11
+  [sigreg+proto] epoch 2/10  sigreg=0.7731  proto=2.3649  min_dist=3.57  mean_dist=5.23
+  [sigreg+proto] epoch 3/10  sigreg=0.6750  proto=1.6278  min_dist=3.67  mean_dist=5.36
+  [sigreg+proto] epoch 4/10  sigreg=0.6315  proto=1.2533  min_dist=3.78  mean_dist=5.48
+  [sigreg+proto] epoch 5/10  sigreg=0.6036  proto=1.0284  min_dist=3.89  mean_dist=5.60
+  [sigreg+proto] epoch 6/10  sigreg=0.5819  proto=0.8799  min_dist=3.96  mean_dist=5.72
+  [sigreg+proto] epoch 7/10  sigreg=0.5653  proto=0.7505  min_dist=4.03  mean_dist=5.84
+  [sigreg+proto] epoch 8/10  sigreg=0.5482  proto=0.6570  min_dist=4.10  mean_dist=5.95
+  [sigreg+proto] epoch 9/10  sigreg=0.5358  proto=0.5712  min_dist=4.17  mean_dist=6.07
+  [sigreg+proto] epoch 10/10  sigreg=0.5239  proto=0.4844  min_dist=4.24  mean_dist=6.18
+Using cache found in /home/pharris/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+  [sup w0.5              ] probe=0.8791+-0.0036 acc=0.5604 supAUC=0.9564 eucl=0.5612
+
+----- sup w0.2 -----
+  cifar100 balanced loader (no {4}): 49500 images, 20 batches of 99x24
+  [sigreg+proto] epoch 1/10  sigreg=0.9802  proto=3.8291  min_dist=3.46  mean_dist=5.11
+  [sigreg+proto] epoch 2/10  sigreg=0.7929  proto=2.3592  min_dist=3.57  mean_dist=5.23
+  [sigreg+proto] epoch 3/10  sigreg=0.7072  proto=1.6096  min_dist=3.68  mean_dist=5.36
+  [sigreg+proto] epoch 4/10  sigreg=0.6786  proto=1.2298  min_dist=3.79  mean_dist=5.48
+  [sigreg+proto] epoch 5/10  sigreg=0.6665  proto=0.9994  min_dist=3.89  mean_dist=5.60
+  [sigreg+proto] epoch 6/10  sigreg=0.6553  proto=0.8510  min_dist=3.96  mean_dist=5.72
+  [sigreg+proto] epoch 7/10  sigreg=0.6498  proto=0.7212  min_dist=4.03  mean_dist=5.84
+  [sigreg+proto] epoch 8/10  sigreg=0.6404  proto=0.6210  min_dist=4.10  mean_dist=5.95
+  [sigreg+proto] epoch 9/10  sigreg=0.6311  proto=0.5374  min_dist=4.17  mean_dist=6.07
+  [sigreg+proto] epoch 10/10  sigreg=0.6276  proto=0.4496  min_dist=4.24  mean_dist=6.18
+Using cache found in /home/pharris/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+  [sup w0.2              ] probe=0.8710+-0.0035 acc=0.5564 supAUC=0.9584 eucl=0.5425
+
+  best sup weight: w=1.0 (probe 0.8968)
+
+===== B: SSL trunk variants -> supres arm =====
+
+----- ssl-40ep -----
+  CIFAR two-view embedding-train images (no {4}): 49500
+  [sigreg-ssl] epoch 1/40  inv=0.1030  sigreg=0.0965
+  [sigreg-ssl] epoch 2/40  inv=0.0899  sigreg=0.0626
+  [sigreg-ssl] epoch 3/40  inv=0.0855  sigreg=0.0572
+  [sigreg-ssl] epoch 4/40  inv=0.0821  sigreg=0.0522
+  [sigreg-ssl] epoch 5/40  inv=0.0798  sigreg=0.0488
+  [sigreg-ssl] epoch 6/40  inv=0.0784  sigreg=0.0453
+  [sigreg-ssl] epoch 7/40  inv=0.0778  sigreg=0.0437
+  [sigreg-ssl] epoch 8/40  inv=0.0754  sigreg=0.0418
+  [sigreg-ssl] epoch 9/40  inv=0.0747  sigreg=0.0409
+  [sigreg-ssl] epoch 10/40  inv=0.0735  sigreg=0.0397
+  [sigreg-ssl] epoch 11/40  inv=0.0720  sigreg=0.0387
+  [sigreg-ssl] epoch 12/40  inv=0.0721  sigreg=0.0376
+  [sigreg-ssl] epoch 13/40  inv=0.0714  sigreg=0.0364
+  [sigreg-ssl] epoch 14/40  inv=0.0711  sigreg=0.0353
+  [sigreg-ssl] epoch 15/40  inv=0.0711  sigreg=0.0346
+  [sigreg-ssl] epoch 16/40  inv=0.0700  sigreg=0.0339
+  [sigreg-ssl] epoch 17/40  inv=0.0692  sigreg=0.0333
+  [sigreg-ssl] epoch 18/40  inv=0.0690  sigreg=0.0329
+  [sigreg-ssl] epoch 19/40  inv=0.0687  sigreg=0.0328
+  [sigreg-ssl] epoch 20/40  inv=0.0681  sigreg=0.0322
+  [sigreg-ssl] epoch 21/40  inv=0.0675  sigreg=0.0319
+  [sigreg-ssl] epoch 22/40  inv=0.0672  sigreg=0.0316
+  [sigreg-ssl] epoch 23/40  inv=0.0670  sigreg=0.0316
+  [sigreg-ssl] epoch 24/40  inv=0.0660  sigreg=0.0310
+  [sigreg-ssl] epoch 25/40  inv=0.0656  sigreg=0.0305
+  [sigreg-ssl] epoch 26/40  inv=0.0659  sigreg=0.0307
+  [sigreg-ssl] epoch 27/40  inv=0.0646  sigreg=0.0303
+  [sigreg-ssl] epoch 28/40  inv=0.0647  sigreg=0.0304
+  [sigreg-ssl] epoch 29/40  inv=0.0648  sigreg=0.0302
+  [sigreg-ssl] epoch 30/40  inv=0.0647  sigreg=0.0300
+  [sigreg-ssl] epoch 31/40  inv=0.0641  sigreg=0.0294
+  [sigreg-ssl] epoch 32/40  inv=0.0640  sigreg=0.0296
+  [sigreg-ssl] epoch 33/40  inv=0.0638  sigreg=0.0292
+  [sigreg-ssl] epoch 34/40  inv=0.0631  sigreg=0.0290
+  [sigreg-ssl] epoch 35/40  inv=0.0628  sigreg=0.0288
+  [sigreg-ssl] epoch 36/40  inv=0.0623  sigreg=0.0288
+  [sigreg-ssl] epoch 37/40  inv=0.0624  sigreg=0.0283
+  [sigreg-ssl] epoch 38/40  inv=0.0614  sigreg=0.0284
+  [sigreg-ssl] epoch 39/40  inv=0.0615  sigreg=0.0282
+  [sigreg-ssl] epoch 40/40  inv=0.0619  sigreg=0.0283
+  cifar100 balanced loader (no {4}): 49500 images, 20 batches of 99x24
+  [sigreg+proto] epoch 1/10  sigreg=0.2428  proto=2.6564  min_dist=0.52  mean_dist=3.16
+  [sigreg+proto] epoch 2/10  sigreg=0.2439  proto=2.3259  min_dist=0.62  mean_dist=3.24
+  [sigreg+proto] epoch 3/10  sigreg=0.2331  proto=2.1841  min_dist=0.70  mean_dist=3.32
+  [sigreg+proto] epoch 4/10  sigreg=0.2310  proto=2.0718  min_dist=0.78  mean_dist=3.40
+  [sigreg+proto] epoch 5/10  sigreg=0.2291  proto=1.9834  min_dist=0.85  mean_dist=3.47
+  [sigreg+proto] epoch 6/10  sigreg=0.2281  proto=1.8867  min_dist=0.91  mean_dist=3.55
+  [sigreg+proto] epoch 7/10  sigreg=0.2250  proto=1.8293  min_dist=0.97  mean_dist=3.62
+  [sigreg+proto] epoch 8/10  sigreg=0.2237  proto=1.7519  min_dist=1.03  mean_dist=3.69
+  [sigreg+proto] epoch 9/10  sigreg=0.2205  proto=1.6907  min_dist=1.08  mean_dist=3.76
+  [sigreg+proto] epoch 10/10  sigreg=0.2192  proto=1.6129  min_dist=1.13  mean_dist=3.83
+Using cache found in /home/pharris/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+  [ssl->supres [ssl-40ep]] probe=0.9213+-0.0020 acc=0.4089 supAUC=0.9548 eucl=0.5078
+
+----- ssl-lam0.5 -----
+  CIFAR two-view embedding-train images (no {4}): 49500
+  [sigreg-ssl] epoch 1/20  inv=0.0718  sigreg=0.1426
+  [sigreg-ssl] epoch 2/20  inv=0.0640  sigreg=0.1043
+  [sigreg-ssl] epoch 3/20  inv=0.0610  sigreg=0.0975
+  [sigreg-ssl] epoch 4/20  inv=0.0595  sigreg=0.0914
+  [sigreg-ssl] epoch 5/20  inv=0.0579  sigreg=0.0865
+  [sigreg-ssl] epoch 6/20  inv=0.0571  sigreg=0.0830
+  [sigreg-ssl] epoch 7/20  inv=0.0564  sigreg=0.0806
+  [sigreg-ssl] epoch 8/20  inv=0.0547  sigreg=0.0774
+  [sigreg-ssl] epoch 9/20  inv=0.0545  sigreg=0.0761
+  [sigreg-ssl] epoch 10/20  inv=0.0537  sigreg=0.0738
+  [sigreg-ssl] epoch 11/20  inv=0.0531  sigreg=0.0723
+  [sigreg-ssl] epoch 12/20  inv=0.0532  sigreg=0.0714
+  [sigreg-ssl] epoch 13/20  inv=0.0523  sigreg=0.0688
+  [sigreg-ssl] epoch 14/20  inv=0.0523  sigreg=0.0681
+  [sigreg-ssl] epoch 15/20  inv=0.0519  sigreg=0.0673
+  [sigreg-ssl] epoch 16/20  inv=0.0515  sigreg=0.0655
+  [sigreg-ssl] epoch 17/20  inv=0.0509  sigreg=0.0652
+  [sigreg-ssl] epoch 18/20  inv=0.0510  sigreg=0.0639
+  [sigreg-ssl] epoch 19/20  inv=0.0506  sigreg=0.0636
+  [sigreg-ssl] epoch 20/20  inv=0.0506  sigreg=0.0629
+  cifar100 balanced loader (no {4}): 49500 images, 20 batches of 99x24
+  [sigreg+proto] epoch 1/10  sigreg=0.2942  proto=2.8885  min_dist=0.42  mean_dist=3.10
+  [sigreg+proto] epoch 2/10  sigreg=0.2767  proto=2.5414  min_dist=0.51  mean_dist=3.18
+  [sigreg+proto] epoch 3/10  sigreg=0.2660  proto=2.3716  min_dist=0.59  mean_dist=3.25
+  [sigreg+proto] epoch 4/10  sigreg=0.2628  proto=2.2426  min_dist=0.66  mean_dist=3.32
+  [sigreg+proto] epoch 5/10  sigreg=0.2633  proto=2.1428  min_dist=0.71  mean_dist=3.39
+  [sigreg+proto] epoch 6/10  sigreg=0.2604  proto=2.0422  min_dist=0.75  mean_dist=3.45
+  [sigreg+proto] epoch 7/10  sigreg=0.2566  proto=1.9723  min_dist=0.80  mean_dist=3.52
+  [sigreg+proto] epoch 8/10  sigreg=0.2585  proto=1.8881  min_dist=0.84  mean_dist=3.58
+  [sigreg+proto] epoch 9/10  sigreg=0.2558  proto=1.8153  min_dist=0.88  mean_dist=3.65
+  [sigreg+proto] epoch 10/10  sigreg=0.2542  proto=1.7325  min_dist=0.91  mean_dist=3.71
+Using cache found in /home/pharris/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+  [ssl->supres [ssl-lam0.5]] probe=0.8909+-0.0023 acc=0.3844 supAUC=0.9475 eucl=0.3806
+
+===== C: joint w=1.0 (batch 2376) =====
+  cifar100 balanced two-view loader (no {4}): 49500 images, 20 batches of 99x24
+  [sigreg+proto+aug] epoch 1/10  sigreg=0.9657  proto=4.1105  inv=0.0461  min_dist=3.46  mean_dist=5.11
+  [sigreg+proto+aug] epoch 2/10  sigreg=0.7907  proto=3.0910  inv=0.0818  min_dist=3.56  mean_dist=5.23
+  [sigreg+proto+aug] epoch 3/10  sigreg=0.6982  proto=2.5538  inv=0.1233  min_dist=3.67  mean_dist=5.36
+  [sigreg+proto+aug] epoch 4/10  sigreg=0.6639  proto=2.2803  inv=0.1400  min_dist=3.78  mean_dist=5.48
+  [sigreg+proto+aug] epoch 5/10  sigreg=0.6471  proto=2.0918  inv=0.1477  min_dist=3.85  mean_dist=5.60
+  [sigreg+proto+aug] epoch 6/10  sigreg=0.6401  proto=1.9730  inv=0.1547  min_dist=3.92  mean_dist=5.72
+  [sigreg+proto+aug] epoch 7/10  sigreg=0.6408  proto=1.8806  inv=0.1559  min_dist=3.99  mean_dist=5.84
+  [sigreg+proto+aug] epoch 8/10  sigreg=0.6434  proto=1.8230  inv=0.1571  min_dist=4.06  mean_dist=5.95
+  [sigreg+proto+aug] epoch 9/10  sigreg=0.6479  proto=1.7757  inv=0.1568  min_dist=4.13  mean_dist=6.07
+  [sigreg+proto+aug] epoch 10/10  sigreg=0.6497  proto=1.6990  inv=0.1596  min_dist=4.19  mean_dist=6.18
+  [joint w1.0            ] probe=0.9038+-0.0021 acc=0.5531 supAUC=0.9609 eucl=0.6238
+
+===== round-2 summary =====
+  sup* (r1)                  probe=0.8968  (reference)
+  ssl->supres* (r1)          probe=0.9123  (reference)
+  joint* (r1)                probe=0.9078  (reference)
+  supcon (r1)                probe=0.9268  (reference)
+  supcon+simclr (r1)         probe=0.9394  (reference)
+  sup w0.5                   probe=0.8791+-0.0036  acc=0.5604
+  sup w0.2                   probe=0.8710+-0.0035  acc=0.5564
+  ssl->supres [ssl-40ep]     probe=0.9213+-0.0020  acc=0.4089
+  ssl->supres [ssl-lam0.5]   probe=0.8909+-0.0023  acc=0.3844
+  joint w1.0                 probe=0.9038+-0.0021  acc=0.5531
+saved /home/pharris/sigreg/SuperSig/plots/exp34_probe_round2_cifar100.png
+saved /home/pharris/sigreg/SuperSig/logs/exp34/probe_round2.npz
