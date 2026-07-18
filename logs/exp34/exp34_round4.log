@@ -1,0 +1,69 @@
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+Using cache found in /home/pharris/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+exp34d [cifar100] round 4 (plain tuned concat), holdout=[4]
+  refs: ssl->supres [40ep] (r2)=0.9213, supcon (r1)=0.9268, supcon+simclr (r1)=0.9394
+
+----- sup16 (winner recipe) -----
+  cifar100 balanced loader (no {4}): 49500 images, 20 batches of 99x24
+  [sigreg+proto] epoch 1/10  sigreg=1.2305  proto=3.9031  min_dist=2.59  mean_dist=5.04
+  [sigreg+proto] epoch 2/10  sigreg=0.8628  proto=2.7670  min_dist=2.66  mean_dist=5.13
+  [sigreg+proto] epoch 3/10  sigreg=0.6583  proto=2.1401  min_dist=2.71  mean_dist=5.22
+  [sigreg+proto] epoch 4/10  sigreg=0.5500  proto=1.7687  min_dist=2.74  mean_dist=5.31
+  [sigreg+proto] epoch 5/10  sigreg=0.4905  proto=1.5187  min_dist=2.78  mean_dist=5.39
+  [sigreg+proto] epoch 6/10  sigreg=0.4457  proto=1.3403  min_dist=2.81  mean_dist=5.48
+  [sigreg+proto] epoch 7/10  sigreg=0.4121  proto=1.1908  min_dist=2.85  mean_dist=5.57
+  [sigreg+proto] epoch 8/10  sigreg=0.3828  proto=1.0581  min_dist=2.88  mean_dist=5.65
+  [sigreg+proto] epoch 9/10  sigreg=0.3619  proto=0.9613  min_dist=2.92  mean_dist=5.73
+Using cache found in /home/pharris/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+  [sigreg+proto] epoch 10/10  sigreg=0.3427  proto=0.8436  min_dist=2.95  mean_dist=5.81
+
+----- ssl16 (40 two-view epochs) -----
+  CIFAR two-view embedding-train images (no {4}): 49500
+  [sigreg-ssl] epoch 1/40  inv=0.1030  sigreg=0.0963
+  [sigreg-ssl] epoch 2/40  inv=0.0902  sigreg=0.0625
+  [sigreg-ssl] epoch 3/40  inv=0.0858  sigreg=0.0568
+  [sigreg-ssl] epoch 4/40  inv=0.0825  sigreg=0.0516
+  [sigreg-ssl] epoch 5/40  inv=0.0803  sigreg=0.0478
+  [sigreg-ssl] epoch 6/40  inv=0.0790  sigreg=0.0446
+  [sigreg-ssl] epoch 7/40  inv=0.0782  sigreg=0.0431
+  [sigreg-ssl] epoch 8/40  inv=0.0756  sigreg=0.0414
+  [sigreg-ssl] epoch 9/40  inv=0.0749  sigreg=0.0406
+  [sigreg-ssl] epoch 10/40  inv=0.0736  sigreg=0.0397
+  [sigreg-ssl] epoch 11/40  inv=0.0719  sigreg=0.0384
+  [sigreg-ssl] epoch 12/40  inv=0.0722  sigreg=0.0375
+  [sigreg-ssl] epoch 13/40  inv=0.0712  sigreg=0.0366
+  [sigreg-ssl] epoch 14/40  inv=0.0708  sigreg=0.0360
+  [sigreg-ssl] epoch 15/40  inv=0.0706  sigreg=0.0351
+  [sigreg-ssl] epoch 16/40  inv=0.0696  sigreg=0.0346
+  [sigreg-ssl] epoch 17/40  inv=0.0689  sigreg=0.0338
+  [sigreg-ssl] epoch 18/40  inv=0.0684  sigreg=0.0333
+  [sigreg-ssl] epoch 19/40  inv=0.0681  sigreg=0.0334
+  [sigreg-ssl] epoch 20/40  inv=0.0679  sigreg=0.0326
+  [sigreg-ssl] epoch 21/40  inv=0.0675  sigreg=0.0319
+  [sigreg-ssl] epoch 22/40  inv=0.0674  sigreg=0.0312
+  [sigreg-ssl] epoch 23/40  inv=0.0671  sigreg=0.0313
+  [sigreg-ssl] epoch 24/40  inv=0.0658  sigreg=0.0309
+  [sigreg-ssl] epoch 25/40  inv=0.0654  sigreg=0.0304
+  [sigreg-ssl] epoch 26/40  inv=0.0656  sigreg=0.0308
+  [sigreg-ssl] epoch 27/40  inv=0.0648  sigreg=0.0300
+  [sigreg-ssl] epoch 28/40  inv=0.0652  sigreg=0.0302
+  [sigreg-ssl] epoch 29/40  inv=0.0647  sigreg=0.0301
+  [sigreg-ssl] epoch 30/40  inv=0.0646  sigreg=0.0296
+  [sigreg-ssl] epoch 31/40  inv=0.0644  sigreg=0.0292
+  [sigreg-ssl] epoch 32/40  inv=0.0640  sigreg=0.0294
+  [sigreg-ssl] epoch 33/40  inv=0.0637  sigreg=0.0290
+  [sigreg-ssl] epoch 34/40  inv=0.0630  sigreg=0.0290
+  [sigreg-ssl] epoch 35/40  inv=0.0628  sigreg=0.0288
+  [sigreg-ssl] epoch 36/40  inv=0.0623  sigreg=0.0286
+  [sigreg-ssl] epoch 37/40  inv=0.0623  sigreg=0.0284
+  [sigreg-ssl] epoch 38/40  inv=0.0617  sigreg=0.0282
+  [sigreg-ssl] epoch 39/40  inv=0.0611  sigreg=0.0281
+  [sigreg-ssl] epoch 40/40  inv=0.0617  sigreg=0.0284
+
+===== round-4 summary =====
+  ssl->supres [40ep] (r2)        probe=0.9213  (reference)
+  supcon (r1)                    probe=0.9268  (reference)
+  supcon+simclr (r1)             probe=0.9394  (reference)
+  concat [sup16;ssl16-40ep]      probe=0.8848+-0.0033  acc=0.5411  supAUC=0.9515  eucl=0.4853
+saved /home/pharris/sigreg/SuperSig/logs/exp34/probe_round4.npz
