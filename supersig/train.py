@@ -342,20 +342,48 @@ def train_simclr_sigreg(backbone, loader, epochs, temp=0.5, lr=1e-3, lam=1.0,
               f"sigreg={reg_run/n:.4f}")
 
 
+def train_supcon_sigreg(backbone, two_view_labeled_loader, epochs, temp=0.1,
+                        lr=1e-3, lam=1.0, n_slices=64):
+    """
+    Supervised twin of train_simclr_sigreg (exp 34g): SupCon on the normalised
+    embeddings (positives = same class, both views) plus SIGReg toward N(0, I)
+    on the RAW embeddings.
+    """
+    opt = torch.optim.Adam(backbone.parameters(), lr=lr)
+    backbone.train()
+    for ep in range(epochs):
+        con_run, reg_run, n = 0.0, 0.0, 0
+        for v1, v2, y in two_view_labeled_loader:
+            v1, v2, y = v1.to(DEVICE), v2.to(DEVICE), y.to(DEVICE)
+            opt.zero_grad()
+            z = backbone(torch.cat([v1, v2]))
+            con = supcon_loss(F.normalize(z, dim=1), torch.cat([y, y]),
+                              temp=temp)
+            reg = sigreg_loss(z, n_slices=n_slices)
+            (con + lam * reg).backward()
+            opt.step()
+            con_run += con.item() * v1.size(0)
+            reg_run += reg.item() * v1.size(0)
+            n += v1.size(0)
+        print(f"  [supcon+sigreg] epoch {ep+1}/{epochs}  supcon={con_run/n:.4f}  "
+              f"sigreg={reg_run/n:.4f}")
+
+
 def train_simclr_residual(backbone, two_view_labeled_loader, epochs, means,
-                          temp=0.5, lr=1e-3):
+                          temp=0.5, lr=1e-3, lam=0.0, n_slices=64):
     """
     SimCLR on the supervised residual (exp 34e): the contrastive analog of
     train_sigreg_residual_ssl.  Class means are FROZEN (e.g. SupCon
     centroids); NT-Xent runs on the normalised residuals z - mean_y, so the
     instance-discrimination task must use whatever the class atom cannot
-    explain.
+    explain.  lam > 0 adds SIGReg toward N(0, I) on the raw residuals
+    (exp 34h, the calibrated variant).
     """
     means = means.detach()
     opt = torch.optim.Adam(backbone.parameters(), lr=lr)
     backbone.train()
     for ep in range(epochs):
-        run, n = 0.0, 0
+        run, reg_run, n = 0.0, 0.0, 0
         for v1, v2, y in two_view_labeled_loader:
             v1, v2, y = v1.to(DEVICE), v2.to(DEVICE), y.to(DEVICE)
             opt.zero_grad()
@@ -364,11 +392,47 @@ def train_simclr_residual(backbone, two_view_labeled_loader, epochs, means,
             inst = torch.arange(v1.size(0), device=DEVICE)
             loss = supcon_loss(F.normalize(r, dim=1),
                                torch.cat([inst, inst]), temp=temp)
-            loss.backward()
+            reg = (sigreg_loss(r, n_slices=n_slices) if lam > 0
+                   else torch.zeros((), device=DEVICE))
+            (loss + lam * reg).backward()
             opt.step()
             run += loss.item() * v1.size(0)
+            reg_run += reg.item() * v1.size(0)
             n += v1.size(0)
-        print(f"  [simclr-residual] epoch {ep+1}/{epochs}  loss={run/n:.4f}")
+        extra = f"  sigreg={reg_run/n:.4f}" if lam > 0 else ""
+        print(f"  [simclr-residual] epoch {ep+1}/{epochs}  loss={run/n:.4f}"
+              + extra)
+
+
+def train_supcon_sigreg_residual(backbone, two_view_labeled_loader, epochs,
+                                 means, temp=0.1, lr=1e-3, lam=1.0,
+                                 n_slices=64):
+    """
+    Mirror of train_simclr_residual for the classifier (exp 34h): SupCon with
+    CLASS labels on the normalised residuals z - mean_y (frozen featurizer
+    centroids) plus SIGReg on the raw residuals.  The class-discrimination
+    task must use whatever the featurizer's class atom cannot explain.
+    """
+    means = means.detach()
+    opt = torch.optim.Adam(backbone.parameters(), lr=lr)
+    backbone.train()
+    for ep in range(epochs):
+        run, reg_run, n = 0.0, 0.0, 0
+        for v1, v2, y in two_view_labeled_loader:
+            v1, v2, y = v1.to(DEVICE), v2.to(DEVICE), y.to(DEVICE)
+            opt.zero_grad()
+            z = backbone(torch.cat([v1, v2]))
+            yy = torch.cat([y, y])
+            r = z - means[yy]
+            con = supcon_loss(F.normalize(r, dim=1), yy, temp=temp)
+            reg = sigreg_loss(r, n_slices=n_slices)
+            (con + lam * reg).backward()
+            opt.step()
+            run += con.item() * v1.size(0)
+            reg_run += reg.item() * v1.size(0)
+            n += v1.size(0)
+        print(f"  [supcon-sigreg-residual] epoch {ep+1}/{epochs}  "
+              f"supcon={run/n:.4f}  sigreg={reg_run/n:.4f}")
 
 
 def train_supcon_plain(backbone, loader, epochs, temp=0.1, lr=1e-3):
