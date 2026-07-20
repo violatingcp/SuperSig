@@ -313,6 +313,64 @@ def train_simclr(backbone, loader, epochs, temp=0.5, lr=1e-3):
         print(f"  [simclr] epoch {ep+1}/{epochs}  loss={run/n:.4f}")
 
 
+def train_simclr_sigreg(backbone, loader, epochs, temp=0.5, lr=1e-3, lam=1.0,
+                        n_slices=64):
+    """
+    Hybrid feature half (exp 34e): SimCLR NT-Xent on the normalised embeddings
+    plus SIGReg toward N(0, I) on the RAW embeddings.  The contrastive term
+    manufactures instance-level features; the SIGReg term keeps them in a
+    calibrated Gaussian geometry instead of on the unit sphere.
+    """
+    opt = torch.optim.Adam(backbone.parameters(), lr=lr)
+    backbone.train()
+    for ep in range(epochs):
+        con_run, reg_run, n = 0.0, 0.0, 0
+        for v1, v2 in loader:
+            v1, v2 = v1.to(DEVICE), v2.to(DEVICE)
+            opt.zero_grad()
+            z = backbone(torch.cat([v1, v2]))
+            inst = torch.arange(v1.size(0), device=DEVICE)
+            con = supcon_loss(F.normalize(z, dim=1),
+                              torch.cat([inst, inst]), temp=temp)
+            reg = sigreg_loss(z, n_slices=n_slices)
+            (con + lam * reg).backward()
+            opt.step()
+            con_run += con.item() * v1.size(0)
+            reg_run += reg.item() * v1.size(0)
+            n += v1.size(0)
+        print(f"  [simclr+sigreg] epoch {ep+1}/{epochs}  nt-xent={con_run/n:.4f}  "
+              f"sigreg={reg_run/n:.4f}")
+
+
+def train_simclr_residual(backbone, two_view_labeled_loader, epochs, means,
+                          temp=0.5, lr=1e-3):
+    """
+    SimCLR on the supervised residual (exp 34e): the contrastive analog of
+    train_sigreg_residual_ssl.  Class means are FROZEN (e.g. SupCon
+    centroids); NT-Xent runs on the normalised residuals z - mean_y, so the
+    instance-discrimination task must use whatever the class atom cannot
+    explain.
+    """
+    means = means.detach()
+    opt = torch.optim.Adam(backbone.parameters(), lr=lr)
+    backbone.train()
+    for ep in range(epochs):
+        run, n = 0.0, 0
+        for v1, v2, y in two_view_labeled_loader:
+            v1, v2, y = v1.to(DEVICE), v2.to(DEVICE), y.to(DEVICE)
+            opt.zero_grad()
+            z = backbone(torch.cat([v1, v2]))
+            r = z - means[torch.cat([y, y])]
+            inst = torch.arange(v1.size(0), device=DEVICE)
+            loss = supcon_loss(F.normalize(r, dim=1),
+                               torch.cat([inst, inst]), temp=temp)
+            loss.backward()
+            opt.step()
+            run += loss.item() * v1.size(0)
+            n += v1.size(0)
+        print(f"  [simclr-residual] epoch {ep+1}/{epochs}  loss={run/n:.4f}")
+
+
 def train_supcon_plain(backbone, loader, epochs, temp=0.1, lr=1e-3):
     """SupCon on single un-augmented views: positives are same-class samples only."""
     opt = torch.optim.Adam(backbone.parameters(), lr=lr)
