@@ -38,6 +38,43 @@ At f=0.05 (C100) / f=0.03 (C10), the calibrated arms saturate the kernel
 tests on C100 (SparKer/MMD 1.00) and reach 0.78-0.94 on C10; sup->res
 saturates C10 already at 0.03.
 
+## Dimension effect on CIFAR-100 (exp 34j: 50+50 vs 16+16)
+
+Probe (pre-discovery):
+
+| space                | 16+16  | 50+50  | delta |
+|----------------------|--------|--------|-------|
+| supcon+simclr        | 0.9394 | 0.9547 | +1.5  |
+| supcon+hybrid[lam1]  | 0.9409 | 0.9541 | +1.3  |
+| supcon+hybrid[lam5]  | 0.9423 | 0.9474 | +0.5  |
+| supcon+res-simclr    | 0.9281 | 0.9519 | +2.4  |
+| ss[lam5]+hybrid      | 0.9235 | 0.9076 | -1.6  |
+| hybrid->supres       | 0.9263 | 0.9234 | -0.3  |
+| cls->resfeat         | 0.8745 | 0.9228 | +4.8  |
+| feat->rescls         | 0.8196 | 0.8399 | +2.0  |
+
+Power at f=0.02 (pre / post):
+
+| arm                 | SparKer 16+16 | SparKer 50+50 | MMD 16+16 | MMD 50+50 |
+|---------------------|---------------|---------------|-----------|-----------|
+| supcon+hybrid[lam5] | 0.06 / 0.30   | 0.00 / 0.16   | 0.30/0.88 | 0.42/0.82 |
+| ss[lam5]+hybrid     | 0.10 / 0.52   | 0.06 / 0.10   | 0.38/0.86 | 0.46/0.84 |
+| hybrid->supres      | 0.06 / 0.12   | 0.04 / 0.04   | 0.20/0.42 | 0.20/0.56 |
+| cls->resfeat        | 0.50 / 0.44   | 0.14 / 0.38   | 0.52/0.74 | 0.24/0.78 |
+| feat->rescls        | 0.00 / 0.06   | 0.02 / 0.02   | 0.32/0.72 | 0.30/0.40 |
+
+Mahalanobis stays dead at 100-D (max 0.22 anywhere) and per-event stays
+~0.1 -- decrowding by dimension does NOT turn the holdout into an outlier
+population.
+
+Dimension verdict: relief of crowding helps LINEAR readouts (probe +1 to
++5 pts; plain supcon+simclr retakes the lead, so the hybrid's probe edge is
+a low-dimension phenomenon) but HURTS the kernel discovery tests (SparKer
+pre/post collapse -- distance concentration; cls->resfeat's discovery-free
+0.50 at f=0.02 drops to 0.14).  MMD is the dimension-robust statistic
+(post ~0.8 at f=0.02 at both dims).  16+16 remains the best operating
+point for dataset-level discovery; 50+50 for probe/accuracy.
+
 ## Verdicts
 
 - The calibrated-contrastive family is a CIFAR-100 specialist. On CIFAR-10
