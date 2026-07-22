@@ -51,6 +51,8 @@ LOGDIR = os.path.join(os.path.dirname(os.path.dirname(
 
 def main():
     ap = argparse.ArgumentParser()
+    ap.add_argument("--dataset", choices=["cifar10", "cifar100"],
+                    default="cifar100")
     ap.add_argument("--holdout", type=int, default=4)
     ap.add_argument("--rounds", type=int, default=2)
     ap.add_argument("--quick", action="store_true")
@@ -59,12 +61,17 @@ def main():
     ap.add_argument("--conf-thresh", type=float, default=0.5)
     ap.add_argument("--sigma-end", type=float, default=0.3)
     ap.add_argument("--alpha", type=float, default=0.05)
-    ap.add_argument("--fractions", default="0.001,0.003,0.01,0.02,0.05")
+    ap.add_argument("--fractions", default=None,
+                    help="defaults per dataset: cifar100 0.001..0.05, "
+                         "cifar10 0.001..0.1")
     ap.add_argument("--n-d", type=int, default=5000)
     ap.add_argument("--kernels", type=int, default=16)
     ap.add_argument("--steps", type=int, default=300)
     args = ap.parse_args()
-    ds = "cifar100"
+    ds = args.dataset
+    if args.fractions is None:
+        args.fractions = ("0.001,0.003,0.01,0.02,0.03,0.1" if ds == "cifar10"
+                          else "0.001,0.003,0.01,0.02,0.05")
     cfgH = recipe(ds, emb_dim=args.dim_half)
     n_cls = cfgH["n_classes"]
     holdouts = {args.holdout}
@@ -76,7 +83,8 @@ def main():
     n_null_post = 20 if args.quick else 100
     n_sig_toys = 10 if args.quick else 50
     sparker_kw = dict(M=args.kernels, steps=args.steps)   # annealed widths
-    names = [str(c) for c in range(n_cls)]
+    names = (exp29.CIFAR_NAMES if ds == "cifar10"
+             else [str(c) for c in range(n_cls)])
     STAGES = [("confmask", dict(conf_thresh=args.conf_thresh)),
               ("confmask+anneal", dict(conf_thresh=args.conf_thresh,
                                        disc_sigma_end=args.sigma_end))]
@@ -210,19 +218,30 @@ def main():
                 power[st_name]["mmd"][name].append(p[0])
 
     # ----- report vs stored baselines ---------------------------------------
-    base34f = np.load(os.path.join(LOGDIR, "power_data_hybrid.npz"),
-                      allow_pickle=True)
-    base34g = np.load(os.path.join(LOGDIR, "power_data_ss_hybrid.npz"),
-                      allow_pickle=True)
-    basef = list(base34f["fractions"])
+    if ds == "cifar10":
+        base34i = np.load(os.path.join(LOGDIR, "arc_cifar10.npz"),
+                          allow_pickle=True)
+        basef = list(base34i["fractions"])
 
-    def baseline(stat, arm):
-        if arm == "supcon+hybrid":
-            row = base34f[f"{stat}_supcon+hybrid_post"]
-        else:
-            row = base34g[f"{stat}_post"]
-        return [float(row[basef.index(f)]) if f in basef else float("nan")
-                for f in fractions]
+        def baseline(stat, arm):
+            key = ("supcon+hybrid[lam5]" if arm == "supcon+hybrid" else arm)
+            row = base34i[f"{stat}_{key}_post"]
+            return [float(row[basef.index(f)]) if f in basef
+                    else float("nan") for f in fractions]
+    else:
+        base34f = np.load(os.path.join(LOGDIR, "power_data_hybrid.npz"),
+                          allow_pickle=True)
+        base34g = np.load(os.path.join(LOGDIR, "power_data_ss_hybrid.npz"),
+                          allow_pickle=True)
+        basef = list(base34f["fractions"])
+
+        def baseline(stat, arm):
+            if arm == "supcon+hybrid":
+                row = base34f[f"{stat}_supcon+hybrid_post"]
+            else:
+                row = base34g[f"{stat}_post"]
+            return [float(row[basef.index(f)]) if f in basef
+                    else float("nan") for f in fractions]
 
     npz = {"fractions": np.array(fractions)}
     for stat in STATS:
@@ -253,20 +272,20 @@ def main():
         plt.axhline(0.05, color="gray", lw=1, ls=":")
         plt.xlabel("injected anomaly fraction")
         plt.ylabel("power at alpha=0.05 (post-discovery)")
-        plt.title(f"exp35 [cifar100 16+16] conf-masked / annealed discovery: "
+        plt.title(f"exp35 [{ds} 16+16] conf-masked / annealed discovery: "
                   f"{stat}")
         plt.grid(alpha=0.25, which="both")
         plt.legend(loc="upper left", fontsize=7)
         plt.tight_layout()
-        out = plot_path(f"exp35_{stat}_power_cifar100.png")
+        out = plot_path(f"exp35_{stat}_power_{ds}.png")
         plt.savefig(out, dpi=150)
         plt.close()
         print("saved", out)
     outdir = os.path.join(os.path.dirname(os.path.dirname(
         os.path.abspath(__file__))), "logs", "exp35")
     os.makedirs(outdir, exist_ok=True)
-    np.savez(os.path.join(outdir, "power_data_confmask.npz"), **npz)
-    print(f"saved {outdir}/power_data_confmask.npz")
+    np.savez(os.path.join(outdir, f"power_data_confmask_{ds}.npz"), **npz)
+    print(f"saved {outdir}/power_data_confmask_{ds}.npz")
 
 
 if __name__ == "__main__":
