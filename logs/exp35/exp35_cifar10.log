@@ -1,0 +1,624 @@
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+Using cache found in /home/pharris/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+exp35 [cifar10] conf-masked discovery + asymmetric annealing, holdout=[4], thresh=0.5, sigma_end=0.3
+
+----- supcon16 -----
+  CIFAR two-view embedding-train images (no {4}): 45000
+  [supcon] epoch 1/10  loss=4.7539
+  [supcon] epoch 2/10  loss=4.6713
+  [supcon] epoch 3/10  loss=4.6398
+  [supcon] epoch 4/10  loss=4.6236
+  [supcon] epoch 5/10  loss=4.6007
+  [supcon] epoch 6/10  loss=4.5890
+  [supcon] epoch 7/10  loss=4.5758
+  [supcon] epoch 8/10  loss=4.5582
+  [supcon] epoch 9/10  loss=4.5515
+  [supcon] epoch 10/10  loss=4.5378
+Using cache found in /home/pharris/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+
+----- hybrid16 simclr+sigreg (lam=5) -----
+  CIFAR two-view embedding-train images (no {4}): 45000
+  [simclr+sigreg] epoch 1/20  nt-xent=4.8437  sigreg=0.1034
+  [simclr+sigreg] epoch 2/20  nt-xent=4.6498  sigreg=0.0327
+  [simclr+sigreg] epoch 3/20  nt-xent=4.6007  sigreg=0.0230
+  [simclr+sigreg] epoch 4/20  nt-xent=4.5744  sigreg=0.0185
+  [simclr+sigreg] epoch 5/20  nt-xent=4.5553  sigreg=0.0159
+  [simclr+sigreg] epoch 6/20  nt-xent=4.5426  sigreg=0.0135
+  [simclr+sigreg] epoch 7/20  nt-xent=4.5295  sigreg=0.0115
+  [simclr+sigreg] epoch 8/20  nt-xent=4.5174  sigreg=0.0102
+  [simclr+sigreg] epoch 9/20  nt-xent=4.5122  sigreg=0.0099
+  [simclr+sigreg] epoch 10/20  nt-xent=4.5064  sigreg=0.0097
+  [simclr+sigreg] epoch 11/20  nt-xent=4.5034  sigreg=0.0095
+  [simclr+sigreg] epoch 12/20  nt-xent=4.5014  sigreg=0.0095
+  [simclr+sigreg] epoch 13/20  nt-xent=4.4986  sigreg=0.0094
+  [simclr+sigreg] epoch 14/20  nt-xent=4.4959  sigreg=0.0092
+  [simclr+sigreg] epoch 15/20  nt-xent=4.4922  sigreg=0.0089
+  [simclr+sigreg] epoch 16/20  nt-xent=4.4911  sigreg=0.0088
+  [simclr+sigreg] epoch 17/20  nt-xent=4.4885  sigreg=0.0087
+  [simclr+sigreg] epoch 18/20  nt-xent=4.4871  sigreg=0.0087
+  [simclr+sigreg] epoch 19/20  nt-xent=4.4849  sigreg=0.0085
+  [simclr+sigreg] epoch 20/20  nt-xent=4.4818  sigreg=0.0084
+Using cache found in /home/pharris/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+
+----- ss16 supcon+sigreg (lam=5) -----
+  CIFAR two-view embedding-train images (no {4}): 45000
+  [supcon+sigreg] epoch 1/10  supcon=5.2078  sigreg=0.1504
+  [supcon+sigreg] epoch 2/10  supcon=5.0780  sigreg=0.0900
+  [supcon+sigreg] epoch 3/10  supcon=5.0186  sigreg=0.0891
+  [supcon+sigreg] epoch 4/10  supcon=4.9850  sigreg=0.0874
+  [supcon+sigreg] epoch 5/10  supcon=4.9428  sigreg=0.0878
+  [supcon+sigreg] epoch 6/10  supcon=4.9270  sigreg=0.0857
+  [supcon+sigreg] epoch 7/10  supcon=4.9017  sigreg=0.0853
+  [supcon+sigreg] epoch 8/10  supcon=4.8678  sigreg=0.0845
+  [supcon+sigreg] epoch 9/10  supcon=4.8576  sigreg=0.0845
+  [supcon+sigreg] epoch 10/10  supcon=4.8406  sigreg=0.0833
+
+===== POST [confmask], f=0.001 (45 injected) =====
+    conf-mask(>0.5): kept 800/2250 pooled, kept-purity=0.000
+  [sigreg+proto] epoch 1/5  sigreg=0.2076  proto=1.3295  min_dist=1.70  mean_dist=4.12
+  [sigreg+proto] epoch 2/5  sigreg=0.1325  proto=0.7439  min_dist=2.15  mean_dist=4.64
+  [sigreg+proto] epoch 3/5  sigreg=0.1282  proto=0.5426  min_dist=2.52  mean_dist=5.11
+  [sigreg+proto] epoch 4/5  sigreg=0.1271  proto=0.4442  min_dist=2.86  mean_dist=5.53
+  [sigreg+proto] epoch 5/5  sigreg=0.1246  proto=0.3808  min_dist=3.16  mean_dist=5.92
+  round 1: pool=2250 purity=0.000 k-hat=4 anchors=4  margin=0.6064  mean-anchor=0.6904  deer=0.690
+    conf-mask(>0.5): kept 2110/3745 pooled, kept-purity=0.000
+  [sigreg+proto] epoch 1/5  sigreg=0.1263  proto=0.5546  min_dist=2.03  mean_dist=6.18
+  [sigreg+proto] epoch 2/5  sigreg=0.1260  proto=0.4936  min_dist=2.49  mean_dist=6.64
+  [sigreg+proto] epoch 3/5  sigreg=0.1279  proto=0.4860  min_dist=2.87  mean_dist=7.06
+  [sigreg+proto] epoch 4/5  sigreg=0.1302  proto=0.4942  min_dist=3.20  mean_dist=7.45
+  [sigreg+proto] epoch 5/5  sigreg=0.1349  proto=0.5266  min_dist=3.47  mean_dist=7.82
+  round 2: pool=2252 purity=0.001 k-hat=4 anchors=8  margin=0.5777  mean-anchor=0.6245  deer=0.625
+  [supcon+hybrid] per-event post f=0.001: power=0.022
+  [supcon+hybrid] sparker (post)
+    post-spk f=0.001: power=0.100 [0.058,0.162] (5/50)
+  [supcon+hybrid] maha (post)
+    post-maha f=0.001: power=0.160 [0.107,0.229] (8/50)
+  [supcon+hybrid] mmd (post)
+    post-mmd f=0.001: power=0.020 [0.003,0.064] (1/50)
+    conf-mask(>0.5): kept 721/2252 pooled, kept-purity=0.001
+  [sigreg+proto] epoch 1/5  sigreg=0.1615  proto=0.7013  min_dist=1.86  mean_dist=6.62
+  [sigreg+proto] epoch 2/5  sigreg=0.1322  proto=0.4225  min_dist=2.34  mean_dist=7.10
+  [sigreg+proto] epoch 3/5  sigreg=0.1313  proto=0.3348  min_dist=2.71  mean_dist=7.55
+  [sigreg+proto] epoch 4/5  sigreg=0.1297  proto=0.3178  min_dist=3.03  mean_dist=7.98
+  [sigreg+proto] epoch 5/5  sigreg=0.1270  proto=0.2989  min_dist=3.30  mean_dist=8.39
+  round 1: pool=2252 purity=0.001 k-hat=4 anchors=4  margin=0.7125  mean-anchor=0.7751  deer=0.775
+    conf-mask(>0.5): kept 1903/3922 pooled, kept-purity=0.001
+  [sigreg+proto] epoch 1/5  sigreg=0.1289  proto=0.5247  min_dist=3.54  mean_dist=8.18
+  [sigreg+proto] epoch 2/5  sigreg=0.1290  proto=0.4588  min_dist=4.00  mean_dist=8.64
+  [sigreg+proto] epoch 3/5  sigreg=0.1324  proto=0.4928  min_dist=4.39  mean_dist=9.06
+  [sigreg+proto] epoch 4/5  sigreg=0.1349  proto=0.5085  min_dist=4.74  mean_dist=9.46
+  [sigreg+proto] epoch 5/5  sigreg=0.1383  proto=0.5399  min_dist=5.05  mean_dist=9.83
+  round 2: pool=2255 purity=0.002 k-hat=4 anchors=8  margin=0.7162  mean-anchor=0.7669  deer=0.767
+  [ss[lam5]+hybrid] per-event post f=0.001: power=0.055
+  [ss[lam5]+hybrid] sparker (post)
+    post-spk f=0.001: power=0.060 [0.028,0.115] (3/50)
+  [ss[lam5]+hybrid] maha (post)
+    post-maha f=0.001: power=0.100 [0.058,0.162] (5/50)
+  [ss[lam5]+hybrid] mmd (post)
+    post-mmd f=0.001: power=0.040 [0.014,0.090] (2/50)
+
+===== POST [confmask+anneal], f=0.001 (45 injected) =====
+    conf-mask(>0.5): kept 800/2250 pooled, kept-purity=0.000
+  [sigreg+proto] epoch 1/5  sigreg=0.2055  proto=1.3552  min_dist=1.70  mean_dist=4.12  disc_sigma=1.00
+  [sigreg+proto] epoch 2/5  sigreg=0.1344  proto=0.7271  min_dist=2.14  mean_dist=4.64  disc_sigma=0.82
+  [sigreg+proto] epoch 3/5  sigreg=0.1338  proto=0.5317  min_dist=2.52  mean_dist=5.11  disc_sigma=0.65
+  [sigreg+proto] epoch 4/5  sigreg=0.1413  proto=0.4800  min_dist=2.85  mean_dist=5.52  disc_sigma=0.47
+  [sigreg+proto] epoch 5/5  sigreg=0.1539  proto=0.5199  min_dist=3.16  mean_dist=5.91  disc_sigma=0.30
+  round 1: pool=2250 purity=0.000 k-hat=4 anchors=4  margin=0.5604  mean-anchor=0.5825  deer=0.582
+    conf-mask(>0.5): kept 2162/4146 pooled, kept-purity=0.001
+  [sigreg+proto] epoch 1/5  sigreg=0.1352  proto=0.6863  min_dist=2.68  mean_dist=6.26  disc_sigma=1.00
+  [sigreg+proto] epoch 2/5  sigreg=0.1322  proto=0.5565  min_dist=3.12  mean_dist=6.73  disc_sigma=0.82
+  [sigreg+proto] epoch 3/5  sigreg=0.1440  proto=0.5863  min_dist=3.49  mean_dist=7.16  disc_sigma=0.65
+  [sigreg+proto] epoch 4/5  sigreg=0.1605  proto=0.6557  min_dist=3.82  mean_dist=7.56  disc_sigma=0.47
+  [sigreg+proto] epoch 5/5  sigreg=0.2111  proto=0.8847  min_dist=4.12  mean_dist=7.91  disc_sigma=0.30
+  round 2: pool=2254 purity=0.002 k-hat=4 anchors=8  margin=0.5789  mean-anchor=0.7386  deer=0.739
+  [supcon+hybrid] per-event post f=0.001: power=0.009
+  [supcon+hybrid] sparker (post)
+    post-spk f=0.001: power=0.040 [0.014,0.090] (2/50)
+  [supcon+hybrid] maha (post)
+    post-maha f=0.001: power=0.080 [0.042,0.138] (4/50)
+  [supcon+hybrid] mmd (post)
+    post-mmd f=0.001: power=0.100 [0.058,0.162] (5/50)
+    conf-mask(>0.5): kept 721/2252 pooled, kept-purity=0.001
+  [sigreg+proto] epoch 1/5  sigreg=0.1615  proto=0.7031  min_dist=1.86  mean_dist=6.62  disc_sigma=1.00
+  [sigreg+proto] epoch 2/5  sigreg=0.1345  proto=0.4206  min_dist=2.34  mean_dist=7.10  disc_sigma=0.82
+  [sigreg+proto] epoch 3/5  sigreg=0.1376  proto=0.3590  min_dist=2.71  mean_dist=7.55  disc_sigma=0.65
+  [sigreg+proto] epoch 4/5  sigreg=0.1430  proto=0.3530  min_dist=3.02  mean_dist=7.98  disc_sigma=0.47
+  [sigreg+proto] epoch 5/5  sigreg=0.1614  proto=0.3984  min_dist=3.30  mean_dist=8.37  disc_sigma=0.30
+  round 1: pool=2252 purity=0.001 k-hat=4 anchors=4  margin=0.6989  mean-anchor=0.7413  deer=0.741
+    conf-mask(>0.5): kept 2065/4102 pooled, kept-purity=0.003
+  [sigreg+proto] epoch 1/5  sigreg=0.1440  proto=0.6797  min_dist=1.94  mean_dist=8.42  disc_sigma=1.00
+  [sigreg+proto] epoch 2/5  sigreg=0.1403  proto=0.5634  min_dist=2.42  mean_dist=8.85  disc_sigma=0.82
+  [sigreg+proto] epoch 3/5  sigreg=0.1543  proto=0.6135  min_dist=2.81  mean_dist=9.24  disc_sigma=0.65
+  [sigreg+proto] epoch 4/5  sigreg=0.1743  proto=0.6963  min_dist=3.15  mean_dist=9.59  disc_sigma=0.47
+  [sigreg+proto] epoch 5/5  sigreg=0.2640  proto=0.9952  min_dist=3.44  mean_dist=9.89  disc_sigma=0.30
+  round 2: pool=2255 purity=0.002 k-hat=4 anchors=8  margin=0.6741  mean-anchor=0.7660  deer=0.766
+  [ss[lam5]+hybrid] per-event post f=0.001: power=0.049
+  [ss[lam5]+hybrid] sparker (post)
+    post-spk f=0.001: power=0.080 [0.042,0.138] (4/50)
+  [ss[lam5]+hybrid] maha (post)
+    post-maha f=0.001: power=0.120 [0.074,0.184] (6/50)
+  [ss[lam5]+hybrid] mmd (post)
+    post-mmd f=0.001: power=0.040 [0.014,0.090] (2/50)
+
+===== POST [confmask], f=0.003 (135 injected) =====
+    conf-mask(>0.5): kept 685/2252 pooled, kept-purity=0.003
+  [sigreg+proto] epoch 1/5  sigreg=0.2025  proto=1.3125  min_dist=1.85  mean_dist=4.15
+  [sigreg+proto] epoch 2/5  sigreg=0.1327  proto=0.6931  min_dist=2.37  mean_dist=4.68
+  [sigreg+proto] epoch 3/5  sigreg=0.1298  proto=0.4901  min_dist=2.80  mean_dist=5.14
+  [sigreg+proto] epoch 4/5  sigreg=0.1291  proto=0.4020  min_dist=3.17  mean_dist=5.56
+  [sigreg+proto] epoch 5/5  sigreg=0.1259  proto=0.3622  min_dist=3.51  mean_dist=5.95
+  round 1: pool=2252 purity=0.001 k-hat=4 anchors=4  margin=0.6486  mean-anchor=0.7327  deer=0.733
+    conf-mask(>0.5): kept 1951/3811 pooled, kept-purity=0.002
+  [sigreg+proto] epoch 1/5  sigreg=0.1267  proto=0.5502  min_dist=2.52  mean_dist=6.17
+  [sigreg+proto] epoch 2/5  sigreg=0.1266  proto=0.4763  min_dist=2.95  mean_dist=6.64
+  [sigreg+proto] epoch 3/5  sigreg=0.1294  proto=0.4724  min_dist=3.32  mean_dist=7.07
+  [sigreg+proto] epoch 4/5  sigreg=0.1310  proto=0.4883  min_dist=3.66  mean_dist=7.47
+  [sigreg+proto] epoch 5/5  sigreg=0.1315  proto=0.4919  min_dist=3.98  mean_dist=7.84
+  round 2: pool=2254 purity=0.002 k-hat=4 anchors=8  margin=0.6381  mean-anchor=0.7878  deer=0.788
+  [supcon+hybrid] per-event post f=0.003: power=0.019
+  [supcon+hybrid] sparker (post)
+    post-spk f=0.003: power=0.020 [0.003,0.064] (1/50)
+  [supcon+hybrid] maha (post)
+    post-maha f=0.003: power=0.120 [0.074,0.184] (6/50)
+  [supcon+hybrid] mmd (post)
+    post-mmd f=0.003: power=0.120 [0.074,0.184] (6/50)
+    conf-mask(>0.5): kept 774/2254 pooled, kept-purity=0.005
+  [sigreg+proto] epoch 1/5  sigreg=0.1624  proto=0.7066  min_dist=3.35  mean_dist=6.84
+  [sigreg+proto] epoch 2/5  sigreg=0.1336  proto=0.4043  min_dist=3.64  mean_dist=7.40
+  [sigreg+proto] epoch 3/5  sigreg=0.1320  proto=0.3455  min_dist=3.97  mean_dist=7.92
+  [sigreg+proto] epoch 4/5  sigreg=0.1308  proto=0.3198  min_dist=4.29  mean_dist=8.40
+  [sigreg+proto] epoch 5/5  sigreg=0.1309  proto=0.3146  min_dist=4.60  mean_dist=8.85
+  round 1: pool=2254 purity=0.002 k-hat=4 anchors=4  margin=0.7302  mean-anchor=0.8325  deer=0.832
+    conf-mask(>0.5): kept 2042/3895 pooled, kept-purity=0.006
+  [sigreg+proto] epoch 1/5  sigreg=0.1382  proto=0.5518  min_dist=2.97  mean_dist=8.93
+  [sigreg+proto] epoch 2/5  sigreg=0.1372  proto=0.5140  min_dist=3.51  mean_dist=9.38
+  [sigreg+proto] epoch 3/5  sigreg=0.1387  proto=0.5114  min_dist=3.96  mean_dist=9.80
+  [sigreg+proto] epoch 4/5  sigreg=0.1427  proto=0.5640  min_dist=4.35  mean_dist=10.20
+  [sigreg+proto] epoch 5/5  sigreg=0.1457  proto=0.5507  min_dist=4.70  mean_dist=10.57
+  round 2: pool=2260 purity=0.004 k-hat=4 anchors=8  margin=0.7084  mean-anchor=0.8476  deer=0.848
+  [ss[lam5]+hybrid] per-event post f=0.003: power=0.069
+  [ss[lam5]+hybrid] sparker (post)
+    post-spk f=0.003: power=0.060 [0.028,0.115] (3/50)
+  [ss[lam5]+hybrid] maha (post)
+    post-maha f=0.003: power=0.120 [0.074,0.184] (6/50)
+  [ss[lam5]+hybrid] mmd (post)
+    post-mmd f=0.003: power=0.060 [0.028,0.115] (3/50)
+
+===== POST [confmask+anneal], f=0.003 (135 injected) =====
+    conf-mask(>0.5): kept 685/2252 pooled, kept-purity=0.003
+  [sigreg+proto] epoch 1/5  sigreg=0.1999  proto=1.2661  min_dist=1.85  mean_dist=4.14  disc_sigma=1.00
+  [sigreg+proto] epoch 2/5  sigreg=0.1343  proto=0.6895  min_dist=2.37  mean_dist=4.68  disc_sigma=0.82
+  [sigreg+proto] epoch 3/5  sigreg=0.1384  proto=0.5064  min_dist=2.80  mean_dist=5.14  disc_sigma=0.65
+  [sigreg+proto] epoch 4/5  sigreg=0.1414  proto=0.4395  min_dist=3.17  mean_dist=5.56  disc_sigma=0.47
+  [sigreg+proto] epoch 5/5  sigreg=0.1546  proto=0.4749  min_dist=3.51  mean_dist=5.94  disc_sigma=0.30
+  round 1: pool=2252 purity=0.001 k-hat=4 anchors=4  margin=0.6528  mean-anchor=0.6806  deer=0.681
+    conf-mask(>0.5): kept 1999/4149 pooled, kept-purity=0.005
+  [sigreg+proto] epoch 1/5  sigreg=0.1353  proto=0.6381  min_dist=2.51  mean_dist=6.34  disc_sigma=1.00
+  [sigreg+proto] epoch 2/5  sigreg=0.1318  proto=0.5434  min_dist=2.93  mean_dist=6.82  disc_sigma=0.82
+  [sigreg+proto] epoch 3/5  sigreg=0.1433  proto=0.5604  min_dist=3.28  mean_dist=7.26  disc_sigma=0.65
+  [sigreg+proto] epoch 4/5  sigreg=0.1596  proto=0.6534  min_dist=3.60  mean_dist=7.66  disc_sigma=0.47
+  [sigreg+proto] epoch 5/5  sigreg=0.2107  proto=0.8555  min_dist=3.87  mean_dist=8.01  disc_sigma=0.30
+  round 2: pool=2260 purity=0.004 k-hat=4 anchors=8  margin=0.6982  mean-anchor=0.8380  deer=0.838
+  [supcon+hybrid] per-event post f=0.003: power=0.055
+  [supcon+hybrid] sparker (post)
+    post-spk f=0.003: power=0.060 [0.028,0.115] (3/50)
+  [supcon+hybrid] maha (post)
+    post-maha f=0.003: power=0.200 [0.141,0.273] (10/50)
+  [supcon+hybrid] mmd (post)
+    post-mmd f=0.003: power=0.060 [0.028,0.115] (3/50)
+    conf-mask(>0.5): kept 774/2254 pooled, kept-purity=0.005
+  [sigreg+proto] epoch 1/5  sigreg=0.1623  proto=0.7093  min_dist=3.35  mean_dist=6.84  disc_sigma=1.00
+  [sigreg+proto] epoch 2/5  sigreg=0.1363  proto=0.4102  min_dist=3.64  mean_dist=7.40  disc_sigma=0.82
+  [sigreg+proto] epoch 3/5  sigreg=0.1394  proto=0.3701  min_dist=3.96  mean_dist=7.91  disc_sigma=0.65
+  [sigreg+proto] epoch 4/5  sigreg=0.1464  proto=0.3884  min_dist=4.27  mean_dist=8.39  disc_sigma=0.47
+  [sigreg+proto] epoch 5/5  sigreg=0.1729  proto=0.4841  min_dist=4.55  mean_dist=8.82  disc_sigma=0.30
+  round 1: pool=2254 purity=0.002 k-hat=4 anchors=4  margin=0.7189  mean-anchor=0.7823  deer=0.782
+    conf-mask(>0.5): kept 2249/4123 pooled, kept-purity=0.007
+  [sigreg+proto] epoch 1/5  sigreg=0.1487  proto=0.7319  min_dist=2.79  mean_dist=8.59  disc_sigma=1.00
+  [sigreg+proto] epoch 2/5  sigreg=0.1447  proto=0.6421  min_dist=3.29  mean_dist=9.03  disc_sigma=0.82
+  [sigreg+proto] epoch 3/5  sigreg=0.1611  proto=0.7040  min_dist=3.71  mean_dist=9.43  disc_sigma=0.65
+  [sigreg+proto] epoch 4/5  sigreg=0.1887  proto=0.8776  min_dist=4.06  mean_dist=9.80  disc_sigma=0.47
+  [sigreg+proto] epoch 5/5  sigreg=0.2702  proto=1.1408  min_dist=4.34  mean_dist=10.10  disc_sigma=0.30
+  round 2: pool=2264 purity=0.006 k-hat=4 anchors=8  margin=0.7519  mean-anchor=0.8321  deer=0.832
+  [ss[lam5]+hybrid] per-event post f=0.003: power=0.140
+  [ss[lam5]+hybrid] sparker (post)
+    post-spk f=0.003: power=0.120 [0.074,0.184] (6/50)
+  [ss[lam5]+hybrid] maha (post)
+    post-maha f=0.003: power=0.100 [0.058,0.162] (5/50)
+  [ss[lam5]+hybrid] mmd (post)
+    post-mmd f=0.003: power=0.160 [0.107,0.229] (8/50)
+
+===== POST [confmask], f=0.01 (455 injected) =====
+    conf-mask(>0.5): kept 684/2256 pooled, kept-purity=0.003
+  [sigreg+proto] epoch 1/5  sigreg=0.2034  proto=1.2462  min_dist=2.03  mean_dist=4.51
+  [sigreg+proto] epoch 2/5  sigreg=0.1300  proto=0.6976  min_dist=2.51  mean_dist=5.02
+  [sigreg+proto] epoch 3/5  sigreg=0.1269  proto=0.4965  min_dist=2.91  mean_dist=5.49
+  [sigreg+proto] epoch 4/5  sigreg=0.1263  proto=0.4109  min_dist=3.26  mean_dist=5.91
+  [sigreg+proto] epoch 5/5  sigreg=0.1242  proto=0.3698  min_dist=3.58  mean_dist=6.30
+  round 1: pool=2256 purity=0.003 k-hat=4 anchors=4  margin=0.6045  mean-anchor=0.6275  deer=0.627
+    conf-mask(>0.5): kept 1885/3762 pooled, kept-purity=0.007
+  [sigreg+proto] epoch 1/5  sigreg=0.1261  proto=0.5389  min_dist=2.76  mean_dist=6.45
+  [sigreg+proto] epoch 2/5  sigreg=0.1262  proto=0.4749  min_dist=3.13  mean_dist=6.92
+  [sigreg+proto] epoch 3/5  sigreg=0.1299  proto=0.4670  min_dist=3.50  mean_dist=7.34
+  [sigreg+proto] epoch 4/5  sigreg=0.1318  proto=0.4712  min_dist=3.84  mean_dist=7.74
+  [sigreg+proto] epoch 5/5  sigreg=0.1347  proto=0.4695  min_dist=4.13  mean_dist=8.11
+  round 2: pool=2273 purity=0.010 k-hat=4 anchors=8  margin=0.6621  mean-anchor=0.7706  deer=0.771
+  [supcon+hybrid] per-event post f=0.01: power=0.043
+  [supcon+hybrid] sparker (post)
+    post-spk f=0.01: power=0.060 [0.028,0.115] (3/50)
+  [supcon+hybrid] maha (post)
+    post-maha f=0.01: power=0.060 [0.028,0.115] (3/50)
+  [supcon+hybrid] mmd (post)
+    post-mmd f=0.01: power=0.120 [0.074,0.184] (6/50)
+    conf-mask(>0.5): kept 726/2260 pooled, kept-purity=0.001
+  [sigreg+proto] epoch 1/5  sigreg=0.1595  proto=0.7137  min_dist=1.86  mean_dist=6.62
+  [sigreg+proto] epoch 2/5  sigreg=0.1326  proto=0.4260  min_dist=2.34  mean_dist=7.10
+  [sigreg+proto] epoch 3/5  sigreg=0.1341  proto=0.3518  min_dist=2.70  mean_dist=7.55
+  [sigreg+proto] epoch 4/5  sigreg=0.1302  proto=0.3241  min_dist=3.02  mean_dist=7.98
+  [sigreg+proto] epoch 5/5  sigreg=0.1284  proto=0.2975  min_dist=3.29  mean_dist=8.38
+  round 1: pool=2260 purity=0.004 k-hat=4 anchors=4  margin=0.6504  mean-anchor=0.7254  deer=0.725
+    conf-mask(>0.5): kept 1929/3926 pooled, kept-purity=0.016
+  [sigreg+proto] epoch 1/5  sigreg=0.1302  proto=0.5292  min_dist=3.18  mean_dist=8.24
+  [sigreg+proto] epoch 2/5  sigreg=0.1272  proto=0.4693  min_dist=3.68  mean_dist=8.69
+  [sigreg+proto] epoch 3/5  sigreg=0.1305  proto=0.4791  min_dist=4.11  mean_dist=9.11
+  [sigreg+proto] epoch 4/5  sigreg=0.1339  proto=0.5060  min_dist=4.48  mean_dist=9.50
+  [sigreg+proto] epoch 5/5  sigreg=0.1367  proto=0.5440  min_dist=4.82  mean_dist=9.87
+  round 2: pool=2286 purity=0.016 k-hat=4 anchors=8  margin=0.6775  mean-anchor=0.7607  deer=0.761
+  [ss[lam5]+hybrid] per-event post f=0.01: power=0.034
+  [ss[lam5]+hybrid] sparker (post)
+    post-spk f=0.01: power=0.040 [0.014,0.090] (2/50)
+  [ss[lam5]+hybrid] maha (post)
+    post-maha f=0.01: power=0.160 [0.107,0.229] (8/50)
+  [ss[lam5]+hybrid] mmd (post)
+    post-mmd f=0.01: power=0.120 [0.074,0.184] (6/50)
+
+===== POST [confmask+anneal], f=0.01 (455 injected) =====
+    conf-mask(>0.5): kept 684/2256 pooled, kept-purity=0.003
+  [sigreg+proto] epoch 1/5  sigreg=0.2061  proto=1.2800  min_dist=2.03  mean_dist=4.51  disc_sigma=1.00
+  [sigreg+proto] epoch 2/5  sigreg=0.1344  proto=0.6784  min_dist=2.51  mean_dist=5.02  disc_sigma=0.82
+  [sigreg+proto] epoch 3/5  sigreg=0.1349  proto=0.5117  min_dist=2.91  mean_dist=5.49  disc_sigma=0.65
+  [sigreg+proto] epoch 4/5  sigreg=0.1384  proto=0.4522  min_dist=3.26  mean_dist=5.91  disc_sigma=0.47
+  [sigreg+proto] epoch 5/5  sigreg=0.1537  proto=0.4753  min_dist=3.58  mean_dist=6.30  disc_sigma=0.30
+  round 1: pool=2256 purity=0.003 k-hat=4 anchors=4  margin=0.5433  mean-anchor=0.5645  deer=0.564
+    conf-mask(>0.5): kept 2283/4189 pooled, kept-purity=0.007
+  [sigreg+proto] epoch 1/5  sigreg=0.1365  proto=0.6702  min_dist=2.78  mean_dist=6.81  disc_sigma=1.00
+  [sigreg+proto] epoch 2/5  sigreg=0.1322  proto=0.5467  min_dist=3.07  mean_dist=7.30  disc_sigma=0.82
+  [sigreg+proto] epoch 3/5  sigreg=0.1445  proto=0.5881  min_dist=3.38  mean_dist=7.74  disc_sigma=0.65
+  [sigreg+proto] epoch 4/5  sigreg=0.1644  proto=0.6867  min_dist=3.68  mean_dist=8.15  disc_sigma=0.47
+  [sigreg+proto] epoch 5/5  sigreg=0.2177  proto=0.9181  min_dist=3.95  mean_dist=8.51  disc_sigma=0.30
+  round 2: pool=2277 purity=0.012 k-hat=4 anchors=8  margin=0.6507  mean-anchor=0.7848  deer=0.785
+  [supcon+hybrid] per-event post f=0.01: power=0.051
+  [supcon+hybrid] sparker (post)
+    post-spk f=0.01: power=0.040 [0.014,0.090] (2/50)
+  [supcon+hybrid] maha (post)
+    post-maha f=0.01: power=0.160 [0.107,0.229] (8/50)
+  [supcon+hybrid] mmd (post)
+    post-mmd f=0.01: power=0.040 [0.014,0.090] (2/50)
+    conf-mask(>0.5): kept 726/2260 pooled, kept-purity=0.001
+  [sigreg+proto] epoch 1/5  sigreg=0.1593  proto=0.7142  min_dist=1.86  mean_dist=6.62  disc_sigma=1.00
+  [sigreg+proto] epoch 2/5  sigreg=0.1349  proto=0.4242  min_dist=2.33  mean_dist=7.10  disc_sigma=0.82
+  [sigreg+proto] epoch 3/5  sigreg=0.1398  proto=0.3772  min_dist=2.70  mean_dist=7.55  disc_sigma=0.65
+  [sigreg+proto] epoch 4/5  sigreg=0.1417  proto=0.3572  min_dist=3.01  mean_dist=7.97  disc_sigma=0.47
+  [sigreg+proto] epoch 5/5  sigreg=0.1617  proto=0.3890  min_dist=3.28  mean_dist=8.37  disc_sigma=0.30
+  round 1: pool=2260 purity=0.004 k-hat=4 anchors=4  margin=0.6674  mean-anchor=0.7341  deer=0.734
+    conf-mask(>0.5): kept 2394/4164 pooled, kept-purity=0.018
+  [sigreg+proto] epoch 1/5  sigreg=0.1464  proto=0.6549  min_dist=3.17  mean_dist=8.75  disc_sigma=1.00
+  [sigreg+proto] epoch 2/5  sigreg=0.1405  proto=0.5649  min_dist=3.57  mean_dist=9.21  disc_sigma=0.82
+  [sigreg+proto] epoch 3/5  sigreg=0.1543  proto=0.5943  min_dist=3.90  mean_dist=9.64  disc_sigma=0.65
+  [sigreg+proto] epoch 4/5  sigreg=0.1797  proto=0.7313  min_dist=4.19  mean_dist=10.03  disc_sigma=0.47
+  [sigreg+proto] epoch 5/5  sigreg=0.2546  proto=1.0314  min_dist=4.43  mean_dist=10.36  disc_sigma=0.30
+  round 2: pool=2292 purity=0.018 k-hat=4 anchors=8  margin=0.7534  mean-anchor=0.8879  deer=0.888
+  [ss[lam5]+hybrid] per-event post f=0.01: power=0.118
+  [ss[lam5]+hybrid] sparker (post)
+    post-spk f=0.01: power=0.020 [0.003,0.064] (1/50)
+  [ss[lam5]+hybrid] maha (post)
+    post-maha f=0.01: power=0.120 [0.074,0.184] (6/50)
+  [ss[lam5]+hybrid] mmd (post)
+    post-mmd f=0.01: power=0.160 [0.107,0.229] (8/50)
+
+===== POST [confmask], f=0.02 (918 injected) =====
+    conf-mask(>0.5): kept 590/2258 pooled, kept-purity=0.003
+  [sigreg+proto] epoch 1/5  sigreg=0.2051  proto=1.3520  min_dist=2.08  mean_dist=3.96
+  [sigreg+proto] epoch 2/5  sigreg=0.1326  proto=0.7219  min_dist=2.51  mean_dist=4.48
+  [sigreg+proto] epoch 3/5  sigreg=0.1293  proto=0.5204  min_dist=2.91  mean_dist=4.94
+  [sigreg+proto] epoch 4/5  sigreg=0.1264  proto=0.4219  min_dist=3.30  mean_dist=5.36
+  [sigreg+proto] epoch 5/5  sigreg=0.1240  proto=0.3443  min_dist=3.65  mean_dist=5.74
+  round 1: pool=2258 purity=0.004 k-hat=4 anchors=4  margin=0.6595  mean-anchor=0.7722  deer=0.772
+    conf-mask(>0.5): kept 2032/3766 pooled, kept-purity=0.002
+  [sigreg+proto] epoch 1/5  sigreg=0.1273  proto=0.5228  min_dist=2.53  mean_dist=6.13
+  [sigreg+proto] epoch 2/5  sigreg=0.1263  proto=0.4491  min_dist=2.87  mean_dist=6.61
+  [sigreg+proto] epoch 3/5  sigreg=0.1278  proto=0.4406  min_dist=3.18  mean_dist=7.05
+  [sigreg+proto] epoch 4/5  sigreg=0.1294  proto=0.4608  min_dist=3.46  mean_dist=7.45
+  [sigreg+proto] epoch 5/5  sigreg=0.1317  proto=0.4748  min_dist=3.73  mean_dist=7.82
+  round 2: pool=2259 purity=0.004 k-hat=4 anchors=8  margin=0.6832  mean-anchor=0.7700  deer=0.770
+  [supcon+hybrid] per-event post f=0.02: power=0.034
+  [supcon+hybrid] sparker (post)
+    post-spk f=0.02: power=0.360 [0.286,0.440] (18/50)
+  [supcon+hybrid] maha (post)
+    post-maha f=0.02: power=0.220 [0.159,0.294] (11/50)
+  [supcon+hybrid] mmd (post)
+    post-mmd f=0.02: power=0.180 [0.124,0.251] (9/50)
+    conf-mask(>0.5): kept 993/2262 pooled, kept-purity=0.004
+  [sigreg+proto] epoch 1/5  sigreg=0.1600  proto=0.7168  min_dist=3.16  mean_dist=6.68
+  [sigreg+proto] epoch 2/5  sigreg=0.1338  proto=0.4318  min_dist=3.48  mean_dist=7.25
+  [sigreg+proto] epoch 3/5  sigreg=0.1336  proto=0.3772  min_dist=3.80  mean_dist=7.77
+  [sigreg+proto] epoch 4/5  sigreg=0.1346  proto=0.3729  min_dist=4.10  mean_dist=8.26
+  [sigreg+proto] epoch 5/5  sigreg=0.1344  proto=0.3827  min_dist=4.39  mean_dist=8.71
+  round 1: pool=2262 purity=0.005 k-hat=4 anchors=4  margin=0.7186  mean-anchor=0.7892  deer=0.789
+    conf-mask(>0.5): kept 2227/4032 pooled, kept-purity=0.031
+  [sigreg+proto] epoch 1/5  sigreg=0.1381  proto=0.6113  min_dist=1.98  mean_dist=8.66
+  [sigreg+proto] epoch 2/5  sigreg=0.1357  proto=0.5663  min_dist=2.42  mean_dist=9.10
+  [sigreg+proto] epoch 3/5  sigreg=0.1386  proto=0.5491  min_dist=2.78  mean_dist=9.51
+  [sigreg+proto] epoch 4/5  sigreg=0.1398  proto=0.5775  min_dist=3.07  mean_dist=9.89
+  [sigreg+proto] epoch 5/5  sigreg=0.1438  proto=0.6002  min_dist=3.34  mean_dist=10.25
+  round 2: pool=2321 purity=0.031 k-hat=4 anchors=8  margin=0.7624  mean-anchor=0.8736  deer=0.874
+  [ss[lam5]+hybrid] per-event post f=0.02: power=0.201
+  [ss[lam5]+hybrid] sparker (post)
+    post-spk f=0.02: power=0.500 [0.421,0.579] (25/50)
+  [ss[lam5]+hybrid] maha (post)
+    post-maha f=0.02: power=0.340 [0.268,0.419] (17/50)
+  [ss[lam5]+hybrid] mmd (post)
+    post-mmd f=0.02: power=0.120 [0.074,0.184] (6/50)
+
+===== POST [confmask+anneal], f=0.02 (918 injected) =====
+    conf-mask(>0.5): kept 590/2258 pooled, kept-purity=0.003
+  [sigreg+proto] epoch 1/5  sigreg=0.2010  proto=1.3621  min_dist=2.08  mean_dist=3.96  disc_sigma=1.00
+  [sigreg+proto] epoch 2/5  sigreg=0.1339  proto=0.7188  min_dist=2.51  mean_dist=4.48  disc_sigma=0.82
+  [sigreg+proto] epoch 3/5  sigreg=0.1347  proto=0.5255  min_dist=2.91  mean_dist=4.94  disc_sigma=0.65
+  [sigreg+proto] epoch 4/5  sigreg=0.1377  proto=0.4503  min_dist=3.30  mean_dist=5.36  disc_sigma=0.47
+  [sigreg+proto] epoch 5/5  sigreg=0.1496  proto=0.4741  min_dist=3.64  mean_dist=5.73  disc_sigma=0.30
+  round 1: pool=2258 purity=0.004 k-hat=4 anchors=4  margin=0.6534  mean-anchor=0.7094  deer=0.709
+    conf-mask(>0.5): kept 2213/4125 pooled, kept-purity=0.004
+  [sigreg+proto] epoch 1/5  sigreg=0.1342  proto=0.6412  min_dist=2.77  mean_dist=6.37  disc_sigma=1.00
+  [sigreg+proto] epoch 2/5  sigreg=0.1308  proto=0.5228  min_dist=3.15  mean_dist=6.85  disc_sigma=0.82
+  [sigreg+proto] epoch 3/5  sigreg=0.1411  proto=0.5630  min_dist=3.47  mean_dist=7.28  disc_sigma=0.65
+  [sigreg+proto] epoch 4/5  sigreg=0.1606  proto=0.6796  min_dist=3.78  mean_dist=7.68  disc_sigma=0.47
+  [sigreg+proto] epoch 5/5  sigreg=0.2142  proto=0.9220  min_dist=4.05  mean_dist=8.03  disc_sigma=0.30
+  round 2: pool=2282 purity=0.014 k-hat=4 anchors=8  margin=0.5544  mean-anchor=0.5881  deer=0.588
+  [supcon+hybrid] per-event post f=0.02: power=0.016
+  [supcon+hybrid] sparker (post)
+    post-spk f=0.02: power=0.400 [0.324,0.480] (20/50)
+  [supcon+hybrid] maha (post)
+    post-maha f=0.02: power=0.440 [0.362,0.520] (22/50)
+  [supcon+hybrid] mmd (post)
+    post-mmd f=0.02: power=0.160 [0.107,0.229] (8/50)
+    conf-mask(>0.5): kept 993/2262 pooled, kept-purity=0.004
+  [sigreg+proto] epoch 1/5  sigreg=0.1599  proto=0.7151  min_dist=3.16  mean_dist=6.68  disc_sigma=1.00
+  [sigreg+proto] epoch 2/5  sigreg=0.1368  proto=0.4353  min_dist=3.48  mean_dist=7.25  disc_sigma=0.82
+  [sigreg+proto] epoch 3/5  sigreg=0.1402  proto=0.4014  min_dist=3.79  mean_dist=7.77  disc_sigma=0.65
+  [sigreg+proto] epoch 4/5  sigreg=0.1482  proto=0.4348  min_dist=4.09  mean_dist=8.25  disc_sigma=0.47
+  [sigreg+proto] epoch 5/5  sigreg=0.1801  proto=0.5507  min_dist=4.34  mean_dist=8.68  disc_sigma=0.30
+  round 1: pool=2262 purity=0.005 k-hat=4 anchors=4  margin=0.6689  mean-anchor=0.6945  deer=0.694
+    conf-mask(>0.5): kept 2530/4303 pooled, kept-purity=0.053
+  [sigreg+proto] epoch 1/5  sigreg=0.1539  proto=0.7711  min_dist=3.58  mean_dist=8.90  disc_sigma=1.00
+  [sigreg+proto] epoch 2/5  sigreg=0.1474  proto=0.6611  min_dist=4.04  mean_dist=9.36  disc_sigma=0.82
+  [sigreg+proto] epoch 3/5  sigreg=0.1632  proto=0.7061  min_dist=4.42  mean_dist=9.79  disc_sigma=0.65
+  [sigreg+proto] epoch 4/5  sigreg=0.1867  proto=0.8655  min_dist=4.74  mean_dist=10.17  disc_sigma=0.47
+  [sigreg+proto] epoch 5/5  sigreg=0.2679  proto=1.1564  min_dist=4.99  mean_dist=10.48  disc_sigma=0.30
+  round 2: pool=2396 purity=0.061 k-hat=4 anchors=8  margin=0.8186  mean-anchor=0.8932  deer=0.893
+  [ss[lam5]+hybrid] per-event post f=0.02: power=0.226
+  [ss[lam5]+hybrid] sparker (post)
+    post-spk f=0.02: power=0.240 [0.177,0.315] (12/50)
+  [ss[lam5]+hybrid] maha (post)
+    post-maha f=0.02: power=0.240 [0.177,0.315] (12/50)
+  [ss[lam5]+hybrid] mmd (post)
+    post-mmd f=0.02: power=0.440 [0.362,0.520] (22/50)
+
+===== POST [confmask], f=0.03 (1392 injected) =====
+    conf-mask(>0.5): kept 770/2271 pooled, kept-purity=0.004
+  [sigreg+proto] epoch 1/5  sigreg=0.2020  proto=1.3059  min_dist=2.30  mean_dist=4.15
+  [sigreg+proto] epoch 2/5  sigreg=0.1316  proto=0.6984  min_dist=2.74  mean_dist=4.69
+  [sigreg+proto] epoch 3/5  sigreg=0.1296  proto=0.5266  min_dist=3.12  mean_dist=5.17
+  [sigreg+proto] epoch 4/5  sigreg=0.1283  proto=0.4289  min_dist=3.46  mean_dist=5.60
+  [sigreg+proto] epoch 5/5  sigreg=0.1260  proto=0.3809  min_dist=3.77  mean_dist=5.99
+  round 1: pool=2271 purity=0.009 k-hat=4 anchors=4  margin=0.5942  mean-anchor=0.6817  deer=0.682
+    conf-mask(>0.5): kept 1980/3806 pooled, kept-purity=0.006
+  [sigreg+proto] epoch 1/5  sigreg=0.1273  proto=0.5504  min_dist=2.67  mean_dist=6.25
+  [sigreg+proto] epoch 2/5  sigreg=0.1279  proto=0.4777  min_dist=3.09  mean_dist=6.74
+  [sigreg+proto] epoch 3/5  sigreg=0.1307  proto=0.4766  min_dist=3.45  mean_dist=7.18
+  [sigreg+proto] epoch 4/5  sigreg=0.1312  proto=0.4834  min_dist=3.79  mean_dist=7.59
+  [sigreg+proto] epoch 5/5  sigreg=0.1347  proto=0.5039  min_dist=4.11  mean_dist=7.97
+  round 2: pool=2268 purity=0.008 k-hat=4 anchors=8  margin=0.5352  mean-anchor=0.6556  deer=0.656
+  [supcon+hybrid] per-event post f=0.03: power=0.013
+  [supcon+hybrid] sparker (post)
+    post-spk f=0.03: power=0.920 [0.862,0.958] (46/50)
+  [supcon+hybrid] maha (post)
+    post-maha f=0.03: power=0.440 [0.362,0.520] (22/50)
+  [supcon+hybrid] mmd (post)
+    post-mmd f=0.03: power=0.820 [0.749,0.876] (41/50)
+    conf-mask(>0.5): kept 778/2280 pooled, kept-purity=0.024
+  [sigreg+proto] epoch 1/5  sigreg=0.1590  proto=0.6928  min_dist=2.77  mean_dist=6.57
+  [sigreg+proto] epoch 2/5  sigreg=0.1355  proto=0.3988  min_dist=3.30  mean_dist=7.09
+  [sigreg+proto] epoch 3/5  sigreg=0.1345  proto=0.3564  min_dist=3.74  mean_dist=7.59
+  [sigreg+proto] epoch 4/5  sigreg=0.1315  proto=0.3267  min_dist=4.13  mean_dist=8.06
+  [sigreg+proto] epoch 5/5  sigreg=0.1324  proto=0.3310  min_dist=4.50  mean_dist=8.50
+  round 1: pool=2280 purity=0.013 k-hat=4 anchors=4  margin=0.7284  mean-anchor=0.8001  deer=0.800
+    conf-mask(>0.5): kept 2161/4092 pooled, kept-purity=0.046
+  [sigreg+proto] epoch 1/5  sigreg=0.1369  proto=0.5928  min_dist=2.72  mean_dist=8.58
+  [sigreg+proto] epoch 2/5  sigreg=0.1367  proto=0.5434  min_dist=3.24  mean_dist=9.03
+  [sigreg+proto] epoch 3/5  sigreg=0.1383  proto=0.5608  min_dist=3.67  mean_dist=9.45
+  [sigreg+proto] epoch 4/5  sigreg=0.1439  proto=0.5861  min_dist=4.04  mean_dist=9.85
+  [sigreg+proto] epoch 5/5  sigreg=0.1454  proto=0.6117  min_dist=4.38  mean_dist=10.22
+  round 2: pool=2353 purity=0.044 k-hat=4 anchors=8  margin=0.8205  mean-anchor=0.8731  deer=0.873
+  [ss[lam5]+hybrid] per-event post f=0.03: power=0.210
+  [ss[lam5]+hybrid] sparker (post)
+    post-spk f=0.03: power=0.860 [0.793,0.910] (43/50)
+  [ss[lam5]+hybrid] maha (post)
+    post-maha f=0.03: power=0.600 [0.520,0.676] (30/50)
+  [ss[lam5]+hybrid] mmd (post)
+    post-mmd f=0.03: power=0.800 [0.727,0.859] (40/50)
+
+===== POST [confmask+anneal], f=0.03 (1392 injected) =====
+    conf-mask(>0.5): kept 770/2271 pooled, kept-purity=0.004
+  [sigreg+proto] epoch 1/5  sigreg=0.2042  proto=1.3256  min_dist=2.30  mean_dist=4.15  disc_sigma=1.00
+  [sigreg+proto] epoch 2/5  sigreg=0.1339  proto=0.6779  min_dist=2.74  mean_dist=4.69  disc_sigma=0.82
+  [sigreg+proto] epoch 3/5  sigreg=0.1331  proto=0.4995  min_dist=3.12  mean_dist=5.17  disc_sigma=0.65
+  [sigreg+proto] epoch 4/5  sigreg=0.1407  proto=0.4537  min_dist=3.45  mean_dist=5.60  disc_sigma=0.47
+  [sigreg+proto] epoch 5/5  sigreg=0.1551  proto=0.4956  min_dist=3.75  mean_dist=5.99  disc_sigma=0.30
+  round 1: pool=2271 purity=0.009 k-hat=4 anchors=4  margin=0.6187  mean-anchor=0.6077  deer=0.608
+    conf-mask(>0.5): kept 2350/4300 pooled, kept-purity=0.044
+  [sigreg+proto] epoch 1/5  sigreg=0.1358  proto=0.6855  min_dist=2.64  mean_dist=6.44  disc_sigma=1.00
+  [sigreg+proto] epoch 2/5  sigreg=0.1317  proto=0.5566  min_dist=3.08  mean_dist=6.94  disc_sigma=0.82
+  [sigreg+proto] epoch 3/5  sigreg=0.1450  proto=0.6082  min_dist=3.47  mean_dist=7.39  disc_sigma=0.65
+  [sigreg+proto] epoch 4/5  sigreg=0.1635  proto=0.7340  min_dist=3.81  mean_dist=7.80  disc_sigma=0.47
+  [sigreg+proto] epoch 5/5  sigreg=0.2178  proto=0.9693  min_dist=4.11  mean_dist=8.16  disc_sigma=0.30
+  round 2: pool=2378 purity=0.054 k-hat=4 anchors=8  margin=0.6861  mean-anchor=0.8321  deer=0.832
+  [supcon+hybrid] per-event post f=0.03: power=0.077
+  [supcon+hybrid] sparker (post)
+    post-spk f=0.03: power=0.500 [0.421,0.579] (25/50)
+  [supcon+hybrid] maha (post)
+    post-maha f=0.03: power=0.300 [0.231,0.378] (15/50)
+  [supcon+hybrid] mmd (post)
+    post-mmd f=0.03: power=0.340 [0.268,0.419] (17/50)
+    conf-mask(>0.5): kept 778/2280 pooled, kept-purity=0.024
+  [sigreg+proto] epoch 1/5  sigreg=0.1591  proto=0.6931  min_dist=2.77  mean_dist=6.57  disc_sigma=1.00
+  [sigreg+proto] epoch 2/5  sigreg=0.1379  proto=0.4051  min_dist=3.30  mean_dist=7.09  disc_sigma=0.82
+  [sigreg+proto] epoch 3/5  sigreg=0.1411  proto=0.3898  min_dist=3.73  mean_dist=7.59  disc_sigma=0.65
+  [sigreg+proto] epoch 4/5  sigreg=0.1475  proto=0.4017  min_dist=4.11  mean_dist=8.05  disc_sigma=0.47
+  [sigreg+proto] epoch 5/5  sigreg=0.1718  proto=0.4915  min_dist=4.45  mean_dist=8.47  disc_sigma=0.30
+  round 1: pool=2280 purity=0.013 k-hat=4 anchors=4  margin=0.7361  mean-anchor=0.7925  deer=0.793
+    conf-mask(>0.5): kept 2360/4322 pooled, kept-purity=0.053
+  [sigreg+proto] epoch 1/5  sigreg=0.1512  proto=0.7016  min_dist=3.22  mean_dist=8.91  disc_sigma=1.00
+  [sigreg+proto] epoch 2/5  sigreg=0.1458  proto=0.5843  min_dist=3.67  mean_dist=9.36  disc_sigma=0.82
+  [sigreg+proto] epoch 3/5  sigreg=0.1601  proto=0.6477  min_dist=4.03  mean_dist=9.78  disc_sigma=0.65
+  [sigreg+proto] epoch 4/5  sigreg=0.1856  proto=0.7708  min_dist=4.33  mean_dist=10.16  disc_sigma=0.47
+  [sigreg+proto] epoch 5/5  sigreg=0.2617  proto=1.0587  min_dist=4.57  mean_dist=10.48  disc_sigma=0.30
+  round 2: pool=2369 purity=0.050 k-hat=4 anchors=8  margin=0.8016  mean-anchor=0.8386  deer=0.839
+  [ss[lam5]+hybrid] per-event post f=0.03: power=0.224
+  [ss[lam5]+hybrid] sparker (post)
+    post-spk f=0.03: power=0.820 [0.749,0.876] (41/50)
+  [ss[lam5]+hybrid] maha (post)
+    post-maha f=0.03: power=0.180 [0.124,0.251] (9/50)
+  [ss[lam5]+hybrid] mmd (post)
+    post-mmd f=0.03: power=0.880 [0.816,0.926] (44/50)
+
+===== POST [confmask], f=0.1 (5000 injected) =====
+    conf-mask(>0.5): kept 892/2311 pooled, kept-purity=0.037
+  [sigreg+proto] epoch 1/5  sigreg=0.2054  proto=1.3724  min_dist=1.88  mean_dist=4.07
+  [sigreg+proto] epoch 2/5  sigreg=0.1320  proto=0.7652  min_dist=2.29  mean_dist=4.60
+  [sigreg+proto] epoch 3/5  sigreg=0.1290  proto=0.5617  min_dist=2.54  mean_dist=5.08
+  [sigreg+proto] epoch 4/5  sigreg=0.1255  proto=0.4506  min_dist=2.74  mean_dist=5.50
+  [sigreg+proto] epoch 5/5  sigreg=0.1240  proto=0.4023  min_dist=2.96  mean_dist=5.89
+  round 1: pool=2311 purity=0.026 k-hat=4 anchors=4  margin=0.6943  mean-anchor=0.7622  deer=0.762
+    conf-mask(>0.5): kept 1997/4056 pooled, kept-purity=0.077
+  [sigreg+proto] epoch 1/5  sigreg=0.1272  proto=0.5619  min_dist=2.18  mean_dist=6.13
+  [sigreg+proto] epoch 2/5  sigreg=0.1264  proto=0.4828  min_dist=2.61  mean_dist=6.61
+  [sigreg+proto] epoch 3/5  sigreg=0.1297  proto=0.4747  min_dist=2.97  mean_dist=7.04
+  [sigreg+proto] epoch 4/5  sigreg=0.1308  proto=0.4653  min_dist=3.30  mean_dist=7.44
+  [sigreg+proto] epoch 5/5  sigreg=0.1325  proto=0.4593  min_dist=3.61  mean_dist=7.81
+  round 2: pool=2429 purity=0.074 k-hat=4 anchors=8  margin=0.7708  mean-anchor=0.8381  deer=0.838
+  [supcon+hybrid] per-event post f=0.1: power=0.161
+  [supcon+hybrid] sparker (post)
+    post-spk f=0.1: power=1.000 [0.964,1.000] (50/50)
+  [supcon+hybrid] maha (post)
+    post-maha f=0.1: power=1.000 [0.964,1.000] (50/50)
+  [supcon+hybrid] mmd (post)
+    post-mmd f=0.1: power=1.000 [0.964,1.000] (50/50)
+    conf-mask(>0.5): kept 749/2351 pooled, kept-purity=0.069
+  [sigreg+proto] epoch 1/5  sigreg=0.1598  proto=0.7233  min_dist=2.36  mean_dist=6.44
+  [sigreg+proto] epoch 2/5  sigreg=0.1329  proto=0.4117  min_dist=2.85  mean_dist=6.95
+  [sigreg+proto] epoch 3/5  sigreg=0.1295  proto=0.3492  min_dist=3.27  mean_dist=7.43
+  [sigreg+proto] epoch 4/5  sigreg=0.1279  proto=0.3192  min_dist=3.67  mean_dist=7.89
+  [sigreg+proto] epoch 5/5  sigreg=0.1268  proto=0.3212  min_dist=4.04  mean_dist=8.32
+  round 1: pool=2351 purity=0.043 k-hat=4 anchors=4  margin=0.7048  mean-anchor=0.7433  deer=0.743
+    conf-mask(>0.5): kept 2373/4519 pooled, kept-purity=0.217
+  [sigreg+proto] epoch 1/5  sigreg=0.1320  proto=0.5441  min_dist=3.93  mean_dist=8.17
+  [sigreg+proto] epoch 2/5  sigreg=0.1313  proto=0.4947  min_dist=4.39  mean_dist=8.64
+  [sigreg+proto] epoch 3/5  sigreg=0.1339  proto=0.5099  min_dist=4.78  mean_dist=9.09
+  [sigreg+proto] epoch 4/5  sigreg=0.1400  proto=0.5654  min_dist=5.14  mean_dist=9.50
+  [sigreg+proto] epoch 5/5  sigreg=0.1407  proto=0.5606  min_dist=5.48  mean_dist=9.89
+  round 2: pool=2732 purity=0.176 k-hat=4 anchors=8  margin=0.8682  mean-anchor=0.9291  deer=0.929
+  [ss[lam5]+hybrid] per-event post f=0.1: power=0.424
+  [ss[lam5]+hybrid] sparker (post)
+    post-spk f=0.1: power=1.000 [0.964,1.000] (50/50)
+  [ss[lam5]+hybrid] maha (post)
+    post-maha f=0.1: power=1.000 [0.964,1.000] (50/50)
+  [ss[lam5]+hybrid] mmd (post)
+    post-mmd f=0.1: power=1.000 [0.964,1.000] (50/50)
+
+===== POST [confmask+anneal], f=0.1 (5000 injected) =====
+    conf-mask(>0.5): kept 892/2311 pooled, kept-purity=0.037
+  [sigreg+proto] epoch 1/5  sigreg=0.2044  proto=1.3840  min_dist=1.88  mean_dist=4.07  disc_sigma=1.00
+  [sigreg+proto] epoch 2/5  sigreg=0.1349  proto=0.7415  min_dist=2.29  mean_dist=4.60  disc_sigma=0.82
+  [sigreg+proto] epoch 3/5  sigreg=0.1353  proto=0.5519  min_dist=2.54  mean_dist=5.07  disc_sigma=0.65
+  [sigreg+proto] epoch 4/5  sigreg=0.1395  proto=0.4981  min_dist=2.74  mean_dist=5.50  disc_sigma=0.47
+  [sigreg+proto] epoch 5/5  sigreg=0.1554  proto=0.5270  min_dist=2.96  mean_dist=5.89  disc_sigma=0.30
+  round 1: pool=2311 purity=0.026 k-hat=4 anchors=4  margin=0.7244  mean-anchor=0.7706  deer=0.771
+    conf-mask(>0.5): kept 2285/4372 pooled, kept-purity=0.044
+  [sigreg+proto] epoch 1/5  sigreg=0.1366  proto=0.6792  min_dist=2.80  mean_dist=6.32  disc_sigma=1.00
+  [sigreg+proto] epoch 2/5  sigreg=0.1326  proto=0.5370  min_dist=3.16  mean_dist=6.81  disc_sigma=0.82
+  [sigreg+proto] epoch 3/5  sigreg=0.1414  proto=0.5635  min_dist=3.49  mean_dist=7.25  disc_sigma=0.65
+  [sigreg+proto] epoch 4/5  sigreg=0.1598  proto=0.6451  min_dist=3.81  mean_dist=7.66  disc_sigma=0.47
+  [sigreg+proto] epoch 5/5  sigreg=0.2158  proto=0.9063  min_dist=4.09  mean_dist=8.01  disc_sigma=0.30
+  round 2: pool=2392 purity=0.059 k-hat=4 anchors=8  margin=0.6934  mean-anchor=0.8154  deer=0.815
+  [supcon+hybrid] per-event post f=0.1: power=0.058
+  [supcon+hybrid] sparker (post)
+    post-spk f=0.1: power=1.000 [0.964,1.000] (50/50)
+  [supcon+hybrid] maha (post)
+    post-maha f=0.1: power=0.920 [0.862,0.958] (46/50)
+  [supcon+hybrid] mmd (post)
+    post-mmd f=0.1: power=1.000 [0.964,1.000] (50/50)
+    conf-mask(>0.5): kept 749/2351 pooled, kept-purity=0.069
+  [sigreg+proto] epoch 1/5  sigreg=0.1601  proto=0.7238  min_dist=2.36  mean_dist=6.44  disc_sigma=1.00
+  [sigreg+proto] epoch 2/5  sigreg=0.1352  proto=0.4105  min_dist=2.85  mean_dist=6.95  disc_sigma=0.82
+  [sigreg+proto] epoch 3/5  sigreg=0.1364  proto=0.3710  min_dist=3.26  mean_dist=7.43  disc_sigma=0.65
+  [sigreg+proto] epoch 4/5  sigreg=0.1456  proto=0.3762  min_dist=3.66  mean_dist=7.88  disc_sigma=0.47
+  [sigreg+proto] epoch 5/5  sigreg=0.1650  proto=0.4516  min_dist=4.01  mean_dist=8.29  disc_sigma=0.30
+  round 1: pool=2351 purity=0.043 k-hat=4 anchors=4  margin=0.6819  mean-anchor=0.6813  deer=0.681
+    conf-mask(>0.5): kept 2492/4799 pooled, kept-purity=0.233
+  [sigreg+proto] epoch 1/5  sigreg=0.1459  proto=0.6460  min_dist=2.97  mean_dist=8.31  disc_sigma=1.00
+  [sigreg+proto] epoch 2/5  sigreg=0.1417  proto=0.5561  min_dist=3.46  mean_dist=8.78  disc_sigma=0.82
+  [sigreg+proto] epoch 3/5  sigreg=0.1556  proto=0.5882  min_dist=3.88  mean_dist=9.20  disc_sigma=0.65
+  [sigreg+proto] epoch 4/5  sigreg=0.1864  proto=0.7671  min_dist=4.25  mean_dist=9.59  disc_sigma=0.47
+  [sigreg+proto] epoch 5/5  sigreg=0.2665  proto=1.0614  min_dist=4.55  mean_dist=9.90  disc_sigma=0.30
+  round 2: pool=2786 purity=0.192 k-hat=4 anchors=8  margin=0.8791  mean-anchor=0.8916  deer=0.892
+  [ss[lam5]+hybrid] per-event post f=0.1: power=0.486
+  [ss[lam5]+hybrid] sparker (post)
+    post-spk f=0.1: power=1.000 [0.964,1.000] (50/50)
+  [ss[lam5]+hybrid] maha (post)
+    post-maha f=0.1: power=0.140 [0.090,0.207] (7/50)
+  [ss[lam5]+hybrid] mmd (post)
+    post-mmd f=0.1: power=1.000 [0.964,1.000] (50/50)
+
+===== EXP35 PEREVENT POST POWER (alpha=0.05) =====
+  arm                          variant    0.001    0.003     0.01     0.02     0.03      0.1
+  supcon+hybrid        baseline(34f/g)    0.018    0.024    0.019    0.023    0.035    0.126
+  supcon+hybrid               confmask    0.022    0.019    0.043    0.034    0.013    0.161
+  supcon+hybrid        confmask+anneal    0.009    0.055    0.051    0.016    0.077    0.058
+  ss[lam5]+hybrid      baseline(34f/g)    0.064    0.080    0.144    0.071    0.173    0.243
+  ss[lam5]+hybrid             confmask    0.055    0.069    0.034    0.201    0.210    0.424
+  ss[lam5]+hybrid      confmask+anneal    0.049    0.140    0.118    0.226    0.224    0.486
+saved /home/pharris/sigreg/SuperSig/plots/exp35_perevent_power_cifar10.png
+
+===== EXP35 SPARKER POST POWER (alpha=0.05) =====
+  arm                          variant    0.001    0.003     0.01     0.02     0.03      0.1
+  supcon+hybrid        baseline(34f/g)    0.000    0.060    0.080    0.040    0.540    1.000
+  supcon+hybrid               confmask    0.100    0.020    0.060    0.360    0.920    1.000
+  supcon+hybrid        confmask+anneal    0.040    0.060    0.040    0.400    0.500    1.000
+  ss[lam5]+hybrid      baseline(34f/g)    0.040    0.020    0.100    0.440    0.800    1.000
+  ss[lam5]+hybrid             confmask    0.060    0.060    0.040    0.500    0.860    1.000
+  ss[lam5]+hybrid      confmask+anneal    0.080    0.120    0.020    0.240    0.820    1.000
+saved /home/pharris/sigreg/SuperSig/plots/exp35_sparker_power_cifar10.png
+
+===== EXP35 MAHA POST POWER (alpha=0.05) =====
+  arm                          variant    0.001    0.003     0.01     0.02     0.03      0.1
+  supcon+hybrid        baseline(34f/g)    0.100    0.100    0.200    0.140    0.300    0.960
+  supcon+hybrid               confmask    0.160    0.120    0.060    0.220    0.440    1.000
+  supcon+hybrid        confmask+anneal    0.080    0.200    0.160    0.440    0.300    0.920
+  ss[lam5]+hybrid      baseline(34f/g)    0.080    0.200    0.200    0.540    0.540    1.000
+  ss[lam5]+hybrid             confmask    0.100    0.120    0.160    0.340    0.600    1.000
+  ss[lam5]+hybrid      confmask+anneal    0.120    0.100    0.120    0.240    0.180    0.140
+saved /home/pharris/sigreg/SuperSig/plots/exp35_maha_power_cifar10.png
+
+===== EXP35 MMD POST POWER (alpha=0.05) =====
+  arm                          variant    0.001    0.003     0.01     0.02     0.03      0.1
+  supcon+hybrid        baseline(34f/g)    0.040    0.140    0.180    0.260    0.780    1.000
+  supcon+hybrid               confmask    0.020    0.120    0.120    0.180    0.820    1.000
+  supcon+hybrid        confmask+anneal    0.100    0.060    0.040    0.160    0.340    1.000
+  ss[lam5]+hybrid      baseline(34f/g)    0.040    0.040    0.120    0.260    0.560    1.000
+  ss[lam5]+hybrid             confmask    0.040    0.060    0.120    0.120    0.800    1.000
+  ss[lam5]+hybrid      confmask+anneal    0.040    0.160    0.160    0.440    0.880    1.000
+saved /home/pharris/sigreg/SuperSig/plots/exp35_mmd_power_cifar10.png
+saved /home/pharris/sigreg/SuperSig/logs/exp35/power_data_confmask_cifar10.npz
