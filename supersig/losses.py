@@ -44,14 +44,21 @@ def sigreg_loss(z, n_slices=64):
     return ((proj_sorted - q) ** 2).mean()
 
 
-def classwise_sigreg_loss(z, y, means, n_slices=64):
-    """SIGReg applied independently to each supervised category in the batch."""
+def classwise_sigreg_loss(z, y, means, n_slices=64, class_sigma=None):
+    """SIGReg applied independently to each supervised category in the batch.
+
+    class_sigma: optional per-class target std (len = means rows).  Residuals
+    are divided by sigma_c, so class c is pulled toward N(mean_c, sigma_c^2 I)
+    -- the asymmetric variance-annealing hook of exp 35 (JEPAMatch-inspired).
+    """
     losses = []
     for c in torch.unique(y):
         mask = y == c
         if mask.sum() < MIN_PER_CLASS:
             continue
         zc = z[mask] - means[c]
+        if class_sigma is not None:
+            zc = zc / class_sigma[c]
         losses.append(sigreg_loss(zc, n_slices=n_slices))
     if not losses:
         return z.new_zeros(())

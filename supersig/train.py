@@ -127,7 +127,8 @@ def train_supcon(backbone, loader, epochs, temp=0.1, lr=1e-3):
 def train_sigreg_hybrid(backbone, loader, epochs, means, mode="repulse",
                         disc="supcon", alpha=1.0, temp=0.1, lr=1e-3, margin=3.0,
                         rep_weight=REP_WEIGHT, sigreg_weight=1.0, n_slices=64,
-                        rep_exempt_from=None):
+                        rep_exempt_from=None, disc_sigma_end=None,
+                        disc_sigma_from=None):
     """
     Classwise SIGReg + mean-geometry regularizer + a discriminative term.
 
@@ -139,6 +140,11 @@ def train_sigreg_hybrid(backbone, loader, epochs, means, mode="repulse",
     disc="hinge"  : purely geometric, CE-free: relu(margin - ||z - mean_wrong||)^2
                     keeps every sample at least `margin` sigma from wrong means.
     Mean-geometry `mode` follows train_sigreg_classwise (means always learnable).
+
+    disc_sigma_end + disc_sigma_from (exp 35): asymmetric variance annealing.
+    Classes >= disc_sigma_from (the discovered anchors) get their SIGReg
+    target std annealed linearly 1.0 -> disc_sigma_end over the epochs, while
+    all other classes stay at sigma=1 (calibration preserved).
     """
     means.requires_grad_(True)
     params = list(backbone.parameters()) + [means]
@@ -149,12 +155,19 @@ def train_sigreg_hybrid(backbone, loader, epochs, means, mode="repulse",
     opt = torch.optim.Adam(params, lr=lr)
     backbone.train()
     for ep in range(epochs):
+        class_sigma = None
+        if disc_sigma_end is not None and disc_sigma_from is not None:
+            frac = ep / max(1, epochs - 1)
+            sig_t = 1.0 + frac * (disc_sigma_end - 1.0)
+            class_sigma = torch.ones(means.size(0), device=DEVICE)
+            class_sigma[disc_sigma_from:] = sig_t
         reg_run, disc_run, n = 0.0, 0.0, 0
         for x, y in loader:
             x, y = x.to(DEVICE), y.to(DEVICE)
             opt.zero_grad()
             z = backbone(x)
-            reg = classwise_sigreg_loss(z, y, means, n_slices=n_slices)
+            reg = classwise_sigreg_loss(z, y, means, n_slices=n_slices,
+                                        class_sigma=class_sigma)
             if mode == "learnmeans":
                 aux = BETA_SEP * separation_loss(means)
             elif mode == "repulse":
@@ -178,8 +191,11 @@ def train_sigreg_hybrid(backbone, loader, epochs, means, mode="repulse",
             disc_run += d.item() * x.size(0)
             n += x.size(0)
         dmin, dmean = mean_geometry(means.detach())
+        sig_tag = (f"  disc_sigma={class_sigma[-1]:.2f}"
+                   if class_sigma is not None else "")
         print(f"  [sigreg+{disc}] epoch {ep+1}/{epochs}  sigreg={reg_run/n:.4f}  "
-              f"{disc}={disc_run/n:.4f}  min_dist={dmin:.2f}  mean_dist={dmean:.2f}")
+              f"{disc}={disc_run/n:.4f}  min_dist={dmin:.2f}  mean_dist={dmean:.2f}"
+              + sig_tag)
 
 
 def train_sigreg_residual_ssl(backbone, two_view_labeled_loader, epochs, means,

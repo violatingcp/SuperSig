@@ -116,11 +116,20 @@ def fill_means(centroids, seen, cfg):
 def run_concat_discovery(sup, trunk, means_sup, ssl_cents, *, base, dim,
                          train_eval_loader, test_loader, seen, holdouts, cfg,
                          rounds=2, ft_epochs=5, tau_quantile=0.95, names=None,
-                         seed=0):
+                         seed=0, conf_thresh=None, disc_sigma_end=None):
     """
     Discovery in the concatenated [sup ; ssl] space (exp-25 recipe): pool ->
     BIC k-means in concat -> pseudo-label -> fine-tune the SUP branch only ->
     refresh discovered ssl halves.  Returns history like run_discovery.
+
+    Exp-35 (JEPAMatch-inspired) options, both defaulting to off:
+      conf_thresh    : keep a pooled event for fine-tuning/centroid refresh
+                       only if the proto-posterior probability of its assigned
+                       discovered anchor (softmax over ALL anchors of
+                       -||z-a||^2/2 in the concat space) exceeds this value.
+      disc_sigma_end : anneal the SIGReg target std of the DISCOVERED classes
+                       1.0 -> this value across each fine-tune (seen classes
+                       stay at sigma=1).
     """
     n_classes = cfg["n_classes"]
     ssl_tr, tr_lab = collect_embeddings(trunk, train_eval_loader)
@@ -155,9 +164,25 @@ def run_concat_discovery(sup, trunk, means_sup, ssl_cents, *, base, dim,
         p_lab = n_classes + torch.cdist(
             Zcat[torch.as_tensor(pooled, device=DEVICE)],
             disc_anchors).argmin(1).cpu().numpy()
+        keep_idx, keep_lab = p_idx, p_lab
+        if conf_thresh is not None and len(p_idx):
+            seen_anchors = torch.cat([cur_means[seen], ssl_cents], dim=1)
+            all_anc = torch.cat([seen_anchors, disc_anchors])
+            logits = -0.5 * torch.cdist(
+                Zcat[torch.as_tensor(pooled, device=DEVICE)], all_anc).pow(2)
+            conf = torch.softmax(logits, dim=1)
+            assigned = seen_anchors.size(0) + torch.as_tensor(
+                p_lab - n_classes, device=DEVICE)
+            ca = conf[torch.arange(len(p_lab), device=DEVICE), assigned]
+            keep = (ca >= conf_thresh).cpu().numpy()
+            kept_pur = (float((~is_seen_lab[p_idx[keep]]).mean())
+                        if keep.any() else float("nan"))
+            print(f"    conf-mask(>{conf_thresh}): kept {int(keep.sum())}"
+                  f"/{len(p_lab)} pooled, kept-purity={kept_pur:.3f}")
+            keep_idx, keep_lab = p_idx[keep], p_lab[keep]
         lab_idx = np.where(is_seen_lab)[0]
-        ft_idx = np.concatenate([lab_idx, p_idx])
-        ft_lab = np.concatenate([tr_lab[lab_idx], p_lab])
+        ft_idx = np.concatenate([lab_idx, keep_idx])
+        ft_lab = np.concatenate([tr_lab[lab_idx], keep_lab])
         n_pb = len(seen) + disc_ssl.size(0) if n_classes <= 10 else 25
         sampler = BalancedBatchSampler(list(ft_lab), n_classes=n_pb,
                                        n_per_class=24)
@@ -168,13 +193,16 @@ def run_concat_discovery(sup, trunk, means_sup, ssl_cents, *, base, dim,
                             rep_weight=cfg["rep_weight"],
                             sigreg_weight=cfg["sigreg_weight"],
                             n_slices=cfg["n_slices"],
-                            rep_exempt_from=n_classes)
+                            rep_exempt_from=n_classes,
+                            disc_sigma_end=disc_sigma_end,
+                            disc_sigma_from=(n_classes if disc_sigma_end
+                                             else None))
         cur_means = cur_means.detach()
         sup_tr, _ = collect_embeddings(sup, train_eval_loader)
         Zcat = torch.cat([torch.as_tensor(sup_tr, device=DEVICE), Zssl_tr], 1)
         for j in range(disc_ssl.size(0)):
             m = np.zeros(len(tr_lab), dtype=bool)
-            m[p_idx[p_lab == n_classes + j]] = True
+            m[keep_idx[keep_lab == n_classes + j]] = True
             if m.any():
                 disc_ssl[j] = Zssl_tr[torch.as_tensor(m, device=DEVICE)].mean(0)
 
