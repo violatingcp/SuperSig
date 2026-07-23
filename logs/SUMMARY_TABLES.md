@@ -51,7 +51,8 @@ the settled classic recipe on every metric.
 | cls->resfeat          | 0.8745 | 0.5490 | 0.5753 | 0.5599 | 0.50/0.44       | 0.00/0.12       | 0.52/0.74       |
 | sup->res (exp33)      | 0.8361 | 0.5236 | 0.5201 | 0.3915 | 0.08/0.08       | 0.00/0.14       | 0.14/0.22       |
 | feat->rescls          | 0.8196 | 0.3703 | 0.3186 | 0.2465 | 0.00/0.06       | 0.00/0.00       | 0.32/0.72       |
-| sup->res-hybrid (36)  | (running) | -- | --     | --     | --              | --              | --              |
+| sup->res (36 rebuild) | 0.8409 | 0.5264 | 0.5100 | 0.3781 | 0.16/0.08 m0.16 | 0.04/0.06 m0.02 | 0.48/0.34 m0.52 |
+| sup->res-hybrid (36)  | 0.8383 | 0.5217 | 0.5385 | 0.3500 | 0.12/0.14 m0.18 | 0.08/0.06 m0.02 | 0.44/0.60 m0.24 |
 
 *exp33 supcon+simclr row's powers from the exp33 npz.
 50+50 (100-D total, exp34j) probe: supcon+simclr 0.9547, supcon+hybrid
@@ -69,7 +70,9 @@ ss[lam5]+hybrid (SparKer 0.52, MMD 0.86); pre-detection cls->resfeat
   supervised SIGReg + residual + parametric stats; crowded many-class
   (C100) -> contrastive + SIGReg calibration + kernel stats.
 - Hybrid (NT-Xent + SIGReg) beats either ingredient alone: as feature half
-  on C100 (probe), as residual objective on C10 (everything).
+  on C100 (probe), as residual objective on C10 (everything).  The hybrid
+  residual does NOT transfer to C100 (0.838 vs 0.841, tie; exp 36 c100) --
+  its C10 dominance is a separable-data effect.
 - Conf-masked discovery (JEPAMatch M_i): free win above the pool-purity
   floor, mainly through Mahalanobis; useless below it. Asymmetric variance
   annealing: high-variance, off by default.
