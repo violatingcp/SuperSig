@@ -45,13 +45,14 @@ exp31 = importlib.import_module("31_sparker_power")
 exp32 = importlib.import_module("32_maha_mmd_power")
 
 STATS = ["perevent", "sparker", "maha", "mmd"]
-REF_NPZ = os.path.join(os.path.dirname(os.path.dirname(
-    os.path.abspath(__file__))), "logs", "exp33",
-    "power_data_cifar10_16p16_k1.npz")
+LOG33 = os.path.join(os.path.dirname(os.path.dirname(
+    os.path.abspath(__file__))), "logs", "exp33")
 
 
 def main():
     ap = argparse.ArgumentParser()
+    ap.add_argument("--dataset", choices=["cifar10", "cifar100"],
+                    default="cifar10")
     ap.add_argument("--holdout", type=int, default=4)
     ap.add_argument("--rounds", type=int, default=2)
     ap.add_argument("--quick", action="store_true")
@@ -59,12 +60,15 @@ def main():
     ap.add_argument("--dim-half", type=int, default=16)
     ap.add_argument("--res-lam", type=float, default=5.0)
     ap.add_argument("--alpha", type=float, default=0.05)
-    ap.add_argument("--fractions", default="0.001,0.003,0.01,0.02,0.03,0.1")
+    ap.add_argument("--fractions", default=None)
     ap.add_argument("--n-d", type=int, default=5000)
     ap.add_argument("--kernels", type=int, default=16)
     ap.add_argument("--steps", type=int, default=300)
     args = ap.parse_args()
-    ds = "cifar10"
+    ds = args.dataset
+    if args.fractions is None:
+        args.fractions = ("0.001,0.003,0.01,0.02,0.03,0.1" if ds == "cifar10"
+                          else "0.001,0.003,0.01,0.02,0.05")
     cfgH = recipe(ds, emb_dim=args.dim_half)
     n_cls = cfgH["n_classes"]
     holdouts = {args.holdout}
@@ -77,7 +81,8 @@ def main():
     n_null_post = 20 if args.quick else 100
     n_sig_toys = 10 if args.quick else 50
     sparker_kw = dict(M=args.kernels, steps=args.steps)   # annealed widths
-    names = exp29.CIFAR_NAMES
+    names = (exp29.CIFAR_NAMES if ds == "cifar10"
+             else [str(c) for c in range(n_cls)])
     print(f"exp36 [{ds}] sup->res with hybrid residual, "
           f"holdout={sorted(holdouts)}, res_lam={args.res_lam}")
 
@@ -264,7 +269,8 @@ def main():
             post_power["mmd"][name].append(p[0])
 
     # ----- report -----------------------------------------------------------
-    ref = np.load(REF_NPZ, allow_pickle=True) if os.path.exists(REF_NPZ) \
+    ref_npz = os.path.join(LOG33, f"power_data_{ds}_16p16_k1.npz")
+    ref = np.load(ref_npz, allow_pickle=True) if os.path.exists(ref_npz) \
         else None
     npz = {"fractions": np.array(fractions)}
     for name in arm_names:
@@ -300,19 +306,20 @@ def main():
         plt.axhline(0.05, color="gray", lw=1, ls=":")
         plt.xlabel("injected anomaly fraction")
         plt.ylabel("power at alpha=0.05")
-        plt.title(f"exp36 [cifar10] sup->res residual objectives: {stat}")
+        plt.title(f"exp36 [{ds}] sup->res residual objectives: {stat}")
         plt.grid(alpha=0.25, which="both")
         plt.legend(loc="upper left", fontsize=8)
         plt.tight_layout()
-        out = plot_path(f"exp36_{stat}_power_cifar10.png")
+        out = plot_path(f"exp36_{stat}_power_{ds}.png")
         plt.savefig(out, dpi=150)
         plt.close()
         print("saved", out)
     outdir = os.path.join(os.path.dirname(os.path.dirname(
         os.path.abspath(__file__))), "logs", "exp36")
     os.makedirs(outdir, exist_ok=True)
-    np.savez(os.path.join(outdir, "power_data_supres_hybrid.npz"), **npz)
-    print(f"saved {outdir}/power_data_supres_hybrid.npz")
+    np.savez(os.path.join(outdir, f"power_data_supres_hybrid_{ds}.npz"),
+             **npz)
+    print(f"saved {outdir}/power_data_supres_hybrid_{ds}.npz")
 
 
 if __name__ == "__main__":
