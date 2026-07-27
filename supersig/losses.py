@@ -316,3 +316,132 @@ def supcon_loss(feats, labels, temp=0.1):
     pos_count = pos.sum(dim=1).clamp(min=1)
     mean_log_prob_pos = (pos * log_prob).sum(dim=1) / pos_count
     return -mean_log_prob_pos.mean()
+
+
+# --------------------------------------------------------------------------- #
+# Configurable hybrid contrastive loss (the exp-34e "one class" of the note)   #
+# --------------------------------------------------------------------------- #
+def _critic_matrix(z, kind, tau):
+    """Pairwise critic g_ij on the (2N x D) batch of RAW embeddings.
+
+    cosine   : <z_i/|z_i|, z_j/|z_j|> / tau         (unit sphere, scale-free)
+    bilinear : <z_i, z_j> / tau                     (raw Euclidean inner product)
+    distance : (-1/2 |z_i - z_j|^2) / tau           (raw squared distance)
+
+    The `bilinear` and `distance` critics live in the SAME raw space that SIGReg
+    regularises, so the interaction and marginal terms share one geometry; the
+    `cosine` critic reproduces the sphere geometry of NT-Xent / SupCon.
+    """
+    if kind == "cosine":
+        zc = F.normalize(z, dim=1)
+        return (zc @ zc.t()) / tau
+    if kind == "bilinear":
+        return (z @ z.t()) / tau
+    if kind == "distance":
+        return (-0.5 * torch.cdist(z, z).pow(2)) / tau
+    raise ValueError(f"unknown critic {kind!r}")
+
+
+def _softmax_interaction(g, pos, self_mask):
+    """Self-normalised (NT-Xent / SupCon) estimator of PMI from a critic matrix."""
+    g = g - g.max(dim=1, keepdim=True).values.detach()
+    exp_g = torch.exp(g).masked_fill(self_mask, 0.0)
+    log_prob = g - torch.log(exp_g.sum(dim=1, keepdim=True) + 1e-12)
+    pos_count = pos.sum(dim=1).clamp(min=1)
+    return -((pos * log_prob).sum(dim=1) / pos_count).mean()
+
+
+def _nplm_interaction(g, pos, self_mask, clamp=30.0):
+    """Un-normalised maximum-likelihood (NPLM) estimator of PMI.
+
+    L = E_ref[e^g - 1] - E_pos[g], with the reference = independent (cross-group)
+    pairs and the positives = same-group pairs.  Minimiser g* = log p(x,x')/p(x)p(x')
+    with E_ref[e^{g*}] = 1, so the ABSOLUTE (calibrated) log-ratio is recovered.
+
+    The reference explicitly EXCLUDES positives (and the diagonal): with supervised
+    positives those same-group pairs are not independent draws, so counting them
+    would bias E_ref[e^g] -- the NPLM analogue of SupCon's positive masking.
+
+    Stabilisation is by CLAMPING the exponent, not by subtracting a per-row max:
+    a subtracted constant does not cancel here (there is no enclosing log-ratio as
+    in softmax), so it would shift the recovered critic by that constant and break
+    the absolute calibration.  Clamping only affects pathologically large entries
+    and leaves g* unchanged in the normal range.
+    """
+    ref = (~pos) & (~self_mask)
+    exp_term = torch.exp(g.clamp(max=clamp)) - 1.0
+    ref_mean = exp_term[ref].mean() if ref.any() else g.new_zeros(())
+    pos_mean = g[pos].mean() if pos.any() else g.new_zeros(())
+    return ref_mean - pos_mean
+
+
+class HybridContrastiveLoss(nn.Module):
+    """One configurable contrastive loss spanning the design cube of the note.
+
+    L = L_interaction(critic g ; positives P) + lam * L_marginal(z)
+
+    Four orthogonal knobs (every existing exp-34 arm is a corner):
+      positives  : 'instance'   two augmented views of the same sample
+                   'supervised' same class label
+      critic     : 'cosine' | 'bilinear' | 'distance'   (see _critic_matrix)
+      estimator  : 'softmax' (NT-Xent / SupCon)  |  'nplm' (calibrated log-ratio)
+      marginal   : 'none' | 'sigreg'  |  'classwise_sigreg'
+
+    Recipes:
+      SimCLR              instance / cosine   / softmax / none
+      SupCon              supervised / cosine / softmax / none
+      exp-34e hybrid      instance / cosine   / softmax / sigreg
+      34g supcon+sigreg   supervised / cosine / softmax / sigreg
+      NPLM geometry       */ bilinear|distance/ nplm    / sigreg   (log-likelihood space)
+      class-wise NPLM     supervised / distance / nplm  / classwise_sigreg
+
+    forward(z, labels, means=None, class_sigma=None):
+      z       : (2N, D) RAW embeddings, the two views stacked as in train.py.
+      labels  : (2N,) positive-group ids -- instance ids for 'instance'
+                (e.g. cat([arange(N), arange(N)])), class labels for 'supervised'.
+                For 'classwise_sigreg' pass the CLASS labels here regardless.
+      means   : (C, D) class means, required for 'classwise_sigreg'.
+    """
+
+    def __init__(self, positives="instance", critic="bilinear",
+                 estimator="nplm", marginal="sigreg", tau=1.0, lam=1.0,
+                 n_slices=64):
+        super().__init__()
+        if positives not in ("instance", "supervised"):
+            raise ValueError(f"unknown positives {positives!r}")
+        if estimator not in ("softmax", "nplm"):
+            raise ValueError(f"unknown estimator {estimator!r}")
+        if marginal not in ("none", "sigreg", "classwise_sigreg"):
+            raise ValueError(f"unknown marginal {marginal!r}")
+        self.positives = positives
+        self.critic = critic
+        self.estimator = estimator
+        self.marginal = marginal
+        self.tau = tau
+        self.lam = lam
+        self.n_slices = n_slices
+
+    def interaction(self, z, labels):
+        n = z.size(0)
+        self_mask = torch.eye(n, dtype=torch.bool, device=z.device)
+        pos = (labels.unsqueeze(0) == labels.unsqueeze(1)) & ~self_mask
+        g = _critic_matrix(z, self.critic, self.tau)
+        if self.estimator == "softmax":
+            return _softmax_interaction(g, pos, self_mask)
+        return _nplm_interaction(g, pos, self_mask)
+
+    def marginal_term(self, z, labels, means, class_sigma):
+        if self.marginal == "none":
+            return z.new_zeros(())
+        if self.marginal == "sigreg":
+            return sigreg_loss(z, n_slices=self.n_slices)
+        if means is None:
+            raise ValueError("classwise_sigreg requires `means`")
+        return classwise_sigreg_loss(z, labels, means, n_slices=self.n_slices,
+                                     class_sigma=class_sigma)
+
+    def forward(self, z, labels, means=None, class_sigma=None):
+        inter = self.interaction(z, labels)
+        marg = self.marginal_term(z, labels, means, class_sigma)
+        total = inter + self.lam * marg
+        return total, {"interaction": inter.detach(), "marginal": marg.detach()}
