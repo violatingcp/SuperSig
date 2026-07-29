@@ -1,0 +1,136 @@
+device=cuda  backbone=ResNet-18 from scratch @224  corpus=DTD train+val unlabeled (300 ssl epochs)
+
+----- sigreg: SIGReg-SSL (VISReg family) -----
+  [sigreg] epoch 1/300  main=0.1628  sigreg=0.4186
+  [sigreg] epoch 10/300  main=0.1235  sigreg=0.1980
+  [sigreg] epoch 20/300  main=0.1206  sigreg=0.1694
+  [sigreg] epoch 30/300  main=0.1108  sigreg=0.1518
+  [sigreg] epoch 40/300  main=0.0997  sigreg=0.1246
+  [sigreg] epoch 50/300  main=0.0933  sigreg=0.1189
+  [sigreg] epoch 60/300  main=0.0927  sigreg=0.1090
+  [sigreg] epoch 70/300  main=0.0887  sigreg=0.1047
+  [sigreg] epoch 80/300  main=0.0881  sigreg=0.0991
+  [sigreg] epoch 90/300  main=0.0847  sigreg=0.0966
+  [sigreg] epoch 100/300  main=0.0822  sigreg=0.0950
+  [sigreg] epoch 110/300  main=0.0784  sigreg=0.0865
+  [sigreg] epoch 120/300  main=0.0764  sigreg=0.0842
+  [sigreg] epoch 130/300  main=0.0779  sigreg=0.0803
+  [sigreg] epoch 140/300  main=0.0766  sigreg=0.0755
+  [sigreg] epoch 150/300  main=0.0722  sigreg=0.0769
+  [sigreg] epoch 160/300  main=0.0669  sigreg=0.0694
+  [sigreg] epoch 170/300  main=0.0704  sigreg=0.0714
+  [sigreg] epoch 180/300  main=0.0654  sigreg=0.0691
+  [sigreg] epoch 190/300  main=0.0620  sigreg=0.0614
+  [sigreg] epoch 200/300  main=0.0621  sigreg=0.0660
+  [sigreg] epoch 210/300  main=0.0594  sigreg=0.0635
+  [sigreg] epoch 220/300  main=0.0583  sigreg=0.0618
+  [sigreg] epoch 230/300  main=0.0581  sigreg=0.0584
+  [sigreg] epoch 240/300  main=0.0574  sigreg=0.0617
+  [sigreg] epoch 250/300  main=0.0533  sigreg=0.0602
+  [sigreg] epoch 260/300  main=0.0552  sigreg=0.0594
+  [sigreg] epoch 270/300  main=0.0527  sigreg=0.0580
+  [sigreg] epoch 280/300  main=0.0545  sigreg=0.0600
+  [sigreg] epoch 290/300  main=0.0525  sigreg=0.0593
+  [sigreg] epoch 300/300  main=0.0517  sigreg=0.0575
+  sigreg probe TEST=0.4271
+
+----- simclr: SimCLR (contrastive baseline) -----
+  [simclr] epoch 1/300  main=5.6240  sigreg=0.0000
+  [simclr] epoch 10/300  main=4.9194  sigreg=0.0000
+  [simclr] epoch 20/300  main=4.7799  sigreg=0.0000
+  [simclr] epoch 30/300  main=4.6822  sigreg=0.0000
+  [simclr] epoch 40/300  main=4.6325  sigreg=0.0000
+  [simclr] epoch 50/300  main=4.6054  sigreg=0.0000
+  [simclr] epoch 60/300  main=4.5827  sigreg=0.0000
+  [simclr] epoch 70/300  main=4.5612  sigreg=0.0000
+  [simclr] epoch 80/300  main=4.5454  sigreg=0.0000
+  [simclr] epoch 90/300  main=4.5308  sigreg=0.0000
+  [simclr] epoch 100/300  main=4.5150  sigreg=0.0000
+  [simclr] epoch 110/300  main=4.5112  sigreg=0.0000
+  [simclr] epoch 120/300  main=4.4999  sigreg=0.0000
+  [simclr] epoch 130/300  main=4.4910  sigreg=0.0000
+  [simclr] epoch 140/300  main=4.4766  sigreg=0.0000
+  [simclr] epoch 150/300  main=4.4756  sigreg=0.0000
+  [simclr] epoch 160/300  main=4.4628  sigreg=0.0000
+  [simclr] epoch 170/300  main=4.4555  sigreg=0.0000
+  [simclr] epoch 180/300  main=4.4429  sigreg=0.0000
+  [simclr] epoch 190/300  main=4.4399  sigreg=0.0000
+  [simclr] epoch 200/300  main=4.4363  sigreg=0.0000
+  [simclr] epoch 210/300  main=4.4284  sigreg=0.0000
+  [simclr] epoch 220/300  main=4.4230  sigreg=0.0000
+  [simclr] epoch 230/300  main=4.4153  sigreg=0.0000
+  [simclr] epoch 240/300  main=4.4157  sigreg=0.0000
+  [simclr] epoch 250/300  main=4.4075  sigreg=0.0000
+  [simclr] epoch 260/300  main=4.4096  sigreg=0.0000
+  [simclr] epoch 270/300  main=4.4082  sigreg=0.0000
+  [simclr] epoch 280/300  main=4.4020  sigreg=0.0000
+  [simclr] epoch 290/300  main=4.4039  sigreg=0.0000
+  [simclr] epoch 300/300  main=4.3992  sigreg=0.0000
+  simclr probe TEST=0.4606
+
+----- hybrid: SimCLR+SIGReg hybrid (lam=5) -----
+  [hybrid] epoch 1/300  main=5.6832  sigreg=0.3742
+  [hybrid] epoch 10/300  main=4.9662  sigreg=0.0701
+  [hybrid] epoch 20/300  main=4.8403  sigreg=0.0527
+  [hybrid] epoch 30/300  main=4.7517  sigreg=0.0431
+  [hybrid] epoch 40/300  main=4.7256  sigreg=0.0406
+  [hybrid] epoch 50/300  main=4.6738  sigreg=0.0353
+  [hybrid] epoch 60/300  main=4.6683  sigreg=0.0329
+  [hybrid] epoch 70/300  main=4.6513  sigreg=0.0327
+  [hybrid] epoch 80/300  main=4.6232  sigreg=0.0306
+  [hybrid] epoch 90/300  main=4.6156  sigreg=0.0300
+  [hybrid] epoch 100/300  main=4.5911  sigreg=0.0282
+  [hybrid] epoch 110/300  main=4.5878  sigreg=0.0271
+  [hybrid] epoch 120/300  main=4.5684  sigreg=0.0266
+  [hybrid] epoch 130/300  main=4.5594  sigreg=0.0240
+  [hybrid] epoch 140/300  main=4.5451  sigreg=0.0226
+  [hybrid] epoch 150/300  main=4.5391  sigreg=0.0234
+  [hybrid] epoch 160/300  main=4.5287  sigreg=0.0241
+  [hybrid] epoch 170/300  main=4.5187  sigreg=0.0216
+  [hybrid] epoch 180/300  main=4.5163  sigreg=0.0222
+  [hybrid] epoch 190/300  main=4.5151  sigreg=0.0214
+  [hybrid] epoch 200/300  main=4.4987  sigreg=0.0204
+  [hybrid] epoch 210/300  main=4.4960  sigreg=0.0212
+  [hybrid] epoch 220/300  main=4.4879  sigreg=0.0202
+  [hybrid] epoch 230/300  main=4.4838  sigreg=0.0209
+  [hybrid] epoch 240/300  main=4.4782  sigreg=0.0203
+  [hybrid] epoch 250/300  main=4.4722  sigreg=0.0189
+  [hybrid] epoch 260/300  main=4.4695  sigreg=0.0189
+  [hybrid] epoch 270/300  main=4.4681  sigreg=0.0191
+  [hybrid] epoch 280/300  main=4.4688  sigreg=0.0188
+  [hybrid] epoch 290/300  main=4.4663  sigreg=0.0194
+  [hybrid] epoch 300/300  main=4.4644  sigreg=0.0187
+  hybrid probe TEST=0.4074
+  concat probe TEST=0.4681
+
+----- supervised CE reference (from scratch) -----
+  [supervised] epoch 1/100  loss=3.9211  acc=0.0494
+  [supervised] epoch 10/100  loss=3.2074  acc=0.1629
+  [supervised] epoch 20/100  loss=2.5778  acc=0.2832
+  [supervised] epoch 30/100  loss=2.0147  acc=0.4219
+  [supervised] epoch 40/100  loss=1.6780  acc=0.4994
+  [supervised] epoch 50/100  loss=1.3766  acc=0.5898
+  [supervised] epoch 60/100  loss=1.0667  acc=0.6680
+  [supervised] epoch 70/100  loss=0.8067  acc=0.7589
+  [supervised] epoch 80/100  loss=0.6357  acc=0.8189
+  [supervised] epoch 90/100  loss=0.5274  acc=0.8574
+  [supervised] epoch 100/100  loss=0.5264  acc=0.8566
+  supervised probe TEST=0.5293
+
+===== DTD TOP-1: unsupervised from scratch on DTD (ResNet-18, no labels in the representation) =====
+  reference (ImageNet-pretrained / paper):
+    MoCoV3 ViT-B/16 (paper)                      73.7
+    DINO ViT-B/16 (paper)                        74.3
+    iBOT ViT-L/16 (paper)                        75.3
+    VISReg ViT-B/16 (paper)                      75.7
+    VISReg ViT-L/14 (paper)                      76.5
+    Linear probe, raw DINO (train+val) [37]      76.4
+  from scratch on DTD only:
+    SIGReg-SSL (VISReg family)                   42.7
+    SimCLR (contrastive baseline)                46.1
+    SimCLR+SIGReg hybrid (lam=5)                 40.7
+    Concat [simclr ; sigreg-ssl] (exp 22)        46.8
+    Supervised CE from scratch (ceiling)         52.9
+
+  saved /home/pharris/sigreg/SuperSig/plots/dtd_scratch_accuracy.png
+Done.
