@@ -1,0 +1,97 @@
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+device=cuda  bases=['dino', 'lejepa', 'visreg']  arms=['ce', 'ss', 'supcon']  emb_dim=100  ft_epochs=20  lr=1e-05/0.001
+
+################ base: DINO ViT-B/16 (FINE-TUNED) ################
+--- [dino] ce-ft ---
+  [ce-ft] epoch 1/20  main=3.9124  sigreg=0.0000
+  [ce-ft] epoch 5/20  main=1.5890  sigreg=0.0000
+  [ce-ft] epoch 10/20  main=1.0572  sigreg=0.0000
+  [ce-ft] epoch 15/20  main=0.8532  sigreg=0.0000
+  [ce-ft] epoch 20/20  main=0.7838  sigreg=0.0000
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+--- [dino] ss-ft ---
+  [ss-ft] epoch 1/20  main=1.5911  sigreg=0.2233
+  [ss-ft] epoch 5/20  main=1.2419  sigreg=0.1242
+  [ss-ft] epoch 10/20  main=1.1304  sigreg=0.1068
+  [ss-ft] epoch 15/20  main=1.0607  sigreg=0.0924
+  [ss-ft] epoch 20/20  main=1.0758  sigreg=0.0837
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+--- [dino] supcon-ft ---
+  [supcon-ft] epoch 1/20  main=1.3895  sigreg=0.0000
+  [supcon-ft] epoch 5/20  main=1.1638  sigreg=0.0000
+  [supcon-ft] epoch 10/20  main=1.0467  sigreg=0.0000
+  [supcon-ft] epoch 15/20  main=0.9862  sigreg=0.0000
+  [supcon-ft] epoch 20/20  main=0.9671  sigreg=0.0000
+  [dino] CE fine-tune (direct)            63.0
+  [dino] ce-ft trunk probe (768d)         65.5
+  [dino] ss[lam5]-ft (head probe)         43.3
+  [dino] ss-ft trunk probe (768d)         64.3
+  [dino] SupCon-ft (head probe)           50.2
+  [dino] supcon-ft trunk probe (768d)     64.3
+
+################ base: LeJEPA ViT-B/16 (community repro) (FINE-TUNED) ################
+--- [lejepa] ce-ft ---
+  [ce-ft] epoch 1/20  main=4.1743  sigreg=0.0000
+  [ce-ft] epoch 5/20  main=1.3158  sigreg=0.0000
+  [ce-ft] epoch 10/20  main=0.6627  sigreg=0.0000
+  [ce-ft] epoch 15/20  main=0.4675  sigreg=0.0000
+  [ce-ft] epoch 20/20  main=0.4357  sigreg=0.0000
+--- [lejepa] ss-ft ---
+  [ss-ft] epoch 1/20  main=1.9130  sigreg=0.2771
+  [ss-ft] epoch 5/20  main=1.2947  sigreg=0.1196
+  [ss-ft] epoch 10/20  main=1.0742  sigreg=0.1037
+  [ss-ft] epoch 15/20  main=0.9707  sigreg=0.0926
+  [ss-ft] epoch 20/20  main=0.9683  sigreg=0.0883
+--- [lejepa] supcon-ft ---
+  [supcon-ft] epoch 1/20  main=1.4886  sigreg=0.0000
+  [supcon-ft] epoch 5/20  main=1.0775  sigreg=0.0000
+  [supcon-ft] epoch 10/20  main=0.9050  sigreg=0.0000
+  [supcon-ft] epoch 15/20  main=0.8200  sigreg=0.0000
+  [supcon-ft] epoch 20/20  main=0.8043  sigreg=0.0000
+  [lejepa] CE fine-tune (direct)            75.4
+  [lejepa] ce-ft trunk probe (768d)         75.8
+  [lejepa] ss[lam5]-ft (head probe)         49.0
+  [lejepa] ss-ft trunk probe (768d)         63.5
+  [lejepa] SupCon-ft (head probe)           58.7
+  [lejepa] supcon-ft trunk probe (768d)     68.0
+
+################ base: VISReg ViT-B/16 (paper's weights) (FINE-TUNED) ################
+--- [visreg] ce-ft ---
+  [ce-ft] epoch 1/20  main=4.0262  sigreg=0.0000
+  [ce-ft] epoch 5/20  main=0.7745  sigreg=0.0000
+  [ce-ft] epoch 10/20  main=0.3323  sigreg=0.0000
+  [ce-ft] epoch 15/20  main=0.2114  sigreg=0.0000
+  [ce-ft] epoch 20/20  main=0.1874  sigreg=0.0000
+--- [visreg] ss-ft ---
+  [ss-ft] epoch 1/20  main=1.9302  sigreg=0.2125
+  [ss-ft] epoch 5/20  main=1.2051  sigreg=0.1138
+  [ss-ft] epoch 10/20  main=1.0023  sigreg=0.0957
+  [ss-ft] epoch 15/20  main=0.8935  sigreg=0.0861
+  [ss-ft] epoch 20/20  main=0.8941  sigreg=0.0816
+--- [visreg] supcon-ft ---
+  [supcon-ft] epoch 1/20  main=1.5663  sigreg=0.0000
+  [supcon-ft] epoch 5/20  main=1.0436  sigreg=0.0000
+  [supcon-ft] epoch 10/20  main=0.8919  sigreg=0.0000
+  [supcon-ft] epoch 15/20  main=0.8001  sigreg=0.0000
+  [supcon-ft] epoch 20/20  main=0.7914  sigreg=0.0000
+  [visreg] CE fine-tune (direct)            76.6
+  [visreg] ce-ft trunk probe (768d)         76.3
+  [visreg] ss[lam5]-ft (head probe)         54.5
+  [visreg] ss-ft trunk probe (768d)         68.9
+  [visreg] SupCon-ft (head probe)           62.7
+  [visreg] supcon-ft trunk probe (768d)     71.4
+
+===== AIRCRAFT TOP-1, END-TO-END FINE-TUNED (vs frozen refs) =====
+  method                                    dino    lejepa    visreg
+  raw probe (frozen) [44]                   64.9      34.3      37.9
+  ss[lam5] (frozen) [44]                    63.3      38.4      37.8
+  SupCon aug (frozen) [44]                  60.8      48.0      52.4
+  CE fine-tune (direct)                     63.0      75.4      76.6
+  ce-ft trunk probe (768d)                  65.5      75.8      76.3
+  ss[lam5]-ft (head probe)                  43.3      49.0      54.5
+  ss-ft trunk probe (768d)                  64.3      63.5      68.9
+  SupCon-ft (head probe)                    50.2      58.7      62.7
+  supcon-ft trunk probe (768d)              64.3      68.0      71.4
+
+  saved /home/pharris/sigreg/SuperSig/plots/aircraft_finetune_accuracy.png
+Done.
