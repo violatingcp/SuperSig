@@ -1,0 +1,555 @@
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+device=cuda  base=DINO ViT-B/16 (frozen)  emb_dim=64  seed pair-dist=5.0 sigma  embed_epochs=120
+
+--- features ---
+  cached plain features: /home/pharris/sigreg/SuperSig/data/dtd_feats_dino_vitb16.pt
+  aug replica 1/24
+  aug replica 2/24
+  aug replica 3/24
+  aug replica 4/24
+  aug replica 5/24
+  aug replica 6/24
+  aug replica 7/24
+  aug replica 8/24
+  aug replica 9/24
+  aug replica 10/24
+  aug replica 11/24
+  aug replica 12/24
+  aug replica 13/24
+  aug replica 14/24
+  aug replica 15/24
+  aug replica 16/24
+  aug replica 17/24
+  aug replica 18/24
+  aug replica 19/24
+  aug replica 20/24
+  aug replica 21/24
+  aug replica 22/24
+  aug replica 23/24
+  aug replica 24/24
+
+=== linear probe on raw DINO features (paper protocol: train only, lr swept on val) ===
+    lr=0.0001  val acc=0.6654
+    lr=0.0003  val acc=0.6989
+    lr=0.001  val acc=0.7048
+    lr=0.003  val acc=0.7080
+    lr=0.01  val acc=0.6899
+  best lr=0.003  val=0.7080  TEST=0.7330
+
+=== linear probe on raw DINO features (train+val) ===
+  TEST=0.7644
+
+=== SIGReg repulse + proto (top CIFAR-10 config, exp 13) ===
+  seed anchors: pairwise distance=5.00 sigma
+  balanced feature loader: 3760 samples, 6 batches of 24x24
+  [sigreg+proto] epoch 1/120  sigreg=0.6651  proto=3.7050  min_dist=5.00  mean_dist=5.01
+  [sigreg+proto] epoch 2/120  sigreg=0.5728  proto=1.7284  min_dist=5.01  mean_dist=5.03
+  [sigreg+proto] epoch 3/120  sigreg=0.5342  proto=0.9247  min_dist=5.02  mean_dist=5.05
+  [sigreg+proto] epoch 4/120  sigreg=0.4968  proto=0.6423  min_dist=5.03  mean_dist=5.06
+  [sigreg+proto] epoch 5/120  sigreg=0.4513  proto=0.4977  min_dist=5.04  mean_dist=5.08
+  [sigreg+proto] epoch 6/120  sigreg=0.4098  proto=0.3770  min_dist=5.05  mean_dist=5.09
+  [sigreg+proto] epoch 7/120  sigreg=0.3848  proto=0.2567  min_dist=5.06  mean_dist=5.11
+  [sigreg+proto] epoch 8/120  sigreg=0.3682  proto=0.1963  min_dist=5.07  mean_dist=5.13
+  [sigreg+proto] epoch 9/120  sigreg=0.3453  proto=0.1291  min_dist=5.08  mean_dist=5.14
+  [sigreg+proto] epoch 10/120  sigreg=0.3203  proto=0.0994  min_dist=5.09  mean_dist=5.16
+  [sigreg+proto] epoch 11/120  sigreg=0.3026  proto=0.0793  min_dist=5.10  mean_dist=5.17
+  [sigreg+proto] epoch 12/120  sigreg=0.2798  proto=0.0631  min_dist=5.11  mean_dist=5.19
+  [sigreg+proto] epoch 13/120  sigreg=0.2650  proto=0.0581  min_dist=5.12  mean_dist=5.21
+  [sigreg+proto] epoch 14/120  sigreg=0.2501  proto=0.0432  min_dist=5.13  mean_dist=5.23
+  [sigreg+proto] epoch 15/120  sigreg=0.2308  proto=0.0386  min_dist=5.14  mean_dist=5.24
+  [sigreg+proto] epoch 16/120  sigreg=0.2218  proto=0.0380  min_dist=5.14  mean_dist=5.26
+  [sigreg+proto] epoch 17/120  sigreg=0.2132  proto=0.0253  min_dist=5.15  mean_dist=5.28
+  [sigreg+proto] epoch 18/120  sigreg=0.2052  proto=0.0213  min_dist=5.16  mean_dist=5.30
+  [sigreg+proto] epoch 19/120  sigreg=0.1998  proto=0.0232  min_dist=5.17  mean_dist=5.32
+  [sigreg+proto] epoch 20/120  sigreg=0.1985  proto=0.0198  min_dist=5.18  mean_dist=5.34
+  [sigreg+proto] epoch 21/120  sigreg=0.1860  proto=0.0180  min_dist=5.19  mean_dist=5.36
+  [sigreg+proto] epoch 22/120  sigreg=0.1752  proto=0.0128  min_dist=5.20  mean_dist=5.38
+  [sigreg+proto] epoch 23/120  sigreg=0.1743  proto=0.0109  min_dist=5.21  mean_dist=5.40
+  [sigreg+proto] epoch 24/120  sigreg=0.1718  proto=0.0113  min_dist=5.22  mean_dist=5.42
+  [sigreg+proto] epoch 25/120  sigreg=0.1635  proto=0.0097  min_dist=5.23  mean_dist=5.44
+  [sigreg+proto] epoch 26/120  sigreg=0.1646  proto=0.0103  min_dist=5.25  mean_dist=5.46
+  [sigreg+proto] epoch 27/120  sigreg=0.1566  proto=0.0094  min_dist=5.26  mean_dist=5.49
+  [sigreg+proto] epoch 28/120  sigreg=0.1585  proto=0.0106  min_dist=5.27  mean_dist=5.51
+  [sigreg+proto] epoch 29/120  sigreg=0.1561  proto=0.0075  min_dist=5.28  mean_dist=5.54
+  [sigreg+proto] epoch 30/120  sigreg=0.1564  proto=0.0086  min_dist=5.30  mean_dist=5.56
+  [sigreg+proto] epoch 31/120  sigreg=0.1528  proto=0.0074  min_dist=5.31  mean_dist=5.59
+  [sigreg+proto] epoch 32/120  sigreg=0.1468  proto=0.0068  min_dist=5.32  mean_dist=5.61
+  [sigreg+proto] epoch 33/120  sigreg=0.1475  proto=0.0060  min_dist=5.34  mean_dist=5.64
+  [sigreg+proto] epoch 34/120  sigreg=0.1482  proto=0.0065  min_dist=5.35  mean_dist=5.66
+  [sigreg+proto] epoch 35/120  sigreg=0.1451  proto=0.0061  min_dist=5.37  mean_dist=5.69
+  [sigreg+proto] epoch 36/120  sigreg=0.1438  proto=0.0048  min_dist=5.39  mean_dist=5.72
+  [sigreg+proto] epoch 37/120  sigreg=0.1459  proto=0.0056  min_dist=5.40  mean_dist=5.74
+  [sigreg+proto] epoch 38/120  sigreg=0.1430  proto=0.0048  min_dist=5.42  mean_dist=5.77
+  [sigreg+proto] epoch 39/120  sigreg=0.1405  proto=0.0044  min_dist=5.44  mean_dist=5.80
+  [sigreg+proto] epoch 40/120  sigreg=0.1426  proto=0.0038  min_dist=5.46  mean_dist=5.83
+  [sigreg+proto] epoch 41/120  sigreg=0.1366  proto=0.0038  min_dist=5.47  mean_dist=5.86
+  [sigreg+proto] epoch 42/120  sigreg=0.1404  proto=0.0040  min_dist=5.49  mean_dist=5.89
+  [sigreg+proto] epoch 43/120  sigreg=0.1421  proto=0.0038  min_dist=5.51  mean_dist=5.92
+  [sigreg+proto] epoch 44/120  sigreg=0.1352  proto=0.0036  min_dist=5.52  mean_dist=5.95
+  [sigreg+proto] epoch 45/120  sigreg=0.1357  proto=0.0035  min_dist=5.54  mean_dist=5.97
+  [sigreg+proto] epoch 46/120  sigreg=0.1368  proto=0.0031  min_dist=5.55  mean_dist=6.00
+  [sigreg+proto] epoch 47/120  sigreg=0.1380  proto=0.0030  min_dist=5.56  mean_dist=6.03
+  [sigreg+proto] epoch 48/120  sigreg=0.1350  proto=0.0026  min_dist=5.57  mean_dist=6.06
+  [sigreg+proto] epoch 49/120  sigreg=0.1337  proto=0.0025  min_dist=5.59  mean_dist=6.09
+  [sigreg+proto] epoch 50/120  sigreg=0.1317  proto=0.0024  min_dist=5.60  mean_dist=6.12
+  [sigreg+proto] epoch 51/120  sigreg=0.1323  proto=0.0022  min_dist=5.61  mean_dist=6.16
+  [sigreg+proto] epoch 52/120  sigreg=0.1297  proto=0.0020  min_dist=5.63  mean_dist=6.19
+  [sigreg+proto] epoch 53/120  sigreg=0.1344  proto=0.0022  min_dist=5.64  mean_dist=6.22
+  [sigreg+proto] epoch 54/120  sigreg=0.1334  proto=0.0019  min_dist=5.65  mean_dist=6.25
+  [sigreg+proto] epoch 55/120  sigreg=0.1326  proto=0.0020  min_dist=5.67  mean_dist=6.28
+  [sigreg+proto] epoch 56/120  sigreg=0.1315  proto=0.0018  min_dist=5.68  mean_dist=6.31
+  [sigreg+proto] epoch 57/120  sigreg=0.1318  proto=0.0018  min_dist=5.69  mean_dist=6.34
+  [sigreg+proto] epoch 58/120  sigreg=0.1274  proto=0.0016  min_dist=5.70  mean_dist=6.37
+  [sigreg+proto] epoch 59/120  sigreg=0.1277  proto=0.0016  min_dist=5.72  mean_dist=6.40
+  [sigreg+proto] epoch 60/120  sigreg=0.1273  proto=0.0017  min_dist=5.73  mean_dist=6.43
+  [sigreg+proto] epoch 61/120  sigreg=0.1280  proto=0.0016  min_dist=5.75  mean_dist=6.46
+  [sigreg+proto] epoch 62/120  sigreg=0.1274  proto=0.0016  min_dist=5.76  mean_dist=6.49
+  [sigreg+proto] epoch 63/120  sigreg=0.1305  proto=0.0013  min_dist=5.77  mean_dist=6.53
+  [sigreg+proto] epoch 64/120  sigreg=0.1298  proto=0.0012  min_dist=5.79  mean_dist=6.56
+  [sigreg+proto] epoch 65/120  sigreg=0.1290  proto=0.0012  min_dist=5.80  mean_dist=6.59
+  [sigreg+proto] epoch 66/120  sigreg=0.1284  proto=0.0011  min_dist=5.81  mean_dist=6.62
+  [sigreg+proto] epoch 67/120  sigreg=0.1289  proto=0.0013  min_dist=5.83  mean_dist=6.65
+  [sigreg+proto] epoch 68/120  sigreg=0.1288  proto=0.0011  min_dist=5.84  mean_dist=6.68
+  [sigreg+proto] epoch 69/120  sigreg=0.1298  proto=0.0011  min_dist=5.86  mean_dist=6.71
+  [sigreg+proto] epoch 70/120  sigreg=0.1277  proto=0.0010  min_dist=5.87  mean_dist=6.74
+  [sigreg+proto] epoch 71/120  sigreg=0.1303  proto=0.0009  min_dist=5.88  mean_dist=6.77
+  [sigreg+proto] epoch 72/120  sigreg=0.1304  proto=0.0010  min_dist=5.89  mean_dist=6.81
+  [sigreg+proto] epoch 73/120  sigreg=0.1272  proto=0.0009  min_dist=5.90  mean_dist=6.84
+  [sigreg+proto] epoch 74/120  sigreg=0.1270  proto=0.0008  min_dist=5.91  mean_dist=6.87
+  [sigreg+proto] epoch 75/120  sigreg=0.1284  proto=0.0008  min_dist=5.92  mean_dist=6.90
+  [sigreg+proto] epoch 76/120  sigreg=0.1302  proto=0.0008  min_dist=5.93  mean_dist=6.93
+  [sigreg+proto] epoch 77/120  sigreg=0.1266  proto=0.0008  min_dist=5.94  mean_dist=6.96
+  [sigreg+proto] epoch 78/120  sigreg=0.1256  proto=0.0007  min_dist=5.96  mean_dist=6.99
+  [sigreg+proto] epoch 79/120  sigreg=0.1267  proto=0.0007  min_dist=5.97  mean_dist=7.02
+  [sigreg+proto] epoch 80/120  sigreg=0.1282  proto=0.0007  min_dist=5.98  mean_dist=7.05
+  [sigreg+proto] epoch 81/120  sigreg=0.1278  proto=0.0008  min_dist=5.99  mean_dist=7.09
+  [sigreg+proto] epoch 82/120  sigreg=0.1273  proto=0.0007  min_dist=6.00  mean_dist=7.12
+  [sigreg+proto] epoch 83/120  sigreg=0.1273  proto=0.0007  min_dist=6.01  mean_dist=7.15
+  [sigreg+proto] epoch 84/120  sigreg=0.1268  proto=0.0005  min_dist=6.02  mean_dist=7.18
+  [sigreg+proto] epoch 85/120  sigreg=0.1335  proto=0.0007  min_dist=6.03  mean_dist=7.21
+  [sigreg+proto] epoch 86/120  sigreg=0.1257  proto=0.0006  min_dist=6.05  mean_dist=7.24
+  [sigreg+proto] epoch 87/120  sigreg=0.1280  proto=0.0006  min_dist=6.06  mean_dist=7.27
+  [sigreg+proto] epoch 88/120  sigreg=0.1275  proto=0.0006  min_dist=6.07  mean_dist=7.30
+  [sigreg+proto] epoch 89/120  sigreg=0.1261  proto=0.0005  min_dist=6.08  mean_dist=7.33
+  [sigreg+proto] epoch 90/120  sigreg=0.1290  proto=0.0005  min_dist=6.10  mean_dist=7.36
+  [sigreg+proto] epoch 91/120  sigreg=0.1274  proto=0.0006  min_dist=6.11  mean_dist=7.40
+  [sigreg+proto] epoch 92/120  sigreg=0.1269  proto=0.0005  min_dist=6.12  mean_dist=7.43
+  [sigreg+proto] epoch 93/120  sigreg=0.1255  proto=0.0005  min_dist=6.13  mean_dist=7.46
+  [sigreg+proto] epoch 94/120  sigreg=0.1227  proto=0.0005  min_dist=6.15  mean_dist=7.49
+  [sigreg+proto] epoch 95/120  sigreg=0.1270  proto=0.0005  min_dist=6.16  mean_dist=7.52
+  [sigreg+proto] epoch 96/120  sigreg=0.1265  proto=0.0005  min_dist=6.17  mean_dist=7.55
+  [sigreg+proto] epoch 97/120  sigreg=0.1247  proto=0.0004  min_dist=6.19  mean_dist=7.58
+  [sigreg+proto] epoch 98/120  sigreg=0.1279  proto=0.0004  min_dist=6.20  mean_dist=7.61
+  [sigreg+proto] epoch 99/120  sigreg=0.1277  proto=0.0005  min_dist=6.21  mean_dist=7.64
+  [sigreg+proto] epoch 100/120  sigreg=0.1305  proto=0.0005  min_dist=6.23  mean_dist=7.67
+  [sigreg+proto] epoch 101/120  sigreg=0.1284  proto=0.0004  min_dist=6.24  mean_dist=7.70
+  [sigreg+proto] epoch 102/120  sigreg=0.1306  proto=0.0005  min_dist=6.26  mean_dist=7.73
+  [sigreg+proto] epoch 103/120  sigreg=0.1257  proto=0.0004  min_dist=6.27  mean_dist=7.76
+  [sigreg+proto] epoch 104/120  sigreg=0.1280  proto=0.0004  min_dist=6.28  mean_dist=7.79
+  [sigreg+proto] epoch 105/120  sigreg=0.1277  proto=0.0004  min_dist=6.30  mean_dist=7.82
+  [sigreg+proto] epoch 106/120  sigreg=0.1266  proto=0.0004  min_dist=6.31  mean_dist=7.85
+  [sigreg+proto] epoch 107/120  sigreg=0.1287  proto=0.0003  min_dist=6.33  mean_dist=7.89
+  [sigreg+proto] epoch 108/120  sigreg=0.1315  proto=0.0003  min_dist=6.34  mean_dist=7.92
+  [sigreg+proto] epoch 109/120  sigreg=0.1261  proto=0.0003  min_dist=6.36  mean_dist=7.95
+  [sigreg+proto] epoch 110/120  sigreg=0.1329  proto=0.0004  min_dist=6.37  mean_dist=7.98
+  [sigreg+proto] epoch 111/120  sigreg=0.1284  proto=0.0003  min_dist=6.39  mean_dist=8.01
+  [sigreg+proto] epoch 112/120  sigreg=0.1287  proto=0.0003  min_dist=6.40  mean_dist=8.04
+  [sigreg+proto] epoch 113/120  sigreg=0.1255  proto=0.0003  min_dist=6.42  mean_dist=8.07
+  [sigreg+proto] epoch 114/120  sigreg=0.1308  proto=0.0003  min_dist=6.43  mean_dist=8.10
+  [sigreg+proto] epoch 115/120  sigreg=0.1282  proto=0.0004  min_dist=6.45  mean_dist=8.13
+  [sigreg+proto] epoch 116/120  sigreg=0.1288  proto=0.0003  min_dist=6.47  mean_dist=8.16
+  [sigreg+proto] epoch 117/120  sigreg=0.1274  proto=0.0003  min_dist=6.48  mean_dist=8.19
+  [sigreg+proto] epoch 118/120  sigreg=0.1288  proto=0.0003  min_dist=6.50  mean_dist=8.22
+  [sigreg+proto] epoch 119/120  sigreg=0.1265  proto=0.0003  min_dist=6.51  mean_dist=8.25
+  [sigreg+proto] epoch 120/120  sigreg=0.1254  proto=0.0002  min_dist=6.53  mean_dist=8.28
+  probe TEST=0.7090   proto-posterior TEST=0.7383
+
+=== SIGReg repulse + linear-head CE (exp 12) ===
+  seed anchors: pairwise distance=5.00 sigma
+  balanced feature loader: 3760 samples, 6 batches of 24x24
+  [sigreg+ce] epoch 1/120  sigreg=0.6615  ce=3.6185  min_dist=5.02  mean_dist=5.02
+  [sigreg+ce] epoch 2/120  sigreg=0.6974  ce=2.6625  min_dist=5.03  mean_dist=5.03
+  [sigreg+ce] epoch 3/120  sigreg=0.8831  ce=2.0247  min_dist=5.05  mean_dist=5.05
+  [sigreg+ce] epoch 4/120  sigreg=0.9707  ce=1.5911  min_dist=5.07  mean_dist=5.07
+  [sigreg+ce] epoch 5/120  sigreg=0.9204  ce=1.4622  min_dist=5.08  mean_dist=5.09
+  [sigreg+ce] epoch 6/120  sigreg=0.8162  ce=1.4171  min_dist=5.10  mean_dist=5.10
+  [sigreg+ce] epoch 7/120  sigreg=0.7880  ce=1.3646  min_dist=5.12  mean_dist=5.12
+  [sigreg+ce] epoch 8/120  sigreg=0.8323  ce=1.1924  min_dist=5.13  mean_dist=5.14
+  [sigreg+ce] epoch 9/120  sigreg=0.8075  ce=1.0966  min_dist=5.15  mean_dist=5.16
+  [sigreg+ce] epoch 10/120  sigreg=0.7925  ce=0.9859  min_dist=5.17  mean_dist=5.18
+  [sigreg+ce] epoch 11/120  sigreg=0.7963  ce=0.9348  min_dist=5.19  mean_dist=5.20
+  [sigreg+ce] epoch 12/120  sigreg=0.7490  ce=0.8706  min_dist=5.20  mean_dist=5.22
+  [sigreg+ce] epoch 13/120  sigreg=0.7716  ce=0.7964  min_dist=5.22  mean_dist=5.24
+  [sigreg+ce] epoch 14/120  sigreg=0.7566  ce=0.7355  min_dist=5.24  mean_dist=5.26
+  [sigreg+ce] epoch 15/120  sigreg=0.7632  ce=0.6578  min_dist=5.26  mean_dist=5.28
+  [sigreg+ce] epoch 16/120  sigreg=0.7502  ce=0.6234  min_dist=5.27  mean_dist=5.30
+  [sigreg+ce] epoch 17/120  sigreg=0.7157  ce=0.6326  min_dist=5.29  mean_dist=5.33
+  [sigreg+ce] epoch 18/120  sigreg=0.7236  ce=0.5405  min_dist=5.31  mean_dist=5.35
+  [sigreg+ce] epoch 19/120  sigreg=0.6965  ce=0.5241  min_dist=5.33  mean_dist=5.37
+  [sigreg+ce] epoch 20/120  sigreg=0.7083  ce=0.4786  min_dist=5.34  mean_dist=5.40
+  [sigreg+ce] epoch 21/120  sigreg=0.6918  ce=0.4224  min_dist=5.36  mean_dist=5.42
+  [sigreg+ce] epoch 22/120  sigreg=0.6902  ce=0.4081  min_dist=5.38  mean_dist=5.45
+  [sigreg+ce] epoch 23/120  sigreg=0.6744  ce=0.4011  min_dist=5.40  mean_dist=5.47
+  [sigreg+ce] epoch 24/120  sigreg=0.6460  ce=0.3641  min_dist=5.42  mean_dist=5.50
+  [sigreg+ce] epoch 25/120  sigreg=0.6542  ce=0.3481  min_dist=5.44  mean_dist=5.52
+  [sigreg+ce] epoch 26/120  sigreg=0.6412  ce=0.3290  min_dist=5.46  mean_dist=5.55
+  [sigreg+ce] epoch 27/120  sigreg=0.6397  ce=0.3110  min_dist=5.47  mean_dist=5.58
+  [sigreg+ce] epoch 28/120  sigreg=0.6205  ce=0.2970  min_dist=5.49  mean_dist=5.60
+  [sigreg+ce] epoch 29/120  sigreg=0.6223  ce=0.2835  min_dist=5.51  mean_dist=5.63
+  [sigreg+ce] epoch 30/120  sigreg=0.6023  ce=0.2725  min_dist=5.53  mean_dist=5.66
+  [sigreg+ce] epoch 31/120  sigreg=0.5931  ce=0.2541  min_dist=5.55  mean_dist=5.68
+  [sigreg+ce] epoch 32/120  sigreg=0.6055  ce=0.2430  min_dist=5.57  mean_dist=5.71
+  [sigreg+ce] epoch 33/120  sigreg=0.5875  ce=0.2434  min_dist=5.59  mean_dist=5.74
+  [sigreg+ce] epoch 34/120  sigreg=0.5663  ce=0.2309  min_dist=5.61  mean_dist=5.77
+  [sigreg+ce] epoch 35/120  sigreg=0.5475  ce=0.2216  min_dist=5.62  mean_dist=5.79
+  [sigreg+ce] epoch 36/120  sigreg=0.5707  ce=0.2003  min_dist=5.64  mean_dist=5.82
+  [sigreg+ce] epoch 37/120  sigreg=0.5536  ce=0.2047  min_dist=5.66  mean_dist=5.85
+  [sigreg+ce] epoch 38/120  sigreg=0.5333  ce=0.2024  min_dist=5.68  mean_dist=5.88
+  [sigreg+ce] epoch 39/120  sigreg=0.5317  ce=0.1860  min_dist=5.70  mean_dist=5.91
+  [sigreg+ce] epoch 40/120  sigreg=0.5297  ce=0.1798  min_dist=5.72  mean_dist=5.94
+  [sigreg+ce] epoch 41/120  sigreg=0.5084  ce=0.1827  min_dist=5.74  mean_dist=5.96
+  [sigreg+ce] epoch 42/120  sigreg=0.5127  ce=0.1689  min_dist=5.76  mean_dist=5.99
+  [sigreg+ce] epoch 43/120  sigreg=0.4989  ce=0.1675  min_dist=5.78  mean_dist=6.02
+  [sigreg+ce] epoch 44/120  sigreg=0.4956  ce=0.1668  min_dist=5.80  mean_dist=6.05
+  [sigreg+ce] epoch 45/120  sigreg=0.4800  ce=0.1645  min_dist=5.81  mean_dist=6.08
+  [sigreg+ce] epoch 46/120  sigreg=0.5081  ce=0.1562  min_dist=5.83  mean_dist=6.11
+  [sigreg+ce] epoch 47/120  sigreg=0.4870  ce=0.1594  min_dist=5.85  mean_dist=6.13
+  [sigreg+ce] epoch 48/120  sigreg=0.4701  ce=0.1558  min_dist=5.87  mean_dist=6.16
+  [sigreg+ce] epoch 49/120  sigreg=0.4713  ce=0.1453  min_dist=5.89  mean_dist=6.19
+  [sigreg+ce] epoch 50/120  sigreg=0.4676  ce=0.1411  min_dist=5.91  mean_dist=6.22
+  [sigreg+ce] epoch 51/120  sigreg=0.4565  ce=0.1459  min_dist=5.93  mean_dist=6.25
+  [sigreg+ce] epoch 52/120  sigreg=0.4558  ce=0.1352  min_dist=5.95  mean_dist=6.28
+  [sigreg+ce] epoch 53/120  sigreg=0.4575  ce=0.1336  min_dist=5.97  mean_dist=6.30
+  [sigreg+ce] epoch 54/120  sigreg=0.4425  ce=0.1350  min_dist=5.98  mean_dist=6.33
+  [sigreg+ce] epoch 55/120  sigreg=0.4381  ce=0.1314  min_dist=6.00  mean_dist=6.36
+  [sigreg+ce] epoch 56/120  sigreg=0.4299  ce=0.1220  min_dist=6.02  mean_dist=6.39
+  [sigreg+ce] epoch 57/120  sigreg=0.4297  ce=0.1270  min_dist=6.04  mean_dist=6.42
+  [sigreg+ce] epoch 58/120  sigreg=0.4311  ce=0.1237  min_dist=6.06  mean_dist=6.45
+  [sigreg+ce] epoch 59/120  sigreg=0.4273  ce=0.1196  min_dist=6.08  mean_dist=6.48
+  [sigreg+ce] epoch 60/120  sigreg=0.4140  ce=0.1213  min_dist=6.10  mean_dist=6.50
+  [sigreg+ce] epoch 61/120  sigreg=0.4078  ce=0.1197  min_dist=6.12  mean_dist=6.53
+  [sigreg+ce] epoch 62/120  sigreg=0.4077  ce=0.1111  min_dist=6.14  mean_dist=6.56
+  [sigreg+ce] epoch 63/120  sigreg=0.3910  ce=0.1123  min_dist=6.16  mean_dist=6.59
+  [sigreg+ce] epoch 64/120  sigreg=0.3912  ce=0.1088  min_dist=6.17  mean_dist=6.62
+  [sigreg+ce] epoch 65/120  sigreg=0.3921  ce=0.1043  min_dist=6.19  mean_dist=6.64
+  [sigreg+ce] epoch 66/120  sigreg=0.3819  ce=0.1099  min_dist=6.21  mean_dist=6.67
+  [sigreg+ce] epoch 67/120  sigreg=0.3752  ce=0.1075  min_dist=6.23  mean_dist=6.70
+  [sigreg+ce] epoch 68/120  sigreg=0.3743  ce=0.0996  min_dist=6.25  mean_dist=6.73
+  [sigreg+ce] epoch 69/120  sigreg=0.3725  ce=0.0974  min_dist=6.27  mean_dist=6.76
+  [sigreg+ce] epoch 70/120  sigreg=0.3694  ce=0.1009  min_dist=6.29  mean_dist=6.78
+  [sigreg+ce] epoch 71/120  sigreg=0.3625  ce=0.0969  min_dist=6.31  mean_dist=6.81
+  [sigreg+ce] epoch 72/120  sigreg=0.3570  ce=0.0955  min_dist=6.33  mean_dist=6.84
+  [sigreg+ce] epoch 73/120  sigreg=0.3583  ce=0.0935  min_dist=6.35  mean_dist=6.87
+  [sigreg+ce] epoch 74/120  sigreg=0.3575  ce=0.0934  min_dist=6.36  mean_dist=6.89
+  [sigreg+ce] epoch 75/120  sigreg=0.3335  ce=0.0933  min_dist=6.38  mean_dist=6.92
+  [sigreg+ce] epoch 76/120  sigreg=0.3452  ce=0.0908  min_dist=6.40  mean_dist=6.95
+  [sigreg+ce] epoch 77/120  sigreg=0.3478  ce=0.0904  min_dist=6.42  mean_dist=6.98
+  [sigreg+ce] epoch 78/120  sigreg=0.3331  ce=0.0876  min_dist=6.44  mean_dist=7.00
+  [sigreg+ce] epoch 79/120  sigreg=0.3367  ce=0.0840  min_dist=6.46  mean_dist=7.03
+  [sigreg+ce] epoch 80/120  sigreg=0.3273  ce=0.0846  min_dist=6.48  mean_dist=7.06
+  [sigreg+ce] epoch 81/120  sigreg=0.3221  ce=0.0836  min_dist=6.50  mean_dist=7.09
+  [sigreg+ce] epoch 82/120  sigreg=0.3183  ce=0.0826  min_dist=6.52  mean_dist=7.11
+  [sigreg+ce] epoch 83/120  sigreg=0.3191  ce=0.0814  min_dist=6.54  mean_dist=7.14
+  [sigreg+ce] epoch 84/120  sigreg=0.3230  ce=0.0768  min_dist=6.55  mean_dist=7.17
+  [sigreg+ce] epoch 85/120  sigreg=0.3111  ce=0.0787  min_dist=6.57  mean_dist=7.20
+  [sigreg+ce] epoch 86/120  sigreg=0.3050  ce=0.0842  min_dist=6.59  mean_dist=7.22
+  [sigreg+ce] epoch 87/120  sigreg=0.2992  ce=0.0756  min_dist=6.61  mean_dist=7.25
+  [sigreg+ce] epoch 88/120  sigreg=0.3040  ce=0.0696  min_dist=6.63  mean_dist=7.28
+  [sigreg+ce] epoch 89/120  sigreg=0.2935  ce=0.0718  min_dist=6.65  mean_dist=7.30
+  [sigreg+ce] epoch 90/120  sigreg=0.2908  ce=0.0750  min_dist=6.67  mean_dist=7.33
+  [sigreg+ce] epoch 91/120  sigreg=0.2902  ce=0.0733  min_dist=6.69  mean_dist=7.36
+  [sigreg+ce] epoch 92/120  sigreg=0.2874  ce=0.0692  min_dist=6.71  mean_dist=7.39
+  [sigreg+ce] epoch 93/120  sigreg=0.2850  ce=0.0683  min_dist=6.73  mean_dist=7.41
+  [sigreg+ce] epoch 94/120  sigreg=0.2798  ce=0.0678  min_dist=6.75  mean_dist=7.44
+  [sigreg+ce] epoch 95/120  sigreg=0.2789  ce=0.0677  min_dist=6.77  mean_dist=7.47
+  [sigreg+ce] epoch 96/120  sigreg=0.2755  ce=0.0668  min_dist=6.79  mean_dist=7.49
+  [sigreg+ce] epoch 97/120  sigreg=0.2664  ce=0.0647  min_dist=6.81  mean_dist=7.52
+  [sigreg+ce] epoch 98/120  sigreg=0.2674  ce=0.0669  min_dist=6.83  mean_dist=7.55
+  [sigreg+ce] epoch 99/120  sigreg=0.2752  ce=0.0627  min_dist=6.85  mean_dist=7.58
+  [sigreg+ce] epoch 100/120  sigreg=0.2607  ce=0.0644  min_dist=6.86  mean_dist=7.60
+  [sigreg+ce] epoch 101/120  sigreg=0.2626  ce=0.0602  min_dist=6.88  mean_dist=7.63
+  [sigreg+ce] epoch 102/120  sigreg=0.2531  ce=0.0635  min_dist=6.90  mean_dist=7.66
+  [sigreg+ce] epoch 103/120  sigreg=0.2585  ce=0.0589  min_dist=6.92  mean_dist=7.68
+  [sigreg+ce] epoch 104/120  sigreg=0.2461  ce=0.0584  min_dist=6.94  mean_dist=7.71
+  [sigreg+ce] epoch 105/120  sigreg=0.2447  ce=0.0578  min_dist=6.96  mean_dist=7.74
+  [sigreg+ce] epoch 106/120  sigreg=0.2410  ce=0.0557  min_dist=6.98  mean_dist=7.77
+  [sigreg+ce] epoch 107/120  sigreg=0.2452  ce=0.0558  min_dist=7.00  mean_dist=7.79
+  [sigreg+ce] epoch 108/120  sigreg=0.2410  ce=0.0574  min_dist=7.02  mean_dist=7.82
+  [sigreg+ce] epoch 109/120  sigreg=0.2384  ce=0.0544  min_dist=7.04  mean_dist=7.85
+  [sigreg+ce] epoch 110/120  sigreg=0.2423  ce=0.0533  min_dist=7.06  mean_dist=7.88
+  [sigreg+ce] epoch 111/120  sigreg=0.2340  ce=0.0540  min_dist=7.08  mean_dist=7.90
+  [sigreg+ce] epoch 112/120  sigreg=0.2322  ce=0.0540  min_dist=7.10  mean_dist=7.93
+  [sigreg+ce] epoch 113/120  sigreg=0.2237  ce=0.0510  min_dist=7.12  mean_dist=7.96
+  [sigreg+ce] epoch 114/120  sigreg=0.2251  ce=0.0497  min_dist=7.14  mean_dist=7.99
+  [sigreg+ce] epoch 115/120  sigreg=0.2241  ce=0.0504  min_dist=7.16  mean_dist=8.01
+  [sigreg+ce] epoch 116/120  sigreg=0.2224  ce=0.0475  min_dist=7.18  mean_dist=8.04
+  [sigreg+ce] epoch 117/120  sigreg=0.2192  ce=0.0493  min_dist=7.20  mean_dist=8.07
+  [sigreg+ce] epoch 118/120  sigreg=0.2186  ce=0.0493  min_dist=7.22  mean_dist=8.10
+  [sigreg+ce] epoch 119/120  sigreg=0.2110  ce=0.0479  min_dist=7.24  mean_dist=8.12
+  [sigreg+ce] epoch 120/120  sigreg=0.2087  ce=0.0451  min_dist=7.26  mean_dist=8.15
+  probe TEST=0.7431
+
+=== SupCon, two-view augmentation (exp 09) ===
+  [supcon] epoch 1/120  loss=5.6979
+  [supcon] epoch 2/120  loss=4.9689
+  [supcon] epoch 3/120  loss=4.6839
+  [supcon] epoch 4/120  loss=4.4973
+  [supcon] epoch 5/120  loss=4.3288
+  [supcon] epoch 6/120  loss=4.1964
+  [supcon] epoch 7/120  loss=4.0604
+  [supcon] epoch 8/120  loss=3.9353
+  [supcon] epoch 9/120  loss=3.8242
+  [supcon] epoch 10/120  loss=3.7192
+  [supcon] epoch 11/120  loss=3.6342
+  [supcon] epoch 12/120  loss=3.5749
+  [supcon] epoch 13/120  loss=3.5277
+  [supcon] epoch 14/120  loss=3.4625
+  [supcon] epoch 15/120  loss=3.4156
+  [supcon] epoch 16/120  loss=3.3787
+  [supcon] epoch 17/120  loss=3.3502
+  [supcon] epoch 18/120  loss=3.3204
+  [supcon] epoch 19/120  loss=3.2941
+  [supcon] epoch 20/120  loss=3.2953
+  [supcon] epoch 21/120  loss=3.2653
+  [supcon] epoch 22/120  loss=3.2460
+  [supcon] epoch 23/120  loss=3.2395
+  [supcon] epoch 24/120  loss=3.2265
+  [supcon] epoch 25/120  loss=3.2161
+  [supcon] epoch 26/120  loss=3.2059
+  [supcon] epoch 27/120  loss=3.2038
+  [supcon] epoch 28/120  loss=3.1904
+  [supcon] epoch 29/120  loss=3.1941
+  [supcon] epoch 30/120  loss=3.1696
+  [supcon] epoch 31/120  loss=3.1795
+  [supcon] epoch 32/120  loss=3.1667
+  [supcon] epoch 33/120  loss=3.1609
+  [supcon] epoch 34/120  loss=3.1603
+  [supcon] epoch 35/120  loss=3.1642
+  [supcon] epoch 36/120  loss=3.1553
+  [supcon] epoch 37/120  loss=3.1546
+  [supcon] epoch 38/120  loss=3.1442
+  [supcon] epoch 39/120  loss=3.1529
+  [supcon] epoch 40/120  loss=3.1454
+  [supcon] epoch 41/120  loss=3.1397
+  [supcon] epoch 42/120  loss=3.1413
+  [supcon] epoch 43/120  loss=3.1403
+  [supcon] epoch 44/120  loss=3.1442
+  [supcon] epoch 45/120  loss=3.1318
+  [supcon] epoch 46/120  loss=3.1320
+  [supcon] epoch 47/120  loss=3.1303
+  [supcon] epoch 48/120  loss=3.1319
+  [supcon] epoch 49/120  loss=3.1279
+  [supcon] epoch 50/120  loss=3.1336
+  [supcon] epoch 51/120  loss=3.1244
+  [supcon] epoch 52/120  loss=3.1253
+  [supcon] epoch 53/120  loss=3.1195
+  [supcon] epoch 54/120  loss=3.1209
+  [supcon] epoch 55/120  loss=3.1222
+  [supcon] epoch 56/120  loss=3.1154
+  [supcon] epoch 57/120  loss=3.1197
+  [supcon] epoch 58/120  loss=3.1167
+  [supcon] epoch 59/120  loss=3.1202
+  [supcon] epoch 60/120  loss=3.1171
+  [supcon] epoch 61/120  loss=3.1154
+  [supcon] epoch 62/120  loss=3.1184
+  [supcon] epoch 63/120  loss=3.1166
+  [supcon] epoch 64/120  loss=3.1190
+  [supcon] epoch 65/120  loss=3.1182
+  [supcon] epoch 66/120  loss=3.1142
+  [supcon] epoch 67/120  loss=3.1150
+  [supcon] epoch 68/120  loss=3.1124
+  [supcon] epoch 69/120  loss=3.1123
+  [supcon] epoch 70/120  loss=3.1059
+  [supcon] epoch 71/120  loss=3.0988
+  [supcon] epoch 72/120  loss=3.1078
+  [supcon] epoch 73/120  loss=3.1061
+  [supcon] epoch 74/120  loss=3.1081
+  [supcon] epoch 75/120  loss=3.1094
+  [supcon] epoch 76/120  loss=3.1058
+  [supcon] epoch 77/120  loss=3.1036
+  [supcon] epoch 78/120  loss=3.1051
+  [supcon] epoch 79/120  loss=3.1049
+  [supcon] epoch 80/120  loss=3.1009
+  [supcon] epoch 81/120  loss=3.1119
+  [supcon] epoch 82/120  loss=3.1079
+  [supcon] epoch 83/120  loss=3.0985
+  [supcon] epoch 84/120  loss=3.0952
+  [supcon] epoch 85/120  loss=3.1009
+  [supcon] epoch 86/120  loss=3.1018
+  [supcon] epoch 87/120  loss=3.1067
+  [supcon] epoch 88/120  loss=3.0953
+  [supcon] epoch 89/120  loss=3.1021
+  [supcon] epoch 90/120  loss=3.1013
+  [supcon] epoch 91/120  loss=3.1032
+  [supcon] epoch 92/120  loss=3.1010
+  [supcon] epoch 93/120  loss=3.1016
+  [supcon] epoch 94/120  loss=3.0922
+  [supcon] epoch 95/120  loss=3.1069
+  [supcon] epoch 96/120  loss=3.0997
+  [supcon] epoch 97/120  loss=3.0958
+  [supcon] epoch 98/120  loss=3.0978
+  [supcon] epoch 99/120  loss=3.0943
+  [supcon] epoch 100/120  loss=3.0990
+  [supcon] epoch 101/120  loss=3.0952
+  [supcon] epoch 102/120  loss=3.1060
+  [supcon] epoch 103/120  loss=3.0952
+  [supcon] epoch 104/120  loss=3.0952
+  [supcon] epoch 105/120  loss=3.1006
+  [supcon] epoch 106/120  loss=3.0968
+  [supcon] epoch 107/120  loss=3.0951
+  [supcon] epoch 108/120  loss=3.0989
+  [supcon] epoch 109/120  loss=3.0950
+  [supcon] epoch 110/120  loss=3.0960
+  [supcon] epoch 111/120  loss=3.0962
+  [supcon] epoch 112/120  loss=3.0975
+  [supcon] epoch 113/120  loss=3.0946
+  [supcon] epoch 114/120  loss=3.0965
+  [supcon] epoch 115/120  loss=3.0935
+  [supcon] epoch 116/120  loss=3.0927
+  [supcon] epoch 117/120  loss=3.0919
+  [supcon] epoch 118/120  loss=3.0910
+  [supcon] epoch 119/120  loss=3.0963
+  [supcon] epoch 120/120  loss=3.0941
+  probe TEST=0.7606
+
+=== SupCon, no augmentation (exp 10) ===
+  [supcon-plain] epoch 1/120  loss=5.0380
+  [supcon-plain] epoch 2/120  loss=4.1807
+  [supcon-plain] epoch 3/120  loss=3.8447
+  [supcon-plain] epoch 4/120  loss=3.5889
+  [supcon-plain] epoch 5/120  loss=3.3844
+  [supcon-plain] epoch 6/120  loss=3.1975
+  [supcon-plain] epoch 7/120  loss=3.0231
+  [supcon-plain] epoch 8/120  loss=2.8800
+  [supcon-plain] epoch 9/120  loss=2.7707
+  [supcon-plain] epoch 10/120  loss=2.6764
+  [supcon-plain] epoch 11/120  loss=2.5968
+  [supcon-plain] epoch 12/120  loss=2.5463
+  [supcon-plain] epoch 13/120  loss=2.5011
+  [supcon-plain] epoch 14/120  loss=2.4811
+  [supcon-plain] epoch 15/120  loss=2.4563
+  [supcon-plain] epoch 16/120  loss=2.4369
+  [supcon-plain] epoch 17/120  loss=2.4202
+  [supcon-plain] epoch 18/120  loss=2.4080
+  [supcon-plain] epoch 19/120  loss=2.3999
+  [supcon-plain] epoch 20/120  loss=2.3975
+  [supcon-plain] epoch 21/120  loss=2.3878
+  [supcon-plain] epoch 22/120  loss=2.3895
+  [supcon-plain] epoch 23/120  loss=2.3755
+  [supcon-plain] epoch 24/120  loss=2.3725
+  [supcon-plain] epoch 25/120  loss=2.3765
+  [supcon-plain] epoch 26/120  loss=2.3689
+  [supcon-plain] epoch 27/120  loss=2.3705
+  [supcon-plain] epoch 28/120  loss=2.3681
+  [supcon-plain] epoch 29/120  loss=2.3610
+  [supcon-plain] epoch 30/120  loss=2.3636
+  [supcon-plain] epoch 31/120  loss=2.3563
+  [supcon-plain] epoch 32/120  loss=2.3571
+  [supcon-plain] epoch 33/120  loss=2.3533
+  [supcon-plain] epoch 34/120  loss=2.3552
+  [supcon-plain] epoch 35/120  loss=2.3540
+  [supcon-plain] epoch 36/120  loss=2.3645
+  [supcon-plain] epoch 37/120  loss=2.3558
+  [supcon-plain] epoch 38/120  loss=2.3539
+  [supcon-plain] epoch 39/120  loss=2.3502
+  [supcon-plain] epoch 40/120  loss=2.3500
+  [supcon-plain] epoch 41/120  loss=2.3491
+  [supcon-plain] epoch 42/120  loss=2.3523
+  [supcon-plain] epoch 43/120  loss=2.3507
+  [supcon-plain] epoch 44/120  loss=2.3464
+  [supcon-plain] epoch 45/120  loss=2.3516
+  [supcon-plain] epoch 46/120  loss=2.3494
+  [supcon-plain] epoch 47/120  loss=2.3550
+  [supcon-plain] epoch 48/120  loss=2.3508
+  [supcon-plain] epoch 49/120  loss=2.3434
+  [supcon-plain] epoch 50/120  loss=2.3466
+  [supcon-plain] epoch 51/120  loss=2.3498
+  [supcon-plain] epoch 52/120  loss=2.3477
+  [supcon-plain] epoch 53/120  loss=2.3484
+  [supcon-plain] epoch 54/120  loss=2.3405
+  [supcon-plain] epoch 55/120  loss=2.3421
+  [supcon-plain] epoch 56/120  loss=2.3428
+  [supcon-plain] epoch 57/120  loss=2.3490
+  [supcon-plain] epoch 58/120  loss=2.3421
+  [supcon-plain] epoch 59/120  loss=2.3452
+  [supcon-plain] epoch 60/120  loss=2.3391
+  [supcon-plain] epoch 61/120  loss=2.3465
+  [supcon-plain] epoch 62/120  loss=2.3456
+  [supcon-plain] epoch 63/120  loss=2.3388
+  [supcon-plain] epoch 64/120  loss=2.3422
+  [supcon-plain] epoch 65/120  loss=2.3450
+  [supcon-plain] epoch 66/120  loss=2.3469
+  [supcon-plain] epoch 67/120  loss=2.3445
+  [supcon-plain] epoch 68/120  loss=2.3450
+  [supcon-plain] epoch 69/120  loss=2.3422
+  [supcon-plain] epoch 70/120  loss=2.3436
+  [supcon-plain] epoch 71/120  loss=2.3415
+  [supcon-plain] epoch 72/120  loss=2.3410
+  [supcon-plain] epoch 73/120  loss=2.3396
+  [supcon-plain] epoch 74/120  loss=2.3446
+  [supcon-plain] epoch 75/120  loss=2.3437
+  [supcon-plain] epoch 76/120  loss=2.3494
+  [supcon-plain] epoch 77/120  loss=2.3449
+  [supcon-plain] epoch 78/120  loss=2.3378
+  [supcon-plain] epoch 79/120  loss=2.3456
+  [supcon-plain] epoch 80/120  loss=2.3496
+  [supcon-plain] epoch 81/120  loss=2.3411
+  [supcon-plain] epoch 82/120  loss=2.3384
+  [supcon-plain] epoch 83/120  loss=2.3408
+  [supcon-plain] epoch 84/120  loss=2.3450
+  [supcon-plain] epoch 85/120  loss=2.3524
+  [supcon-plain] epoch 86/120  loss=2.3392
+  [supcon-plain] epoch 87/120  loss=2.3377
+  [supcon-plain] epoch 88/120  loss=2.3396
+  [supcon-plain] epoch 89/120  loss=2.3404
+  [supcon-plain] epoch 90/120  loss=2.3399
+  [supcon-plain] epoch 91/120  loss=2.3350
+  [supcon-plain] epoch 92/120  loss=2.3349
+  [supcon-plain] epoch 93/120  loss=2.3407
+  [supcon-plain] epoch 94/120  loss=2.3403
+  [supcon-plain] epoch 95/120  loss=2.3364
+  [supcon-plain] epoch 96/120  loss=2.3389
+  [supcon-plain] epoch 97/120  loss=2.3461
+  [supcon-plain] epoch 98/120  loss=2.3367
+  [supcon-plain] epoch 99/120  loss=2.3444
+  [supcon-plain] epoch 100/120  loss=2.3412
+  [supcon-plain] epoch 101/120  loss=2.3343
+  [supcon-plain] epoch 102/120  loss=2.3439
+  [supcon-plain] epoch 103/120  loss=2.3383
+  [supcon-plain] epoch 104/120  loss=2.3336
+  [supcon-plain] epoch 105/120  loss=2.3405
+  [supcon-plain] epoch 106/120  loss=2.3341
+  [supcon-plain] epoch 107/120  loss=2.3373
+  [supcon-plain] epoch 108/120  loss=2.3367
+  [supcon-plain] epoch 109/120  loss=2.3350
+  [supcon-plain] epoch 110/120  loss=2.3422
+  [supcon-plain] epoch 111/120  loss=2.3410
+  [supcon-plain] epoch 112/120  loss=2.3385
+  [supcon-plain] epoch 113/120  loss=2.3416
+  [supcon-plain] epoch 114/120  loss=2.3349
+  [supcon-plain] epoch 115/120  loss=2.3393
+  [supcon-plain] epoch 116/120  loss=2.3373
+  [supcon-plain] epoch 117/120  loss=2.3359
+  [supcon-plain] epoch 118/120  loss=2.3375
+  [supcon-plain] epoch 119/120  loss=2.3410
+  [supcon-plain] epoch 120/120  loss=2.3360
+  probe TEST=0.7415
+
+===== DTD TOP-1 SUMMARY (base: frozen DINO ViT-B/16) =====
+  MoCoV3 ViT-B/16 (paper)                    73.7
+  DINO ViT-B/16 (paper)                      74.3
+  iBOT ViT-L/16 (paper)                      75.3
+  VISReg ViT-B/16 (paper)                    75.7
+  VISReg ViT-L/14 (paper)                    76.5
+  Linear probe, raw DINO (train)             73.3
+  Linear probe, raw DINO (train+val)         76.4
+  SIGReg repulse + proto                     70.9
+  SIGReg + proto (own posterior)             73.8
+  SIGReg repulse + CE                        74.3
+  SupCon (aug)                               76.1
+  SupCon (no aug)                            74.1
+
+  saved /home/pharris/sigreg/SuperSig/plots/dtd_vitb16_accuracy.png
+Done.

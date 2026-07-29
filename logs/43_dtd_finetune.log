@@ -1,0 +1,97 @@
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+device=cuda  bases=['dino', 'lejepa', 'visreg']  arms=['ce', 'ss', 'supcon']  emb_dim=100  ft_epochs=20  lr=1e-05/0.001
+
+################ base: DINO ViT-B/16 (FINE-TUNED) ################
+--- [dino] ce-ft ---
+  [ce-ft] epoch 1/20  main=1.9193  sigreg=0.0000
+  [ce-ft] epoch 5/20  main=0.3158  sigreg=0.0000
+  [ce-ft] epoch 10/20  main=0.1434  sigreg=0.0000
+  [ce-ft] epoch 15/20  main=0.1074  sigreg=0.0000
+  [ce-ft] epoch 20/20  main=0.0920  sigreg=0.0000
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+--- [dino] ss-ft ---
+  [ss-ft] epoch 1/20  main=1.7341  sigreg=0.1666
+  [ss-ft] epoch 5/20  main=1.2372  sigreg=0.1086
+  [ss-ft] epoch 10/20  main=0.9588  sigreg=0.1007
+  [ss-ft] epoch 15/20  main=0.8499  sigreg=0.0965
+  [ss-ft] epoch 20/20  main=0.7852  sigreg=0.0929
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+--- [dino] supcon-ft ---
+  [supcon-ft] epoch 1/20  main=1.5931  sigreg=0.0000
+  [supcon-ft] epoch 5/20  main=1.1713  sigreg=0.0000
+  [supcon-ft] epoch 10/20  main=0.9321  sigreg=0.0000
+  [supcon-ft] epoch 15/20  main=0.8213  sigreg=0.0000
+  [supcon-ft] epoch 20/20  main=0.7498  sigreg=0.0000
+  [dino] CE fine-tune (direct)            76.9
+  [dino] ce-ft trunk probe (768d)         76.1
+  [dino] ss[lam5]-ft (head probe)         77.1
+  [dino] ss-ft trunk probe (768d)         76.8
+  [dino] SupCon-ft (head probe)           76.6
+  [dino] supcon-ft trunk probe (768d)     76.8
+
+################ base: LeJEPA ViT-B/16 (community repro) (FINE-TUNED) ################
+--- [lejepa] ce-ft ---
+  [ce-ft] epoch 1/20  main=2.6975  sigreg=0.0000
+  [ce-ft] epoch 5/20  main=0.5115  sigreg=0.0000
+  [ce-ft] epoch 10/20  main=0.2021  sigreg=0.0000
+  [ce-ft] epoch 15/20  main=0.1263  sigreg=0.0000
+  [ce-ft] epoch 20/20  main=0.1089  sigreg=0.0000
+--- [lejepa] ss-ft ---
+  [ss-ft] epoch 1/20  main=1.7882  sigreg=0.3454
+  [ss-ft] epoch 5/20  main=1.2274  sigreg=0.1229
+  [ss-ft] epoch 10/20  main=0.9533  sigreg=0.1118
+  [ss-ft] epoch 15/20  main=0.8645  sigreg=0.1055
+  [ss-ft] epoch 20/20  main=0.8016  sigreg=0.1033
+--- [lejepa] supcon-ft ---
+  [supcon-ft] epoch 1/20  main=1.6086  sigreg=0.0000
+  [supcon-ft] epoch 5/20  main=1.0982  sigreg=0.0000
+  [supcon-ft] epoch 10/20  main=0.8196  sigreg=0.0000
+  [supcon-ft] epoch 15/20  main=0.7365  sigreg=0.0000
+  [supcon-ft] epoch 20/20  main=0.6763  sigreg=0.0000
+  [lejepa] CE fine-tune (direct)            79.0
+  [lejepa] ce-ft trunk probe (768d)         78.4
+  [lejepa] ss[lam5]-ft (head probe)         76.2
+  [lejepa] ss-ft trunk probe (768d)         76.8
+  [lejepa] SupCon-ft (head probe)           77.4
+  [lejepa] supcon-ft trunk probe (768d)     77.8
+
+################ base: VISReg ViT-B/16 (paper's weights) (FINE-TUNED) ################
+--- [visreg] ce-ft ---
+  [ce-ft] epoch 1/20  main=2.1281  sigreg=0.0000
+  [ce-ft] epoch 5/20  main=0.3017  sigreg=0.0000
+  [ce-ft] epoch 10/20  main=0.0924  sigreg=0.0000
+  [ce-ft] epoch 15/20  main=0.0531  sigreg=0.0000
+  [ce-ft] epoch 20/20  main=0.0441  sigreg=0.0000
+--- [visreg] ss-ft ---
+  [ss-ft] epoch 1/20  main=1.7139  sigreg=0.2212
+  [ss-ft] epoch 5/20  main=1.1700  sigreg=0.1155
+  [ss-ft] epoch 10/20  main=0.8884  sigreg=0.1063
+  [ss-ft] epoch 15/20  main=0.8029  sigreg=0.0968
+  [ss-ft] epoch 20/20  main=0.7409  sigreg=0.0945
+--- [visreg] supcon-ft ---
+  [supcon-ft] epoch 1/20  main=1.6105  sigreg=0.0000
+  [supcon-ft] epoch 5/20  main=1.1127  sigreg=0.0000
+  [supcon-ft] epoch 10/20  main=0.8434  sigreg=0.0000
+  [supcon-ft] epoch 15/20  main=0.7590  sigreg=0.0000
+  [supcon-ft] epoch 20/20  main=0.6912  sigreg=0.0000
+  [visreg] CE fine-tune (direct)            79.7
+  [visreg] ce-ft trunk probe (768d)         79.3
+  [visreg] ss[lam5]-ft (head probe)         79.6
+  [visreg] ss-ft trunk probe (768d)         79.5
+  [visreg] SupCon-ft (head probe)           78.5
+  [visreg] supcon-ft trunk probe (768d)     79.4
+
+===== DTD TOP-1, END-TO-END FINE-TUNED (vs frozen refs) =====
+  method                                    dino    lejepa    visreg
+  raw probe (frozen) [40]                   76.5      76.2      77.9
+  ss[lam5] (frozen) [41]                    77.1      75.8      78.3
+  SupCon aug (frozen) [40]                  75.5      77.0      76.5
+  CE fine-tune (direct)                     76.9      79.0      79.7
+  ce-ft trunk probe (768d)                  76.1      78.4      79.3
+  ss[lam5]-ft (head probe)                  77.1      76.2      79.6
+  ss-ft trunk probe (768d)                  76.8      76.8      79.5
+  SupCon-ft (head probe)                    76.6      77.4      78.5
+  supcon-ft trunk probe (768d)              76.8      77.8      79.4
+
+  saved /home/pharris/sigreg/SuperSig/plots/dtd_finetune_accuracy.png
+Done.

@@ -1,0 +1,103 @@
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+device=cuda  aircraft  bases=['dino', 'visreg']  arms=['ssl', 'residual']  ft_epochs=20
+
+######## aircraft on DINO ViT-B/16 ########
+--- [dino] simclr-ft (unsupervised) ---
+  [simclr-ft] epoch 1/20  main=2.6460  aux=0.0000
+  [simclr-ft] epoch 5/20  main=2.4658  aux=0.0000
+  [simclr-ft] epoch 10/20  main=2.4229  aux=0.0000
+  [simclr-ft] epoch 15/20  main=2.4043  aux=0.0000
+  [simclr-ft] epoch 20/20  main=2.3931  aux=0.0000
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+--- [dino] sigreg-ssl-ft (unsupervised) ---
+  [sigreg-ssl-ft] epoch 1/20  main=0.0543  aux=0.2352
+  [sigreg-ssl-ft] epoch 5/20  main=0.0490  aux=0.1454
+  [sigreg-ssl-ft] epoch 10/20  main=0.0459  aux=0.1290
+  [sigreg-ssl-ft] epoch 15/20  main=0.0439  aux=0.1177
+  [sigreg-ssl-ft] epoch 20/20  main=0.0448  aux=0.1158
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+--- [dino] residual-ft on supcon-ft parent ---
+  [res-supcon] epoch 1/20  main=2.5939  aux=0.6812
+  [res-supcon] epoch 5/20  main=2.4733  aux=0.5402
+  [res-supcon] epoch 10/20  main=2.4512  aux=0.4905
+  [res-supcon] epoch 15/20  main=2.4350  aux=0.4518
+  [res-supcon] epoch 20/20  main=2.4321  aux=0.4263
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+--- [dino] residual-ft on ss-ft parent ---
+  [res-ss] epoch 1/20  main=2.5813  aux=0.5525
+  [res-ss] epoch 5/20  main=2.4417  aux=0.4799
+  [res-ss] epoch 10/20  main=2.4189  aux=0.4550
+  [res-ss] epoch 15/20  main=2.4069  aux=0.4269
+  [res-ss] epoch 20/20  main=2.4004  aux=0.4136
+  [dino] simclr-ft head probe           20.1
+  [dino] simclr-ft trunk probe          64.3
+  [dino] sigreg-ssl-ft head probe       16.5
+  [dino] sigreg-ssl-ft trunk probe      65.3
+  [dino] supcon-ft (parent head)        49.3
+  [dino] res-supcon head probe          28.3
+  [dino] [supcon ; res] head concat     50.9
+  [dino] [supcon ; res] trunk concat    65.4
+  [dino] ss-ft (parent head)            43.1
+  [dino] res-ss head probe              14.7
+  [dino] [ss ; res] head concat         43.9
+  [dino] [ss ; res] trunk concat        65.4
+
+######## aircraft on VISReg ViT-B/16 (paper's weights) ########
+--- [visreg] simclr-ft (unsupervised) ---
+  [simclr-ft] epoch 1/20  main=2.5575  aux=0.0000
+  [simclr-ft] epoch 5/20  main=2.3773  aux=0.0000
+  [simclr-ft] epoch 10/20  main=2.3453  aux=0.0000
+  [simclr-ft] epoch 15/20  main=2.3320  aux=0.0000
+  [simclr-ft] epoch 20/20  main=2.3228  aux=0.0000
+--- [visreg] sigreg-ssl-ft (unsupervised) ---
+  [sigreg-ssl-ft] epoch 1/20  main=0.0281  aux=0.2103
+  [sigreg-ssl-ft] epoch 5/20  main=0.0266  aux=0.1189
+  [sigreg-ssl-ft] epoch 10/20  main=0.0225  aux=0.1044
+  [sigreg-ssl-ft] epoch 15/20  main=0.0205  aux=0.0980
+  [sigreg-ssl-ft] epoch 20/20  main=0.0207  aux=0.0960
+--- [visreg] residual-ft on supcon-ft parent ---
+  [res-supcon] epoch 1/20  main=2.5042  aux=0.5350
+  [res-supcon] epoch 5/20  main=2.3863  aux=0.4663
+  [res-supcon] epoch 10/20  main=2.3657  aux=0.4323
+  [res-supcon] epoch 15/20  main=2.3571  aux=0.4126
+  [res-supcon] epoch 20/20  main=2.3537  aux=0.3998
+--- [visreg] residual-ft on ss-ft parent ---
+  [res-ss] epoch 1/20  main=2.4808  aux=0.4826
+  [res-ss] epoch 5/20  main=2.3621  aux=0.4467
+  [res-ss] epoch 10/20  main=2.3439  aux=0.4247
+  [res-ss] epoch 15/20  main=2.3373  aux=0.4058
+  [res-ss] epoch 20/20  main=2.3330  aux=0.3968
+  [visreg] simclr-ft head probe           10.3
+  [visreg] simclr-ft trunk probe          43.8
+  [visreg] sigreg-ssl-ft head probe       8.7
+  [visreg] sigreg-ssl-ft trunk probe      41.3
+  [visreg] supcon-ft (parent head)        61.6
+  [visreg] res-supcon head probe          38.2
+  [visreg] [supcon ; res] head concat     61.7
+  [visreg] [supcon ; res] trunk concat    70.3
+  [visreg] ss-ft (parent head)            54.3
+  [visreg] res-ss head probe              19.5
+  [visreg] [ss ; res] head concat         54.2
+  [visreg] [ss ; res] trunk concat        67.1
+
+===== AIRCRAFT SSL-FT + RESIDUAL-FT SUMMARY =====
+  method                                  dino    visreg
+  raw probe (frozen) [44]                 64.9      37.9
+  CE-ft [43]                              65.5      76.6
+  SupCon-ft head / trunk [43]             50.2      62.7
+  ss-ft head / trunk [43]                 43.3      54.5
+  simclr-ft head probe                    20.1      10.3
+  simclr-ft trunk probe                   64.3      43.8
+  sigreg-ssl-ft head probe                16.5       8.7
+  sigreg-ssl-ft trunk probe               65.3      41.3
+  supcon-ft (parent head)                 49.3      61.6
+  res-supcon head probe                   28.3      38.2
+  [supcon ; res] head concat              50.9      61.7
+  [supcon ; res] trunk concat             65.4      70.3
+  ss-ft (parent head)                     43.1      54.3
+  res-ss head probe                       14.7      19.5
+  [ss ; res] head concat                  43.9      54.2
+  [ss ; res] trunk concat                 65.4      67.1
+
+  saved /home/pharris/sigreg/SuperSig/plots/aircraft_ssl_ft.png
+Done.

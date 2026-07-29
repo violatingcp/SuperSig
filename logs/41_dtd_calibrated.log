@@ -1,0 +1,1494 @@
+device=cuda  bases=['dino', 'lejepa', 'visreg']  emb_dim=100  lam=5
+
+################ base: DINO ViT-B/16 ################
+  cached plain features: /home/pharris/sigreg/SuperSig/data/dtd_feats_dino_vitb16.pt
+  cached aug bank: /home/pharris/sigreg/SuperSig/data/dtd_augfeats_dino_vitb16_a24.pt
+--- [dino] ss[lam5]: SupCon + SIGReg on raw z ---
+  [supcon+sigreg] epoch 1/120  supcon=5.8415  sigreg=0.3194
+  [supcon+sigreg] epoch 2/120  supcon=5.3959  sigreg=0.1659
+  [supcon+sigreg] epoch 3/120  supcon=5.1975  sigreg=0.1438
+  [supcon+sigreg] epoch 4/120  supcon=4.9800  sigreg=0.1095
+  [supcon+sigreg] epoch 5/120  supcon=4.8180  sigreg=0.0929
+  [supcon+sigreg] epoch 6/120  supcon=4.6804  sigreg=0.0665
+  [supcon+sigreg] epoch 7/120  supcon=4.5648  sigreg=0.0590
+  [supcon+sigreg] epoch 8/120  supcon=4.4385  sigreg=0.0510
+  [supcon+sigreg] epoch 9/120  supcon=4.3324  sigreg=0.0501
+  [supcon+sigreg] epoch 10/120  supcon=4.2447  sigreg=0.0455
+  [supcon+sigreg] epoch 11/120  supcon=4.1515  sigreg=0.0401
+  [supcon+sigreg] epoch 12/120  supcon=4.0556  sigreg=0.0416
+  [supcon+sigreg] epoch 13/120  supcon=3.9947  sigreg=0.0374
+  [supcon+sigreg] epoch 14/120  supcon=3.9364  sigreg=0.0414
+  [supcon+sigreg] epoch 15/120  supcon=3.8692  sigreg=0.0381
+  [supcon+sigreg] epoch 16/120  supcon=3.8175  sigreg=0.0374
+  [supcon+sigreg] epoch 17/120  supcon=3.7647  sigreg=0.0376
+  [supcon+sigreg] epoch 18/120  supcon=3.7283  sigreg=0.0332
+  [supcon+sigreg] epoch 19/120  supcon=3.6784  sigreg=0.0375
+  [supcon+sigreg] epoch 20/120  supcon=3.6317  sigreg=0.0364
+  [supcon+sigreg] epoch 21/120  supcon=3.6168  sigreg=0.0374
+  [supcon+sigreg] epoch 22/120  supcon=3.5715  sigreg=0.0359
+  [supcon+sigreg] epoch 23/120  supcon=3.5523  sigreg=0.0360
+  [supcon+sigreg] epoch 24/120  supcon=3.5309  sigreg=0.0351
+  [supcon+sigreg] epoch 25/120  supcon=3.4973  sigreg=0.0379
+  [supcon+sigreg] epoch 26/120  supcon=3.4732  sigreg=0.0367
+  [supcon+sigreg] epoch 27/120  supcon=3.4513  sigreg=0.0329
+  [supcon+sigreg] epoch 28/120  supcon=3.4306  sigreg=0.0348
+  [supcon+sigreg] epoch 29/120  supcon=3.4203  sigreg=0.0349
+  [supcon+sigreg] epoch 30/120  supcon=3.4013  sigreg=0.0360
+  [supcon+sigreg] epoch 31/120  supcon=3.3941  sigreg=0.0350
+  [supcon+sigreg] epoch 32/120  supcon=3.3817  sigreg=0.0351
+  [supcon+sigreg] epoch 33/120  supcon=3.3654  sigreg=0.0361
+  [supcon+sigreg] epoch 34/120  supcon=3.3549  sigreg=0.0354
+  [supcon+sigreg] epoch 35/120  supcon=3.3375  sigreg=0.0349
+  [supcon+sigreg] epoch 36/120  supcon=3.3322  sigreg=0.0324
+  [supcon+sigreg] epoch 37/120  supcon=3.3174  sigreg=0.0312
+  [supcon+sigreg] epoch 38/120  supcon=3.3137  sigreg=0.0330
+  [supcon+sigreg] epoch 39/120  supcon=3.3056  sigreg=0.0347
+  [supcon+sigreg] epoch 40/120  supcon=3.2954  sigreg=0.0328
+  [supcon+sigreg] epoch 41/120  supcon=3.2795  sigreg=0.0319
+  [supcon+sigreg] epoch 42/120  supcon=3.2823  sigreg=0.0326
+  [supcon+sigreg] epoch 43/120  supcon=3.2743  sigreg=0.0321
+  [supcon+sigreg] epoch 44/120  supcon=3.2686  sigreg=0.0313
+  [supcon+sigreg] epoch 45/120  supcon=3.2648  sigreg=0.0336
+  [supcon+sigreg] epoch 46/120  supcon=3.2549  sigreg=0.0319
+  [supcon+sigreg] epoch 47/120  supcon=3.2469  sigreg=0.0314
+  [supcon+sigreg] epoch 48/120  supcon=3.2460  sigreg=0.0325
+  [supcon+sigreg] epoch 49/120  supcon=3.2452  sigreg=0.0330
+  [supcon+sigreg] epoch 50/120  supcon=3.2353  sigreg=0.0282
+  [supcon+sigreg] epoch 51/120  supcon=3.2333  sigreg=0.0322
+  [supcon+sigreg] epoch 52/120  supcon=3.2326  sigreg=0.0304
+  [supcon+sigreg] epoch 53/120  supcon=3.2257  sigreg=0.0329
+  [supcon+sigreg] epoch 54/120  supcon=3.2212  sigreg=0.0286
+  [supcon+sigreg] epoch 55/120  supcon=3.2099  sigreg=0.0298
+  [supcon+sigreg] epoch 56/120  supcon=3.2162  sigreg=0.0303
+  [supcon+sigreg] epoch 57/120  supcon=3.2197  sigreg=0.0318
+  [supcon+sigreg] epoch 58/120  supcon=3.2035  sigreg=0.0313
+  [supcon+sigreg] epoch 59/120  supcon=3.2074  sigreg=0.0318
+  [supcon+sigreg] epoch 60/120  supcon=3.2108  sigreg=0.0322
+  [supcon+sigreg] epoch 61/120  supcon=3.2051  sigreg=0.0311
+  [supcon+sigreg] epoch 62/120  supcon=3.1912  sigreg=0.0314
+  [supcon+sigreg] epoch 63/120  supcon=3.1913  sigreg=0.0306
+  [supcon+sigreg] epoch 64/120  supcon=3.1948  sigreg=0.0314
+  [supcon+sigreg] epoch 65/120  supcon=3.1922  sigreg=0.0305
+  [supcon+sigreg] epoch 66/120  supcon=3.1868  sigreg=0.0322
+  [supcon+sigreg] epoch 67/120  supcon=3.1789  sigreg=0.0290
+  [supcon+sigreg] epoch 68/120  supcon=3.1875  sigreg=0.0299
+  [supcon+sigreg] epoch 69/120  supcon=3.1784  sigreg=0.0315
+  [supcon+sigreg] epoch 70/120  supcon=3.1803  sigreg=0.0304
+  [supcon+sigreg] epoch 71/120  supcon=3.1760  sigreg=0.0282
+  [supcon+sigreg] epoch 72/120  supcon=3.1747  sigreg=0.0299
+  [supcon+sigreg] epoch 73/120  supcon=3.1760  sigreg=0.0302
+  [supcon+sigreg] epoch 74/120  supcon=3.1775  sigreg=0.0289
+  [supcon+sigreg] epoch 75/120  supcon=3.1715  sigreg=0.0319
+  [supcon+sigreg] epoch 76/120  supcon=3.1715  sigreg=0.0285
+  [supcon+sigreg] epoch 77/120  supcon=3.1636  sigreg=0.0301
+  [supcon+sigreg] epoch 78/120  supcon=3.1739  sigreg=0.0287
+  [supcon+sigreg] epoch 79/120  supcon=3.1661  sigreg=0.0298
+  [supcon+sigreg] epoch 80/120  supcon=3.1648  sigreg=0.0307
+  [supcon+sigreg] epoch 81/120  supcon=3.1624  sigreg=0.0293
+  [supcon+sigreg] epoch 82/120  supcon=3.1546  sigreg=0.0284
+  [supcon+sigreg] epoch 83/120  supcon=3.1590  sigreg=0.0290
+  [supcon+sigreg] epoch 84/120  supcon=3.1610  sigreg=0.0308
+  [supcon+sigreg] epoch 85/120  supcon=3.1597  sigreg=0.0278
+  [supcon+sigreg] epoch 86/120  supcon=3.1545  sigreg=0.0288
+  [supcon+sigreg] epoch 87/120  supcon=3.1516  sigreg=0.0285
+  [supcon+sigreg] epoch 88/120  supcon=3.1536  sigreg=0.0315
+  [supcon+sigreg] epoch 89/120  supcon=3.1523  sigreg=0.0315
+  [supcon+sigreg] epoch 90/120  supcon=3.1527  sigreg=0.0293
+  [supcon+sigreg] epoch 91/120  supcon=3.1526  sigreg=0.0310
+  [supcon+sigreg] epoch 92/120  supcon=3.1553  sigreg=0.0281
+  [supcon+sigreg] epoch 93/120  supcon=3.1488  sigreg=0.0280
+  [supcon+sigreg] epoch 94/120  supcon=3.1426  sigreg=0.0279
+  [supcon+sigreg] epoch 95/120  supcon=3.1543  sigreg=0.0286
+  [supcon+sigreg] epoch 96/120  supcon=3.1417  sigreg=0.0259
+  [supcon+sigreg] epoch 97/120  supcon=3.1418  sigreg=0.0267
+  [supcon+sigreg] epoch 98/120  supcon=3.1408  sigreg=0.0283
+  [supcon+sigreg] epoch 99/120  supcon=3.1411  sigreg=0.0287
+  [supcon+sigreg] epoch 100/120  supcon=3.1459  sigreg=0.0284
+  [supcon+sigreg] epoch 101/120  supcon=3.1380  sigreg=0.0304
+  [supcon+sigreg] epoch 102/120  supcon=3.1448  sigreg=0.0288
+  [supcon+sigreg] epoch 103/120  supcon=3.1446  sigreg=0.0292
+  [supcon+sigreg] epoch 104/120  supcon=3.1410  sigreg=0.0288
+  [supcon+sigreg] epoch 105/120  supcon=3.1375  sigreg=0.0275
+  [supcon+sigreg] epoch 106/120  supcon=3.1328  sigreg=0.0282
+  [supcon+sigreg] epoch 107/120  supcon=3.1298  sigreg=0.0265
+  [supcon+sigreg] epoch 108/120  supcon=3.1496  sigreg=0.0297
+  [supcon+sigreg] epoch 109/120  supcon=3.1377  sigreg=0.0272
+  [supcon+sigreg] epoch 110/120  supcon=3.1325  sigreg=0.0277
+  [supcon+sigreg] epoch 111/120  supcon=3.1385  sigreg=0.0274
+  [supcon+sigreg] epoch 112/120  supcon=3.1290  sigreg=0.0259
+  [supcon+sigreg] epoch 113/120  supcon=3.1396  sigreg=0.0272
+  [supcon+sigreg] epoch 114/120  supcon=3.1312  sigreg=0.0285
+  [supcon+sigreg] epoch 115/120  supcon=3.1324  sigreg=0.0293
+  [supcon+sigreg] epoch 116/120  supcon=3.1275  sigreg=0.0280
+  [supcon+sigreg] epoch 117/120  supcon=3.1320  sigreg=0.0282
+  [supcon+sigreg] epoch 118/120  supcon=3.1297  sigreg=0.0281
+  [supcon+sigreg] epoch 119/120  supcon=3.1292  sigreg=0.0264
+  [supcon+sigreg] epoch 120/120  supcon=3.1323  sigreg=0.0277
+--- [dino] hybrid half (NT-Xent + SIGReg lam=5) ---
+  [simclr+sigreg] epoch 1/120  nt-xent=5.5234  sigreg=0.2508
+  [simclr+sigreg] epoch 2/120  nt-xent=5.3014  sigreg=0.0995
+  [simclr+sigreg] epoch 3/120  nt-xent=5.2539  sigreg=0.0789
+  [simclr+sigreg] epoch 4/120  nt-xent=5.2361  sigreg=0.0584
+  [simclr+sigreg] epoch 5/120  nt-xent=5.2013  sigreg=0.0441
+  [simclr+sigreg] epoch 6/120  nt-xent=5.1846  sigreg=0.0357
+  [simclr+sigreg] epoch 7/120  nt-xent=5.1745  sigreg=0.0335
+  [simclr+sigreg] epoch 8/120  nt-xent=5.1706  sigreg=0.0302
+  [simclr+sigreg] epoch 9/120  nt-xent=5.1589  sigreg=0.0282
+  [simclr+sigreg] epoch 10/120  nt-xent=5.1555  sigreg=0.0251
+  [simclr+sigreg] epoch 11/120  nt-xent=5.1494  sigreg=0.0245
+  [simclr+sigreg] epoch 12/120  nt-xent=5.1496  sigreg=0.0234
+  [simclr+sigreg] epoch 13/120  nt-xent=5.1434  sigreg=0.0237
+  [simclr+sigreg] epoch 14/120  nt-xent=5.1406  sigreg=0.0216
+  [simclr+sigreg] epoch 15/120  nt-xent=5.1408  sigreg=0.0224
+  [simclr+sigreg] epoch 16/120  nt-xent=5.1421  sigreg=0.0238
+  [simclr+sigreg] epoch 17/120  nt-xent=5.1405  sigreg=0.0210
+  [simclr+sigreg] epoch 18/120  nt-xent=5.1347  sigreg=0.0224
+  [simclr+sigreg] epoch 19/120  nt-xent=5.1317  sigreg=0.0217
+  [simclr+sigreg] epoch 20/120  nt-xent=5.1287  sigreg=0.0191
+  [simclr+sigreg] epoch 21/120  nt-xent=5.1217  sigreg=0.0185
+  [simclr+sigreg] epoch 22/120  nt-xent=5.1248  sigreg=0.0188
+  [simclr+sigreg] epoch 23/120  nt-xent=5.1221  sigreg=0.0182
+  [simclr+sigreg] epoch 24/120  nt-xent=5.1197  sigreg=0.0190
+  [simclr+sigreg] epoch 25/120  nt-xent=5.1198  sigreg=0.0193
+  [simclr+sigreg] epoch 26/120  nt-xent=5.1172  sigreg=0.0193
+  [simclr+sigreg] epoch 27/120  nt-xent=5.1163  sigreg=0.0182
+  [simclr+sigreg] epoch 28/120  nt-xent=5.1137  sigreg=0.0200
+  [simclr+sigreg] epoch 29/120  nt-xent=5.1160  sigreg=0.0209
+  [simclr+sigreg] epoch 30/120  nt-xent=5.1147  sigreg=0.0203
+  [simclr+sigreg] epoch 31/120  nt-xent=5.1100  sigreg=0.0190
+  [simclr+sigreg] epoch 32/120  nt-xent=5.1105  sigreg=0.0223
+  [simclr+sigreg] epoch 33/120  nt-xent=5.1119  sigreg=0.0200
+  [simclr+sigreg] epoch 34/120  nt-xent=5.1100  sigreg=0.0205
+  [simclr+sigreg] epoch 35/120  nt-xent=5.1081  sigreg=0.0194
+  [simclr+sigreg] epoch 36/120  nt-xent=5.1055  sigreg=0.0192
+  [simclr+sigreg] epoch 37/120  nt-xent=5.1042  sigreg=0.0184
+  [simclr+sigreg] epoch 38/120  nt-xent=5.1016  sigreg=0.0181
+  [simclr+sigreg] epoch 39/120  nt-xent=5.1017  sigreg=0.0178
+  [simclr+sigreg] epoch 40/120  nt-xent=5.0976  sigreg=0.0183
+  [simclr+sigreg] epoch 41/120  nt-xent=5.0991  sigreg=0.0173
+  [simclr+sigreg] epoch 42/120  nt-xent=5.0953  sigreg=0.0163
+  [simclr+sigreg] epoch 43/120  nt-xent=5.0950  sigreg=0.0188
+  [simclr+sigreg] epoch 44/120  nt-xent=5.0951  sigreg=0.0184
+  [simclr+sigreg] epoch 45/120  nt-xent=5.0971  sigreg=0.0179
+  [simclr+sigreg] epoch 46/120  nt-xent=5.0882  sigreg=0.0170
+  [simclr+sigreg] epoch 47/120  nt-xent=5.0923  sigreg=0.0189
+  [simclr+sigreg] epoch 48/120  nt-xent=5.0894  sigreg=0.0168
+  [simclr+sigreg] epoch 49/120  nt-xent=5.0884  sigreg=0.0162
+  [simclr+sigreg] epoch 50/120  nt-xent=5.0879  sigreg=0.0158
+  [simclr+sigreg] epoch 51/120  nt-xent=5.0874  sigreg=0.0168
+  [simclr+sigreg] epoch 52/120  nt-xent=5.0861  sigreg=0.0161
+  [simclr+sigreg] epoch 53/120  nt-xent=5.0848  sigreg=0.0162
+  [simclr+sigreg] epoch 54/120  nt-xent=5.0841  sigreg=0.0161
+  [simclr+sigreg] epoch 55/120  nt-xent=5.0843  sigreg=0.0168
+  [simclr+sigreg] epoch 56/120  nt-xent=5.0835  sigreg=0.0163
+  [simclr+sigreg] epoch 57/120  nt-xent=5.0808  sigreg=0.0152
+  [simclr+sigreg] epoch 58/120  nt-xent=5.0801  sigreg=0.0146
+  [simclr+sigreg] epoch 59/120  nt-xent=5.0810  sigreg=0.0154
+  [simclr+sigreg] epoch 60/120  nt-xent=5.0802  sigreg=0.0160
+  [simclr+sigreg] epoch 61/120  nt-xent=5.0766  sigreg=0.0168
+  [simclr+sigreg] epoch 62/120  nt-xent=5.0791  sigreg=0.0162
+  [simclr+sigreg] epoch 63/120  nt-xent=5.0778  sigreg=0.0147
+  [simclr+sigreg] epoch 64/120  nt-xent=5.0746  sigreg=0.0150
+  [simclr+sigreg] epoch 65/120  nt-xent=5.0745  sigreg=0.0138
+  [simclr+sigreg] epoch 66/120  nt-xent=5.0761  sigreg=0.0159
+  [simclr+sigreg] epoch 67/120  nt-xent=5.0726  sigreg=0.0150
+  [simclr+sigreg] epoch 68/120  nt-xent=5.0748  sigreg=0.0150
+  [simclr+sigreg] epoch 69/120  nt-xent=5.0723  sigreg=0.0149
+  [simclr+sigreg] epoch 70/120  nt-xent=5.0729  sigreg=0.0148
+  [simclr+sigreg] epoch 71/120  nt-xent=5.0725  sigreg=0.0154
+  [simclr+sigreg] epoch 72/120  nt-xent=5.0698  sigreg=0.0146
+  [simclr+sigreg] epoch 73/120  nt-xent=5.0713  sigreg=0.0135
+  [simclr+sigreg] epoch 74/120  nt-xent=5.0700  sigreg=0.0148
+  [simclr+sigreg] epoch 75/120  nt-xent=5.0679  sigreg=0.0143
+  [simclr+sigreg] epoch 76/120  nt-xent=5.0670  sigreg=0.0138
+  [simclr+sigreg] epoch 77/120  nt-xent=5.0686  sigreg=0.0144
+  [simclr+sigreg] epoch 78/120  nt-xent=5.0660  sigreg=0.0144
+  [simclr+sigreg] epoch 79/120  nt-xent=5.0659  sigreg=0.0135
+  [simclr+sigreg] epoch 80/120  nt-xent=5.0662  sigreg=0.0137
+  [simclr+sigreg] epoch 81/120  nt-xent=5.0649  sigreg=0.0135
+  [simclr+sigreg] epoch 82/120  nt-xent=5.0631  sigreg=0.0138
+  [simclr+sigreg] epoch 83/120  nt-xent=5.0655  sigreg=0.0133
+  [simclr+sigreg] epoch 84/120  nt-xent=5.0632  sigreg=0.0136
+  [simclr+sigreg] epoch 85/120  nt-xent=5.0625  sigreg=0.0139
+  [simclr+sigreg] epoch 86/120  nt-xent=5.0613  sigreg=0.0141
+  [simclr+sigreg] epoch 87/120  nt-xent=5.0609  sigreg=0.0137
+  [simclr+sigreg] epoch 88/120  nt-xent=5.0612  sigreg=0.0135
+  [simclr+sigreg] epoch 89/120  nt-xent=5.0619  sigreg=0.0146
+  [simclr+sigreg] epoch 90/120  nt-xent=5.0614  sigreg=0.0140
+  [simclr+sigreg] epoch 91/120  nt-xent=5.0601  sigreg=0.0135
+  [simclr+sigreg] epoch 92/120  nt-xent=5.0602  sigreg=0.0141
+  [simclr+sigreg] epoch 93/120  nt-xent=5.0597  sigreg=0.0136
+  [simclr+sigreg] epoch 94/120  nt-xent=5.0573  sigreg=0.0129
+  [simclr+sigreg] epoch 95/120  nt-xent=5.0572  sigreg=0.0140
+  [simclr+sigreg] epoch 96/120  nt-xent=5.0584  sigreg=0.0132
+  [simclr+sigreg] epoch 97/120  nt-xent=5.0569  sigreg=0.0134
+  [simclr+sigreg] epoch 98/120  nt-xent=5.0542  sigreg=0.0125
+  [simclr+sigreg] epoch 99/120  nt-xent=5.0561  sigreg=0.0127
+  [simclr+sigreg] epoch 100/120  nt-xent=5.0561  sigreg=0.0135
+  [simclr+sigreg] epoch 101/120  nt-xent=5.0564  sigreg=0.0134
+  [simclr+sigreg] epoch 102/120  nt-xent=5.0560  sigreg=0.0132
+  [simclr+sigreg] epoch 103/120  nt-xent=5.0573  sigreg=0.0139
+  [simclr+sigreg] epoch 104/120  nt-xent=5.0563  sigreg=0.0132
+  [simclr+sigreg] epoch 105/120  nt-xent=5.0526  sigreg=0.0132
+  [simclr+sigreg] epoch 106/120  nt-xent=5.0535  sigreg=0.0136
+  [simclr+sigreg] epoch 107/120  nt-xent=5.0531  sigreg=0.0141
+  [simclr+sigreg] epoch 108/120  nt-xent=5.0511  sigreg=0.0123
+  [simclr+sigreg] epoch 109/120  nt-xent=5.0523  sigreg=0.0127
+  [simclr+sigreg] epoch 110/120  nt-xent=5.0515  sigreg=0.0137
+  [simclr+sigreg] epoch 111/120  nt-xent=5.0504  sigreg=0.0130
+  [simclr+sigreg] epoch 112/120  nt-xent=5.0496  sigreg=0.0130
+  [simclr+sigreg] epoch 113/120  nt-xent=5.0510  sigreg=0.0130
+  [simclr+sigreg] epoch 114/120  nt-xent=5.0498  sigreg=0.0130
+  [simclr+sigreg] epoch 115/120  nt-xent=5.0481  sigreg=0.0122
+  [simclr+sigreg] epoch 116/120  nt-xent=5.0475  sigreg=0.0122
+  [simclr+sigreg] epoch 117/120  nt-xent=5.0474  sigreg=0.0127
+  [simclr+sigreg] epoch 118/120  nt-xent=5.0475  sigreg=0.0124
+  [simclr+sigreg] epoch 119/120  nt-xent=5.0481  sigreg=0.0131
+  [simclr+sigreg] epoch 120/120  nt-xent=5.0466  sigreg=0.0128
+--- [dino] SupCon (aug) reference ---
+  [supcon] epoch 1/120  loss=5.6386
+  [supcon] epoch 2/120  loss=4.9624
+  [supcon] epoch 3/120  loss=4.6858
+  [supcon] epoch 4/120  loss=4.5011
+  [supcon] epoch 5/120  loss=4.3234
+  [supcon] epoch 6/120  loss=4.2069
+  [supcon] epoch 7/120  loss=4.0767
+  [supcon] epoch 8/120  loss=3.9697
+  [supcon] epoch 9/120  loss=3.8432
+  [supcon] epoch 10/120  loss=3.7566
+  [supcon] epoch 11/120  loss=3.6618
+  [supcon] epoch 12/120  loss=3.5836
+  [supcon] epoch 13/120  loss=3.5245
+  [supcon] epoch 14/120  loss=3.4753
+  [supcon] epoch 15/120  loss=3.4258
+  [supcon] epoch 16/120  loss=3.3830
+  [supcon] epoch 17/120  loss=3.3503
+  [supcon] epoch 18/120  loss=3.3200
+  [supcon] epoch 19/120  loss=3.2992
+  [supcon] epoch 20/120  loss=3.2807
+  [supcon] epoch 21/120  loss=3.2609
+  [supcon] epoch 22/120  loss=3.2397
+  [supcon] epoch 23/120  loss=3.2311
+  [supcon] epoch 24/120  loss=3.2143
+  [supcon] epoch 25/120  loss=3.2177
+  [supcon] epoch 26/120  loss=3.2041
+  [supcon] epoch 27/120  loss=3.1935
+  [supcon] epoch 28/120  loss=3.1905
+  [supcon] epoch 29/120  loss=3.1848
+  [supcon] epoch 30/120  loss=3.1796
+  [supcon] epoch 31/120  loss=3.1645
+  [supcon] epoch 32/120  loss=3.1675
+  [supcon] epoch 33/120  loss=3.1624
+  [supcon] epoch 34/120  loss=3.1559
+  [supcon] epoch 35/120  loss=3.1569
+  [supcon] epoch 36/120  loss=3.1481
+  [supcon] epoch 37/120  loss=3.1398
+  [supcon] epoch 38/120  loss=3.1379
+  [supcon] epoch 39/120  loss=3.1357
+  [supcon] epoch 40/120  loss=3.1366
+  [supcon] epoch 41/120  loss=3.1316
+  [supcon] epoch 42/120  loss=3.1341
+  [supcon] epoch 43/120  loss=3.1428
+  [supcon] epoch 44/120  loss=3.1311
+  [supcon] epoch 45/120  loss=3.1276
+  [supcon] epoch 46/120  loss=3.1265
+  [supcon] epoch 47/120  loss=3.1256
+  [supcon] epoch 48/120  loss=3.1226
+  [supcon] epoch 49/120  loss=3.1190
+  [supcon] epoch 50/120  loss=3.1226
+  [supcon] epoch 51/120  loss=3.1177
+  [supcon] epoch 52/120  loss=3.1165
+  [supcon] epoch 53/120  loss=3.1179
+  [supcon] epoch 54/120  loss=3.1164
+  [supcon] epoch 55/120  loss=3.1146
+  [supcon] epoch 56/120  loss=3.1138
+  [supcon] epoch 57/120  loss=3.1117
+  [supcon] epoch 58/120  loss=3.1148
+  [supcon] epoch 59/120  loss=3.1114
+  [supcon] epoch 60/120  loss=3.1099
+  [supcon] epoch 61/120  loss=3.1056
+  [supcon] epoch 62/120  loss=3.1149
+  [supcon] epoch 63/120  loss=3.1053
+  [supcon] epoch 64/120  loss=3.1069
+  [supcon] epoch 65/120  loss=3.1044
+  [supcon] epoch 66/120  loss=3.1053
+  [supcon] epoch 67/120  loss=3.0987
+  [supcon] epoch 68/120  loss=3.1069
+  [supcon] epoch 69/120  loss=3.1058
+  [supcon] epoch 70/120  loss=3.1050
+  [supcon] epoch 71/120  loss=3.1006
+  [supcon] epoch 72/120  loss=3.1093
+  [supcon] epoch 73/120  loss=3.1002
+  [supcon] epoch 74/120  loss=3.1042
+  [supcon] epoch 75/120  loss=3.0977
+  [supcon] epoch 76/120  loss=3.0969
+  [supcon] epoch 77/120  loss=3.0976
+  [supcon] epoch 78/120  loss=3.0920
+  [supcon] epoch 79/120  loss=3.0975
+  [supcon] epoch 80/120  loss=3.0981
+  [supcon] epoch 81/120  loss=3.1005
+  [supcon] epoch 82/120  loss=3.0985
+  [supcon] epoch 83/120  loss=3.0910
+  [supcon] epoch 84/120  loss=3.1026
+  [supcon] epoch 85/120  loss=3.0945
+  [supcon] epoch 86/120  loss=3.0950
+  [supcon] epoch 87/120  loss=3.0953
+  [supcon] epoch 88/120  loss=3.1075
+  [supcon] epoch 89/120  loss=3.0938
+  [supcon] epoch 90/120  loss=3.0899
+  [supcon] epoch 91/120  loss=3.0999
+  [supcon] epoch 92/120  loss=3.0976
+  [supcon] epoch 93/120  loss=3.0989
+  [supcon] epoch 94/120  loss=3.1014
+  [supcon] epoch 95/120  loss=3.0986
+  [supcon] epoch 96/120  loss=3.1012
+  [supcon] epoch 97/120  loss=3.0943
+  [supcon] epoch 98/120  loss=3.0900
+  [supcon] epoch 99/120  loss=3.0942
+  [supcon] epoch 100/120  loss=3.0989
+  [supcon] epoch 101/120  loss=3.0898
+  [supcon] epoch 102/120  loss=3.0915
+  [supcon] epoch 103/120  loss=3.0985
+  [supcon] epoch 104/120  loss=3.0907
+  [supcon] epoch 105/120  loss=3.0930
+  [supcon] epoch 106/120  loss=3.0917
+  [supcon] epoch 107/120  loss=3.0919
+  [supcon] epoch 108/120  loss=3.0857
+  [supcon] epoch 109/120  loss=3.0892
+  [supcon] epoch 110/120  loss=3.0961
+  [supcon] epoch 111/120  loss=3.0824
+  [supcon] epoch 112/120  loss=3.0851
+  [supcon] epoch 113/120  loss=3.0874
+  [supcon] epoch 114/120  loss=3.0833
+  [supcon] epoch 115/120  loss=3.0850
+  [supcon] epoch 116/120  loss=3.0873
+  [supcon] epoch 117/120  loss=3.0807
+  [supcon] epoch 118/120  loss=3.0894
+  [supcon] epoch 119/120  loss=3.0801
+  [supcon] epoch 120/120  loss=3.0928
+--- [dino] supcon->res-hybrid (residual, augmented) ---
+  [simclr-residual] epoch 1/120  loss=5.5155  sigreg=0.5006
+  [simclr-residual] epoch 2/120  loss=5.2523  sigreg=0.1802
+  [simclr-residual] epoch 3/120  loss=5.2425  sigreg=0.1139
+  [simclr-residual] epoch 4/120  loss=5.1964  sigreg=0.0784
+  [simclr-residual] epoch 5/120  loss=5.1751  sigreg=0.0683
+  [simclr-residual] epoch 6/120  loss=5.1715  sigreg=0.0564
+  [simclr-residual] epoch 7/120  loss=5.1677  sigreg=0.0514
+  [simclr-residual] epoch 8/120  loss=5.1575  sigreg=0.0507
+  [simclr-residual] epoch 9/120  loss=5.1472  sigreg=0.0428
+  [simclr-residual] epoch 10/120  loss=5.1446  sigreg=0.0411
+  [simclr-residual] epoch 11/120  loss=5.1450  sigreg=0.0407
+  [simclr-residual] epoch 12/120  loss=5.1364  sigreg=0.0396
+  [simclr-residual] epoch 13/120  loss=5.1306  sigreg=0.0368
+  [simclr-residual] epoch 14/120  loss=5.1251  sigreg=0.0379
+  [simclr-residual] epoch 15/120  loss=5.1201  sigreg=0.0344
+  [simclr-residual] epoch 16/120  loss=5.1202  sigreg=0.0338
+  [simclr-residual] epoch 17/120  loss=5.1169  sigreg=0.0324
+  [simclr-residual] epoch 18/120  loss=5.1150  sigreg=0.0322
+  [simclr-residual] epoch 19/120  loss=5.1122  sigreg=0.0300
+  [simclr-residual] epoch 20/120  loss=5.1105  sigreg=0.0302
+  [simclr-residual] epoch 21/120  loss=5.1085  sigreg=0.0298
+  [simclr-residual] epoch 22/120  loss=5.1031  sigreg=0.0267
+  [simclr-residual] epoch 23/120  loss=5.1030  sigreg=0.0281
+  [simclr-residual] epoch 24/120  loss=5.1013  sigreg=0.0295
+  [simclr-residual] epoch 25/120  loss=5.1000  sigreg=0.0295
+  [simclr-residual] epoch 26/120  loss=5.0989  sigreg=0.0280
+  [simclr-residual] epoch 27/120  loss=5.0948  sigreg=0.0254
+  [simclr-residual] epoch 28/120  loss=5.0937  sigreg=0.0265
+  [simclr-residual] epoch 29/120  loss=5.0908  sigreg=0.0260
+  [simclr-residual] epoch 30/120  loss=5.0886  sigreg=0.0248
+  [simclr-residual] epoch 31/120  loss=5.0864  sigreg=0.0240
+  [simclr-residual] epoch 32/120  loss=5.0872  sigreg=0.0258
+  [simclr-residual] epoch 33/120  loss=5.0848  sigreg=0.0271
+  [simclr-residual] epoch 34/120  loss=5.0845  sigreg=0.0258
+  [simclr-residual] epoch 35/120  loss=5.0833  sigreg=0.0219
+  [simclr-residual] epoch 36/120  loss=5.0804  sigreg=0.0275
+  [simclr-residual] epoch 37/120  loss=5.0798  sigreg=0.0247
+  [simclr-residual] epoch 38/120  loss=5.0785  sigreg=0.0235
+  [simclr-residual] epoch 39/120  loss=5.0783  sigreg=0.0246
+  [simclr-residual] epoch 40/120  loss=5.0752  sigreg=0.0253
+  [simclr-residual] epoch 41/120  loss=5.0743  sigreg=0.0224
+  [simclr-residual] epoch 42/120  loss=5.0726  sigreg=0.0239
+  [simclr-residual] epoch 43/120  loss=5.0731  sigreg=0.0225
+  [simclr-residual] epoch 44/120  loss=5.0718  sigreg=0.0212
+  [simclr-residual] epoch 45/120  loss=5.0728  sigreg=0.0253
+  [simclr-residual] epoch 46/120  loss=5.0716  sigreg=0.0242
+  [simclr-residual] epoch 47/120  loss=5.0710  sigreg=0.0230
+  [simclr-residual] epoch 48/120  loss=5.0679  sigreg=0.0224
+  [simclr-residual] epoch 49/120  loss=5.0688  sigreg=0.0212
+  [simclr-residual] epoch 50/120  loss=5.0674  sigreg=0.0213
+  [simclr-residual] epoch 51/120  loss=5.0666  sigreg=0.0219
+  [simclr-residual] epoch 52/120  loss=5.0657  sigreg=0.0222
+  [simclr-residual] epoch 53/120  loss=5.0641  sigreg=0.0213
+  [simclr-residual] epoch 54/120  loss=5.0640  sigreg=0.0207
+  [simclr-residual] epoch 55/120  loss=5.0610  sigreg=0.0208
+  [simclr-residual] epoch 56/120  loss=5.0617  sigreg=0.0202
+  [simclr-residual] epoch 57/120  loss=5.0607  sigreg=0.0220
+  [simclr-residual] epoch 58/120  loss=5.0592  sigreg=0.0200
+  [simclr-residual] epoch 59/120  loss=5.0594  sigreg=0.0204
+  [simclr-residual] epoch 60/120  loss=5.0583  sigreg=0.0215
+  [simclr-residual] epoch 61/120  loss=5.0574  sigreg=0.0202
+  [simclr-residual] epoch 62/120  loss=5.0567  sigreg=0.0208
+  [simclr-residual] epoch 63/120  loss=5.0560  sigreg=0.0201
+  [simclr-residual] epoch 64/120  loss=5.0548  sigreg=0.0190
+  [simclr-residual] epoch 65/120  loss=5.0548  sigreg=0.0191
+  [simclr-residual] epoch 66/120  loss=5.0538  sigreg=0.0198
+  [simclr-residual] epoch 67/120  loss=5.0525  sigreg=0.0189
+  [simclr-residual] epoch 68/120  loss=5.0520  sigreg=0.0194
+  [simclr-residual] epoch 69/120  loss=5.0518  sigreg=0.0183
+  [simclr-residual] epoch 70/120  loss=5.0495  sigreg=0.0197
+  [simclr-residual] epoch 71/120  loss=5.0515  sigreg=0.0189
+  [simclr-residual] epoch 72/120  loss=5.0513  sigreg=0.0194
+  [simclr-residual] epoch 73/120  loss=5.0509  sigreg=0.0209
+  [simclr-residual] epoch 74/120  loss=5.0493  sigreg=0.0193
+  [simclr-residual] epoch 75/120  loss=5.0490  sigreg=0.0186
+  [simclr-residual] epoch 76/120  loss=5.0477  sigreg=0.0184
+  [simclr-residual] epoch 77/120  loss=5.0472  sigreg=0.0200
+  [simclr-residual] epoch 78/120  loss=5.0459  sigreg=0.0177
+  [simclr-residual] epoch 79/120  loss=5.0471  sigreg=0.0179
+  [simclr-residual] epoch 80/120  loss=5.0470  sigreg=0.0184
+  [simclr-residual] epoch 81/120  loss=5.0452  sigreg=0.0187
+  [simclr-residual] epoch 82/120  loss=5.0432  sigreg=0.0184
+  [simclr-residual] epoch 83/120  loss=5.0429  sigreg=0.0172
+  [simclr-residual] epoch 84/120  loss=5.0427  sigreg=0.0166
+  [simclr-residual] epoch 85/120  loss=5.0420  sigreg=0.0186
+  [simclr-residual] epoch 86/120  loss=5.0425  sigreg=0.0178
+  [simclr-residual] epoch 87/120  loss=5.0437  sigreg=0.0177
+  [simclr-residual] epoch 88/120  loss=5.0421  sigreg=0.0176
+  [simclr-residual] epoch 89/120  loss=5.0415  sigreg=0.0173
+  [simclr-residual] epoch 90/120  loss=5.0400  sigreg=0.0176
+  [simclr-residual] epoch 91/120  loss=5.0387  sigreg=0.0177
+  [simclr-residual] epoch 92/120  loss=5.0398  sigreg=0.0174
+  [simclr-residual] epoch 93/120  loss=5.0392  sigreg=0.0168
+  [simclr-residual] epoch 94/120  loss=5.0388  sigreg=0.0179
+  [simclr-residual] epoch 95/120  loss=5.0380  sigreg=0.0167
+  [simclr-residual] epoch 96/120  loss=5.0384  sigreg=0.0173
+  [simclr-residual] epoch 97/120  loss=5.0380  sigreg=0.0169
+  [simclr-residual] epoch 98/120  loss=5.0350  sigreg=0.0154
+  [simclr-residual] epoch 99/120  loss=5.0360  sigreg=0.0178
+  [simclr-residual] epoch 100/120  loss=5.0357  sigreg=0.0162
+  [simclr-residual] epoch 101/120  loss=5.0374  sigreg=0.0171
+  [simclr-residual] epoch 102/120  loss=5.0358  sigreg=0.0172
+  [simclr-residual] epoch 103/120  loss=5.0344  sigreg=0.0162
+  [simclr-residual] epoch 104/120  loss=5.0352  sigreg=0.0172
+  [simclr-residual] epoch 105/120  loss=5.0345  sigreg=0.0168
+  [simclr-residual] epoch 106/120  loss=5.0334  sigreg=0.0175
+  [simclr-residual] epoch 107/120  loss=5.0336  sigreg=0.0156
+  [simclr-residual] epoch 108/120  loss=5.0331  sigreg=0.0177
+  [simclr-residual] epoch 109/120  loss=5.0330  sigreg=0.0163
+  [simclr-residual] epoch 110/120  loss=5.0327  sigreg=0.0149
+  [simclr-residual] epoch 111/120  loss=5.0334  sigreg=0.0169
+  [simclr-residual] epoch 112/120  loss=5.0306  sigreg=0.0153
+  [simclr-residual] epoch 113/120  loss=5.0322  sigreg=0.0150
+  [simclr-residual] epoch 114/120  loss=5.0315  sigreg=0.0164
+  [simclr-residual] epoch 115/120  loss=5.0307  sigreg=0.0152
+  [simclr-residual] epoch 116/120  loss=5.0299  sigreg=0.0157
+  [simclr-residual] epoch 117/120  loss=5.0291  sigreg=0.0149
+  [simclr-residual] epoch 118/120  loss=5.0298  sigreg=0.0147
+  [simclr-residual] epoch 119/120  loss=5.0300  sigreg=0.0148
+  [simclr-residual] epoch 120/120  loss=5.0297  sigreg=0.0151
+  [dino] SupCon+SIGReg (ss[lam5])           77.1
+  [dino] ss[lam5]+hybrid (concat)           78.0
+  [dino] SupCon (aug), rerun                75.5
+  [dino] supcon+hybrid (parallel), rerun    77.6
+  [dino] supcon->res-hybrid (concat)        76.9
+
+################ base: LeJEPA ViT-B/16 (community repro) ################
+  cached plain features: /home/pharris/sigreg/SuperSig/data/dtd_feats_lejepa_vitb16.pt
+  cached aug bank: /home/pharris/sigreg/SuperSig/data/dtd_augfeats_lejepa_vitb16_a24.pt
+--- [lejepa] ss[lam5]: SupCon + SIGReg on raw z ---
+  [supcon+sigreg] epoch 1/120  supcon=5.7204  sigreg=0.7973
+  [supcon+sigreg] epoch 2/120  supcon=5.2330  sigreg=0.6319
+  [supcon+sigreg] epoch 3/120  supcon=5.1308  sigreg=0.4504
+  [supcon+sigreg] epoch 4/120  supcon=5.1209  sigreg=0.2985
+  [supcon+sigreg] epoch 5/120  supcon=5.1252  sigreg=0.1866
+  [supcon+sigreg] epoch 6/120  supcon=5.1028  sigreg=0.1366
+  [supcon+sigreg] epoch 7/120  supcon=5.0149  sigreg=0.1093
+  [supcon+sigreg] epoch 8/120  supcon=4.9185  sigreg=0.1000
+  [supcon+sigreg] epoch 9/120  supcon=4.8667  sigreg=0.1004
+  [supcon+sigreg] epoch 10/120  supcon=4.7685  sigreg=0.0865
+  [supcon+sigreg] epoch 11/120  supcon=4.7214  sigreg=0.0843
+  [supcon+sigreg] epoch 12/120  supcon=4.6543  sigreg=0.0800
+  [supcon+sigreg] epoch 13/120  supcon=4.6032  sigreg=0.0762
+  [supcon+sigreg] epoch 14/120  supcon=4.5821  sigreg=0.0766
+  [supcon+sigreg] epoch 15/120  supcon=4.5219  sigreg=0.0734
+  [supcon+sigreg] epoch 16/120  supcon=4.4919  sigreg=0.0741
+  [supcon+sigreg] epoch 17/120  supcon=4.4536  sigreg=0.0655
+  [supcon+sigreg] epoch 18/120  supcon=4.4115  sigreg=0.0639
+  [supcon+sigreg] epoch 19/120  supcon=4.3722  sigreg=0.0714
+  [supcon+sigreg] epoch 20/120  supcon=4.3368  sigreg=0.0596
+  [supcon+sigreg] epoch 21/120  supcon=4.3128  sigreg=0.0678
+  [supcon+sigreg] epoch 22/120  supcon=4.2709  sigreg=0.0605
+  [supcon+sigreg] epoch 23/120  supcon=4.2483  sigreg=0.0609
+  [supcon+sigreg] epoch 24/120  supcon=4.2142  sigreg=0.0629
+  [supcon+sigreg] epoch 25/120  supcon=4.1810  sigreg=0.0622
+  [supcon+sigreg] epoch 26/120  supcon=4.1571  sigreg=0.0637
+  [supcon+sigreg] epoch 27/120  supcon=4.1242  sigreg=0.0587
+  [supcon+sigreg] epoch 28/120  supcon=4.1039  sigreg=0.0567
+  [supcon+sigreg] epoch 29/120  supcon=4.0757  sigreg=0.0575
+  [supcon+sigreg] epoch 30/120  supcon=4.0396  sigreg=0.0585
+  [supcon+sigreg] epoch 31/120  supcon=4.0321  sigreg=0.0565
+  [supcon+sigreg] epoch 32/120  supcon=4.0082  sigreg=0.0556
+  [supcon+sigreg] epoch 33/120  supcon=3.9837  sigreg=0.0585
+  [supcon+sigreg] epoch 34/120  supcon=3.9432  sigreg=0.0595
+  [supcon+sigreg] epoch 35/120  supcon=3.9334  sigreg=0.0552
+  [supcon+sigreg] epoch 36/120  supcon=3.9095  sigreg=0.0533
+  [supcon+sigreg] epoch 37/120  supcon=3.8985  sigreg=0.0591
+  [supcon+sigreg] epoch 38/120  supcon=3.8752  sigreg=0.0531
+  [supcon+sigreg] epoch 39/120  supcon=3.8562  sigreg=0.0553
+  [supcon+sigreg] epoch 40/120  supcon=3.8255  sigreg=0.0518
+  [supcon+sigreg] epoch 41/120  supcon=3.7966  sigreg=0.0556
+  [supcon+sigreg] epoch 42/120  supcon=3.7908  sigreg=0.0537
+  [supcon+sigreg] epoch 43/120  supcon=3.7692  sigreg=0.0548
+  [supcon+sigreg] epoch 44/120  supcon=3.7612  sigreg=0.0512
+  [supcon+sigreg] epoch 45/120  supcon=3.7418  sigreg=0.0504
+  [supcon+sigreg] epoch 46/120  supcon=3.7251  sigreg=0.0536
+  [supcon+sigreg] epoch 47/120  supcon=3.7037  sigreg=0.0517
+  [supcon+sigreg] epoch 48/120  supcon=3.6978  sigreg=0.0570
+  [supcon+sigreg] epoch 49/120  supcon=3.6724  sigreg=0.0557
+  [supcon+sigreg] epoch 50/120  supcon=3.6622  sigreg=0.0503
+  [supcon+sigreg] epoch 51/120  supcon=3.6497  sigreg=0.0475
+  [supcon+sigreg] epoch 52/120  supcon=3.6294  sigreg=0.0512
+  [supcon+sigreg] epoch 53/120  supcon=3.6116  sigreg=0.0465
+  [supcon+sigreg] epoch 54/120  supcon=3.6070  sigreg=0.0531
+  [supcon+sigreg] epoch 55/120  supcon=3.5996  sigreg=0.0505
+  [supcon+sigreg] epoch 56/120  supcon=3.5841  sigreg=0.0522
+  [supcon+sigreg] epoch 57/120  supcon=3.5783  sigreg=0.0531
+  [supcon+sigreg] epoch 58/120  supcon=3.5536  sigreg=0.0496
+  [supcon+sigreg] epoch 59/120  supcon=3.5443  sigreg=0.0553
+  [supcon+sigreg] epoch 60/120  supcon=3.5536  sigreg=0.0504
+  [supcon+sigreg] epoch 61/120  supcon=3.5292  sigreg=0.0511
+  [supcon+sigreg] epoch 62/120  supcon=3.5177  sigreg=0.0528
+  [supcon+sigreg] epoch 63/120  supcon=3.5094  sigreg=0.0521
+  [supcon+sigreg] epoch 64/120  supcon=3.4966  sigreg=0.0461
+  [supcon+sigreg] epoch 65/120  supcon=3.5033  sigreg=0.0506
+  [supcon+sigreg] epoch 66/120  supcon=3.4810  sigreg=0.0512
+  [supcon+sigreg] epoch 67/120  supcon=3.4659  sigreg=0.0511
+  [supcon+sigreg] epoch 68/120  supcon=3.4790  sigreg=0.0471
+  [supcon+sigreg] epoch 69/120  supcon=3.4556  sigreg=0.0510
+  [supcon+sigreg] epoch 70/120  supcon=3.4456  sigreg=0.0481
+  [supcon+sigreg] epoch 71/120  supcon=3.4389  sigreg=0.0481
+  [supcon+sigreg] epoch 72/120  supcon=3.4313  sigreg=0.0462
+  [supcon+sigreg] epoch 73/120  supcon=3.4351  sigreg=0.0499
+  [supcon+sigreg] epoch 74/120  supcon=3.4267  sigreg=0.0458
+  [supcon+sigreg] epoch 75/120  supcon=3.4143  sigreg=0.0515
+  [supcon+sigreg] epoch 76/120  supcon=3.4043  sigreg=0.0455
+  [supcon+sigreg] epoch 77/120  supcon=3.3910  sigreg=0.0506
+  [supcon+sigreg] epoch 78/120  supcon=3.4013  sigreg=0.0482
+  [supcon+sigreg] epoch 79/120  supcon=3.3925  sigreg=0.0476
+  [supcon+sigreg] epoch 80/120  supcon=3.3887  sigreg=0.0488
+  [supcon+sigreg] epoch 81/120  supcon=3.3813  sigreg=0.0444
+  [supcon+sigreg] epoch 82/120  supcon=3.3653  sigreg=0.0451
+  [supcon+sigreg] epoch 83/120  supcon=3.3774  sigreg=0.0489
+  [supcon+sigreg] epoch 84/120  supcon=3.3625  sigreg=0.0433
+  [supcon+sigreg] epoch 85/120  supcon=3.3574  sigreg=0.0461
+  [supcon+sigreg] epoch 86/120  supcon=3.3543  sigreg=0.0487
+  [supcon+sigreg] epoch 87/120  supcon=3.3456  sigreg=0.0452
+  [supcon+sigreg] epoch 88/120  supcon=3.3531  sigreg=0.0458
+  [supcon+sigreg] epoch 89/120  supcon=3.3385  sigreg=0.0461
+  [supcon+sigreg] epoch 90/120  supcon=3.3440  sigreg=0.0435
+  [supcon+sigreg] epoch 91/120  supcon=3.3325  sigreg=0.0446
+  [supcon+sigreg] epoch 92/120  supcon=3.3338  sigreg=0.0473
+  [supcon+sigreg] epoch 93/120  supcon=3.3290  sigreg=0.0432
+  [supcon+sigreg] epoch 94/120  supcon=3.3188  sigreg=0.0471
+  [supcon+sigreg] epoch 95/120  supcon=3.3222  sigreg=0.0456
+  [supcon+sigreg] epoch 96/120  supcon=3.3075  sigreg=0.0443
+  [supcon+sigreg] epoch 97/120  supcon=3.3044  sigreg=0.0495
+  [supcon+sigreg] epoch 98/120  supcon=3.3038  sigreg=0.0486
+  [supcon+sigreg] epoch 99/120  supcon=3.3005  sigreg=0.0457
+  [supcon+sigreg] epoch 100/120  supcon=3.3057  sigreg=0.0441
+  [supcon+sigreg] epoch 101/120  supcon=3.2980  sigreg=0.0475
+  [supcon+sigreg] epoch 102/120  supcon=3.3009  sigreg=0.0481
+  [supcon+sigreg] epoch 103/120  supcon=3.3002  sigreg=0.0436
+  [supcon+sigreg] epoch 104/120  supcon=3.2915  sigreg=0.0493
+  [supcon+sigreg] epoch 105/120  supcon=3.2839  sigreg=0.0451
+  [supcon+sigreg] epoch 106/120  supcon=3.2823  sigreg=0.0466
+  [supcon+sigreg] epoch 107/120  supcon=3.2769  sigreg=0.0444
+  [supcon+sigreg] epoch 108/120  supcon=3.2898  sigreg=0.0430
+  [supcon+sigreg] epoch 109/120  supcon=3.2775  sigreg=0.0444
+  [supcon+sigreg] epoch 110/120  supcon=3.2658  sigreg=0.0468
+  [supcon+sigreg] epoch 111/120  supcon=3.2685  sigreg=0.0474
+  [supcon+sigreg] epoch 112/120  supcon=3.2581  sigreg=0.0429
+  [supcon+sigreg] epoch 113/120  supcon=3.2722  sigreg=0.0488
+  [supcon+sigreg] epoch 114/120  supcon=3.2629  sigreg=0.0438
+  [supcon+sigreg] epoch 115/120  supcon=3.2532  sigreg=0.0454
+  [supcon+sigreg] epoch 116/120  supcon=3.2517  sigreg=0.0453
+  [supcon+sigreg] epoch 117/120  supcon=3.2619  sigreg=0.0429
+  [supcon+sigreg] epoch 118/120  supcon=3.2531  sigreg=0.0448
+  [supcon+sigreg] epoch 119/120  supcon=3.2492  sigreg=0.0426
+  [supcon+sigreg] epoch 120/120  supcon=3.2484  sigreg=0.0473
+--- [lejepa] hybrid half (NT-Xent + SIGReg lam=5) ---
+  [simclr+sigreg] epoch 1/120  nt-xent=5.4165  sigreg=0.7919
+  [simclr+sigreg] epoch 2/120  nt-xent=5.2727  sigreg=0.5710
+  [simclr+sigreg] epoch 3/120  nt-xent=5.3072  sigreg=0.3147
+  [simclr+sigreg] epoch 4/120  nt-xent=5.3317  sigreg=0.1590
+  [simclr+sigreg] epoch 5/120  nt-xent=5.3240  sigreg=0.1226
+  [simclr+sigreg] epoch 6/120  nt-xent=5.2850  sigreg=0.0932
+  [simclr+sigreg] epoch 7/120  nt-xent=5.2500  sigreg=0.0764
+  [simclr+sigreg] epoch 8/120  nt-xent=5.2403  sigreg=0.0729
+  [simclr+sigreg] epoch 9/120  nt-xent=5.2211  sigreg=0.0673
+  [simclr+sigreg] epoch 10/120  nt-xent=5.2103  sigreg=0.0659
+  [simclr+sigreg] epoch 11/120  nt-xent=5.1996  sigreg=0.0582
+  [simclr+sigreg] epoch 12/120  nt-xent=5.1902  sigreg=0.0548
+  [simclr+sigreg] epoch 13/120  nt-xent=5.1866  sigreg=0.0518
+  [simclr+sigreg] epoch 14/120  nt-xent=5.1827  sigreg=0.0537
+  [simclr+sigreg] epoch 15/120  nt-xent=5.1763  sigreg=0.0490
+  [simclr+sigreg] epoch 16/120  nt-xent=5.1679  sigreg=0.0498
+  [simclr+sigreg] epoch 17/120  nt-xent=5.1669  sigreg=0.0514
+  [simclr+sigreg] epoch 18/120  nt-xent=5.1659  sigreg=0.0469
+  [simclr+sigreg] epoch 19/120  nt-xent=5.1589  sigreg=0.0463
+  [simclr+sigreg] epoch 20/120  nt-xent=5.1588  sigreg=0.0463
+  [simclr+sigreg] epoch 21/120  nt-xent=5.1559  sigreg=0.0417
+  [simclr+sigreg] epoch 22/120  nt-xent=5.1521  sigreg=0.0402
+  [simclr+sigreg] epoch 23/120  nt-xent=5.1483  sigreg=0.0398
+  [simclr+sigreg] epoch 24/120  nt-xent=5.1457  sigreg=0.0395
+  [simclr+sigreg] epoch 25/120  nt-xent=5.1437  sigreg=0.0405
+  [simclr+sigreg] epoch 26/120  nt-xent=5.1429  sigreg=0.0390
+  [simclr+sigreg] epoch 27/120  nt-xent=5.1371  sigreg=0.0378
+  [simclr+sigreg] epoch 28/120  nt-xent=5.1383  sigreg=0.0384
+  [simclr+sigreg] epoch 29/120  nt-xent=5.1407  sigreg=0.0357
+  [simclr+sigreg] epoch 30/120  nt-xent=5.1375  sigreg=0.0389
+  [simclr+sigreg] epoch 31/120  nt-xent=5.1337  sigreg=0.0394
+  [simclr+sigreg] epoch 32/120  nt-xent=5.1316  sigreg=0.0382
+  [simclr+sigreg] epoch 33/120  nt-xent=5.1339  sigreg=0.0359
+  [simclr+sigreg] epoch 34/120  nt-xent=5.1315  sigreg=0.0361
+  [simclr+sigreg] epoch 35/120  nt-xent=5.1269  sigreg=0.0349
+  [simclr+sigreg] epoch 36/120  nt-xent=5.1273  sigreg=0.0348
+  [simclr+sigreg] epoch 37/120  nt-xent=5.1266  sigreg=0.0371
+  [simclr+sigreg] epoch 38/120  nt-xent=5.1243  sigreg=0.0315
+  [simclr+sigreg] epoch 39/120  nt-xent=5.1244  sigreg=0.0324
+  [simclr+sigreg] epoch 40/120  nt-xent=5.1186  sigreg=0.0341
+  [simclr+sigreg] epoch 41/120  nt-xent=5.1199  sigreg=0.0335
+  [simclr+sigreg] epoch 42/120  nt-xent=5.1181  sigreg=0.0310
+  [simclr+sigreg] epoch 43/120  nt-xent=5.1185  sigreg=0.0321
+  [simclr+sigreg] epoch 44/120  nt-xent=5.1187  sigreg=0.0332
+  [simclr+sigreg] epoch 45/120  nt-xent=5.1150  sigreg=0.0316
+  [simclr+sigreg] epoch 46/120  nt-xent=5.1169  sigreg=0.0291
+  [simclr+sigreg] epoch 47/120  nt-xent=5.1125  sigreg=0.0305
+  [simclr+sigreg] epoch 48/120  nt-xent=5.1162  sigreg=0.0315
+  [simclr+sigreg] epoch 49/120  nt-xent=5.1132  sigreg=0.0308
+  [simclr+sigreg] epoch 50/120  nt-xent=5.1147  sigreg=0.0318
+  [simclr+sigreg] epoch 51/120  nt-xent=5.1125  sigreg=0.0297
+  [simclr+sigreg] epoch 52/120  nt-xent=5.1132  sigreg=0.0316
+  [simclr+sigreg] epoch 53/120  nt-xent=5.1102  sigreg=0.0275
+  [simclr+sigreg] epoch 54/120  nt-xent=5.1095  sigreg=0.0300
+  [simclr+sigreg] epoch 55/120  nt-xent=5.1087  sigreg=0.0294
+  [simclr+sigreg] epoch 56/120  nt-xent=5.1077  sigreg=0.0290
+  [simclr+sigreg] epoch 57/120  nt-xent=5.1097  sigreg=0.0284
+  [simclr+sigreg] epoch 58/120  nt-xent=5.1069  sigreg=0.0287
+  [simclr+sigreg] epoch 59/120  nt-xent=5.1061  sigreg=0.0295
+  [simclr+sigreg] epoch 60/120  nt-xent=5.1040  sigreg=0.0305
+  [simclr+sigreg] epoch 61/120  nt-xent=5.1035  sigreg=0.0294
+  [simclr+sigreg] epoch 62/120  nt-xent=5.1039  sigreg=0.0299
+  [simclr+sigreg] epoch 63/120  nt-xent=5.1027  sigreg=0.0284
+  [simclr+sigreg] epoch 64/120  nt-xent=5.1010  sigreg=0.0279
+  [simclr+sigreg] epoch 65/120  nt-xent=5.0993  sigreg=0.0270
+  [simclr+sigreg] epoch 66/120  nt-xent=5.1016  sigreg=0.0274
+  [simclr+sigreg] epoch 67/120  nt-xent=5.0994  sigreg=0.0252
+  [simclr+sigreg] epoch 68/120  nt-xent=5.0990  sigreg=0.0282
+  [simclr+sigreg] epoch 69/120  nt-xent=5.0975  sigreg=0.0257
+  [simclr+sigreg] epoch 70/120  nt-xent=5.0981  sigreg=0.0260
+  [simclr+sigreg] epoch 71/120  nt-xent=5.1004  sigreg=0.0276
+  [simclr+sigreg] epoch 72/120  nt-xent=5.1001  sigreg=0.0277
+  [simclr+sigreg] epoch 73/120  nt-xent=5.0974  sigreg=0.0257
+  [simclr+sigreg] epoch 74/120  nt-xent=5.0986  sigreg=0.0274
+  [simclr+sigreg] epoch 75/120  nt-xent=5.0979  sigreg=0.0276
+  [simclr+sigreg] epoch 76/120  nt-xent=5.0984  sigreg=0.0263
+  [simclr+sigreg] epoch 77/120  nt-xent=5.0969  sigreg=0.0267
+  [simclr+sigreg] epoch 78/120  nt-xent=5.0968  sigreg=0.0274
+  [simclr+sigreg] epoch 79/120  nt-xent=5.0957  sigreg=0.0264
+  [simclr+sigreg] epoch 80/120  nt-xent=5.0925  sigreg=0.0241
+  [simclr+sigreg] epoch 81/120  nt-xent=5.0915  sigreg=0.0243
+  [simclr+sigreg] epoch 82/120  nt-xent=5.0947  sigreg=0.0235
+  [simclr+sigreg] epoch 83/120  nt-xent=5.0934  sigreg=0.0268
+  [simclr+sigreg] epoch 84/120  nt-xent=5.0953  sigreg=0.0257
+  [simclr+sigreg] epoch 85/120  nt-xent=5.0939  sigreg=0.0245
+  [simclr+sigreg] epoch 86/120  nt-xent=5.0928  sigreg=0.0249
+  [simclr+sigreg] epoch 87/120  nt-xent=5.0912  sigreg=0.0262
+  [simclr+sigreg] epoch 88/120  nt-xent=5.0955  sigreg=0.0245
+  [simclr+sigreg] epoch 89/120  nt-xent=5.0932  sigreg=0.0275
+  [simclr+sigreg] epoch 90/120  nt-xent=5.0939  sigreg=0.0259
+  [simclr+sigreg] epoch 91/120  nt-xent=5.0906  sigreg=0.0242
+  [simclr+sigreg] epoch 92/120  nt-xent=5.0903  sigreg=0.0257
+  [simclr+sigreg] epoch 93/120  nt-xent=5.0918  sigreg=0.0271
+  [simclr+sigreg] epoch 94/120  nt-xent=5.0913  sigreg=0.0240
+  [simclr+sigreg] epoch 95/120  nt-xent=5.0869  sigreg=0.0241
+  [simclr+sigreg] epoch 96/120  nt-xent=5.0918  sigreg=0.0244
+  [simclr+sigreg] epoch 97/120  nt-xent=5.0903  sigreg=0.0245
+  [simclr+sigreg] epoch 98/120  nt-xent=5.0886  sigreg=0.0256
+  [simclr+sigreg] epoch 99/120  nt-xent=5.0880  sigreg=0.0229
+  [simclr+sigreg] epoch 100/120  nt-xent=5.0884  sigreg=0.0240
+  [simclr+sigreg] epoch 101/120  nt-xent=5.0867  sigreg=0.0237
+  [simclr+sigreg] epoch 102/120  nt-xent=5.0869  sigreg=0.0236
+  [simclr+sigreg] epoch 103/120  nt-xent=5.0876  sigreg=0.0242
+  [simclr+sigreg] epoch 104/120  nt-xent=5.0852  sigreg=0.0236
+  [simclr+sigreg] epoch 105/120  nt-xent=5.0861  sigreg=0.0254
+  [simclr+sigreg] epoch 106/120  nt-xent=5.0859  sigreg=0.0218
+  [simclr+sigreg] epoch 107/120  nt-xent=5.0839  sigreg=0.0225
+  [simclr+sigreg] epoch 108/120  nt-xent=5.0845  sigreg=0.0235
+  [simclr+sigreg] epoch 109/120  nt-xent=5.0850  sigreg=0.0224
+  [simclr+sigreg] epoch 110/120  nt-xent=5.0856  sigreg=0.0258
+  [simclr+sigreg] epoch 111/120  nt-xent=5.0864  sigreg=0.0249
+  [simclr+sigreg] epoch 112/120  nt-xent=5.0824  sigreg=0.0221
+  [simclr+sigreg] epoch 113/120  nt-xent=5.0800  sigreg=0.0224
+  [simclr+sigreg] epoch 114/120  nt-xent=5.0838  sigreg=0.0221
+  [simclr+sigreg] epoch 115/120  nt-xent=5.0832  sigreg=0.0235
+  [simclr+sigreg] epoch 116/120  nt-xent=5.0832  sigreg=0.0227
+  [simclr+sigreg] epoch 117/120  nt-xent=5.0813  sigreg=0.0227
+  [simclr+sigreg] epoch 118/120  nt-xent=5.0811  sigreg=0.0239
+  [simclr+sigreg] epoch 119/120  nt-xent=5.0808  sigreg=0.0237
+  [simclr+sigreg] epoch 120/120  nt-xent=5.0831  sigreg=0.0230
+--- [lejepa] SupCon (aug) reference ---
+  [supcon] epoch 1/120  loss=5.6731
+  [supcon] epoch 2/120  loss=5.0078
+  [supcon] epoch 3/120  loss=4.6967
+  [supcon] epoch 4/120  loss=4.5032
+  [supcon] epoch 5/120  loss=4.3103
+  [supcon] epoch 6/120  loss=4.1687
+  [supcon] epoch 7/120  loss=4.0452
+  [supcon] epoch 8/120  loss=3.9091
+  [supcon] epoch 9/120  loss=3.7949
+  [supcon] epoch 10/120  loss=3.7132
+  [supcon] epoch 11/120  loss=3.6142
+  [supcon] epoch 12/120  loss=3.5449
+  [supcon] epoch 13/120  loss=3.4780
+  [supcon] epoch 14/120  loss=3.4322
+  [supcon] epoch 15/120  loss=3.3849
+  [supcon] epoch 16/120  loss=3.3528
+  [supcon] epoch 17/120  loss=3.3172
+  [supcon] epoch 18/120  loss=3.2934
+  [supcon] epoch 19/120  loss=3.2720
+  [supcon] epoch 20/120  loss=3.2573
+  [supcon] epoch 21/120  loss=3.2486
+  [supcon] epoch 22/120  loss=3.2289
+  [supcon] epoch 23/120  loss=3.2190
+  [supcon] epoch 24/120  loss=3.2091
+  [supcon] epoch 25/120  loss=3.2039
+  [supcon] epoch 26/120  loss=3.1882
+  [supcon] epoch 27/120  loss=3.1750
+  [supcon] epoch 28/120  loss=3.1794
+  [supcon] epoch 29/120  loss=3.1723
+  [supcon] epoch 30/120  loss=3.1617
+  [supcon] epoch 31/120  loss=3.1569
+  [supcon] epoch 32/120  loss=3.1591
+  [supcon] epoch 33/120  loss=3.1560
+  [supcon] epoch 34/120  loss=3.1480
+  [supcon] epoch 35/120  loss=3.1535
+  [supcon] epoch 36/120  loss=3.1426
+  [supcon] epoch 37/120  loss=3.1388
+  [supcon] epoch 38/120  loss=3.1354
+  [supcon] epoch 39/120  loss=3.1316
+  [supcon] epoch 40/120  loss=3.1344
+  [supcon] epoch 41/120  loss=3.1288
+  [supcon] epoch 42/120  loss=3.1306
+  [supcon] epoch 43/120  loss=3.1337
+  [supcon] epoch 44/120  loss=3.1260
+  [supcon] epoch 45/120  loss=3.1219
+  [supcon] epoch 46/120  loss=3.1222
+  [supcon] epoch 47/120  loss=3.1233
+  [supcon] epoch 48/120  loss=3.1251
+  [supcon] epoch 49/120  loss=3.1141
+  [supcon] epoch 50/120  loss=3.1181
+  [supcon] epoch 51/120  loss=3.1170
+  [supcon] epoch 52/120  loss=3.1185
+  [supcon] epoch 53/120  loss=3.1159
+  [supcon] epoch 54/120  loss=3.1134
+  [supcon] epoch 55/120  loss=3.1133
+  [supcon] epoch 56/120  loss=3.1184
+  [supcon] epoch 57/120  loss=3.1096
+  [supcon] epoch 58/120  loss=3.1140
+  [supcon] epoch 59/120  loss=3.1097
+  [supcon] epoch 60/120  loss=3.1090
+  [supcon] epoch 61/120  loss=3.1065
+  [supcon] epoch 62/120  loss=3.1101
+  [supcon] epoch 63/120  loss=3.1070
+  [supcon] epoch 64/120  loss=3.1105
+  [supcon] epoch 65/120  loss=3.1053
+  [supcon] epoch 66/120  loss=3.1051
+  [supcon] epoch 67/120  loss=3.0997
+  [supcon] epoch 68/120  loss=3.1067
+  [supcon] epoch 69/120  loss=3.1062
+  [supcon] epoch 70/120  loss=3.1054
+  [supcon] epoch 71/120  loss=3.1000
+  [supcon] epoch 72/120  loss=3.1106
+  [supcon] epoch 73/120  loss=3.1023
+  [supcon] epoch 74/120  loss=3.1134
+  [supcon] epoch 75/120  loss=3.1122
+  [supcon] epoch 76/120  loss=3.1057
+  [supcon] epoch 77/120  loss=3.1143
+  [supcon] epoch 78/120  loss=3.1038
+  [supcon] epoch 79/120  loss=3.1080
+  [supcon] epoch 80/120  loss=3.1061
+  [supcon] epoch 81/120  loss=3.1051
+  [supcon] epoch 82/120  loss=3.1017
+  [supcon] epoch 83/120  loss=3.0953
+  [supcon] epoch 84/120  loss=3.1088
+  [supcon] epoch 85/120  loss=3.0964
+  [supcon] epoch 86/120  loss=3.0978
+  [supcon] epoch 87/120  loss=3.0966
+  [supcon] epoch 88/120  loss=3.1084
+  [supcon] epoch 89/120  loss=3.0934
+  [supcon] epoch 90/120  loss=3.0906
+  [supcon] epoch 91/120  loss=3.0990
+  [supcon] epoch 92/120  loss=3.1005
+  [supcon] epoch 93/120  loss=3.0993
+  [supcon] epoch 94/120  loss=3.1005
+  [supcon] epoch 95/120  loss=3.0977
+  [supcon] epoch 96/120  loss=3.0984
+  [supcon] epoch 97/120  loss=3.0931
+  [supcon] epoch 98/120  loss=3.0875
+  [supcon] epoch 99/120  loss=3.0886
+  [supcon] epoch 100/120  loss=3.0946
+  [supcon] epoch 101/120  loss=3.0874
+  [supcon] epoch 102/120  loss=3.0919
+  [supcon] epoch 103/120  loss=3.1008
+  [supcon] epoch 104/120  loss=3.0946
+  [supcon] epoch 105/120  loss=3.0945
+  [supcon] epoch 106/120  loss=3.0920
+  [supcon] epoch 107/120  loss=3.0947
+  [supcon] epoch 108/120  loss=3.0886
+  [supcon] epoch 109/120  loss=3.0912
+  [supcon] epoch 110/120  loss=3.0980
+  [supcon] epoch 111/120  loss=3.0858
+  [supcon] epoch 112/120  loss=3.0880
+  [supcon] epoch 113/120  loss=3.0923
+  [supcon] epoch 114/120  loss=3.0857
+  [supcon] epoch 115/120  loss=3.0873
+  [supcon] epoch 116/120  loss=3.0871
+  [supcon] epoch 117/120  loss=3.0864
+  [supcon] epoch 118/120  loss=3.0904
+  [supcon] epoch 119/120  loss=3.0837
+  [supcon] epoch 120/120  loss=3.0984
+--- [lejepa] supcon->res-hybrid (residual, augmented) ---
+  [simclr-residual] epoch 1/120  loss=5.4314  sigreg=0.8952
+  [simclr-residual] epoch 2/120  loss=5.2034  sigreg=0.7862
+  [simclr-residual] epoch 3/120  loss=5.2219  sigreg=0.6507
+  [simclr-residual] epoch 4/120  loss=5.2755  sigreg=0.4735
+  [simclr-residual] epoch 5/120  loss=5.3422  sigreg=0.3291
+  [simclr-residual] epoch 6/120  loss=5.3635  sigreg=0.2058
+  [simclr-residual] epoch 7/120  loss=5.3526  sigreg=0.1642
+  [simclr-residual] epoch 8/120  loss=5.3162  sigreg=0.1190
+  [simclr-residual] epoch 9/120  loss=5.2886  sigreg=0.1059
+  [simclr-residual] epoch 10/120  loss=5.2680  sigreg=0.0913
+  [simclr-residual] epoch 11/120  loss=5.2576  sigreg=0.0798
+  [simclr-residual] epoch 12/120  loss=5.2486  sigreg=0.0641
+  [simclr-residual] epoch 13/120  loss=5.2396  sigreg=0.0665
+  [simclr-residual] epoch 14/120  loss=5.2263  sigreg=0.0653
+  [simclr-residual] epoch 15/120  loss=5.2199  sigreg=0.0587
+  [simclr-residual] epoch 16/120  loss=5.2127  sigreg=0.0622
+  [simclr-residual] epoch 17/120  loss=5.2054  sigreg=0.0585
+  [simclr-residual] epoch 18/120  loss=5.1981  sigreg=0.0514
+  [simclr-residual] epoch 19/120  loss=5.1935  sigreg=0.0514
+  [simclr-residual] epoch 20/120  loss=5.1883  sigreg=0.0509
+  [simclr-residual] epoch 21/120  loss=5.1846  sigreg=0.0513
+  [simclr-residual] epoch 22/120  loss=5.1827  sigreg=0.0514
+  [simclr-residual] epoch 23/120  loss=5.1808  sigreg=0.0518
+  [simclr-residual] epoch 24/120  loss=5.1766  sigreg=0.0531
+  [simclr-residual] epoch 25/120  loss=5.1767  sigreg=0.0510
+  [simclr-residual] epoch 26/120  loss=5.1714  sigreg=0.0463
+  [simclr-residual] epoch 27/120  loss=5.1722  sigreg=0.0503
+  [simclr-residual] epoch 28/120  loss=5.1647  sigreg=0.0470
+  [simclr-residual] epoch 29/120  loss=5.1642  sigreg=0.0471
+  [simclr-residual] epoch 30/120  loss=5.1623  sigreg=0.0429
+  [simclr-residual] epoch 31/120  loss=5.1575  sigreg=0.0442
+  [simclr-residual] epoch 32/120  loss=5.1577  sigreg=0.0443
+  [simclr-residual] epoch 33/120  loss=5.1569  sigreg=0.0417
+  [simclr-residual] epoch 34/120  loss=5.1527  sigreg=0.0414
+  [simclr-residual] epoch 35/120  loss=5.1499  sigreg=0.0411
+  [simclr-residual] epoch 36/120  loss=5.1456  sigreg=0.0398
+  [simclr-residual] epoch 37/120  loss=5.1495  sigreg=0.0455
+  [simclr-residual] epoch 38/120  loss=5.1461  sigreg=0.0439
+  [simclr-residual] epoch 39/120  loss=5.1438  sigreg=0.0388
+  [simclr-residual] epoch 40/120  loss=5.1432  sigreg=0.0396
+  [simclr-residual] epoch 41/120  loss=5.1428  sigreg=0.0407
+  [simclr-residual] epoch 42/120  loss=5.1391  sigreg=0.0384
+  [simclr-residual] epoch 43/120  loss=5.1370  sigreg=0.0397
+  [simclr-residual] epoch 44/120  loss=5.1352  sigreg=0.0369
+  [simclr-residual] epoch 45/120  loss=5.1340  sigreg=0.0374
+  [simclr-residual] epoch 46/120  loss=5.1357  sigreg=0.0381
+  [simclr-residual] epoch 47/120  loss=5.1342  sigreg=0.0369
+  [simclr-residual] epoch 48/120  loss=5.1338  sigreg=0.0391
+  [simclr-residual] epoch 49/120  loss=5.1316  sigreg=0.0374
+  [simclr-residual] epoch 50/120  loss=5.1321  sigreg=0.0368
+  [simclr-residual] epoch 51/120  loss=5.1332  sigreg=0.0367
+  [simclr-residual] epoch 52/120  loss=5.1314  sigreg=0.0369
+  [simclr-residual] epoch 53/120  loss=5.1287  sigreg=0.0381
+  [simclr-residual] epoch 54/120  loss=5.1284  sigreg=0.0369
+  [simclr-residual] epoch 55/120  loss=5.1268  sigreg=0.0362
+  [simclr-residual] epoch 56/120  loss=5.1252  sigreg=0.0341
+  [simclr-residual] epoch 57/120  loss=5.1244  sigreg=0.0348
+  [simclr-residual] epoch 58/120  loss=5.1231  sigreg=0.0332
+  [simclr-residual] epoch 59/120  loss=5.1233  sigreg=0.0332
+  [simclr-residual] epoch 60/120  loss=5.1220  sigreg=0.0334
+  [simclr-residual] epoch 61/120  loss=5.1199  sigreg=0.0339
+  [simclr-residual] epoch 62/120  loss=5.1209  sigreg=0.0336
+  [simclr-residual] epoch 63/120  loss=5.1205  sigreg=0.0347
+  [simclr-residual] epoch 64/120  loss=5.1215  sigreg=0.0355
+  [simclr-residual] epoch 65/120  loss=5.1192  sigreg=0.0329
+  [simclr-residual] epoch 66/120  loss=5.1191  sigreg=0.0355
+  [simclr-residual] epoch 67/120  loss=5.1170  sigreg=0.0348
+  [simclr-residual] epoch 68/120  loss=5.1138  sigreg=0.0324
+  [simclr-residual] epoch 69/120  loss=5.1163  sigreg=0.0326
+  [simclr-residual] epoch 70/120  loss=5.1151  sigreg=0.0353
+  [simclr-residual] epoch 71/120  loss=5.1155  sigreg=0.0346
+  [simclr-residual] epoch 72/120  loss=5.1139  sigreg=0.0320
+  [simclr-residual] epoch 73/120  loss=5.1139  sigreg=0.0358
+  [simclr-residual] epoch 74/120  loss=5.1154  sigreg=0.0314
+  [simclr-residual] epoch 75/120  loss=5.1113  sigreg=0.0321
+  [simclr-residual] epoch 76/120  loss=5.1118  sigreg=0.0317
+  [simclr-residual] epoch 77/120  loss=5.1108  sigreg=0.0335
+  [simclr-residual] epoch 78/120  loss=5.1093  sigreg=0.0337
+  [simclr-residual] epoch 79/120  loss=5.1084  sigreg=0.0315
+  [simclr-residual] epoch 80/120  loss=5.1089  sigreg=0.0301
+  [simclr-residual] epoch 81/120  loss=5.1068  sigreg=0.0302
+  [simclr-residual] epoch 82/120  loss=5.1063  sigreg=0.0305
+  [simclr-residual] epoch 83/120  loss=5.1083  sigreg=0.0306
+  [simclr-residual] epoch 84/120  loss=5.1068  sigreg=0.0304
+  [simclr-residual] epoch 85/120  loss=5.1084  sigreg=0.0313
+  [simclr-residual] epoch 86/120  loss=5.1038  sigreg=0.0305
+  [simclr-residual] epoch 87/120  loss=5.1023  sigreg=0.0295
+  [simclr-residual] epoch 88/120  loss=5.1034  sigreg=0.0285
+  [simclr-residual] epoch 89/120  loss=5.1037  sigreg=0.0316
+  [simclr-residual] epoch 90/120  loss=5.1037  sigreg=0.0317
+  [simclr-residual] epoch 91/120  loss=5.1040  sigreg=0.0289
+  [simclr-residual] epoch 92/120  loss=5.1031  sigreg=0.0299
+  [simclr-residual] epoch 93/120  loss=5.1049  sigreg=0.0298
+  [simclr-residual] epoch 94/120  loss=5.1041  sigreg=0.0321
+  [simclr-residual] epoch 95/120  loss=5.1021  sigreg=0.0284
+  [simclr-residual] epoch 96/120  loss=5.1015  sigreg=0.0294
+  [simclr-residual] epoch 97/120  loss=5.1007  sigreg=0.0298
+  [simclr-residual] epoch 98/120  loss=5.1006  sigreg=0.0287
+  [simclr-residual] epoch 99/120  loss=5.0989  sigreg=0.0286
+  [simclr-residual] epoch 100/120  loss=5.1000  sigreg=0.0269
+  [simclr-residual] epoch 101/120  loss=5.0998  sigreg=0.0284
+  [simclr-residual] epoch 102/120  loss=5.1007  sigreg=0.0299
+  [simclr-residual] epoch 103/120  loss=5.0975  sigreg=0.0301
+  [simclr-residual] epoch 104/120  loss=5.0971  sigreg=0.0267
+  [simclr-residual] epoch 105/120  loss=5.0950  sigreg=0.0248
+  [simclr-residual] epoch 106/120  loss=5.0957  sigreg=0.0294
+  [simclr-residual] epoch 107/120  loss=5.0962  sigreg=0.0287
+  [simclr-residual] epoch 108/120  loss=5.0971  sigreg=0.0283
+  [simclr-residual] epoch 109/120  loss=5.0954  sigreg=0.0270
+  [simclr-residual] epoch 110/120  loss=5.0942  sigreg=0.0286
+  [simclr-residual] epoch 111/120  loss=5.0947  sigreg=0.0270
+  [simclr-residual] epoch 112/120  loss=5.0955  sigreg=0.0270
+  [simclr-residual] epoch 113/120  loss=5.0942  sigreg=0.0258
+  [simclr-residual] epoch 114/120  loss=5.0942  sigreg=0.0264
+  [simclr-residual] epoch 115/120  loss=5.0951  sigreg=0.0300
+  [simclr-residual] epoch 116/120  loss=5.0908  sigreg=0.0274
+  [simclr-residual] epoch 117/120  loss=5.0910  sigreg=0.0282
+  [simclr-residual] epoch 118/120  loss=5.0931  sigreg=0.0291
+  [simclr-residual] epoch 119/120  loss=5.0929  sigreg=0.0264
+  [simclr-residual] epoch 120/120  loss=5.0934  sigreg=0.0270
+  [lejepa] SupCon+SIGReg (ss[lam5])           75.8
+  [lejepa] ss[lam5]+hybrid (concat)           76.6
+  [lejepa] SupCon (aug), rerun                77.0
+  [lejepa] supcon+hybrid (parallel), rerun    75.5
+  [lejepa] supcon->res-hybrid (concat)        74.6
+
+################ base: VISReg ViT-B/16 (paper's weights) ################
+  cached plain features: /home/pharris/sigreg/SuperSig/data/dtd_feats_visreg_vitb16.pt
+  cached aug bank: /home/pharris/sigreg/SuperSig/data/dtd_augfeats_visreg_vitb16_a24.pt
+--- [visreg] ss[lam5]: SupCon + SIGReg on raw z ---
+  [supcon+sigreg] epoch 1/120  supcon=5.8588  sigreg=0.5568
+  [supcon+sigreg] epoch 2/120  supcon=5.6296  sigreg=0.3022
+  [supcon+sigreg] epoch 3/120  supcon=5.4731  sigreg=0.2120
+  [supcon+sigreg] epoch 4/120  supcon=5.3630  sigreg=0.1769
+  [supcon+sigreg] epoch 5/120  supcon=5.2326  sigreg=0.1637
+  [supcon+sigreg] epoch 6/120  supcon=5.1372  sigreg=0.1357
+  [supcon+sigreg] epoch 7/120  supcon=5.0510  sigreg=0.1209
+  [supcon+sigreg] epoch 8/120  supcon=5.0074  sigreg=0.1078
+  [supcon+sigreg] epoch 9/120  supcon=4.9166  sigreg=0.0929
+  [supcon+sigreg] epoch 10/120  supcon=4.8292  sigreg=0.0835
+  [supcon+sigreg] epoch 11/120  supcon=4.7921  sigreg=0.0841
+  [supcon+sigreg] epoch 12/120  supcon=4.7100  sigreg=0.0738
+  [supcon+sigreg] epoch 13/120  supcon=4.6634  sigreg=0.0724
+  [supcon+sigreg] epoch 14/120  supcon=4.6193  sigreg=0.0744
+  [supcon+sigreg] epoch 15/120  supcon=4.5274  sigreg=0.0776
+  [supcon+sigreg] epoch 16/120  supcon=4.5227  sigreg=0.0684
+  [supcon+sigreg] epoch 17/120  supcon=4.4513  sigreg=0.0676
+  [supcon+sigreg] epoch 18/120  supcon=4.4064  sigreg=0.0661
+  [supcon+sigreg] epoch 19/120  supcon=4.3611  sigreg=0.0624
+  [supcon+sigreg] epoch 20/120  supcon=4.3249  sigreg=0.0615
+  [supcon+sigreg] epoch 21/120  supcon=4.2851  sigreg=0.0605
+  [supcon+sigreg] epoch 22/120  supcon=4.2324  sigreg=0.0575
+  [supcon+sigreg] epoch 23/120  supcon=4.2149  sigreg=0.0638
+  [supcon+sigreg] epoch 24/120  supcon=4.1785  sigreg=0.0560
+  [supcon+sigreg] epoch 25/120  supcon=4.1439  sigreg=0.0559
+  [supcon+sigreg] epoch 26/120  supcon=4.1052  sigreg=0.0559
+  [supcon+sigreg] epoch 27/120  supcon=4.0774  sigreg=0.0537
+  [supcon+sigreg] epoch 28/120  supcon=4.0155  sigreg=0.0545
+  [supcon+sigreg] epoch 29/120  supcon=3.9905  sigreg=0.0556
+  [supcon+sigreg] epoch 30/120  supcon=3.9711  sigreg=0.0541
+  [supcon+sigreg] epoch 31/120  supcon=3.9314  sigreg=0.0570
+  [supcon+sigreg] epoch 32/120  supcon=3.9180  sigreg=0.0533
+  [supcon+sigreg] epoch 33/120  supcon=3.8875  sigreg=0.0489
+  [supcon+sigreg] epoch 34/120  supcon=3.8557  sigreg=0.0515
+  [supcon+sigreg] epoch 35/120  supcon=3.8237  sigreg=0.0512
+  [supcon+sigreg] epoch 36/120  supcon=3.8124  sigreg=0.0470
+  [supcon+sigreg] epoch 37/120  supcon=3.7911  sigreg=0.0495
+  [supcon+sigreg] epoch 38/120  supcon=3.7570  sigreg=0.0530
+  [supcon+sigreg] epoch 39/120  supcon=3.7559  sigreg=0.0524
+  [supcon+sigreg] epoch 40/120  supcon=3.7401  sigreg=0.0528
+  [supcon+sigreg] epoch 41/120  supcon=3.7072  sigreg=0.0548
+  [supcon+sigreg] epoch 42/120  supcon=3.6964  sigreg=0.0493
+  [supcon+sigreg] epoch 43/120  supcon=3.6853  sigreg=0.0501
+  [supcon+sigreg] epoch 44/120  supcon=3.6545  sigreg=0.0512
+  [supcon+sigreg] epoch 45/120  supcon=3.6468  sigreg=0.0455
+  [supcon+sigreg] epoch 46/120  supcon=3.6350  sigreg=0.0478
+  [supcon+sigreg] epoch 47/120  supcon=3.6227  sigreg=0.0492
+  [supcon+sigreg] epoch 48/120  supcon=3.6037  sigreg=0.0510
+  [supcon+sigreg] epoch 49/120  supcon=3.5836  sigreg=0.0510
+  [supcon+sigreg] epoch 50/120  supcon=3.5747  sigreg=0.0454
+  [supcon+sigreg] epoch 51/120  supcon=3.5532  sigreg=0.0410
+  [supcon+sigreg] epoch 52/120  supcon=3.5505  sigreg=0.0436
+  [supcon+sigreg] epoch 53/120  supcon=3.5339  sigreg=0.0452
+  [supcon+sigreg] epoch 54/120  supcon=3.5196  sigreg=0.0491
+  [supcon+sigreg] epoch 55/120  supcon=3.5120  sigreg=0.0467
+  [supcon+sigreg] epoch 56/120  supcon=3.5055  sigreg=0.0449
+  [supcon+sigreg] epoch 57/120  supcon=3.4971  sigreg=0.0498
+  [supcon+sigreg] epoch 58/120  supcon=3.4702  sigreg=0.0484
+  [supcon+sigreg] epoch 59/120  supcon=3.4771  sigreg=0.0450
+  [supcon+sigreg] epoch 60/120  supcon=3.4803  sigreg=0.0481
+  [supcon+sigreg] epoch 61/120  supcon=3.4651  sigreg=0.0466
+  [supcon+sigreg] epoch 62/120  supcon=3.4511  sigreg=0.0421
+  [supcon+sigreg] epoch 63/120  supcon=3.4386  sigreg=0.0459
+  [supcon+sigreg] epoch 64/120  supcon=3.4300  sigreg=0.0421
+  [supcon+sigreg] epoch 65/120  supcon=3.4350  sigreg=0.0415
+  [supcon+sigreg] epoch 66/120  supcon=3.4138  sigreg=0.0448
+  [supcon+sigreg] epoch 67/120  supcon=3.4073  sigreg=0.0475
+  [supcon+sigreg] epoch 68/120  supcon=3.4110  sigreg=0.0422
+  [supcon+sigreg] epoch 69/120  supcon=3.3899  sigreg=0.0466
+  [supcon+sigreg] epoch 70/120  supcon=3.3896  sigreg=0.0441
+  [supcon+sigreg] epoch 71/120  supcon=3.3910  sigreg=0.0446
+  [supcon+sigreg] epoch 72/120  supcon=3.3793  sigreg=0.0460
+  [supcon+sigreg] epoch 73/120  supcon=3.3863  sigreg=0.0446
+  [supcon+sigreg] epoch 74/120  supcon=3.3723  sigreg=0.0451
+  [supcon+sigreg] epoch 75/120  supcon=3.3597  sigreg=0.0495
+  [supcon+sigreg] epoch 76/120  supcon=3.3606  sigreg=0.0456
+  [supcon+sigreg] epoch 77/120  supcon=3.3481  sigreg=0.0419
+  [supcon+sigreg] epoch 78/120  supcon=3.3498  sigreg=0.0432
+  [supcon+sigreg] epoch 79/120  supcon=3.3477  sigreg=0.0437
+  [supcon+sigreg] epoch 80/120  supcon=3.3406  sigreg=0.0449
+  [supcon+sigreg] epoch 81/120  supcon=3.3368  sigreg=0.0456
+  [supcon+sigreg] epoch 82/120  supcon=3.3317  sigreg=0.0412
+  [supcon+sigreg] epoch 83/120  supcon=3.3311  sigreg=0.0428
+  [supcon+sigreg] epoch 84/120  supcon=3.3134  sigreg=0.0427
+  [supcon+sigreg] epoch 85/120  supcon=3.3121  sigreg=0.0412
+  [supcon+sigreg] epoch 86/120  supcon=3.3160  sigreg=0.0419
+  [supcon+sigreg] epoch 87/120  supcon=3.3014  sigreg=0.0450
+  [supcon+sigreg] epoch 88/120  supcon=3.3063  sigreg=0.0407
+  [supcon+sigreg] epoch 89/120  supcon=3.2934  sigreg=0.0428
+  [supcon+sigreg] epoch 90/120  supcon=3.3076  sigreg=0.0443
+  [supcon+sigreg] epoch 91/120  supcon=3.2964  sigreg=0.0395
+  [supcon+sigreg] epoch 92/120  supcon=3.2910  sigreg=0.0424
+  [supcon+sigreg] epoch 93/120  supcon=3.2908  sigreg=0.0419
+  [supcon+sigreg] epoch 94/120  supcon=3.2773  sigreg=0.0404
+  [supcon+sigreg] epoch 95/120  supcon=3.2877  sigreg=0.0420
+  [supcon+sigreg] epoch 96/120  supcon=3.2892  sigreg=0.0399
+  [supcon+sigreg] epoch 97/120  supcon=3.2698  sigreg=0.0395
+  [supcon+sigreg] epoch 98/120  supcon=3.2732  sigreg=0.0403
+  [supcon+sigreg] epoch 99/120  supcon=3.2792  sigreg=0.0418
+  [supcon+sigreg] epoch 100/120  supcon=3.2679  sigreg=0.0362
+  [supcon+sigreg] epoch 101/120  supcon=3.2610  sigreg=0.0421
+  [supcon+sigreg] epoch 102/120  supcon=3.2616  sigreg=0.0425
+  [supcon+sigreg] epoch 103/120  supcon=3.2645  sigreg=0.0420
+  [supcon+sigreg] epoch 104/120  supcon=3.2589  sigreg=0.0388
+  [supcon+sigreg] epoch 105/120  supcon=3.2572  sigreg=0.0410
+  [supcon+sigreg] epoch 106/120  supcon=3.2513  sigreg=0.0376
+  [supcon+sigreg] epoch 107/120  supcon=3.2439  sigreg=0.0442
+  [supcon+sigreg] epoch 108/120  supcon=3.2601  sigreg=0.0389
+  [supcon+sigreg] epoch 109/120  supcon=3.2466  sigreg=0.0419
+  [supcon+sigreg] epoch 110/120  supcon=3.2364  sigreg=0.0407
+  [supcon+sigreg] epoch 111/120  supcon=3.2394  sigreg=0.0385
+  [supcon+sigreg] epoch 112/120  supcon=3.2321  sigreg=0.0386
+  [supcon+sigreg] epoch 113/120  supcon=3.2463  sigreg=0.0393
+  [supcon+sigreg] epoch 114/120  supcon=3.2368  sigreg=0.0389
+  [supcon+sigreg] epoch 115/120  supcon=3.2283  sigreg=0.0389
+  [supcon+sigreg] epoch 116/120  supcon=3.2268  sigreg=0.0391
+  [supcon+sigreg] epoch 117/120  supcon=3.2275  sigreg=0.0394
+  [supcon+sigreg] epoch 118/120  supcon=3.2245  sigreg=0.0412
+  [supcon+sigreg] epoch 119/120  supcon=3.2247  sigreg=0.0386
+  [supcon+sigreg] epoch 120/120  supcon=3.2201  sigreg=0.0404
+--- [visreg] hybrid half (NT-Xent + SIGReg lam=5) ---
+  [simclr+sigreg] epoch 1/120  nt-xent=5.5602  sigreg=0.5088
+  [simclr+sigreg] epoch 2/120  nt-xent=5.3765  sigreg=0.1757
+  [simclr+sigreg] epoch 3/120  nt-xent=5.3544  sigreg=0.1134
+  [simclr+sigreg] epoch 4/120  nt-xent=5.2970  sigreg=0.1106
+  [simclr+sigreg] epoch 5/120  nt-xent=5.2717  sigreg=0.0849
+  [simclr+sigreg] epoch 6/120  nt-xent=5.2562  sigreg=0.0826
+  [simclr+sigreg] epoch 7/120  nt-xent=5.2341  sigreg=0.0711
+  [simclr+sigreg] epoch 8/120  nt-xent=5.2282  sigreg=0.0682
+  [simclr+sigreg] epoch 9/120  nt-xent=5.2107  sigreg=0.0614
+  [simclr+sigreg] epoch 10/120  nt-xent=5.2051  sigreg=0.0638
+  [simclr+sigreg] epoch 11/120  nt-xent=5.1939  sigreg=0.0587
+  [simclr+sigreg] epoch 12/120  nt-xent=5.1805  sigreg=0.0537
+  [simclr+sigreg] epoch 13/120  nt-xent=5.1744  sigreg=0.0491
+  [simclr+sigreg] epoch 14/120  nt-xent=5.1703  sigreg=0.0481
+  [simclr+sigreg] epoch 15/120  nt-xent=5.1673  sigreg=0.0463
+  [simclr+sigreg] epoch 16/120  nt-xent=5.1693  sigreg=0.0493
+  [simclr+sigreg] epoch 17/120  nt-xent=5.1616  sigreg=0.0474
+  [simclr+sigreg] epoch 18/120  nt-xent=5.1624  sigreg=0.0463
+  [simclr+sigreg] epoch 19/120  nt-xent=5.1559  sigreg=0.0465
+  [simclr+sigreg] epoch 20/120  nt-xent=5.1496  sigreg=0.0405
+  [simclr+sigreg] epoch 21/120  nt-xent=5.1486  sigreg=0.0374
+  [simclr+sigreg] epoch 22/120  nt-xent=5.1433  sigreg=0.0407
+  [simclr+sigreg] epoch 23/120  nt-xent=5.1421  sigreg=0.0386
+  [simclr+sigreg] epoch 24/120  nt-xent=5.1366  sigreg=0.0336
+  [simclr+sigreg] epoch 25/120  nt-xent=5.1381  sigreg=0.0359
+  [simclr+sigreg] epoch 26/120  nt-xent=5.1376  sigreg=0.0382
+  [simclr+sigreg] epoch 27/120  nt-xent=5.1338  sigreg=0.0353
+  [simclr+sigreg] epoch 28/120  nt-xent=5.1321  sigreg=0.0344
+  [simclr+sigreg] epoch 29/120  nt-xent=5.1330  sigreg=0.0352
+  [simclr+sigreg] epoch 30/120  nt-xent=5.1303  sigreg=0.0354
+  [simclr+sigreg] epoch 31/120  nt-xent=5.1278  sigreg=0.0333
+  [simclr+sigreg] epoch 32/120  nt-xent=5.1277  sigreg=0.0366
+  [simclr+sigreg] epoch 33/120  nt-xent=5.1291  sigreg=0.0367
+  [simclr+sigreg] epoch 34/120  nt-xent=5.1257  sigreg=0.0347
+  [simclr+sigreg] epoch 35/120  nt-xent=5.1249  sigreg=0.0341
+  [simclr+sigreg] epoch 36/120  nt-xent=5.1277  sigreg=0.0339
+  [simclr+sigreg] epoch 37/120  nt-xent=5.1228  sigreg=0.0331
+  [simclr+sigreg] epoch 38/120  nt-xent=5.1202  sigreg=0.0307
+  [simclr+sigreg] epoch 39/120  nt-xent=5.1175  sigreg=0.0286
+  [simclr+sigreg] epoch 40/120  nt-xent=5.1180  sigreg=0.0334
+  [simclr+sigreg] epoch 41/120  nt-xent=5.1144  sigreg=0.0311
+  [simclr+sigreg] epoch 42/120  nt-xent=5.1148  sigreg=0.0311
+  [simclr+sigreg] epoch 43/120  nt-xent=5.1116  sigreg=0.0271
+  [simclr+sigreg] epoch 44/120  nt-xent=5.1121  sigreg=0.0307
+  [simclr+sigreg] epoch 45/120  nt-xent=5.1114  sigreg=0.0283
+  [simclr+sigreg] epoch 46/120  nt-xent=5.1122  sigreg=0.0286
+  [simclr+sigreg] epoch 47/120  nt-xent=5.1088  sigreg=0.0287
+  [simclr+sigreg] epoch 48/120  nt-xent=5.1108  sigreg=0.0293
+  [simclr+sigreg] epoch 49/120  nt-xent=5.1063  sigreg=0.0272
+  [simclr+sigreg] epoch 50/120  nt-xent=5.1065  sigreg=0.0300
+  [simclr+sigreg] epoch 51/120  nt-xent=5.1079  sigreg=0.0263
+  [simclr+sigreg] epoch 52/120  nt-xent=5.1040  sigreg=0.0274
+  [simclr+sigreg] epoch 53/120  nt-xent=5.1042  sigreg=0.0274
+  [simclr+sigreg] epoch 54/120  nt-xent=5.1046  sigreg=0.0282
+  [simclr+sigreg] epoch 55/120  nt-xent=5.1020  sigreg=0.0269
+  [simclr+sigreg] epoch 56/120  nt-xent=5.1010  sigreg=0.0271
+  [simclr+sigreg] epoch 57/120  nt-xent=5.1025  sigreg=0.0258
+  [simclr+sigreg] epoch 58/120  nt-xent=5.1037  sigreg=0.0254
+  [simclr+sigreg] epoch 59/120  nt-xent=5.1007  sigreg=0.0245
+  [simclr+sigreg] epoch 60/120  nt-xent=5.0968  sigreg=0.0238
+  [simclr+sigreg] epoch 61/120  nt-xent=5.0973  sigreg=0.0262
+  [simclr+sigreg] epoch 62/120  nt-xent=5.0968  sigreg=0.0240
+  [simclr+sigreg] epoch 63/120  nt-xent=5.0986  sigreg=0.0245
+  [simclr+sigreg] epoch 64/120  nt-xent=5.0960  sigreg=0.0250
+  [simclr+sigreg] epoch 65/120  nt-xent=5.0961  sigreg=0.0252
+  [simclr+sigreg] epoch 66/120  nt-xent=5.0930  sigreg=0.0241
+  [simclr+sigreg] epoch 67/120  nt-xent=5.0958  sigreg=0.0253
+  [simclr+sigreg] epoch 68/120  nt-xent=5.0949  sigreg=0.0256
+  [simclr+sigreg] epoch 69/120  nt-xent=5.0943  sigreg=0.0224
+  [simclr+sigreg] epoch 70/120  nt-xent=5.0924  sigreg=0.0233
+  [simclr+sigreg] epoch 71/120  nt-xent=5.0942  sigreg=0.0245
+  [simclr+sigreg] epoch 72/120  nt-xent=5.0924  sigreg=0.0242
+  [simclr+sigreg] epoch 73/120  nt-xent=5.0907  sigreg=0.0252
+  [simclr+sigreg] epoch 74/120  nt-xent=5.0916  sigreg=0.0266
+  [simclr+sigreg] epoch 75/120  nt-xent=5.0904  sigreg=0.0226
+  [simclr+sigreg] epoch 76/120  nt-xent=5.0918  sigreg=0.0235
+  [simclr+sigreg] epoch 77/120  nt-xent=5.0900  sigreg=0.0249
+  [simclr+sigreg] epoch 78/120  nt-xent=5.0889  sigreg=0.0240
+  [simclr+sigreg] epoch 79/120  nt-xent=5.0904  sigreg=0.0235
+  [simclr+sigreg] epoch 80/120  nt-xent=5.0880  sigreg=0.0234
+  [simclr+sigreg] epoch 81/120  nt-xent=5.0884  sigreg=0.0232
+  [simclr+sigreg] epoch 82/120  nt-xent=5.0893  sigreg=0.0252
+  [simclr+sigreg] epoch 83/120  nt-xent=5.0892  sigreg=0.0231
+  [simclr+sigreg] epoch 84/120  nt-xent=5.0890  sigreg=0.0241
+  [simclr+sigreg] epoch 85/120  nt-xent=5.0846  sigreg=0.0198
+  [simclr+sigreg] epoch 86/120  nt-xent=5.0854  sigreg=0.0202
+  [simclr+sigreg] epoch 87/120  nt-xent=5.0836  sigreg=0.0222
+  [simclr+sigreg] epoch 88/120  nt-xent=5.0871  sigreg=0.0219
+  [simclr+sigreg] epoch 89/120  nt-xent=5.0851  sigreg=0.0224
+  [simclr+sigreg] epoch 90/120  nt-xent=5.0853  sigreg=0.0229
+  [simclr+sigreg] epoch 91/120  nt-xent=5.0799  sigreg=0.0223
+  [simclr+sigreg] epoch 92/120  nt-xent=5.0841  sigreg=0.0234
+  [simclr+sigreg] epoch 93/120  nt-xent=5.0857  sigreg=0.0225
+  [simclr+sigreg] epoch 94/120  nt-xent=5.0829  sigreg=0.0242
+  [simclr+sigreg] epoch 95/120  nt-xent=5.0837  sigreg=0.0228
+  [simclr+sigreg] epoch 96/120  nt-xent=5.0840  sigreg=0.0226
+  [simclr+sigreg] epoch 97/120  nt-xent=5.0821  sigreg=0.0223
+  [simclr+sigreg] epoch 98/120  nt-xent=5.0816  sigreg=0.0219
+  [simclr+sigreg] epoch 99/120  nt-xent=5.0808  sigreg=0.0216
+  [simclr+sigreg] epoch 100/120  nt-xent=5.0817  sigreg=0.0227
+  [simclr+sigreg] epoch 101/120  nt-xent=5.0776  sigreg=0.0227
+  [simclr+sigreg] epoch 102/120  nt-xent=5.0783  sigreg=0.0219
+  [simclr+sigreg] epoch 103/120  nt-xent=5.0802  sigreg=0.0218
+  [simclr+sigreg] epoch 104/120  nt-xent=5.0756  sigreg=0.0204
+  [simclr+sigreg] epoch 105/120  nt-xent=5.0756  sigreg=0.0204
+  [simclr+sigreg] epoch 106/120  nt-xent=5.0740  sigreg=0.0194
+  [simclr+sigreg] epoch 107/120  nt-xent=5.0752  sigreg=0.0209
+  [simclr+sigreg] epoch 108/120  nt-xent=5.0757  sigreg=0.0212
+  [simclr+sigreg] epoch 109/120  nt-xent=5.0766  sigreg=0.0198
+  [simclr+sigreg] epoch 110/120  nt-xent=5.0783  sigreg=0.0207
+  [simclr+sigreg] epoch 111/120  nt-xent=5.0757  sigreg=0.0205
+  [simclr+sigreg] epoch 112/120  nt-xent=5.0722  sigreg=0.0217
+  [simclr+sigreg] epoch 113/120  nt-xent=5.0774  sigreg=0.0186
+  [simclr+sigreg] epoch 114/120  nt-xent=5.0736  sigreg=0.0212
+  [simclr+sigreg] epoch 115/120  nt-xent=5.0754  sigreg=0.0224
+  [simclr+sigreg] epoch 116/120  nt-xent=5.0742  sigreg=0.0197
+  [simclr+sigreg] epoch 117/120  nt-xent=5.0702  sigreg=0.0190
+  [simclr+sigreg] epoch 118/120  nt-xent=5.0725  sigreg=0.0186
+  [simclr+sigreg] epoch 119/120  nt-xent=5.0717  sigreg=0.0202
+  [simclr+sigreg] epoch 120/120  nt-xent=5.0707  sigreg=0.0204
+--- [visreg] SupCon (aug) reference ---
+  [supcon] epoch 1/120  loss=5.6891
+  [supcon] epoch 2/120  loss=5.1106
+  [supcon] epoch 3/120  loss=4.8148
+  [supcon] epoch 4/120  loss=4.6448
+  [supcon] epoch 5/120  loss=4.4810
+  [supcon] epoch 6/120  loss=4.3537
+  [supcon] epoch 7/120  loss=4.2456
+  [supcon] epoch 8/120  loss=4.1417
+  [supcon] epoch 9/120  loss=4.0451
+  [supcon] epoch 10/120  loss=3.9491
+  [supcon] epoch 11/120  loss=3.8466
+  [supcon] epoch 12/120  loss=3.7697
+  [supcon] epoch 13/120  loss=3.7083
+  [supcon] epoch 14/120  loss=3.6500
+  [supcon] epoch 15/120  loss=3.5882
+  [supcon] epoch 16/120  loss=3.5379
+  [supcon] epoch 17/120  loss=3.4954
+  [supcon] epoch 18/120  loss=3.4569
+  [supcon] epoch 19/120  loss=3.4206
+  [supcon] epoch 20/120  loss=3.3910
+  [supcon] epoch 21/120  loss=3.3665
+  [supcon] epoch 22/120  loss=3.3423
+  [supcon] epoch 23/120  loss=3.3198
+  [supcon] epoch 24/120  loss=3.3039
+  [supcon] epoch 25/120  loss=3.2964
+  [supcon] epoch 26/120  loss=3.2741
+  [supcon] epoch 27/120  loss=3.2569
+  [supcon] epoch 28/120  loss=3.2593
+  [supcon] epoch 29/120  loss=3.2376
+  [supcon] epoch 30/120  loss=3.2223
+  [supcon] epoch 31/120  loss=3.2133
+  [supcon] epoch 32/120  loss=3.2123
+  [supcon] epoch 33/120  loss=3.2047
+  [supcon] epoch 34/120  loss=3.1902
+  [supcon] epoch 35/120  loss=3.1937
+  [supcon] epoch 36/120  loss=3.1840
+  [supcon] epoch 37/120  loss=3.1726
+  [supcon] epoch 38/120  loss=3.1746
+  [supcon] epoch 39/120  loss=3.1729
+  [supcon] epoch 40/120  loss=3.1719
+  [supcon] epoch 41/120  loss=3.1720
+  [supcon] epoch 42/120  loss=3.1660
+  [supcon] epoch 43/120  loss=3.1680
+  [supcon] epoch 44/120  loss=3.1598
+  [supcon] epoch 45/120  loss=3.1547
+  [supcon] epoch 46/120  loss=3.1532
+  [supcon] epoch 47/120  loss=3.1526
+  [supcon] epoch 48/120  loss=3.1555
+  [supcon] epoch 49/120  loss=3.1418
+  [supcon] epoch 50/120  loss=3.1459
+  [supcon] epoch 51/120  loss=3.1483
+  [supcon] epoch 52/120  loss=3.1405
+  [supcon] epoch 53/120  loss=3.1368
+  [supcon] epoch 54/120  loss=3.1332
+  [supcon] epoch 55/120  loss=3.1322
+  [supcon] epoch 56/120  loss=3.1314
+  [supcon] epoch 57/120  loss=3.1361
+  [supcon] epoch 58/120  loss=3.1372
+  [supcon] epoch 59/120  loss=3.1284
+  [supcon] epoch 60/120  loss=3.1279
+  [supcon] epoch 61/120  loss=3.1234
+  [supcon] epoch 62/120  loss=3.1253
+  [supcon] epoch 63/120  loss=3.1214
+  [supcon] epoch 64/120  loss=3.1188
+  [supcon] epoch 65/120  loss=3.1215
+  [supcon] epoch 66/120  loss=3.1198
+  [supcon] epoch 67/120  loss=3.1120
+  [supcon] epoch 68/120  loss=3.1156
+  [supcon] epoch 69/120  loss=3.1178
+  [supcon] epoch 70/120  loss=3.1170
+  [supcon] epoch 71/120  loss=3.1130
+  [supcon] epoch 72/120  loss=3.1230
+  [supcon] epoch 73/120  loss=3.1126
+  [supcon] epoch 74/120  loss=3.1164
+  [supcon] epoch 75/120  loss=3.1155
+  [supcon] epoch 76/120  loss=3.1133
+  [supcon] epoch 77/120  loss=3.1148
+  [supcon] epoch 78/120  loss=3.1085
+  [supcon] epoch 79/120  loss=3.1119
+  [supcon] epoch 80/120  loss=3.1114
+  [supcon] epoch 81/120  loss=3.1154
+  [supcon] epoch 82/120  loss=3.1117
+  [supcon] epoch 83/120  loss=3.1069
+  [supcon] epoch 84/120  loss=3.1188
+  [supcon] epoch 85/120  loss=3.1074
+  [supcon] epoch 86/120  loss=3.1043
+  [supcon] epoch 87/120  loss=3.1036
+  [supcon] epoch 88/120  loss=3.1168
+  [supcon] epoch 89/120  loss=3.0997
+  [supcon] epoch 90/120  loss=3.0979
+  [supcon] epoch 91/120  loss=3.1068
+  [supcon] epoch 92/120  loss=3.1063
+  [supcon] epoch 93/120  loss=3.1040
+  [supcon] epoch 94/120  loss=3.1054
+  [supcon] epoch 95/120  loss=3.1020
+  [supcon] epoch 96/120  loss=3.1031
+  [supcon] epoch 97/120  loss=3.1001
+  [supcon] epoch 98/120  loss=3.0953
+  [supcon] epoch 99/120  loss=3.0961
+  [supcon] epoch 100/120  loss=3.1046
+  [supcon] epoch 101/120  loss=3.0946
+  [supcon] epoch 102/120  loss=3.0967
+  [supcon] epoch 103/120  loss=3.1030
+  [supcon] epoch 104/120  loss=3.0971
+  [supcon] epoch 105/120  loss=3.1007
+  [supcon] epoch 106/120  loss=3.1040
+  [supcon] epoch 107/120  loss=3.1037
+  [supcon] epoch 108/120  loss=3.0943
+  [supcon] epoch 109/120  loss=3.1026
+  [supcon] epoch 110/120  loss=3.1093
+  [supcon] epoch 111/120  loss=3.0996
+  [supcon] epoch 112/120  loss=3.1009
+  [supcon] epoch 113/120  loss=3.1014
+  [supcon] epoch 114/120  loss=3.1003
+  [supcon] epoch 115/120  loss=3.0966
+  [supcon] epoch 116/120  loss=3.0974
+  [supcon] epoch 117/120  loss=3.0921
+  [supcon] epoch 118/120  loss=3.0999
+  [supcon] epoch 119/120  loss=3.0928
+  [supcon] epoch 120/120  loss=3.1063
+--- [visreg] supcon->res-hybrid (residual, augmented) ---
+  [simclr-residual] epoch 1/120  loss=5.3907  sigreg=0.6593
+  [simclr-residual] epoch 2/120  loss=5.3479  sigreg=0.1984
+  [simclr-residual] epoch 3/120  loss=5.3357  sigreg=0.1458
+  [simclr-residual] epoch 4/120  loss=5.2799  sigreg=0.0841
+  [simclr-residual] epoch 5/120  loss=5.2705  sigreg=0.0832
+  [simclr-residual] epoch 6/120  loss=5.2574  sigreg=0.0756
+  [simclr-residual] epoch 7/120  loss=5.2415  sigreg=0.0654
+  [simclr-residual] epoch 8/120  loss=5.2239  sigreg=0.0575
+  [simclr-residual] epoch 9/120  loss=5.2170  sigreg=0.0564
+  [simclr-residual] epoch 10/120  loss=5.2081  sigreg=0.0524
+  [simclr-residual] epoch 11/120  loss=5.2017  sigreg=0.0519
+  [simclr-residual] epoch 12/120  loss=5.1989  sigreg=0.0488
+  [simclr-residual] epoch 13/120  loss=5.1935  sigreg=0.0503
+  [simclr-residual] epoch 14/120  loss=5.1946  sigreg=0.0542
+  [simclr-residual] epoch 15/120  loss=5.1897  sigreg=0.0482
+  [simclr-residual] epoch 16/120  loss=5.1821  sigreg=0.0444
+  [simclr-residual] epoch 17/120  loss=5.1774  sigreg=0.0448
+  [simclr-residual] epoch 18/120  loss=5.1732  sigreg=0.0442
+  [simclr-residual] epoch 19/120  loss=5.1770  sigreg=0.0447
+  [simclr-residual] epoch 20/120  loss=5.1743  sigreg=0.0461
+  [simclr-residual] epoch 21/120  loss=5.1702  sigreg=0.0402
+  [simclr-residual] epoch 22/120  loss=5.1749  sigreg=0.0441
+  [simclr-residual] epoch 23/120  loss=5.1734  sigreg=0.0479
+  [simclr-residual] epoch 24/120  loss=5.1661  sigreg=0.0456
+  [simclr-residual] epoch 25/120  loss=5.1642  sigreg=0.0425
+  [simclr-residual] epoch 26/120  loss=5.1632  sigreg=0.0425
+  [simclr-residual] epoch 27/120  loss=5.1585  sigreg=0.0385
+  [simclr-residual] epoch 28/120  loss=5.1546  sigreg=0.0387
+  [simclr-residual] epoch 29/120  loss=5.1541  sigreg=0.0370
+  [simclr-residual] epoch 30/120  loss=5.1572  sigreg=0.0399
+  [simclr-residual] epoch 31/120  loss=5.1489  sigreg=0.0358
+  [simclr-residual] epoch 32/120  loss=5.1493  sigreg=0.0343
+  [simclr-residual] epoch 33/120  loss=5.1474  sigreg=0.0378
+  [simclr-residual] epoch 34/120  loss=5.1449  sigreg=0.0353
+  [simclr-residual] epoch 35/120  loss=5.1465  sigreg=0.0372
+  [simclr-residual] epoch 36/120  loss=5.1463  sigreg=0.0344
+  [simclr-residual] epoch 37/120  loss=5.1449  sigreg=0.0368
+  [simclr-residual] epoch 38/120  loss=5.1445  sigreg=0.0397
+  [simclr-residual] epoch 39/120  loss=5.1443  sigreg=0.0361
+  [simclr-residual] epoch 40/120  loss=5.1436  sigreg=0.0377
+  [simclr-residual] epoch 41/120  loss=5.1426  sigreg=0.0369
+  [simclr-residual] epoch 42/120  loss=5.1393  sigreg=0.0343
+  [simclr-residual] epoch 43/120  loss=5.1373  sigreg=0.0352
+  [simclr-residual] epoch 44/120  loss=5.1391  sigreg=0.0357
+  [simclr-residual] epoch 45/120  loss=5.1385  sigreg=0.0359
+  [simclr-residual] epoch 46/120  loss=5.1326  sigreg=0.0366
+  [simclr-residual] epoch 47/120  loss=5.1332  sigreg=0.0336
+  [simclr-residual] epoch 48/120  loss=5.1308  sigreg=0.0364
+  [simclr-residual] epoch 49/120  loss=5.1294  sigreg=0.0346
+  [simclr-residual] epoch 50/120  loss=5.1302  sigreg=0.0349
+  [simclr-residual] epoch 51/120  loss=5.1278  sigreg=0.0361
+  [simclr-residual] epoch 52/120  loss=5.1237  sigreg=0.0295
+  [simclr-residual] epoch 53/120  loss=5.1231  sigreg=0.0329
+  [simclr-residual] epoch 54/120  loss=5.1247  sigreg=0.0280
+  [simclr-residual] epoch 55/120  loss=5.1220  sigreg=0.0312
+  [simclr-residual] epoch 56/120  loss=5.1191  sigreg=0.0295
+  [simclr-residual] epoch 57/120  loss=5.1244  sigreg=0.0301
+  [simclr-residual] epoch 58/120  loss=5.1220  sigreg=0.0330
+  [simclr-residual] epoch 59/120  loss=5.1233  sigreg=0.0329
+  [simclr-residual] epoch 60/120  loss=5.1204  sigreg=0.0319
+  [simclr-residual] epoch 61/120  loss=5.1188  sigreg=0.0332
+  [simclr-residual] epoch 62/120  loss=5.1160  sigreg=0.0305
+  [simclr-residual] epoch 63/120  loss=5.1192  sigreg=0.0279
+  [simclr-residual] epoch 64/120  loss=5.1169  sigreg=0.0310
+  [simclr-residual] epoch 65/120  loss=5.1130  sigreg=0.0279
+  [simclr-residual] epoch 66/120  loss=5.1132  sigreg=0.0309
+  [simclr-residual] epoch 67/120  loss=5.1101  sigreg=0.0303
+  [simclr-residual] epoch 68/120  loss=5.1117  sigreg=0.0270
+  [simclr-residual] epoch 69/120  loss=5.1105  sigreg=0.0254
+  [simclr-residual] epoch 70/120  loss=5.1101  sigreg=0.0290
+  [simclr-residual] epoch 71/120  loss=5.1076  sigreg=0.0289
+  [simclr-residual] epoch 72/120  loss=5.1120  sigreg=0.0295
+  [simclr-residual] epoch 73/120  loss=5.1101  sigreg=0.0307
+  [simclr-residual] epoch 74/120  loss=5.1069  sigreg=0.0282
+  [simclr-residual] epoch 75/120  loss=5.1102  sigreg=0.0295
+  [simclr-residual] epoch 76/120  loss=5.1086  sigreg=0.0279
+  [simclr-residual] epoch 77/120  loss=5.1121  sigreg=0.0302
+  [simclr-residual] epoch 78/120  loss=5.1074  sigreg=0.0277
+  [simclr-residual] epoch 79/120  loss=5.1072  sigreg=0.0267
+  [simclr-residual] epoch 80/120  loss=5.1071  sigreg=0.0270
+  [simclr-residual] epoch 81/120  loss=5.1025  sigreg=0.0280
+  [simclr-residual] epoch 82/120  loss=5.1020  sigreg=0.0266
+  [simclr-residual] epoch 83/120  loss=5.0996  sigreg=0.0288
+  [simclr-residual] epoch 84/120  loss=5.0985  sigreg=0.0266
+  [simclr-residual] epoch 85/120  loss=5.1000  sigreg=0.0252
+  [simclr-residual] epoch 86/120  loss=5.1014  sigreg=0.0268
+  [simclr-residual] epoch 87/120  loss=5.1040  sigreg=0.0293
+  [simclr-residual] epoch 88/120  loss=5.0997  sigreg=0.0269
+  [simclr-residual] epoch 89/120  loss=5.0996  sigreg=0.0284
+  [simclr-residual] epoch 90/120  loss=5.0991  sigreg=0.0270
+  [simclr-residual] epoch 91/120  loss=5.0958  sigreg=0.0266
+  [simclr-residual] epoch 92/120  loss=5.0950  sigreg=0.0251
+  [simclr-residual] epoch 93/120  loss=5.0988  sigreg=0.0263
+  [simclr-residual] epoch 94/120  loss=5.0961  sigreg=0.0247
+  [simclr-residual] epoch 95/120  loss=5.0930  sigreg=0.0254
+  [simclr-residual] epoch 96/120  loss=5.0938  sigreg=0.0267
+  [simclr-residual] epoch 97/120  loss=5.0949  sigreg=0.0268
+  [simclr-residual] epoch 98/120  loss=5.0928  sigreg=0.0264
+  [simclr-residual] epoch 99/120  loss=5.0939  sigreg=0.0273
+  [simclr-residual] epoch 100/120  loss=5.0895  sigreg=0.0257
+  [simclr-residual] epoch 101/120  loss=5.0944  sigreg=0.0240
+  [simclr-residual] epoch 102/120  loss=5.0899  sigreg=0.0235
+  [simclr-residual] epoch 103/120  loss=5.0890  sigreg=0.0254
+  [simclr-residual] epoch 104/120  loss=5.0913  sigreg=0.0239
+  [simclr-residual] epoch 105/120  loss=5.0891  sigreg=0.0235
+  [simclr-residual] epoch 106/120  loss=5.0905  sigreg=0.0264
+  [simclr-residual] epoch 107/120  loss=5.0902  sigreg=0.0252
+  [simclr-residual] epoch 108/120  loss=5.0892  sigreg=0.0258
+  [simclr-residual] epoch 109/120  loss=5.0880  sigreg=0.0238
+  [simclr-residual] epoch 110/120  loss=5.0920  sigreg=0.0242
+  [simclr-residual] epoch 111/120  loss=5.0893  sigreg=0.0248
+  [simclr-residual] epoch 112/120  loss=5.0865  sigreg=0.0253
+  [simclr-residual] epoch 113/120  loss=5.0855  sigreg=0.0250
+  [simclr-residual] epoch 114/120  loss=5.0851  sigreg=0.0222
+  [simclr-residual] epoch 115/120  loss=5.0853  sigreg=0.0236
+  [simclr-residual] epoch 116/120  loss=5.0833  sigreg=0.0222
+  [simclr-residual] epoch 117/120  loss=5.0853  sigreg=0.0239
+  [simclr-residual] epoch 118/120  loss=5.0811  sigreg=0.0244
+  [simclr-residual] epoch 119/120  loss=5.0824  sigreg=0.0240
+  [simclr-residual] epoch 120/120  loss=5.0832  sigreg=0.0259
+  [visreg] SupCon+SIGReg (ss[lam5])           78.3
+  [visreg] ss[lam5]+hybrid (concat)           78.5
+  [visreg] SupCon (aug), rerun                76.5
+  [visreg] supcon+hybrid (parallel), rerun    77.9
+  [visreg] supcon->res-hybrid (concat)        77.0
+
+===== DTD TOP-1, calibrated arms (100-d heads) =====
+  method                                    dino    lejepa    visreg
+  raw probe (train+val) [40]                76.5      76.2      77.9
+  SupCon (aug) [40]                         75.5      77.0      76.5
+  supcon+hybrid (parallel) [40]             77.9      76.0      78.1
+  SupCon+SIGReg (ss[lam5])                  77.1      75.8      78.3
+  ss[lam5]+hybrid (concat)                  78.0      76.6      78.5
+  SupCon (aug), rerun                       75.5      77.0      76.5
+  supcon+hybrid (parallel), rerun           77.6      75.5      77.9
+  supcon->res-hybrid (concat)               76.9      74.6      77.0
+
+  saved /home/pharris/sigreg/SuperSig/plots/dtd_calibrated_accuracy.png
+Done.
