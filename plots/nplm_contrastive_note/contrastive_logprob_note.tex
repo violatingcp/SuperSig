@@ -1,0 +1,476 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{hyperref}
+
+\title{Do contrastive embeddings converge to a log-probability?\\
+\large InfoNCE vs.\ LeCun's MSE\,+\,SIGReg (LeJEPA)}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{Question}
+Given a contrastive-style encoder trained to its optimum, does the distance
+between two (class) centers in embedding space converge to a log-probability?
+We compare two regimes: (i) InfoNCE / SimCLR-style losses, and (ii) LeCun's
+MSE\,+\,SIGReg objective (LeJEPA,
+\href{https://arxiv.org/abs/2511.08544}{arXiv:2511.08544}).
+
+\section{InfoNCE: the log-density-ratio comes from the partition function}
+For anchor $x$, positive $x^+$, temperature $\tau$, and critic $f$,
+\begin{equation}
+\mathcal{L}_{\mathrm{InfoNCE}}
+= -\frac{f(x,x^+)}{\tau}
++ \log\sum_{k}\exp\!\frac{f(x,x_k)}{\tau}.
+\end{equation}
+With unbounded negatives and sufficient capacity, the minimizing critic is the
+pointwise mutual information (Oord et al.; Wang \& Isola):
+\begin{equation}
+\frac{f^\star(x,x^+)}{\tau}
+= \log\frac{p(x^+\mid x)}{p(x^+)} + \text{const}
+= \operatorname{PMI}(x,x^+).
+\label{eq:pmi}
+\end{equation}
+The \emph{softmax denominator} is what forces the critic onto a log-ratio:
+InfoNCE is implicitly a density-ratio estimator. On the unit sphere the
+\emph{similarity} is what lands on a log-probability, and distance is affine in
+it:
+\begin{equation}
+d^2(z_i,z_k) = 2 - 2\cos\theta_{ik}
+= 2 - 2\tau\,\operatorname{PMI}(x_i,x_k)/\text{scale}.
+\end{equation}
+
+\paragraph{Supervised case.}
+With supervised positives (same-class $x^+$), $p(x^+\mid x)$ is the same-class
+conditional, and the center-to-center object becomes a
+\emph{log-likelihood-ratio} between class conditionals $p(\cdot\mid a)$ and
+$p(\cdot\mid b)$ --- a measure of class confusability/overlap.
+
+\paragraph{Two caveats.}
+\begin{enumerate}
+\item \textbf{Non-collapse required.} If the embedding dimension is too small
+(and $\tau$ small), the supervised optimum is a simplex equiangular tight frame
+(neural collapse): all class centers equidistant, and the likelihood
+information is destroyed.
+\item \textbf{Affine, and a ratio.} The readout is affine in a log-density
+\emph{ratio}, with a $\tau$-dependent scale and an unidentified additive
+constant --- not a calibrated log-likelihood.
+\end{enumerate}
+
+\section{LeJEPA (MSE\,+\,SIGReg): the mechanism is removed by design}
+The objective has no partition function, no negatives, no critic:
+\begin{equation}
+\mathcal{L}
+= \underbrace{\bigl\|z_{\mathrm{pred}} - z_{\mathrm{target}}\bigr\|^2}_{\text{alignment}}
++ \lambda\,
+\underbrace{\mathcal{L}_{\mathrm{SIGReg}}}_{\text{marginal}\,\to\,\mathcal{N}(0,I)},
+\qquad
+\mathcal{L}_{\mathrm{SIGReg}}
+= \sum_k \bigl|\phi_{\mathrm{emp}}(\omega_k) - \phi_{\mathcal{N}}(\omega_k)\bigr|^2,
+\end{equation}
+where SIGReg is an Epps--Pulley characteristic-function test pinning the
+\emph{aggregate} embedding marginal to an isotropic Gaussian. Because there is
+no softmax denominator, \emph{the InfoNCE$\to$PMI argument does not apply}:
+nothing drives the pairwise distance to a log-likelihood-ratio.
+
+\paragraph{What is a log-probability here.}
+The constraint makes the \emph{norm}, not the pairwise distance, affine in a
+log-density --- and it is the density under the \emph{imposed prior}, not the
+data:
+\begin{equation}
+\log p_{\mathrm{ref}}(z) = -\tfrac12\|z\|^2 + \text{const}
+\quad\Longrightarrow\quad
+\|z\|^2 = -2\log p_{\mathrm{ref}}(z).
+\end{equation}
+Recovering the true \emph{data} log-likelihood would additionally require the
+encoder's change-of-variables Jacobian (as in a normalizing flow); SIGReg
+constrains only the marginal, not the Jacobian, so data log-likelihood is
+\emph{not} recovered.
+
+\paragraph{Supervised / class centers.}
+Supervised MSE (pull same-class together) $+$ SIGReg (spread the set to
+$\mathcal{N}(0,I)$) yields Gaussian class blobs packed so the mixture
+$\approx\mathcal{N}(0,I)$. Then the class-center distance is a
+Mahalanobis/Gaussian separation, which equals a log-likelihood-ratio
+\emph{only under an added LDA-style assumption}: each class conditional Gaussian
+with shared covariance. SIGReg guarantees only that the \emph{aggregate} is
+Gaussian, not the per-class conditionals. With balanced classes the centers
+pack near-symmetrically, so distances reflect class count/priors (packing
+geometry), not confusability --- the Gaussian-packing analogue of the ETF
+collapse.
+
+\section{Summary}
+\begin{center}
+\begin{tabular}{@{}lll@{}}
+\toprule
+ & InfoNCE / SimCLR & LeJEPA (MSE\,+\,SIGReg)\\
+\midrule
+Similarity $\to$ & $\log\frac{p(x^+\mid x)}{p(x^+)}$ (PMI) & nothing (no critic)\\
+Pinned to a log-prob & pairwise distance (affine in $-$log-ratio) & the \emph{norm}: $\|z\|^2=-2\log p_{\mathrm{ref}}$\\
+Center dist.\ $=$ log-lik.\ ratio? & yes, up to affine $+$ non-collapse & only under equal-cov.\ Gaussian assumption\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent
+\textbf{Bottom line.} InfoNCE's distance encodes an \emph{estimated}
+log-density-ratio via its partition function. LeCun's MSE\,+\,SIGReg deliberately
+replaces that with an \emph{imposed} marginal prior: you gain provable
+distributional control and lose the automatic ``distance $=$ log-likelihood''
+readout. To make class-center distances into log-likelihood-ratios under SIGReg,
+you must add a per-class second-moment constraint; the aggregate Gaussian alone
+will not do it.
+
+\section{An NPLM-based contrastive loss}
+The quantity we want --- a \emph{calibrated} log-likelihood-ratio --- is exactly
+what the New Physics Learning Machine (NPLM, D'Agnolo \& Wulzer) estimates by
+construction, so it is a natural loss to build a contrastive objective on.
+
+\paragraph{Reframing.} Both SimCLR and the supervised question are asking for the
+pointwise mutual information
+\begin{equation}
+\operatorname{PMI}(x,x') = \log\frac{p(x,x')}{p(x)\,p(x')},
+\end{equation}
+where the joint $p(x,x')$ is the distribution of \emph{positive pairs}
+(augmentations of the same point, or same-class pairs) and the reference
+$p(x)p(x')$ is \emph{independent pairs} (a shuffled batch). InfoNCE estimates
+this ratio with a coupled softmax; NPLM estimates the same ratio with a
+maximum-likelihood (Neyman--Pearson) loss.
+
+\paragraph{The loss.} NPLM parametrizes the alternative density as
+$n(x)=n_{\mathrm{ref}}(x)\,e^{f(x)}$ and minimizes
+$\mathcal{L}[f]=\sum_{\mathrm{ref}}(e^{f}-1)-\sum_{\mathrm{data}}f$. Ported to
+pairs with a critic $g(x,x')$,
+\begin{equation}
+\mathcal{L}[g]
+= \mathbb{E}_{(x,x')\sim p(x)p(x')}\!\big[e^{g(x,x')}-1\big]
+- \mathbb{E}_{(x,x')\sim p(x,x')}\big[g(x,x')\big].
+\label{eq:nplm}
+\end{equation}
+The stationarity condition $p(x)p(x')\,e^{g^\star}=p(x,x')$ gives
+\begin{equation}
+g^\star(x,x') = \log\frac{p(x,x')}{p(x)p(x')} = \operatorname{PMI}(x,x').
+\end{equation}
+Crucially the $e^{g}-1$ term forces $\mathbb{E}_{\mathrm{ref}}[e^{g^\star}]=1$,
+which pins the additive constant: unlike InfoNCE, the recovered value is the
+\emph{absolute}, calibrated log-likelihood-ratio.
+
+\paragraph{Distance geometry.} Choosing
+\begin{equation}
+g(x,x') = -\tfrac12\|z(x)-z(x')\|^2 + b(x) + b(x'),
+\end{equation}
+with a learned log-density bias $b$, the optimum yields
+\begin{equation}
+\|z(x)-z(x')\|^2 = -2\operatorname{PMI}(x,x') + 2b(x) + 2b(x'),
+\end{equation}
+so squared distance is exactly affine in the negative \emph{calibrated}
+log-likelihood-ratio, with $b$ absorbing the per-point marginal density.
+
+\paragraph{Test statistic.} $t=-2\,\mathcal{L}_{\min}$ is an asymptotic
+log-likelihood-ratio test (Wilks) --- the same object trained is the
+signal-detection statistic, which is the point of NPLM.
+
+\paragraph{Hybrid with LeJEPA.} Keep SIGReg to pin the marginal
+$p(z)=\mathcal{N}(0,I)$ (so $\|z\|^2=-2\log p_{\mathrm{ref}}$) \emph{and} add the
+NPLM ratio head~\eqref{eq:nplm} for calibrated pairwise log-likelihood-ratios.
+This gives both a controlled marginal geometry and pairwise distances that are
+genuine calibrated log-likelihood-ratios --- the ``distance $=$ log-probability''
+property neither loss delivers alone.
+
+\subsection{Pros and cons}
+\paragraph{Pros.}
+\begin{itemize}
+\item \textbf{Calibration.} The $e^{g}-1$ term fixes the additive constant, so
+the critic recovers the \emph{absolute} log-likelihood-ratio, not
+``$\operatorname{PMI}+\text{const}$'' as in InfoNCE. This is the ``distance $=$
+log-likelihood'' readout, genuinely calibrated.
+\item \textbf{No coupled partition function.} The reference expectation is
+separable; there is no softmax denominator locking many negatives together. One
+needs enough shuffled pairs, not a large coupled negative set.
+\item \textbf{Built-in test statistic.} $t=-2\mathcal{L}_{\min}$ is an asymptotic
+log-likelihood-ratio test, directly usable for signal detection --- the trained
+object and the test statistic coincide.
+\item \textbf{Weights and imbalance.} Class weights / imbalance enter as simple
+sample weights, without reweighting a normalization constant.
+\item \textbf{Interpretable geometry.} With the distance parametrization, pairwise
+distances and class-center separations are calibrated log-likelihood-ratios of
+confusability, free of the ETF-collapse scale ambiguity.
+\end{itemize}
+
+\paragraph{Cons.}
+\begin{itemize}
+\item \textbf{Exponential instability.} $e^{g}$ diverges when $g$ is
+large-positive on reference pairs --- the classic NPLM training pathology.
+Requires weight clipping / bounding $\|g\|$, a kernel version (Falkon-NPLM), or
+regularization to control the variance of $\mathbb{E}_{\mathrm{ref}}[e^{g}]$.
+\item \textbf{Reference-sample cost.} It remains density-ratio estimation; the
+calibration is only as good as the shuffled-pair coverage of $p(x)p(x')$.
+\item \textbf{Identifiability of the distance form.} The bias $b$ must be
+expressive enough to represent marginal-density variation, or the distance term
+is forced to explain structure it cannot represent.
+\item \textbf{No automatic marginal control.} Unlike SIGReg, the loss says
+nothing about the shape of $p(z)$; if a controlled marginal is wanted it must be
+added (hence the hybrid above).
+\item \textbf{Higher-variance gradients.} The exponential term generally yields
+noisier gradients than the log-softmax of InfoNCE, so it can need smaller steps /
+more careful optimization.
+\end{itemize}
+
+\section{Building an embedded log-likelihood space (NPLM $+$ SIGReg)}
+The aim of this section is a concrete objective, structured like InfoNCE (an
+encoder $z=h_\theta(x)$, positive pairs, in-batch negatives), whose optimum makes
+the \emph{embedding geometry itself} the log-likelihood surface --- not up to an
+unidentified constant, but ``in the true sense.''
+
+\subsection{Design target: what ``true log-likelihood space'' means}
+We ask the encoder $z=h_\theta(x)\in\mathbb{R}^d$ to satisfy two readouts
+simultaneously, against a fixed reference $q(z)=\mathcal{N}(0,I)$:
+\begin{align}
+\text{(marginal)}\quad & \log p(x) = -\tfrac12\|z\|^2 + c_0,
+\label{eq:marg}\\[2pt]
+\text{(interaction)}\quad & \log\frac{p(x,x')}{p(x)p(x')} = \langle z, z'\rangle.
+\label{eq:inter}
+\end{align}
+Adding \eqref{eq:marg} for $x$ and $x'$ to \eqref{eq:inter} gives the \emph{joint}
+log-density as a single quadratic,
+\begin{equation}
+\log p(x,x')
+= -\tfrac12\|z\|^2 - \tfrac12\|z'\|^2 + \langle z,z'\rangle + c_1
+= -\tfrac12\|z-z'\|^2 + c_1.
+\label{eq:joint}
+\end{equation}
+So the design target is precisely: \emph{marginals standard Gaussian, positive
+pairs Gaussian in the embedding difference}. Every likelihood object --- marginal,
+conditional, ratio, joint --- is then a quadratic in $z$, which is what we mean by
+the embedding \emph{being} log-likelihood space. Equations \eqref{eq:marg} and
+\eqref{eq:inter} are supplied by two different terms: SIGReg delivers the
+marginal, NPLM delivers the interaction.
+
+\subsection{The embedded NPLM critic and its minimizer}
+Take the InfoNCE-style critic --- inner product plus a learned per-point bias ---
+\begin{equation}
+g_\theta(x,x') = \langle z, z'\rangle + b_\theta(x) + b_\theta(x'),
+\qquad z=h_\theta(x),
+\label{eq:critic}
+\end{equation}
+and plug it into the NPLM density-ratio loss between the joint (positives) and the
+product of marginals (independent pairs),
+\begin{equation}
+\mathcal{L}_{\mathrm{NPLM}}[g]
+= \mathbb{E}_{p(x)p(x')}\!\big[e^{g}-1\big]
+- \mathbb{E}_{p(x,x')}\big[g\big].
+\label{eq:Lnplm}
+\end{equation}
+Its unconstrained functional derivative,
+$\delta\mathcal{L}/\delta g = p(x)p(x')e^{g}-p(x,x')$, vanishes at
+\begin{equation}
+g^\star(x,x') = \log\frac{p(x,x')}{p(x)p(x')} = \operatorname{PMI}(x,x').
+\end{equation}
+For the \emph{constrained} family \eqref{eq:critic} the minimizer is a projection:
+using $p(x,x')=p(x)p(x')e^{g^\star}$,
+\begin{equation}
+\mathcal{L}_{\mathrm{NPLM}}[g]-\mathcal{L}_{\mathrm{NPLM}}[g^\star]
+= \mathbb{E}_{p(x)p(x')}\!\Big[e^{g}-e^{g^\star}-e^{g^\star}\big(g-g^\star\big)\Big]
+= D_\phi\!\big(g^\star\,\|\,g\big)\ \ge 0,
+\label{eq:bregman}
+\end{equation}
+the Bregman divergence generated by the convex $\phi(t)=e^{t}$ under the reference
+measure. Hence the encoder learns the \emph{best exponential-Bregman approximation
+of $\operatorname{PMI}$} representable by \eqref{eq:critic}; if $\operatorname{PMI}$
+is genuinely bilinear-plus-separable, the fit is exact and
+$\langle z,z'\rangle+b(x)+b(x') = \operatorname{PMI}(x,x')$.
+
+\subsection{The residual gauge, and how SIGReg removes it}
+Equation \eqref{eq:critic} has exactly the gauge freedom that leaves InfoNCE's
+constant unidentified:
+\begin{equation}
+z \mapsto Rz + a,\qquad b(x)\mapsto b(x) - \langle a, z\rangle - \tfrac12\|a\|^2 + \beta,
+\end{equation}
+for any rotation $R$, shift $a$, constant $\beta$ --- all leave $g$ (hence
+$\mathcal{L}_{\mathrm{NPLM}}$) invariant. So NPLM alone fixes the \emph{interaction}
+\eqref{eq:inter} but not the split between $z$ and $b$: the map to
+``log-likelihood space'' is undetermined. Impose SIGReg on the marginal,
+\begin{equation}
+\mathcal{L}_{\mathrm{SIGReg}}
+= \sum_k\big|\phi_{\mathrm{emp}}(\omega_k)-\phi_{\mathcal{N}}(\omega_k)\big|^2
+\ \xrightarrow{\ \min\ }\ p(z)=\mathcal{N}(0,I).
+\end{equation}
+This kills the shift/rotation freedom (only $R$ with $a=0$ survives, an irrelevant
+frame choice) and, via \eqref{eq:marg}, \emph{identifies the bias as the marginal
+log-density},
+\begin{equation}
+b_\theta(x)\ \longrightarrow\ -\tfrac12\|z\|^2 + \text{const}.
+\end{equation}
+Substituting back into \eqref{eq:critic} collapses the critic to the pure distance
+form $g=-\tfrac12\|z-z'\|^2+\text{const}$, and \eqref{eq:joint} holds. The two
+terms are therefore complementary by design: \textbf{NPLM pins the interaction and
+its absolute scale ($\mathbb{E}_{\mathrm{ref}}[e^{g^\star}]=1$), SIGReg pins the
+marginal and removes the residual gauge.} Neither alone yields
+\eqref{eq:marg}--\eqref{eq:joint}; together they do.
+
+\subsection{The combined objective and its minibatch estimator}
+\begin{equation}
+\boxed{\;
+\mathcal{L}
+= \underbrace{\mathbb{E}_{p(x)p(x')}\!\big[e^{g_\theta}-1\big]
+- \mathbb{E}_{p(x,x')}\big[g_\theta\big]}_{\text{NPLM interaction}}
+\;+\;\lambda\,
+\underbrace{\sum_k\big|\phi_{\mathrm{emp}}(\omega_k)-\phi_{\mathcal{N}}(\omega_k)\big|^2}_{\text{SIGReg marginal}}
+\;}
+\end{equation}
+For a batch $\{(x_i,x_i^+)\}_{i=1}^N$ with $g_{ij}=g_\theta(x_i,x_j^+)$, use the
+diagonal as positives and the off-diagonal (shuffled) pairs as the
+product-of-marginals reference:
+\begin{equation}
+\widehat{\mathcal{L}}_{\mathrm{NPLM}}
+= \frac{1}{N(N-1)}\sum_{i\neq j}\big(e^{g_{ij}}-1\big)
+- \frac{1}{N}\sum_i g_{ii}.
+\end{equation}
+This reuses \emph{exactly} the InfoNCE batch geometry; the only change is the loss
+functional:
+\begin{equation}
+\widehat{\mathcal{L}}_{\mathrm{InfoNCE}}
+= -\frac1N\sum_i \log\frac{e^{g_{ii}}}{\sum_j e^{g_{ij}}}
+\qquad\text{vs.}\qquad
+\widehat{\mathcal{L}}_{\mathrm{NPLM}}
+= \frac{1}{N(N-1)}\sum_{i\neq j}e^{g_{ij}} - \frac1N\sum_i g_{ii} - 1.
+\end{equation}
+InfoNCE is the \emph{self-normalized} (per-anchor softmax) estimator of the same
+log-ratio; NPLM is the \emph{un-normalized maximum-likelihood} estimator, which is
+why it retains the absolute normalization that InfoNCE discards. Reading $g_{ii}$
+off the diagonal as $-\tfrac12\|z_i-z_i^+\|^2$ (once SIGReg is active) makes the
+positive term a plain squared-distance pull, and the reference term a repulsion
+weighted by $e^{-\frac12\|z_i-z_j^+\|^2}$.
+
+\subsection{Result}
+At the joint optimum the embedding satisfies the three quadratic identities
+\begin{equation}
+\log p(x) = -\tfrac12\|z\|^2 + c_0,\quad
+\log\frac{p(x,x')}{p(x)p(x')} = \langle z,z'\rangle,\quad
+\log p(x,x') = -\tfrac12\|z-z'\|^2 + c_1,
+\end{equation}
+so marginal densities, pairwise log-likelihood-ratios, and joint log-densities are
+all read directly off the geometry --- an embedding that approximates
+log-likelihood space in the true (calibrated, gauge-fixed) sense. The
+approximation is exact when $\operatorname{PMI}$ lies in the bilinear-plus-separable
+family \eqref{eq:critic}; otherwise \eqref{eq:bregman} says the encoder returns the
+closest such surface in exponential-Bregman divergence. The practical caveats of
+\S5.1 (exponential instability of $e^{g}$, reference-pair coverage) carry over and
+set the sole implementation burden.
+
+\section{The exp-34e hybrid, and a configurable NPLM geometry}
+The SuperSig codebase already contains a hybrid of the contrastive and SIGReg
+families (\texttt{experiments/34e\_hybrid\_contrastive.py}, via
+\texttt{train\_simclr\_sigreg}). This section places it in the framework above,
+identifies why it stops short of the \S6 identities, and shows that a single loss
+class --- with the NPLM interaction as one option --- spans it and many neighbours.
+
+\subsection{What exp-34e does, in this language}
+For two augmented views $v_1,v_2$ with raw embeddings $z=h_\theta(v)$, the hybrid
+half optimizes
+\begin{equation}
+\mathcal{L}_{\text{34e}}
+= \underbrace{\mathrm{NTXent}\!\big(\hat z,\hat z'\big)}_{\text{instance positives, }\hat z = z/\|z\|}
++ \lambda\,\underbrace{\mathrm{SIGReg}(z)}_{\text{raw }z\,\to\,\mathcal{N}(0,I)},
+\qquad \hat z = z/\|z\|.
+\end{equation}
+In the vocabulary above: NT-Xent is the \emph{self-normalized} (softmax) estimator
+of $\operatorname{PMI}$ (\S5, \S6.4) with \emph{instance} positives, and SIGReg
+supplies the marginal (\S3). The supervised twin \texttt{train\_supcon\_sigreg}
+just swaps instance positives for same-label positives. So exp-34e is already the
+``InfoNCE $+$ SIGReg'' hybrid of \S5 --- with one consequential detail.
+
+\subsection{Why it stops short: two geometries}
+NT-Xent acts on the \emph{normalized} embedding $\hat z$ (angles on the unit
+sphere; scale-invariant), whereas SIGReg acts on the \emph{raw} embedding $z$ (it
+is entirely about the radial and coordinate distribution). The interaction term is
+blind to $\|z\|$; the marginal term is largely about $\|z\|$. The two therefore
+speak different geometries and are only loosely coupled: one obtains features whose
+\emph{angles} encode $\operatorname{PMI}+\text{const}$ sitting inside a
+raw distribution nudged toward Gaussian --- not the single coherent surface of
+\eqref{eq:joint}. This is precisely why exp-34e yields good, calibrated-looking
+features but not the log-likelihood identities of \S6: the softmax discards the
+constant \emph{and} the interaction lives in a different space than the marginal
+constraint.
+
+\subsection{The one-line fix: NPLM on the raw space}
+Replace NT-Xent-on-the-sphere with the NPLM ratio on the \emph{same raw} $z$ that
+SIGReg controls, using the critic \eqref{eq:critic} (or its distance form). Now
+interaction and marginal share one Euclidean geometry, the gauge argument of \S6.3
+applies verbatim, and \eqref{eq:marg}--\eqref{eq:joint} hold. The upgrade is a
+single structural swap,
+\begin{equation}
+\text{normalize}+\text{softmax}\ \longrightarrow\ \text{raw}+\text{NPLM},
+\end{equation}
+turning ``contrastive features that happen to be Gaussian'' into ``an embedding
+that is log-likelihood space.''
+
+\subsection{One class, many configurations}
+All of the above are instances of a single objective
+\begin{equation}
+\mathcal{L}
+= \mathcal{L}_{\text{int}}\big(g;\ \mathcal{P}\big)
++ \lambda\,\mathcal{L}_{\text{marg}}(z),
+\end{equation}
+with four orthogonal knobs:
+\begin{itemize}
+\item \textbf{positives} $\mathcal{P}$: instance (augmented views) $\mid$
+supervised (same label) $\mid$ residual ($z-\bar z_y$);
+\item \textbf{critic} $g$: cosine $\langle\hat z,\hat z'\rangle/\tau$ $\mid$
+bilinear $\langle z,z'\rangle$ $\mid$ neg-distance
+$-\tfrac12\|z-z'\|^2$ ($+\,b(x)+b(x')$);
+\item \textbf{interaction estimator}: softmax NT-Xent (self-normalized) $\mid$
+NPLM $e^{g}-1$ (un-normalized MLE);
+\item \textbf{marginal} $\mathcal{L}_{\text{marg}}$: none $\mid$
+SIGReg $\to\mathcal{N}(0,I)$ $\mid$ class-wise SIGReg
+$\to\mathcal{N}(m_c,\sigma_c^2 I)$.
+\end{itemize}
+The known recipes are corners of this cube:
+\begin{center}
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+recipe & positives & critic & estimator & marginal\\
+\midrule
+SimCLR & instance & cosine & softmax & none\\
+SupCon & supervised & cosine & softmax & none\\
+exp-34e hybrid & instance & cosine & softmax & SIGReg\\
+34g supcon$+$sigreg & supervised & cosine & softmax & SIGReg\\
+LeJEPA-like & pred/target & neg-dist (MSE) & --- & SIGReg\\
+\textbf{NPLM geometry} & instance/sup & bilinear/neg-dist & \textbf{NPLM} & SIGReg\\
+class-wise NPLM & supervised & neg-dist & NPLM & class-wise SIGReg\\
+\bottomrule
+\end{tabular}
+\end{center}
+Making \texttt{train\_simclr\_sigreg} a configurable class along these axes means
+every existing exp-34 arm is a special case and the log-likelihood-space arm is one
+config flip away --- directly comparable under the same probe protocol.
+
+\subsection{Practical notes for robustness across configurations}
+\begin{itemize}
+\item \textbf{Stabilize $e^{g}$ by clamping, not by subtracting a max.} It is
+tempting to copy the \texttt{sim - sim.max()} guard from \texttt{supcon\_loss},
+but that trick is only valid inside a log-\emph{ratio}: in softmax the subtracted
+constant cancels, whereas in the NPLM loss there is no enclosing ratio, so
+subtracting a constant $c$ shifts the minimizer to $g^\star+c$ and \emph{destroys
+the absolute calibration} that is the entire point. Instead clamp the exponent,
+$e^{\min(g,\,g_{\max})}$; this tames the blow-up of \S5.1 while leaving $g^\star$
+unchanged in the normal range. (Empirically, with clamping the recovered critic
+matches the analytic $\operatorname{PMI}$ with correlation $0.99$ and a mean
+offset of $\approx 0$; with max-subtraction the offset runs to hundreds.)
+\item \textbf{Mask same-class pairs from the reference.} With supervised positives,
+off-diagonal same-class pairs are \emph{positives}, not independent draws; they
+must be excluded from the $\mathbb{E}_{\mathrm{ref}}[e^{g}]$ sum or they bias the
+product-of-marginals estimate --- the NPLM analogue of SupCon's positive masking.
+\item \textbf{Drop the bias under class-wise marginals.} When
+$\mathcal{L}_{\text{marg}}$ is class-wise SIGReg, the class mean $m_c$ already
+supplies the per-point offset, so $b(x)$ can be fixed to $-\tfrac12\|z-m_{y}\|^2$
+rather than learned.
+\item \textbf{Fold temperature into $g$.} A single scale $\tau$ (or a learnable
+scalar on $g$) subsumes the cosine temperature and the NPLM output scale, keeping
+the knobs independent and the configurations comparable.
+\end{itemize}
+
+\end{document}
