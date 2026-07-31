@@ -118,6 +118,7 @@ def main():
         args.fractions = ("0.001,0.003,0.01,0.02,0.03,0.1" if ds == "cifar10"
                           else "0.001,0.003,0.01,0.02,0.05")
 
+    dtag = ds if args.dim == 32 else f"{ds}_{args.dim}d"
     cfg = recipe(ds, emb_dim=args.dim)
     n_cls = cfg["n_classes"]
     holdouts = {args.holdout}
@@ -265,12 +266,12 @@ def main():
             plt.grid(alpha=0.25, which="both")
             plt.legend(loc="upper left", fontsize=8, ncol=2)
             plt.tight_layout()
-            plt.savefig(plot_path(f"exp53_{stat}_power_{ds}.png"), dpi=150)
+            plt.savefig(plot_path(f"exp53_{stat}_power_{dtag}.png"), dpi=150)
             plt.close()
-            print("  saved " + plot_path(f"exp53_{stat}_power_{ds}.png"))
+            print("  saved " + plot_path(f"exp53_{stat}_power_{dtag}.png"))
 
     os.makedirs(os.path.join("logs", "exp53"), exist_ok=True)
-    np.savez(os.path.join("logs", "exp53", f"results_classwise_{ds}.npz"),
+    np.savez(os.path.join("logs", "exp53", f"results_classwise_{dtag}.npz"),
              fractions=np.array(fractions), arms=np.array(args.arms),
              **{f"{k}_{n}": np.array(results[n][k]) for n in args.arms
                 for k in ("probe", "probe_sd", "acc", "sup_auc", "eucl",
