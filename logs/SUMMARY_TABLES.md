@@ -108,9 +108,16 @@ Sources: exp50 (suite), exp51 (aircraft), exp52 (lam/tau scan), exp53
 | nplm_bil_sup_cw  | 0.7812 / --    | 0.4468 | 0.5163 | 0.5138 | 0.045 / --          | 0.04 / --    | 0.08 / -- | 0.00 / -- |
 | nplm_dist_sup_cw | 0.8951/0.9768  | 0.8846 | 0.7523 | 0.7294 | 0.163 / 0.316       | 0.70 / 0.06* | 0.32/0.74 | 0.12/0.34 |
 
-*SparKer post collapse is a fixed-sigma kernel-scale artifact: the proto
-fine-tune inflates the compact NPLM space to pair-dist-5 scale, mismatching
-the sigma=1 kernel that suited it pre-discovery.
+*SparKer post collapse CONFIRMED as a pure fixed-sigma kernel-scale artifact
+(exp 57): the discovery fine-tune rescales the NPLM space ~4x (class RMS
+0.56->5.34, median pairwise 2.6->11.1), so all density variation sits far
+above the sigma=1 kernel; with sigma=3/10 or the annealed median-heuristic
+schedule the same post space scores SparKer 1.00/1.00 at f=0.02/0.1 -- the
+best post-discovery SparKer in the program (exp-33 sup post ref: 0.98@0.02).
+The information was never lost; the kernel was mis-scaled.  Lesson: fixed
+sigma=1 (the exp-33 "k1" convention) is only valid for spaces at the
+supervised-recipe unit-cluster scale; use the annealed median heuristic when
+comparing heterogeneous geometries.
 
 Per-event post @0.1: nplm_dist_sup_cw 0.749, nplm_sup_dist 0.734 -- both
 above the exp-33 sup post reference (0.591) and supcon (0.302).  Discovery
