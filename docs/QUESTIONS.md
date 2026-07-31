@@ -22,9 +22,10 @@ fine-grained vs separable.  Current rules of thumb:
   noise of SupCon, no labels, best geometry+gaussianity).
 - fine-grained low-data frozen-features (aircraft): supcon_sigreg — the
   SIGReg marginal helps exactly there, opposite of CIFAR.
-- 64-D C100 (exp 50/53 64d): bilinear arms REGRESS (0.935->0.858,
-  0.925->0.825); supervised distance arms gain mildly.  High-D is not
-  free for NPLM losses.
+- 64-D C100 (exp 50/53 64d, complete): bilinear arms REGRESS (0.935->0.858
+  losing probe AND geometry; 0.925->0.825); supervised distance arms and
+  the softmax arms gain mildly (supcon_sigreg 0.913, simclr 0.885).
+  High-D is not free for NPLM losses; 32-D stands as the C100 default.
 
 ## Q3. Does NPLM calibration deliver absolute, usable distances?
 Yes — verified analytically (34f), geometrically (exp 54 plots: tight
@@ -84,8 +85,8 @@ without labels.  Unresolved: the 0.007 gap needs a 3-5 seed run.
 
 ## Open items (as of exp 58)
 
-- exp 58 power grid: NPLM-ft vs proto-ft (probe verdict already: proto).
-- 64-D C100 classwise final arm + batteries; fold into SUMMARY_TABLES.
+- exp 58 power grid: NPLM-ft vs proto-ft (probe verdict already: proto,
+  0.966/0.968 vs 0.812/0.836 on both supervised NPLM arms).
 - 3-5 seed run of nplm_bilinear vs supcon on C100 (the 0.007 question).
 - C100 discovery rate fixes: tau_quantile 0.995, multi-class holdouts.
 - Annealed-sigma rerun of historical k1 SparKer rows where geometries

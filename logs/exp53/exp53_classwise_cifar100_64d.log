@@ -1,0 +1,194 @@
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+Using cache found in /home/pharris/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+exp53 [cifar100] NPLM + classwise SIGReg, dim=64, epochs=20, holdout=[4], lam=1.0, tau=1.0, arms=['nplm_bil_cw', 'nplm_bil_sup_cw', 'nplm_dist_sup_cw']
+
+----- nplm_bil_cw (positives=instance, critic=bilinear) -----
+  cifar100 balanced two-view loader (no {4}): 49500 images, 82 batches of 25x24
+  [nplm/bilinear/cw] epoch 1/20  interaction=58040.1432  classwise=0.9157
+  [nplm/bilinear/cw] epoch 2/20  interaction=1.0599  classwise=0.8994
+  [nplm/bilinear/cw] epoch 3/20  interaction=0.3540  classwise=0.8942
+  [nplm/bilinear/cw] epoch 4/20  interaction=-0.6018  classwise=0.8921
+  [nplm/bilinear/cw] epoch 5/20  interaction=-0.4100  classwise=0.8911
+  [nplm/bilinear/cw] epoch 6/20  interaction=-0.7536  classwise=0.8900
+  [nplm/bilinear/cw] epoch 7/20  interaction=-0.7869  classwise=0.8885
+  [nplm/bilinear/cw] epoch 8/20  interaction=-0.8442  classwise=0.8872
+  [nplm/bilinear/cw] epoch 9/20  interaction=-0.8308  classwise=0.8855
+  [nplm/bilinear/cw] epoch 10/20  interaction=-0.8688  classwise=0.8858
+  [nplm/bilinear/cw] epoch 11/20  interaction=-0.8826  classwise=0.8869
+  [nplm/bilinear/cw] epoch 12/20  interaction=1.9123  classwise=0.8886
+  [nplm/bilinear/cw] epoch 13/20  interaction=-0.1534  classwise=0.8967
+  [nplm/bilinear/cw] epoch 14/20  interaction=-0.3928  classwise=0.8925
+  [nplm/bilinear/cw] epoch 15/20  interaction=-0.5226  classwise=0.8917
+  [nplm/bilinear/cw] epoch 16/20  interaction=-0.5620  classwise=0.8916
+  [nplm/bilinear/cw] epoch 17/20  interaction=-0.6491  classwise=0.8905
+  [nplm/bilinear/cw] epoch 18/20  interaction=-0.7161  classwise=0.8900
+  [nplm/bilinear/cw] epoch 19/20  interaction=-0.7413  classwise=0.8897
+  [nplm/bilinear/cw] epoch 20/20  interaction=-0.7318  classwise=0.8889
+Using cache found in /home/pharris/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+  [nplm_bil_cw     ] probe=0.8677+-0.0023 acc=0.2908 supAUC=0.8851 eucl=0.3840 mahaT=0.3802 mahaPC=0.4226 cent->anchor=3.71
+
+----- nplm_bil_sup_cw (positives=supervised, critic=bilinear) -----
+  cifar100 balanced two-view loader (no {4}): 49500 images, 82 batches of 25x24
+  [nplm/bilinear/cw] epoch 1/20  interaction=73173.4084  classwise=0.9195
+  [nplm/bilinear/cw] epoch 2/20  interaction=2.5742  classwise=0.9104
+  [nplm/bilinear/cw] epoch 3/20  interaction=1.2015  classwise=0.9086
+  [nplm/bilinear/cw] epoch 4/20  interaction=0.3839  classwise=0.9050
+  [nplm/bilinear/cw] epoch 5/20  interaction=0.1643  classwise=0.8997
+  [nplm/bilinear/cw] epoch 6/20  interaction=0.0455  classwise=0.8993
+  [nplm/bilinear/cw] epoch 7/20  interaction=-0.0362  classwise=0.8982
+  [nplm/bilinear/cw] epoch 8/20  interaction=-0.0902  classwise=0.8967
+  [nplm/bilinear/cw] epoch 9/20  interaction=-0.1231  classwise=0.8962
+  [nplm/bilinear/cw] epoch 10/20  interaction=-0.1383  classwise=0.8958
+  [nplm/bilinear/cw] epoch 11/20  interaction=-0.1476  classwise=0.8943
+  [nplm/bilinear/cw] epoch 12/20  interaction=-0.1702  classwise=0.8939
+  [nplm/bilinear/cw] epoch 13/20  interaction=-0.1873  classwise=0.8937
+  [nplm/bilinear/cw] epoch 14/20  interaction=-0.1843  classwise=0.8942
+  [nplm/bilinear/cw] epoch 15/20  interaction=-0.1938  classwise=0.8937
+  [nplm/bilinear/cw] epoch 16/20  interaction=-0.1992  classwise=0.8930
+  [nplm/bilinear/cw] epoch 17/20  interaction=-0.0249  classwise=0.8959
+  [nplm/bilinear/cw] epoch 18/20  interaction=-0.1696  classwise=0.8966
+  [nplm/bilinear/cw] epoch 19/20  interaction=-0.1991  classwise=0.8939
+  [nplm/bilinear/cw] epoch 20/20  interaction=-0.2189  classwise=0.8953
+Using cache found in /home/pharris/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+  [nplm_bil_sup_cw ] probe=0.8253+-0.0031 acc=0.2902 supAUC=0.8824 eucl=0.2857 mahaT=0.2648 mahaPC=0.3062 cent->anchor=3.65
+
+----- nplm_dist_sup_cw (positives=supervised, critic=distance) -----
+  cifar100 balanced two-view loader (no {4}): 49500 images, 82 batches of 25x24
+  [nplm/distance/cw] epoch 1/20  interaction=-0.0756  classwise=1.0456
+  [nplm/distance/cw] epoch 2/20  interaction=-0.2203  classwise=1.0498
+  [nplm/distance/cw] epoch 3/20  interaction=-0.2462  classwise=1.0467
+  [nplm/distance/cw] epoch 4/20  interaction=-0.2690  classwise=1.0454
+  [nplm/distance/cw] epoch 5/20  interaction=-0.2794  classwise=1.0440
+  [nplm/distance/cw] epoch 6/20  interaction=-0.3007  classwise=1.0449
+  [nplm/distance/cw] epoch 7/20  interaction=-0.2945  classwise=1.0434
+  [nplm/distance/cw] epoch 8/20  interaction=-0.3183  classwise=1.0434
+  [nplm/distance/cw] epoch 9/20  interaction=-0.3125  classwise=1.0443
+  [nplm/distance/cw] epoch 10/20  interaction=-0.3283  classwise=1.0435
+  [nplm/distance/cw] epoch 11/20  interaction=-0.3356  classwise=1.0448
+  [nplm/distance/cw] epoch 12/20  interaction=-0.3286  classwise=1.0460
+  [nplm/distance/cw] epoch 13/20  interaction=-0.3342  classwise=1.0434
+  [nplm/distance/cw] epoch 14/20  interaction=-0.3448  classwise=1.0448
+  [nplm/distance/cw] epoch 15/20  interaction=-0.3456  classwise=1.0439
+  [nplm/distance/cw] epoch 16/20  interaction=-0.3610  classwise=1.0458
+  [nplm/distance/cw] epoch 17/20  interaction=-0.3564  classwise=1.0452
+  [nplm/distance/cw] epoch 18/20  interaction=-0.3552  classwise=1.0447
+  [nplm/distance/cw] epoch 19/20  interaction=-0.3519  classwise=1.0452
+  [nplm/distance/cw] epoch 20/20  interaction=-0.3553  classwise=1.0439
+  [nplm_dist_sup_cw] probe=0.8605+-0.0007 acc=0.2866 supAUC=0.9202 eucl=0.3525 mahaT=0.2972 mahaPC=0.3348 cent->anchor=3.43
+
+===== performance / novelty table =====
+  arm                          probe     acc  supAUC    eucl   mahaT  mahaPC
+  nplm_bil_cw          0.8677+-0.0023  0.2908  0.8851  0.3840  0.3802  0.4226
+  nplm_bil_sup_cw      0.8253+-0.0031  0.2902  0.8824  0.2857  0.2648  0.3062
+  nplm_dist_sup_cw     0.8605+-0.0007  0.2866  0.9202  0.3525  0.2972  0.3348
+
+===== gaussianity (seen classes, test set) =====
+  metric                       nplm_bil_cwnplm_bil_sup_cwnplm_dist_sup_cw
+  eig min (class cov)                0.000         0.000        -0.000
+  eig max (class cov)                1.266         1.531         0.325
+  eig cond worst                   70926.7       40396.8324793761792.0
+  class RMS min                      0.118         0.097         0.038
+  class RMS mean                     0.170         0.178         0.069
+  class RMS max                      0.237         0.272         0.100
+  max |corr| (worst class)           0.904         0.913         0.994
+  SW ratio mean                       1.79          1.64         10.17
+  SW ratio worst                      3.79          3.86         28.84
+  |skew| mean                        0.346         0.327         1.284
+  |ex-kurt| mean                     0.638         0.593         3.821
+  centroid dist min                   0.24          0.21          0.05
+  centroid dist mean                  1.18          1.21          1.54
+  separation (min d/RMS)              1.39          1.17          0.76
+
+===== PRE power batteries (all statistics) =====
+  [nplm_bil_cw] per-event pre power=0.000
+  [nplm_bil_cw] sparker
+    pre-spk f=0.001: power=0.080 [0.042,0.138] (4/50)
+    pre-spk f=0.003: power=0.080 [0.042,0.138] (4/50)
+    pre-spk f=0.01: power=0.120 [0.074,0.184] (6/50)
+    pre-spk f=0.02: power=0.140 [0.090,0.207] (7/50)
+    pre-spk f=0.05: power=0.780 [0.706,0.841] (39/50)
+  [nplm_bil_cw] maha
+    pre-maha f=0.001: power=0.020 [0.003,0.064] (1/50)
+    pre-maha f=0.003: power=0.060 [0.028,0.115] (3/50)
+    pre-maha f=0.01: power=0.000 [0.000,0.036] (0/50)
+    pre-maha f=0.02: power=0.000 [0.000,0.036] (0/50)
+    pre-maha f=0.05: power=0.000 [0.000,0.036] (0/50)
+  [nplm_bil_cw] mmd
+    pre-mmd f=0.001: power=0.080 [0.042,0.138] (4/50)
+    pre-mmd f=0.003: power=0.060 [0.028,0.115] (3/50)
+    pre-mmd f=0.01: power=0.300 [0.231,0.378] (15/50)
+    pre-mmd f=0.02: power=0.560 [0.480,0.638] (28/50)
+    pre-mmd f=0.05: power=1.000 [0.964,1.000] (50/50)
+  [nplm_bil_sup_cw] per-event pre power=0.000
+  [nplm_bil_sup_cw] sparker
+    pre-spk f=0.001: power=0.020 [0.003,0.064] (1/50)
+    pre-spk f=0.003: power=0.040 [0.014,0.090] (2/50)
+    pre-spk f=0.01: power=0.020 [0.003,0.064] (1/50)
+    pre-spk f=0.02: power=0.020 [0.003,0.064] (1/50)
+    pre-spk f=0.05: power=0.240 [0.177,0.315] (12/50)
+  [nplm_bil_sup_cw] maha
+    pre-maha f=0.001: power=0.100 [0.058,0.162] (5/50)
+    pre-maha f=0.003: power=0.040 [0.014,0.090] (2/50)
+    pre-maha f=0.01: power=0.000 [0.000,0.036] (0/50)
+    pre-maha f=0.02: power=0.000 [0.000,0.036] (0/50)
+    pre-maha f=0.05: power=0.000 [0.000,0.036] (0/50)
+  [nplm_bil_sup_cw] mmd
+    pre-mmd f=0.001: power=0.060 [0.028,0.115] (3/50)
+    pre-mmd f=0.003: power=0.060 [0.028,0.115] (3/50)
+    pre-mmd f=0.01: power=0.260 [0.194,0.336] (13/50)
+    pre-mmd f=0.02: power=0.500 [0.421,0.579] (25/50)
+    pre-mmd f=0.05: power=1.000 [0.964,1.000] (50/50)
+  [nplm_dist_sup_cw] per-event pre power=0.030
+  [nplm_dist_sup_cw] sparker
+    pre-spk f=0.001: power=0.040 [0.014,0.090] (2/50)
+    pre-spk f=0.003: power=0.060 [0.028,0.115] (3/50)
+    pre-spk f=0.01: power=0.100 [0.058,0.162] (5/50)
+    pre-spk f=0.02: power=0.120 [0.074,0.184] (6/50)
+    pre-spk f=0.05: power=0.960 [0.910,0.986] (48/50)
+  [nplm_dist_sup_cw] maha
+    pre-maha f=0.001: power=0.020 [0.003,0.064] (1/50)
+    pre-maha f=0.003: power=0.040 [0.014,0.090] (2/50)
+    pre-maha f=0.01: power=0.020 [0.003,0.064] (1/50)
+    pre-maha f=0.02: power=0.000 [0.000,0.036] (0/50)
+    pre-maha f=0.05: power=0.000 [0.000,0.036] (0/50)
+  [nplm_dist_sup_cw] mmd
+    pre-mmd f=0.001: power=0.040 [0.014,0.090] (2/50)
+    pre-mmd f=0.003: power=0.080 [0.042,0.138] (4/50)
+    pre-mmd f=0.01: power=0.200 [0.141,0.273] (10/50)
+    pre-mmd f=0.02: power=0.640 [0.560,0.714] (32/50)
+    pre-mmd f=0.05: power=1.000 [0.964,1.000] (50/50)
+
+===== EXP53 PEREVENT PRE POWER (alpha=0.05) =====
+  arm                   0.001    0.003     0.01     0.02     0.05
+  nplm_bil_cw           0.000    0.000    0.000    0.000    0.000
+  nplm_bil_sup_cw       0.000    0.000    0.000    0.000    0.000
+  nplm_dist_sup_cw      0.030    0.030    0.030    0.030    0.030
+  saved /home/pharris/sigreg/SuperSig/plots/exp53_perevent_power_cifar100_64d.png
+
+===== EXP53 SPARKER PRE POWER (alpha=0.05) =====
+  arm                   0.001    0.003     0.01     0.02     0.05
+  nplm_bil_cw           0.080    0.080    0.120    0.140    0.780
+  nplm_bil_sup_cw       0.020    0.040    0.020    0.020    0.240
+  nplm_dist_sup_cw      0.040    0.060    0.100    0.120    0.960
+  saved /home/pharris/sigreg/SuperSig/plots/exp53_sparker_power_cifar100_64d.png
+
+===== EXP53 MAHA PRE POWER (alpha=0.05) =====
+  arm                   0.001    0.003     0.01     0.02     0.05
+  nplm_bil_cw           0.020    0.060    0.000    0.000    0.000
+  nplm_bil_sup_cw       0.100    0.040    0.000    0.000    0.000
+  nplm_dist_sup_cw      0.020    0.040    0.020    0.000    0.000
+  saved /home/pharris/sigreg/SuperSig/plots/exp53_maha_power_cifar100_64d.png
+
+===== EXP53 MMD PRE POWER (alpha=0.05) =====
+  arm                   0.001    0.003     0.01     0.02     0.05
+  nplm_bil_cw           0.080    0.060    0.300    0.560    1.000
+  nplm_bil_sup_cw       0.060    0.060    0.260    0.500    1.000
+  nplm_dist_sup_cw      0.040    0.080    0.200    0.640    1.000
+  saved /home/pharris/sigreg/SuperSig/plots/exp53_mmd_power_cifar100_64d.png
+
+===== EXP53 SUMMARY =====
+  [nplm_bil_cw     ] probe=0.8677+-0.0023  acc=0.2908  eucl=0.3840  mahaT=0.3802  cent->anchor=3.71
+  [nplm_bil_sup_cw ] probe=0.8253+-0.0031  acc=0.2902  eucl=0.2857  mahaT=0.2648  cent->anchor=3.65
+  [nplm_dist_sup_cw] probe=0.8605+-0.0007  acc=0.2866  eucl=0.3525  mahaT=0.2972  cent->anchor=3.43
+Done.

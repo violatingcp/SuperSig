@@ -146,6 +146,16 @@ shapes the endgame.  Single-seed probe spread ~0.017 (0.9179 rerun vs 0.9349
 exp-50 same config) -- the nplm_bilinear-vs-supcon probe gap (0.007) is
 unresolved at one seed.
 
+64-D C100 rerun (exps 50/53 64d, results_*_cifar100_64d.npz): probe
+supcon 0.9389, supcon_sigreg 0.9129 (+0.03 vs 32d), simclr 0.8854 (+0.03),
+nplm_bilinear 0.8584 (-0.077, eucl 0.35 vs 0.53 -- loses probe AND
+geometry), nplm_sup_dist 0.8377 (+0.03, best MMD@0.02 0.66), lejepa 0.8265
+(-0.04); classwise arms flat-to-worse (bil_cw 0.8677, bil_sup_cw 0.8253
+(-0.10), dist_sup_cw 0.8605), cent->anchor still 3.4-3.7 -- 64-D does not
+make 100 anchors realizable.  Verdict: high-D mildly helps the softmax
+arms (linear-readout effect) but DEGRADES the NPLM/bilinear program --
+the 32-D defaults stand for calibrated losses on C100.
+
 Discovery on C100 (exps 55/56): pool purity 0.003-0.013 (500 holdout train
 images vs ~2500-event tail at tauq=0.95) -- discovery neutral-to-harmful for
 every space; the conf mask keeps 0 events in round 1 (posterior diluted over
