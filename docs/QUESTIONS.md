@@ -9,10 +9,12 @@ reporting: `docs/METRICS.md`.
 The central tension.  Softmax-contrastive spaces (SupCon) maximize
 linearly-readable structure but carry no absolute distance information
 (per-event power 0.000); calibrated spaces (NPLM, supervised SIGReg) are
-ready-to-use distance metrics at a probe cost.  Best single-space
-compromise so far: `nplm_dist_sup_cw` on CIFAR-10 (probe 0.895 pre / 0.977
-post, best geometry in program).  Status: OPEN in general — the answer so
-far is "one space + discovery update", not "one loss".
+ready-to-use distance metrics at a probe cost.  Exp 59 largely closes this
+on C10: `supcon+nplm` concat (0.954 probe + 0.768 eucl, discovery-free)
+and `sup->res-nplm` (probe 0.984 post + record geometry + near-max post
+power) each serve both currencies; the NPLM-bilinear half is a strict
+upgrade over SimCLR as the feature half of any concat.  Remaining gap:
+no SINGLE standalone loss does it yet.
 
 ## Q2. Which loss corner wins in which regime?
 Regime variables: #seen classes vs dim, labels available, per-class data,

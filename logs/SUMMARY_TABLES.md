@@ -123,6 +123,26 @@ Per-event post @0.1: nplm_dist_sup_cw 0.749, nplm_sup_dist 0.734 -- both
 above the exp-33 sup post reference (0.591) and supcon (0.302).  Discovery
 pool purity r1 0.34-0.36 for the supervised NPLM arms vs 0.10 bilinear.
 
+### Exp 59: NPLM residual + concat spaces (C10, 16+16, annealed sigma)
+
+| space          | probe pre/post | acc    | eucl   | mahaT  | perevt pre/post@.02 | SpK@.02   | Maha@.02  | MMD@.02   |
+|----------------|----------------|--------|--------|--------|---------------------|-----------|-----------|-----------|
+| sup->res-nplm  | 0.9340/0.9840  | 0.9117 | 0.8344 | 0.7680 | 0.275/0.511         | 0.88/1.00 | 0.70/0.90 | 0.34/0.90 |
+| sup+nplm       | 0.9321/0.9791  | 0.8812 | 0.7910 | 0.7710 | 0.232/0.438         | 0.42/0.94 | 0.84/0.86 | 0.24/0.80 |
+| supcon+nplm    | 0.9540/0.9195  | 0.8848 | 0.7681 | 0.7414 | 0.015/0.116         | 0.26/0.30 | 0.64/0.88 | 0.66/0.06 |
+| nplmsup+nplm   | 0.8870/0.9180  | 0.8691 | 0.7051 | 0.7596 | 0.138/0.214         | 0.12/0.04 | 0.66/0.62 | 0.08/0.10 |
+| nplmsup->res   | 0.8652/0.8956  | 0.7111 | 0.4316 | 0.5962 | 0.015/0.076         | 0.04/0.08 | 0.30/0.36 | 0.00/0.02 |
+
+sup->res-nplm is the NEW OVERALL C10 CHAMPION: record probe post (0.9840),
+record eucl (0.8344, beats exp-36 sup->res-hybrid 0.8159), and near-max
+post power on every statistic -- the NPLM residual strictly improves on the
+NT-Xent residual.  supcon+nplm takes the best PRE-discovery probe in the
+program (0.9540) with real geometry (vs supcon+simclr's 0.645 eucl) -- the
+label-free nplm_bilinear half is a strict upgrade over the SimCLR half --
+but inherits SupCon's discovery fragility (0.954->0.920): use it
+discovery-free.  Residual-on-NPLM-trunk fails (compact geometry leaves the
+residual nothing); all-NPLM concat is mid-pack.
+
 ### Exp 58: discovery fine-tune A/B -- proto/repulse vs NPLM+sigreg
 (C10, both supervised NPLM arms, annealed-sigma SparKer throughout.)
 

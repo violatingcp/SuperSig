@@ -52,6 +52,11 @@ Name mapping to the user-facing loss taxonomy:
 | ssl->supres (33) | 0.890 / 0.940 | 0.881 | 0.680 | 0.550 | 0.02/0.28 | 0.56/0.60 | 0.32/0.88 |
 | sup->res (36) | 0.930 / -- | 0.911 | 0.795 | 0.735 | 0.34/0.22 | 0.80/0.76 | 0.38/0.70 |
 | sup->res-hybrid (36) | 0.938 / -- | 0.918 | 0.816 | 0.758 | 0.28/0.38 | 0.94/0.84 | 0.42/0.94 |
+| **sup->res-nplm (59)** | 0.934 / **0.984** | 0.912 | **0.834** | 0.768 | 0.30/0.34‡ | 0.70/0.90 | 0.34/0.90 |
+| sup+nplm (59) | 0.932 / 0.979 | 0.881 | 0.791 | **0.771** | 0.16/0.34‡ | 0.84/0.86 | 0.24/0.80 |
+| supcon+nplm (59) | **0.954** / 0.920 | 0.885 | 0.768 | 0.741 | 0.04/0.26‡ | 0.64/0.88 | 0.66/0.06 |
+| nplmsup+nplm (59) | 0.887 / 0.918 | 0.869 | 0.705 | 0.760 | 0.04/0.06‡ | 0.66/0.62 | 0.08/0.10 |
+| nplmsup->res (59) | 0.865 / 0.896 | 0.711 | 0.432 | 0.596 | 0.04/0.04‡ | 0.30/0.36 | 0.00/0.02 |
 
 † Fixed-sigma (k1) SparKer values on spaces whose scale differs from the
 supervised-recipe geometry are suspect (exp 57): the nplm_bilinear post and
@@ -61,20 +66,33 @@ power loss.  The sup-NPLM post rows use exp-58 annealed-sigma values (their
 exp-55 k1 counterparts were ~0.05 across the board).  exp-33/36 SIGReg-arm
 values are scale-matched and trustworthy.
 
+‡ exp-59 SparKer values use the annealed median-heuristic sigma (exp-57
+rule); earlier rows are fixed sigma=1 — compare within, not across.
+
 ## Reading
 
-1. **Best pre-discovery probe**: supcon+simclr concat (0.949) and
-   supcon+hybrid[lam5] (0.948); best standalone: supcon 0.942.
-2. **Best pre-discovery calibrated geometry**: sup->res-hybrid concat
-   (eucl 0.816, mahaT 0.758, Maha@.02 0.94); best standalone: sup nplm
-   +cw sigreg (0.752 / 0.729).
-3. **Best post-discovery probe overall**: sup nplm +cw sigreg + proto ft
-   (**0.977**), then sup->res (33) 0.969, sup nplm 0.963 — the NPLM
-   standalone arms overtake every concat once discovery runs.
-4. **Best post-discovery detection**: sup->res-hybrid (Maha 0.84, MMD 0.94
-   @.02) among concats; sup nplm ft=nplm among standalones (Maha 0.90,
-   MMD 0.74, SpK@.01 0.32-0.66, per-event 0.57@.02 — see exp 58).
+1. **Best pre-discovery probe**: supcon+nplm (**0.954**, exp 59) — and
+   unlike the old leaders (supcon+simclr 0.949, supcon+hybrid 0.948) it
+   carries real geometry (eucl 0.768, mahaT 0.741): the closest thing yet
+   to one space serving both currencies without discovery.
+2. **Best pre-discovery calibrated geometry**: sup->res-nplm (eucl
+   **0.834**, program record) and sup+nplm (mahaT **0.771**, record);
+   the NPLM residual beats the exp-36 NT-Xent residual on geometry.
+3. **Best post-discovery probe / overall champion**: sup->res-nplm
+   (**0.984**), then sup+nplm 0.979, sup nplm+cw 0.977, sup->res (33)
+   0.969.  It pairs the record probe with per-event 0.51@.02 (0.66@0.1),
+   SparKer 1.00@.02, Maha 0.90@.02, MMD 0.90@.02 post — the best full
+   pipeline in the program.
+4. **Discovery response tracks the supervised trunk**: SIGReg/NPLM-sup
+   trunks gain (+0.03 to +0.05 probe), SupCon trunks lose (supcon+nplm
+   0.954->0.920, supcon+simclr 0.949->0.919) — use supcon concats
+   discovery-free.
 5. **The ft-objective split (exp 58)**: proto ft -> probe (0.96-0.98);
-   NPLM ft -> power (2x on most statistics).  No single update wins both.
-6. **Unsupervised arms**: never competitive on C10 in either currency;
-   the NPLM corners are the only ones with usable raw-distance geometry.
+   NPLM ft -> power (2x on most statistics).  No single update wins both;
+   sup->res-nplm + proto ft comes closest to both at once.
+6. **Unsupervised arms**: never competitive on C10 standalone in either
+   currency — but nplm_bilinear is the best *feature half*: every concat
+   that swaps SimCLR for it improves geometry at equal-or-better probe.
+7. **Weak combos**: residual-on-NPLM-trunk (nplmsup->res 0.865/0.432) —
+   the compact NPLM geometry leaves the residual nothing to learn;
+   all-NPLM concat is mid-pack.
