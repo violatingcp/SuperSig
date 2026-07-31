@@ -123,6 +123,26 @@ Per-event post @0.1: nplm_dist_sup_cw 0.749, nplm_sup_dist 0.734 -- both
 above the exp-33 sup post reference (0.591) and supcon (0.302).  Discovery
 pool purity r1 0.34-0.36 for the supervised NPLM arms vs 0.10 bilinear.
 
+### Exp 58: discovery fine-tune A/B -- proto/repulse vs NPLM+sigreg
+(C10, both supervised NPLM arms, annealed-sigma SparKer throughout.)
+
+| config                  | probe post | perevt@.02 | SpK@.02 | Maha@.02 | MMD@.02 |
+|-------------------------|-----------|------------|---------|----------|---------|
+| nplm_sup_dist / proto   | 0.9661    | 0.299      | 0.52    | 0.40     | 0.34    |
+| nplm_sup_dist / nplm    | 0.8117    | **0.572**  | **1.00**| **0.90** | **0.74**|
+| nplm_dist_sup_cw / proto| 0.9676    | 0.483      | 0.80    | 0.62     | 0.42    |
+| nplm_dist_sup_cw / nplm | 0.8364    | **0.575**  | **0.92**| 0.56     | **0.72**|
+
+The probe-vs-calibration dissociation recurs at the FINE-TUNE level: the
+proto/repulse update maximizes probe-readable structure (0.97) but
+partially decalibrates the space; the NPLM+sigreg update keeps the space
+calibrated -- every power statistic favors it, often 2x (per-event 0.31 at
+f=0.001!), it holds round-2 pool purity (0.22-0.30 vs 0.03-0.11), does not
+fragment discovered anchors (1 vs 5), and posts the best margin /
+mean-anchor AUCs (0.95-0.96).  Choose the ft objective by the downstream
+consumer: linear readout -> proto; dataset-level detection -> NPLM-ft.
+These annealed-sigma proto rows supersede the exp-55 k1 SparKer artifacts.
+
 ## CIFAR-100 (exps 50/52/53/55/56)
 
 | space            | probe pre/post   | acc    | eucl   | mahaT  | perevt | SparKer @.02      | Maha @.02         | MMD @.02          |

@@ -45,8 +45,12 @@ lam is inert early (exp 52); tau is the knob that matters.
 - C100: rate-blocked (500 holdout vs ~2500-event tail, purity ~0.003-0.01);
   conf mask (exp 56) is only a do-no-harm gate.  Untested fixes: stricter
   tau_quantile (0.995+), multi-class holdouts, larger holdout fraction.
-- ft objective: proto/repulse >> NPLM-ft for the probe (0.966 vs 0.812 on
-  nplm_sup_dist; exp 58 power grid pending at time of writing).
+- ft objective (exp 58, complete): the probe-vs-calibration dissociation
+  recurs at the fine-tune level.  proto/repulse wins the probe (0.97 vs
+  0.81-0.84); NPLM+sigreg-ft wins EVERY power statistic (per-event 0.57 vs
+  0.30-0.48 @0.02, SparKer 1.00/0.92, Maha 0.90, MMD 0.74), holds round-2
+  pool purity (0.22-0.30 vs 0.03-0.11) and does not fragment anchors.
+  Choose by consumer: linear readout -> proto; detection -> NPLM-ft.
 
 ## Q6. Which dataset-level statistic when?
 Statistic-geometry matching: parametric (per-event, Maha) needs calibrated
@@ -85,8 +89,9 @@ without labels.  Unresolved: the 0.007 gap needs a 3-5 seed run.
 
 ## Open items (as of exp 58)
 
-- exp 58 power grid: NPLM-ft vs proto-ft (probe verdict already: proto,
-  0.966/0.968 vs 0.812/0.836 on both supervised NPLM arms).
+- exp-58 follow-up: a two-stage ft (NPLM-ft then a probe head, or
+  proto-ft with an NPLM calibration term) to get 0.97 probe AND 0.57
+  per-event in one space.
 - 3-5 seed run of nplm_bilinear vs supcon on C100 (the 0.007 question).
 - C100 discovery rate fixes: tau_quantile 0.995, multi-class holdouts.
 - Annealed-sigma rerun of historical k1 SparKer rows where geometries
