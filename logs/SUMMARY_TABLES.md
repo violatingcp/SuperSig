@@ -143,6 +143,24 @@ but inherits SupCon's discovery fragility (0.954->0.920): use it
 discovery-free.  Residual-on-NPLM-trunk fails (compact geometry leaves the
 residual nothing); all-NPLM concat is mid-pack.
 
+### Exp 59 on CIFAR-100 (16+16, annealed sigma)
+
+| space          | probe pre/post | acc    | eucl   | mahaT  | SpK@.02   | Maha@.02  | MMD@.02   |
+|----------------|----------------|--------|--------|--------|-----------|-----------|-----------|
+| supcon+nplm    | 0.9417/0.9316  | 0.5532 | 0.4364 | 0.4146 | 0.26/0.56 | 0.00/0.08 | 0.48/**0.90** |
+| sup+nplm       | 0.8958/0.8603  | 0.4959 | 0.5666 | 0.4166 | 0.10/0.06 | 0.04/0.08 | 0.30/0.46 |
+| nplmsup+nplm   | 0.8957/0.8999  | 0.4135 | 0.5260 | 0.4892 | 0.16/0.14 | 0.02/0.00 | 0.62/0.62 |
+| nplmsup->res   | 0.8448/0.8660  | 0.1513 | 0.5164 | 0.4167 | 0.04/0.22 | 0.04/0.00 | 0.12/0.52 |
+| sup->res-nplm  | 0.7985/0.8001  | 0.5098 | 0.4899 | 0.3249 | 0.26/0.18 | 0.04/0.00 | 0.30/0.52 |
+
+C100 verdicts: supcon+nplm ties standalone supcon's probe (0.9417) with
+better geometry (mahaT 0.415 vs 0.341) and posts the best mid-fraction MMD
+on record for C100 (0.90 post @0.02) -- the nplm-bilinear-as-feature-half
+upgrade holds on both datasets.  The NPLM residual does NOT transfer
+(0.799; the exp-36 "residual wins are a separable-data effect" verdict
+extends to NPLM residuals).  Discovery on C100 stays probe-neutral
+(rate-blocked) but lifts MMD broadly; Maha and per-event stay dead.
+
 ### Exp 58: discovery fine-tune A/B -- proto/repulse vs NPLM+sigreg
 (C10, both supervised NPLM arms, annealed-sigma SparKer throughout.)
 
