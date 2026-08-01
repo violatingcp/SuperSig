@@ -42,7 +42,6 @@ exp44 = importlib.import_module("44_transfer_32d")
 exp50 = importlib.import_module("50_nplm_cifar10_suite")
 
 ARMS, COLORS, STATS = exp50.ARMS, exp50.COLORS, exp50.STATS
-N_CLS = exp44.N_CLASSES["aircraft"]
 
 
 def filter_bank(bank, keep_mask):
@@ -52,10 +51,12 @@ def filter_bank(bank, keep_mask):
 
 def main():
     ap = argparse.ArgumentParser()
+    ap.add_argument("--dataset", default="aircraft",
+                    choices=list(exp44.N_CLASSES))
     ap.add_argument("--base", default="dino",
                     choices=list(exp40.CACHE_TAG))
-    ap.add_argument("--holdouts",
-                    default=",".join(str(c) for c in range(90, 100)))
+    ap.add_argument("--holdouts", default=None,
+                    help="comma list; default = last 10 classes")
     ap.add_argument("--quick", action="store_true")
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--dim", type=int, default=32)
@@ -67,7 +68,8 @@ def main():
     ap.add_argument("--refresh", action="store_true")
     ap.add_argument("--alpha", type=float, default=0.05)
     ap.add_argument("--fractions", default="0.003,0.01,0.02,0.05,0.1")
-    ap.add_argument("--n-d", type=int, default=1000)
+    ap.add_argument("--n-d", type=int, default=None,
+                    help="toy size; default 1000 aircraft, 2000 cars")
     ap.add_argument("--kernels", type=int, default=16)
     ap.add_argument("--steps", type=int, default=300)
     ap.add_argument("--sparker-sigma", type=float, default=1.0)
@@ -76,6 +78,11 @@ def main():
     ap.add_argument("--skip-power", action="store_true")
     args = ap.parse_args()
 
+    N_CLS = exp44.N_CLASSES[args.dataset]
+    if args.holdouts is None:
+        args.holdouts = ",".join(str(c) for c in range(N_CLS - 10, N_CLS))
+    if args.n_d is None:
+        args.n_d = 2000 if args.dataset == "cars" else 1000
     holdouts = {int(x) for x in args.holdouts.split(",")}
     seen = [c for c in range(N_CLS) if c not in holdouts]
     con_ep = args.epochs or (5 if args.quick else 120)
@@ -86,11 +93,11 @@ def main():
     if args.sparker_sigma > 0:
         sparker_kw.update(sigma0=args.sparker_sigma, sigma_ratio=1.0,
                           n_checkpoints=1)
-    tag = f"aircraft_{args.base}"
+    tag = f"{args.dataset}_{args.base}"
     print(f"exp51 [{tag}] NPLM suite, dim={args.dim}, epochs={con_ep}, "
           f"holdouts={sorted(holdouts)}, lam={args.lam}, arms={args.arms}")
 
-    plain, bank = exp44.build_features("aircraft", args.base, args)
+    plain, bank = exp44.build_features(args.dataset, args.base, args)
     (Xtr, ytr), (Xte, yte) = plain["train"], plain["test"]
     tr_lab, te_lab = ytr.numpy(), yte.numpy()
     seen_bank = filter_bank(bank, ~np.isin(bank["labels"].numpy(),
