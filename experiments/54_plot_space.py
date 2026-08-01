@@ -33,12 +33,14 @@ exp28 = importlib.import_module("28_concat_residual")
 exp29 = importlib.import_module("29_residual_finetune")
 exp34h = importlib.import_module("34h_hybrid_nplm_cifar")
 exp50 = importlib.import_module("50_nplm_cifar10_suite")
+exp53 = importlib.import_module("53_nplm_classwise")
+exp55 = importlib.import_module("55_nplm_discovery")
 
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--arm", default="nplm_sup_dist",
-                    choices=list(exp50.ARMS))
+                    choices=list(exp50.ARMS) + list(exp53.ARMS))
     ap.add_argument("--dataset", default="cifar10")
     ap.add_argument("--holdout", type=int, default=4)
     ap.add_argument("--quick", action="store_true")
@@ -46,6 +48,7 @@ def main():
     ap.add_argument("--dim", type=int, default=32)
     ap.add_argument("--epochs", type=int, default=None)
     ap.add_argument("--lam", type=float, default=1.0)
+    ap.add_argument("--tau", type=float, default=1.0)
     args = ap.parse_args()
     ds = args.dataset
 
@@ -64,20 +67,8 @@ def main():
         d = np.load(cache)
         tr, tr_lab, te, te_lab = d["tr"], d["tr_lab"], d["te"], d["te_lab"]
     else:
-        kind, spec, labeled = exp50.ARMS[args.arm]
-        i = list(exp50.ARMS).index(args.arm)   # exp-50 per-arm seed offset
-        print(f"retraining {args.arm} [{ds}] with exp-50 seed {args.seed+20+i}")
-        torch.manual_seed(args.seed + 20 + i)
-        np.random.seed(args.seed + 20 + i)
-        net = CIFARResNetBackbone(args.dim, arch=cfg["arch"],
-                                  pretrain=ds).to(DEVICE)
-        loader = cifar_two_view_loader(quick=args.quick, labeled=labeled,
-                                       holdout=holdouts, dataset=ds)
-        if kind == "hybrid":
-            exp34h.train_hybrid(net, loader, con_ep, spec, labeled,
-                                lam=args.lam, n_slices=cfg["n_slices"])
-        else:
-            spec(net, loader, con_ep)
+        print(f"retraining {args.arm} [{ds}] with its original seed")
+        net = exp55.train_arm(args.arm, ds, cfg, args, con_ep, holdouts)
         train_loader, test_loader = get_cifar_loaders(quick=args.quick,
                                                       dataset=ds)
         train_eval_loader = DataLoader(train_loader.dataset, batch_size=256,
