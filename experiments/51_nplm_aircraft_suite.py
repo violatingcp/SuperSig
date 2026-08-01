@@ -26,7 +26,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-from supersig.config import DEVICE, plot_path
+from supersig.config import DATA_DIR, DEVICE, REPO_DIR, plot_path
 from supersig.metrics import gaussianity_summary
 
 exp28 = importlib.import_module("28_concat_residual")
@@ -49,12 +49,66 @@ def filter_bank(bank, keep_mask):
             "labels": bank["labels"][keep_mask]}
 
 
+def build_features_ft(args):
+    """Feature banks extracted with an exp-62 fine-tuned trunk (cached)."""
+    exp43 = importlib.import_module("43_dtd_finetune")
+    tag = (f"{args.dataset}_{exp40.CACHE_TAG[args.base]}"
+           f"_{args.trunk_ckpt_arm}")
+    plain_cache = os.path.join(DATA_DIR, f"tf_feats_{tag}.pt")
+    aug_cache = os.path.join(DATA_DIR,
+                             f"tf_augfeats_{tag}_a{args.aug_reps}.pt")
+
+    def load_trunk():
+        m = exp43.FineTuneModel(args.base, 100)
+        ck = os.path.join(REPO_DIR, "checkpoints",
+                          f"{args.dataset}_ft_{args.base}"
+                          f"_{args.trunk_ckpt_arm}.pt")
+        print(f"  loading ft trunk {ck}")
+        m.load_state_dict(torch.load(ck, map_location=DEVICE))
+        t = m.trunk.eval()
+        for p in t.parameters():
+            p.requires_grad = False
+        return t
+
+    model = None
+    if os.path.exists(plain_cache) and not args.refresh:
+        plain = torch.load(plain_cache)
+    else:
+        model = load_trunk()
+        plain = {}
+        for split in ("train", "test"):
+            d = exp44.make_split(args.dataset, split, exp37.TF_EVAL)
+            plain[split] = exp37.extract(model, d)
+            print(f"  extracted {tag} {split}: "
+                  f"{tuple(plain[split][0].shape)}")
+        torch.save(plain, plain_cache)
+    if os.path.exists(aug_cache) and not args.refresh:
+        bank = torch.load(aug_cache)
+    else:
+        model = model or load_trunk()
+        d = exp44.make_split(args.dataset, "train", exp37.TF_AUG)
+        reps, labels = [], None
+        for a in range(args.aug_reps):
+            f, labels = exp37.extract(model, d)
+            reps.append(f.half())
+            print(f"  {tag} aug replica {a + 1}/{args.aug_reps}")
+        bank = {"feats": torch.stack(reps), "labels": labels}
+        torch.save(bank, aug_cache)
+    del model
+    if DEVICE.type == "cuda":
+        torch.cuda.empty_cache()
+    return plain, bank
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--dataset", default="aircraft",
                     choices=list(exp44.N_CLASSES))
     ap.add_argument("--base", default="dino",
                     choices=list(exp40.CACHE_TAG))
+    ap.add_argument("--trunk-ckpt-arm", default=None,
+                    help="use checkpoints/{ds}_ft_{base}_{arm}.pt trunk "
+                         "(exp 62) instead of the frozen base")
     ap.add_argument("--holdouts", default=None,
                     help="comma list; default = last 10 classes")
     ap.add_argument("--quick", action="store_true")
@@ -94,10 +148,13 @@ def main():
         sparker_kw.update(sigma0=args.sparker_sigma, sigma_ratio=1.0,
                           n_checkpoints=1)
     tag = f"{args.dataset}_{args.base}"
+    if args.trunk_ckpt_arm:
+        tag += f"_{args.trunk_ckpt_arm}"
     print(f"exp51 [{tag}] NPLM suite, dim={args.dim}, epochs={con_ep}, "
           f"holdouts={sorted(holdouts)}, lam={args.lam}, arms={args.arms}")
 
-    plain, bank = exp44.build_features(args.dataset, args.base, args)
+    plain, bank = (build_features_ft(args) if args.trunk_ckpt_arm
+                   else exp44.build_features(args.dataset, args.base, args))
     (Xtr, ytr), (Xte, yte) = plain["train"], plain["test"]
     tr_lab, te_lab = ytr.numpy(), yte.numpy()
     seen_bank = filter_bank(bank, ~np.isin(bank["labels"].numpy(),

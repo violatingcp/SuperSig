@@ -79,6 +79,19 @@ closed-set test top-1 %, head 100-D / trunk 768-D probes)
 | refs: frozen / CE-ft | 64.9 / 65.5 | 34.3 / 75.8 | 37.9 / 76.6 |
 | refs: SupCon-ft / ss-ft | 50.2 / 43.3 | 58.7 / 49.0 | 62.7 / 54.5 |
 
+## Suite on the nplm-sup-ft trunks (exp 51 rerun; frozen-base values in
+parens.  CAVEAT: the exp-62 ft saw images AND labels of all 100 variants
+including holdouts, so the novelty columns here are optimistic vs the
+strict open-world protocol; the acc gains are clean closed-set numbers.)
+
+| arm | DINO-ft probe/acc/mahaT | LeJEPA-ft | VISReg-ft |
+|---|---|---|---|
+| supcon_sigreg | 0.758/0.591/0.751 (0.781/0.596/0.743) | **0.812/0.638/0.800** (0.724/0.404/0.627) | 0.786/0.656/0.768 (0.737/0.428/0.639) |
+| supcon | 0.749/0.562/0.724 (0.688/0.557/0.708) | 0.699/0.630/0.709 (0.706/0.483/0.688) | 0.802/**0.665**/0.757 (0.764/0.492/0.704) |
+| nplm_sup_dist | 0.721/0.227/0.688 (=) | 0.734/0.338/0.787 (0.722/0.178/0.651) | 0.742/0.305/**0.812** (0.731/0.186/0.617) |
+| nplm_bilinear | 0.684/0.093/0.606 (0.612/...) | 0.753/0.231/0.656 (0.681/...) | 0.754/0.307/0.655 (0.661/...) |
+| label-free others | ~= frozen | +0.05-0.08 probe | +0.06-0.07 probe |
+
 ## Reading
 
 1. **DINO is the strongest base** on every currency (best probes, accs,
@@ -108,7 +121,15 @@ closed-set test top-1 %, head 100-D / trunk 768-D probes)
    over the plain nplm_bil half (separable-data effect, third
    confirmation).  The nplm_bil half still lifts plain supcon
    (0.688 -> 0.772).
-8. **End-to-end NPLM ft (exp 62)**: nplm-sup-ft is the best
+8. **The nplm-sup-ft trunks are far better suite substrates than their
+   frozen selves** (exp 51 rerun): every arm on the LeJEPA/VISReg ft
+   trunks improves (probe +0.05-0.09, acc +0.12-0.25), with new aircraft
+   records — LeJEPA-ft + supcon_sigreg 0.812/0.638/0.800 and VISReg-ft
+   nplm_sup_dist mahaT 0.812, VISReg-ft supcon acc 0.665.  DINO-ft ~=
+   frozen DINO (already at ceiling).  Two-stage recipe emerges: NPLM-sup
+   trunk ft, then a supcon_sigreg head.  Mind the holdout-contamination
+   caveat above for the novelty columns.
+9. **End-to-end NPLM ft (exp 62)**: nplm-sup-ft is the best
    contrastive-family trunk ft on every base -- matches CE-ft on DINO
    (65.3 vs 65.5), beats SupCon-ft on LeJEPA (61.4 vs 58.7), ties it on
    VISReg (63.2 vs 62.7); CE-ft keeps the crown on the sketching trunks
