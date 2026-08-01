@@ -1,4 +1,4 @@
-# FGVC-Aircraft master table — 8 losses x 3 frozen ViT-B/16 bases (exp 51)
+# Transfer-suite master tables — aircraft (3 bases) + cars (exp 51/60)
 
 Protocol: frozen trunk (features cached, a8 aug bank), 768->256->32
 FeatureHead per arm, 120 epochs, holdout variants 90-99 (~330 signal test
@@ -46,6 +46,28 @@ Sources: logs/exp51/results_nplm_aircraft_{dino,lejepa,visreg}.npz.
 | nplm_bilinear | 0.661 | 0.058 | 0.489 | 0.597 | 0.024 | 0.08 | 0.20 | 0.00 |
 | nplm_distance | 0.648 | 0.056 | 0.504 | 0.573 | 0.072 | 0.10 | 0.04 | 0.00 |
 
+## Stanford Cars, DINO base (196 classes, holdouts 186-195, n_d=2000)
+
+| arm | probe | acc | eucl | mahaT | perevt | MMD@.1 |
+|---|---|---|---|---|---|---|
+| supcon_sigreg | **0.747** | **0.653** | **0.627** | **0.603** | 0.075 | **0.96** |
+| supcon | 0.733 | 0.609 | 0.544 | 0.544 | 0.028 | 0.68 |
+| simclr | 0.612 | 0.114 | 0.462 | 0.473 | 0.023 | 0.18 |
+| lejepa | 0.596 | 0.096 | 0.477 | 0.490 | 0.038 | 0.12 |
+| simclr_sigreg | 0.591 | 0.125 | 0.437 | 0.449 | 0.021 | 0.74 |
+| nplm_bilinear | 0.570 | 0.058 | 0.476 | 0.488 | 0.033 | 0.02 |
+| nplm_sup_dist | 0.541 | 0.110 | 0.531 | 0.493 | **0.106** | 0.66 |
+| nplm_distance | 0.525 | 0.059 | 0.492 | 0.480 | 0.021 | 0.12 |
+
+## Aircraft NPLM residual/concat (exp 60, DINO, 16+16)
+
+| arm | probe | acc | eucl | mahaT | perevt | MMD@.1 |
+|---|---|---|---|---|---|---|
+| supsig->res-nplm | 0.786 | 0.569 | 0.743 | 0.725 | 0.192 | 0.50 |
+| supsig+nplm | 0.785 | 0.565 | 0.734 | 0.725 | 0.192 | 0.76 |
+| supcon+nplm | 0.772 | 0.500 | 0.691 | 0.701 | 0.201 | 0.02 |
+| nplmsup+nplm | 0.721 | 0.229 | 0.602 | 0.661 | 0.087 | 0.84 |
+
 ## Reading
 
 1. **DINO is the strongest base** on every currency (best probes, accs,
@@ -64,3 +86,14 @@ Sources: logs/exp51/results_nplm_aircraft_{dino,lejepa,visreg}.npz.
    discrimination needs labels at these data sizes regardless of trunk.
 5. **Per-event power is supervised-only** on aircraft (supcon family
    0.14-0.22, nplm_sup_dist 0.09-0.15, everything else ~0.05).
+6. **Cars amplifies the aircraft regime** (196 classes, ~41 imgs/class):
+   supcon_sigreg sweeps every column (probe 0.747, MMD 0.96); label-free
+   arms collapse (probe <= 0.61, acc <= 0.13); the one NPLM bright spot is
+   per-event calibration -- nplm_sup_dist 0.106, the best in the cars
+   table, beating supcon_sigreg's 0.075 despite a far worse probe.
+7. **Residual/concat constructions match but do not beat the standalone
+   champion on aircraft** (exp 60: supsig->res-nplm 0.786/0.725 vs
+   standalone supcon_sigreg 0.781/0.743); the NPLM residual adds nothing
+   over the plain nplm_bil half (separable-data effect, third
+   confirmation).  The nplm_bil half still lifts plain supcon
+   (0.688 -> 0.772).
