@@ -68,6 +68,17 @@ Sources: logs/exp51/results_nplm_aircraft_{dino,lejepa,visreg}.npz.
 | supcon+nplm | 0.772 | 0.500 | 0.691 | 0.701 | 0.201 | 0.02 |
 | nplmsup+nplm | 0.721 | 0.229 | 0.602 | 0.661 | 0.087 | 0.84 |
 
+## End-to-end NPLM fine-tuning (exp 62; exp-49 recipe, trunk trainable,
+closed-set test top-1 %, head 100-D / trunk 768-D probes)
+
+| ft objective | DINO head/trunk | LeJEPA head/trunk | VISReg head/trunk |
+|---|---|---|---|
+| nplm-bil-ft (label-free) | 10.0 / 64.3 | 11.1 / 30.8 | 2.5 / 30.8 |
+| nplm-dist-ft (label-free) | 6.6 / 65.3 | 5.6 / 32.9 | 5.6 / 31.2 |
+| nplm-sup-ft (labeled) | 10.6 / **65.3** | 16.3 / **61.4** | 11.9 / **63.2** |
+| refs: frozen / CE-ft | 64.9 / 65.5 | 34.3 / 75.8 | 37.9 / 76.6 |
+| refs: SupCon-ft / ss-ft | 50.2 / 43.3 | 58.7 / 49.0 | 62.7 / 54.5 |
+
 ## Reading
 
 1. **DINO is the strongest base** on every currency (best probes, accs,
@@ -97,3 +108,12 @@ Sources: logs/exp51/results_nplm_aircraft_{dino,lejepa,visreg}.npz.
    over the plain nplm_bil half (separable-data effect, third
    confirmation).  The nplm_bil half still lifts plain supcon
    (0.688 -> 0.772).
+8. **End-to-end NPLM ft (exp 62)**: nplm-sup-ft is the best
+   contrastive-family trunk ft on every base -- matches CE-ft on DINO
+   (65.3 vs 65.5), beats SupCon-ft on LeJEPA (61.4 vs 58.7), ties it on
+   VISReg (63.2 vs 62.7); CE-ft keeps the crown on the sketching trunks
+   (75.8/76.6).  The label-free NPLM fts are conservative: they preserve
+   the strong DINO trunk (64-65 vs frozen 64.9, where SupCon-ft/ss-ft
+   DESTROY it: 50.2/43.3) but cannot build up the weak trunks (30.8-32.9
+   vs frozen 34.3/37.9).  NPLM heads are never linear-probe spaces
+   (2.5-16.3%), consistent with the whole program.

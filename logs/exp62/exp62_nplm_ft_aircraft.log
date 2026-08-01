@@ -1,0 +1,127 @@
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+exp62 [aircraft] NPLM end-to-end ft, bases=['dino', 'lejepa', 'visreg'], arms=['nplm-bil-ft', 'nplm-dist-ft', 'nplm-sup-ft'], epochs=20, lam=1.0
+
+######## aircraft on DINO ViT-B/16 ########
+--- [dino] nplm-bil-ft (instance/bilinear) ---
+  [nplm-bil-ft] epoch 1/20  main=1683791235007.6680  aux=0.8400
+  [nplm-bil-ft] epoch 5/20  main=906.6538  aux=0.8345
+  [nplm-bil-ft] epoch 10/20  main=782.4164  aux=0.8330
+  [nplm-bil-ft] epoch 15/20  main=568.4146  aux=0.8309
+  [nplm-bil-ft] epoch 20/20  main=545.1977  aux=0.8306
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+--- [dino] nplm-dist-ft (instance/distance) ---
+  [nplm-dist-ft] epoch 1/20  main=-0.6317  aux=0.4828
+  [nplm-dist-ft] epoch 5/20  main=-0.7332  aux=0.4231
+  [nplm-dist-ft] epoch 10/20  main=-0.7516  aux=0.4055
+  [nplm-dist-ft] epoch 15/20  main=-0.7640  aux=0.4011
+  [nplm-dist-ft] epoch 20/20  main=-0.7665  aux=0.3963
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+--- [dino] nplm-sup-ft (supervised/distance) ---
+  [nplm-sup-ft] epoch 1/20  main=-0.2325  aux=0.7677
+  [nplm-sup-ft] epoch 5/20  main=-0.4401  aux=0.7167
+  [nplm-sup-ft] epoch 10/20  main=-0.4806  aux=0.6924
+  [nplm-sup-ft] epoch 15/20  main=-0.4588  aux=0.6896
+  [nplm-sup-ft] epoch 20/20  main=-0.4853  aux=0.6844
+
+===== [dino] references (exp 43/44/49) =====
+  [dino] raw probe (frozen) [44]            64.9
+  [dino] CE-ft [43]                         65.5
+  [dino] SupCon-ft head / trunk [43]        50.2
+  [dino] ss-ft head / trunk [43]            43.3
+  [dino] nplm-bil-ft head probe             10.0
+  [dino] nplm-bil-ft trunk probe            64.3
+  [dino] nplm-dist-ft head probe            6.6
+  [dino] nplm-dist-ft trunk probe           65.3
+  [dino] nplm-sup-ft head probe             10.6
+  [dino] nplm-sup-ft trunk probe            65.3
+
+######## aircraft on LeJEPA ViT-B/16 (community repro) ########
+--- [lejepa] nplm-bil-ft (instance/bilinear) ---
+Fetching 37 files:   0%|          | 0/37 [00:00<?, ?it/s]Fetching 37 files: 100%|██████████| 37/37 [00:00<00:00, 434703.78it/s]
+  [nplm-bil-ft] epoch 1/20  main=2705007605.9602  aux=0.7531
+  [nplm-bil-ft] epoch 5/20  main=-1.5020  aux=0.6965
+  [nplm-bil-ft] epoch 10/20  main=-2.0344  aux=0.6563
+  [nplm-bil-ft] epoch 15/20  main=-2.4357  aux=0.6291
+  [nplm-bil-ft] epoch 20/20  main=-2.5524  aux=0.6220
+--- [lejepa] nplm-dist-ft (instance/distance) ---
+Fetching 37 files:   0%|          | 0/37 [00:00<?, ?it/s]Fetching 37 files: 100%|██████████| 37/37 [00:00<00:00, 27712.37it/s]
+  [nplm-dist-ft] epoch 1/20  main=-0.7666  aux=0.4112
+  [nplm-dist-ft] epoch 5/20  main=-0.8332  aux=0.3044
+  [nplm-dist-ft] epoch 10/20  main=-0.8530  aux=0.2722
+  [nplm-dist-ft] epoch 15/20  main=-0.8670  aux=0.2534
+  [nplm-dist-ft] epoch 20/20  main=-0.8696  aux=0.2557
+--- [lejepa] nplm-sup-ft (supervised/distance) ---
+Fetching 37 files:   0%|          | 0/37 [00:00<?, ?it/s]Fetching 37 files: 100%|██████████| 37/37 [00:00<00:00, 34212.80it/s]
+  [nplm-sup-ft] epoch 1/20  main=-0.2926  aux=0.7703
+  [nplm-sup-ft] epoch 5/20  main=-0.5218  aux=0.6614
+  [nplm-sup-ft] epoch 10/20  main=-0.5912  aux=0.5968
+  [nplm-sup-ft] epoch 15/20  main=-0.6124  aux=0.5706
+  [nplm-sup-ft] epoch 20/20  main=-0.6321  aux=0.5575
+
+===== [lejepa] references (exp 43/44/49) =====
+  [lejepa] raw probe (frozen) [44]            34.3
+  [lejepa] CE-ft [43]                         75.8
+  [lejepa] SupCon-ft head / trunk [43]        58.7
+  [lejepa] ss-ft head / trunk [43]            49.0
+  [lejepa] nplm-bil-ft head probe             11.1
+  [lejepa] nplm-bil-ft trunk probe            30.8
+  [lejepa] nplm-dist-ft head probe            5.6
+  [lejepa] nplm-dist-ft trunk probe           32.9
+  [lejepa] nplm-sup-ft head probe             16.3
+  [lejepa] nplm-sup-ft trunk probe            61.4
+
+######## aircraft on VISReg ViT-B/16 (paper's weights) ########
+--- [visreg] nplm-bil-ft (instance/bilinear) ---
+  [nplm-bil-ft] epoch 1/20  main=26.4234  aux=0.7729
+  [nplm-bil-ft] epoch 5/20  main=2.4026  aux=0.7327
+  [nplm-bil-ft] epoch 10/20  main=1265069382.8332  aux=0.8258
+  [nplm-bil-ft] epoch 15/20  main=315.4504  aux=0.9624
+  [nplm-bil-ft] epoch 20/20  main=-0.5541  aux=0.9552
+--- [visreg] nplm-dist-ft (instance/distance) ---
+  [nplm-dist-ft] epoch 1/20  main=-0.7918  aux=0.3963
+  [nplm-dist-ft] epoch 5/20  main=-0.8300  aux=0.3176
+  [nplm-dist-ft] epoch 10/20  main=-0.8472  aux=0.2739
+  [nplm-dist-ft] epoch 15/20  main=-0.8643  aux=0.2530
+  [nplm-dist-ft] epoch 20/20  main=-0.8660  aux=0.2525
+--- [visreg] nplm-sup-ft (supervised/distance) ---
+  [nplm-sup-ft] epoch 1/20  main=-0.3069  aux=0.7698
+  [nplm-sup-ft] epoch 5/20  main=-0.5341  aux=0.6630
+  [nplm-sup-ft] epoch 10/20  main=-0.6018  aux=0.5856
+  [nplm-sup-ft] epoch 15/20  main=-0.6231  aux=0.5498
+  [nplm-sup-ft] epoch 20/20  main=-0.6337  aux=0.5453
+
+===== [visreg] references (exp 43/44/49) =====
+  [visreg] raw probe (frozen) [44]            37.9
+  [visreg] CE-ft [43]                         76.6
+  [visreg] SupCon-ft head / trunk [43]        62.7
+  [visreg] ss-ft head / trunk [43]            54.5
+  [visreg] nplm-bil-ft head probe             2.5
+  [visreg] nplm-bil-ft trunk probe            30.8
+  [visreg] nplm-dist-ft head probe            5.6
+  [visreg] nplm-dist-ft trunk probe           31.2
+  [visreg] nplm-sup-ft head probe             11.9
+  [visreg] nplm-sup-ft trunk probe            63.2
+
+===== EXP62 SUMMARY (test top-1, %) =====
+  [dino] nplm-bil-ft head probe             10.0
+  [dino] nplm-bil-ft trunk probe            64.3
+  [dino] nplm-dist-ft head probe            6.6
+  [dino] nplm-dist-ft trunk probe           65.3
+  [dino] nplm-sup-ft head probe             10.6
+  [dino] nplm-sup-ft trunk probe            65.3
+  [lejepa] nplm-bil-ft head probe             11.1
+  [lejepa] nplm-bil-ft trunk probe            30.8
+  [lejepa] nplm-dist-ft head probe            5.6
+  [lejepa] nplm-dist-ft trunk probe           32.9
+  [lejepa] nplm-sup-ft head probe             16.3
+  [lejepa] nplm-sup-ft trunk probe            61.4
+  [visreg] nplm-bil-ft head probe             2.5
+  [visreg] nplm-bil-ft trunk probe            30.8
+  [visreg] nplm-dist-ft head probe            5.6
+  [visreg] nplm-dist-ft trunk probe           31.2
+  [visreg] nplm-sup-ft head probe             11.9
+  [visreg] nplm-sup-ft trunk probe            63.2
+saved /home/pharris/sigreg/SuperSig/plots/exp62_nplm_ft_aircraft.png
+Done.
