@@ -202,6 +202,17 @@ at tau=0.5, 0.83-0.87 at tau=2); lam nearly inert -- the exp-clamped NPLM
 interaction is ~1e10 at init vs ~1e-2 for lam*sigreg, so the marginal only
 shapes the endgame.
 
+Exp-65 nplm_dist_sup_cw with LEARNED repulsed means (C100, paired vs the
+exp-53 fixed-anchor row): probe 0.8890 (0.8864), acc 0.3861 (0.3471),
+supAUC 0.932, MMD@0.02 0.68 (0.52) -- but eucl 0.3326 (0.4525), mahaT
+0.3097 (0.3717), per-event 0.010 (0.020), cent->anchor 7.41 (3.28).
+Verdict: learning the means under the recipe's Coulomb repulsion does NOT
+fix realizability -- it overshoots (the repulsion equilibrium sits far
+outside where classwise-sigreg alone can pull the embeddings, 7.4 vs 3.3),
+trading calibrated geometry for modest acc/MMD gains.  Untried levers:
+smaller rep_weight, centroid-initialized means, or a proto term to pull
+embeddings to their means (which is exactly the supervised recipe).
+
 Exp-64 pretrain -> full CE-ft (C100; pretrain 20ep on 99 seen classes,
 then CE-ft 10ep on ALL 100 incl. holdout 4; 32-D):
 
