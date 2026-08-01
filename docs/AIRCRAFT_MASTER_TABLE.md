@@ -92,6 +92,22 @@ strict open-world protocol; the acc gains are clean closed-set numbers.)
 | nplm_bilinear | 0.684/0.093/0.606 (0.612/...) | 0.753/0.231/0.656 (0.681/...) | 0.754/0.307/0.655 (0.661/...) |
 | label-free others | ~= frozen | +0.05-0.08 probe | +0.06-0.07 probe |
 
+## Supervised-CE head baseline (exp 63; 32-D head + linear classifier,
+seen classes; cls-top1 = the classifier's own test accuracy)
+
+| substrate | probe | acc(NC) | eucl | mahaT | perevt | cls-top1 |
+|---|---|---|---|---|---|---|
+| frozen DINO | 0.721 | 0.577 | 0.718 | 0.725 | 0.123 | 0.583 |
+| DINO nplm-sup-ft | 0.735 | 0.589 | 0.726 | 0.728 | 0.156 | 0.573 |
+| LeJEPA nplm-sup-ft | 0.772 | 0.543 | 0.771 | 0.785 | 0.204 | 0.625 |
+| VISReg nplm-sup-ft | 0.769 | 0.528 | 0.776 | 0.767 | 0.258 | 0.602 |
+
+CE is NOT the ceiling: on every substrate the supcon_sigreg head beats the
+CE head on every column -- on LeJEPA-ft even supcon_sigreg's
+nearest-centroid acc (0.638) exceeds CE's own trained-classifier top-1
+(0.625).  Contrastive+SIGReg heads are better than plain supervision even
+at pure classification in this regime.
+
 ## Reading
 
 1. **DINO is the strongest base** on every currency (best probes, accs,

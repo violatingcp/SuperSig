@@ -1,0 +1,42 @@
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+exp63 supervised-CE baseline [aircraft]
+
+===== training: supervised-CE [aircraft frozen] =====
+  [ce/frozen] epoch 1/120  loss=4.4752  train-acc=0.0355
+  [ce/frozen] epoch 30/120  loss=1.0774  train-acc=0.6818
+  [ce/frozen] epoch 60/120  loss=0.5722  train-acc=0.8262
+  [ce/frozen] epoch 90/120  loss=0.3571  train-acc=0.8991
+  [ce/frozen] epoch 120/120  loss=0.2136  train-acc=0.9416
+  [ce_frozen             ] probe=0.7213+-0.0168 acc=0.5767 supAUC=0.9356 eucl=0.7177 mahaT=0.7250 perevt=0.123 cls-top1=0.5833
+
+===== training: supervised-CE [aircraft dino-ft] =====
+  [ce/dino-ft] epoch 1/120  loss=4.4743  train-acc=0.0332
+  [ce/dino-ft] epoch 30/120  loss=1.0869  train-acc=0.6820
+  [ce/dino-ft] epoch 60/120  loss=0.5808  train-acc=0.8244
+  [ce/dino-ft] epoch 90/120  loss=0.3492  train-acc=0.8952
+  [ce/dino-ft] epoch 120/120  loss=0.2122  train-acc=0.9455
+  [ce_dino-ft            ] probe=0.7354+-0.0318 acc=0.5890 supAUC=0.9349 eucl=0.7261 mahaT=0.7280 perevt=0.156 cls-top1=0.5727
+
+===== training: supervised-CE [aircraft lejepa-ft] =====
+  [ce/lejepa-ft] epoch 1/120  loss=4.5037  train-acc=0.0316
+  [ce/lejepa-ft] epoch 30/120  loss=1.5333  train-acc=0.5309
+  [ce/lejepa-ft] epoch 60/120  loss=1.0666  train-acc=0.6758
+  [ce/lejepa-ft] epoch 90/120  loss=0.8251  train-acc=0.7447
+  [ce/lejepa-ft] epoch 120/120  loss=0.6401  train-acc=0.8026
+  [ce_lejepa-ft          ] probe=0.7723+-0.0087 acc=0.5430 supAUC=0.9402 eucl=0.7707 mahaT=0.7848 perevt=0.204 cls-top1=0.6250
+
+===== training: supervised-CE [aircraft visreg-ft] =====
+  [ce/visreg-ft] epoch 1/120  loss=4.3900  train-acc=0.0250
+  [ce/visreg-ft] epoch 30/120  loss=1.6200  train-acc=0.4961
+  [ce/visreg-ft] epoch 60/120  loss=1.1628  train-acc=0.6362
+  [ce/visreg-ft] epoch 90/120  loss=0.9493  train-acc=0.6905
+  [ce/visreg-ft] epoch 120/120  loss=0.7670  train-acc=0.7523
+  [ce_visreg-ft          ] probe=0.7686+-0.0526 acc=0.5277 supAUC=0.9319 eucl=0.7762 mahaT=0.7667 perevt=0.258 cls-top1=0.6023
+
+===== EXP63 SUMMARY =====
+  [ce_frozen             ] probe=0.7213 acc=0.5767 eucl=0.7177 mahaT=0.7250 perevt=0.123 cls-top1=0.5833
+  [ce_dino-ft            ] probe=0.7354 acc=0.5890 eucl=0.7261 mahaT=0.7280 perevt=0.156 cls-top1=0.5727
+  [ce_lejepa-ft          ] probe=0.7723 acc=0.5430 eucl=0.7707 mahaT=0.7848 perevt=0.204 cls-top1=0.6250
+  [ce_visreg-ft          ] probe=0.7686 acc=0.5277 eucl=0.7762 mahaT=0.7667 perevt=0.258 cls-top1=0.6023
+Done.

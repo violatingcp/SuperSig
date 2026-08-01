@@ -202,6 +202,12 @@ at tau=0.5, 0.83-0.87 at tau=2); lam nearly inert -- the exp-clamped NPLM
 interaction is ~1e10 at init vs ~1e-2 for lam*sigreg, so the marginal only
 shapes the endgame.
 
+Exp-63 supervised-CE baseline (C100, 32-D, holdout 4): probe 0.9363,
+acc 0.5356 (cls top-1 0.5204), eucl 0.3938, mahaT 0.3969, per-event 0.010.
+Plain CE TIES supcon's probe (0.940+-0.004) with the same uncalibrated
+geometry -- supcon's probe edge over simple supervision is negligible; the
+whole value of the SIGReg/NPLM arms is the calibration axis.
+
 Exp-61 multi-seed VERDICT (5 paired seeds, C100): the "nplm_bilinear
 matches supcon's probe" claim from exp 50 does NOT survive.  supcon probe
 0.9401 +- 0.0042 (seed-stable); nplm_bilinear 0.8548 +- 0.0422
