@@ -1,0 +1,47 @@
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+Using cache found in /home/pharris/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+exp64 [cifar100] pretrain->CE-ft, holdout=[4] (excluded from pretrain, included in ft), pre=20ep ft=10ep, arms=['nplm_dist_sup_cw']
+  cifar100 balanced loader: 50000 images, 83 batches of 25x24
+
+===== arm: nplm_dist_sup_cw =====
+--- stage 1: nplm_dist_sup_cw pretrain (seen classes only) ---
+  cifar100 balanced two-view loader (no {4}): 49500 images, 82 batches of 25x24
+  [nplm/distance/cw] epoch 1/20  interaction=-0.1252  classwise=1.1753
+  [nplm/distance/cw] epoch 2/20  interaction=-0.2315  classwise=1.1612
+  [nplm/distance/cw] epoch 3/20  interaction=-0.2584  classwise=1.1559
+  [nplm/distance/cw] epoch 4/20  interaction=-0.2740  classwise=1.1531
+  [nplm/distance/cw] epoch 5/20  interaction=-0.2814  classwise=1.1480
+  [nplm/distance/cw] epoch 6/20  interaction=-0.2990  classwise=1.1522
+  [nplm/distance/cw] epoch 7/20  interaction=-0.2986  classwise=1.1468
+  [nplm/distance/cw] epoch 8/20  interaction=-0.3095  classwise=1.1452
+  [nplm/distance/cw] epoch 9/20  interaction=-0.3127  classwise=1.1479
+  [nplm/distance/cw] epoch 10/20  interaction=-0.3232  classwise=1.1481
+  [nplm/distance/cw] epoch 11/20  interaction=-0.3157  classwise=1.1467
+  [nplm/distance/cw] epoch 12/20  interaction=-0.3250  classwise=1.1453
+  [nplm/distance/cw] epoch 13/20  interaction=-0.3374  classwise=1.1454
+  [nplm/distance/cw] epoch 14/20  interaction=-0.3365  classwise=1.1447
+  [nplm/distance/cw] epoch 15/20  interaction=-0.3321  classwise=1.1479
+  [nplm/distance/cw] epoch 16/20  interaction=-0.3427  classwise=1.1430
+  [nplm/distance/cw] epoch 17/20  interaction=-0.3511  classwise=1.1467
+  [nplm/distance/cw] epoch 18/20  interaction=-0.3429  classwise=1.1466
+  [nplm/distance/cw] epoch 19/20  interaction=-0.3517  classwise=1.1475
+  [nplm/distance/cw] epoch 20/20  interaction=-0.3593  classwise=1.1456
+--- stage 2: CE fine-tune, all 100 classes ---
+  [ce-ft] epoch 1/10  loss=4.1343  train-acc=0.0802
+  [ce-ft] epoch 2/10  loss=3.1227  train-acc=0.1983
+  [ce-ft] epoch 3/10  loss=2.6826  train-acc=0.2759
+  [ce-ft] epoch 4/10  loss=2.5128  train-acc=0.3182
+  [ce-ft] epoch 5/10  loss=2.3221  train-acc=0.3580
+  [ce-ft] epoch 6/10  loss=2.2456  train-acc=0.3834
+  [ce-ft] epoch 7/10  loss=2.1788  train-acc=0.4046
+  [ce-ft] epoch 8/10  loss=2.1301  train-acc=0.4134
+  [ce-ft] epoch 9/10  loss=2.0888  train-acc=0.4264
+  [ce-ft] epoch 10/10  loss=2.0108  train-acc=0.4436
+  [nplm_dist_sup_cw] top1=0.4914  seen=0.4938  holdout-recall=0.2500
+
+===== EXP64 SUMMARY [cifar100] =====
+  pretrain            top1    seen  holdout
+  nplm_dist_sup_cw  0.4914  0.4938   0.2500
+saved /home/pharris/sigreg/SuperSig/plots/exp64_pretrain_ft_cifar100_cw.png
+Done.

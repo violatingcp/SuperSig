@@ -202,6 +202,28 @@ at tau=0.5, 0.83-0.87 at tau=2); lam nearly inert -- the exp-clamped NPLM
 interaction is ~1e10 at init vs ~1e-2 for lam*sigreg, so the marginal only
 shapes the endgame.
 
+Exp-64 pretrain -> full CE-ft (C100; pretrain 20ep on 99 seen classes,
+then CE-ft 10ep on ALL 100 incl. holdout 4; 32-D):
+
+| pretrain          | top1   | seen   | holdout recall |
+|-------------------|--------|--------|----------------|
+| nplm_dist_sup_cw  | 0.4914 | 0.4938 | 0.250          |
+| nplm_bilinear     | 0.4741 | 0.4771 | 0.180          |
+| simclr            | 0.4461 | 0.4498 | 0.080          |
+| none (CE only)    | 0.4433 | 0.4477 | 0.010          |
+| nplm_sup_dist     | 0.4385 | 0.4429 | 0.000          |
+| simclr_sigreg     | 0.4374 | 0.4408 | 0.100          |
+| lejepa            | 0.3991 | 0.4001 | 0.300          |
+
+Verdicts: classwise-NPLM pretraining is the best substrate for later full
+supervision on BOTH axes (+0.048 top1 over no-pretrain AND 25x the
+holdout absorption); nplm_bilinear is the best label-free.  The marginal
+choice flips new-class absorption completely: global-sigreg supervised
+NPLM leaves ZERO room for the new class (recall 0.000 -- the collapse
+geometry has nowhere to put it) while classwise reserves per-class
+structure (0.250).  LeJEPA absorbs the new class best (0.30) but costs
+-0.044 overall.
+
 Exp-63 supervised-CE baseline (C100, 32-D, holdout 4): probe 0.9363,
 acc 0.5356 (cls top-1 0.5204), eucl 0.3938, mahaT 0.3969, per-event 0.010.
 Plain CE TIES supcon's probe (0.940+-0.004) with the same uncalibrated
