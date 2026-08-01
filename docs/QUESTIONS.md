@@ -20,8 +20,11 @@ no SINGLE standalone loss does it yet.
 Regime variables: #seen classes vs dim, labels available, per-class data,
 fine-grained vs separable.  Current rules of thumb:
 - few classes, labels (C10): supervised distance NPLM + classwise SIGReg.
-- many classes (C100, 32-D): label-free bilinear NPLM (probe within seed
-  noise of SupCon, no labels, best geometry+gaussianity).
+- many classes (C100, 32-D): label-free bilinear NPLM for GEOMETRY (eucl
+  0.50 vs 0.40, mahaT 0.47 vs 0.39 across seeds) but NOT probe parity —
+  exp 61 (5 paired seeds): supcon 0.940+-0.004 vs nplm_bilinear
+  0.855+-0.042, paired diff -0.085 (t=-4.7); the exp-50 0.935 was a
+  tail draw of a heavy-tailed seed distribution.
 - fine-grained low-data frozen-features (aircraft): supcon_sigreg — the
   SIGReg marginal helps exactly there, opposite of CIFAR.
 - 64-D C100 (exp 50/53 64d, complete): bilinear arms REGRESS (0.935->0.858
@@ -68,9 +71,11 @@ regimes need their own sweep; DTD/transfer suite (exps 37-49) tells the
 same story for the older losses.
 
 ## Q8. Label efficiency — how far do augmentations alone go?
-Plain LeJEPA and SimCLR are never on the Pareto front (all 3 datasets).
-Label-free NPLM-bilinear is the interesting arm: near-SupCon probe on C100
-without labels.  Unresolved: the 0.007 gap needs a 3-5 seed run.
+Plain LeJEPA and SimCLR are never on the Pareto front (all 3+ datasets).
+Label-free NPLM-bilinear buys calibrated geometry without labels, but NOT
+probe parity: exp 61 settled the C100 question decisively for SupCon
+(-0.085 paired, t=-4.7); nplm_bilinear's 10x-larger seed variance is an
+open question of its own (what stabilizes the good seeds?).
 
 ## Standard protocol for testing a new loss / idea
 

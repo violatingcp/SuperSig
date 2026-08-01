@@ -200,9 +200,18 @@ These annealed-sigma proto rows supersede the exp-55 k1 SparKer artifacts.
 Exp-52 lam/tau scan (nplm_bilinear): tau=1 is a sharp optimum (0.92 vs 0.81
 at tau=0.5, 0.83-0.87 at tau=2); lam nearly inert -- the exp-clamped NPLM
 interaction is ~1e10 at init vs ~1e-2 for lam*sigreg, so the marginal only
-shapes the endgame.  Single-seed probe spread ~0.017 (0.9179 rerun vs 0.9349
-exp-50 same config) -- the nplm_bilinear-vs-supcon probe gap (0.007) is
-unresolved at one seed.
+shapes the endgame.
+
+Exp-61 multi-seed VERDICT (5 paired seeds, C100): the "nplm_bilinear
+matches supcon's probe" claim from exp 50 does NOT survive.  supcon probe
+0.9401 +- 0.0042 (seed-stable); nplm_bilinear 0.8548 +- 0.0422
+(heavy-tailed: per-seed 0.789-0.889, with 0.918/0.935 from earlier seeds
+as tail draws).  Paired diff -0.085 +- 0.018 sem, t=-4.73: supcon
+decisively better on the probe.  The GEOMETRY advantage survives seeds:
+nplm_bilinear eucl 0.502+-0.038 / mahaT 0.465+-0.028 vs supcon
+0.404+-0.025 / 0.386+-0.013.  Corrected verdict: label-free NPLM buys
+calibrated geometry, not probe parity; its seed variance (10x supcon's)
+is itself a finding.
 
 64-D C100 rerun (exps 50/53 64d, results_*_cifar100_64d.npz): probe
 supcon 0.9389, supcon_sigreg 0.9129 (+0.03 vs 32d), simclr 0.8854 (+0.03),
