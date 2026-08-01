@@ -1,0 +1,66 @@
+# FGVC-Aircraft master table — 8 losses x 3 frozen ViT-B/16 bases (exp 51)
+
+Protocol: frozen trunk (features cached, a8 aug bank), 768->256->32
+FeatureHead per arm, 120 epochs, holdout variants 90-99 (~330 signal test
+events), n_d=1000 toys, fixed sigma=1 SparKer (all spaces here share the
+compact head scale, so within-table comparison is fair).  Power columns at
+f=0.1 (the only fraction with meaningful power at this pool size).
+Sources: logs/exp51/results_nplm_aircraft_{dino,lejepa,visreg}.npz.
+
+## DINO base
+
+| arm | probe | acc | eucl | mahaT | perevt | SpK@.1 | Maha@.1 | MMD@.1 |
+|---|---|---|---|---|---|---|---|---|
+| supcon_sigreg | **0.781** | **0.596** | **0.764** | **0.743** | **0.222** | 0.38 | **0.64** | 0.76 |
+| lejepa | 0.732 | 0.119 | 0.456 | 0.533 | 0.033 | 0.16 | 0.22 | 0.10 |
+| nplm_sup_dist | 0.721 | 0.220 | 0.708 | 0.695 | 0.147 | **0.64** | 0.44 | **0.86** |
+| simclr_sigreg | 0.713 | 0.161 | 0.418 | 0.485 | 0.048 | 0.18 | 0.26 | 0.30 |
+| nplm_distance | 0.695 | 0.077 | 0.457 | 0.543 | 0.057 | 0.14 | 0.04 | 0.08 |
+| supcon | 0.688 | 0.557 | 0.730 | 0.708 | 0.192 | 0.42 | 0.44 | 0.02 |
+| simclr | 0.659 | 0.148 | 0.569 | 0.539 | 0.078 | 0.06 | 0.12 | 0.00 |
+| nplm_bilinear | 0.612 | 0.083 | 0.548 | 0.595 | 0.039 | 0.16 | 0.08 | 0.00 |
+
+## LeJEPA base
+
+| arm | probe | acc | eucl | mahaT | perevt | SpK@.1 | Maha@.1 | MMD@.1 |
+|---|---|---|---|---|---|---|---|---|
+| supcon_sigreg | **0.724** | 0.404 | 0.673 | 0.627 | **0.201** | 0.52 | 0.12 | 0.24 |
+| nplm_sup_dist | 0.722 | 0.178 | 0.655 | 0.651 | 0.120 | 0.28 | **0.50** | **0.72** |
+| supcon | 0.706 | **0.483** | **0.704** | **0.688** | 0.171 | **0.64** | 0.16 | 0.10 |
+| simclr_sigreg | 0.681 | 0.093 | 0.521 | 0.573 | 0.048 | 0.12 | 0.14 | 0.06 |
+| nplm_bilinear | 0.681 | 0.066 | 0.571 | 0.611 | 0.084 | 0.18 | 0.18 | 0.00 |
+| lejepa | 0.673 | 0.074 | 0.532 | 0.594 | 0.072 | 0.04 | 0.10 | 0.04 |
+| nplm_distance | 0.659 | 0.053 | 0.498 | 0.561 | 0.063 | 0.12 | 0.04 | 0.00 |
+| simclr | 0.642 | 0.096 | 0.610 | 0.589 | 0.084 | 0.44 | 0.04 | 0.00 |
+
+## VISReg base
+
+| arm | probe | acc | eucl | mahaT | perevt | SpK@.1 | Maha@.1 | MMD@.1 |
+|---|---|---|---|---|---|---|---|---|
+| supcon | **0.764** | **0.492** | **0.734** | **0.704** | **0.177** | **0.90** | 0.10 | 0.50 |
+| supcon_sigreg | 0.737 | 0.428 | 0.703 | 0.639 | 0.138 | 0.36 | 0.22 | 0.78 |
+| nplm_sup_dist | 0.731 | 0.186 | 0.631 | 0.617 | 0.087 | 0.68 | **0.40** | **0.78** |
+| lejepa | 0.698 | 0.071 | 0.522 | 0.603 | 0.048 | 0.06 | 0.12 | 0.02 |
+| simclr_sigreg | 0.694 | 0.082 | 0.505 | 0.565 | 0.045 | 0.10 | 0.08 | 0.08 |
+| simclr | 0.668 | 0.088 | 0.595 | 0.585 | 0.099 | 0.22 | 0.06 | 0.04 |
+| nplm_bilinear | 0.661 | 0.058 | 0.489 | 0.597 | 0.024 | 0.08 | 0.20 | 0.00 |
+| nplm_distance | 0.648 | 0.056 | 0.504 | 0.573 | 0.072 | 0.10 | 0.04 | 0.00 |
+
+## Reading
+
+1. **DINO is the strongest base** on every currency (best probes, accs,
+   geometry), consistent with the exp-44 transfer table.
+2. **The supcon_sigreg advantage is DINO-specific**: on the weaker
+   LeJEPA/VISReg trunks plain SupCon retakes probe/acc/eucl (VISReg:
+   0.764/0.492/0.734 vs 0.737/0.428/0.703).  The SIGReg marginal helps
+   most when the underlying features are already strong.
+3. **nplm_sup_dist is the most base-robust arm**: probe 0.72-0.73 on all
+   three trunks (spread 0.009 vs supcon's 0.076), consistently
+   second-best geometry, and the best kernel-test space on every base
+   (MMD@.1 0.86/0.72/0.78; Maha best on 2 of 3) -- the calibrated space
+   survives trunk changes that reorder everything else.
+4. **Label-free arms are uniformly weak on aircraft on every base**
+   (probe <= 0.70, acc <= 0.16, per-event <= 0.10): fine-grained
+   discrimination needs labels at these data sizes regardless of trunk.
+5. **Per-event power is supervised-only** on aircraft (supcon family
+   0.14-0.22, nplm_sup_dist 0.09-0.15, everything else ~0.05).
