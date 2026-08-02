@@ -262,6 +262,28 @@ make 100 anchors realizable.  Verdict: high-D mildly helps the softmax
 arms (linear-readout effect) but DEGRADES the NPLM/bilinear program --
 the 32-D defaults stand for calibrated losses on C100.
 
+100-D C100 study (exps 50/53/66 at --dim 100, holdout 4):
+
+| arm              | probe  | acc    | eucl   | mahaT  | SpK@.02 | MMD@.02 | perevt |
+|------------------|--------|--------|--------|--------|---------|---------|--------|
+| sup (recipe)     | 0.9546 | 0.5545 | 0.3947 | 0.3927 | 0.04    | 0.52    | 0.010  |
+| supcon           | 0.9443 | 0.5630 | 0.4034 | 0.3581 | 0.16    | 0.34    | 0.000  |
+| supcon_sigreg    | 0.9364 | 0.5895 | 0.4764 | 0.4281 | 0.02    | 0.38    | 0.010  |
+| nplm_dist_sup_cw | 0.8440 | 0.2591 | 0.5294 | 0.4627 | 0.18    | 0.50    | 0.030  |
+| nplm_sup_dist    | 0.8271 | 0.2579 | 0.4103 | 0.3775 | 0.08    | 0.70    | 0.020  |
+
+Verdicts: (1) the supervised-SIGReg recipe at 100-D posts the BEST C100
+probe in the program (0.9546, vs 0.9039 at its native 16/32-D) -- high-D
+linear-readout effect confirmed for the recipe itself.  (2) supcon_sigreg
++0.053 probe at 100-D (0.9364), now the best all-rounder (acc 0.590,
+mahaT 0.428).  (3) ORTHOGONAL ANCHORS DO NOT FIX classwise-NPLM
+realizability: cent->anchor is ~constant across dims (3.28/3.43/3.46 at
+32/64/100-D) -- the stall is an equilibrium of pull strength (lam=1
+classwise-sigreg vs the compact NPLM interaction), not dimensional
+crowding.  Refutes the dimension hypothesis; the untested lever is lam or
+anchor scale.  Still, 100-D gives classwise NPLM its best C100 geometry
+(eucl 0.529, mahaT 0.463) at a probe cost (0.844 vs 0.886).
+
 Discovery on C100 (exps 55/56): pool purity 0.003-0.013 (500 holdout train
 images vs ~2500-event tail at tauq=0.95) -- discovery neutral-to-harmful for
 every space; the conf mask keeps 0 events in round 1 (posterior diluted over
