@@ -284,6 +284,18 @@ crowding.  Refutes the dimension hypothesis; the untested lever is lam or
 anchor scale.  Still, 100-D gives classwise NPLM its best C100 geometry
 (eucl 0.529, mahaT 0.463) at a probe cost (0.844 vs 0.886).
 
+Classwise-lam scan + discovery (exp 53/55 rerun, C100 32-D,
+nplm_dist_sup_cw): higher lam closes the anchor gap monotonically
+(cent->anchor 3.28/2.68/2.11 at lam 1/5/20 -- confirming the
+pull-strength-equilibrium mechanism after the dimension hypothesis died).
+lam=5 is the sweet spot: acc 0.347 -> 0.522 (+0.17!), mahaT 0.392, probe
+-0.015; lam=20 over-regularizes.  Discovery on the lam=5 arm: probe
+0.8585 -> 0.8995 (+0.041) -- the FIRST C100 arm where discovery improves
+the probe, despite pool purity still ~0.002 (the impure-pool ft now acts
+as supervised refinement instead of noise, because classes are
+separated); per-event post 0.13@0.02, MMD post 0.66@0.02 / 1.00@0.05.
+Best C100 classwise-NPLM configuration on record: lam=5 + discovery.
+
 Discovery on C100 (exps 55/56): pool purity 0.003-0.013 (500 holdout train
 images vs ~2500-event tail at tauq=0.95) -- discovery neutral-to-harmful for
 every space; the conf mask keeps 0 events in round 1 (posterior diluted over

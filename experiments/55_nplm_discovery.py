@@ -107,6 +107,7 @@ def main():
     ap.add_argument("--steps", type=int, default=300)
     ap.add_argument("--sparker-sigma", type=float, default=1.0)
     ap.add_argument("--arms", nargs="+", default=ARMS, choices=ARMS)
+    ap.add_argument("--out-tag", default="")
     args = ap.parse_args()
     ds = args.dataset
     if args.fractions is None:
@@ -272,9 +273,11 @@ def main():
         plt.grid(alpha=0.25, which="both")
         plt.legend(loc="upper left", fontsize=8, ncol=2)
         plt.tight_layout()
-        plt.savefig(plot_path(f"exp55_{stat}_power_{ds}.png"), dpi=150)
+        plt.savefig(plot_path(f"exp55_{stat}_power_{ds}{args.out_tag}.png"),
+                    dpi=150)
         plt.close()
-        print("  saved " + plot_path(f"exp55_{stat}_power_{ds}.png"))
+        print("  saved "
+              + plot_path(f"exp55_{stat}_power_{ds}{args.out_tag}.png"))
 
     print(f"\n===== EXP55 SUMMARY [{ds}] =====")
     for name in args.arms:
@@ -285,7 +288,8 @@ def main():
                   f"anchors={h['n_anchors']}  margin={h['margin']:.4f}  "
                   f"mean-anchor={h['mean_pc']:.4f}")
     os.makedirs(os.path.join("logs", "exp55"), exist_ok=True)
-    np.savez(os.path.join("logs", "exp55", f"discovery_nplm_{ds}.npz"),
+    np.savez(os.path.join("logs", "exp55",
+                          f"discovery_nplm_{ds}{args.out_tag}.npz"),
              fractions=np.array(fractions), arms=np.array(args.arms),
              **{f"probe_{n}": np.array(probe[n]) for n in args.arms},
              **{f"{s}_{n}_post": np.array(post_power[s][n]) for s in STATS

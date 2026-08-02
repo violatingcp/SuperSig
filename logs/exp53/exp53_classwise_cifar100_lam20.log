@@ -1,0 +1,94 @@
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+Using cache found in /home/pharris/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+exp53 [cifar100] NPLM + classwise SIGReg, dim=32, epochs=20, holdout=[4], lam=20.0, tau=1.0, arms=['nplm_dist_sup_cw']
+
+----- nplm_dist_sup_cw (positives=supervised, critic=distance) -----
+  cifar100 balanced two-view loader (no {4}): 49500 images, 82 batches of 25x24
+  [nplm/distance/cw] epoch 1/20  interaction=3.0675  classwise=0.8015
+  [nplm/distance/cw] epoch 2/20  interaction=3.5626  classwise=0.7184
+  [nplm/distance/cw] epoch 3/20  interaction=3.7709  classwise=0.6770
+  [nplm/distance/cw] epoch 4/20  interaction=3.9110  classwise=0.6526
+  [nplm/distance/cw] epoch 5/20  interaction=4.0125  classwise=0.6330
+  [nplm/distance/cw] epoch 6/20  interaction=4.0914  classwise=0.6191
+  [nplm/distance/cw] epoch 7/20  interaction=4.1266  classwise=0.6085
+  [nplm/distance/cw] epoch 8/20  interaction=4.2027  classwise=0.5931
+  [nplm/distance/cw] epoch 9/20  interaction=4.2644  classwise=0.5867
+  [nplm/distance/cw] epoch 10/20  interaction=4.3244  classwise=0.5733
+  [nplm/distance/cw] epoch 11/20  interaction=4.3511  classwise=0.5725
+  [nplm/distance/cw] epoch 12/20  interaction=4.3727  classwise=0.5645
+  [nplm/distance/cw] epoch 13/20  interaction=4.4029  classwise=0.5563
+  [nplm/distance/cw] epoch 14/20  interaction=4.4228  classwise=0.5526
+  [nplm/distance/cw] epoch 15/20  interaction=4.4701  classwise=0.5475
+  [nplm/distance/cw] epoch 16/20  interaction=4.5125  classwise=0.5385
+  [nplm/distance/cw] epoch 17/20  interaction=4.4907  classwise=0.5421
+  [nplm/distance/cw] epoch 18/20  interaction=4.5237  classwise=0.5368
+  [nplm/distance/cw] epoch 19/20  interaction=4.5444  classwise=0.5338
+  [nplm/distance/cw] epoch 20/20  interaction=4.5548  classwise=0.5309
+  [nplm_dist_sup_cw] probe=0.8237+-0.0029 acc=0.5015 supAUC=0.9384 eucl=0.4154 mahaT=0.3733 mahaPC=0.4336 cent->anchor=2.11
+
+===== performance / novelty table =====
+  arm                          probe     acc  supAUC    eucl   mahaT  mahaPC
+  nplm_dist_sup_cw     0.8237+-0.0029  0.5015  0.9384  0.4154  0.3733  0.4336
+
+===== gaussianity (seen classes, test set) =====
+  metric                    nplm_dist_sup_cw
+  eig min (class cov)                0.002
+  eig max (class cov)                5.532
+  eig cond worst                    2199.6
+  class RMS min                      0.369
+  class RMS mean                     0.428
+  class RMS max                      0.534
+  max |corr| (worst class)           0.915
+  SW ratio mean                       1.48
+  SW ratio worst                      3.01
+  |skew| mean                        0.288
+  |ex-kurt| mean                     0.500
+  centroid dist min                   0.46
+  centroid dist mean                  2.84
+  separation (min d/RMS)              1.08
+
+===== PRE power batteries (all statistics) =====
+  [nplm_dist_sup_cw] per-event pre power=0.020
+  [nplm_dist_sup_cw] sparker
+    pre-spk f=0.001: power=0.040 [0.014,0.090] (2/50)
+    pre-spk f=0.003: power=0.020 [0.003,0.064] (1/50)
+    pre-spk f=0.01: power=0.040 [0.014,0.090] (2/50)
+    pre-spk f=0.02: power=0.060 [0.028,0.115] (3/50)
+    pre-spk f=0.05: power=1.000 [0.964,1.000] (50/50)
+  [nplm_dist_sup_cw] maha
+    pre-maha f=0.001: power=0.040 [0.014,0.090] (2/50)
+    pre-maha f=0.003: power=0.060 [0.028,0.115] (3/50)
+    pre-maha f=0.01: power=0.040 [0.014,0.090] (2/50)
+    pre-maha f=0.02: power=0.000 [0.000,0.036] (0/50)
+    pre-maha f=0.05: power=0.000 [0.000,0.036] (0/50)
+  [nplm_dist_sup_cw] mmd
+    pre-mmd f=0.001: power=0.040 [0.014,0.090] (2/50)
+    pre-mmd f=0.003: power=0.040 [0.014,0.090] (2/50)
+    pre-mmd f=0.01: power=0.200 [0.141,0.273] (10/50)
+    pre-mmd f=0.02: power=0.320 [0.249,0.399] (16/50)
+    pre-mmd f=0.05: power=1.000 [0.964,1.000] (50/50)
+
+===== EXP53 PEREVENT PRE POWER (alpha=0.05) =====
+  arm                   0.001    0.003     0.01     0.02     0.05
+  nplm_dist_sup_cw      0.020    0.020    0.020    0.020    0.020
+  saved /home/pharris/sigreg/SuperSig/plots/exp53_perevent_power_cifar100_lam20.png
+
+===== EXP53 SPARKER PRE POWER (alpha=0.05) =====
+  arm                   0.001    0.003     0.01     0.02     0.05
+  nplm_dist_sup_cw      0.040    0.020    0.040    0.060    1.000
+  saved /home/pharris/sigreg/SuperSig/plots/exp53_sparker_power_cifar100_lam20.png
+
+===== EXP53 MAHA PRE POWER (alpha=0.05) =====
+  arm                   0.001    0.003     0.01     0.02     0.05
+  nplm_dist_sup_cw      0.040    0.060    0.040    0.000    0.000
+  saved /home/pharris/sigreg/SuperSig/plots/exp53_maha_power_cifar100_lam20.png
+
+===== EXP53 MMD PRE POWER (alpha=0.05) =====
+  arm                   0.001    0.003     0.01     0.02     0.05
+  nplm_dist_sup_cw      0.040    0.040    0.200    0.320    1.000
+  saved /home/pharris/sigreg/SuperSig/plots/exp53_mmd_power_cifar100_lam20.png
+
+===== EXP53 SUMMARY =====
+  [nplm_dist_sup_cw] probe=0.8237+-0.0029  acc=0.5015  eucl=0.4154  mahaT=0.3733  cent->anchor=2.11
+Done.

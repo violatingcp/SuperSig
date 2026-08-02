@@ -119,6 +119,8 @@ def main():
                           else "0.001,0.003,0.01,0.02,0.05")
 
     dtag = ds if args.dim == 32 else f"{ds}_{args.dim}d"
+    if args.lam != 1.0:
+        dtag += f"_lam{args.lam:g}"
     cfg = recipe(ds, emb_dim=args.dim)
     n_cls = cfg["n_classes"]
     holdouts = {args.holdout}
