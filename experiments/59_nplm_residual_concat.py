@@ -33,6 +33,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import argparse
 import copy
 import importlib
+import math
 import numpy as np
 import torch
 from torch.utils.data import DataLoader, Subset
@@ -43,7 +44,7 @@ import matplotlib.pyplot as plt
 from supersig.config import DATA_DIR, DEVICE, plot_path
 from supersig.data import (get_cifar_loaders, cifar_two_view_loader,
                            cifar_two_view_balanced_loader, _cifar_spec)
-from supersig.losses import HybridContrastiveLoss
+from supersig.losses import HybridContrastiveLoss, make_anchors
 from supersig.models import CIFARResNetBackbone
 from supersig.metrics import gaussianity_summary
 from supersig.recipes import supervised_embedding, recipe
@@ -56,6 +57,7 @@ exp30 = importlib.import_module("30_power_curves")
 exp31 = importlib.import_module("31_sparker_power")
 exp32 = importlib.import_module("32_maha_mmd_power")
 exp34h = importlib.import_module("34h_hybrid_nplm_cifar")
+exp53 = importlib.import_module("53_nplm_classwise")
 
 STATS = ["perevent", "sparker", "maha", "mmd"]
 COLORS = {"sup->res-nplm": "#2a78d6", "nplmsup->res": "#8c2d9e",
@@ -108,9 +110,17 @@ def main():
     ap.add_argument("--steps", type=int, default=300)
     ap.add_argument("--arms", nargs="+", default=list(COLORS),
                     choices=list(COLORS))
+    ap.add_argument("--cw-lam", type=float, default=None,
+                    help="use classwise-NPLM (this lam) for the nplm_sup "
+                         "half instead of the global-marginal variant")
     ap.add_argument("--skip-power", action="store_true")
     args = ap.parse_args()
     ds = args.dataset
+    dtag = ds
+    if args.dim_half != 16:
+        dtag += f"_{2 * args.dim_half}d"
+    if args.cw_lam is not None:
+        dtag += f"_cwlam{args.cw_lam:g}"
 
     cfgH = recipe(ds, emb_dim=args.dim_half)
     n_cls = cfgH["n_classes"]
@@ -184,13 +194,27 @@ def main():
     torch.manual_seed(args.seed + 17); np.random.seed(args.seed + 17)
     nplm_sup16 = CIFARResNetBackbone(args.dim_half, arch=cfgH["arch"],
                                      pretrain=ds).to(DEVICE)
-    exp34h.train_hybrid(nplm_sup16,
-                        cifar_two_view_loader(quick=args.quick, labeled=True,
-                                              holdout=holdouts, dataset=ds),
-                        con_ep, dict(positives="supervised", critic="distance",
-                                     estimator="nplm", marginal="sigreg",
-                                     tau=args.tau), True,
-                        lam=args.lam, n_slices=cfgH["n_slices"])
+    if args.cw_lam is not None:
+        cw_means = make_anchors(cfgH["pair_dist"] / math.sqrt(2.0),
+                                emb_dim=args.dim_half,
+                                n_classes=n_cls).detach()
+        exp53.train_nplm_classwise(
+            nplm_sup16,
+            cifar_two_view_balanced_loader(ds, holdout=holdouts,
+                                           quick=args.quick),
+            con_ep, "supervised", "distance", cw_means, tau=args.tau,
+            lam=args.cw_lam, n_slices=cfgH["n_slices"])
+    else:
+        exp34h.train_hybrid(nplm_sup16,
+                            cifar_two_view_loader(quick=args.quick,
+                                                  labeled=True,
+                                                  holdout=holdouts,
+                                                  dataset=ds),
+                            con_ep,
+                            dict(positives="supervised", critic="distance",
+                                 estimator="nplm", marginal="sigreg",
+                                 tau=args.tau), True,
+                            lam=args.lam, n_slices=cfgH["n_slices"])
     means_nplmsup = exp28.fill_means(cents_of(nplm_sup16), seen, cfgH).detach()
 
     print("\n===== training: res_cls16 (classwise residual post nplm_sup16) "
@@ -410,9 +434,9 @@ def main():
             plt.grid(alpha=0.25, which="both")
             plt.legend(loc="upper left", fontsize=8, ncol=2)
             plt.tight_layout()
-            plt.savefig(plot_path(f"exp59_{stat}_power_{ds}.png"), dpi=150)
+            plt.savefig(plot_path(f"exp59_{stat}_power_{dtag}.png"), dpi=150)
             plt.close()
-            print("  saved " + plot_path(f"exp59_{stat}_power_{ds}.png"))
+            print("  saved " + plot_path(f"exp59_{stat}_power_{dtag}.png"))
 
     print(f"\n===== EXP59 SUMMARY [{ds}] =====")
     for name in args.arms:
@@ -421,7 +445,7 @@ def main():
               f"acc={r['acc']:.4f} eucl={r['eucl']:.4f} "
               f"mahaT={r['mahaT']:.4f}")
     os.makedirs(os.path.join("logs", "exp59"), exist_ok=True)
-    np.savez(os.path.join("logs", "exp59", f"nplm_residual_concat_{ds}.npz"),
+    np.savez(os.path.join("logs", "exp59", f"nplm_residual_concat_{dtag}.npz"),
              fractions=np.array(fractions), arms=np.array(args.arms),
              **{f"{k}_{n}": np.array(results[n][k]) for n in args.arms
                 for k in ("probe", "probe_sd", "acc", "sup_auc", "eucl",
