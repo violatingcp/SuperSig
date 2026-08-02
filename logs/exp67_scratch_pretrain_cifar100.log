@@ -1,0 +1,145 @@
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+exp67 [cifar100] FROM-SCRATCH pretraining, dim=100, epochs=200, holdout=[4] excluded, arms=['simclr', 'visreg', 'nplm']
+
+===== pretraining from scratch: simclr =====
+Using cache found in /home/pharris/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+  CIFAR two-view embedding-train images (no {4}): 49500
+  [simclr] epoch 1/200  main=4.9858  aux=0.0000
+  [simclr] epoch 5/200  main=4.6373  aux=0.0000
+  [simclr] epoch 10/200  main=4.5785  aux=0.0000
+  [simclr] epoch 15/200  main=4.5465  aux=0.0000
+  [simclr] epoch 20/200  main=4.5276  aux=0.0000
+  [simclr] epoch 25/200  main=4.5149  aux=0.0000
+  [simclr] epoch 30/200  main=4.5034  aux=0.0000
+  [simclr] epoch 35/200  main=4.4945  aux=0.0000
+  [simclr] epoch 40/200  main=4.4870  aux=0.0000
+  [simclr] epoch 45/200  main=4.4820  aux=0.0000
+  [simclr] epoch 50/200  main=4.4753  aux=0.0000
+  [simclr] epoch 55/200  main=4.4700  aux=0.0000
+  [simclr] epoch 60/200  main=4.4639  aux=0.0000
+  [simclr] epoch 65/200  main=4.4621  aux=0.0000
+  [simclr] epoch 70/200  main=4.4572  aux=0.0000
+  [simclr] epoch 75/200  main=4.4535  aux=0.0000
+  [simclr] epoch 80/200  main=4.4513  aux=0.0000
+  [simclr] epoch 85/200  main=4.4481  aux=0.0000
+  [simclr] epoch 90/200  main=4.4461  aux=0.0000
+  [simclr] epoch 95/200  main=4.4435  aux=0.0000
+  [simclr] epoch 100/200  main=4.4411  aux=0.0000
+  [simclr] epoch 105/200  main=4.4386  aux=0.0000
+  [simclr] epoch 110/200  main=4.4375  aux=0.0000
+  [simclr] epoch 115/200  main=4.4358  aux=0.0000
+  [simclr] epoch 120/200  main=4.4332  aux=0.0000
+  [simclr] epoch 125/200  main=4.4332  aux=0.0000
+  [simclr] epoch 130/200  main=4.4315  aux=0.0000
+  [simclr] epoch 135/200  main=4.4297  aux=0.0000
+  [simclr] epoch 140/200  main=4.4268  aux=0.0000
+  [simclr] epoch 145/200  main=4.4247  aux=0.0000
+  [simclr] epoch 150/200  main=4.4243  aux=0.0000
+  [simclr] epoch 155/200  main=4.4244  aux=0.0000
+  [simclr] epoch 160/200  main=4.4238  aux=0.0000
+  [simclr] epoch 165/200  main=4.4217  aux=0.0000
+  [simclr] epoch 170/200  main=4.4211  aux=0.0000
+  [simclr] epoch 175/200  main=4.4196  aux=0.0000
+  [simclr] epoch 180/200  main=4.4196  aux=0.0000
+  [simclr] epoch 185/200  main=4.4192  aux=0.0000
+  [simclr] epoch 190/200  main=4.4187  aux=0.0000
+  [simclr] epoch 195/200  main=4.4173  aux=0.0000
+  [simclr] epoch 200/200  main=4.4169  aux=0.0000
+  saved /home/pharris/sigreg/SuperSig/checkpoints/scratch_simclr_cifar100_100d.pt
+  [simclr  ] probe=0.7914 acc=0.2418 eucl=0.4435 mahaT=0.3853
+
+===== pretraining from scratch: visreg =====
+Using cache found in /home/pharris/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+  CIFAR two-view embedding-train images (no {4}): 49500
+  [visreg] epoch 1/200  main=0.1198  aux=0.2306
+  [visreg] epoch 5/200  main=0.1057  aux=0.1172
+  [visreg] epoch 10/200  main=0.0951  aux=0.1003
+  [visreg] epoch 15/200  main=0.0877  aux=0.0906
+  [visreg] epoch 20/200  main=0.0850  aux=0.0818
+  [visreg] epoch 25/200  main=0.0825  aux=0.0762
+  [visreg] epoch 30/200  main=0.0815  aux=0.0729
+  [visreg] epoch 35/200  main=0.0780  aux=0.0695
+  [visreg] epoch 40/200  main=0.0760  aux=0.0676
+  [visreg] epoch 45/200  main=0.0737  aux=0.0657
+  [visreg] epoch 50/200  main=0.0725  aux=0.0637
+  [visreg] epoch 55/200  main=0.0713  aux=0.0630
+  [visreg] epoch 60/200  main=0.0698  aux=0.0620
+  [visreg] epoch 65/200  main=0.0685  aux=0.0610
+  [visreg] epoch 70/200  main=0.0680  aux=0.0598
+  [visreg] epoch 75/200  main=0.0671  aux=0.0583
+  [visreg] epoch 80/200  main=0.0664  aux=0.0572
+  [visreg] epoch 85/200  main=0.0665  aux=0.0569
+  [visreg] epoch 90/200  main=0.0659  aux=0.0550
+  [visreg] epoch 95/200  main=0.0650  aux=0.0548
+  [visreg] epoch 100/200  main=0.0645  aux=0.0539
+  [visreg] epoch 105/200  main=0.0636  aux=0.0536
+  [visreg] epoch 110/200  main=0.0630  aux=0.0535
+  [visreg] epoch 115/200  main=0.0627  aux=0.0527
+  [visreg] epoch 120/200  main=0.0627  aux=0.0523
+  [visreg] epoch 125/200  main=0.0621  aux=0.0513
+  [visreg] epoch 130/200  main=0.0615  aux=0.0513
+  [visreg] epoch 135/200  main=0.0614  aux=0.0504
+  [visreg] epoch 140/200  main=0.0611  aux=0.0497
+  [visreg] epoch 145/200  main=0.0606  aux=0.0495
+  [visreg] epoch 150/200  main=0.0597  aux=0.0488
+  [visreg] epoch 155/200  main=0.0599  aux=0.0496
+  [visreg] epoch 160/200  main=0.0587  aux=0.0486
+  [visreg] epoch 165/200  main=0.0590  aux=0.0478
+  [visreg] epoch 170/200  main=0.0586  aux=0.0479
+  [visreg] epoch 175/200  main=0.0585  aux=0.0479
+  [visreg] epoch 180/200  main=0.0582  aux=0.0475
+  [visreg] epoch 185/200  main=0.0581  aux=0.0479
+  [visreg] epoch 190/200  main=0.0576  aux=0.0469
+  [visreg] epoch 195/200  main=0.0573  aux=0.0472
+  [visreg] epoch 200/200  main=0.0577  aux=0.0472
+  saved /home/pharris/sigreg/SuperSig/checkpoints/scratch_visreg_cifar100_100d.pt
+  [visreg  ] probe=0.8031 acc=0.1896 eucl=0.4993 mahaT=0.3823
+
+===== pretraining from scratch: nplm =====
+Using cache found in /home/pharris/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+  CIFAR two-view embedding-train images (no {4}): 49500
+  [nplm] epoch 1/200  main=361866579.3276  aux=0.8791
+  [nplm] epoch 5/200  main=0.6565  aux=0.8476
+  [nplm] epoch 10/200  main=0.5732  aux=0.8319
+  [nplm] epoch 15/200  main=0.5297  aux=0.8275
+  [nplm] epoch 20/200  main=0.5023  aux=0.8246
+  [nplm] epoch 25/200  main=0.3729  aux=0.7982
+  [nplm] epoch 30/200  main=0.3566  aux=0.7955
+  [nplm] epoch 35/200  main=0.3468  aux=0.7951
+  [nplm] epoch 40/200  main=0.3316  aux=0.7904
+  [nplm] epoch 45/200  main=0.3007  aux=0.7818
+  [nplm] epoch 50/200  main=0.2864  aux=0.7793
+  [nplm] epoch 55/200  main=0.2704  aux=0.7772
+  [nplm] epoch 60/200  main=0.2650  aux=0.7765
+  [nplm] epoch 65/200  main=0.2492  aux=0.7740
+  [nplm] epoch 70/200  main=0.2426  aux=0.7721
+  [nplm] epoch 75/200  main=0.2369  aux=0.7725
+  [nplm] epoch 80/200  main=0.2362  aux=0.7729
+  [nplm] epoch 85/200  main=0.2358  aux=0.7719
+  [nplm] epoch 90/200  main=0.2268  aux=0.7713
+  [nplm] epoch 95/200  main=0.2229  aux=0.7704
+  [nplm] epoch 100/200  main=0.2153  aux=0.7690
+  [nplm] epoch 105/200  main=0.2035  aux=0.7684
+  [nplm] epoch 110/200  main=0.1975  aux=0.7665
+  [nplm] epoch 115/200  main=0.1830  aux=0.7655
+  [nplm] epoch 120/200  main=0.1356  aux=0.7572
+  [nplm] epoch 125/200  main=0.0859  aux=0.7505
+  [nplm] epoch 130/200  main=0.0376  aux=0.7439
+  [nplm] epoch 135/200  main=-0.0186  aux=0.7387
+  [nplm] epoch 140/200  main=-0.0852  aux=0.7313
+  [nplm] epoch 145/200  main=-0.1898  aux=0.7231
+  [nplm] epoch 150/200  main=-0.3572  aux=0.7073
+  [nplm] epoch 155/200  main=-0.5794  aux=0.6873
+  [nplm] epoch 160/200  main=-0.7977  aux=0.6722
+  [nplm] epoch 165/200  main=-1.0151  aux=0.6544
+  [nplm] epoch 170/200  main=-1.2903  aux=0.6387
+  [nplm] epoch 175/200  main=-1.5849  aux=0.6212
+  [nplm] epoch 180/200  main=-1.9226  aux=0.6032
+  [nplm] epoch 185/200  main=-2.3258  aux=0.5826
+  [nplm] epoch 190/200  main=-2.6860  aux=0.5664
+  [nplm] epoch 195/200  main=-3.0219  aux=0.5511
+  [nplm] epoch 200/200  main=-3.4137  aux=0.5351
+  saved /home/pharris/sigreg/SuperSig/checkpoints/scratch_nplm_cifar100_100d.pt
+  [nplm    ] probe=0.7572 acc=0.1814 eucl=0.4134 mahaT=0.3610
+Done.

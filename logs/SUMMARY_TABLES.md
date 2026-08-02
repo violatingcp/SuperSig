@@ -80,6 +80,14 @@ ss[lam5]+hybrid (SparKer 0.52, MMD 0.86); pre-detection cls->resfeat
   dimension-robust statistic; C100 Maha-deadness is class similarity, not
   dimension.
 
+Exp-67 from-scratch bases (C100, RANDOM init, 100-D, 200ep, holdout 4
+excluded; checkpoints/scratch_{arm}_cifar100_100d.pt, resumable):
+simclr probe 0.7914 / acc 0.2418 / eucl 0.4435 / mahaT 0.3853;
+visreg 0.8031 / 0.1896 / 0.4993 / 0.3823;
+nplm (bilinear, label-free) 0.7572 / 0.1814 / 0.4134 / 0.3610.
+The ~0.06-0.13 probe drop vs hub-init counterparts quantifies the
+hub-trunk contribution; these are the clean bases for caveat-free runs.
+
 # SuperSig exps 50-56: NPLM loss program
 
 Standalone 32-D spaces (no concat), holdout 4, seed 0, 20 epochs, lam=1,
