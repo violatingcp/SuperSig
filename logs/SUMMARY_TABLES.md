@@ -143,6 +143,24 @@ but inherits SupCon's discovery fragility (0.954->0.920): use it
 discovery-free.  Residual-on-NPLM-trunk fails (compact geometry leaves the
 residual nothing); all-NPLM concat is mid-pack.
 
+### Exp 59 on CIFAR-100 at 50+50 = 100-D, classwise-lam5 supervised half
+
+| space          | probe pre/post | acc    | eucl   | mahaT  | SpK@.02   | MMD@.02   |
+|----------------|----------------|--------|--------|--------|-----------|-----------|
+| supcon+nplm    | 0.9431/**0.9467** | 0.5798 | 0.3281 | 0.3282 | 0.22/0.28 | 0.46/0.82 |
+| sup->res-nplm  | 0.9294/0.9385  | 0.5890 | 0.5404 | 0.3846 | 0.16/0.12 | 0.26/0.24 |
+| nplmsup+nplm   | 0.9206/0.9321  | 0.5286 | 0.4123 | 0.3760 | 0.00/0.28 | 0.42/**0.94** |
+| sup+nplm       | 0.9191/0.9160  | 0.5290 | 0.5449 | 0.3294 | 0.42/0.06 | 0.22/0.44 |
+| nplmsup->res   | 0.9111/0.9330  | 0.2021 | 0.4380 | 0.3517 | 0.04/0.12 | 0.12/0.44 |
+
+The 100-D + cw-lam5 configuration redeems the C100 constructions: the NPLM
+residual jumps 0.799 -> 0.929 (+0.13; the 32-D "residuals don't transfer"
+verdict was partly dimensional), discovery is probe-POSITIVE for 4/5 arms
+(supcon+nplm 0.9467 post = best C100 concat probe, second overall only to
+sup@100d 0.9546), and nplmsup+nplm posts the C100 MMD record post (0.94
+@0.02).  Maha/per-event stay weak (C100 pattern).  Backbones remain
+hub-cifar100-pretrained (see exp 67 for from-scratch bases).
+
 ### Exp 59 on CIFAR-100 (16+16, annealed sigma)
 
 | space          | probe pre/post | acc    | eucl   | mahaT  | SpK@.02   | Maha@.02  | MMD@.02   |
