@@ -1,0 +1,453 @@
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+Using cache found in /home/pharris/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+exp50 [cifar100] NPLM suite, dim=100, epochs=20, holdout=[4], lam=1.0, arms=['simclr', 'lejepa', 'simclr_sigreg', 'supcon', 'supcon_sigreg', 'nplm_bilinear', 'nplm_distance', 'nplm_sup_dist']
+
+----- simclr (augmentations only) -----
+  init from checkpoints/scratch_visreg_cifar100_100d.pt
+  CIFAR two-view embedding-train images (no {4}): 49500
+  [simclr] epoch 1/20  loss=4.4684
+  [simclr] epoch 2/20  loss=4.4604
+  [simclr] epoch 3/20  loss=4.4575
+  [simclr] epoch 4/20  loss=4.4547
+  [simclr] epoch 5/20  loss=4.4533
+  [simclr] epoch 6/20  loss=4.4505
+  [simclr] epoch 7/20  loss=4.4486
+  [simclr] epoch 8/20  loss=4.4473
+  [simclr] epoch 9/20  loss=4.4461
+  [simclr] epoch 10/20  loss=4.4437
+  [simclr] epoch 11/20  loss=4.4430
+  [simclr] epoch 12/20  loss=4.4428
+  [simclr] epoch 13/20  loss=4.4406
+  [simclr] epoch 14/20  loss=4.4413
+  [simclr] epoch 15/20  loss=4.4397
+  [simclr] epoch 16/20  loss=4.4380
+  [simclr] epoch 17/20  loss=4.4376
+  [simclr] epoch 18/20  loss=4.4363
+  [simclr] epoch 19/20  loss=4.4367
+  [simclr] epoch 20/20  loss=4.4366
+Using cache found in /home/pharris/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+  [simclr        ] probe=0.8225+-0.0021 acc=0.2085 supAUC=0.8511 eucl=0.4634 mahaT=0.3827 mahaPC=0.4615
+
+----- lejepa (augmentations only) -----
+  init from checkpoints/scratch_visreg_cifar100_100d.pt
+  CIFAR two-view embedding-train images (no {4}): 49500
+  [sigreg-ssl] epoch 1/20  inv=0.0573  sigreg=0.0471
+  [sigreg-ssl] epoch 2/20  inv=0.0568  sigreg=0.0474
+  [sigreg-ssl] epoch 3/20  inv=0.0568  sigreg=0.0463
+  [sigreg-ssl] epoch 4/20  inv=0.0567  sigreg=0.0467
+  [sigreg-ssl] epoch 5/20  inv=0.0568  sigreg=0.0469
+  [sigreg-ssl] epoch 6/20  inv=0.0569  sigreg=0.0471
+  [sigreg-ssl] epoch 7/20  inv=0.0566  sigreg=0.0468
+  [sigreg-ssl] epoch 8/20  inv=0.0564  sigreg=0.0470
+  [sigreg-ssl] epoch 9/20  inv=0.0568  sigreg=0.0472
+  [sigreg-ssl] epoch 10/20  inv=0.0567  sigreg=0.0471
+  [sigreg-ssl] epoch 11/20  inv=0.0569  sigreg=0.0472
+  [sigreg-ssl] epoch 12/20  inv=0.0575  sigreg=0.0473
+  [sigreg-ssl] epoch 13/20  inv=0.0565  sigreg=0.0467
+  [sigreg-ssl] epoch 14/20  inv=0.0560  sigreg=0.0466
+  [sigreg-ssl] epoch 15/20  inv=0.0564  sigreg=0.0464
+  [sigreg-ssl] epoch 16/20  inv=0.0571  sigreg=0.0466
+  [sigreg-ssl] epoch 17/20  inv=0.0562  sigreg=0.0468
+  [sigreg-ssl] epoch 18/20  inv=0.0560  sigreg=0.0466
+  [sigreg-ssl] epoch 19/20  inv=0.0566  sigreg=0.0467
+  [sigreg-ssl] epoch 20/20  inv=0.0566  sigreg=0.0467
+Using cache found in /home/pharris/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+  [lejepa        ] probe=0.7906+-0.0028 acc=0.1893 supAUC=0.8421 eucl=0.4685 mahaT=0.3657 mahaPC=0.4261
+
+----- simclr_sigreg (augmentations only) -----
+  init from checkpoints/scratch_visreg_cifar100_100d.pt
+  CIFAR two-view embedding-train images (no {4}): 49500
+  [softmax/cosine] epoch 1/20  interaction=4.4699  marginal=0.0369
+  [softmax/cosine] epoch 2/20  interaction=4.4619  marginal=0.0342
+  [softmax/cosine] epoch 3/20  interaction=4.4606  marginal=0.0324
+  [softmax/cosine] epoch 4/20  interaction=4.4589  marginal=0.0325
+  [softmax/cosine] epoch 5/20  interaction=4.4551  marginal=0.0318
+  [softmax/cosine] epoch 6/20  interaction=4.4549  marginal=0.0315
+  [softmax/cosine] epoch 7/20  interaction=4.4535  marginal=0.0300
+  [softmax/cosine] epoch 8/20  interaction=4.4510  marginal=0.0299
+  [softmax/cosine] epoch 9/20  interaction=4.4502  marginal=0.0293
+  [softmax/cosine] epoch 10/20  interaction=4.4483  marginal=0.0286
+  [softmax/cosine] epoch 11/20  interaction=4.4466  marginal=0.0283
+  [softmax/cosine] epoch 12/20  interaction=4.4456  marginal=0.0278
+  [softmax/cosine] epoch 13/20  interaction=4.4452  marginal=0.0275
+  [softmax/cosine] epoch 14/20  interaction=4.4438  marginal=0.0273
+  [softmax/cosine] epoch 15/20  interaction=4.4432  marginal=0.0267
+  [softmax/cosine] epoch 16/20  interaction=4.4422  marginal=0.0266
+  [softmax/cosine] epoch 17/20  interaction=4.4420  marginal=0.0265
+  [softmax/cosine] epoch 18/20  interaction=4.4408  marginal=0.0262
+  [softmax/cosine] epoch 19/20  interaction=4.4397  marginal=0.0263
+  [softmax/cosine] epoch 20/20  interaction=4.4389  marginal=0.0258
+Using cache found in /home/pharris/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+  [simclr_sigreg ] probe=0.8138+-0.0030 acc=0.2120 supAUC=0.8606 eucl=0.5568 mahaT=0.4200 mahaPC=0.5082
+
+----- supcon (labels) -----
+  init from checkpoints/scratch_visreg_cifar100_100d.pt
+  CIFAR two-view embedding-train images (no {4}): 49500
+  [supcon] epoch 1/20  loss=5.0927
+  [supcon] epoch 2/20  loss=4.7678
+  [supcon] epoch 3/20  loss=4.6590
+  [supcon] epoch 4/20  loss=4.5758
+  [supcon] epoch 5/20  loss=4.5139
+  [supcon] epoch 6/20  loss=4.4702
+  [supcon] epoch 7/20  loss=4.4184
+  [supcon] epoch 8/20  loss=4.3854
+  [supcon] epoch 9/20  loss=4.3429
+  [supcon] epoch 10/20  loss=4.3134
+  [supcon] epoch 11/20  loss=4.2864
+  [supcon] epoch 12/20  loss=4.2687
+  [supcon] epoch 13/20  loss=4.2417
+  [supcon] epoch 14/20  loss=4.2159
+  [supcon] epoch 15/20  loss=4.1988
+  [supcon] epoch 16/20  loss=4.1730
+  [supcon] epoch 17/20  loss=4.1539
+  [supcon] epoch 18/20  loss=4.1401
+  [supcon] epoch 19/20  loss=4.1315
+  [supcon] epoch 20/20  loss=4.1158
+Using cache found in /home/pharris/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+  [supcon        ] probe=0.9102+-0.0026 acc=0.4632 supAUC=0.9621 eucl=0.4683 mahaT=0.3686 mahaPC=0.4844
+
+----- supcon_sigreg (labels) -----
+  init from checkpoints/scratch_visreg_cifar100_100d.pt
+  CIFAR two-view embedding-train images (no {4}): 49500
+  [softmax/cosine] epoch 1/20  interaction=5.1696  marginal=0.3152
+  [softmax/cosine] epoch 2/20  interaction=4.8130  marginal=0.2745
+  [softmax/cosine] epoch 3/20  interaction=4.7044  marginal=0.2453
+  [softmax/cosine] epoch 4/20  interaction=4.6323  marginal=0.2285
+  [softmax/cosine] epoch 5/20  interaction=4.5729  marginal=0.2137
+  [softmax/cosine] epoch 6/20  interaction=4.5211  marginal=0.2017
+  [softmax/cosine] epoch 7/20  interaction=4.4967  marginal=0.1928
+  [softmax/cosine] epoch 8/20  interaction=4.4501  marginal=0.1854
+  [softmax/cosine] epoch 9/20  interaction=4.4147  marginal=0.1782
+  [softmax/cosine] epoch 10/20  interaction=4.3911  marginal=0.1717
+  [softmax/cosine] epoch 11/20  interaction=4.3560  marginal=0.1667
+  [softmax/cosine] epoch 12/20  interaction=4.3490  marginal=0.1658
+  [softmax/cosine] epoch 13/20  interaction=4.3318  marginal=0.1618
+  [softmax/cosine] epoch 14/20  interaction=4.2913  marginal=0.1536
+  [softmax/cosine] epoch 15/20  interaction=4.2633  marginal=0.1506
+  [softmax/cosine] epoch 16/20  interaction=4.2700  marginal=0.1504
+  [softmax/cosine] epoch 17/20  interaction=4.2398  marginal=0.1431
+  [softmax/cosine] epoch 18/20  interaction=4.2236  marginal=0.1410
+  [softmax/cosine] epoch 19/20  interaction=4.2028  marginal=0.1374
+  [softmax/cosine] epoch 20/20  interaction=4.1911  marginal=0.1366
+Using cache found in /home/pharris/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+  [supcon_sigreg ] probe=0.9263+-0.0011 acc=0.4558 supAUC=0.9596 eucl=0.2641 mahaT=0.2464 mahaPC=0.3535
+
+----- nplm_bilinear (augmentations only) -----
+  init from checkpoints/scratch_visreg_cifar100_100d.pt
+  CIFAR two-view embedding-train images (no {4}): 49500
+  [nplm/bilinear] epoch 1/20  interaction=20151988971.9683  marginal=0.5738
+  [nplm/bilinear] epoch 2/20  interaction=2062445.9890  marginal=0.6179
+  [nplm/bilinear] epoch 3/20  interaction=966314.8665  marginal=0.6195
+  [nplm/bilinear] epoch 4/20  interaction=486198.7355  marginal=0.6208
+  [nplm/bilinear] epoch 5/20  interaction=121922.2122  marginal=0.6205
+  [nplm/bilinear] epoch 6/20  interaction=7121.1843  marginal=0.6235
+  [nplm/bilinear] epoch 7/20  interaction=1275937.7723  marginal=0.6224
+  [nplm/bilinear] epoch 8/20  interaction=426503.7581  marginal=0.6224
+  [nplm/bilinear] epoch 9/20  interaction=17819.1959  marginal=0.6229
+  [nplm/bilinear] epoch 10/20  interaction=15260.1870  marginal=0.6228
+  [nplm/bilinear] epoch 11/20  interaction=495866.1583  marginal=0.6277
+  [nplm/bilinear] epoch 12/20  interaction=2914.2411  marginal=0.6306
+  [nplm/bilinear] epoch 13/20  interaction=19583.0413  marginal=0.6304
+  [nplm/bilinear] epoch 14/20  interaction=6876.5843  marginal=0.6305
+  [nplm/bilinear] epoch 15/20  interaction=423808.8237  marginal=0.6302
+  [nplm/bilinear] epoch 16/20  interaction=9271.4821  marginal=0.6300
+  [nplm/bilinear] epoch 17/20  interaction=6573.9438  marginal=0.6294
+  [nplm/bilinear] epoch 18/20  interaction=19912.6845  marginal=0.6325
+  [nplm/bilinear] epoch 19/20  interaction=15350.5932  marginal=0.6334
+  [nplm/bilinear] epoch 20/20  interaction=3673.3003  marginal=0.6318
+Using cache found in /home/pharris/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+  [nplm_bilinear ] probe=0.6916+-0.0042 acc=0.0748 supAUC=0.7246 eucl=0.5412 mahaT=0.4601 mahaPC=0.4772
+
+----- nplm_distance (augmentations only) -----
+  init from checkpoints/scratch_visreg_cifar100_100d.pt
+  CIFAR two-view embedding-train images (no {4}): 49500
+  [nplm/distance] epoch 1/20  interaction=-0.5406  marginal=0.4692
+  [nplm/distance] epoch 2/20  interaction=-0.7120  marginal=0.4767
+  [nplm/distance] epoch 3/20  interaction=-0.7172  marginal=0.4702
+  [nplm/distance] epoch 4/20  interaction=-0.7214  marginal=0.4683
+  [nplm/distance] epoch 5/20  interaction=-0.7276  marginal=0.4657
+  [nplm/distance] epoch 6/20  interaction=-0.7264  marginal=0.4659
+  [nplm/distance] epoch 7/20  interaction=-0.7263  marginal=0.4644
+  [nplm/distance] epoch 8/20  interaction=-0.7269  marginal=0.4615
+  [nplm/distance] epoch 9/20  interaction=-0.7270  marginal=0.4642
+  [nplm/distance] epoch 10/20  interaction=-0.7281  marginal=0.4595
+  [nplm/distance] epoch 11/20  interaction=-0.7275  marginal=0.4614
+  [nplm/distance] epoch 12/20  interaction=-0.7268  marginal=0.4638
+  [nplm/distance] epoch 13/20  interaction=-0.7279  marginal=0.4580
+  [nplm/distance] epoch 14/20  interaction=-0.7283  marginal=0.4609
+  [nplm/distance] epoch 15/20  interaction=-0.7289  marginal=0.4559
+  [nplm/distance] epoch 16/20  interaction=-0.7274  marginal=0.4597
+  [nplm/distance] epoch 17/20  interaction=-0.7291  marginal=0.4581
+  [nplm/distance] epoch 18/20  interaction=-0.7279  marginal=0.4521
+  [nplm/distance] epoch 19/20  interaction=-0.7267  marginal=0.4553
+  [nplm/distance] epoch 20/20  interaction=-0.7273  marginal=0.4564
+Using cache found in /home/pharris/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+  [nplm_distance ] probe=0.7529+-0.0053 acc=0.1173 supAUC=0.7809 eucl=0.4689 mahaT=0.4429 mahaPC=0.4750
+
+----- nplm_sup_dist (labels) -----
+  init from checkpoints/scratch_visreg_cifar100_100d.pt
+  CIFAR two-view embedding-train images (no {4}): 49500
+  [nplm/distance] epoch 1/20  interaction=1.8330  marginal=0.8274
+  [nplm/distance] epoch 2/20  interaction=-0.0830  marginal=0.8598
+  [nplm/distance] epoch 3/20  interaction=-0.1317  marginal=0.8456
+  [nplm/distance] epoch 4/20  interaction=-0.1632  marginal=0.8347
+  [nplm/distance] epoch 5/20  interaction=-0.1844  marginal=0.8276
+  [nplm/distance] epoch 6/20  interaction=-0.2019  marginal=0.8244
+  [nplm/distance] epoch 7/20  interaction=-0.2143  marginal=0.8191
+  [nplm/distance] epoch 8/20  interaction=-0.2236  marginal=0.8163
+  [nplm/distance] epoch 9/20  interaction=-0.2342  marginal=0.8118
+  [nplm/distance] epoch 10/20  interaction=-0.2399  marginal=0.8128
+  [nplm/distance] epoch 11/20  interaction=-0.2460  marginal=0.8101
+  [nplm/distance] epoch 12/20  interaction=-0.2511  marginal=0.8094
+  [nplm/distance] epoch 13/20  interaction=-0.2609  marginal=0.8060
+  [nplm/distance] epoch 14/20  interaction=-0.2648  marginal=0.8018
+  [nplm/distance] epoch 15/20  interaction=-0.2687  marginal=0.8030
+  [nplm/distance] epoch 16/20  interaction=-0.2732  marginal=0.8021
+  [nplm/distance] epoch 17/20  interaction=-0.2793  marginal=0.7997
+  [nplm/distance] epoch 18/20  interaction=-0.2842  marginal=0.7970
+  [nplm/distance] epoch 19/20  interaction=-0.2852  marginal=0.7983
+  [nplm/distance] epoch 20/20  interaction=-0.2881  marginal=0.7952
+  [nplm_sup_dist ] probe=0.8541+-0.0012 acc=0.1356 supAUC=0.8614 eucl=0.5017 mahaT=0.4369 mahaPC=0.4421
+
+===== performance / novelty table =====
+  arm                        probe     acc  supAUC    eucl   mahaT  mahaPC
+  simclr             0.8225+-0.0021  0.2085  0.8511  0.4634  0.3827  0.4615
+  lejepa             0.7906+-0.0028  0.1893  0.8421  0.4685  0.3657  0.4261
+  simclr_sigreg      0.8138+-0.0030  0.2120  0.8606  0.5568  0.4200  0.5082
+  supcon             0.9102+-0.0026  0.4632  0.9621  0.4683  0.3686  0.4844
+  supcon_sigreg      0.9263+-0.0011  0.4558  0.9596  0.2641  0.2464  0.3535
+  nplm_bilinear      0.6916+-0.0042  0.0748  0.7246  0.5412  0.4601  0.4772
+  nplm_distance      0.7529+-0.0053  0.1173  0.7809  0.4689  0.4429  0.4750
+  nplm_sup_dist      0.8541+-0.0012  0.1356  0.8614  0.5017  0.4369  0.4421
+
+===== gaussianity (seen classes, test set) =====
+  metric                            simclr        lejepa simclr_sigreg        supcon supcon_sigreg nplm_bilinear nplm_distance nplm_sup_dist
+  eig min (class cov)               -0.000        -0.000        -0.000        -0.000        -0.000        -0.000        -0.000        -0.000
+  eig max (class cov)               41.521        38.687        37.773        29.205        27.883         2.059        12.880         0.519
+  eig cond worst            41521164320768.038687358320640.037772974882816.029204821311488.027883391156224.02058562568192.012880270327808.0519410122752.0
+  class RMS min                      0.635         0.577         0.579         0.309         0.447         0.156         0.180         0.037
+  class RMS mean                     0.821         0.791         0.872         0.438         0.576         0.191         0.288         0.059
+  class RMS max                      1.034         0.998         0.998         0.682         0.709         0.263         0.424         0.081
+  max |corr| (worst class)           0.963         0.985         0.940         0.967         0.971         0.950         0.998         1.000
+  SW ratio mean                       2.19          2.53          1.83          1.64          1.57          2.45          3.90          7.99
+  SW ratio worst                      5.26          5.92          5.83          3.29          2.44          3.92          9.22         36.59
+  |skew| mean                        0.376         0.412         0.319         0.322         0.305         0.435         0.573         1.044
+  |ex-kurt| mean                     0.709         0.717         0.542         0.563         0.547         0.886         1.235         2.281
+  centroid dist min                   1.02          1.07          1.19          0.92          1.11          0.21          0.19          0.02
+  centroid dist mean                  5.92          6.63          6.08          6.76          9.19          0.93          2.87          1.37
+  separation (min d/RMS)              1.25          1.35          1.37          2.10          1.93          1.08          0.65          0.32
+saved /home/pharris/sigreg/SuperSig/plots/exp50_probe_cifar100_100d_scr-visreg.png
+
+===== PRE power batteries (all statistics) =====
+  [simclr] per-event pre power=0.030
+  [simclr] sparker
+    pre-spk f=0.001: power=0.060 [0.028,0.115] (3/50)
+    pre-spk f=0.003: power=0.020 [0.003,0.064] (1/50)
+    pre-spk f=0.01: power=0.080 [0.042,0.138] (4/50)
+    pre-spk f=0.02: power=0.020 [0.003,0.064] (1/50)
+    pre-spk f=0.05: power=0.600 [0.520,0.676] (30/50)
+  [simclr] maha
+    pre-maha f=0.001: power=0.120 [0.074,0.184] (6/50)
+    pre-maha f=0.003: power=0.080 [0.042,0.138] (4/50)
+    pre-maha f=0.01: power=0.020 [0.003,0.064] (1/50)
+    pre-maha f=0.02: power=0.000 [0.000,0.036] (0/50)
+    pre-maha f=0.05: power=0.060 [0.028,0.115] (3/50)
+  [simclr] mmd
+    pre-mmd f=0.001: power=0.060 [0.028,0.115] (3/50)
+    pre-mmd f=0.003: power=0.000 [0.000,0.036] (0/50)
+    pre-mmd f=0.01: power=0.040 [0.014,0.090] (2/50)
+    pre-mmd f=0.02: power=0.080 [0.042,0.138] (4/50)
+    pre-mmd f=0.05: power=0.540 [0.460,0.618] (27/50)
+  [lejepa] per-event pre power=0.020
+  [lejepa] sparker
+    pre-spk f=0.001: power=0.000 [0.000,0.036] (0/50)
+    pre-spk f=0.003: power=0.080 [0.042,0.138] (4/50)
+    pre-spk f=0.01: power=0.060 [0.028,0.115] (3/50)
+    pre-spk f=0.02: power=0.040 [0.014,0.090] (2/50)
+    pre-spk f=0.05: power=0.620 [0.540,0.695] (31/50)
+  [lejepa] maha
+    pre-maha f=0.001: power=0.120 [0.074,0.184] (6/50)
+    pre-maha f=0.003: power=0.040 [0.014,0.090] (2/50)
+    pre-maha f=0.01: power=0.040 [0.014,0.090] (2/50)
+    pre-maha f=0.02: power=0.040 [0.014,0.090] (2/50)
+    pre-maha f=0.05: power=0.000 [0.000,0.036] (0/50)
+  [lejepa] mmd
+    pre-mmd f=0.001: power=0.040 [0.014,0.090] (2/50)
+    pre-mmd f=0.003: power=0.000 [0.000,0.036] (0/50)
+    pre-mmd f=0.01: power=0.060 [0.028,0.115] (3/50)
+    pre-mmd f=0.02: power=0.100 [0.058,0.162] (5/50)
+    pre-mmd f=0.05: power=0.680 [0.601,0.751] (34/50)
+  [simclr_sigreg] per-event pre power=0.050
+  [simclr_sigreg] sparker
+    pre-spk f=0.001: power=0.000 [0.000,0.036] (0/50)
+    pre-spk f=0.003: power=0.060 [0.028,0.115] (3/50)
+    pre-spk f=0.01: power=0.020 [0.003,0.064] (1/50)
+    pre-spk f=0.02: power=0.000 [0.000,0.036] (0/50)
+    pre-spk f=0.05: power=0.580 [0.500,0.657] (29/50)
+  [simclr_sigreg] maha
+    pre-maha f=0.001: power=0.060 [0.028,0.115] (3/50)
+    pre-maha f=0.003: power=0.080 [0.042,0.138] (4/50)
+    pre-maha f=0.01: power=0.060 [0.028,0.115] (3/50)
+    pre-maha f=0.02: power=0.060 [0.028,0.115] (3/50)
+    pre-maha f=0.05: power=0.080 [0.042,0.138] (4/50)
+  [simclr_sigreg] mmd
+    pre-mmd f=0.001: power=0.060 [0.028,0.115] (3/50)
+    pre-mmd f=0.003: power=0.020 [0.003,0.064] (1/50)
+    pre-mmd f=0.01: power=0.040 [0.014,0.090] (2/50)
+    pre-mmd f=0.02: power=0.040 [0.014,0.090] (2/50)
+    pre-mmd f=0.05: power=0.300 [0.231,0.378] (15/50)
+  [supcon] per-event pre power=0.030
+  [supcon] sparker
+    pre-spk f=0.001: power=0.000 [0.000,0.036] (0/50)
+    pre-spk f=0.003: power=0.020 [0.003,0.064] (1/50)
+    pre-spk f=0.01: power=0.020 [0.003,0.064] (1/50)
+    pre-spk f=0.02: power=0.080 [0.042,0.138] (4/50)
+    pre-spk f=0.05: power=0.700 [0.622,0.769] (35/50)
+  [supcon] maha
+    pre-maha f=0.001: power=0.020 [0.003,0.064] (1/50)
+    pre-maha f=0.003: power=0.020 [0.003,0.064] (1/50)
+    pre-maha f=0.01: power=0.020 [0.003,0.064] (1/50)
+    pre-maha f=0.02: power=0.020 [0.003,0.064] (1/50)
+    pre-maha f=0.05: power=0.000 [0.000,0.036] (0/50)
+  [supcon] mmd
+    pre-mmd f=0.001: power=0.020 [0.003,0.064] (1/50)
+    pre-mmd f=0.003: power=0.040 [0.014,0.090] (2/50)
+    pre-mmd f=0.01: power=0.000 [0.000,0.036] (0/50)
+    pre-mmd f=0.02: power=0.100 [0.058,0.162] (5/50)
+    pre-mmd f=0.05: power=1.000 [0.964,1.000] (50/50)
+  [supcon_sigreg] per-event pre power=0.000
+  [supcon_sigreg] sparker
+    pre-spk f=0.001: power=0.020 [0.003,0.064] (1/50)
+    pre-spk f=0.003: power=0.020 [0.003,0.064] (1/50)
+    pre-spk f=0.01: power=0.060 [0.028,0.115] (3/50)
+    pre-spk f=0.02: power=0.080 [0.042,0.138] (4/50)
+    pre-spk f=0.05: power=0.740 [0.664,0.806] (37/50)
+  [supcon_sigreg] maha
+    pre-maha f=0.001: power=0.040 [0.014,0.090] (2/50)
+    pre-maha f=0.003: power=0.060 [0.028,0.115] (3/50)
+    pre-maha f=0.01: power=0.000 [0.000,0.036] (0/50)
+    pre-maha f=0.02: power=0.000 [0.000,0.036] (0/50)
+    pre-maha f=0.05: power=0.000 [0.000,0.036] (0/50)
+  [supcon_sigreg] mmd
+    pre-mmd f=0.001: power=0.060 [0.028,0.115] (3/50)
+    pre-mmd f=0.003: power=0.120 [0.074,0.184] (6/50)
+    pre-mmd f=0.01: power=0.120 [0.074,0.184] (6/50)
+    pre-mmd f=0.02: power=0.340 [0.268,0.419] (17/50)
+    pre-mmd f=0.05: power=1.000 [0.964,1.000] (50/50)
+  [nplm_bilinear] per-event pre power=0.070
+  [nplm_bilinear] sparker
+    pre-spk f=0.001: power=0.020 [0.003,0.064] (1/50)
+    pre-spk f=0.003: power=0.020 [0.003,0.064] (1/50)
+    pre-spk f=0.01: power=0.040 [0.014,0.090] (2/50)
+    pre-spk f=0.02: power=0.100 [0.058,0.162] (5/50)
+    pre-spk f=0.05: power=0.460 [0.382,0.540] (23/50)
+  [nplm_bilinear] maha
+    pre-maha f=0.001: power=0.040 [0.014,0.090] (2/50)
+    pre-maha f=0.003: power=0.020 [0.003,0.064] (1/50)
+    pre-maha f=0.01: power=0.040 [0.014,0.090] (2/50)
+    pre-maha f=0.02: power=0.040 [0.014,0.090] (2/50)
+    pre-maha f=0.05: power=0.020 [0.003,0.064] (1/50)
+  [nplm_bilinear] mmd
+    pre-mmd f=0.001: power=0.060 [0.028,0.115] (3/50)
+    pre-mmd f=0.003: power=0.000 [0.000,0.036] (0/50)
+    pre-mmd f=0.01: power=0.140 [0.090,0.207] (7/50)
+    pre-mmd f=0.02: power=0.120 [0.074,0.184] (6/50)
+    pre-mmd f=0.05: power=0.740 [0.664,0.806] (37/50)
+  [nplm_distance] per-event pre power=0.010
+  [nplm_distance] sparker
+    pre-spk f=0.001: power=0.020 [0.003,0.064] (1/50)
+    pre-spk f=0.003: power=0.080 [0.042,0.138] (4/50)
+    pre-spk f=0.01: power=0.040 [0.014,0.090] (2/50)
+    pre-spk f=0.02: power=0.040 [0.014,0.090] (2/50)
+    pre-spk f=0.05: power=0.540 [0.460,0.618] (27/50)
+  [nplm_distance] maha
+    pre-maha f=0.001: power=0.100 [0.058,0.162] (5/50)
+    pre-maha f=0.003: power=0.060 [0.028,0.115] (3/50)
+    pre-maha f=0.01: power=0.060 [0.028,0.115] (3/50)
+    pre-maha f=0.02: power=0.040 [0.014,0.090] (2/50)
+    pre-maha f=0.05: power=0.020 [0.003,0.064] (1/50)
+  [nplm_distance] mmd
+    pre-mmd f=0.001: power=0.020 [0.003,0.064] (1/50)
+    pre-mmd f=0.003: power=0.020 [0.003,0.064] (1/50)
+    pre-mmd f=0.01: power=0.100 [0.058,0.162] (5/50)
+    pre-mmd f=0.02: power=0.180 [0.124,0.251] (9/50)
+    pre-mmd f=0.05: power=0.840 [0.771,0.893] (42/50)
+  [nplm_sup_dist] per-event pre power=0.050
+  [nplm_sup_dist] sparker
+    pre-spk f=0.001: power=0.000 [0.000,0.036] (0/50)
+    pre-spk f=0.003: power=0.120 [0.074,0.184] (6/50)
+    pre-spk f=0.01: power=0.020 [0.003,0.064] (1/50)
+    pre-spk f=0.02: power=0.140 [0.090,0.207] (7/50)
+    pre-spk f=0.05: power=0.960 [0.910,0.986] (48/50)
+  [nplm_sup_dist] maha
+    pre-maha f=0.001: power=0.120 [0.074,0.184] (6/50)
+    pre-maha f=0.003: power=0.120 [0.074,0.184] (6/50)
+    pre-maha f=0.01: power=0.000 [0.000,0.036] (0/50)
+    pre-maha f=0.02: power=0.080 [0.042,0.138] (4/50)
+    pre-maha f=0.05: power=0.040 [0.014,0.090] (2/50)
+  [nplm_sup_dist] mmd
+    pre-mmd f=0.001: power=0.020 [0.003,0.064] (1/50)
+    pre-mmd f=0.003: power=0.020 [0.003,0.064] (1/50)
+    pre-mmd f=0.01: power=0.020 [0.003,0.064] (1/50)
+    pre-mmd f=0.02: power=0.080 [0.042,0.138] (4/50)
+    pre-mmd f=0.05: power=1.000 [0.964,1.000] (50/50)
+
+===== EXP50 PEREVENT PRE POWER (alpha=0.05) =====
+  arm                 0.001    0.003     0.01     0.02     0.05
+  simclr              0.030    0.030    0.030    0.030    0.030
+  lejepa              0.020    0.020    0.020    0.020    0.020
+  simclr_sigreg       0.050    0.050    0.050    0.050    0.050
+  supcon              0.030    0.030    0.030    0.030    0.030
+  supcon_sigreg       0.000    0.000    0.000    0.000    0.000
+  nplm_bilinear       0.070    0.070    0.070    0.070    0.070
+  nplm_distance       0.010    0.010    0.010    0.010    0.010
+  nplm_sup_dist       0.050    0.050    0.050    0.050    0.050
+  saved /home/pharris/sigreg/SuperSig/plots/exp50_perevent_power_cifar100_100d_scr-visreg.png
+
+===== EXP50 SPARKER PRE POWER (alpha=0.05) =====
+  arm                 0.001    0.003     0.01     0.02     0.05
+  simclr              0.060    0.020    0.080    0.020    0.600
+  lejepa              0.000    0.080    0.060    0.040    0.620
+  simclr_sigreg       0.000    0.060    0.020    0.000    0.580
+  supcon              0.000    0.020    0.020    0.080    0.700
+  supcon_sigreg       0.020    0.020    0.060    0.080    0.740
+  nplm_bilinear       0.020    0.020    0.040    0.100    0.460
+  nplm_distance       0.020    0.080    0.040    0.040    0.540
+  nplm_sup_dist       0.000    0.120    0.020    0.140    0.960
+  saved /home/pharris/sigreg/SuperSig/plots/exp50_sparker_power_cifar100_100d_scr-visreg.png
+
+===== EXP50 MAHA PRE POWER (alpha=0.05) =====
+  arm                 0.001    0.003     0.01     0.02     0.05
+  simclr              0.120    0.080    0.020    0.000    0.060
+  lejepa              0.120    0.040    0.040    0.040    0.000
+  simclr_sigreg       0.060    0.080    0.060    0.060    0.080
+  supcon              0.020    0.020    0.020    0.020    0.000
+  supcon_sigreg       0.040    0.060    0.000    0.000    0.000
+  nplm_bilinear       0.040    0.020    0.040    0.040    0.020
+  nplm_distance       0.100    0.060    0.060    0.040    0.020
+  nplm_sup_dist       0.120    0.120    0.000    0.080    0.040
+  saved /home/pharris/sigreg/SuperSig/plots/exp50_maha_power_cifar100_100d_scr-visreg.png
+
+===== EXP50 MMD PRE POWER (alpha=0.05) =====
+  arm                 0.001    0.003     0.01     0.02     0.05
+  simclr              0.060    0.000    0.040    0.080    0.540
+  lejepa              0.040    0.000    0.060    0.100    0.680
+  simclr_sigreg       0.060    0.020    0.040    0.040    0.300
+  supcon              0.020    0.040    0.000    0.100    1.000
+  supcon_sigreg       0.060    0.120    0.120    0.340    1.000
+  nplm_bilinear       0.060    0.000    0.140    0.120    0.740
+  nplm_distance       0.020    0.020    0.100    0.180    0.840
+  nplm_sup_dist       0.020    0.020    0.020    0.080    1.000
+  saved /home/pharris/sigreg/SuperSig/plots/exp50_mmd_power_cifar100_100d_scr-visreg.png
+
+===== EXP50 SUMMARY =====
+  [simclr        ] probe=0.8225+-0.0021  acc=0.2085  eucl=0.4634  mahaT=0.3827
+  [lejepa        ] probe=0.7906+-0.0028  acc=0.1893  eucl=0.4685  mahaT=0.3657
+  [simclr_sigreg ] probe=0.8138+-0.0030  acc=0.2120  eucl=0.5568  mahaT=0.4200
+  [supcon        ] probe=0.9102+-0.0026  acc=0.4632  eucl=0.4683  mahaT=0.3686
+  [supcon_sigreg ] probe=0.9263+-0.0011  acc=0.4558  eucl=0.2641  mahaT=0.2464
+  [nplm_bilinear ] probe=0.6916+-0.0042  acc=0.0748  eucl=0.5412  mahaT=0.4601
+  [nplm_distance ] probe=0.7529+-0.0053  acc=0.1173  eucl=0.4689  mahaT=0.4429
+  [nplm_sup_dist ] probe=0.8541+-0.0012  acc=0.1356  eucl=0.5017  mahaT=0.4369
+Done.

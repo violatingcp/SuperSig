@@ -88,6 +88,28 @@ nplm (bilinear, label-free) 0.7572 / 0.1814 / 0.4134 / 0.3610.
 The ~0.06-0.13 probe drop vs hub-init counterparts quantifies the
 hub-trunk contribution; these are the clean bases for caveat-free runs.
 
+Full suite on the from-scratch bases (exp 50 --scratch-base, C100 100-D,
+probe/acc; all caveat-free: no hub trunk, holdout never seen):
+
+| arm            | scr-simclr    | scr-visreg    | scr-nplm      |
+|----------------|---------------|---------------|---------------|
+| supcon_sigreg  | **0.933**/0.457 | **0.926**/0.456 | 0.896/0.403 |
+| supcon         | 0.925/0.462   | 0.910/0.463   | **0.925**/0.430 |
+| nplm_sup_dist  | 0.851/0.119   | 0.854/0.136   | 0.818/0.159   |
+| simclr_sigreg  | 0.827/0.242   | 0.814/0.212   | 0.750/0.187   |
+| lejepa         | 0.817/0.202   | 0.791/0.189   | 0.682/0.137   |
+| simclr         | 0.790/0.241   | 0.823/0.209   | 0.793/0.179   |
+| nplm_distance  | 0.735/0.098   | 0.753/0.117   | 0.699/0.080   |
+| nplm_bilinear  | 0.664/0.102   | 0.692/0.075   | 0.710/0.175   |
+
+Verdicts: (1) supcon_sigreg BEATS supcon on 2/3 clean bases (the hub-init
+ordering reverses -- the SIGReg marginal earns its keep when the trunk is
+honest).  (2) Supervised heads reach 0.90-0.93 on every scratch base,
+within ~0.01-0.02 of the hub-init 100-D numbers: 20 epochs of supervised
+loss training nearly erases the hub trunk's probe advantage.  (3) Scratch
+bases do not rescue label-free NPLM (0.66-0.75).  Best caveat-free
+pipeline: scratch-simclr base + supcon_sigreg head (0.9327).
+
 # SuperSig exps 50-56: NPLM loss program
 
 Standalone 32-D spaces (no concat), holdout 4, seed 0, 20 epochs, lam=1,
