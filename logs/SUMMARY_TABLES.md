@@ -112,6 +112,17 @@ probe/acc; all caveat-free: no hub trunk, holdout never seen):
 | nplm_distance  | 0.735/0.098   | 0.753/0.117   | 0.699/0.080   |
 | nplm_bilinear  | 0.664/0.102   | 0.692/0.075   | 0.710/0.175   |
 
+Suite on the scratch-nplmcw base (probe/acc; same protocol):
+supcon_sigreg 0.9302/0.5248, supcon 0.9290/0.5326 (eucl 0.4618 -- best
+supcon geometry on any base), simclr 0.8917/0.3360, lejepa 0.8539,
+simclr_sigreg 0.8446, nplm_sup_dist 0.8390, nplm_bilinear 0.8344/0.2754
+(mahaT 0.4667, best in table), nplm_distance 0.7541.  The calibrated
+supervised base is the best SUBSTRATE of the four scratch bases: every
+label-free head gains +0.05-0.17 probe over the label-free bases (simclr
+0.79->0.89, nplm_bilinear 0.66-0.71->0.83), and supcon keeps far better
+geometry on it.  Caveat: nplmcw pretraining used labels, so label-free
+heads on it are no longer label-free pipelines.
+
 Verdicts: (1) supcon_sigreg BEATS supcon on 2/3 clean bases (the hub-init
 ordering reverses -- the SIGReg marginal earns its keep when the trunk is
 honest).  (2) Supervised heads reach 0.90-0.93 on every scratch base,
