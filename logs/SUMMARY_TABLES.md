@@ -123,6 +123,15 @@ label-free head gains +0.05-0.17 probe over the label-free bases (simclr
 geometry on it.  Caveat: nplmcw pretraining used labels, so label-free
 heads on it are no longer label-free pipelines.
 
+Discovery on the supervised scratch bases (exp 68; probe pre/post,
+MMD post @0.02/@0.05; annealed sigma): supcon 0.9376 -> 0.9287
+(0.86/1.00), supsig 0.8433 -> 0.8211 (0.62/1.00), nplmcw 0.8990 ->
+**0.9231** (0.50/1.00).  Clean-lineage confirmation of the program
+pattern: only the classwise-NPLM base takes discovery positively (+0.024);
+supcon/supsig degrade.  Per-event/Maha stay C100-dead; MMD post is strong
+at f>=0.02 on all three.  Best clean full pipeline: scratch-nplmcw +
+discovery = probe 0.923 with calibrated geometry.
+
 Verdicts: (1) supcon_sigreg BEATS supcon on 2/3 clean bases (the hub-init
 ordering reverses -- the SIGReg marginal earns its keep when the trunk is
 honest).  (2) Supervised heads reach 0.90-0.93 on every scratch base,
