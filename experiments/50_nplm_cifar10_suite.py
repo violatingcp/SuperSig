@@ -104,6 +104,10 @@ def main():
     ap.add_argument("--steps", type=int, default=300)
     ap.add_argument("--sparker-sigma", type=float, default=1.0)
     ap.add_argument("--arms", nargs="+", default=list(ARMS), choices=list(ARMS))
+    ap.add_argument("--scratch-base", default=None,
+                    help="init every arm from checkpoints/scratch_{this}_"
+                         "{ds}_{dim}d.pt (random-init trunk, exp 67) "
+                         "instead of the hub-pretrained trunk")
     ap.add_argument("--skip-power", action="store_true")
     args = ap.parse_args()
     ds = args.dataset
@@ -112,6 +116,8 @@ def main():
                           else "0.001,0.003,0.01,0.02,0.05")
 
     dtag = ds if args.dim == 32 else f"{ds}_{args.dim}d"
+    if args.scratch_base:
+        dtag += f"_scr-{args.scratch_base}"
     cfg = recipe(ds, emb_dim=args.dim)
     n_cls = cfg["n_classes"]
     holdouts = {args.holdout}
@@ -148,8 +154,16 @@ def main():
         print(f"\n----- {name} ({'labels' if labeled else 'augmentations only'})"
               f" -----")
         torch.manual_seed(args.seed + 20 + i); np.random.seed(args.seed + 20 + i)
-        net = CIFARResNetBackbone(args.dim, arch=cfg["arch"],
-                                  pretrain=ds).to(DEVICE)
+        net = CIFARResNetBackbone(
+            args.dim, arch=cfg["arch"],
+            pretrain=None if args.scratch_base else ds).to(DEVICE)
+        if args.scratch_base:
+            ck = os.path.join("checkpoints",
+                              f"scratch_{args.scratch_base}_{ds}"
+                              f"_{args.dim}d.pt")
+            net.load_state_dict(torch.load(ck,
+                                           map_location=DEVICE)["state_dict"])
+            print(f"  init from {ck}")
         loader = cifar_two_view_loader(quick=args.quick, labeled=labeled,
                                        holdout=holdouts, dataset=ds)
         if kind == "hybrid":

@@ -29,8 +29,14 @@ import matplotlib
 matplotlib.use("Agg")
 
 from supersig.config import DEVICE, REPO_DIR
-from supersig.data import get_cifar_loaders, cifar_two_view_loader
-from supersig.losses import HybridContrastiveLoss, sigreg_loss, supcon_loss
+from supersig.data import (get_cifar_loaders, cifar_two_view_loader,
+                           cifar_two_view_balanced_loader,
+                           cifar_balanced_loader)
+import math
+from supersig.losses import (HybridContrastiveLoss, sigreg_loss,
+                             supcon_loss, classwise_sigreg_loss,
+                             make_anchors)
+from supersig.train import train_sigreg_hybrid
 from supersig.models import CIFARResNetBackbone
 from supersig.recipes import recipe
 from supersig.train import collect_embeddings
@@ -39,22 +45,42 @@ exp28 = importlib.import_module("28_concat_residual")
 exp29 = importlib.import_module("29_residual_finetune")
 
 CKPT_DIR = os.path.join(REPO_DIR, "checkpoints")
-ARMS = ["simclr", "visreg", "nplm"]
+ARMS = ["simclr", "visreg", "nplm", "supcon", "supsig",
+        "nplmcw"]
+LABELED = {"supcon", "nplmcw"}
 
 
 def pretrain(arm, net, loader, epochs, ckpt, lam, tau, n_slices,
-             start_ep=0, lr=1e-3):
+             start_ep=0, lr=1e-3, cw_means=None, cw_lam=5.0):
     nplm_fn = HybridContrastiveLoss(positives="instance", critic="bilinear",
                                     estimator="nplm", marginal="sigreg",
                                     tau=tau, lam=lam, n_slices=n_slices)
+    cw_fn = HybridContrastiveLoss(positives="supervised", critic="distance",
+                                  estimator="nplm", marginal="none", tau=tau)
     opt = torch.optim.Adam(net.parameters(), lr=lr)
     net.train()
     for ep in range(start_ep, epochs):
         run_a, run_b, n = 0.0, 0.0, 0
-        for v1, v2 in loader:
+        for batch in loader:
+            if arm in LABELED:
+                v1, v2, y = batch
+                y = y.to(DEVICE)
+            else:
+                v1, v2 = batch
             v1, v2 = v1.to(DEVICE), v2.to(DEVICE)
             opt.zero_grad()
-            if arm == "simclr":
+            if arm == "supcon":
+                z = net(torch.cat([v1, v2]))
+                a = supcon_loss(F.normalize(z, dim=1),
+                                torch.cat([y, y]), temp=0.1)
+                b = torch.zeros((), device=DEVICE)
+            elif arm == "nplmcw":
+                z = net(torch.cat([v1, v2]))
+                cls = torch.cat([y, y])
+                a, _ = cw_fn(z, cls)
+                b = cw_lam * classwise_sigreg_loss(z, cls, cw_means,
+                                                   n_slices=n_slices)
+            elif arm == "simclr":
                 z = net(torch.cat([v1, v2]))
                 inst = torch.arange(v1.size(0), device=DEVICE)
                 a = supcon_loss(F.normalize(z, dim=1),
@@ -70,7 +96,7 @@ def pretrain(arm, net, loader, epochs, ckpt, lam, tau, n_slices,
                 inst = torch.arange(v1.size(0), device=DEVICE)
                 total, parts = nplm_fn(z, torch.cat([inst, inst]))
                 a, b = total, parts["marginal"]
-            loss = a + b if arm == "visreg" else a
+            loss = a + b if arm in ("visreg", "nplmcw") else a
             loss.backward()
             opt.step()
             run_a += float(a) * v1.size(0)
@@ -97,6 +123,7 @@ def main():
     ap.add_argument("--lam", type=float, default=1.0)
     ap.add_argument("--tau", type=float, default=1.0)
     ap.add_argument("--arms", nargs="+", default=ARMS, choices=ARMS)
+    ap.add_argument("--cw-lam", type=float, default=5.0)
     ap.add_argument("--resume", action="store_true")
     args = ap.parse_args()
     ds = args.dataset
@@ -130,10 +157,45 @@ def main():
             net.load_state_dict(state["state_dict"])
             start_ep = state["epoch"]
             print(f"  resuming {ckpt} at epoch {start_ep}")
-        loader = cifar_two_view_loader(quick=args.quick, labeled=False,
-                                       holdout=holdouts, dataset=ds)
-        pretrain(arm, net, loader, epochs, ckpt, lam=args.lam, tau=args.tau,
-                 n_slices=cfg["n_slices"], start_ep=start_ep)
+        if arm == "supsig":
+            means = make_anchors(cfg["pair_dist"] / math.sqrt(2.0),
+                                 emb_dim=args.dim,
+                                 n_classes=n_cls).clone()
+            loader = cifar_balanced_loader(ds, holdout=holdouts,
+                                           quick=args.quick)
+            done = start_ep
+            while done < epochs:
+                chunk = min(50, epochs - done)
+                train_sigreg_hybrid(net, loader, chunk, means,
+                                    mode="repulse", disc="proto", alpha=1.0,
+                                    rep_weight=cfg["rep_weight"],
+                                    sigreg_weight=cfg["sigreg_weight"],
+                                    n_slices=cfg["n_slices"])
+                done += chunk
+                torch.save({"state_dict": net.state_dict(),
+                            "means": means.detach().cpu(), "epoch": done},
+                           ckpt)
+                print(f"  [supsig] checkpoint at epoch {done}", flush=True)
+        else:
+            cw_means = None
+            if arm == "nplmcw":
+                cw_means = make_anchors(cfg["pair_dist"] / math.sqrt(2.0),
+                                        emb_dim=args.dim,
+                                        n_classes=n_cls).detach()
+                loader = cifar_two_view_balanced_loader(
+                    ds, holdout=holdouts, quick=args.quick)
+            elif arm in LABELED:
+                loader = cifar_two_view_loader(quick=args.quick,
+                                               labeled=True,
+                                               holdout=holdouts, dataset=ds)
+            else:
+                loader = cifar_two_view_loader(quick=args.quick,
+                                               labeled=False,
+                                               holdout=holdouts, dataset=ds)
+            pretrain(arm, net, loader, epochs, ckpt, lam=args.lam,
+                     tau=args.tau, n_slices=cfg["n_slices"],
+                     start_ep=start_ep, cw_means=cw_means,
+                     cw_lam=args.cw_lam)
         print(f"  saved {ckpt}")
 
         tr, tr_lab = collect_embeddings(net, train_eval_loader)
