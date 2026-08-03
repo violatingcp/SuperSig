@@ -1,0 +1,308 @@
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+exp67 [cifar100] FROM-SCRATCH pretraining, dim=100, epochs=200, holdout=[4] excluded, arms=['supcon', 'supsig', 'nplmcw']
+
+===== pretraining from scratch: supcon =====
+Using cache found in /home/pharris/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+  CIFAR two-view embedding-train images (no {4}): 49500
+  [supcon] epoch 1/200  main=5.8595  aux=0.0000
+  [supcon] epoch 5/200  main=5.0551  aux=0.0000
+  [supcon] epoch 10/200  main=4.7086  aux=0.0000
+  [supcon] epoch 15/200  main=4.4897  aux=0.0000
+  [supcon] epoch 20/200  main=4.3423  aux=0.0000
+  [supcon] epoch 25/200  main=4.2142  aux=0.0000
+  [supcon] epoch 30/200  main=4.1297  aux=0.0000
+  [supcon] epoch 35/200  main=4.0460  aux=0.0000
+  [supcon] epoch 40/200  main=3.9865  aux=0.0000
+  [supcon] epoch 45/200  main=3.9238  aux=0.0000
+  [supcon] epoch 50/200  main=3.8720  aux=0.0000
+  [supcon] epoch 55/200  main=3.8317  aux=0.0000
+  [supcon] epoch 60/200  main=3.7901  aux=0.0000
+  [supcon] epoch 65/200  main=3.7555  aux=0.0000
+  [supcon] epoch 70/200  main=3.7245  aux=0.0000
+  [supcon] epoch 75/200  main=3.6972  aux=0.0000
+  [supcon] epoch 80/200  main=3.6687  aux=0.0000
+  [supcon] epoch 85/200  main=3.6393  aux=0.0000
+  [supcon] epoch 90/200  main=3.6283  aux=0.0000
+  [supcon] epoch 95/200  main=3.5987  aux=0.0000
+  [supcon] epoch 100/200  main=3.5751  aux=0.0000
+  [supcon] epoch 105/200  main=3.5605  aux=0.0000
+  [supcon] epoch 110/200  main=3.5436  aux=0.0000
+  [supcon] epoch 115/200  main=3.5302  aux=0.0000
+  [supcon] epoch 120/200  main=3.4991  aux=0.0000
+  [supcon] epoch 125/200  main=3.4932  aux=0.0000
+  [supcon] epoch 130/200  main=3.4750  aux=0.0000
+  [supcon] epoch 135/200  main=3.4545  aux=0.0000
+  [supcon] epoch 140/200  main=3.4505  aux=0.0000
+  [supcon] epoch 145/200  main=3.4363  aux=0.0000
+  [supcon] epoch 150/200  main=3.4300  aux=0.0000
+  [supcon] epoch 155/200  main=3.4143  aux=0.0000
+  [supcon] epoch 160/200  main=3.3972  aux=0.0000
+  [supcon] epoch 165/200  main=3.3971  aux=0.0000
+  [supcon] epoch 170/200  main=3.3784  aux=0.0000
+  [supcon] epoch 175/200  main=3.3757  aux=0.0000
+  [supcon] epoch 180/200  main=3.3568  aux=0.0000
+  [supcon] epoch 185/200  main=3.3605  aux=0.0000
+  [supcon] epoch 190/200  main=3.3483  aux=0.0000
+  [supcon] epoch 195/200  main=3.3365  aux=0.0000
+  [supcon] epoch 200/200  main=3.3196  aux=0.0000
+  saved /home/pharris/sigreg/SuperSig/checkpoints/scratch_supcon_cifar100_100d.pt
+  [supcon  ] probe=0.9390 acc=0.5451 eucl=0.2334 mahaT=0.2792
+
+===== pretraining from scratch: supsig =====
+Using cache found in /home/pharris/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+  cifar100 balanced loader (no {4}): 49500 images, 82 batches of 25x24
+  [sigreg+proto] epoch 1/50  sigreg=0.8096  proto=4.4184  min_dist=5.08  mean_dist=5.18
+  [sigreg+proto] epoch 2/50  sigreg=0.6849  proto=3.9911  min_dist=5.15  mean_dist=5.37
+  [sigreg+proto] epoch 3/50  sigreg=0.6423  proto=3.7863  min_dist=5.24  mean_dist=5.62
+  [sigreg+proto] epoch 4/50  sigreg=0.6320  proto=3.6525  min_dist=5.33  mean_dist=5.97
+  [sigreg+proto] epoch 5/50  sigreg=0.6376  proto=3.4718  min_dist=5.40  mean_dist=6.39
+  [sigreg+proto] epoch 6/50  sigreg=0.6531  proto=3.3419  min_dist=5.50  mean_dist=6.84
+  [sigreg+proto] epoch 7/50  sigreg=0.6645  proto=3.2126  min_dist=5.60  mean_dist=7.29
+  [sigreg+proto] epoch 8/50  sigreg=0.6789  proto=3.1044  min_dist=5.73  mean_dist=7.70
+  [sigreg+proto] epoch 9/50  sigreg=0.6958  proto=2.9895  min_dist=5.86  mean_dist=8.09
+  [sigreg+proto] epoch 10/50  sigreg=0.7121  proto=2.8960  min_dist=5.99  mean_dist=8.44
+  [sigreg+proto] epoch 11/50  sigreg=0.7239  proto=2.7990  min_dist=6.11  mean_dist=8.76
+  [sigreg+proto] epoch 12/50  sigreg=0.7386  proto=2.6997  min_dist=6.22  mean_dist=9.05
+  [sigreg+proto] epoch 13/50  sigreg=0.7483  proto=2.6605  min_dist=6.34  mean_dist=9.32
+  [sigreg+proto] epoch 14/50  sigreg=0.7646  proto=2.5680  min_dist=6.46  mean_dist=9.57
+  [sigreg+proto] epoch 15/50  sigreg=0.7742  proto=2.5024  min_dist=6.57  mean_dist=9.80
+  [sigreg+proto] epoch 16/50  sigreg=0.7806  proto=2.4040  min_dist=6.67  mean_dist=10.02
+  [sigreg+proto] epoch 17/50  sigreg=0.7904  proto=2.3480  min_dist=6.77  mean_dist=10.22
+  [sigreg+proto] epoch 18/50  sigreg=0.7999  proto=2.2778  min_dist=6.86  mean_dist=10.40
+  [sigreg+proto] epoch 19/50  sigreg=0.8048  proto=2.2275  min_dist=6.95  mean_dist=10.58
+  [sigreg+proto] epoch 20/50  sigreg=0.8086  proto=2.1647  min_dist=7.04  mean_dist=10.75
+  [sigreg+proto] epoch 21/50  sigreg=0.8231  proto=2.1455  min_dist=7.11  mean_dist=10.90
+  [sigreg+proto] epoch 22/50  sigreg=0.8284  proto=2.0654  min_dist=7.20  mean_dist=11.05
+  [sigreg+proto] epoch 23/50  sigreg=0.8312  proto=1.9682  min_dist=7.28  mean_dist=11.19
+  [sigreg+proto] epoch 24/50  sigreg=0.8318  proto=1.9581  min_dist=7.36  mean_dist=11.33
+  [sigreg+proto] epoch 25/50  sigreg=0.8436  proto=1.8949  min_dist=7.41  mean_dist=11.46
+  [sigreg+proto] epoch 26/50  sigreg=0.8479  proto=1.8236  min_dist=7.50  mean_dist=11.58
+  [sigreg+proto] epoch 27/50  sigreg=0.8482  proto=1.7867  min_dist=7.58  mean_dist=11.70
+  [sigreg+proto] epoch 28/50  sigreg=0.8571  proto=1.7700  min_dist=7.63  mean_dist=11.81
+  [sigreg+proto] epoch 29/50  sigreg=0.8604  proto=1.7064  min_dist=7.69  mean_dist=11.92
+  [sigreg+proto] epoch 30/50  sigreg=0.8633  proto=1.6305  min_dist=7.76  mean_dist=12.03
+  [sigreg+proto] epoch 31/50  sigreg=0.8673  proto=1.6080  min_dist=7.81  mean_dist=12.13
+  [sigreg+proto] epoch 32/50  sigreg=0.8669  proto=1.5487  min_dist=7.88  mean_dist=12.23
+  [sigreg+proto] epoch 33/50  sigreg=0.8804  proto=1.5207  min_dist=7.94  mean_dist=12.32
+  [sigreg+proto] epoch 34/50  sigreg=0.8785  proto=1.4519  min_dist=7.98  mean_dist=12.41
+  [sigreg+proto] epoch 35/50  sigreg=0.8759  proto=1.4585  min_dist=8.03  mean_dist=12.50
+  [sigreg+proto] epoch 36/50  sigreg=0.8802  proto=1.4279  min_dist=8.08  mean_dist=12.59
+  [sigreg+proto] epoch 37/50  sigreg=0.8831  proto=1.3466  min_dist=8.12  mean_dist=12.68
+  [sigreg+proto] epoch 38/50  sigreg=0.8859  proto=1.3198  min_dist=8.17  mean_dist=12.76
+  [sigreg+proto] epoch 39/50  sigreg=0.8852  proto=1.2611  min_dist=8.20  mean_dist=12.84
+  [sigreg+proto] epoch 40/50  sigreg=0.8828  proto=1.2711  min_dist=8.24  mean_dist=12.92
+  [sigreg+proto] epoch 41/50  sigreg=0.8924  proto=1.2222  min_dist=8.31  mean_dist=12.99
+  [sigreg+proto] epoch 42/50  sigreg=0.8920  proto=1.1640  min_dist=8.34  mean_dist=13.07
+  [sigreg+proto] epoch 43/50  sigreg=0.8868  proto=1.1110  min_dist=8.37  mean_dist=13.14
+  [sigreg+proto] epoch 44/50  sigreg=0.8886  proto=1.1698  min_dist=8.41  mean_dist=13.21
+  [sigreg+proto] epoch 45/50  sigreg=0.8930  proto=1.1007  min_dist=8.45  mean_dist=13.28
+  [sigreg+proto] epoch 46/50  sigreg=0.8885  proto=1.0426  min_dist=8.49  mean_dist=13.35
+  [sigreg+proto] epoch 47/50  sigreg=0.8881  proto=1.0231  min_dist=8.52  mean_dist=13.42
+  [sigreg+proto] epoch 48/50  sigreg=0.8917  proto=1.0145  min_dist=8.57  mean_dist=13.49
+  [sigreg+proto] epoch 49/50  sigreg=0.8886  proto=0.9319  min_dist=8.61  mean_dist=13.55
+  [sigreg+proto] epoch 50/50  sigreg=0.8886  proto=0.9798  min_dist=8.65  mean_dist=13.61
+  [supsig] checkpoint at epoch 50
+  [sigreg+proto] epoch 1/50  sigreg=0.8965  proto=0.9481  min_dist=8.69  mean_dist=13.70
+  [sigreg+proto] epoch 2/50  sigreg=0.8871  proto=0.8787  min_dist=8.73  mean_dist=13.78
+  [sigreg+proto] epoch 3/50  sigreg=0.8919  proto=0.8373  min_dist=8.77  mean_dist=13.85
+  [sigreg+proto] epoch 4/50  sigreg=0.8891  proto=0.8081  min_dist=8.81  mean_dist=13.91
+  [sigreg+proto] epoch 5/50  sigreg=0.8810  proto=0.7759  min_dist=8.85  mean_dist=13.98
+  [sigreg+proto] epoch 6/50  sigreg=0.8884  proto=0.7837  min_dist=8.89  mean_dist=14.04
+  [sigreg+proto] epoch 7/50  sigreg=0.8923  proto=0.7874  min_dist=8.91  mean_dist=14.10
+  [sigreg+proto] epoch 8/50  sigreg=0.8876  proto=0.7496  min_dist=8.95  mean_dist=14.17
+  [sigreg+proto] epoch 9/50  sigreg=0.8885  proto=0.7418  min_dist=8.97  mean_dist=14.22
+  [sigreg+proto] epoch 10/50  sigreg=0.8849  proto=0.7195  min_dist=9.00  mean_dist=14.28
+  [sigreg+proto] epoch 11/50  sigreg=0.8897  proto=0.7664  min_dist=9.04  mean_dist=14.34
+  [sigreg+proto] epoch 12/50  sigreg=0.8886  proto=0.6967  min_dist=9.07  mean_dist=14.39
+  [sigreg+proto] epoch 13/50  sigreg=0.8847  proto=0.6731  min_dist=9.09  mean_dist=14.44
+  [sigreg+proto] epoch 14/50  sigreg=0.8836  proto=0.7051  min_dist=9.12  mean_dist=14.49
+  [sigreg+proto] epoch 15/50  sigreg=0.8899  proto=0.7183  min_dist=9.16  mean_dist=14.54
+  [sigreg+proto] epoch 16/50  sigreg=0.8908  proto=0.7208  min_dist=9.17  mean_dist=14.59
+  [sigreg+proto] epoch 17/50  sigreg=0.8917  proto=0.6751  min_dist=9.20  mean_dist=14.63
+  [sigreg+proto] epoch 18/50  sigreg=0.8853  proto=0.6602  min_dist=9.22  mean_dist=14.68
+  [sigreg+proto] epoch 19/50  sigreg=0.8841  proto=0.6549  min_dist=9.26  mean_dist=14.72
+  [sigreg+proto] epoch 20/50  sigreg=0.8849  proto=0.6725  min_dist=9.29  mean_dist=14.76
+  [sigreg+proto] epoch 21/50  sigreg=0.8809  proto=0.6063  min_dist=9.32  mean_dist=14.80
+  [sigreg+proto] epoch 22/50  sigreg=0.8841  proto=0.6107  min_dist=9.33  mean_dist=14.84
+  [sigreg+proto] epoch 23/50  sigreg=0.8790  proto=0.5788  min_dist=9.36  mean_dist=14.88
+  [sigreg+proto] epoch 24/50  sigreg=0.8762  proto=0.5937  min_dist=9.38  mean_dist=14.92
+  [sigreg+proto] epoch 25/50  sigreg=0.8746  proto=0.5606  min_dist=9.40  mean_dist=14.96
+  [sigreg+proto] epoch 26/50  sigreg=0.8724  proto=0.5646  min_dist=9.42  mean_dist=15.00
+  [sigreg+proto] epoch 27/50  sigreg=0.8665  proto=0.5543  min_dist=9.45  mean_dist=15.03
+  [sigreg+proto] epoch 28/50  sigreg=0.8677  proto=0.6051  min_dist=9.47  mean_dist=15.07
+  [sigreg+proto] epoch 29/50  sigreg=0.8655  proto=0.5660  min_dist=9.49  mean_dist=15.10
+  [sigreg+proto] epoch 30/50  sigreg=0.8652  proto=0.5393  min_dist=9.52  mean_dist=15.13
+  [sigreg+proto] epoch 31/50  sigreg=0.8604  proto=0.5212  min_dist=9.52  mean_dist=15.17
+  [sigreg+proto] epoch 32/50  sigreg=0.8669  proto=0.5506  min_dist=9.55  mean_dist=15.20
+  [sigreg+proto] epoch 33/50  sigreg=0.8587  proto=0.4900  min_dist=9.57  mean_dist=15.23
+  [sigreg+proto] epoch 34/50  sigreg=0.8552  proto=0.5059  min_dist=9.59  mean_dist=15.26
+  [sigreg+proto] epoch 35/50  sigreg=0.8625  proto=0.5796  min_dist=9.59  mean_dist=15.29
+  [sigreg+proto] epoch 36/50  sigreg=0.8535  proto=0.5020  min_dist=9.63  mean_dist=15.32
+  [sigreg+proto] epoch 37/50  sigreg=0.8599  proto=0.5604  min_dist=9.63  mean_dist=15.34
+  [sigreg+proto] epoch 38/50  sigreg=0.8546  proto=0.4873  min_dist=9.65  mean_dist=15.37
+  [sigreg+proto] epoch 39/50  sigreg=0.8435  proto=0.4629  min_dist=9.67  mean_dist=15.39
+  [sigreg+proto] epoch 40/50  sigreg=0.8487  proto=0.5232  min_dist=9.68  mean_dist=15.42
+  [sigreg+proto] epoch 41/50  sigreg=0.8458  proto=0.5135  min_dist=9.70  mean_dist=15.45
+  [sigreg+proto] epoch 42/50  sigreg=0.8400  proto=0.5158  min_dist=9.73  mean_dist=15.47
+  [sigreg+proto] epoch 43/50  sigreg=0.8353  proto=0.4546  min_dist=9.76  mean_dist=15.50
+  [sigreg+proto] epoch 44/50  sigreg=0.8358  proto=0.4642  min_dist=9.78  mean_dist=15.52
+  [sigreg+proto] epoch 45/50  sigreg=0.8334  proto=0.4762  min_dist=9.79  mean_dist=15.54
+  [sigreg+proto] epoch 46/50  sigreg=0.8381  proto=0.4946  min_dist=9.79  mean_dist=15.57
+  [sigreg+proto] epoch 47/50  sigreg=0.8328  proto=0.4994  min_dist=9.80  mean_dist=15.59
+  [sigreg+proto] epoch 48/50  sigreg=0.8273  proto=0.4843  min_dist=9.82  mean_dist=15.61
+  [sigreg+proto] epoch 49/50  sigreg=0.8355  proto=0.4895  min_dist=9.84  mean_dist=15.63
+  [sigreg+proto] epoch 50/50  sigreg=0.8227  proto=0.4143  min_dist=9.86  mean_dist=15.65
+  [supsig] checkpoint at epoch 100
+  [sigreg+proto] epoch 1/50  sigreg=0.8270  proto=0.5054  min_dist=9.86  mean_dist=15.70
+  [sigreg+proto] epoch 2/50  sigreg=0.8204  proto=0.4181  min_dist=9.88  mean_dist=15.72
+  [sigreg+proto] epoch 3/50  sigreg=0.8101  proto=0.3666  min_dist=9.89  mean_dist=15.74
+  [sigreg+proto] epoch 4/50  sigreg=0.8172  proto=0.4446  min_dist=9.91  mean_dist=15.76
+  [sigreg+proto] epoch 5/50  sigreg=0.8148  proto=0.3920  min_dist=9.93  mean_dist=15.78
+  [sigreg+proto] epoch 6/50  sigreg=0.8115  proto=0.4497  min_dist=9.95  mean_dist=15.80
+  [sigreg+proto] epoch 7/50  sigreg=0.8050  proto=0.3788  min_dist=9.96  mean_dist=15.81
+  [sigreg+proto] epoch 8/50  sigreg=0.8089  proto=0.4332  min_dist=9.98  mean_dist=15.83
+  [sigreg+proto] epoch 9/50  sigreg=0.8035  proto=0.4380  min_dist=10.00  mean_dist=15.84
+  [sigreg+proto] epoch 10/50  sigreg=0.8017  proto=0.4449  min_dist=10.02  mean_dist=15.86
+  [sigreg+proto] epoch 11/50  sigreg=0.7973  proto=0.4091  min_dist=10.03  mean_dist=15.88
+  [sigreg+proto] epoch 12/50  sigreg=0.8018  proto=0.4314  min_dist=10.04  mean_dist=15.89
+  [sigreg+proto] epoch 13/50  sigreg=0.7998  proto=0.4590  min_dist=10.04  mean_dist=15.90
+  [sigreg+proto] epoch 14/50  sigreg=0.7894  proto=0.3926  min_dist=10.06  mean_dist=15.92
+  [sigreg+proto] epoch 15/50  sigreg=0.7897  proto=0.4409  min_dist=10.07  mean_dist=15.93
+  [sigreg+proto] epoch 16/50  sigreg=0.7871  proto=0.3961  min_dist=10.08  mean_dist=15.94
+  [sigreg+proto] epoch 17/50  sigreg=0.7773  proto=0.3695  min_dist=10.10  mean_dist=15.96
+  [sigreg+proto] epoch 18/50  sigreg=0.7804  proto=0.4069  min_dist=10.12  mean_dist=15.97
+  [sigreg+proto] epoch 19/50  sigreg=0.7672  proto=0.3166  min_dist=10.12  mean_dist=15.98
+  [sigreg+proto] epoch 20/50  sigreg=0.7631  proto=0.3269  min_dist=10.14  mean_dist=16.00
+  [sigreg+proto] epoch 21/50  sigreg=0.7656  proto=0.4036  min_dist=10.16  mean_dist=16.01
+  [sigreg+proto] epoch 22/50  sigreg=0.7642  proto=0.4261  min_dist=10.16  mean_dist=16.02
+  [sigreg+proto] epoch 23/50  sigreg=0.7656  proto=0.4603  min_dist=10.16  mean_dist=16.02
+  [sigreg+proto] epoch 24/50  sigreg=0.7667  proto=0.3946  min_dist=10.18  mean_dist=16.03
+  [sigreg+proto] epoch 25/50  sigreg=0.7616  proto=0.3872  min_dist=10.19  mean_dist=16.04
+  [sigreg+proto] epoch 26/50  sigreg=0.7638  proto=0.3946  min_dist=10.20  mean_dist=16.05
+  [sigreg+proto] epoch 27/50  sigreg=0.7558  proto=0.3275  min_dist=10.20  mean_dist=16.06
+  [sigreg+proto] epoch 28/50  sigreg=0.7523  proto=0.3849  min_dist=10.21  mean_dist=16.07
+  [sigreg+proto] epoch 29/50  sigreg=0.7495  proto=0.3811  min_dist=10.21  mean_dist=16.08
+  [sigreg+proto] epoch 30/50  sigreg=0.7476  proto=0.3934  min_dist=10.22  mean_dist=16.09
+  [sigreg+proto] epoch 31/50  sigreg=0.7480  proto=0.4095  min_dist=10.23  mean_dist=16.09
+  [sigreg+proto] epoch 32/50  sigreg=0.7390  proto=0.3683  min_dist=10.24  mean_dist=16.10
+  [sigreg+proto] epoch 33/50  sigreg=0.7463  proto=0.3832  min_dist=10.24  mean_dist=16.11
+  [sigreg+proto] epoch 34/50  sigreg=0.7325  proto=0.3344  min_dist=10.25  mean_dist=16.12
+  [sigreg+proto] epoch 35/50  sigreg=0.7371  proto=0.4182  min_dist=10.25  mean_dist=16.13
+  [sigreg+proto] epoch 36/50  sigreg=0.7378  proto=0.4238  min_dist=10.26  mean_dist=16.13
+  [sigreg+proto] epoch 37/50  sigreg=0.7331  proto=0.3853  min_dist=10.26  mean_dist=16.14
+  [sigreg+proto] epoch 38/50  sigreg=0.7263  proto=0.3251  min_dist=10.26  mean_dist=16.15
+  [sigreg+proto] epoch 39/50  sigreg=0.7163  proto=0.3176  min_dist=10.27  mean_dist=16.15
+  [sigreg+proto] epoch 40/50  sigreg=0.7228  proto=0.3531  min_dist=10.29  mean_dist=16.16
+  [sigreg+proto] epoch 41/50  sigreg=0.7181  proto=0.3773  min_dist=10.29  mean_dist=16.17
+  [sigreg+proto] epoch 42/50  sigreg=0.7223  proto=0.3820  min_dist=10.30  mean_dist=16.17
+  [sigreg+proto] epoch 43/50  sigreg=0.7140  proto=0.2976  min_dist=10.30  mean_dist=16.18
+  [sigreg+proto] epoch 44/50  sigreg=0.7135  proto=0.4023  min_dist=10.30  mean_dist=16.19
+  [sigreg+proto] epoch 45/50  sigreg=0.7105  proto=0.3762  min_dist=10.32  mean_dist=16.19
+  [sigreg+proto] epoch 46/50  sigreg=0.7138  proto=0.3855  min_dist=10.32  mean_dist=16.19
+  [sigreg+proto] epoch 47/50  sigreg=0.7091  proto=0.3793  min_dist=10.29  mean_dist=16.20
+  [sigreg+proto] epoch 48/50  sigreg=0.7130  proto=0.3888  min_dist=10.31  mean_dist=16.20
+  [sigreg+proto] epoch 49/50  sigreg=0.6997  proto=0.3257  min_dist=10.32  mean_dist=16.21
+  [sigreg+proto] epoch 50/50  sigreg=0.7014  proto=0.3494  min_dist=10.32  mean_dist=16.22
+  [supsig] checkpoint at epoch 150
+  [sigreg+proto] epoch 1/50  sigreg=0.7064  proto=0.3811  min_dist=10.36  mean_dist=16.25
+  [sigreg+proto] epoch 2/50  sigreg=0.6899  proto=0.2693  min_dist=10.35  mean_dist=16.26
+  [sigreg+proto] epoch 3/50  sigreg=0.6923  proto=0.3394  min_dist=10.36  mean_dist=16.27
+  [sigreg+proto] epoch 4/50  sigreg=0.6876  proto=0.3006  min_dist=10.35  mean_dist=16.27
+  [sigreg+proto] epoch 5/50  sigreg=0.6867  proto=0.4095  min_dist=10.34  mean_dist=16.27
+  [sigreg+proto] epoch 6/50  sigreg=0.6872  proto=0.3603  min_dist=10.35  mean_dist=16.28
+  [sigreg+proto] epoch 7/50  sigreg=0.6842  proto=0.3736  min_dist=10.36  mean_dist=16.28
+  [sigreg+proto] epoch 8/50  sigreg=0.6810  proto=0.3414  min_dist=10.37  mean_dist=16.28
+  [sigreg+proto] epoch 9/50  sigreg=0.6763  proto=0.3398  min_dist=10.36  mean_dist=16.29
+  [sigreg+proto] epoch 10/50  sigreg=0.6854  proto=0.3820  min_dist=10.36  mean_dist=16.29
+  [sigreg+proto] epoch 11/50  sigreg=0.6766  proto=0.3231  min_dist=10.37  mean_dist=16.29
+  [sigreg+proto] epoch 12/50  sigreg=0.6680  proto=0.2932  min_dist=10.35  mean_dist=16.30
+  [sigreg+proto] epoch 13/50  sigreg=0.6643  proto=0.3243  min_dist=10.35  mean_dist=16.30
+  [sigreg+proto] epoch 14/50  sigreg=0.6724  proto=0.3772  min_dist=10.35  mean_dist=16.30
+  [sigreg+proto] epoch 15/50  sigreg=0.6600  proto=0.3036  min_dist=10.36  mean_dist=16.30
+  [sigreg+proto] epoch 16/50  sigreg=0.6609  proto=0.3498  min_dist=10.36  mean_dist=16.31
+  [sigreg+proto] epoch 17/50  sigreg=0.6629  proto=0.3069  min_dist=10.37  mean_dist=16.31
+  [sigreg+proto] epoch 18/50  sigreg=0.6628  proto=0.3255  min_dist=10.37  mean_dist=16.32
+  [sigreg+proto] epoch 19/50  sigreg=0.6544  proto=0.2989  min_dist=10.36  mean_dist=16.32
+  [sigreg+proto] epoch 20/50  sigreg=0.6501  proto=0.3437  min_dist=10.36  mean_dist=16.32
+  [sigreg+proto] epoch 21/50  sigreg=0.6483  proto=0.2728  min_dist=10.37  mean_dist=16.33
+  [sigreg+proto] epoch 22/50  sigreg=0.6460  proto=0.3126  min_dist=10.38  mean_dist=16.33
+  [sigreg+proto] epoch 23/50  sigreg=0.6463  proto=0.2868  min_dist=10.39  mean_dist=16.34
+  [sigreg+proto] epoch 24/50  sigreg=0.6409  proto=0.2953  min_dist=10.38  mean_dist=16.34
+  [sigreg+proto] epoch 25/50  sigreg=0.6425  proto=0.3404  min_dist=10.38  mean_dist=16.34
+  [sigreg+proto] epoch 26/50  sigreg=0.6437  proto=0.3569  min_dist=10.36  mean_dist=16.34
+  [sigreg+proto] epoch 27/50  sigreg=0.6387  proto=0.3498  min_dist=10.36  mean_dist=16.34
+  [sigreg+proto] epoch 28/50  sigreg=0.6371  proto=0.3588  min_dist=10.37  mean_dist=16.34
+  [sigreg+proto] epoch 29/50  sigreg=0.6262  proto=0.2635  min_dist=10.37  mean_dist=16.35
+  [sigreg+proto] epoch 30/50  sigreg=0.6236  proto=0.2547  min_dist=10.39  mean_dist=16.36
+  [sigreg+proto] epoch 31/50  sigreg=0.6215  proto=0.2729  min_dist=10.39  mean_dist=16.36
+  [sigreg+proto] epoch 32/50  sigreg=0.6302  proto=0.3173  min_dist=10.40  mean_dist=16.36
+  [sigreg+proto] epoch 33/50  sigreg=0.6229  proto=0.3219  min_dist=10.40  mean_dist=16.37
+  [sigreg+proto] epoch 34/50  sigreg=0.6290  proto=0.3393  min_dist=10.39  mean_dist=16.37
+  [sigreg+proto] epoch 35/50  sigreg=0.6244  proto=0.3151  min_dist=10.40  mean_dist=16.37
+  [sigreg+proto] epoch 36/50  sigreg=0.6199  proto=0.3158  min_dist=10.40  mean_dist=16.37
+  [sigreg+proto] epoch 37/50  sigreg=0.6241  proto=0.3469  min_dist=10.39  mean_dist=16.37
+  [sigreg+proto] epoch 38/50  sigreg=0.6156  proto=0.3071  min_dist=10.39  mean_dist=16.38
+  [sigreg+proto] epoch 39/50  sigreg=0.6263  proto=0.3549  min_dist=10.38  mean_dist=16.38
+  [sigreg+proto] epoch 40/50  sigreg=0.6152  proto=0.3065  min_dist=10.39  mean_dist=16.38
+  [sigreg+proto] epoch 41/50  sigreg=0.6144  proto=0.3136  min_dist=10.39  mean_dist=16.38
+  [sigreg+proto] epoch 42/50  sigreg=0.6081  proto=0.2854  min_dist=10.38  mean_dist=16.39
+  [sigreg+proto] epoch 43/50  sigreg=0.6089  proto=0.2752  min_dist=10.39  mean_dist=16.39
+  [sigreg+proto] epoch 44/50  sigreg=0.6130  proto=0.3422  min_dist=10.39  mean_dist=16.39
+  [sigreg+proto] epoch 45/50  sigreg=0.6026  proto=0.2589  min_dist=10.39  mean_dist=16.40
+  [sigreg+proto] epoch 46/50  sigreg=0.5953  proto=0.2587  min_dist=10.39  mean_dist=16.40
+  [sigreg+proto] epoch 47/50  sigreg=0.6019  proto=0.3050  min_dist=10.41  mean_dist=16.40
+  [sigreg+proto] epoch 48/50  sigreg=0.6029  proto=0.3052  min_dist=10.40  mean_dist=16.40
+  [sigreg+proto] epoch 49/50  sigreg=0.5946  proto=0.3069  min_dist=10.41  mean_dist=16.41
+  [sigreg+proto] epoch 50/50  sigreg=0.5985  proto=0.2951  min_dist=10.40  mean_dist=16.41
+  [supsig] checkpoint at epoch 200
+  saved /home/pharris/sigreg/SuperSig/checkpoints/scratch_supsig_cifar100_100d.pt
+  [supsig  ] probe=0.8144 acc=0.3459 eucl=0.3402 mahaT=0.3201
+
+===== pretraining from scratch: nplmcw =====
+Using cache found in /home/pharris/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+  cifar100 balanced two-view loader (no {4}): 49500 images, 82 batches of 25x24
+  [nplmcw] epoch 1/200  main=0.1619  aux=4.7930
+  [nplmcw] epoch 5/200  main=0.0987  aux=4.7342
+  [nplmcw] epoch 10/200  main=0.0441  aux=4.7256
+  [nplmcw] epoch 15/200  main=0.0159  aux=4.7254
+  [nplmcw] epoch 20/200  main=-0.0175  aux=4.7282
+  [nplmcw] epoch 25/200  main=-0.0259  aux=4.7149
+  [nplmcw] epoch 30/200  main=-0.0517  aux=4.7152
+  [nplmcw] epoch 35/200  main=-0.0684  aux=4.7074
+  [nplmcw] epoch 40/200  main=-0.0863  aux=4.7100
+  [nplmcw] epoch 45/200  main=-0.1035  aux=4.7017
+  [nplmcw] epoch 50/200  main=-0.1093  aux=4.7039
+  [nplmcw] epoch 55/200  main=-0.1181  aux=4.7000
+  [nplmcw] epoch 60/200  main=-0.1268  aux=4.6953
+  [nplmcw] epoch 65/200  main=-0.1325  aux=4.6912
+  [nplmcw] epoch 70/200  main=-0.1371  aux=4.6956
+  [nplmcw] epoch 75/200  main=-0.1497  aux=4.6905
+  [nplmcw] epoch 80/200  main=-0.1518  aux=4.6816
+  [nplmcw] epoch 85/200  main=-0.1575  aux=4.6846
+  [nplmcw] epoch 90/200  main=-0.1601  aux=4.6844
+  [nplmcw] epoch 95/200  main=-0.1667  aux=4.6855
+  [nplmcw] epoch 100/200  main=-0.1820  aux=4.6830
+  [nplmcw] epoch 105/200  main=-0.1750  aux=4.6793
+  [nplmcw] epoch 110/200  main=-0.1839  aux=4.6783
+  [nplmcw] epoch 115/200  main=-0.1857  aux=4.6775
+  [nplmcw] epoch 120/200  main=-0.1847  aux=4.6785
+  [nplmcw] epoch 125/200  main=-0.1906  aux=4.6735
+  [nplmcw] epoch 130/200  main=-0.1931  aux=4.6751
+  [nplmcw] epoch 135/200  main=-0.1896  aux=4.6695
+  [nplmcw] epoch 140/200  main=-0.2013  aux=4.6750
+  [nplmcw] epoch 145/200  main=-0.2051  aux=4.6722
+  [nplmcw] epoch 150/200  main=-0.2050  aux=4.6725
+  [nplmcw] epoch 155/200  main=-0.2065  aux=4.6653
+  [nplmcw] epoch 160/200  main=-0.2126  aux=4.6737
+  [nplmcw] epoch 165/200  main=-0.2117  aux=4.6668
+  [nplmcw] epoch 170/200  main=-0.2222  aux=4.6701
+  [nplmcw] epoch 175/200  main=-0.2196  aux=4.6634
+  [nplmcw] epoch 180/200  main=-0.2259  aux=4.6629
+  [nplmcw] epoch 185/200  main=-0.2277  aux=4.6701
+  [nplmcw] epoch 190/200  main=-0.2226  aux=4.6665
+  [nplmcw] epoch 195/200  main=-0.2193  aux=4.6652
+  [nplmcw] epoch 200/200  main=-0.2244  aux=4.6643
+  saved /home/pharris/sigreg/SuperSig/checkpoints/scratch_nplmcw_cifar100_100d.pt
+  [nplmcw  ] probe=0.8987 acc=0.4631 eucl=0.5252 mahaT=0.4109
+Done.

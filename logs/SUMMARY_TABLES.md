@@ -88,6 +88,16 @@ nplm (bilinear, label-free) 0.7572 / 0.1814 / 0.4134 / 0.3610.
 The ~0.06-0.13 probe drop vs hub-init counterparts quantifies the
 hub-trunk contribution; these are the clean bases for caveat-free runs.
 
+Supervised from-scratch bases (same protocol, 200ep):
+supcon probe 0.9390 / acc 0.5451 / eucl 0.2334 / mahaT 0.2792 -- MATCHES
+hub-init supcon (0.944): 200 supervised epochs fully erase the hub trunk.
+supsig (recipe) 0.8144 / 0.3459 / 0.3402 / 0.3201 -- far below its
+hub-init 0.9546: the supervised-SIGReg recipe leans heavily on the hub
+trunk (or its 10-epoch schedule; chunked-Adam 200ep does not recover it).
+nplmcw (classwise lam=5) 0.8987 / 0.4631 / **0.5252** / **0.4109** -- the
+best all-round clean supervised base: probe within 0.04 of supcon with
+2.3x its eucl; the classwise-calibrated geometry forms fully from scratch.
+
 Full suite on the from-scratch bases (exp 50 --scratch-base, C100 100-D,
 probe/acc; all caveat-free: no hub trunk, holdout never seen):
 
