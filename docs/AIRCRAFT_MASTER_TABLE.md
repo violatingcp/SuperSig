@@ -75,6 +75,25 @@ gains the most probe (+0.096) but loses its per-event calibration lead
 (0.106 -> 0.03): at 196 classes the extra dims go to probe-readable
 directions, not calibrated ones.
 
+## Cars discovery (exp 69; first transfer-suite discovery, feature-space
+loop, 32-D supervised heads, annealed sigma; probe pre -> post)
+
+| arm | probe pre/post | pool purity r1 | perevt post @.02 | Maha post @.05 |
+|---|---|---|---|---|
+| supcon | 0.7364 -> 0.7142 | 0.033 | 0.092 | 0.56 |
+| supcon_sigreg | 0.7273 -> 0.6945 | 0.138 | 0.120 | 0.42 |
+| nplm_sup_dist | 0.5868 -> 0.4936 | 0.119 | 0.138 | 0.12 |
+
+Discovery is probe-NEGATIVE for every arm on cars despite favorable
+holdout counts (~410 vs ~400-event tail): pool purity caps at 0.14
+because novel fine-grained variants do not sit in the distance tail --
+they sit among the seen classes (a novel car model looks like existing
+car models).  BIC fragments the impure pool into 11-22 anchors and the
+ft erodes the space (nplm_sup_dist worst, -0.09).  Dataset-level stats
+improve modestly post (per-event 0.12-0.16, Maha 0.42-0.56 @0.05).
+Extends the discovery lesson: pooling needs novelty that is GEOMETRICALLY
+OUTLYING, which fine-grained novelty is not, calibrated space or no.
+
 ## Aircraft NPLM residual/concat (exp 60, DINO, 16+16)
 
 | arm | probe | acc | eucl | mahaT | perevt | MMD@.1 |
