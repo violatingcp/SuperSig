@@ -59,6 +59,22 @@ Sources: logs/exp51/results_nplm_aircraft_{dino,lejepa,visreg}.npz.
 | nplm_sup_dist | 0.541 | 0.110 | 0.531 | 0.493 | **0.106** | 0.66 |
 | nplm_distance | 0.525 | 0.059 | 0.492 | 0.480 | 0.021 | 0.12 |
 
+## Stanford Cars at 100-D (DINO; 32-D values in parens)
+
+| arm | probe | acc | eucl | mahaT | perevt |
+|---|---|---|---|---|---|
+| supcon | 0.754 (0.733) | 0.584 | 0.477 (0.544) | 0.482 | 0.01 |
+| supcon_sigreg | 0.745 (0.747) | 0.659 | 0.622 (0.627) | 0.565 | 0.08 |
+| nplm_sup_dist | 0.637 (0.541) | 0.096 | 0.485 | 0.478 | 0.03 (0.106) |
+| label-free arms | 0.49-0.62 | <=0.13 | ~0.47 | ~0.46 | <=0.04 |
+
+100-D on cars: supcon takes the probe lead (+0.021, high-D readout
+effect); supcon_sigreg flat but keeps acc/geometry/per-event/battery
+crowns -- champion unchanged and dimension-indifferent.  nplm_sup_dist
+gains the most probe (+0.096) but loses its per-event calibration lead
+(0.106 -> 0.03): at 196 classes the extra dims go to probe-readable
+directions, not calibrated ones.
+
 ## Aircraft NPLM residual/concat (exp 60, DINO, 16+16)
 
 | arm | probe | acc | eucl | mahaT | perevt | MMD@.1 |

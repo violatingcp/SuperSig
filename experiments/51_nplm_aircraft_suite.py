@@ -150,6 +150,8 @@ def main():
     tag = f"{args.dataset}_{args.base}"
     if args.trunk_ckpt_arm:
         tag += f"_{args.trunk_ckpt_arm}"
+    if args.dim != 32:
+        tag += f"_{args.dim}d"
     print(f"exp51 [{tag}] NPLM suite, dim={args.dim}, epochs={con_ep}, "
           f"holdouts={sorted(holdouts)}, lam={args.lam}, arms={args.arms}")
 
