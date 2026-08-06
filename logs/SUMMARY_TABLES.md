@@ -395,6 +395,25 @@ holdout variants 90-99, cached a8 aug bank, 120 epochs, n_d=1000)
 | simclr         | 0.6592 | 0.1480 | 0.5690 | 0.5390 | 0.078  | 0.06   | 0.12    | 0.00   |
 | nplm_bilinear  | 0.6121 | 0.0827 | 0.5484 | 0.5945 | 0.039  | 0.16   | 0.08    | 0.00   |
 
+## Stanford Cars end-to-end ft suite (exp 70; DINO trunk trainable,
+exp-49 recipe, 100-D heads, holdouts 186-195 excluded from ft; discovery
+= feature-space loop on each arm's own ft-trunk bank.  Full tables in
+docs/AIRCRAFT_MASTER_TABLE.md.)
+
+| arm | probe pre -> post | acc | eucl | mahaT | perevt pre/post@.05 | Maha@.1 pre |
+|---|---|---|---|---|---|---|
+| supcon-ft | 0.7332 -> **0.7666** | 0.462 | 0.603 | 0.564 | 0.136 / 0.202 | 0.94 |
+| ss-ft | 0.7191 -> 0.7474 | 0.330 | 0.551 | 0.547 | 0.103 / 0.195 | 0.68 |
+| nplm-bil-ft | 0.5912 -> 0.7044 | 0.063 | 0.506 | 0.496 | 0.026 / 0.108 | 0.04 |
+| simclr-ft | 0.6238 -> 0.6839 | 0.108 | 0.469 | 0.476 | 0.023 / 0.063 | 0.18 |
+| sigreg-ssl-ft | 0.5843 -> 0.6903 | 0.083 | 0.483 | 0.496 | 0.033 / 0.042 | 0.16 |
+| nplm-sup-ft | 0.5490 -> 0.6001 | 0.105 | 0.555 | 0.547 | 0.061 / 0.171 | 0.18 |
+
+Discovery probe-POSITIVE on all six e2e-ft spaces (reversing frozen-trunk
+exp 69) with pool purity still <= 0.14: on a task-specialized trunk the
+impure-pool ft refines instead of erodes.  supcon-ft + discovery (0.767)
+is the cars probe champion under the strictest protocol on record.
+
 ## NPLM program verdicts
 
 - Probe-vs-calibration dissociation everywhere: softmax(SupCon) spaces are

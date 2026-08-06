@@ -1,4 +1,4 @@
-# Transfer-suite master tables — aircraft (3 bases) + cars (exp 51/60)
+# Transfer-suite master tables — aircraft (3 bases) + cars (exp 51/60/69/70)
 
 Protocol: frozen trunk (features cached, a8 aug bank), 768->256->32
 FeatureHead per arm, 120 epochs, holdout variants 90-99 (~330 signal test
@@ -93,8 +93,57 @@ ft erodes the space (nplm_sup_dist worst, -0.09).  Dataset-level stats
 improve modestly post (per-event 0.12-0.16, Maha 0.42-0.56 @0.05).
 Extends the discovery lesson: pooling needs novelty that is GEOMETRICALLY
 OUTLYING, which fine-grained novelty is not, calibrated space or no.
+(BUT see exp 70 below: on end-to-end fine-tuned trunks discovery flips
+probe-POSITIVE for all six arms.)
 
-## Aircraft NPLM residual/concat (exp 60, DINO, 16+16)
+## Cars END-TO-END fine-tuning suite (exp 70; DINO ViT-B/16 trunk
+trainable, exp-49 recipe, 20 ep, 100-D heads.  Holdouts 186-195 EXCLUDED
+from the ft corpus — images and labels — so unlike the aircraft ft-trunk
+rerun these novelty numbers are strictly open-world.  Discovery =
+feature-space loop (exp-69 protocol) on each arm's own ft-trunk bank.)
+
+Pre-discovery battery (powers at alpha=0.05, n_d=2000):
+
+| arm | probe | acc | supAUC | eucl | mahaT | perevt | SpK@.1 | Maha@.1 | MMD@.1 |
+|---|---|---|---|---|---|---|---|---|---|
+| supcon-ft | **0.733** | **0.462** | **0.974** | **0.603** | **0.564** | **0.136** | 0.98 | **0.94** | **0.84** |
+| ss-ft | 0.719 | 0.330 | 0.966 | 0.551 | 0.547 | 0.103 | **1.00** | 0.68 | 0.82 |
+| simclr-ft | 0.624 | 0.108 | 0.776 | 0.469 | 0.476 | 0.023 | 0.30 | 0.18 | 0.20 |
+| nplm-bil-ft | 0.591 | 0.063 | 0.760 | 0.506 | 0.496 | 0.026 | 0.12 | 0.04 | 0.02 |
+| sigreg-ssl-ft | 0.584 | 0.083 | 0.803 | 0.483 | 0.496 | 0.033 | 0.12 | 0.16 | 0.08 |
+| nplm-sup-ft | 0.549 | 0.105 | 0.916 | 0.555 | 0.547 | 0.061 | 0.94 | 0.18 | 0.28 |
+
+Discovery, natural + injected post grid (probe 3-seed; post powers @f):
+
+| arm | probe pre -> post | delta | purity r1 | mahaT pre -> post | perevt post@.05 | Maha post@.05 |
+|---|---|---|---|---|---|---|
+| supcon-ft | 0.7332 -> **0.7666** | +0.033 | 0.140 | 0.564 -> 0.546 | **0.202** | **0.68** |
+| ss-ft | 0.7191 -> 0.7474 | +0.028 | 0.068 | 0.547 -> 0.541 | 0.195 | 0.44 |
+| nplm-bil-ft | 0.5912 -> 0.7044 | +0.113 | 0.054 | 0.496 -> 0.507 | 0.108 | 0.24 |
+| sigreg-ssl-ft | 0.5843 -> 0.6903 | +0.106 | 0.045 | 0.496 -> 0.517 | 0.042 | 0.20 |
+| simclr-ft | 0.6238 -> 0.6839 | +0.060 | 0.035 | 0.476 -> 0.482 | 0.063 | 0.10 |
+| nplm-sup-ft | 0.5490 -> 0.6001 | +0.051 | 0.068 | 0.547 -> 0.500 | 0.171 | 0.06 |
+
+Verdicts.  (1) Discovery is probe-POSITIVE on ALL SIX end-to-end ft
+spaces (+0.03 to +0.11) — the exact reversal of exp 69, where every
+frozen-trunk arm lost probe.  Pool purity is STILL low (<= 0.14), so the
+gain is not from pure pools: on a cars-specialized trunk the impure-pool
+proto/repulse ft acts as beneficial refinement (the C100 classwise-lam5
+mechanism), where on generic frozen features it eroded the space.
+Fine-grained novelty remains non-outlying; what changed is that the
+substrate can absorb the ft.  (Confound note: exp 69 heads were 32-D,
+these are 100-D.)  (2) supcon-ft + discovery probe 0.767 is the NEW CARS
+CHAMPION, beating every frozen-trunk space (best 0.754) under a stricter
+protocol (holdouts excluded from ft).  (3) Pre-discovery, e2e ft roughly
+matches the frozen 32-D champion on probe (0.733 vs 0.747) with lower
+nearest-centroid acc (0.462 vs 0.653) but stronger dataset-level power
+(SpK/Maha@.1 0.98/0.94 vs the frozen table's MMD-led 0.96) and the best
+mahaT on cars to date (0.56).  (4) Supervised >> unsupervised pretraining
+everywhere, and within families supcon > sigreg-supcon > nplm on cars;
+nplm-sup-ft is again probe-worst / calibration-strong (SpK@.1 0.94,
+per-event post 0.17) — the dissociation, unchanged.  (5) Post per-event
+power of the supervised arms (0.17-0.20 @.05) is the best cars per-event
+on record.
 
 | arm | probe | acc | eucl | mahaT | perevt | MMD@.1 |
 |---|---|---|---|---|---|---|
@@ -166,6 +215,14 @@ at pure classification in this regime.
    arms collapse (probe <= 0.61, acc <= 0.13); the one NPLM bright spot is
    per-event calibration -- nplm_sup_dist 0.106, the best in the cars
    table, beating supcon_sigreg's 0.075 despite a far worse probe.
+7. **Discovery on cars needs a task-specialized trunk** (exps 69 vs 70):
+   probe-negative on every frozen-trunk space, probe-positive on every
+   end-to-end fine-tuned space (all six arms, +0.03 to +0.11), with pool
+   purity low in both.  The discovery ft is refinement when the substrate
+   is aligned to the task and erosion when it is not -- same lesson as
+   CIFAR-100 classwise-lam5, now in the fine-grained transfer regime.
+   Best full cars pipeline: supcon end-to-end ft + discovery (probe
+   0.767, per-event 0.20 / Maha 0.68 @f=0.05).
 7. **Residual/concat constructions match but do not beat the standalone
    champion on aircraft** (exp 60: supsig->res-nplm 0.786/0.725 vs
    standalone supcon_sigreg 0.781/0.743); the NPLM residual adds nothing
