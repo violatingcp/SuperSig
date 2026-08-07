@@ -280,6 +280,44 @@ flowers/dtd, discovery on end-to-end ft spaces is now positive in 21/24
 dataset x arm cells -- the frozen-trunk exp-69 negative was about the
 substrate, not the datasets.
 
+## Galaxy10 ft suite across bases (exp 70; probe pre -> post per base)
+
+| arm | DINO | LeJEPA | VISReg |
+|---|---|---|---|
+| supcon-ft | **0.938** -> 0.939 | 0.919 -> 0.931 | **0.939** -> 0.944 |
+| sigreg-ssl-ft | 0.914 -> 0.931 | **0.927** -> 0.940 | 0.931 -> 0.940 |
+| simclr-ft | 0.868 -> **0.942** | 0.902 -> **0.946** | 0.933 -> 0.922 |
+| nplm-sup-ft | 0.878 -> 0.912 | 0.899 -> 0.897 | 0.883 -> 0.933 |
+| ss-ft | 0.872 -> 0.926 | 0.803 -> 0.871 | 0.865 -> **0.945** |
+| nplm-bil-ft | 0.839 -> 0.928 | 0.893 -> 0.905 | 0.802 -> 0.904 |
+
+Galaxy10 is base-robust and discovery-friendly (16/18 cells positive):
+probes live in a tight 0.87-0.95 band and every base ends 0.93-0.95 post.
+nplm-sup-ft holds the calibration crown on ALL THREE bases (eucl
+0.77-0.79, mahaT 0.82-0.86, purity 0.46-0.50 -- remarkably stable), the
+few-class regime where supervised distance-NPLM is the right corner.
+
+## EXP-70 GRID VERDICTS (4 datasets x 3 bases x 6 arms, pre+post)
+
+- **supcon-ft + discovery is probe-positive in 12/12 dataset x base
+  cells** -- the only universally safe full pipeline in the program.
+  Overall discovery is positive in 50/72 cells; catastrophic erosion is
+  rare (worst: ss-ft flowers/LeJEPA -0.18).
+- Pre-probe champion is REGIME-determined, base-invariant: fine-grained
+  many-class (cars, flowers) -> ss-ft; texture (dtd) -> simclr-ft;
+  few-class coarse (galaxy10) -> supcon-ft.  Calibration champion:
+  ss-ft/supcon-ft on many-class data, nplm-sup-ft at few classes
+  (galaxy10, 3/3 bases) -- the CIFAR class-count rule, verbatim.
+- End-to-end ft largely erases the frozen-base ranking (VISReg holds
+  several pre records: dtd simclr 0.854, cars ss 0.741) -- exp-43/49's
+  inversion, now in the open-world battery.
+- nplm-sup-ft's discovery rescue (+0.14 to +0.20) replicates on all
+  three DTD bases; its failure mode is few-shot many-class data
+  (flowers, ~18 imgs/class).
+- Discovery helps most where the pre space is weakest (unsupervised arms
+  +0.05..+0.15) and where purity is high; flowers/VISReg shows purity
+  0.65+ can still leave strong arms flat (nothing left to learn).
+
 ## Aircraft NPLM residual/concat (exp 60, DINO, 16+16)
 
 | arm | probe | acc | eucl | mahaT | perevt | MMD@.1 |

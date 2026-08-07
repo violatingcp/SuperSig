@@ -414,6 +414,21 @@ exp 69) with pool purity still <= 0.14: on a task-specialized trunk the
 impure-pool ft refines instead of erodes.  supcon-ft + discovery (0.767)
 is the cars probe champion under the strictest protocol on record.
 
+Exp 70 was then run over the FULL GRID: {cars, flowers, dtd, galaxy10} x
+{dino, lejepa, visreg} bases, same 6 arms + battery + discovery (24 h of
+runs, 2026-08-06/07).  Grid verdicts (full tables in
+docs/AIRCRAFT_MASTER_TABLE.md): supcon-ft + discovery probe-positive in
+12/12 dataset x base cells (the universally safe pipeline; discovery
+positive 50/72 cells overall).  Pre-probe champion by regime, base-
+invariant: ss-ft on fine-grained many-class (cars 0.71-0.74, flowers
+0.75-0.80), simclr-ft on texture (dtd 0.81-0.854), supcon-ft on few-class
+coarse (galaxy10 0.92-0.94).  nplm-sup-ft: calibration crown at few
+classes (galaxy10 all bases, purity 0.46-0.50, per-event 0.35-0.50) and a
++0.14..+0.20 discovery rescue on every DTD base, but underfits few-shot
+many-class data (flowers).  ss-ft: record purities (dtd 0.80-0.81,
+flowers 0.60-0.66) but discovery-unstable (flowers/LeJEPA 0.79 -> 0.61).
+E2e ft erases the frozen-base ranking (VISReg takes several pre records).
+
 ## NPLM program verdicts
 
 - Probe-vs-calibration dissociation everywhere: softmax(SupCon) spaces are
