@@ -191,6 +191,30 @@ already-strong arms but +0.10 for nplm-bil-ft and +0.19 for nplm-sup-ft
 pool ft recovers what the weak NPLM heads missed.  Post champion
 supcon-ft 0.811.  Maha@.1 is near-saturated for all non-NPLM arms.
 
+## Galaxy10 END-TO-END ft suite (exp 70, DINO; 10 classes, holdout {9}
+(1 class) excluded from ft, 10%/90% train/test split, n_d=2000)
+
+| arm | probe pre -> post | acc | eucl | mahaT | perevt pre/post best | purity r1 | MMD@.05 pre |
+|---|---|---|---|---|---|---|---|
+| supcon-ft | **0.938** -> 0.939 | **0.610** | 0.666 | 0.786 | 0.021 / 0.230 | 0.070 | 0.94 |
+| sigreg-ssl-ft | 0.914 -> 0.931 | 0.408 | 0.514 | 0.764 | 0.020 / 0.075 | 0.012 | 0.14 |
+| nplm-sup-ft | 0.878 -> 0.912 | 0.414 | **0.779** | **0.824** | **0.348** / **0.502** | **0.459** | 0.88 |
+| ss-ft | 0.872 -> 0.926 | 0.558 | 0.633 | 0.691 | 0.058 / 0.186 | 0.048 | **0.98** |
+| simclr-ft | 0.868 -> **0.942** | 0.421 | 0.595 | 0.730 | 0.019 / 0.026 | 0.024 | 0.20 |
+| nplm-bil-ft | 0.839 -> 0.928 | 0.319 | 0.664 | 0.712 | 0.072 / 0.019 | 0.140 | 0.40 |
+
+Galaxy10 is the CIFAR-10 of the transfer suite (9 seen classes, coarse
+morphological novelty) and the class-count rule holds exactly:
+nplm-sup-ft takes the calibration crown back -- best eucl/mahaT, purity
+0.459, per-event 0.35 pre / 0.50 post (vs supcon-ft 0.02 pre!) -- while
+supcon-ft keeps the probe/acc crown.  Discovery is probe-positive for ALL
+SIX arms (+0.00 to +0.09); post champion is simclr-ft 0.942 (+0.074).
+MMD@.05 is near-saturated for the supervised arms (0.88-0.98 pre, 0.96-
+1.00 post).  With 6/6 positive here, 6/6 on cars-ft, and 4/6-5/6 on
+flowers/dtd, discovery on end-to-end ft spaces is now positive in 21/24
+dataset x arm cells -- the frozen-trunk exp-69 negative was about the
+substrate, not the datasets.
+
 ## Aircraft NPLM residual/concat (exp 60, DINO, 16+16)
 
 | arm | probe | acc | eucl | mahaT | perevt | MMD@.1 |
