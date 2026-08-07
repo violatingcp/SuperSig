@@ -169,6 +169,28 @@ per-event, purity -- the strongest single-space showing of ss in the
 program.  nplm-sup-ft is flat/weak everywhere here: with only ~18
 imgs/class, supervised distance-NPLM underfits.
 
+## DTD END-TO-END ft suite (exp 70, DINO; 47 classes, holdouts 37-46
+excluded from ft, 80 train imgs/class, n_d=1000)
+
+| arm | probe pre -> post | acc | eucl | mahaT | perevt pre/post@.05 | purity r1 | Maha@.1 pre |
+|---|---|---|---|---|---|---|---|
+| simclr-ft | **0.808** -> 0.802 | 0.653 | 0.469 | 0.506 | 0.020 / 0.035 | 0.039 | 0.98 |
+| sigreg-ssl-ft | 0.803 -> 0.802 | 0.635 | 0.543 | 0.577 | 0.048 / 0.110 | 0.026 | **1.00** |
+| supcon-ft | 0.799 -> **0.811** | 0.759 | 0.704 | 0.646 | 0.040 / 0.165 | 0.129 | 0.76 |
+| ss-ft | 0.782 -> 0.785 | **0.782** | **0.801** | **0.742** | **0.207** / **0.255** | **0.795** | 0.98 |
+| nplm-bil-ft | 0.682 -> 0.786 | 0.366 | 0.465 | 0.479 | 0.020 / 0.068 | 0.169 | 0.14 |
+| nplm-sup-ft | 0.586 -> 0.781 | 0.432 | 0.590 | 0.615 | 0.077 / 0.145 | 0.444 | 0.74 |
+
+DTD sits between flowers and cars: textures make even unsupervised probes
+strong (simclr-ft 0.808 pre-champion -- instance discrimination suits
+texture novelty), while calibration currency again belongs to ss-ft
+(purity 0.795 r1 -- program record; eucl 0.801, mahaT 0.742, per-event
+0.21 -> 0.26).  Discovery is a RESCUE operation here: near-flat for the
+already-strong arms but +0.10 for nplm-bil-ft and +0.19 for nplm-sup-ft
+(0.586 -> 0.781, the largest discovery rescue on record) -- the impure-
+pool ft recovers what the weak NPLM heads missed.  Post champion
+supcon-ft 0.811.  Maha@.1 is near-saturated for all non-NPLM arms.
+
 ## Aircraft NPLM residual/concat (exp 60, DINO, 16+16)
 
 | arm | probe | acc | eucl | mahaT | perevt | MMD@.1 |
