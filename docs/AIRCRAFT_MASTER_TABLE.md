@@ -234,6 +234,28 @@ already-strong arms but +0.10 for nplm-bil-ft and +0.19 for nplm-sup-ft
 pool ft recovers what the weak NPLM heads missed.  Post champion
 supcon-ft 0.811.  Maha@.1 is near-saturated for all non-NPLM arms.
 
+## DTD ft suite across bases (exp 70; probe pre -> post per base)
+
+| arm | DINO | LeJEPA | VISReg |
+|---|---|---|---|
+| simclr-ft | **0.808** -> 0.802 | **0.817** -> 0.821 | **0.854** -> 0.848 |
+| sigreg-ssl-ft | 0.803 -> 0.802 | 0.809 -> 0.826 | 0.808 -> 0.790 |
+| supcon-ft | 0.799 -> **0.811** | 0.755 -> 0.790 | 0.750 -> 0.791 |
+| ss-ft | 0.782 -> 0.785 | 0.787 -> 0.784 | 0.784 -> 0.785 |
+| nplm-bil-ft | 0.682 -> 0.786 | 0.746 -> 0.745 | 0.778 -> 0.811 |
+| nplm-sup-ft | 0.586 -> 0.781 | 0.581 -> 0.765 | 0.569 -> 0.707 |
+
+DTD is base-invariantly the UNSUPERVISED dataset: simclr-ft wins the
+pre-probe on all three bases, peaking at 0.854 on VISReg -- the best DTD
+novelty probe on record (texture novelty is instance-discrimination
+territory; labels add nothing to the probe here).  Supervised arms keep
+the calibration crown: ss-ft round-1 purity 0.795/0.803/0.811
+(DINO/LeJEPA/VISReg -- the three highest purities in the program) with
+the best eucl/mahaT/acc everywhere.  The nplm-sup-ft discovery rescue
+replicates on every base (+0.14 to +0.20).  Post champions: simclr-ft
+(no-discovery) 0.848-0.854 for the probe; ss-ft for everything
+calibrated.
+
 ## Galaxy10 END-TO-END ft suite (exp 70, DINO; 10 classes, holdout {9}
 (1 class) excluded from ft, 10%/90% train/test split, n_d=2000)
 
