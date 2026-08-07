@@ -190,6 +190,28 @@ per-event, purity -- the strongest single-space showing of ss in the
 program.  nplm-sup-ft is flat/weak everywhere here: with only ~18
 imgs/class, supervised distance-NPLM underfits.
 
+## Flowers ft suite across bases (exp 70; probe pre -> post per base)
+
+| arm | DINO | LeJEPA | VISReg |
+|---|---|---|---|
+| supcon-ft | 0.708 -> **0.814** | 0.678 -> 0.752 | 0.714 -> **0.810** |
+| ss-ft | **0.795** -> 0.788 | **0.792** -> 0.613 (!) | **0.754** -> 0.743 |
+| simclr-ft | 0.743 -> 0.754 | 0.725 -> 0.740 | 0.746 -> 0.728 |
+| sigreg-ssl-ft | 0.732 -> 0.777 | 0.684 -> 0.719 | 0.738 -> 0.734 |
+| nplm-bil-ft | 0.664 -> 0.808 | 0.768 -> 0.723 | 0.737 -> 0.737 |
+| nplm-sup-ft | 0.625 -> 0.624 | 0.734 -> 0.706 | 0.631 -> 0.576 |
+
+Base-invariant flowers structure: ss-ft always wins the pre-probe and the
+supervised arms always pool at high purity (0.43-0.68 r1 on every base);
+supcon-ft + discovery always wins post (0.752-0.814).  One pathology:
+ss-ft discovery on LeJEPA collapses the probe (0.792 -> 0.613, worst
+discovery outcome on record; its 6-anchor round-1 split at purity 0.605
+fragments the strongest classes rather than the novelty) -- on DINO/VISReg
+the same arm is merely flat, so treat ss-ft + discovery as unstable and
+prefer supcon-ft when the discovery step is in the pipeline.  supcon-ft
+geometry on VISReg is the best calibrated flowers space (eucl 0.949,
+mahaT 0.919, acc 0.957).
+
 ## DTD END-TO-END ft suite (exp 70, DINO; 47 classes, holdouts 37-46
 excluded from ft, 80 train imgs/class, n_d=1000)
 
