@@ -1,13 +1,14 @@
 """
-Experiment 70: Stanford Cars END-TO-END fine-tuning suite -- unsupervised
-and supervised pretraining for the simclr / sigreg / nplm families -- with
-the full novelty battery pre AND post discovery.
+Experiment 70: END-TO-END fine-tuning suite (cars / flowers / galaxy10 /
+dtd) -- unsupervised and supervised pretraining for the simclr / sigreg /
+nplm families -- with the full novelty battery pre AND post discovery.
 
 Unlike exps 51/69 (frozen DINO trunk, head-only training), here the whole
-ViT-B/16 fine-tunes on cars (exp-49/62 recipe: trunk 1e-5 / head 1e-3,
-Adam + cosine, AMP fp16, 20 epochs, batch 32x2 views, 100-D head).  The
-fine-tuning corpus EXCLUDES the 10 holdout classes (186-195) -- images and
-labels -- so holdout novelty stays genuinely novel.  Six arms:
+ViT-B/16 fine-tunes on the target dataset (exp-49/62 recipe: trunk 1e-5 /
+head 1e-3, Adam + cosine, AMP fp16, 20 epochs, batch 32x2 views, 100-D
+head).  The fine-tuning corpus EXCLUDES the holdout classes (last 10;
+galaxy10: last 1 of its 10) -- images and labels -- so holdout novelty
+stays genuinely novel.  Six arms:
 
   unsupervised   simclr-ft      NT-Xent temp 0.5 (instance positives)
                  sigreg-ssl-ft  MSE invariance + global SIGReg (LeJEPA)
@@ -25,6 +26,7 @@ discovery probe/eucl/mahaT pre->post + the injected post-power grid
 (annealed-sigma SparKer).
 
     python experiments/70_cars_ft_suite.py
+    python experiments/70_cars_ft_suite.py --dataset flowers
     python experiments/70_cars_ft_suite.py --quick --arms supcon-ft
 """
 import os, sys
@@ -58,8 +60,8 @@ exp49 = importlib.import_module("49_aircraft_ssl_ft")
 exp62 = importlib.import_module("62_aircraft_nplm_ft")
 
 CKPT_DIR = os.path.join(REPO_DIR, "checkpoints")
-DS = "cars"
-BASE = "dino"
+DS = "cars"          # set from --dataset in main()
+BASE = "dino"        # set from --base in main()
 STATS = ["perevent", "sparker", "maha", "mmd"]
 REP_WEIGHT = 20.0
 
@@ -94,8 +96,36 @@ COLORS = {"simclr-ft": "#0072b2", "sigreg-ssl-ft": "#666666",
           "ss-ft": "#008300", "nplm-sup-ft": "#8c2d9e"}
 
 
-def seen_two_view_loader(seen_idx, args):
-    corpus = exp43.train_corpus(DS)
+def eval_split(split, transform):
+    """Plain-transform eval dataset; 'train' = the full labeled train pool
+    (dtd: train+val, matching exp43.train_corpus)."""
+    if DS == "dtd":
+        if split == "train":
+            return exp43.labeled_corpus(transform)
+        from torchvision import datasets as tvd
+        return tvd.DTD(DATA_DIR, split="test", download=True,
+                       transform=transform)
+    return exp44.make_split(DS, split, transform)
+
+
+def corpus_labels(ds):
+    """Per-index labels of a train corpus without decoding images
+    (torchvision _labels / StanfordCars _samples / exp-44 parquet sets)."""
+    if hasattr(ds, "_labels"):
+        return np.asarray(ds._labels)
+    if hasattr(ds, "_samples"):
+        return np.asarray([s[1] for s in ds._samples])
+    if hasattr(ds, "df") and hasattr(ds, "lab_col"):
+        if hasattr(ds, "keep"):
+            return np.asarray([int(ds.df.iloc[k][ds.lab_col])
+                               for k in ds.keep])
+        return ds.df[ds.lab_col].to_numpy().astype(int)
+    if hasattr(ds, "datasets"):        # ConcatDataset
+        return np.concatenate([corpus_labels(d) for d in ds.datasets])
+    return np.asarray([ds[i][1] for i in range(len(ds))])
+
+
+def seen_two_view_loader(corpus, seen_idx, args):
     ds = exp43.TwoViewLabeledImages(Subset(corpus, seen_idx))
     return DataLoader(ds, batch_size=args.batch_size, shuffle=True,
                       num_workers=8, persistent_workers=True, drop_last=True,
@@ -111,7 +141,7 @@ def trunk_banks(model, arm, args):
     trunk = model.trunk.eval()
     plain = {}
     for split in ("train", "test"):
-        d = exp44.make_split(DS, split, exp37.TF_EVAL)
+        d = eval_split(split, exp37.TF_EVAL)
         plain[split] = exp37.extract(trunk, d)
         print(f"  extracted ft70_{arm} {split}: "
               f"{tuple(plain[split][0].shape)}")
@@ -120,7 +150,13 @@ def trunk_banks(model, arm, args):
 
 
 def main():
+    global DS, BASE
     ap = argparse.ArgumentParser()
+    ap.add_argument("--dataset", default="cars",
+                    choices=["cars", "aircraft", "flowers", "galaxy10",
+                             "dtd"])
+    ap.add_argument("--base", default="dino",
+                    choices=["dino", "lejepa", "visreg"])
     ap.add_argument("--quick", action="store_true")
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--arms", nargs="+", default=list(COLORS),
@@ -137,17 +173,22 @@ def main():
     ap.add_argument("--alpha", type=float, default=0.05)
     ap.add_argument("--pre-fractions", default="0.003,0.01,0.02,0.05,0.1")
     ap.add_argument("--post-fractions", default="0.003,0.01,0.02,0.05")
-    ap.add_argument("--n-d", type=int, default=2000)
+    ap.add_argument("--n-d", type=int, default=None,
+                    help="toy size; default 2000 cars/galaxy10, else 1000")
     ap.add_argument("--kernels", type=int, default=16)
     ap.add_argument("--steps", type=int, default=300)
     ap.add_argument("--refresh", action="store_true")
     ap.add_argument("--skip-power", action="store_true")
     ap.add_argument("--skip-discovery", action="store_true")
     args = ap.parse_args()
+    DS, BASE = args.dataset, args.base
     args.ft_epochs = args.ft_epochs or (1 if args.quick else 20)
+    if args.n_d is None:
+        args.n_d = 2000 if DS in ("cars", "galaxy10") else 1000
 
-    N_CLS = exp44.N_CLASSES[DS]
-    holdouts = set(range(N_CLS - 10, N_CLS))
+    N_CLS = 47 if DS == "dtd" else exp44.N_CLASSES[DS]
+    n_hold = 1 if DS == "galaxy10" else 10
+    holdouts = set(range(N_CLS - n_hold, N_CLS))
     seen = [c for c in range(N_CLS) if c not in holdouts]
     ft_ep_disc = 1 if args.quick else 5
     pre_fracs = [float(x) for x in args.pre_fractions.split(",")]
@@ -165,13 +206,9 @@ def main():
           f"ft_epochs={args.ft_epochs}, emb={args.emb_dim}, "
           f"holdouts {min(holdouts)}-{max(holdouts)} EXCLUDED from ft")
 
-    # train-corpus labels come from the frozen-cache order (make_split order)
-    frozen_plain, _bank = exp44.build_features(DS, BASE, argparse.Namespace(
-        aug_reps=8, refresh=False))
-    ytr_all = frozen_plain["train"][1]
-    seen_idx_corpus = np.where(~np.isin(ytr_all.numpy(),
-                                        list(holdouts)))[0].tolist()
-    del _bank
+    corpus = exp43.train_corpus(DS)
+    ytr_all = corpus_labels(corpus)
+    seen_idx_corpus = np.where(~np.isin(ytr_all, list(holdouts)))[0].tolist()
     print(f"  ft corpus: {len(seen_idx_corpus)}/{len(ytr_all)} train images "
           f"(holdout classes removed)")
 
@@ -192,7 +229,7 @@ def main():
             print(f"  loading {ckpt}")
             model.load_state_dict(torch.load(ckpt, map_location=DEVICE))
         else:
-            loader = seen_two_view_loader(seen_idx_corpus, args)
+            loader = seen_two_view_loader(corpus, seen_idx_corpus, args)
             exp49.ft_loop(model, loader, args.ft_epochs, step, args, arm)
             torch.save(model.state_dict(), ckpt)
             del loader

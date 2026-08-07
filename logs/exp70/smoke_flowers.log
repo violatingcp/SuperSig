@@ -1,0 +1,153 @@
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+exp70 [flowers_dino_ft70] end-to-end ft suite, arms=['supcon-ft', 'nplm-bil-ft'], ft_epochs=1, emb=100, holdouts 92-101 EXCLUDED from ft
+  ft corpus: 1840/2040 train images (holdout classes removed)
+
+===== [supcon-ft] (supervised) =====
+  [supcon-ft] epoch 1/1  main=0.8685  aux=0.0000
+  extracted ft70_supcon-ft train: (2040, 768)
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+  extracted ft70_supcon-ft test: (6149, 768)
+  [supcon-ft     ] probe=0.8309+-0.0050 acc=0.8429 supAUC=0.9972 eucl=0.8738 mahaT=0.8653 mahaPC=0.8328
+
+===== [nplm-bil-ft] (unsupervised) =====
+  [nplm-bil-ft] epoch 1/1  main=636444340144.7982  aux=0.5870
+  extracted ft70_nplm-bil-ft train: (2040, 768)
+  extracted ft70_nplm-bil-ft test: (6149, 768)
+  [nplm-bil-ft   ] probe=0.7435+-0.0050 acc=0.6807 supAUC=0.9748 eucl=0.7212 mahaT=0.7059 mahaPC=0.7177
+
+===== PRE table =====
+  arm                        probe     acc  supAUC    eucl   mahaT  mahaPC
+  supcon-ft          0.8309+-0.0050  0.8429  0.9972  0.8738  0.8653  0.8328
+  nplm-bil-ft        0.7435+-0.0050  0.6807  0.9748  0.7212  0.7059  0.7177
+
+===== gaussianity (seen classes, test set) =====
+  metric                         supcon-ft   nplm-bil-ft
+  eig min (class cov)               -0.000        -0.000
+  eig max (class cov)               13.597         0.990
+  eig cond worst            10941438623744.0990305517568.0
+  class RMS min                      0.258         0.080
+  class RMS mean                     0.513         0.163
+  class RMS max                      0.640         0.233
+  max |corr| (worst class)           0.928         0.922
+  SW ratio mean                       1.24          1.30
+  SW ratio worst                      2.67          2.13
+  |skew| mean                        0.317         0.342
+  |ex-kurt| mean                     0.587         0.624
+  centroid dist min                   3.60          0.77
+  centroid dist mean                 10.41          2.02
+  separation (min d/RMS)              7.01          4.72
+
+===== PRE power batteries =====
+  [supcon-ft] per-event pre power=0.396
+  [supcon-ft] sparker (annealed)
+    pre-spk f=0.02: power=0.100 [0.017,0.293] (1/10)
+  [supcon-ft] maha
+    pre-maha f=0.02: power=0.100 [0.017,0.293] (1/10)
+  [supcon-ft] mmd
+    pre-mmd f=0.02: power=0.000 [0.000,0.167] (0/10)
+  [nplm-bil-ft] per-event pre power=0.145
+  [nplm-bil-ft] sparker (annealed)
+    pre-spk f=0.02: power=0.100 [0.017,0.293] (1/10)
+  [nplm-bil-ft] maha
+    pre-maha f=0.02: power=0.100 [0.017,0.293] (1/10)
+  [nplm-bil-ft] mmd
+    pre-mmd f=0.02: power=0.000 [0.000,0.167] (0/10)
+
+===== EXP70 PEREVENT PRE POWER =====
+  arm                  0.02
+  supcon-ft           0.396
+  nplm-bil-ft         0.145
+  saved /home/pharris/sigreg/SuperSig/plots/exp70_perevent_power_pre_flowers_dino_ft70.png
+
+===== EXP70 SPARKER PRE POWER =====
+  arm                  0.02
+  supcon-ft           0.100
+  nplm-bil-ft         0.100
+  saved /home/pharris/sigreg/SuperSig/plots/exp70_sparker_power_pre_flowers_dino_ft70.png
+
+===== EXP70 MAHA PRE POWER =====
+  arm                  0.02
+  supcon-ft           0.100
+  nplm-bil-ft         0.100
+  saved /home/pharris/sigreg/SuperSig/plots/exp70_maha_power_pre_flowers_dino_ft70.png
+
+===== EXP70 MMD PRE POWER =====
+  arm                  0.02
+  supcon-ft           0.000
+  nplm-bil-ft         0.000
+  saved /home/pharris/sigreg/SuperSig/plots/exp70_mmd_power_pre_flowers_dino_ft70.png
+
+----- natural discovery: supcon-ft -----
+  [sigreg+proto] epoch 1/1  sigreg=0.4255  proto=0.9362  min_dist=3.89  mean_dist=10.31
+  round 1: pool=182 purity=0.495 k-hat=4 anchors=4  margin=0.9044  mean-anchor=0.8423  
+  [sigreg+proto] epoch 1/1  sigreg=0.5328  proto=1.3162  min_dist=3.90  mean_dist=10.28
+  round 2: pool=124 purity=0.258 k-hat=2 anchors=6  margin=0.8842  mean-anchor=0.8338  
+  [supcon-ft] probe 0.8309 -> 0.8411  eucl 0.8738 -> 0.8778  mahaT 0.8653 -> 0.8525
+
+----- natural discovery: nplm-bil-ft -----
+  [sigreg+proto] epoch 1/1  sigreg=0.6747  proto=2.3466  min_dist=0.70  mean_dist=2.55
+  round 1: pool=115 purity=0.200 k-hat=1 anchors=1  margin=0.7658  mean-anchor=0.6029  
+  [sigreg+proto] epoch 1/1  sigreg=0.6803  proto=3.3518  min_dist=0.72  mean_dist=2.74
+  round 2: pool=95 purity=0.032 k-hat=2 anchors=3  margin=0.7475  mean-anchor=0.5884  
+  [nplm-bil-ft] probe 0.7435 -> 0.7765  eucl 0.7212 -> 0.7763  mahaT 0.7059 -> 0.7745
+
+===== POST grid, f=0.02 (38 injected) =====
+  [sigreg+proto] epoch 1/1  sigreg=0.4655  proto=1.9267  min_dist=4.20  mean_dist=10.31
+  round 1: pool=113 purity=0.186 k-hat=4 anchors=4  margin=0.8421  mean-anchor=0.7375  
+  [sigreg+proto] epoch 1/1  sigreg=0.5015  proto=2.8609  min_dist=4.23  mean_dist=10.37
+  round 2: pool=95 purity=0.032 k-hat=4 anchors=8  margin=0.8521  mean-anchor=0.8284  
+  [supcon-ft] per-event post f=0.02: power=0.317
+  [supcon-ft] sparker (post, annealed)
+    post-spk f=0.02: power=0.000 [0.000,0.167] (0/10)
+  [supcon-ft] maha (post)
+    post-maha f=0.02: power=0.000 [0.000,0.167] (0/10)
+  [supcon-ft] mmd (post)
+    post-mmd f=0.02: power=0.000 [0.000,0.167] (0/10)
+  [sigreg+proto] epoch 1/1  sigreg=0.6740  proto=2.5436  min_dist=0.70  mean_dist=2.55
+  round 1: pool=98 purity=0.061 k-hat=1 anchors=1  margin=0.7767  mean-anchor=0.6536  
+    merged 3 -> 2 anchors
+  [sigreg+proto] epoch 1/1  sigreg=0.6674  proto=1.8611  min_dist=0.72  mean_dist=2.68
+  round 2: pool=92 purity=0.000 k-hat=2 anchors=2  margin=0.7231  mean-anchor=0.6562  
+  [nplm-bil-ft] per-event post f=0.02: power=0.197
+  [nplm-bil-ft] sparker (post, annealed)
+    post-spk f=0.02: power=0.000 [0.000,0.167] (0/10)
+  [nplm-bil-ft] maha (post)
+    post-maha f=0.02: power=0.100 [0.017,0.293] (1/10)
+  [nplm-bil-ft] mmd (post)
+    post-mmd f=0.02: power=0.000 [0.000,0.167] (0/10)
+
+===== EXP70 PEREVENT POST POWER =====
+  arm                  0.02
+  supcon-ft           0.317
+  nplm-bil-ft         0.197
+  saved /home/pharris/sigreg/SuperSig/plots/exp70_perevent_power_post_flowers_dino_ft70.png
+
+===== EXP70 SPARKER POST POWER =====
+  arm                  0.02
+  supcon-ft           0.000
+  nplm-bil-ft         0.000
+  saved /home/pharris/sigreg/SuperSig/plots/exp70_sparker_power_post_flowers_dino_ft70.png
+
+===== EXP70 MAHA POST POWER =====
+  arm                  0.02
+  supcon-ft           0.000
+  nplm-bil-ft         0.100
+  saved /home/pharris/sigreg/SuperSig/plots/exp70_maha_power_post_flowers_dino_ft70.png
+
+===== EXP70 MMD POST POWER =====
+  arm                  0.02
+  supcon-ft           0.000
+  nplm-bil-ft         0.000
+  saved /home/pharris/sigreg/SuperSig/plots/exp70_mmd_power_post_flowers_dino_ft70.png
+
+===== EXP70 SUMMARY [flowers_dino_ft70] =====
+  [supcon-ft     ] probe=0.8309+-0.0050 acc=0.8429 eucl=0.8738 mahaT=0.8653  || post: probe=0.8411 eucl=0.8778 mahaT=0.8525
+          round 1: purity=0.495 anchors=4  margin=0.9044
+          round 2: purity=0.258 anchors=6  margin=0.8842
+  [nplm-bil-ft   ] probe=0.7435+-0.0050 acc=0.6807 eucl=0.7212 mahaT=0.7059  || post: probe=0.7765 eucl=0.7763 mahaT=0.7745
+          round 1: purity=0.200 anchors=1  margin=0.7658
+          round 2: purity=0.032 anchors=3  margin=0.7475
+saved /home/pharris/sigreg/SuperSig/plots/exp70_probe_flowers_dino_ft70.png
+Done.

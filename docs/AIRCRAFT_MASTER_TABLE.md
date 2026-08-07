@@ -145,6 +145,32 @@ per-event post 0.17) — the dissociation, unchanged.  (5) Post per-event
 power of the supervised arms (0.17-0.20 @.05) is the best cars per-event
 on record.
 
+## Flowers END-TO-END ft suite (exp 70, DINO; 102 classes, holdouts
+92-101 excluded from ft, ~18 train imgs/class seen, n_d=1000)
+
+| arm | probe pre -> post | acc | eucl | mahaT | perevt pre/post@.05 | purity r1 | Maha@.1 pre |
+|---|---|---|---|---|---|---|---|
+| ss-ft | **0.795** -> 0.788 | 0.940 | **0.933** | **0.883** | **0.524** / **0.710** | **0.657** | **1.00** |
+| supcon-ft | 0.708 -> **0.814** | **0.944** | 0.911 | 0.873 | 0.369 / 0.413 | 0.624 | **1.00** |
+| simclr-ft | 0.743 -> 0.754 | 0.839 | 0.671 | 0.673 | 0.071 / 0.052 | 0.098 | 0.82 |
+| sigreg-ssl-ft | 0.732 -> 0.777 | 0.800 | 0.710 | 0.706 | 0.103 / 0.169 | 0.140 | 0.94 |
+| nplm-bil-ft | 0.664 -> 0.808 | 0.531 | 0.667 | 0.646 | 0.083 / 0.179 | 0.164 | 0.58 |
+| nplm-sup-ft | 0.625 -> 0.624 | 0.518 | 0.659 | 0.668 | 0.147 / 0.074 | 0.328 | 0.94 |
+
+Flowers is the ANTI-CARS: coarse-separable holdouts make pool purity high
+(supervised arms 0.33-0.66 in round 1 -- transfer-suite record) and
+per-event power real pre-discovery (ss-ft 0.524).  Discovery gains:
+supcon-ft +0.106 (post 0.814, flowers champion), nplm-bil-ft +0.145 (the
+biggest single discovery gain in the transfer program), sigreg-ssl +0.05;
+ss-ft is the one flat arm (its pre space is already the best-calibrated:
+per-event post 0.71, Maha 0.88 @.05).  The supervised sigreg marginal
+(ss-ft) dominates the flowers pre battery outright -- probe, eucl, mahaT,
+per-event, purity -- the strongest single-space showing of ss in the
+program.  nplm-sup-ft is flat/weak everywhere here: with only ~18
+imgs/class, supervised distance-NPLM underfits.
+
+## Aircraft NPLM residual/concat (exp 60, DINO, 16+16)
+
 | arm | probe | acc | eucl | mahaT | perevt | MMD@.1 |
 |---|---|---|---|---|---|---|
 | supsig->res-nplm | 0.786 | 0.569 | 0.743 | 0.725 | 0.192 | 0.50 |
