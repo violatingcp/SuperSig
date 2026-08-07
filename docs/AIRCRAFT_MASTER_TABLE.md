@@ -145,6 +145,27 @@ per-event post 0.17) — the dissociation, unchanged.  (5) Post per-event
 power of the supervised arms (0.17-0.20 @.05) is the best cars per-event
 on record.
 
+## Cars ft suite across bases (exp 70; probe pre -> post per base)
+
+| arm | DINO | LeJEPA | VISReg |
+|---|---|---|---|
+| supcon-ft | 0.733 -> **0.767** | 0.699 -> 0.726 | 0.707 -> 0.759 |
+| ss-ft | 0.719 -> 0.747 | **0.709** -> 0.699 | **0.741** -> 0.712 |
+| simclr-ft | 0.624 -> 0.684 | 0.618 -> 0.614 | 0.610 -> 0.657 |
+| nplm-bil-ft | 0.591 -> 0.704 | 0.611 -> 0.658 | 0.576 -> 0.624 |
+| sigreg-ssl-ft | 0.584 -> 0.690 | 0.563 -> 0.617 | 0.574 -> 0.634 |
+| nplm-sup-ft | 0.549 -> 0.600 | 0.582 -> 0.658 | 0.579 -> 0.549 |
+
+End-to-end ft largely erases the frozen-base gap on cars (frozen probes:
+DINO 0.75 vs LeJEPA/VISReg ~0.5-0.6 territory): VISReg ss-ft 0.741 is the
+best cars PRE-probe on any base, VISReg supcon-ft has the best cars
+geometry (eucl 0.715, mahaT 0.661, purity 0.206), echoing the exp-43/49
+"fine-tuning inverts the base ranking" lesson.  Discovery stays broadly
+positive (14/18 cells; the exceptions are ss-ft on LeJEPA/VISReg and
+nplm-sup-ft/simclr-ft on one base each).  Best overall cars pipeline
+remains DINO supcon-ft + discovery (0.767), with VISReg supcon-ft +
+discovery (0.759) statistically adjacent.
+
 ## Flowers END-TO-END ft suite (exp 70, DINO; 102 classes, holdouts
 92-101 excluded from ft, ~18 train imgs/class seen, n_d=1000)
 
