@@ -1,0 +1,53 @@
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+exp71 [cars_lejepa_ft71] residual ft on exp-70 parents, runs=[('supcon-ft', 'res'), ('ss-ft', 'res'), ('supcon-ft', 'res-nplm')], epochs=20
+
+===== [cars_lejepa_ft71] supcon-ft->res =====
+Fetching 37 files:   0%|          | 0/37 [00:00<?, ?it/s]Fetching 37 files: 100%|██████████| 37/37 [00:00<00:00, 34025.27it/s]
+  [supcon-ft (parent)          ] probe=0.6988+-0.0070 acc=0.4984 eucl=0.6266 mahaT=0.5723 perevt=0.124
+  [supcon-ft-res] epoch 1/20  main=2.5141  aux=0.6212
+  [supcon-ft-res] epoch 5/20  main=2.4117  aux=0.4511
+  [supcon-ft-res] epoch 10/20  main=2.3753  aux=0.4303
+  [supcon-ft-res] epoch 15/20  main=2.3592  aux=0.4052
+  [supcon-ft-res] epoch 20/20  main=2.3527  aux=0.3862
+  extracted ft70_supcon-ft_res train: (8144, 768)
+  extracted ft70_supcon-ft_res test: (8041, 768)
+  [supcon-ft->res (residual)   ] probe=0.5872+-0.0060 acc=0.1106 eucl=0.4713 mahaT=0.4710 perevt=0.035
+  [supcon-ft->res (concat)     ] probe=0.7260+-0.0025 acc=0.2365 eucl=0.4998 mahaT=0.5534 perevt=0.035
+
+===== [cars_lejepa_ft71] ss-ft->res =====
+Fetching 37 files:   0%|          | 0/37 [00:00<?, ?it/s]Fetching 37 files: 100%|██████████| 37/37 [00:00<00:00, 31081.36it/s]
+  [ss-ft (parent)              ] probe=0.7085+-0.0109 acc=0.2993 eucl=0.5741 mahaT=0.5807 perevt=0.056
+  [ss-ft-res] epoch 1/20  main=2.4978  aux=0.5002
+  [ss-ft-res] epoch 5/20  main=2.3827  aux=0.4431
+  [ss-ft-res] epoch 10/20  main=2.3611  aux=0.4308
+  [ss-ft-res] epoch 15/20  main=2.3476  aux=0.4080
+  [ss-ft-res] epoch 20/20  main=2.3424  aux=0.3976
+  extracted ft70_ss-ft_res train: (8144, 768)
+  extracted ft70_ss-ft_res test: (8041, 768)
+  [ss-ft->res (residual)       ] probe=0.6272+-0.0074 acc=0.0905 eucl=0.4489 mahaT=0.4404 perevt=0.031
+  [ss-ft->res (concat)         ] probe=0.6772+-0.0042 acc=0.2432 eucl=0.5105 mahaT=0.5245 perevt=0.031
+
+===== [cars_lejepa_ft71] supcon-ft->res-nplm =====
+  [supcon-ft-res-nplm] epoch 1/20  main=278717419.4787  aux=0.5425
+  [supcon-ft-res-nplm] epoch 5/20  main=1399335.3968  aux=0.5292
+  [supcon-ft-res-nplm] epoch 10/20  main=96177503.9796  aux=0.5120
+  [supcon-ft-res-nplm] epoch 15/20  main=44356.0564  aux=0.5064
+  [supcon-ft-res-nplm] epoch 20/20  main=44795.8132  aux=0.5065
+  extracted ft70_supcon-ft_resnplm train: (8144, 768)
+  extracted ft70_supcon-ft_resnplm test: (8041, 768)
+  [supcon-ft->res-nplm (residual)] probe=0.6294+-0.0074 acc=0.1333 eucl=0.4690 mahaT=0.4446 perevt=0.014
+  [supcon-ft->res-nplm (concat)] probe=0.7793+-0.0010 acc=0.4914 eucl=0.6084 mahaT=0.5144 perevt=0.082
+
+===== EXP71 SUMMARY [cars_lejepa_ft71] =====
+  space                                    probe     acc    eucl   mahaT  perevt
+  supcon-ft (parent)               0.6988+-0.0070  0.4984  0.6266  0.5723   0.124
+  supcon-ft->res (residual)        0.5872+-0.0060  0.1106  0.4713  0.4710   0.035
+  supcon-ft->res (concat)          0.7260+-0.0025  0.2365  0.4998  0.5534   0.035
+  ss-ft (parent)                   0.7085+-0.0109  0.2993  0.5741  0.5807   0.056
+  ss-ft->res (residual)            0.6272+-0.0074  0.0905  0.4489  0.4404   0.031
+  ss-ft->res (concat)              0.6772+-0.0042  0.2432  0.5105  0.5245   0.031
+  supcon-ft->res-nplm (residual)   0.6294+-0.0074  0.1333  0.4690  0.4446   0.014
+  supcon-ft->res-nplm (concat)     0.7793+-0.0010  0.4914  0.6084  0.5144   0.082
+saved /home/pharris/sigreg/SuperSig/plots/exp71_probe_cars_lejepa_ft71.png
+Done.
