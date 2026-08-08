@@ -1,0 +1,359 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage[table]{xcolor}
+\usepackage{caption}
+\usepackage{hyperref}
+\captionsetup{font=small}
+
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\z}{\mathbf{z}}
+\newcommand{\x}{\mathbf{x}}
+\newcommand{\mmu}{\boldsymbol{\mu}}
+\newcommand{\best}[1]{\textbf{#1}}
+
+\title{Open-World Novelty on Transfer Datasets:\\
+End-to-End Fine-Tuning, Discovery, and Residual Training\\
+{\large SuperSig experiments 70--71 (with context from 49/51/62/69)}}
+\author{P.~Harris (experiments run with Claude)}
+\date{August 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We evaluate six contrastive/regularized pretraining objectives --- three
+unsupervised (SimCLR, SIGReg-SSL/LeJEPA, unsupervised NPLM) and three
+supervised (SupCon, SupCon+SIGReg, supervised NPLM) --- as \emph{end-to-end
+fine-tuning} losses for ViT-B/16 trunks on four transfer datasets
+(Stanford~Cars, Flowers-102, DTD, Galaxy10~DECals), each from three
+pretrained bases (DINO, LeJEPA, VISReg): a $4\times3\times6$ grid.  Every
+space is scored with an open-world novelty battery (held-out--class linear
+probe, nearest-centroid accuracy, distance-based novelty AUCs, and
+dataset-level anomaly-detection power), before and after an iterated
+anchor-\emph{discovery} phase, and finally under \emph{residual}
+fine-tuning.  Three headline results: (i) discovery, which is
+probe-negative on frozen trunks, becomes probe-positive in 50/72 grid
+cells once the trunk is fine-tuned end-to-end --- and the
+SupCon-ft$+$discovery pipeline is positive in 12/12 dataset$\times$base
+cells; (ii) the champion pre-discovery objective is regime-determined and
+base-invariant (SupCon+SIGReg on fine-grained data, SimCLR on textures,
+SupCon on few-class coarse data, supervised NPLM for calibration at few
+classes); (iii) residual fine-tuning beats the discovery pipeline in all
+12 cells and sets new dataset records (cars 0.855, flowers 0.885,
+galaxy10 0.975), with the NPLM residual concat uniquely raising the probe
+\emph{while retaining} calibrated per-event power --- the first cars
+space to break the probe--calibration dissociation.
+\end{abstract}
+
+\section{Setup}
+
+\paragraph{Datasets and open-world protocol.}
+Each dataset's final classes are held out entirely: their images and
+labels are removed from every fine-tuning corpus, so held-out classes are
+genuinely novel at training time.
+
+\begin{table}[h]\centering\small
+\begin{tabular}{lrrrl}
+\toprule
+dataset & classes & held out & train pool (seen) & character \\
+\midrule
+Stanford Cars & 196 & 186--195 & 7\,712 & fine-grained (car models) \\
+Flowers-102 & 102 & 92--101 & 1\,840 & fine-grained, few-shot ($\sim$18/class) \\
+DTD & 47 & 37--46 & 2\,960 & texture \\
+Galaxy10 DECals & 10 & \{9\} & 1\,585 & coarse morphology, 10\%/90\% split \\
+\bottomrule
+\end{tabular}
+\caption{Datasets.  Bases: DINO, LeJEPA and VISReg ViT-B/16 trunks
+(768-D CLS features).}
+\end{table}
+
+\paragraph{Fine-tuning recipe (exp-49/62 convention).}
+Model $=$ pretrained trunk $+$ projection head
+$768\!\to\!256\!\to\!100$; everything trainable.  Adam with cosine
+schedule, trunk lr $10^{-5}$, head lr $10^{-3}$, AMP fp16, 20 epochs,
+batch 32 with two augmented views (RandomResizedCrop, flip, jitter at
+224\,px).  Per-arm seeds.  All objectives operate on the raw 100-D head
+output $\z$; only softmax-contrastive losses $\ell_2$-normalize
+internally.
+
+\section{Loss functions}
+
+Let $\z_i = f_\theta(\x_i)\in\R^{100}$, with two views per image stacked
+into a $2N$ batch; $\hat\z = \z/\lVert\z\rVert$.
+
+\subsection{Core primitives}
+
+\paragraph{SIGReg (sliced Gaussianity).}
+The repo's member of the VISReg/LeJEPA family: a sliced 1-D
+Wasserstein-2 distance to $\mathcal N(0,I)$,
+\begin{equation}
+\mathcal L_{\mathrm{SIG}}(\z_{1:B}) \;=\;
+\frac1S \sum_{s=1}^{S}\;
+\frac1B \sum_{b=1}^{B}
+\bigl( \operatorname{sort}_b(\langle \z, u_s\rangle) - \Phi^{-1}(q_b) \bigr)^2,
+\qquad u_s \sim \mathrm{Unif}(\mathbb S^{d-1}),
+\end{equation}
+with $S{=}64$ slices and $\Phi^{-1}(q_b)$ the standard-normal quantiles.
+A \emph{classwise} variant applies the same functional per class to
+$\z-\mmu_c$, pulling class $c$ toward $\mathcal N(\mmu_c, I)$ (used in the
+CIFAR program; not part of the transfer grid below).
+
+\paragraph{Softmax contrastive (NT-Xent / SupCon).}
+For positives $P(i)$ and temperature $\tau$,
+\begin{equation}
+\mathcal L_{\mathrm{con}} = \sum_i \frac{-1}{|P(i)|} \sum_{p\in P(i)}
+\log \frac{\exp(\langle\hat\z_i,\hat\z_p\rangle/\tau)}
+{\sum_{a\neq i}\exp(\langle\hat\z_i,\hat\z_a\rangle/\tau)} .
+\end{equation}
+With instance positives (the other view) and $\tau{=}0.5$ this is
+SimCLR/NT-Xent; with class positives and $\tau{=}0.1$ it is SupCon.
+
+\subsection{The hybrid contrastive cube (NPLM losses)}
+
+\texttt{HybridContrastiveLoss} factorizes a contrastive objective into
+\emph{positives} $\times$ \emph{critic} $\times$ \emph{estimator}
+$\times$ \emph{marginal}, $\;\mathcal L = \mathcal L_{\mathrm{int}}(g) +
+\lambda\,\mathcal L_{\mathrm{marg}}(\z)$:
+\begin{itemize}\itemsep2pt
+\item \textbf{critic} $g(\z,\z')$: cosine
+$\langle\hat\z,\hat\z'\rangle/\tau$;\; bilinear
+$\langle\z,\z'\rangle/\tau$;\; distance
+$-\tfrac1{2\tau}\lVert\z-\z'\rVert^2$.
+\item \textbf{estimator}: \emph{softmax} (self-normalized per row, as
+above --- recovers pointwise mutual information only up to a per-row
+constant), or \emph{NPLM}: the un-normalized maximum-likelihood objective
+\begin{equation}
+\mathcal L_{\mathrm{NPLM}}
+= \E_{\mathrm{ref}}\!\left[e^{\,g}-1\right] - \E_{\mathrm{pos}}\!\left[g\right],
+\label{eq:nplm}
+\end{equation}
+whose minimizer is the \emph{absolute} log density ratio
+$g^\ast=\log \frac{p(\x,\x')}{p(\x)p(\x')}$ with the calibration property
+$\E_{\mathrm{ref}}[e^{g^\ast}]=1$ (verified empirically, $r>0.9$ against
+analytic PMI).  The reference set excludes positives and the diagonal;
+the exponent is clamped at 30 (row-max subtraction would destroy
+calibration).  At initialization the interaction term is
+$\mathcal O(10^{10})$, so $\lambda$ is inert early and only shapes the
+endgame; $\tau=1$ is a sharp optimum for the bilinear critic.
+\item \textbf{marginal}: none, global SIGReg, or classwise SIGReg.
+\end{itemize}
+Calibrated NPLM spaces carry \emph{absolute} distance information (a
+ready-to-use novelty metric), where softmax spaces are the better linear
+probe inputs --- the program's central probe--calibration dissociation.
+
+\subsection{The six fine-tuning arms (exp 70)}
+
+\begin{table}[h]\centering\small
+\begin{tabular}{llll}
+\toprule
+arm & objective & labels & knobs \\
+\midrule
+simclr-ft & NT-Xent & no & $\tau{=}0.5$ \\
+sigreg-ssl-ft & $\lVert\z_1-\z_2\rVert^2$ (MSE inv.) $+$ SIGReg & no & LeJEPA objective, $\lambda{=}1$ \\
+nplm-bil-ft & NPLM, instance/bilinear $+$ SIGReg & no & $\tau{=}1,\lambda{=}1$ \\
+supcon-ft & SupCon & yes & $\tau{=}0.1$ \\
+ss-ft & SupCon $+$ SIGReg & yes & $\tau{=}0.1,\lambda{=}5$ \\
+nplm-sup-ft & NPLM, supervised/distance $+$ SIGReg & yes & $\tau{=}1,\lambda{=}1$ \\
+\bottomrule
+\end{tabular}
+\caption{Pretraining arms: \{SimCLR, SIGReg, NPLM\} families
+$\times$ \{unsupervised, supervised\}.}
+\end{table}
+
+\subsection{Residual objectives (exp 71)}
+
+Given a trained supervised \emph{parent} with frozen seen-class centroids
+$\mmu_y$ in head space, a deepcopy is fine-tuned end-to-end on the
+residual $\mathbf r = \z - \mmu_y$:
+\begin{align}
+\textbf{res:}\qquad &
+\mathcal L = \mathrm{NTXent}_{\tau=0.5}(\hat{\mathbf r}) + 5\,
+\mathcal L_{\mathrm{SIG}}(\mathbf r)
+&&\text{(exp-36/49 champion residual objective)},\\
+\textbf{res-nplm:}\qquad &
+\mathcal L = \mathcal L_{\mathrm{NPLM}}^{\text{inst/bilinear}}(\mathbf r)
++ \mathcal L_{\mathrm{SIG}}(\mathbf r)
+&&\text{(exp-59 NPLM residual corner)}.
+\end{align}
+Constructions per cell: supcon-ft$\to$res, ss-ft$\to$res,
+supcon-ft$\to$res-nplm; each evaluated as the residual head space alone
+and as the 200-D concat $[\,\text{parent};\text{residual}\,]$.
+
+\section{Training strategies and evaluation}
+
+\paragraph{End-to-end fine-tuning (exp 70).}
+Each arm fine-tunes trunk$+$head on the \emph{seen-class} two-view corpus
+(held-out classes excluded --- images and labels), unlike earlier
+closed-set fine-tunes, so all novelty numbers are strictly open-world.
+
+\paragraph{Discovery (iterated anchor discovery).}
+With the fine-tuned trunk frozen as a feature bank and the head as the
+discovery backbone: (1)~embed the train pool and pool events beyond the
+0.95 distance quantile to the current anchors; (2)~cluster the pool with
+BIC-selected $k$-means, creating new anchors (merged at distance $<3$);
+(3)~pseudo-label and fine-tune the head with the proto/repulse hybrid
+(prototype cross-entropy on $-\tfrac12 d^2$ to anchors $+$ repulsion $+$
+SIGReg), balanced batches, 2 rounds $\times$ 5 epochs.  Reported both
+``naturally'' (train pool as-is) and on an injected grid (signal fraction
+$f$ swept) for post-discovery power.
+
+\paragraph{Metric battery.}
+\emph{probe}: AUC of a linear probe trained to separate held-out from
+seen test images (3 seeds); \emph{acc}: seen-class nearest-centroid
+accuracy; \emph{supAUC}: seen-class supervised separability;
+\emph{eucl}/\emph{mahaT}: novelty AUC of min Euclidean/tied-covariance
+Mahalanobis distance to seen centroids; \emph{perevt}: per-event
+detection power at $\alpha{=}0.05$ from the distance score;
+SparKer/Maha/MMD: dataset-level two-sample test power at injected
+fraction $f$ (toy size $n_d{=}1000$--$2000$; SparKer uses an annealed
+median-heuristic kernel scale).
+
+\section{Results}
+
+\subsection{Pre-discovery: the six arms across the grid}
+
+\begin{table}[h]\centering\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{l cc cc cc cc}
+\toprule
+& \multicolumn{2}{c}{cars} & \multicolumn{2}{c}{flowers}
+& \multicolumn{2}{c}{dtd} & \multicolumn{2}{c}{galaxy10} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}\cmidrule(lr){8-9}
+arm (DINO base) & probe & mahaT & probe & mahaT & probe & mahaT & probe & mahaT \\
+\midrule
+simclr-ft      & 0.624 & 0.476 & 0.743 & 0.673 & \best{0.808} & 0.506 & 0.868 & 0.730 \\
+sigreg-ssl-ft  & 0.584 & 0.496 & 0.732 & 0.706 & 0.803 & 0.577 & 0.914 & 0.764 \\
+nplm-bil-ft    & 0.591 & 0.496 & 0.664 & 0.646 & 0.682 & 0.479 & 0.839 & 0.712 \\
+supcon-ft      & \best{0.733} & \best{0.564} & 0.708 & 0.873 & 0.799 & 0.646 & \best{0.938} & 0.786 \\
+ss-ft          & 0.719 & 0.547 & \best{0.795} & \best{0.883} & 0.782 & \best{0.742} & 0.872 & 0.691 \\
+nplm-sup-ft    & 0.549 & 0.547 & 0.625 & 0.668 & 0.586 & 0.615 & 0.878 & \best{0.824} \\
+\bottomrule
+\end{tabular}
+\caption{Pre-discovery battery, DINO base (LeJEPA/VISReg bases reproduce
+the same ordering).  The pre-probe champion is regime-determined:
+fine-grained $\to$ ss-ft, texture $\to$ simclr-ft, few-class coarse $\to$
+supcon-ft; supervised NPLM takes the calibration crown exactly at few
+classes (galaxy10: best eucl/mahaT, per-event 0.35 vs.\ supcon's 0.02,
+round-1 pool purity 0.46--0.50 on all three bases).}
+\end{table}
+
+\subsection{Discovery: pre $\to$ post probe across all bases}
+
+\begin{table}[h]\centering\footnotesize
+\setlength{\tabcolsep}{3.5pt}
+\begin{tabular}{l ccc ccc}
+\toprule
+& \multicolumn{3}{c}{cars} & \multicolumn{3}{c}{flowers} \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-7}
+arm & DINO & LeJEPA & VISReg & DINO & LeJEPA & VISReg \\
+\midrule
+supcon-ft & .733$\to$\best{.767} & .699$\to$.726 & .707$\to$.759 & .708$\to$\best{.814} & .678$\to$.752 & .714$\to$.810 \\
+ss-ft & .719$\to$.747 & .709$\to$.699 & \best{.741}$\to$.712 & \best{.795}$\to$.788 & .792$\to$.613 & .754$\to$.743 \\
+simclr-ft & .624$\to$.684 & .618$\to$.614 & .610$\to$.657 & .743$\to$.754 & .725$\to$.740 & .746$\to$.728 \\
+sigreg-ssl-ft & .584$\to$.690 & .563$\to$.617 & .574$\to$.634 & .732$\to$.777 & .684$\to$.719 & .738$\to$.734 \\
+nplm-bil-ft & .591$\to$.704 & .611$\to$.658 & .576$\to$.624 & .664$\to$.808 & .768$\to$.723 & .737$\to$.737 \\
+nplm-sup-ft & .549$\to$.600 & .582$\to$.658 & .579$\to$.549 & .625$\to$.624 & .734$\to$.706 & .631$\to$.576 \\
+\midrule
+& \multicolumn{3}{c}{dtd} & \multicolumn{3}{c}{galaxy10} \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-7}
+supcon-ft & .799$\to$\best{.811} & .755$\to$.790 & .750$\to$.791 & \best{.938}$\to$.939 & .919$\to$.931 & \best{.939}$\to$.944 \\
+ss-ft & .782$\to$.785 & .787$\to$.784 & .784$\to$.785 & .872$\to$.926 & .803$\to$.871 & .865$\to$\best{.945} \\
+simclr-ft & \best{.808}$\to$.802 & \best{.817}$\to$.821 & \best{.854}$\to$.848 & .868$\to$\best{.942} & .902$\to$\best{.946} & .933$\to$.922 \\
+sigreg-ssl-ft & .803$\to$.802 & .809$\to$.826 & .808$\to$.790 & .914$\to$.931 & \best{.927}$\to$.940 & .931$\to$.940 \\
+nplm-bil-ft & .682$\to$.786 & .746$\to$.745 & .778$\to$.811 & .839$\to$.928 & .893$\to$.905 & .802$\to$.904 \\
+nplm-sup-ft & .586$\to$.781 & .581$\to$.765 & .569$\to$.707 & .878$\to$.912 & .899$\to$.897 & .883$\to$.933 \\
+\bottomrule
+\end{tabular}
+\caption{Held-out probe, pre $\to$ post discovery, full
+$4\times3\times6$ grid.  Discovery is positive in 50/72 cells;
+\textbf{supcon-ft$+$discovery is positive in 12/12 dataset$\times$base
+cells} (the universally safe pipeline).  On \emph{frozen} trunks (exp
+69, cars) discovery was probe-negative for every arm --- the substrate,
+not the dataset, decides.  Notable: the nplm-sup-ft ``rescue'' on DTD
+($+0.14$ to $+0.20$ on every base); the one catastrophic case is ss-ft
+on flowers/LeJEPA ($-0.18$).}
+\end{table}
+
+\subsection{Residual fine-tuning (exp 71)}
+
+\begin{table}[h]\centering\small
+\setlength{\tabcolsep}{4.5pt}
+\begin{tabular}{ll l cc cc}
+\toprule
+dataset & base & best construction & probe & perevt & parent & prior champ \\
+\midrule
+cars & DINO & supcon$\to$res-nplm concat & 0.821 & 0.148 & 0.733 & 0.767 \\
+cars & LeJEPA & supcon$\to$res-nplm concat & 0.779 & 0.082 & 0.699 & 0.726 \\
+cars & VISReg & supcon$\to$res-nplm concat & \best{0.855} & \best{0.263} & 0.707 & 0.759 \\
+flowers & DINO & supcon$\to$res-nplm concat & \best{0.885} & 0.334 & 0.708 & 0.814 \\
+flowers & LeJEPA & ss$\to$res concat & 0.813 & 0.258 & 0.792 & 0.752 \\
+flowers & VISReg & supcon$\to$res-nplm concat & 0.858 & 0.455 & 0.714 & 0.810 \\
+dtd & DINO & supcon$\to$res concat & 0.845 & 0.045 & 0.799 & 0.811 \\
+dtd & LeJEPA & ss$\to$res concat & 0.831 & 0.158 & 0.787 & 0.826 \\
+dtd & VISReg & supcon$\to$res concat & 0.847 & 0.077 & 0.750 & 0.854$^\ast$ \\
+galaxy10 & DINO & supcon$\to$res concat & 0.955 & 0.021 & 0.938 & 0.942 \\
+galaxy10 & LeJEPA & supcon$\to$res concat & \best{0.975} & 0.001 & 0.919 & 0.946 \\
+galaxy10 & VISReg & supcon$\to$res residual & 0.965 & 0.243 & 0.939 & 0.945 \\
+\bottomrule
+\end{tabular}
+\caption{Best residual construction per cell (probe; per-event power at
+$\alpha{=}0.05$), against its parent and the best prior (exp-70)
+pipeline.  $^\ast$DTD's prior champion is the \emph{pre}-discovery
+simclr-ft space --- the only exp-70 record residual training does not
+beat.  Residual fine-tuning beats the discovery pipeline in
+\textbf{12/12 cells}.}
+\end{table}
+
+\paragraph{The flagship space.}
+Cars/VISReg supcon$\to$res-nplm concat: probe 0.855, nearest-centroid acc
+0.608, eucl 0.747, mahaT 0.678, per-event 0.263 --- the best cars value
+in \emph{every column simultaneously}, and the first cars space to break
+the probe--calibration dissociation.  In general the NPLM residual
+concat raises the probe while \emph{keeping} the parent's calibration,
+whereas plain-res concats often buy the probe with calibration
+(galaxy10/LeJePA: probe 0.975 with per-event 0.001).
+
+\section{Verdicts}
+
+\begin{enumerate}\itemsep3pt
+\item \textbf{Substrate decides whether discovery helps.}  On frozen
+trunks, fine-grained novelty is not geometrically outlying and discovery
+erodes the space; on task-fine-tuned trunks the same impure-pool
+fine-tune acts as refinement (50/72 cells positive; pool purity can stay
+low).  supcon-ft$+$discovery is the only universally safe pipeline
+(12/12).
+\item \textbf{Champion objectives are regime-determined and
+base-invariant.}  Fine-grained many-class $\to$ SupCon$+$SIGReg;
+texture $\to$ SimCLR (labels add nothing: DTD record 0.854 is
+unsupervised); few-class coarse $\to$ SupCon for the probe and
+supervised distance-NPLM for calibration --- the CIFAR class-count rule,
+verbatim, on transfer data.
+\item \textbf{Residual training $>$ discovery everywhere.}  New records:
+cars 0.855 ($+0.088$ over discovery), flowers 0.885 ($+0.071$),
+galaxy10 0.975 ($+0.029$).  The winning residual objective splits by
+regime (res-nplm on fine-grained, plain res on texture/coarse);
+supcon-ft is the universal parent, and ss-ft parents fail on
+fine-grained data because their SIGReg marginal has already absorbed the
+residual directions.
+\item \textbf{The probe--calibration dissociation is real but not
+absolute}: NPLM spaces are the calibrated, distance-ready ones
+throughout, softmax spaces the probe-ready ones --- and the
+res-nplm concat is the one construction found so far that delivers
+both at once.
+\item \textbf{End-to-end fine-tuning erases the frozen-base ranking}
+(VISReg, weakest frozen, holds several pre records), extending the
+exp-43/49 inversion to the open-world battery.
+\end{enumerate}
+
+\vspace{1em}
+\noindent\textit{Artifacts: scripts \texttt{experiments/70\_cars\_ft\_suite.py},
+\texttt{experiments/71\_residual\_ft\_grid.py}; per-cell logs and npz
+archives in \texttt{logs/exp70}, \texttt{logs/exp71}; full tables in
+\texttt{docs/AIRCRAFT\_MASTER\_TABLE.md}; checkpoints
+\texttt{checkpoints/\{ds\}\_ft\_\{base\}\_\{arm\}\_seen.pt}.}
+
+\end{document}
