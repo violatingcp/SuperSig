@@ -1,0 +1,32 @@
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+exp71 [dtd_dino_ft71] residual ft on exp-70 parents, runs=[('supcon-ft', 'res'), ('ss-ft', 'res'), ('supcon-ft', 'res-nplm')], epochs=1
+
+===== [dtd_dino_ft71] supcon-ft->res =====
+  [supcon-ft (parent)          ] probe=0.7974+-0.0017 acc=0.6932 eucl=0.7235 mahaT=0.7352 perevt=0.102
+  [supcon-ft-res] epoch 1/1  main=2.5636  aux=0.6344
+  extracted ft70_supcon-ft_res train: (3760, 768)
+  extracted ft70_supcon-ft_res test: (1880, 768)
+  [supcon-ft->res (residual)   ] probe=0.8030+-0.0025 acc=0.6608 eucl=0.5847 mahaT=0.6369 perevt=0.030
+  [supcon-ft->res (concat)     ] probe=0.8384+-0.0042 acc=0.6851 eucl=0.6856 mahaT=0.7270 perevt=0.095
+
+===== [dtd_dino_ft71] ss-ft->res =====
+  !! missing parent /home/pharris/sigreg/SuperSig/checkpoints/dtd_ft_dino_ss-ft_seen_quick.pt, skipping
+
+===== [dtd_dino_ft71] supcon-ft->res-nplm =====
+  [supcon-ft-res-nplm] epoch 1/1  main=324001309473.3913  aux=0.1364
+  extracted ft70_supcon-ft_resnplm train: (3760, 768)
+  extracted ft70_supcon-ft_resnplm test: (1880, 768)
+  [supcon-ft->res-nplm (residual)] probe=0.7886+-0.0027 acc=0.6473 eucl=0.6651 mahaT=0.6773 perevt=0.107
+  [supcon-ft->res-nplm (concat)] probe=0.8181+-0.0073 acc=0.6885 eucl=0.7226 mahaT=0.7096 perevt=0.125
+
+===== EXP71 SUMMARY [dtd_dino_ft71] =====
+  space                                    probe     acc    eucl   mahaT  perevt
+  supcon-ft (parent)               0.7974+-0.0017  0.6932  0.7235  0.7352   0.102
+  supcon-ft->res (residual)        0.8030+-0.0025  0.6608  0.5847  0.6369   0.030
+  supcon-ft->res (concat)          0.8384+-0.0042  0.6851  0.6856  0.7270   0.095
+  supcon-ft->res-nplm (residual)   0.7886+-0.0027  0.6473  0.6651  0.6773   0.107
+  supcon-ft->res-nplm (concat)     0.8181+-0.0073  0.6885  0.7226  0.7096   0.125
+saved /home/pharris/sigreg/SuperSig/plots/exp71_probe_dtd_dino_ft71.png
+Done.
