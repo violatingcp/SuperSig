@@ -1,0 +1,51 @@
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+exp71 [cars_visreg_ft71] residual ft on exp-70 parents, runs=[('supcon-ft', 'res'), ('ss-ft', 'res'), ('supcon-ft', 'res-nplm')], epochs=20
+
+===== [cars_visreg_ft71] supcon-ft->res =====
+  [supcon-ft (parent)          ] probe=0.7067+-0.0077 acc=0.5546 eucl=0.7149 mahaT=0.6609 perevt=0.223
+  [supcon-ft-res] epoch 1/20  main=2.5084  aux=0.5913
+  [supcon-ft-res] epoch 5/20  main=2.4253  aux=0.5054
+  [supcon-ft-res] epoch 10/20  main=2.4019  aux=0.4573
+  [supcon-ft-res] epoch 15/20  main=2.3842  aux=0.4136
+  [supcon-ft-res] epoch 20/20  main=2.3801  aux=0.4002
+  extracted ft70_supcon-ft_res train: (8144, 768)
+  extracted ft70_supcon-ft_res test: (8041, 768)
+  [supcon-ft->res (residual)   ] probe=0.7283+-0.0047 acc=0.3706 eucl=0.5689 mahaT=0.5227 perevt=0.073
+  [supcon-ft->res (concat)     ] probe=0.8007+-0.0137 acc=0.5467 eucl=0.7046 mahaT=0.6126 perevt=0.228
+
+===== [cars_visreg_ft71] ss-ft->res =====
+  [ss-ft (parent)              ] probe=0.7407+-0.0068 acc=0.3508 eucl=0.5595 mahaT=0.5484 perevt=0.056
+  [ss-ft-res] epoch 1/20  main=2.4747  aux=0.4667
+  [ss-ft-res] epoch 5/20  main=2.3660  aux=0.4391
+  [ss-ft-res] epoch 10/20  main=2.3462  aux=0.4221
+  [ss-ft-res] epoch 15/20  main=2.3348  aux=0.3981
+  [ss-ft-res] epoch 20/20  main=2.3298  aux=0.3864
+  extracted ft70_ss-ft_res train: (8144, 768)
+  extracted ft70_ss-ft_res test: (8041, 768)
+  [ss-ft->res (residual)       ] probe=0.5875+-0.0024 acc=0.0812 eucl=0.4369 mahaT=0.4477 perevt=0.026
+  [ss-ft->res (concat)         ] probe=0.7092+-0.0012 acc=0.3035 eucl=0.4786 mahaT=0.4923 perevt=0.042
+
+===== [cars_visreg_ft71] supcon-ft->res-nplm =====
+  [supcon-ft-res-nplm] epoch 1/20  main=635555232942.2075  aux=0.1173
+  [supcon-ft-res-nplm] epoch 5/20  main=191990107004.2822  aux=0.1569
+  [supcon-ft-res-nplm] epoch 10/20  main=87273176615.3029  aux=0.1755
+  [supcon-ft-res-nplm] epoch 15/20  main=49429686044.5477  aux=0.1852
+  [supcon-ft-res-nplm] epoch 20/20  main=36816324309.7344  aux=0.1920
+  extracted ft70_supcon-ft_resnplm train: (8144, 768)
+  extracted ft70_supcon-ft_resnplm test: (8041, 768)
+  [supcon-ft->res-nplm (residual)] probe=0.8361+-0.0073 acc=0.6089 eucl=0.7278 mahaT=0.6461 perevt=0.256
+  [supcon-ft->res-nplm (concat)] probe=0.8545+-0.0135 acc=0.6077 eucl=0.7466 mahaT=0.6779 perevt=0.263
+
+===== EXP71 SUMMARY [cars_visreg_ft71] =====
+  space                                    probe     acc    eucl   mahaT  perevt
+  supcon-ft (parent)               0.7067+-0.0077  0.5546  0.7149  0.6609   0.223
+  supcon-ft->res (residual)        0.7283+-0.0047  0.3706  0.5689  0.5227   0.073
+  supcon-ft->res (concat)          0.8007+-0.0137  0.5467  0.7046  0.6126   0.228
+  ss-ft (parent)                   0.7407+-0.0068  0.3508  0.5595  0.5484   0.056
+  ss-ft->res (residual)            0.5875+-0.0024  0.0812  0.4369  0.4477   0.026
+  ss-ft->res (concat)              0.7092+-0.0012  0.3035  0.4786  0.4923   0.042
+  supcon-ft->res-nplm (residual)   0.8361+-0.0073  0.6089  0.7278  0.6461   0.256
+  supcon-ft->res-nplm (concat)     0.8545+-0.0135  0.6077  0.7466  0.6779   0.263
+saved /home/pharris/sigreg/SuperSig/plots/exp71_probe_cars_visreg_ft71.png
+Done.
