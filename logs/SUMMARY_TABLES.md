@@ -429,6 +429,18 @@ many-class data (flowers).  ss-ft: record purities (dtd 0.80-0.81,
 flowers 0.60-0.66) but discovery-unstable (flowers/LeJEPA 0.79 -> 0.61).
 E2e ft erases the frozen-base ranking (VISReg takes several pre records).
 
+Exp 71 (`71_residual_ft_grid.py`, 2026-08-07/08) ran the exp-49 residual
+fine-tune on the exp-70 parents over the same 12-cell grid (supcon->res,
+ss->res, supcon->res-nplm; 36 e2e fts).  Residuals beat the discovery
+pipeline in 12/12 cells and set new records on cars 0.855 (visreg
+res-nplm concat, +0.088 -- also best cars acc/eucl/mahaT/perevt at once,
+first cars space to break the dissociation), flowers 0.885 (dino
+res-nplm concat), galaxy10 0.975 (lejepa res concat, probe-only).  Only
+dtd's simclr-ft pre record (0.854) survives.  Objective split: res-nplm
+concat wins fine-grained cells, plain res wins texture/coarse; supcon-ft
+is the universal parent (ss-ft parents fail fine-grained).  Full grid in
+docs/AIRCRAFT_MASTER_TABLE.md.
+
 ## NPLM program verdicts
 
 - Probe-vs-calibration dissociation everywhere: softmax(SupCon) spaces are

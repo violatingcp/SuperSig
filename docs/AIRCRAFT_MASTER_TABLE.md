@@ -318,6 +318,49 @@ few-class regime where supervised distance-NPLM is the right corner.
   +0.05..+0.15) and where purity is high; flowers/VISReg shows purity
   0.65+ can still leave strong arms flat (nothing left to learn).
 
+## Residual fine-tuning grid (exp 71; exp-49 recipe on the exp-70
+parents, 12 cells x {supcon->res, ss->res, supcon->res-nplm}, all
+end-to-end, holdouts excluded.  Best construction per cell, probe
+(perevt); parent and prior exp-70 champion for reference)
+
+| dataset | base | best residual construction | probe (perevt) | parent | prior champ |
+|---|---|---|---|---|---|
+| cars | dino | supcon->res-nplm concat | 0.821 (0.148) | 0.733 | 0.767 |
+| cars | lejepa | supcon->res-nplm concat | 0.779 (0.082) | 0.699 | 0.726 |
+| cars | visreg | supcon->res-nplm concat | **0.855 (0.263)** | 0.707 | 0.759 |
+| flowers | dino | supcon->res-nplm concat | **0.885 (0.334)** | 0.708 | 0.814 |
+| flowers | lejepa | ss->res concat | 0.813 (0.258) | 0.792 | 0.752 |
+| flowers | visreg | supcon->res-nplm concat | 0.858 (0.455) | 0.714 | 0.810 |
+| dtd | dino | supcon->res concat | 0.845 (0.045) | 0.799 | 0.811 |
+| dtd | lejepa | ss->res concat | 0.831 (0.158) | 0.787 | 0.826 |
+| dtd | visreg | supcon->res concat | 0.847 (0.077) | 0.750 | **0.854*** |
+| galaxy10 | dino | supcon->res concat | 0.955 (0.021) | 0.938 | 0.942 |
+| galaxy10 | lejepa | supcon->res concat | **0.975 (0.001)** | 0.919 | 0.946 |
+| galaxy10 | visreg | supcon->res residual | 0.965 (0.243) | 0.939 | 0.945 |
+
+(*dtd prior champ = simclr-ft PRE, the one exp-70 record residuals do
+not beat.)
+
+Verdicts:
+- **Residual fine-tuning beats the discovery pipeline in 12/12 cells**
+  and sets new dataset records on cars (0.855, +0.088), flowers (0.885,
+  +0.071) and galaxy10 (0.975, +0.029).  The fine-grained information
+  that discovery's tail-pooling cannot reach is exactly what the
+  residual objective extracts.
+- **The winning residual objective splits by regime**: res-nplm concat
+  on fine-grained data (cars 3/3, flowers 2/3), plain res concat on
+  texture/coarse (dtd 3/3, galaxy10 3/3) -- the NPLM-vs-softmax split
+  from the probe world, now inside the residual construction.
+- **res-nplm concats keep the parent's calibration** (per-event
+  0.08-0.46 while raising the probe; cars/visreg 0.855 probe + 0.263
+  per-event + best eucl/mahaT is the first cars space to break the
+  probe-calibration dissociation).  Plain res concats often buy their
+  probe with calibration (galaxy10/lejepa 0.975 probe, 0.001 per-event).
+- **supcon-ft is the universal residual parent**; ss-ft parents lose
+  outright on fine-grained data (their sigreg marginal has already
+  absorbed the residual directions) and only win where supcon parents
+  are weakest (flowers/lejepa, dtd/lejepa).
+
 ## Aircraft NPLM residual/concat (exp 60, DINO, 16+16)
 
 | arm | probe | acc | eucl | mahaT | perevt | MMD@.1 |
