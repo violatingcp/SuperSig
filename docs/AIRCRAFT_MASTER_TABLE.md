@@ -325,6 +325,9 @@ end-to-end, holdouts excluded.  Best construction per cell, probe
 
 | dataset | base | best residual construction | probe (perevt) | parent | prior champ |
 |---|---|---|---|---|---|
+| aircraft | dino | supcon->res-nplm concat | 0.816 (0.225) | 0.761 | 0.812* |
+| aircraft | lejepa | supcon->res-nplm concat | 0.848 (0.198) | 0.799 | 0.812* |
+| aircraft | visreg | supcon->res-nplm concat | **0.863 (0.363)** | 0.809 | 0.812* |
 | cars | dino | supcon->res-nplm concat | 0.821 (0.148) | 0.733 | 0.767 |
 | cars | lejepa | supcon->res-nplm concat | 0.779 (0.082) | 0.699 | 0.726 |
 | cars | visreg | supcon->res-nplm concat | **0.855 (0.263)** | 0.707 | 0.759 |
@@ -339,7 +342,13 @@ end-to-end, holdouts excluded.  Best construction per cell, probe
 | galaxy10 | visreg | supcon->res residual | 0.965 (0.243) | 0.939 | 0.945 |
 
 (*dtd prior champ = simclr-ft PRE, the one exp-70 record residuals do
-not beat.)
+not beat.  Aircraft prior champ 0.812 = exp-51-ft with the trunk-
+contamination caveat; the aircraft rows here use NEW open-world parents
+-- exp-70 protocol, holdouts 90-99 excluded -- so 0.863 is both a record
+and a stricter number.  Aircraft parents: supcon-ft 0.761/0.799/0.809,
+ss-ft 0.802/0.802/0.828 on dino/lejepa/visreg; ss-ft wins the parent
+probe on every base, supcon-ft parents the better residuals -- the
+fine-grained pattern again.)
 
 Verdicts:
 - **Residual fine-tuning beats the discovery pipeline in 12/12 cells**
@@ -376,8 +385,22 @@ exp-71 champion of each cell; probe / mahaT pre -> post, purity r1)
 | dtd dino | supcon->res concat | 0.845 -> 0.838 | 0.604 -> 0.646 | 0.135 |
 | galaxy10 dino / lejepa / visreg | res concats / residual | flat / -0.005 / -0.013 | mixed | 0.00-0.34 |
 
+Aircraft cells (run after the 12-cell grid; res-nplm concat winners):
+
+| cell | probe | mahaT | purity | perevt post best |
+|---|---|---|---|---|
+| aircraft dino | 0.816 -> 0.779 | 0.667 -> 0.664 | 0.363 | 0.32 |
+| aircraft lejepa | 0.848 -> 0.832 | 0.711 -> 0.732 | 0.318 | 0.24 |
+| aircraft visreg | 0.863 -> 0.851 | 0.765 -> **0.782** | 0.525 | **0.50** |
+
 Verdict: discovery on top of residual training is PURITY-GATED and
-saturating.  It stacks where the residual space separates novelty
+saturating -- and aircraft sharpens the gate: purity is NECESSARY but
+NOT SUFFICIENT.  Aircraft pools at moderate purity (0.32-0.53) yet
+discovery still costs probe (-0.012 to -0.037) while buying geometry
+and per-event power (visreg per-event 0.30-0.50 across all fractions,
+mahaT +0.017).  On fine-grained data the res-nplm concat's probe
+directions are what the discovery ft erodes; the aircraft record stays
+pre-discovery (0.863).  It stacks where the residual space separates novelty
 (flowers +0.021/+0.009 -> NEW flowers record 0.906; dtd visreg +0.015 ->
 NEW dtd record 0.862, finally beating simclr-ft's 0.854) and is flat or
 slightly negative elsewhere (cars and galaxy10 records stand at 0.855 /

@@ -46,6 +46,9 @@ STATS = ["perevent", "sparker", "maha", "mmd"]
 
 # (ds, base) -> (parent, objective, kind)   [exp-71 winners]
 WINNERS = {
+    ("aircraft", "dino"): ("supcon-ft", "resnplm", "concat"),
+    ("aircraft", "lejepa"): ("supcon-ft", "resnplm", "concat"),
+    ("aircraft", "visreg"): ("supcon-ft", "resnplm", "concat"),
     ("cars", "dino"): ("supcon-ft", "resnplm", "concat"),
     ("cars", "lejepa"): ("supcon-ft", "resnplm", "concat"),
     ("cars", "visreg"): ("supcon-ft", "resnplm", "concat"),
@@ -284,7 +287,8 @@ def main():
     print("saved", out)
 
     os.makedirs(os.path.join("logs", "exp72"), exist_ok=True)
-    np.savez(os.path.join("logs", "exp72", "residual_discovery.npz"),
+    ftag = ("_" + "_".join(k for k in keys)) if args.cells else ""
+    np.savez(os.path.join("logs", "exp72", f"residual_discovery{ftag}.npz"),
              cells=np.array(keys),
              **{f"{k}_{f}": np.array(all_out[k][f]) for k in keys
                 for f in ("probe_pre", "probe_post", "eucl_pre", "eucl_post",

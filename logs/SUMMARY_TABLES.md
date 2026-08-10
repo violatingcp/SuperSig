@@ -447,8 +447,17 @@ residual space separates novelty (flowers 0.885 -> 0.906 NEW RECORD,
 dtd 0.847 -> 0.862 NEW RECORD -- simclr's last pre record finally
 falls), flat/slightly negative elsewhere (cars 0.855 and galaxy10 0.975
 stand from exp 71).  galaxy10/visreg residual + discovery: per-event
-0.32-0.45 at ALL fractions (best low-f per-event on record).  Final
-probe records, all residual pipelines: cars 0.855, flowers 0.906, dtd
+0.32-0.45 at ALL fractions (best low-f per-event on record).
+
+Aircraft joined the grid (2026-08-10) with NEW open-world parents
+(exp-70 protocol, holdouts 90-99 excluded): supcon->res-nplm concat wins
+all three bases (0.816/0.848/0.863 dino/lejepa/visreg; visreg near-
+Pareto, perevt 0.363), beating the caveated 0.812 prior best.  Exp-72
+discovery on the aircraft winners is probe-NEGATIVE at moderate purity
+(0.32-0.53) while buying geometry/per-event (visreg 0.30-0.50 all f):
+purity is necessary but NOT sufficient -- fine-grained res-nplm probe
+directions are what the discovery ft erodes.  Final probe records, all
+residual pipelines: aircraft 0.863, cars 0.855, flowers 0.906, dtd
 0.862, galaxy10 0.975.
 
 ## NPLM program verdicts

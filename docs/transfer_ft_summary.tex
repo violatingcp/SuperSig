@@ -48,8 +48,8 @@ classes); (iii) residual fine-tuning beats the discovery pipeline in all
 space to break the probe--calibration dissociation; (iv) a final
 discovery pass on the residual winners is \emph{purity-gated}: it stacks
 only where the residual space separates the novelty, yielding the
-program's final records --- cars 0.855, flowers 0.906, DTD 0.862,
-Galaxy10 0.975 --- every one a residual pipeline.
+program's final records --- aircraft 0.863, cars 0.855, flowers 0.906,
+DTD 0.862, Galaxy10 0.975 --- every one a residual pipeline.
 \end{abstract}
 
 \section{Setup}
@@ -289,6 +289,9 @@ on flowers/LeJEPA ($-0.18$).}
 \toprule
 dataset & base & best construction & probe & perevt & parent & prior champ \\
 \midrule
+aircraft & DINO & supcon$\to$res-nplm concat & 0.816 & 0.225 & 0.761 & 0.812$^\dagger$ \\
+aircraft & LeJEPA & supcon$\to$res-nplm concat & 0.848 & 0.198 & 0.799 & 0.812$^\dagger$ \\
+aircraft & VISReg & supcon$\to$res-nplm concat & \best{0.863} & \best{0.363} & 0.809 & 0.812$^\dagger$ \\
 cars & DINO & supcon$\to$res-nplm concat & 0.821 & 0.148 & 0.733 & 0.767 \\
 cars & LeJEPA & supcon$\to$res-nplm concat & 0.779 & 0.082 & 0.699 & 0.726 \\
 cars & VISReg & supcon$\to$res-nplm concat & \best{0.855} & \best{0.263} & 0.707 & 0.759 \\
@@ -307,8 +310,12 @@ galaxy10 & VISReg & supcon$\to$res residual & 0.965 & 0.243 & 0.939 & 0.945 \\
 $\alpha{=}0.05$), against its parent and the best prior (exp-70)
 pipeline.  $^\ast$DTD's prior champion is the \emph{pre}-discovery
 simclr-ft space --- the only exp-70 record residual training does not
-beat.  Residual fine-tuning beats the discovery pipeline in
-\textbf{12/12 cells}.}
+beat.  $^\dagger$Aircraft's prior best carried a trunk-contamination
+caveat (the exp-62 trunks saw held-out images and labels); the aircraft
+rows here use new strictly open-world parents (exp-70 protocol,
+holdouts 90--99 excluded), so 0.863 is both a record and a stricter
+number.  Residual fine-tuning beats the discovery pipeline in
+\textbf{12/12 cells} (15/15 including aircraft).}
 \end{table}
 
 \paragraph{The flagship space.}
@@ -355,7 +362,18 @@ highlight: galaxy10/VISReg residual $+$ discovery holds per-event power
 low-$f$ per-event on record.}
 \end{table}
 
+\paragraph{Aircraft sharpens the purity gate.}
+Discovery on the three aircraft res-nplm-concat winners is
+probe-negative ($-0.012$ to $-0.037$) despite \emph{moderate} pool
+purity (0.32--0.53), while buying geometry and per-event power
+(VISReg: per-event 0.30--0.50 at every fraction, mahaT $+0.017$):
+purity is necessary but \emph{not sufficient} --- on fine-grained data
+the res-nplm concat's probe directions are exactly what the discovery
+fine-tune erodes.
+
 \paragraph{Final dataset probe records (all residual pipelines).}
+aircraft \best{0.863} (VISReg supcon$\to$res-nplm concat, exp 71,
+strict open-world parents);
 cars \best{0.855} (VISReg supcon$\to$res-nplm concat, exp 71);
 flowers \best{0.906} (DINO supcon$\to$res-nplm concat $+$ discovery,
 exp 72); DTD \best{0.862} (VISReg supcon$\to$res concat $+$ discovery,
