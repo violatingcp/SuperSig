@@ -68,7 +68,8 @@ def make_res_nplm_step(cents, lam, n_slices):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--dataset", default="cars",
-                    choices=["cars", "flowers", "galaxy10", "dtd"])
+                    choices=["cars", "aircraft", "flowers", "galaxy10",
+                             "dtd"])
     ap.add_argument("--base", default="dino",
                     choices=["dino", "lejepa", "visreg"])
     ap.add_argument("--quick", action="store_true")
