@@ -1,0 +1,54 @@
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+exp70 [aircraft_lejepa_ft70] end-to-end ft suite, arms=['supcon-ft', 'ss-ft'], ft_epochs=20, emb=100, holdouts 90-99 EXCLUDED from ft
+  ft corpus: 6000/6667 train images (holdout classes removed)
+
+===== [supcon-ft] (supervised) =====
+Fetching 37 files:   0%|          | 0/37 [00:00<?, ?it/s]Fetching 37 files: 100%|██████████| 37/37 [00:00<00:00, 256087.87it/s]
+  [supcon-ft] epoch 1/20  main=1.6341  aux=0.0000
+  [supcon-ft] epoch 5/20  main=1.1856  aux=0.0000
+  [supcon-ft] epoch 10/20  main=1.0094  aux=0.0000
+  [supcon-ft] epoch 15/20  main=0.8979  aux=0.0000
+  [supcon-ft] epoch 20/20  main=0.8349  aux=0.0000
+  extracted ft70_supcon-ft train: (6667, 768)
+  extracted ft70_supcon-ft test: (3333, 768)
+  [supcon-ft     ] probe=0.7985+-0.0024 acc=0.5607 supAUC=0.9821 eucl=0.7183 mahaT=0.7229 mahaPC=0.7467
+
+===== [ss-ft] (supervised) =====
+Fetching 37 files:   0%|          | 0/37 [00:00<?, ?it/s]Fetching 37 files: 100%|██████████| 37/37 [00:00<00:00, 22838.74it/s]
+  [ss-ft] epoch 1/20  main=2.1055  aux=1.4118
+  [ss-ft] epoch 5/20  main=1.3102  aux=0.6001
+  [ss-ft] epoch 10/20  main=1.1791  aux=0.5351
+  [ss-ft] epoch 15/20  main=1.0307  aux=0.4852
+  [ss-ft] epoch 20/20  main=1.0089  aux=0.4589
+  extracted ft70_ss-ft train: (6667, 768)
+  extracted ft70_ss-ft test: (3333, 768)
+  [ss-ft         ] probe=0.8024+-0.0108 acc=0.4627 supAUC=0.9735 eucl=0.5124 mahaT=0.6191 mahaPC=0.7243
+
+===== PRE table =====
+  arm                        probe     acc  supAUC    eucl   mahaT  mahaPC
+  supcon-ft          0.7985+-0.0024  0.5607  0.9821  0.7183  0.7229  0.7467
+  ss-ft              0.8024+-0.0108  0.4627  0.9735  0.5124  0.6191  0.7243
+
+===== gaussianity (seen classes, test set) =====
+  metric                         supcon-ft         ss-ft
+  eig min (class cov)               -0.000        -0.000
+  eig max (class cov)                3.180        14.657
+  eig cond worst            3179620597760.014656614694912.0
+  class RMS min                      0.144         0.415
+  class RMS mean                     0.195         0.637
+  class RMS max                      0.245         0.765
+  max |corr| (worst class)           0.933         0.934
+  SW ratio mean                       1.16          1.16
+  SW ratio worst                      2.89          2.49
+  |skew| mean                        0.350         0.347
+  |ex-kurt| mean                     0.668         0.662
+  centroid dist min                   0.45          1.13
+  centroid dist mean                  3.67          9.70
+  separation (min d/RMS)              2.32          1.77
+
+===== EXP70 SUMMARY [aircraft_lejepa_ft70] =====
+  [supcon-ft     ] probe=0.7985+-0.0024 acc=0.5607 eucl=0.7183 mahaT=0.7229
+  [ss-ft         ] probe=0.8024+-0.0108 acc=0.4627 eucl=0.5124 mahaT=0.6191
+saved /home/pharris/sigreg/SuperSig/plots/exp70_probe_aircraft_lejepa_ft70.png
+Done.
