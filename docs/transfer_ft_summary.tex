@@ -17,7 +17,7 @@
 
 \title{Open-World Novelty on Transfer Datasets:\\
 End-to-End Fine-Tuning, Discovery, and Residual Training\\
-{\large SuperSig experiments 70--71 (with context from 49/51/62/69)}}
+{\large SuperSig experiments 70--72 (with context from 49/51/62/69)}}
 \author{P.~Harris (experiments run with Claude)}
 \date{August 2026}
 
@@ -43,10 +43,13 @@ cells; (ii) the champion pre-discovery objective is regime-determined and
 base-invariant (SupCon+SIGReg on fine-grained data, SimCLR on textures,
 SupCon on few-class coarse data, supervised NPLM for calibration at few
 classes); (iii) residual fine-tuning beats the discovery pipeline in all
-12 cells and sets new dataset records (cars 0.855, flowers 0.885,
-galaxy10 0.975), with the NPLM residual concat uniquely raising the probe
+12 cells, with the NPLM residual concat uniquely raising the probe
 \emph{while retaining} calibrated per-event power --- the first cars
-space to break the probe--calibration dissociation.
+space to break the probe--calibration dissociation; (iv) a final
+discovery pass on the residual winners is \emph{purity-gated}: it stacks
+only where the residual space separates the novelty, yielding the
+program's final records --- cars 0.855, flowers 0.906, DTD 0.862,
+Galaxy10 0.975 --- every one a residual pipeline.
 \end{abstract}
 
 \section{Setup}
@@ -317,6 +320,47 @@ concat raises the probe while \emph{keeping} the parent's calibration,
 whereas plain-res concats often buy the probe with calibration
 (galaxy10/LeJePA: probe 0.975 with per-event 0.001).
 
+\subsection{Discovery on the residual winners (exp 72)}
+
+The feature-space discovery loop was finally run on each cell's exp-71
+champion (for concat spaces the discovery backbone is a two-head wrapper
+--- parent head on the parent-trunk bank, residual head on the
+child-trunk bank --- and both heads fine-tune).
+
+\begin{table}[h]\centering\small
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{ll cc c}
+\toprule
+cell & space & probe pre $\to$ post & mahaT pre $\to$ post & purity $r_1$ \\
+\midrule
+flowers/DINO & supcon$\to$res-nplm concat & 0.885 $\to$ \best{0.906} & 0.843 $\to$ 0.853 & 0.609 \\
+flowers/VISReg & supcon$\to$res-nplm concat & 0.858 $\to$ 0.866 & 0.870 $\to$ 0.875 & 0.643 \\
+dtd/VISReg & supcon$\to$res concat & 0.847 $\to$ \best{0.862} & 0.758 $\to$ 0.778 & 0.292 \\
+dtd/LeJEPA & ss$\to$res concat & 0.831 $\to$ 0.838 & 0.791 $\to$ 0.796 & 0.588 \\
+cars/LeJEPA & supcon$\to$res-nplm concat & 0.779 $\to$ 0.787 & 0.514 $\to$ 0.534 & 0.104 \\
+cars/DINO, VISReg & res-nplm concats & flat ($-0.001$/$-0.004$) & $\sim$flat & 0.16/0.26 \\
+flowers/LeJEPA & ss$\to$res concat & flat & flat & 0.439 \\
+dtd/DINO & supcon$\to$res concat & 0.845 $\to$ 0.838 & 0.604 $\to$ 0.646 & 0.135 \\
+galaxy10 (3 bases) & res concats / residual & flat to $-0.013$ & mixed & 0.00--0.34 \\
+\bottomrule
+\end{tabular}
+\caption{Exp 72: discovery applied to the best residual space of each
+cell.  Gains are \emph{purity-gated}: discovery stacks only where the
+residual space separates the novelty (flowers, DTD), and saturates
+elsewhere (cars, galaxy10 --- their exp-71 records stand).  New records:
+flowers 0.906 (first flowers space past 0.90) and DTD 0.862, retiring
+simclr-ft's 0.854 --- the last pre-discovery record.  Calibration
+highlight: galaxy10/VISReg residual $+$ discovery holds per-event power
+0.32--0.45 at every injected fraction including $f{=}0.003$, the best
+low-$f$ per-event on record.}
+\end{table}
+
+\paragraph{Final dataset probe records (all residual pipelines).}
+cars \best{0.855} (VISReg supcon$\to$res-nplm concat, exp 71);
+flowers \best{0.906} (DINO supcon$\to$res-nplm concat $+$ discovery,
+exp 72); DTD \best{0.862} (VISReg supcon$\to$res concat $+$ discovery,
+exp 72); Galaxy10 \best{0.975} (LeJEPA supcon$\to$res concat, exp 71).
+
 \section{Verdicts}
 
 \begin{enumerate}\itemsep3pt
@@ -332,13 +376,15 @@ texture $\to$ SimCLR (labels add nothing: DTD record 0.854 is
 unsupervised); few-class coarse $\to$ SupCon for the probe and
 supervised distance-NPLM for calibration --- the CIFAR class-count rule,
 verbatim, on transfer data.
-\item \textbf{Residual training $>$ discovery everywhere.}  New records:
-cars 0.855 ($+0.088$ over discovery), flowers 0.885 ($+0.071$),
-galaxy10 0.975 ($+0.029$).  The winning residual objective splits by
-regime (res-nplm on fine-grained, plain res on texture/coarse);
-supcon-ft is the universal parent, and ss-ft parents fail on
-fine-grained data because their SIGReg marginal has already absorbed the
-residual directions.
+\item \textbf{Residual training $>$ discovery everywhere, and discovery
+on top of residuals is purity-gated.}  Residual records: cars 0.855
+($+0.088$ over discovery), flowers 0.885, galaxy10 0.975; a further
+discovery pass stacks only where the residual space separates the
+novelty, adding flowers $\to$ 0.906 and DTD $\to$ 0.862 (exp 72).  The
+winning residual objective splits by regime (res-nplm on fine-grained,
+plain res on texture/coarse); supcon-ft is the universal parent, and
+ss-ft parents fail on fine-grained data because their SIGReg marginal
+has already absorbed the residual directions.
 \item \textbf{The probe--calibration dissociation is real but not
 absolute}: NPLM spaces are the calibrated, distance-ready ones
 throughout, softmax spaces the probe-ready ones --- and the
@@ -351,8 +397,9 @@ exp-43/49 inversion to the open-world battery.
 
 \vspace{1em}
 \noindent\textit{Artifacts: scripts \texttt{experiments/70\_cars\_ft\_suite.py},
-\texttt{experiments/71\_residual\_ft\_grid.py}; per-cell logs and npz
-archives in \texttt{logs/exp70}, \texttt{logs/exp71}; full tables in
+\texttt{experiments/71\_residual\_ft\_grid.py},
+\texttt{experiments/72\_residual\_discovery.py}; per-cell logs and npz
+archives in \texttt{logs/exp70}--\texttt{exp72}; full tables in
 \texttt{docs/AIRCRAFT\_MASTER\_TABLE.md}; checkpoints
 \texttt{checkpoints/\{ds\}\_ft\_\{base\}\_\{arm\}\_seen.pt}.}
 
