@@ -1,0 +1,52 @@
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+exp70 [aircraft_visreg_ft70] end-to-end ft suite, arms=['supcon-ft', 'ss-ft'], ft_epochs=20, emb=100, holdouts 90-99 EXCLUDED from ft
+  ft corpus: 6000/6667 train images (holdout classes removed)
+
+===== [supcon-ft] (supervised) =====
+  [supcon-ft] epoch 1/20  main=1.7547  aux=0.0000
+  [supcon-ft] epoch 5/20  main=1.1690  aux=0.0000
+  [supcon-ft] epoch 10/20  main=0.9855  aux=0.0000
+  [supcon-ft] epoch 15/20  main=0.8705  aux=0.0000
+  [supcon-ft] epoch 20/20  main=0.8136  aux=0.0000
+  extracted ft70_supcon-ft train: (6667, 768)
+  extracted ft70_supcon-ft test: (3333, 768)
+  [supcon-ft     ] probe=0.8085+-0.0069 acc=0.5957 supAUC=0.9871 eucl=0.7305 mahaT=0.7197 mahaPC=0.7876
+
+===== [ss-ft] (supervised) =====
+  [ss-ft] epoch 1/20  main=2.0626  aux=1.1063
+  [ss-ft] epoch 5/20  main=1.2344  aux=0.5437
+  [ss-ft] epoch 10/20  main=1.1153  aux=0.4978
+  [ss-ft] epoch 15/20  main=0.9537  aux=0.4415
+  [ss-ft] epoch 20/20  main=0.9380  aux=0.4218
+  extracted ft70_ss-ft train: (6667, 768)
+  extracted ft70_ss-ft test: (3333, 768)
+  [ss-ft         ] probe=0.8284+-0.0035 acc=0.5290 supAUC=0.9801 eucl=0.5608 mahaT=0.6151 mahaPC=0.7054
+
+===== PRE table =====
+  arm                        probe     acc  supAUC    eucl   mahaT  mahaPC
+  supcon-ft          0.8085+-0.0069  0.5957  0.9871  0.7305  0.7197  0.7876
+  ss-ft              0.8284+-0.0035  0.5290  0.9801  0.5608  0.6151  0.7054
+
+===== gaussianity (seen classes, test set) =====
+  metric                         supcon-ft         ss-ft
+  eig min (class cov)               -0.000        -0.000
+  eig max (class cov)               33.953        13.690
+  eig cond worst            33953270464512.013690066698240.0
+  class RMS min                      0.472         0.373
+  class RMS mean                     0.690         0.619
+  class RMS max                      0.816         0.743
+  max |corr| (worst class)           0.942         0.903
+  SW ratio mean                       1.17          1.20
+  SW ratio worst                      3.21          3.20
+  |skew| mean                        0.352         0.361
+  |ex-kurt| mean                     0.678         0.674
+  centroid dist min                   1.69          1.18
+  centroid dist mean                 13.73          9.74
+  separation (min d/RMS)              2.44          1.91
+
+===== EXP70 SUMMARY [aircraft_visreg_ft70] =====
+  [supcon-ft     ] probe=0.8085+-0.0069 acc=0.5957 eucl=0.7305 mahaT=0.7197
+  [ss-ft         ] probe=0.8284+-0.0035 acc=0.5290 eucl=0.5608 mahaT=0.6151
+saved /home/pharris/sigreg/SuperSig/plots/exp70_probe_aircraft_visreg_ft70.png
+Done.

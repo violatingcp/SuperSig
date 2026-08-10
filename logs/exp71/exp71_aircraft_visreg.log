@@ -1,0 +1,51 @@
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+exp71 [aircraft_visreg_ft71] residual ft on exp-70 parents, runs=[('supcon-ft', 'res'), ('ss-ft', 'res'), ('supcon-ft', 'res-nplm')], epochs=20
+
+===== [aircraft_visreg_ft71] supcon-ft->res =====
+  [supcon-ft (parent)          ] probe=0.8085+-0.0069 acc=0.5957 eucl=0.7305 mahaT=0.7197 perevt=0.249
+  [supcon-ft-res] epoch 1/20  main=2.5193  aux=0.5567
+  [supcon-ft-res] epoch 5/20  main=2.3852  aux=0.4607
+  [supcon-ft-res] epoch 10/20  main=2.3711  aux=0.4396
+  [supcon-ft-res] epoch 15/20  main=2.3623  aux=0.4119
+  [supcon-ft-res] epoch 20/20  main=2.3546  aux=0.3980
+  extracted ft70_supcon-ft_res train: (6667, 768)
+  extracted ft70_supcon-ft_res test: (3333, 768)
+  [supcon-ft->res (residual)   ] probe=0.7918+-0.0070 acc=0.3137 eucl=0.4187 mahaT=0.5042 perevt=0.009
+  [supcon-ft->res (concat)     ] probe=0.8390+-0.0189 acc=0.5437 eucl=0.6010 mahaT=0.6589 perevt=0.141
+
+===== [aircraft_visreg_ft71] ss-ft->res =====
+  [ss-ft (parent)              ] probe=0.8284+-0.0035 acc=0.5290 eucl=0.5608 mahaT=0.6151 perevt=0.048
+  [ss-ft-res] epoch 1/20  main=2.5046  aux=0.4975
+  [ss-ft-res] epoch 5/20  main=2.3633  aux=0.4372
+  [ss-ft-res] epoch 10/20  main=2.3493  aux=0.4281
+  [ss-ft-res] epoch 15/20  main=2.3408  aux=0.4077
+  [ss-ft-res] epoch 20/20  main=2.3363  aux=0.4006
+  extracted ft70_ss-ft_res train: (6667, 768)
+  extracted ft70_ss-ft_res test: (3333, 768)
+  [ss-ft->res (residual)       ] probe=0.7498+-0.0034 acc=0.1307 eucl=0.3978 mahaT=0.4751 perevt=0.021
+  [ss-ft->res (concat)         ] probe=0.8143+-0.0065 acc=0.4743 eucl=0.4578 mahaT=0.5921 perevt=0.033
+
+===== [aircraft_visreg_ft71] supcon-ft->res-nplm =====
+  [supcon-ft-res-nplm] epoch 1/20  main=74978928920.9840  aux=0.2108
+  [supcon-ft-res-nplm] epoch 5/20  main=26296594344.8743  aux=0.2667
+  [supcon-ft-res-nplm] epoch 10/20  main=20554007877.0315  aux=0.2899
+  [supcon-ft-res-nplm] epoch 15/20  main=5960795351.2191  aux=0.3020
+  [supcon-ft-res-nplm] epoch 20/20  main=4028160251.9380  aux=0.3060
+  extracted ft70_supcon-ft_resnplm train: (6667, 768)
+  extracted ft70_supcon-ft_resnplm test: (3333, 768)
+  [supcon-ft->res-nplm (residual)] probe=0.8583+-0.0069 acc=0.5747 eucl=0.8120 mahaT=0.7551 perevt=0.411
+  [supcon-ft->res-nplm (concat)] probe=0.8634+-0.0102 acc=0.6053 eucl=0.7922 mahaT=0.7651 perevt=0.363
+
+===== EXP71 SUMMARY [aircraft_visreg_ft71] =====
+  space                                    probe     acc    eucl   mahaT  perevt
+  supcon-ft (parent)               0.8085+-0.0069  0.5957  0.7305  0.7197   0.249
+  supcon-ft->res (residual)        0.7918+-0.0070  0.3137  0.4187  0.5042   0.009
+  supcon-ft->res (concat)          0.8390+-0.0189  0.5437  0.6010  0.6589   0.141
+  ss-ft (parent)                   0.8284+-0.0035  0.5290  0.5608  0.6151   0.048
+  ss-ft->res (residual)            0.7498+-0.0034  0.1307  0.3978  0.4751   0.021
+  ss-ft->res (concat)              0.8143+-0.0065  0.4743  0.4578  0.5921   0.033
+  supcon-ft->res-nplm (residual)   0.8583+-0.0069  0.5747  0.8120  0.7551   0.411
+  supcon-ft->res-nplm (concat)     0.8634+-0.0102  0.6053  0.7922  0.7651   0.363
+saved /home/pharris/sigreg/SuperSig/plots/exp71_probe_aircraft_visreg_ft71.png
+Done.
