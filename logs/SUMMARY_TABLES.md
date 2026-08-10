@@ -441,6 +441,16 @@ concat wins fine-grained cells, plain res wins texture/coarse; supcon-ft
 is the universal parent (ss-ft parents fail fine-grained).  Full grid in
 docs/AIRCRAFT_MASTER_TABLE.md.
 
+Exp 72 (`72_residual_discovery.py`, 2026-08-09): discovery on each
+cell's exp-71 winner.  Purity-gated and saturating: stacks where the
+residual space separates novelty (flowers 0.885 -> 0.906 NEW RECORD,
+dtd 0.847 -> 0.862 NEW RECORD -- simclr's last pre record finally
+falls), flat/slightly negative elsewhere (cars 0.855 and galaxy10 0.975
+stand from exp 71).  galaxy10/visreg residual + discovery: per-event
+0.32-0.45 at ALL fractions (best low-f per-event on record).  Final
+probe records, all residual pipelines: cars 0.855, flowers 0.906, dtd
+0.862, galaxy10 0.975.
+
 ## NPLM program verdicts
 
 - Probe-vs-calibration dissociation everywhere: softmax(SupCon) spaces are

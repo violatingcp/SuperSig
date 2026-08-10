@@ -361,6 +361,33 @@ Verdicts:
   absorbed the residual directions) and only win where supcon parents
   are weakest (flowers/lejepa, dtd/lejepa).
 
+## Discovery on the residual winners (exp 72; feature-space loop on the
+exp-71 champion of each cell; probe / mahaT pre -> post, purity r1)
+
+| cell | space | probe | mahaT | purity |
+|---|---|---|---|---|
+| flowers dino | supcon->res-nplm concat | 0.885 -> **0.906** | 0.843 -> 0.853 | 0.609 |
+| flowers visreg | supcon->res-nplm concat | 0.858 -> 0.866 | 0.870 -> 0.875 | 0.643 |
+| dtd visreg | supcon->res concat | 0.847 -> **0.862** | 0.758 -> 0.778 | 0.292 |
+| dtd lejepa | ss->res concat | 0.831 -> 0.838 | 0.791 -> 0.796 | 0.588 |
+| cars lejepa | supcon->res-nplm concat | 0.779 -> 0.787 | 0.514 -> 0.534 | 0.104 |
+| cars dino / visreg | res-nplm concats | flat (-0.001 / -0.004) | ~flat | 0.16 / 0.26 |
+| flowers lejepa | ss->res concat | flat | flat | 0.439 |
+| dtd dino | supcon->res concat | 0.845 -> 0.838 | 0.604 -> 0.646 | 0.135 |
+| galaxy10 dino / lejepa / visreg | res concats / residual | flat / -0.005 / -0.013 | mixed | 0.00-0.34 |
+
+Verdict: discovery on top of residual training is PURITY-GATED and
+saturating.  It stacks where the residual space separates novelty
+(flowers +0.021/+0.009 -> NEW flowers record 0.906; dtd visreg +0.015 ->
+NEW dtd record 0.862, finally beating simclr-ft's 0.854) and is flat or
+slightly negative elsewhere (cars and galaxy10 records stand at 0.855 /
+0.975 from exp 71).  Post-power niceties: galaxy10 visreg res residual +
+discovery keeps per-event 0.32-0.45 across all fractions (best low-f
+per-event on record); dtd concats reach Maha/MMD 0.88-0.96 at f=0.05.
+Final dataset probe records: cars 0.855 (exp 71), flowers 0.906
+(exp 72), dtd 0.862 (exp 72), galaxy10 0.975 (exp 71) -- every record
+now belongs to a residual pipeline.
+
 ## Aircraft NPLM residual/concat (exp 60, DINO, 16+16)
 
 | arm | probe | acc | eucl | mahaT | perevt | MMD@.1 |
