@@ -460,6 +460,16 @@ directions are what the discovery ft erodes.  Final probe records, all
 residual pipelines: aircraft 0.863, cars 0.855, flowers 0.906, dtd
 0.862, galaxy10 0.975.
 
+Exp 73 (`73_cifar_residual_ft.py`, 2026-08-11) brought the exp-71
+residual-ft recipe home to CIFAR: c10 32+32 supcon->res concat 0.9536
+(ties the pre-discovery concat record); c100 100+100 supcon->res concat
+0.9594 = NEW C100 PROBE RECORD (prev 0.9546; parent seed drew 0.9577 --
+honest residual delta +0.017 over its own parent).  The plain-res
+residual half is the best-calibrated supervised C100 space (eucl 0.650,
+perevt 0.08).  Plain res beats res-nplm on CIFAR (many-class low-res:
+same side of the objective split as dtd/galaxy10).  Also fixed
+exp55.train_arm for plain arms.
+
 ## NPLM program verdicts
 
 - Probe-vs-calibration dissociation everywhere: softmax(SupCon) spaces are
