@@ -1,0 +1,40 @@
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+Using cache found in /home/pharris/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+exp74 [cifar10_32d] discovery on exp-73 residual concats, arms=['res'], holdout=[4]
+
+===== reproducing exp-73 supcon parent =====
+  CIFAR two-view embedding-train images (no {4}): 7194
+  [supcon] epoch 1/2  loss=4.9004
+  [supcon] epoch 2/2  loss=4.6892
+
+===== reproducing exp-73 supcon->res child =====
+  CIFAR two-view embedding-train images (no {4}): 7194
+  [supcon-res] epoch 1/2  loss=7.0845
+  [supcon-res] epoch 2/2  loss=5.8118
+
+----- natural discovery: supcon->res concat -----
+  [sigreg+proto] epoch 1/1  sigreg=0.4437  proto=3.3230  min_dist=1.46  mean_dist=7.13
+  round 1: pool=186 purity=0.038 k-hat=4 anchors=4  margin=0.3253  mean-anchor=0.5813  4=0.581
+  [sigreg+proto] epoch 1/1  sigreg=0.5722  proto=7.0507  min_dist=1.58  mean_dist=11.07
+  round 2: pool=183 purity=0.022 k-hat=4 anchors=8  margin=0.5773  mean-anchor=0.5587  4=0.559
+  [supcon->res concat] probe 0.8969+-0.0011 -> 0.7316+-0.0198  eucl 0.3926 -> 0.4196  mahaT 0.6801 -> 0.3691
+          round 1: purity=0.038 anchors=4  margin=0.3253
+          round 2: purity=0.022 anchors=8  margin=0.5773
+  [sigreg+proto] epoch 1/1  sigreg=0.3682  proto=3.5221  min_dist=1.60  mean_dist=6.93
+  round 1: pool=361 purity=0.003 k-hat=4 anchors=4  margin=0.4764  mean-anchor=0.6272  4=0.627
+  [sigreg+proto] epoch 1/1  sigreg=0.3969  proto=6.9473  min_dist=1.83  mean_dist=10.74
+  round 2: pool=361 purity=0.003 k-hat=4 anchors=8  margin=0.4829  mean-anchor=0.4609  4=0.461
+    post-spk f=0.02: power=0.000 [0.000,0.167] (0/10)
+    post-maha f=0.02: power=0.100 [0.017,0.293] (1/10)
+    post-mmd f=0.02: power=0.000 [0.000,0.167] (0/10)
+  [supcon->res concat] post f=0.02: perevent=0.005  sparker=0.000  maha=0.100  mmd=0.000
+
+===== EXP74 SUMMARY [cifar10_32d] =====
+  [supcon->res concat] probe 0.8969 -> 0.7316  eucl 0.3926 -> 0.4196  mahaT 0.6801 -> 0.3691  purity r1 0.038
+          perevent post: 0.005
+          sparker post: 0.000
+          maha post: 0.100
+          mmd post: 0.000
+saved /home/pharris/sigreg/SuperSig/plots/exp74_probe_cifar10_32d.png
+Done.
