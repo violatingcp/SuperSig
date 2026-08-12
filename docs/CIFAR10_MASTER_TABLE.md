@@ -1,4 +1,11 @@
-# CIFAR-10 master table — exps 33/34i/36 vs 50/53/55/58
+# CIFAR-10 master table
+
+> Exp-73 addendum (exp-71 residual-ft recipe, 32+32-D, holdout 4):
+> supcon->res concat probe 0.9536 (ties the pre-discovery concat record
+> 0.954), supcon->res-nplm concat 0.9465 with the best acc (0.877);
+> parents supcon 0.9404 / supcon_sigreg 0.8556.  Post-discovery C10
+> records (exp 59: sup->res-nplm 0.984) still stand.
+ — exps 33/34i/36 vs 50/53/55/58
 
 All spaces 32-D total (concat arms 16+16), holdout 4 (deer), seed 0.
 Columns: probe = holdout novelty linear-probe AUC pre/post-discovery; acc /

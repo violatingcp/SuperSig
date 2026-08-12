@@ -10,6 +10,8 @@ Sources: exps 33/34/36 (curated), 50-68 npz archives.
 
 | # | space | probe | mahaT | lineage |
 |---|---|---|---|---|
+| 0 | supcon->res concat @100+100d (73) | **0.9594** | 0.440 | hub |
+| 0b | supcon->res-nplm concat @100+100d (73) | 0.9574 | 0.312 | hub |
 | 1 | sup recipe @100d (66) | 0.9546 | 0.393 | hub |
 | 2 | supcon+simclr 50+50 (34j) | 0.9547* | -- | hub (*same value band) |
 | 3 | supcon+hybrid[lam1] 50+50 (34j) | 0.9541 | -- | hub |
@@ -113,6 +115,27 @@ that IMPROVES under discovery, and with calibrated geometry).
 | nplm_dist_sup_cw lam1 | 0.890 -> 0.886 | 0.892 -> 0.875 |
 | nplm_dist_sup_cw lam5 | 0.859 -> **0.900** | -- |
 | nplm_sup_dist | 0.825 -> 0.837 | 0.812 -> 0.839 |
+
+## Residual fine-tuning, exp-71 recipe (exp 73; 100-D parents, deepcopy
++ e2e residual ft, concat = 200-D; holdout 4)
+
+| space | probe | acc | eucl | mahaT | perevt |
+|---|---|---|---|---|---|
+| supcon->res concat | **0.9594** | 0.539 | 0.575 | 0.440 | 0.020 |
+| supcon (parent, this seed) | 0.9577 | 0.575 | 0.338 | 0.347 | 0.000 |
+| supcon->res-nplm concat | 0.9574 | 0.580 | 0.296 | 0.312 | 0.000 |
+| supcon_sigreg (parent) | 0.9455 | 0.593 | 0.388 | 0.381 | 0.000 |
+| supcon_sigreg->res concat | 0.9417 | 0.578 | 0.568 | 0.479 | 0.040 |
+| supcon->res residual alone | 0.8392 | 0.211 | 0.650 | 0.558 | **0.080** |
+
+New C100 probe record 0.9594 (previous 0.9546, sup recipe).  Caveat:
+this supcon parent seed (train_arm full-list index) drew 0.9577, above
+the exp-50 archive's 0.9443 -- the +0.017 concat delta over its own
+parent is the honest residual effect.  The plain-res residual half is
+the best-calibrated supervised C100 space (eucl 0.650, per-event 0.08)
+-- residual ft transfers to CIFAR exactly as on the transfer grid, with
+plain res (not res-nplm) the better objective here (many-class,
+low-res images: same side of the split as DTD/galaxy10).
 
 ## From-scratch lineages (exps 67/68/50-scr; 100-D, no hub trunk)
 
