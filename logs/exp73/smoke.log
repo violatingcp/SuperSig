@@ -1,0 +1,47 @@
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+Using cache found in /home/pharris/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+exp73 [cifar10_32d] CIFAR residual ft (exp-71 recipe), runs=[('supcon', 'res'), ('supcon_sigreg', 'res'), ('supcon', 'res-nplm')], epochs=2, holdout=[4]
+
+===== [cifar10_32d] supcon->res =====
+  CIFAR two-view embedding-train images (no {4}): 7194
+  [supcon] epoch 1/2  loss=4.9028
+  [supcon] epoch 2/2  loss=4.6898
+  [supcon (parent)             ] probe=0.9188+-0.0081 acc=0.8579 eucl=0.7466 mahaT=0.8026 perevt=0.025
+  CIFAR two-view embedding-train images (no {4}): 7194
+  [supcon-res] epoch 1/2  loss=7.1511
+  [supcon-res] epoch 2/2  loss=5.8890
+Using cache found in /home/pharris/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+  [supcon->res (residual)      ] probe=0.7768+-0.0005 acc=0.3524 eucl=0.2630 mahaT=0.2709 perevt=0.020
+  [supcon->res (concat)        ] probe=0.8830+-0.0016 acc=0.4539 eucl=0.2894 mahaT=0.5951 perevt=0.020
+
+===== [cifar10_32d] supcon_sigreg->res =====
+  CIFAR two-view embedding-train images (no {4}): 7194
+  [softmax/cosine] epoch 1/2  interaction=4.9142  marginal=0.6906
+  [softmax/cosine] epoch 2/2  interaction=4.7218  marginal=0.4696
+  [supcon_sigreg (parent)      ] probe=0.9062+-0.0025 acc=0.8524 eucl=0.6170 mahaT=0.6554 perevt=0.000
+  CIFAR two-view embedding-train images (no {4}): 7194
+  [supcon_sigreg-res] epoch 1/2  loss=5.8530
+  [supcon_sigreg-res] epoch 2/2  loss=5.2346
+  [supcon_sigreg->res (residual)] probe=0.7482+-0.0023 acc=0.3041 eucl=0.3640 mahaT=0.3136 perevt=0.020
+  [supcon_sigreg->res (concat) ] probe=0.8983+-0.0041 acc=0.8241 eucl=0.4010 mahaT=0.4532 perevt=0.015
+
+===== [cifar10_32d] supcon->res-nplm =====
+  CIFAR two-view embedding-train images (no {4}): 7194
+  [supcon-res-nplm] epoch 1/2  loss=-0.6455
+  [supcon-res-nplm] epoch 2/2  loss=-1.2690
+  [supcon->res-nplm (residual) ] probe=0.7420+-0.0034 acc=0.3835 eucl=0.3963 mahaT=0.3453 perevt=0.010
+  [supcon->res-nplm (concat)   ] probe=0.8926+-0.0008 acc=0.8319 eucl=0.5842 mahaT=0.6610 perevt=0.025
+
+===== EXP73 SUMMARY [cifar10_32d] =====
+  space                                      probe     acc    eucl   mahaT  perevt
+  supcon (parent)                    0.9188+-0.0081  0.8579  0.7466  0.8026   0.025
+  supcon->res (residual)             0.7768+-0.0005  0.3524  0.2630  0.2709   0.020
+  supcon->res (concat)               0.8830+-0.0016  0.4539  0.2894  0.5951   0.020
+  supcon_sigreg (parent)             0.9062+-0.0025  0.8524  0.6170  0.6554   0.000
+  supcon_sigreg->res (residual)      0.7482+-0.0023  0.3041  0.3640  0.3136   0.020
+  supcon_sigreg->res (concat)        0.8983+-0.0041  0.8241  0.4010  0.4532   0.015
+  supcon->res-nplm (residual)        0.7420+-0.0034  0.3835  0.3963  0.3453   0.010
+  supcon->res-nplm (concat)          0.8926+-0.0008  0.8319  0.5842  0.6610   0.025
+saved /home/pharris/sigreg/SuperSig/plots/exp73_probe_cifar10_32d.png
+Done.

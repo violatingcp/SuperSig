@@ -70,8 +70,11 @@ def train_arm(name, ds, cfg, args, con_ep, holdouts):
                                   pretrain=ds).to(DEVICE)
         loader = cifar_two_view_loader(quick=args.quick, labeled=labeled,
                                        holdout=holdouts, dataset=ds)
-        exp34h.train_hybrid(net, loader, con_ep, spec, labeled,
-                            lam=args.lam, n_slices=cfg["n_slices"])
+        if kind == "hybrid":
+            exp34h.train_hybrid(net, loader, con_ep, spec, labeled,
+                                lam=args.lam, n_slices=cfg["n_slices"])
+        else:
+            spec(net, loader, con_ep)
         return net
     positives, critic = exp53.ARMS[name]
     seed = args.seed + 20 + list(exp53.ARMS).index(name)
