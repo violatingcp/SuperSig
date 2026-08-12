@@ -470,6 +470,16 @@ perevt 0.08).  Plain res beats res-nplm on CIFAR (many-class low-res:
 same side of the objective split as dtd/galaxy10).  Also fixed
 exp55.train_arm for plain arms.
 
+Exp 74 (`74_cifar_residual_discovery.py`, 2026-08-12): discovery on the
+exp-73 concats (image-space loop, two-net concat backbone).  Same
+purity-gate verdict as exp 72: at purity <=0.03 the probe is flat (c10
+~0.953 both arms; c100 res flat / res-nplm -0.007) while calibration
+improves a lot (c10 res-nplm eucl 0.712->0.794, Maha power 0.80@.02;
+c100 res-nplm eucl 0.321->0.530, mahaT 0.302->0.455, MMD 0.84@.02).
+Probe records stay pre-discovery (c100 0.9594) / exp-59 post (c10
+0.984); discovery-on-residuals is a calibration repair, not a probe
+booster, at low purity.
+
 ## NPLM program verdicts
 
 - Probe-vs-calibration dissociation everywhere: softmax(SupCon) spaces are

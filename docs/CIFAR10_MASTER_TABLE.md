@@ -5,6 +5,12 @@
 > 0.954), supcon->res-nplm concat 0.9465 with the best acc (0.877);
 > parents supcon 0.9404 / supcon_sigreg 0.8556.  Post-discovery C10
 > records (exp 59: sup->res-nplm 0.984) still stand.
+>
+> Exp-74 (discovery on the exp-73 concats, two-net backbone): probes
+> hold ~0.953 (res-nplm +0.005, res -0.005) at purity <=0.03 while
+> geometry/powers improve strongly (res-nplm concat eucl 0.712->0.794,
+> mahaT ->0.622; Maha power 0.80@f=.02, all stats 1.0@f=.1).  The
+> full-dim concats trade exp-59's probe peak for far better calibration.
  — exps 33/34i/36 vs 50/53/55/58
 
 All spaces 32-D total (concat arms 16+16), holdout 4 (deer), seed 0.

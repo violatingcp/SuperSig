@@ -137,6 +137,21 @@ the best-calibrated supervised C100 space (eucl 0.650, per-event 0.08)
 plain res (not res-nplm) the better objective here (many-class,
 low-res images: same side of the split as DTD/galaxy10).
 
+## Discovery on the exp-73 concats (exp 74; image-space loop, two-net
+concat backbone; probe / eucl / mahaT pre -> post, purity r1)
+
+| space | probe | eucl | mahaT | purity | notes |
+|---|---|---|---|---|---|
+| supcon->res concat | 0.9566 -> 0.9567 | 0.585 -> 0.562 | 0.432 -> 0.483 | 0.009 | probe flat, mahaT +0.05 |
+| supcon->res-nplm concat | 0.9562 -> 0.9497 | 0.321 -> **0.530** | 0.302 -> 0.455 | 0.000 | MMD 0.84@.02 post |
+
+(Reproduction jitter: exp-73 archived 0.9594/0.9574 for these spaces;
+the exp-74 retrain drew 0.9566/0.9562 -- cudnn nondeterminism at the
++-0.003 level.)  Same verdict as the transfer grid (exp 72): at
+near-zero pool purity discovery cannot move the probe, but the ft
+substantially repairs the concats' calibration (res-nplm eucl +0.21,
+mahaT +0.15).  The probe record stays pre-discovery.
+
 ## From-scratch lineages (exps 67/68/50-scr; 100-D, no hub trunk)
 
 Bases (exp 67): supcon 0.9390/0.279, nplmcw 0.8987/0.411, supsig
