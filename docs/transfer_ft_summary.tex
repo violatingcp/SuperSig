@@ -17,7 +17,7 @@
 
 \title{Open-World Novelty on Transfer Datasets:\\
 End-to-End Fine-Tuning, Discovery, and Residual Training\\
-{\large SuperSig experiments 70--72 (with context from 49/51/62/69)}}
+{\large SuperSig experiments 70--74 (with context from 49/51/62/69)}}
 \author{P.~Harris (experiments run with Claude)}
 \date{August 2026}
 
@@ -49,7 +49,11 @@ space to break the probe--calibration dissociation; (iv) a final
 discovery pass on the residual winners is \emph{purity-gated}: it stacks
 only where the residual space separates the novelty, yielding the
 program's final records --- aircraft 0.863, cars 0.855, flowers 0.906,
-DTD 0.862, Galaxy10 0.975 --- every one a residual pipeline.
+DTD 0.862, Galaxy10 0.975 --- every one a residual pipeline; (v) the
+same recipe transfers back to CIFAR (exps 73--74): supcon$\to$res concat
+sets a new CIFAR-100 probe record (0.9594) and ties the CIFAR-10
+pre-discovery record (0.9536), and discovery on these concats is again
+a calibration repair at low purity, not a probe booster.
 \end{abstract}
 
 \section{Setup}
@@ -379,6 +383,50 @@ flowers \best{0.906} (DINO supcon$\to$res-nplm concat $+$ discovery,
 exp 72); DTD \best{0.862} (VISReg supcon$\to$res concat $+$ discovery,
 exp 72); Galaxy10 \best{0.975} (LeJEPA supcon$\to$res concat, exp 71).
 
+\subsection{The recipe comes home: CIFAR-10/100 (exps 73--74)}
+
+The identical residual fine-tuning recipe was applied in the CIFAR
+world (hub-pretrained ResNet-20 backbones, holdout class 4, parents
+reproduced at their original exp-50 seeds; CIFAR-10 at $32{+}32$-D,
+CIFAR-100 at $100{+}100$-D):
+
+\begin{table}[h]\centering\small
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{l cc cc}
+\toprule
+& \multicolumn{2}{c}{CIFAR-10 (32+32)} & \multicolumn{2}{c}{CIFAR-100 (100+100)} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}
+space & probe & perevt & probe & perevt \\
+\midrule
+supcon (parent) & 0.9404 & 0.000 & 0.9577$^\ast$ & 0.000 \\
+supcon$\to$res concat & \best{0.9536} & 0.039 & \best{0.9594} & 0.020 \\
+supcon$\to$res-nplm concat & 0.9465 & 0.000 & 0.9574 & 0.000 \\
+supcon\_sigreg$\to$res concat & 0.9135 & 0.011 & 0.9417 & 0.040 \\
+supcon$\to$res residual alone & 0.8587 & 0.026 & 0.8392 & \best{0.080} \\
+\bottomrule
+\end{tabular}
+\caption{Exp 73.  CIFAR-100 supcon$\to$res concat 0.9594 is a NEW C100
+probe record (previous 0.9546, sup recipe); CIFAR-10 supcon$\to$res
+concat ties the pre-discovery concat record (0.954).  $^\ast$This
+parent seed drew 0.9577 (above the exp-50 archive's 0.9443 --- a
+different seed path), so the honest residual effect is the $+0.017$
+delta over its own parent.  The objective split lands exactly where the
+transfer grid predicts: plain res $>$ res-nplm on CIFAR (many-class,
+coarse/low-res --- the DTD/galaxy10 side), and the plain-res residual
+half is the best-calibrated supervised C100 space on record (eucl
+0.650, per-event 0.08).  ss-parents again lose on both datasets.}
+\end{table}
+
+Discovery on these concats (exp 74; image-space loop, two-net concat
+backbone) repeats the exp-72/74 law: pool purity is $\le 0.03$ at
+64--200-D, probes stay flat ($\pm 0.007$), and the fine-tune instead
+repairs calibration --- CIFAR-10 res-nplm concat eucl
+$0.712\!\to\!0.794$ with Mahalanobis-battery power 0.80 at $f{=}0.02$
+(1.0 at $f{=}0.1$ for every statistic); CIFAR-100 res-nplm concat eucl
+$0.321\!\to\!0.530$, mahaT $0.302\!\to\!0.455$.  Probe records remain
+pre-discovery (C100 0.9594) or, for CIFAR-10, at exp-59's high-purity
+post-discovery peak (0.984, split-dim sup$\to$res-nplm).
+
 \section{Verdicts}
 
 \begin{enumerate}\itemsep3pt
@@ -408,6 +456,11 @@ absolute}: NPLM spaces are the calibrated, distance-ready ones
 throughout, softmax spaces the probe-ready ones --- and the
 res-nplm concat is the one construction found so far that delivers
 both at once.
+\item \textbf{The recipe is world-independent} (exps 73--74): on CIFAR
+it reproduces every transfer-grid regularity --- concat $>$ parent,
+supcon the right parent, the res/res-nplm objective split by regime,
+and discovery-on-residuals as purity-gated calibration repair --- and
+sets the new CIFAR-100 probe record (0.9594).
 \item \textbf{End-to-end fine-tuning erases the frozen-base ranking}
 (VISReg, weakest frozen, holds several pre records), extending the
 exp-43/49 inversion to the open-world battery.
@@ -416,8 +469,10 @@ exp-43/49 inversion to the open-world battery.
 \vspace{1em}
 \noindent\textit{Artifacts: scripts \texttt{experiments/70\_cars\_ft\_suite.py},
 \texttt{experiments/71\_residual\_ft\_grid.py},
-\texttt{experiments/72\_residual\_discovery.py}; per-cell logs and npz
-archives in \texttt{logs/exp70}--\texttt{exp72}; full tables in
+\texttt{experiments/72\_residual\_discovery.py},
+\texttt{experiments/73\_cifar\_residual\_ft.py},
+\texttt{experiments/74\_cifar\_residual\_discovery.py}; per-cell logs and
+npz archives in \texttt{logs/exp70}--\texttt{exp74}; full tables in
 \texttt{docs/AIRCRAFT\_MASTER\_TABLE.md}; checkpoints
 \texttt{checkpoints/\{ds\}\_ft\_\{base\}\_\{arm\}\_seen.pt}.}
 
