@@ -103,5 +103,34 @@ LID in nearly every space (novelty lives in locally higher-dimensional
 neighborhoods).  Worth promoting into the standard battery; the flowers
 result deserves a dedicated verification (exp 78 candidate).
 
-*(CIFAR cells for both experiments pending; this doc will gain the
-cifar100 otter/beaver section when the queued runs land.)*
+## Exp 76 on CIFAR-100 (100-D; beaver = open-world holdout)
+
+The founding question ("are otters near beavers?") answered in the
+supcon parent: otter -> seal(0.02) beaver*(0.08) bear(0.11); beaver* ->
+otter(0.08) shrew(0.09) seal(0.10) porcupine(0.13) -- the never-labeled
+holdout lands mutually top-2 with otter, purely from ft on the other 99
+classes.  Big cats form their own clique (tiger-leopard 0.18,
+leopard-lion 0.20).  Metrics (chance agree@1 = 0.040):
+
+| space | agree@1 | agree@5 | purity | sil |
+|---|---|---|---|---|
+| supcon (parent) | 0.700 | 0.468 | 0.591 | 0.197 |
+| supcon_sigreg | 0.690 | 0.460 | 0.603 | 0.199 |
+| supcon-res-nplm (concat) | 0.670 | 0.452 | 0.564 | 0.188 |
+| supcon-res (concat) | 0.640 | 0.406 | 0.514 | 0.162 |
+| simclr | 0.570 | 0.366 | 0.457 | 0.118 |
+| nplm_bilinear | 0.530 | 0.334 | 0.417 | 0.059 |
+| supcon-res-nplm (residual) | 0.630 | 0.438 | 0.493 | 0.154 |
+| supcon-res (residual) | 0.490 | 0.288 | 0.365 | 0.029 |
+| lejepa | 0.450 | 0.342 | 0.427 | 0.046 |
+
+- The record res-nplm concat *tightens* the semantic ring (beaver
+  0.06-0.10) at near-parent purity: the best probe space is also
+  semantically sound.
+- The plain-res residual half scrambles semantics by design (beaver ->
+  mushroom/crab/lobster, purity 0.365); the concat restores it while
+  keeping the probe gain -- semantics ride in the parent half.
+- nplm_bilinear keeps correct neighbor *ordering* on cifar100 (beaver:
+  otter 0.04, seal 0.06) unlike on galaxy10, but with distances
+  compressed to 0.03-0.07 (the calibrated-core signature); supervised
+  softmax still carries the most hierarchy.
