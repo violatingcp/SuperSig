@@ -507,6 +507,30 @@ honest 0.955+-0.006 (best seeds 0.9617/0.9615); c10 res concat mean
 Geometry split persists: plain-res concat keeps the calibration crown on
 c100 (eucl 0.607 vs res-nplm 0.339).  Results logs/exp75/*.npz.
 
+Exps 76/77 (`76_interpretability.py`, `77_space_similarity.py`,
+2026-08-16): class-centroid interpretability + inter-space similarity
+batteries over the cached campaign spaces (full write-up
+docs/SPACE_GEOMETRY.md).  Headlines: (1) cifar100 holdout beaver lands
+mutually top-2 with otter unsupervised; supcon parent superclass
+agree@1 0.70 (chance 0.04), dendro purity 0.59; the res-nplm concat
+tightens semantics at near-parent purity while the plain-res residual
+half scrambles them (concat restores).  (2) Supervision erases the
+pretraining base (supcon-ft cross-base CKA 0.68-0.85 ~ cross-loss
+same-base; simclr-ft 0.46-0.62 keeps base identity) -- the geometric
+mechanism of the exp-70 base-invariant regime rules.  (3) Residual
+children: near-rotations on coarse transfer cells (galaxy10 R^2 0.98),
+~10% new variance on fine-grained (cars 0.91), near-total
+reorganization on CIFAR (c100 plain-res R^2 0.32) -- but probe gains
+anti-correlate with drift across regimes: new variance must encode the
+holdout to pay.  (4) nplm-bilinear is a geometric outlier everywhere
+(CKA ~0.2-0.4 vs all arms) yet linearly decodable FROM softmax spaces
+(asym R^2 up to 0.97): NPLM reorganizes, does not add, information.
+(5) TwoNN ID is a loss fingerprint (nplm-sup ~2-3 < ssl/sigreg 5-7 <
+supcon/frozen 9-13).  (6) LID novelty (Levina-Bickel, seen-train refs):
+weak on most cells (0.56-0.74) but 0.95-0.96 on flowers in EVERY base
+-- record-territory unsupervised score, exp-78 verification candidate.
+Results logs/exp76/interp_*.md, logs/exp77/results_*.npz.
+
 ## NPLM program verdicts
 
 - Probe-vs-calibration dissociation everywhere: softmax(SupCon) spaces are

@@ -70,10 +70,19 @@ Parent vs res-nplm child (dino/visreg cells): galaxy10 ridge-R^2
 0.97-0.98 (the child is nearly a linear re-map -- calibration is
 re-weighting, not new information), cars/aircraft R^2 0.91-0.95 with
 mutual-kNN only ~0.2 (locally reorganized, ~5-10% genuinely new
-variance).  The concat gains track the unexplained fraction: biggest
-where the child is least redundant.  lejepa-based children diverge far
-more (CKA 0.24-0.66) than dino/visreg ones -- lejepa parents leave the
-most room for residual reorganization.
+variance).  Within the transfer grid the concat gains track the
+unexplained fraction: biggest where the child is least redundant.
+lejepa-based children diverge far more (CKA 0.24-0.66) than dino/visreg
+ones -- lejepa parents leave the most room for residual reorganization.
+
+CIFAR refines the claim: there the children drift MUCH further (c100
+supcon vs plain-res CKA 0.24, R^2 0.32; res-nplm 0.71/0.77 -- the
+lightly-ft'd ViT trunks anchor transfer children, the fully-plastic
+CIFAR resnets do not) yet the probe gains are the campaign's smallest
+(+0.006-0.016 vs cars +0.148).  So unexplained variance is necessary
+but not sufficient: what pays is whether the new variance encodes the
+holdout (cars) rather than generic reorganization (CIFAR).  Drift is
+capacity to help, not help itself.
 
 ### 3. nplm-bilinear is a geometric outlier everywhere
 
