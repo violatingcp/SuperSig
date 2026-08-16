@@ -132,9 +132,15 @@ def seen_two_view_loader(corpus, seen_idx, args):
                       pin_memory=True)
 
 
+def seed_sfx(args):
+    s = getattr(args, "seed", 0)
+    return f"_s{s}" if s else ""
+
+
 def trunk_banks(model, arm, args):
     """(train, test) 768-d plain-transform banks from the arm's ft trunk."""
     cache = os.path.join(DATA_DIR, f"tf_feats_{DS}_{BASE}_ft70_{arm}"
+                         f"{seed_sfx(args)}"
                          f"{'_quick' if args.quick else ''}.pt")
     if os.path.exists(cache) and not args.refresh:
         return torch.load(cache)
@@ -224,6 +230,7 @@ def main():
         np.random.seed(args.seed + 20 + i)
         model = exp43.FineTuneModel(BASE, args.emb_dim)
         ckpt = os.path.join(CKPT_DIR, f"{DS}_ft_{BASE}_{arm}_seen"
+                            f"{seed_sfx(args)}"
                             f"{'_quick' if args.quick else ''}.pt")
         if os.path.exists(ckpt) and not args.refresh:
             print(f"  loading {ckpt}")

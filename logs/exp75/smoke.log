@@ -1,0 +1,47 @@
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+Using cache found in /home/pharris/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+exp75 [cifar10_32d] multi-seed residual concats, 2 paired seeds
+
+########## seed 0 ##########
+  CIFAR two-view embedding-train images (no {4}): 7194
+  [supcon] epoch 1/2  loss=4.9026
+  [supcon] epoch 2/2  loss=4.6909
+  [seed 0] parent probe=0.9151
+  CIFAR two-view embedding-train images (no {4}): 7194
+  [s0-res] epoch 1/2  loss=7.1815
+  [s0-res] epoch 2/2  loss=5.9128
+  [seed 0] res concat probe=0.8920
+  CIFAR two-view embedding-train images (no {4}): 7194
+  [s0-res-nplm] epoch 1/2  loss=-0.5244
+  [s0-res-nplm] epoch 2/2  loss=-1.1718
+Using cache found in /home/pharris/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+  [seed 0] res-nplm concat probe=0.8848
+
+########## seed 1 ##########
+  CIFAR two-view embedding-train images (no {4}): 7194
+  [supcon] epoch 1/2  loss=4.9112
+  [supcon] epoch 2/2  loss=4.6885
+  [seed 1] parent probe=0.9009
+  CIFAR two-view embedding-train images (no {4}): 7194
+  [s1-res] epoch 1/2  loss=7.2551
+  [s1-res] epoch 2/2  loss=5.8446
+  [seed 1] res concat probe=0.8872
+  CIFAR two-view embedding-train images (no {4}): 7194
+  [s1-res-nplm] epoch 1/2  loss=-0.1997
+  [s1-res-nplm] epoch 2/2  loss=-0.8091
+  [seed 1] res-nplm concat probe=0.9112
+
+===== EXP75 SUMMARY [cifar10_32d] (2 seeds) =====
+  space                          probe             acc            eucl           mahaT
+  parent               0.9080+-0.0071   0.8640+-0.0017   0.7359+-0.0071   0.7573+-0.0471
+  res concat           0.8896+-0.0024   0.4556+-0.0083   0.3491+-0.0229   0.6226+-0.0165
+  res-nplm concat      0.8980+-0.0132   0.8371+-0.0025   0.6059+-0.0170   0.6287+-0.0674
+  paired delta res concat       probe: -0.0184+-0.0047  (0/2 seeds positive)
+  paired delta res-nplm concat  probe: -0.0100+-0.0203  (1/2 seeds positive)
+  per-seed probes:
+    parent            0.9151 0.9009
+    res concat        0.8920 0.8872
+    res-nplm concat   0.8848 0.9112
+saved /home/pharris/sigreg/SuperSig/plots/exp75_probe_cifar10_32d.png
+Done.

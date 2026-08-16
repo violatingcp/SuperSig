@@ -52,8 +52,12 @@ BASE_LABELS = {
 def load_visreg():
     import timm
     from huggingface_hub import hf_hub_download
+    # pin the 2026-04-08 "publish model" revision: the 2026-08-14 upstream
+    # update rewrote this file with projection layers and (unverified)
+    # possibly different trunk weights -- all campaign results used this one
     p = hf_hub_download(repo_id="BooBooWu/visreg",
                         filename="visreg-vit-b-inet1k.pth",
+                        revision="0d5f4fd3e282ce2c9615805cc3e660e462e6bcb1",
                         local_dir=os.path.join(DATA_DIR, "..", "checkpoints",
                                                "visreg"))
     m = timm.create_model("vit_base_patch16_224", pretrained=False,

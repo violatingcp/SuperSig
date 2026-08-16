@@ -82,7 +82,13 @@ def main():
     ap.add_argument("--n-slices", type=int, default=64)
     ap.add_argument("--alpha", type=float, default=0.05)
     ap.add_argument("--refresh", action="store_true")
+    ap.add_argument("--runs", nargs="+", default=None,
+                    help="restrict to constructions, e.g. "
+                         "'supcon-ft:res-nplm'")
     args = ap.parse_args()
+    global RUNS
+    if args.runs:
+        RUNS = [tuple(r.split(":")) for r in args.runs]
     exp70.DS, exp70.BASE = args.dataset, args.base
     DS, BASE = args.dataset, args.base
     args.ft_epochs = args.ft_epochs or (1 if args.quick else 20)
@@ -132,6 +138,7 @@ def main():
         key = f"{parent}->{obj}"
         print(f"\n===== [{tag}] {key} =====")
         pck = os.path.join(CKPT_DIR, f"{DS}_ft_{BASE}_{parent}_seen"
+                           f"{exp70.seed_sfx(args)}"
                            f"{'_quick' if args.quick else ''}.pt")
         if not os.path.exists(pck):
             print(f"  !! missing parent {pck}, skipping")
@@ -158,6 +165,7 @@ def main():
 
         rck = os.path.join(CKPT_DIR, f"{DS}_ft_{BASE}_{parent}_"
                            f"{obj.replace('-', '')}_seen"
+                           f"{exp70.seed_sfx(args)}"
                            f"{'_quick' if args.quick else ''}.pt")
         torch.manual_seed(args.seed + 7); np.random.seed(args.seed + 7)
         child = copy.deepcopy(par)
