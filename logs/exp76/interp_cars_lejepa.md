@@ -1,2628 +1,2654 @@
 # exp76 interpretability [cars_lejepa]
-holdout classes starred; superclass partition: none
+holdout classes starred; superclass partition: yes
 
 ## frozen-lejepa (768d)  [cars_lejepa]
 
+agree@1=0.199 agree@5=0.122 (chance 0.040)  dendro-purity=0.162  silhouette=-0.305  within/between=0.771
+
 
 | class | 5 nearest class centroids (cosine dist) |
 |---|---|
-| class0 | class124(0.11) class105(0.16) class123(0.17) class145(0.18) class69(0.20) |
-| class1 | class21(0.01) class12(0.01) class140(0.01) class20(0.02) class22(0.02) |
-| class2 | class34(0.01) class133(0.01) class186*(0.01) class48(0.01) class51(0.01) |
-| class3 | class134(0.01) class138(0.01) class166(0.01) class42(0.01) class186*(0.02) |
-| class4 | class189*(0.01) class30(0.01) class18(0.01) class13(0.01) class26(0.02) |
-| class5 | class167(0.02) class186*(0.02) class166(0.03) class65(0.03) class182(0.03) |
-| class6 | class34(0.01) class9(0.01) class2(0.01) class48(0.01) class42(0.01) |
-| class7 | class37(0.01) class30(0.01) class58(0.01) class13(0.01) class133(0.02) |
-| class8 | class20(0.01) class14(0.01) class140(0.01) class18(0.01) class37(0.02) |
-| class9 | class104(0.01) class184(0.01) class143(0.01) class6(0.01) class129(0.01) |
-| class10 | class129(0.02) class102(0.02) class101(0.02) class54(0.02) class143(0.02) |
-| class11 | class172(0.01) class20(0.01) class35(0.01) class34(0.01) class19(0.01) |
-| class12 | class18(0.01) class22(0.01) class26(0.01) class21(0.01) class33(0.01) |
-| class13 | class50(0.01) class30(0.01) class127(0.01) class161(0.01) class4(0.01) |
-| class14 | class33(0.01) class12(0.01) class20(0.01) class104(0.01) class8(0.01) |
-| class15 | class16(0.02) class52(0.02) class160(0.02) class47(0.02) class75(0.02) |
-| class16 | class15(0.02) class17(0.02) class142(0.03) class75(0.03) class107(0.03) |
-| class17 | class16(0.02) class15(0.03) class160(0.03) class75(0.04) class52(0.04) |
-| class18 | class12(0.01) class26(0.01) class21(0.01) class33(0.01) class41(0.01) |
-| class19 | class11(0.01) class22(0.01) class12(0.01) class140(0.01) class34(0.01) |
-| class20 | class11(0.01) class140(0.01) class8(0.01) class35(0.01) class14(0.01) |
-| class21 | class12(0.01) class26(0.01) class18(0.01) class1(0.01) class140(0.01) |
-| class22 | class12(0.01) class19(0.01) class48(0.01) class23(0.01) class138(0.01) |
-| class23 | class136(0.01) class138(0.01) class186*(0.01) class42(0.01) class43(0.01) |
-| class24 | class37(0.02) class8(0.02) class14(0.02) class129(0.02) class33(0.02) |
-| class25 | class172(0.01) class34(0.02) class27(0.02) class162(0.02) class11(0.02) |
-| class26 | class18(0.01) class12(0.01) class21(0.01) class127(0.01) class33(0.01) |
-| class27 | class32(0.02) class41(0.02) class33(0.02) class140(0.02) class28(0.02) |
-| class28 | class32(0.02) class36(0.02) class27(0.02) class127(0.02) class29(0.02) |
-| class29 | class34(0.01) class109(0.01) class51(0.01) class181(0.01) class36(0.01) |
-| class30 | class13(0.01) class50(0.01) class79(0.01) class7(0.01) class4(0.01) |
-| class31 | class194*(0.01) class36(0.01) class154(0.01) class109(0.01) class188*(0.02) |
-| class32 | class36(0.01) class51(0.01) class140(0.02) class127(0.02) class41(0.02) |
-| class33 | class14(0.01) class12(0.01) class18(0.01) class26(0.01) class34(0.01) |
-| class34 | class2(0.01) class172(0.01) class11(0.01) class133(0.01) class48(0.01) |
-| class35 | class11(0.01) class58(0.01) class20(0.01) class6(0.01) class9(0.01) |
-| class36 | class32(0.01) class31(0.01) class51(0.01) class29(0.01) class141(0.02) |
-| class37 | class104(0.01) class7(0.01) class14(0.02) class55(0.02) class8(0.02) |
-| class38 | class7(0.02) class37(0.03) class26(0.03) class30(0.03) class58(0.03) |
-| class39 | class67(0.03) class96(0.04) class147(0.04) class78(0.04) class43(0.04) |
-| class40 | class36(0.02) class32(0.02) class41(0.02) class34(0.02) class176(0.02) |
-| class41 | class18(0.01) class133(0.01) class32(0.02) class27(0.02) class12(0.02) |
-| class42 | class136(0.01) class48(0.01) class23(0.01) class186*(0.01) class166(0.01) |
-| class43 | class164(0.01) class23(0.01) class138(0.01) class42(0.01) class134(0.01) |
-| class44 | class38(0.04) class45(0.04) class162(0.04) class9(0.04) class46(0.04) |
-| class45 | class104(0.02) class8(0.02) class9(0.02) class143(0.02) class172(0.02) |
-| class46 | class181(0.01) class163(0.01) class34(0.02) class139(0.02) class6(0.02) |
-| class47 | class107(0.01) class75(0.01) class72(0.01) class90(0.01) class114(0.01) |
-| class48 | class181(0.01) class42(0.01) class138(0.01) class2(0.01) class186*(0.01) |
-| class49 | class177(0.01) class132(0.01) class93(0.01) class57(0.01) class23(0.02) |
-| class50 | class13(0.01) class30(0.01) class161(0.01) class127(0.01) class79(0.01) |
-| class51 | class109(0.01) class2(0.01) class138(0.01) class43(0.01) class36(0.01) |
-| class52 | class147(0.01) class47(0.01) class75(0.01) class117(0.02) class120(0.02) |
-| class53 | class64(0.01) class69(0.01) class112(0.01) class110(0.01) class90(0.02) |
-| class54 | class101(0.01) class10(0.02) class95(0.02) class172(0.02) class58(0.02) |
-| class55 | class104(0.01) class14(0.01) class37(0.02) class8(0.02) class7(0.02) |
-| class56 | class38(0.03) class7(0.04) class44(0.04) class164(0.04) class184(0.04) |
-| class57 | class132(0.01) class177(0.01) class60(0.01) class114(0.01) class88(0.01) |
-| class58 | class35(0.01) class133(0.01) class2(0.01) class7(0.01) class96(0.01) |
-| class59 | class32(0.02) class58(0.02) class138(0.02) class26(0.02) class125(0.02) |
-| class60 | class57(0.01) class114(0.01) class126(0.01) class76(0.01) class72(0.01) |
-| class61 | class188*(0.02) class185(0.02) class154(0.03) class142(0.03) class108(0.03) |
-| class62 | class136(0.01) class166(0.01) class139(0.01) class191*(0.01) class186*(0.01) |
-| class63 | class70(0.01) class118(0.03) class165(0.03) class168(0.05) class115(0.05) |
-| class64 | class53(0.01) class75(0.01) class52(0.02) class110(0.02) class89(0.02) |
-| class65 | class186*(0.01) class181(0.02) class48(0.02) class166(0.02) class138(0.02) |
-| class66 | class187*(0.01) class128(0.01) class82(0.01) class76(0.01) class134(0.01) |
-| class67 | class147(0.01) class194*(0.02) class158(0.02) class52(0.02) class120(0.02) |
-| class68 | class118(0.02) class115(0.03) class112(0.03) class110(0.04) class73(0.04) |
-| class69 | class53(0.01) class110(0.02) class64(0.02) class105(0.02) class112(0.02) |
-| class70 | class63(0.01) class118(0.02) class112(0.03) class165(0.04) class113(0.04) |
-| class71 | class72(0.01) class128(0.01) class81(0.01) class114(0.01) class76(0.01) |
-| class72 | class71(0.01) class114(0.01) class81(0.01) class126(0.01) class60(0.01) |
-| class73 | class90(0.02) class121(0.02) class113(0.02) class112(0.02) class53(0.02) |
-| class74 | class113(0.01) class86(0.01) class121(0.02) class146(0.02) class90(0.02) |
-| class75 | class47(0.01) class117(0.01) class64(0.01) class52(0.01) class147(0.01) |
-| class76 | class134(0.01) class80(0.01) class60(0.01) class66(0.01) class71(0.01) |
-| class77 | class126(0.01) class57(0.01) class66(0.01) class119(0.01) class114(0.01) |
-| class78 | class23(0.01) class3(0.02) class49(0.02) class29(0.02) class166(0.02) |
-| class79 | class30(0.01) class50(0.01) class128(0.01) class106(0.02) class161(0.02) |
-| class80 | class177(0.01) class76(0.01) class131(0.01) class186*(0.01) class183(0.01) |
-| class81 | class72(0.01) class71(0.01) class114(0.02) class47(0.02) class126(0.02) |
-| class82 | class138(0.01) class66(0.01) class134(0.01) class43(0.01) class194*(0.01) |
-| class83 | class96(0.02) class82(0.02) class51(0.02) class134(0.02) class32(0.02) |
-| class84 | class114(0.01) class126(0.02) class60(0.02) class72(0.02) class57(0.02) |
-| class85 | class105(0.02) class121(0.02) class53(0.03) class89(0.03) class110(0.03) |
-| class86 | class121(0.01) class113(0.01) class74(0.01) class90(0.02) class112(0.02) |
-| class87 | class115(0.04) class118(0.05) class165(0.08) class68(0.08) class173(0.08) |
-| class88 | class93(0.01) class57(0.01) class148(0.01) class177(0.01) class49(0.02) |
-| class89 | class147(0.02) class75(0.02) class64(0.02) class53(0.02) class108(0.02) |
-| class90 | class121(0.01) class47(0.01) class112(0.02) class53(0.02) class86(0.02) |
-| class91 | class106(0.01) class128(0.01) class66(0.02) class117(0.02) class187*(0.02) |
-| class92 | class191*(0.02) class111(0.02) class95(0.03) class62(0.03) class166(0.03) |
-| class93 | class88(0.01) class49(0.01) class177(0.01) class23(0.01) class148(0.01) |
-| class94 | class147(0.01) class47(0.01) class117(0.02) class75(0.02) class114(0.02) |
-| class95 | class129(0.01) class192*(0.02) class23(0.02) class143(0.02) class58(0.02) |
-| class96 | class106(0.01) class23(0.01) class58(0.01) class43(0.02) class134(0.02) |
-| class97 | class171(0.01) class170(0.02) class3(0.03) class114(0.03) class88(0.03) |
-| class98 | class178(0.04) class179(0.04) class95(0.04) class143(0.04) class184(0.04) |
-| class99 | class167(0.04) class195*(0.04) class181(0.04) class186*(0.04) class191*(0.04) |
-| class100 | class10(0.03) class172(0.03) class129(0.03) class45(0.03) class104(0.03) |
-| class101 | class102(0.01) class54(0.01) class10(0.02) class95(0.02) class103(0.02) |
-| class102 | class101(0.01) class103(0.02) class10(0.02) class159(0.02) class37(0.02) |
-| class103 | class102(0.02) class101(0.02) class37(0.02) class7(0.02) class55(0.02) |
-| class104 | class9(0.01) class37(0.01) class55(0.01) class14(0.01) class162(0.02) |
-| class105 | class69(0.02) class85(0.02) class53(0.03) class110(0.03) class112(0.03) |
-| class106 | class91(0.01) class96(0.01) class128(0.02) class79(0.02) class71(0.02) |
-| class107 | class47(0.01) class75(0.02) class81(0.02) class142(0.02) class64(0.02) |
-| class108 | class142(0.01) class147(0.02) class75(0.02) class130(0.02) class64(0.02) |
-| class109 | class51(0.01) class23(0.01) class138(0.01) class194*(0.01) class31(0.01) |
-| class110 | class53(0.01) class112(0.02) class64(0.02) class69(0.02) class121(0.02) |
-| class111 | class143(0.02) class54(0.02) class92(0.02) class101(0.03) class95(0.03) |
-| class112 | class53(0.01) class110(0.02) class90(0.02) class142(0.02) class121(0.02) |
-| class113 | class74(0.01) class86(0.01) class121(0.02) class90(0.02) class73(0.02) |
-| class114 | class126(0.01) class72(0.01) class57(0.01) class60(0.01) class71(0.01) |
-| class115 | class118(0.02) class68(0.03) class112(0.03) class70(0.04) class105(0.04) |
-| class116 | class138(0.01) class134(0.01) class131(0.01) class76(0.01) class186*(0.01) |
-| class117 | class75(0.01) class47(0.01) class94(0.02) class52(0.02) class147(0.02) |
-| class118 | class115(0.02) class68(0.02) class70(0.02) class112(0.03) class63(0.03) |
-| class119 | class194*(0.01) class158(0.01) class154(0.01) class185(0.01) class77(0.01) |
-| class120 | class147(0.01) class130(0.01) class194*(0.01) class82(0.02) class52(0.02) |
-| class121 | class90(0.01) class86(0.01) class117(0.02) class113(0.02) class112(0.02) |
-| class122 | class160(0.03) class17(0.04) class64(0.05) class107(0.06) class81(0.06) |
-| class123 | class124(0.04) class145(0.05) class85(0.07) class121(0.07) class105(0.08) |
-| class124 | class123(0.04) class105(0.04) class85(0.06) class110(0.06) class73(0.06) |
-| class125 | class138(0.01) class48(0.01) class2(0.02) class51(0.02) class183(0.02) |
-| class126 | class114(0.01) class77(0.01) class60(0.01) class72(0.01) class57(0.01) |
-| class127 | class133(0.01) class13(0.01) class50(0.01) class26(0.01) class58(0.01) |
-| class128 | class71(0.01) class187*(0.01) class66(0.01) class91(0.01) class79(0.01) |
-| class129 | class143(0.01) class9(0.01) class95(0.01) class139(0.02) class10(0.02) |
-| class130 | class120(0.01) class82(0.02) class128(0.02) class189*(0.02) class75(0.02) |
-| class131 | class136(0.01) class186*(0.01) class183(0.01) class80(0.01) class177(0.01) |
-| class132 | class57(0.01) class49(0.01) class177(0.01) class114(0.01) class93(0.02) |
-| class133 | class127(0.01) class2(0.01) class34(0.01) class12(0.01) class58(0.01) |
-| class134 | class138(0.01) class76(0.01) class116(0.01) class186*(0.01) class3(0.01) |
-| class135 | class127(0.02) class21(0.02) class13(0.02) class26(0.02) class1(0.02) |
-| class136 | class23(0.01) class186*(0.01) class42(0.01) class166(0.01) class183(0.01) |
-| class137 | class2(0.01) class42(0.01) class133(0.01) class3(0.02) class51(0.02) |
-| class138 | class134(0.01) class23(0.01) class116(0.01) class186*(0.01) class82(0.01) |
-| class139 | class62(0.01) class129(0.02) class136(0.02) class163(0.02) class184(0.02) |
-| class140 | class20(0.01) class18(0.01) class8(0.01) class19(0.01) class21(0.01) |
-| class141 | class36(0.02) class154(0.02) class31(0.02) class188*(0.02) class19(0.02) |
-| class142 | class75(0.01) class108(0.01) class47(0.02) class90(0.02) class112(0.02) |
-| class143 | class129(0.01) class9(0.01) class184(0.02) class163(0.02) class139(0.02) |
-| class144 | class146(0.01) class153(0.02) class148(0.03) class86(0.03) class119(0.03) |
-| class145 | class123(0.05) class124(0.06) class85(0.08) class146(0.08) class105(0.09) |
-| class146 | class144(0.01) class74(0.02) class148(0.03) class94(0.03) class86(0.03) |
-| class147 | class94(0.01) class52(0.01) class120(0.01) class194*(0.01) class67(0.01) |
-| class148 | class93(0.01) class88(0.01) class177(0.02) class57(0.02) class131(0.02) |
-| class149 | class179(0.03) class143(0.04) class184(0.04) class178(0.04) class129(0.04) |
-| class150 | class159(0.02) class103(0.03) class55(0.03) class151(0.03) class8(0.03) |
-| class151 | class159(0.03) class150(0.03) class179(0.03) class102(0.03) class103(0.04) |
-| class152 | class5(0.03) class167(0.05) class96(0.05) class56(0.05) class111(0.05) |
-| class153 | class194*(0.02) class119(0.02) class93(0.02) class78(0.02) class109(0.02) |
-| class154 | class194*(0.01) class188*(0.01) class185(0.01) class119(0.01) class31(0.01) |
-| class155 | class107(0.02) class71(0.02) class47(0.02) class72(0.03) class81(0.03) |
-| class156 | class33(0.02) class36(0.03) class18(0.03) class14(0.03) class37(0.03) |
-| class157 | class56(0.04) class38(0.06) class164(0.07) class189*(0.07) class174(0.07) |
-| class158 | class194*(0.01) class119(0.01) class185(0.01) class154(0.02) class147(0.02) |
-| class159 | class102(0.02) class150(0.02) class129(0.02) class10(0.02) class104(0.02) |
-| class160 | class71(0.02) class81(0.02) class72(0.02) class106(0.02) class75(0.02) |
-| class161 | class50(0.01) class13(0.01) class30(0.01) class164(0.02) class4(0.02) |
-| class162 | class172(0.01) class9(0.02) class104(0.02) class163(0.02) class14(0.02) |
-| class163 | class172(0.01) class181(0.01) class34(0.01) class46(0.01) class11(0.02) |
-| class164 | class43(0.01) class187*(0.01) class2(0.01) class66(0.01) class161(0.02) |
-| class165 | class63(0.03) class118(0.04) class70(0.04) class168(0.05) class115(0.06) |
-| class166 | class186*(0.01) class182(0.01) class181(0.01) class136(0.01) class42(0.01) |
-| class167 | class186*(0.02) class181(0.02) class182(0.02) class191*(0.02) class166(0.02) |
-| class168 | class118(0.04) class70(0.04) class86(0.04) class74(0.04) class112(0.04) |
-| class169 | class192*(0.02) class62(0.02) class143(0.02) class181(0.02) class191*(0.02) |
-| class170 | class114(0.01) class3(0.02) class97(0.02) class177(0.02) class132(0.02) |
-| class171 | class97(0.01) class84(0.02) class170(0.03) class190*(0.03) class88(0.03) |
-| class172 | class11(0.01) class34(0.01) class163(0.01) class25(0.01) class162(0.01) |
-| class173 | class155(0.04) class142(0.04) class107(0.04) class118(0.04) class61(0.04) |
-| class174 | class176(0.01) class26(0.03) class30(0.03) class91(0.03) class106(0.03) |
-| class175 | class62(0.02) class23(0.02) class192*(0.02) class169(0.03) class166(0.03) |
-| class176 | class174(0.01) class36(0.02) class26(0.02) class30(0.02) class29(0.02) |
-| class177 | class49(0.01) class57(0.01) class132(0.01) class80(0.01) class131(0.01) |
-| class178 | class179(0.01) class184(0.04) class98(0.04) class149(0.04) class103(0.04) |
-| class179 | class178(0.01) class184(0.02) class143(0.03) class102(0.03) class111(0.03) |
-| class180 | class126(0.02) class77(0.02) class66(0.02) class185(0.02) class114(0.02) |
-| class181 | class186*(0.01) class166(0.01) class182(0.01) class48(0.01) class183(0.01) |
-| class182 | class166(0.01) class181(0.01) class186*(0.01) class183(0.01) class136(0.01) |
-| class183 | class186*(0.01) class136(0.01) class182(0.01) class131(0.01) class181(0.01) |
-| class184 | class9(0.01) class143(0.02) class139(0.02) class62(0.02) class129(0.02) |
-| class185 | class154(0.01) class194*(0.01) class119(0.01) class158(0.01) class188*(0.02) |
-| class186* | class166(0.01) class181(0.01) class183(0.01) class136(0.01) class182(0.01) |
-| class187* | class66(0.01) class128(0.01) class134(0.01) class164(0.01) class71(0.01) |
-| class188* | class154(0.01) class31(0.02) class185(0.02) class194*(0.02) class36(0.02) |
-| class189* | class4(0.01) class128(0.01) class130(0.02) class187*(0.02) class30(0.02) |
-| class190* | class193*(0.02) class171(0.03) class146(0.03) class144(0.04) class74(0.04) |
-| class191* | class181(0.01) class186*(0.01) class62(0.01) class192*(0.02) class23(0.02) |
-| class192* | class62(0.02) class95(0.02) class191*(0.02) class48(0.02) class181(0.02) |
-| class193* | class190*(0.02) class146(0.03) class74(0.03) class144(0.03) class113(0.04) |
-| class194* | class31(0.01) class119(0.01) class158(0.01) class154(0.01) class185(0.01) |
-| class195* | class99(0.04) class109(0.05) class192*(0.06) class116(0.06) class167(0.06) |
+| AM General Hummer SUV 2000 | HUMMER H2 SUT Crew Cab 2009(0.11) Ford F-450 Super Duty Crew Cab 2012(0.16) HUMMER H3T Crew Cab 2010(0.17) Jeep Wrangler SUV 2012(0.18) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.20) |
+| Acura RL Sedan 2012 | Audi S5 Coupe 2012(0.01) Audi A5 Coupe 2012(0.01) Infiniti G Coupe IPL 2012(0.01) Audi S5 Convertible 2012(0.02) Audi S4 Sedan 2012(0.02) |
+| Acura TL Sedan 2012 | BMW M5 Sedan 2010(0.01) Hyundai Sonata Hybrid Sedan 2012(0.01) Toyota Camry Sedan 2012*(0.01) Buick Verano Sedan 2012(0.01) Cadillac SRX SUV 2012(0.01) |
+| Acura TL Type-S 2008 | Hyundai Elantra Sedan 2007(0.01) Hyundai Elantra Touring Hatchback 2012(0.01) Mitsubishi Lancer Sedan 2012(0.01) Bentley Continental GT Coupe 2007(0.01) Toyota Camry Sedan 2012*(0.02) |
+| Acura TSX Sedan 2012 | Volkswagen Golf Hatchback 2012*(0.01) BMW 6 Series Convertible 2007(0.01) Audi TT Hatchback 2011(0.01) Audi TTS Coupe 2012(0.01) BMW 1 Series Convertible 2012(0.02) |
+| Acura Integra Type R 2001 | Nissan Leaf Hatchback 2012(0.02) Toyota Camry Sedan 2012*(0.02) Mitsubishi Lancer Sedan 2012(0.03) Chevrolet Cobalt SS 2010(0.03) Suzuki SX4 Hatchback 2012(0.03) |
+| Acura ZDX Hatchback 2012 | BMW M5 Sedan 2010(0.01) Aston Martin Virage Convertible 2012(0.01) Acura TL Sedan 2012(0.01) Buick Verano Sedan 2012(0.01) Bentley Continental GT Coupe 2007(0.01) |
+| Aston Martin V8 Vantage Convertible 2012 | BMW Z4 Convertible 2012(0.01) BMW 6 Series Convertible 2007(0.01) Chevrolet Camaro Convertible 2012(0.01) Audi TTS Coupe 2012(0.01) Hyundai Sonata Hybrid Sedan 2012(0.02) |
+| Aston Martin V8 Vantage Coupe 2012 | Audi S5 Convertible 2012(0.01) Audi R8 Coupe 2012(0.01) Infiniti G Coupe IPL 2012(0.01) Audi TT Hatchback 2011(0.01) BMW Z4 Convertible 2012(0.02) |
+| Aston Martin Virage Convertible 2012 | Fisker Karma Sedan 2012(0.01) Tesla Model S Sedan 2012(0.01) Jaguar XK XKR 2012(0.01) Acura ZDX Hatchback 2012(0.01) Hyundai Veloster Hatchback 2012(0.01) |
+| Aston Martin Virage Coupe 2012 | Hyundai Veloster Hatchback 2012(0.02) Ferrari 458 Italia Convertible 2012(0.02) Ferrari California Convertible 2012(0.02) Chevrolet Corvette Convertible 2012(0.02) Jaguar XK XKR 2012(0.02) |
+| Audi RS 4 Convertible 2008 | Porsche Panamera Sedan 2012(0.01) Audi S5 Convertible 2012(0.01) BMW M6 Convertible 2010(0.01) BMW M5 Sedan 2010(0.01) Audi S6 Sedan 2011(0.01) |
+| Audi A5 Coupe 2012 | Audi TT Hatchback 2011(0.01) Audi S4 Sedan 2012(0.01) BMW 1 Series Convertible 2012(0.01) Audi S5 Coupe 2012(0.01) BMW M3 Coupe 2012(0.01) |
+| Audi TTS Coupe 2012 | Cadillac CTS-V Sedan 2012(0.01) BMW 6 Series Convertible 2007(0.01) Honda Accord Coupe 2012(0.01) Mercedes-Benz C-Class Sedan 2012(0.01) Acura TSX Sedan 2012(0.01) |
+| Audi R8 Coupe 2012 | BMW M3 Coupe 2012(0.01) Audi A5 Coupe 2012(0.01) Audi S5 Convertible 2012(0.01) Fisker Karma Sedan 2012(0.01) Aston Martin V8 Vantage Coupe 2012(0.01) |
+| Audi V8 Sedan 1994 | Audi 100 Sedan 1994(0.02) Cadillac Escalade EXT Crew Cab 2007(0.02) Mercedes-Benz 300-Class Convertible 1993(0.02) Buick Rainier SUV 2007(0.02) Chrysler Aspen SUV 2009(0.02) |
+| Audi 100 Sedan 1994 | Audi V8 Sedan 1994(0.02) Audi 100 Wagon 1994(0.02) Isuzu Ascender SUV 2008(0.03) Chrysler Aspen SUV 2009(0.03) Ford Freestar Minivan 2007(0.03) |
+| Audi 100 Wagon 1994 | Audi 100 Sedan 1994(0.02) Audi V8 Sedan 1994(0.03) Mercedes-Benz 300-Class Convertible 1993(0.03) Chrysler Aspen SUV 2009(0.04) Cadillac Escalade EXT Crew Cab 2007(0.04) |
+| Audi TT Hatchback 2011 | Audi A5 Coupe 2012(0.01) BMW 1 Series Convertible 2012(0.01) Audi S5 Coupe 2012(0.01) BMW M3 Coupe 2012(0.01) Bentley Continental GT Coupe 2012(0.01) |
+| Audi S6 Sedan 2011 | Audi RS 4 Convertible 2008(0.01) Audi S4 Sedan 2012(0.01) Audi A5 Coupe 2012(0.01) Infiniti G Coupe IPL 2012(0.01) BMW M5 Sedan 2010(0.01) |
+| Audi S5 Convertible 2012 | Audi RS 4 Convertible 2008(0.01) Infiniti G Coupe IPL 2012(0.01) Aston Martin V8 Vantage Coupe 2012(0.01) BMW M6 Convertible 2010(0.01) Audi R8 Coupe 2012(0.01) |
+| Audi S5 Coupe 2012 | Audi A5 Coupe 2012(0.01) BMW 1 Series Convertible 2012(0.01) Audi TT Hatchback 2011(0.01) Acura RL Sedan 2012(0.01) Infiniti G Coupe IPL 2012(0.01) |
+| Audi S4 Sedan 2012 | Audi A5 Coupe 2012(0.01) Audi S6 Sedan 2011(0.01) Buick Verano Sedan 2012(0.01) Audi S4 Sedan 2007(0.01) Hyundai Elantra Touring Hatchback 2012(0.01) |
+| Audi S4 Sedan 2007 | Hyundai Genesis Sedan 2012(0.01) Hyundai Elantra Touring Hatchback 2012(0.01) Toyota Camry Sedan 2012*(0.01) Bentley Continental GT Coupe 2007(0.01) Bentley Continental Flying Spur Sedan 2007(0.01) |
+| Audi TT RS Coupe 2012 | BMW Z4 Convertible 2012(0.02) Aston Martin V8 Vantage Coupe 2012(0.02) Audi R8 Coupe 2012(0.02) Hyundai Veloster Hatchback 2012(0.02) BMW M3 Coupe 2012(0.02) |
+| BMW ActiveHybrid 5 Sedan 2012 | Porsche Panamera Sedan 2012(0.01) BMW M5 Sedan 2010(0.02) BMW 1 Series Coupe 2012(0.02) Mercedes-Benz SL-Class Coupe 2009(0.02) Audi RS 4 Convertible 2008(0.02) |
+| BMW 1 Series Convertible 2012 | Audi TT Hatchback 2011(0.01) Audi A5 Coupe 2012(0.01) Audi S5 Coupe 2012(0.01) Honda Accord Coupe 2012(0.01) BMW M3 Coupe 2012(0.01) |
+| BMW 1 Series Coupe 2012 | BMW X6 SUV 2012(0.02) Bentley Continental GT Coupe 2012(0.02) BMW M3 Coupe 2012(0.02) Infiniti G Coupe IPL 2012(0.02) BMW 3 Series Sedan 2012(0.02) |
+| BMW 3 Series Sedan 2012 | BMW X6 SUV 2012(0.02) BMW X3 SUV 2012(0.02) BMW 1 Series Coupe 2012(0.02) Honda Accord Coupe 2012(0.02) BMW 3 Series Wagon 2012(0.02) |
+| BMW 3 Series Wagon 2012 | BMW M5 Sedan 2010(0.01) Ford Edge SUV 2012(0.01) Cadillac SRX SUV 2012(0.01) Suzuki Kizashi Sedan 2012(0.01) BMW X3 SUV 2012(0.01) |
+| BMW 6 Series Convertible 2007 | Audi TTS Coupe 2012(0.01) Cadillac CTS-V Sedan 2012(0.01) Chrysler Crossfire Convertible 2008(0.01) Aston Martin V8 Vantage Convertible 2012(0.01) Acura TSX Sedan 2012(0.01) |
+| BMW X5 SUV 2007 | Volvo XC90 SUV 2007*(0.01) BMW X3 SUV 2012(0.01) Land Rover LR2 SUV 2012(0.01) Ford Edge SUV 2012(0.01) Toyota 4Runner SUV 2012*(0.02) |
+| BMW X6 SUV 2012 | BMW X3 SUV 2012(0.01) Cadillac SRX SUV 2012(0.01) Infiniti G Coupe IPL 2012(0.02) Honda Accord Coupe 2012(0.02) Bentley Continental GT Coupe 2012(0.02) |
+| BMW M3 Coupe 2012 | Audi R8 Coupe 2012(0.01) Audi A5 Coupe 2012(0.01) Audi TT Hatchback 2011(0.01) BMW 1 Series Convertible 2012(0.01) BMW M5 Sedan 2010(0.01) |
+| BMW M5 Sedan 2010 | Acura TL Sedan 2012(0.01) Porsche Panamera Sedan 2012(0.01) Audi RS 4 Convertible 2008(0.01) Hyundai Sonata Hybrid Sedan 2012(0.01) Buick Verano Sedan 2012(0.01) |
+| BMW M6 Convertible 2010 | Audi RS 4 Convertible 2008(0.01) Chevrolet Camaro Convertible 2012(0.01) Audi S5 Convertible 2012(0.01) Acura ZDX Hatchback 2012(0.01) Aston Martin Virage Convertible 2012(0.01) |
+| BMW X3 SUV 2012 | BMW X6 SUV 2012(0.01) BMW X5 SUV 2007(0.01) Cadillac SRX SUV 2012(0.01) BMW 3 Series Wagon 2012(0.01) Infiniti QX56 SUV 2011(0.02) |
+| BMW Z4 Convertible 2012 | Fisker Karma Sedan 2012(0.01) Aston Martin V8 Vantage Convertible 2012(0.01) Audi R8 Coupe 2012(0.02) Chevrolet Corvette ZR1 2012(0.02) Aston Martin V8 Vantage Coupe 2012(0.02) |
+| Bentley Continental Supersports Conv. Convertible 2012 | Aston Martin V8 Vantage Convertible 2012(0.02) BMW Z4 Convertible 2012(0.03) BMW 1 Series Convertible 2012(0.03) BMW 6 Series Convertible 2007(0.03) Chevrolet Camaro Convertible 2012(0.03) |
+| Bentley Arnage Sedan 2009 | Chevrolet TrailBlazer SS 2009(0.03) Dodge Charger SRT-8 2009(0.04) Jeep Grand Cherokee SUV 2012(0.04) Chrysler 300 SRT-8 2010(0.04) Bentley Continental Flying Spur Sedan 2007(0.04) |
+| Bentley Mulsanne Sedan 2011 | BMW X3 SUV 2012(0.02) BMW X6 SUV 2012(0.02) Bentley Continental GT Coupe 2012(0.02) BMW M5 Sedan 2010(0.02) Rolls-Royce Phantom Sedan 2012(0.02) |
+| Bentley Continental GT Coupe 2012 | Audi TT Hatchback 2011(0.01) Hyundai Sonata Hybrid Sedan 2012(0.01) BMW X6 SUV 2012(0.02) BMW 1 Series Coupe 2012(0.02) Audi A5 Coupe 2012(0.02) |
+| Bentley Continental GT Coupe 2007 | Hyundai Genesis Sedan 2012(0.01) Buick Verano Sedan 2012(0.01) Audi S4 Sedan 2007(0.01) Toyota Camry Sedan 2012*(0.01) Mitsubishi Lancer Sedan 2012(0.01) |
+| Bentley Continental Flying Spur Sedan 2007 | Mercedes-Benz S-Class Sedan 2012(0.01) Audi S4 Sedan 2007(0.01) Hyundai Elantra Touring Hatchback 2012(0.01) Bentley Continental GT Coupe 2007(0.01) Hyundai Elantra Sedan 2007(0.01) |
+| Bugatti Veyron 16.4 Convertible 2009 | Bentley Continental Supersports Conv. Convertible 2012(0.04) Bugatti Veyron 16.4 Coupe 2009(0.04) Mercedes-Benz SL-Class Coupe 2009(0.04) Aston Martin Virage Convertible 2012(0.04) Buick Regal GS 2012(0.04) |
+| Bugatti Veyron 16.4 Coupe 2009 | Fisker Karma Sedan 2012(0.02) Aston Martin V8 Vantage Coupe 2012(0.02) Aston Martin Virage Convertible 2012(0.02) Jaguar XK XKR 2012(0.02) Porsche Panamera Sedan 2012(0.02) |
+| Buick Regal GS 2012 | Suzuki Kizashi Sedan 2012(0.01) Mercedes-Benz E-Class Sedan 2012(0.01) BMW M5 Sedan 2010(0.02) Hyundai Azera Sedan 2012(0.02) Acura ZDX Hatchback 2012(0.02) |
+| Buick Rainier SUV 2007 | Ford Freestar Minivan 2007(0.01) Chrysler Aspen SUV 2009(0.01) Chevrolet Malibu Sedan 2007(0.01) Dodge Dakota Club Cab 2007(0.01) Ford Focus Sedan 2007(0.01) |
+| Buick Verano Sedan 2012 | Suzuki Kizashi Sedan 2012(0.01) Bentley Continental GT Coupe 2007(0.01) Hyundai Elantra Touring Hatchback 2012(0.01) Acura TL Sedan 2012(0.01) Toyota Camry Sedan 2012*(0.01) |
+| Buick Enclave SUV 2012 | Scion xD Hatchback 2012(0.01) Hyundai Veracruz SUV 2012(0.01) Dodge Durango SUV 2012(0.01) Chevrolet Traverse SUV 2012(0.01) Audi S4 Sedan 2007(0.02) |
+| Cadillac CTS-V Sedan 2012 | Audi TTS Coupe 2012(0.01) BMW 6 Series Convertible 2007(0.01) Mercedes-Benz C-Class Sedan 2012(0.01) Honda Accord Coupe 2012(0.01) Chrysler Crossfire Convertible 2008(0.01) |
+| Cadillac SRX SUV 2012 | Ford Edge SUV 2012(0.01) Acura TL Sedan 2012(0.01) Hyundai Elantra Touring Hatchback 2012(0.01) Bentley Continental Flying Spur Sedan 2007(0.01) BMW X3 SUV 2012(0.01) |
+| Cadillac Escalade EXT Crew Cab 2007 | Jeep Grand Cherokee SUV 2012(0.01) Buick Rainier SUV 2007(0.01) Chrysler Aspen SUV 2009(0.01) GMC Terrain SUV 2012(0.02) GMC Acadia SUV 2012(0.02) |
+| Chevrolet Silverado 1500 Hybrid Crew Cab 2012 | Chevrolet Avalanche Crew Cab 2012(0.01) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.01) Ford F-150 Regular Cab 2012(0.01) Ford Ranger SuperCab 2011(0.01) Dodge Dakota Club Cab 2007(0.02) |
+| Chevrolet Corvette Convertible 2012 | Ferrari California Convertible 2012(0.01) Aston Martin Virage Coupe 2012(0.02) Dodge Charger Sedan 2012(0.02) Porsche Panamera Sedan 2012(0.02) Chevrolet Camaro Convertible 2012(0.02) |
+| Chevrolet Corvette ZR1 2012 | Fisker Karma Sedan 2012(0.01) Audi R8 Coupe 2012(0.01) BMW Z4 Convertible 2012(0.02) Aston Martin V8 Vantage Coupe 2012(0.02) Aston Martin V8 Vantage Convertible 2012(0.02) |
+| Chevrolet Corvette Ron Fellows Edition Z06 2007 | Bentley Continental Supersports Conv. Convertible 2012(0.03) Aston Martin V8 Vantage Convertible 2012(0.04) Bugatti Veyron 16.4 Convertible 2009(0.04) Mercedes-Benz S-Class Sedan 2012(0.04) Tesla Model S Sedan 2012(0.04) |
+| Chevrolet Traverse SUV 2012 | Hyundai Veracruz SUV 2012(0.01) Scion xD Hatchback 2012(0.01) Chevrolet Impala Sedan 2007(0.01) Ford Focus Sedan 2007(0.01) Dodge Journey SUV 2012(0.01) |
+| Chevrolet Camaro Convertible 2012 | BMW M6 Convertible 2010(0.01) Hyundai Sonata Hybrid Sedan 2012(0.01) Acura TL Sedan 2012(0.01) Aston Martin V8 Vantage Convertible 2012(0.01) Dodge Charger SRT-8 2009(0.01) |
+| Chevrolet HHR SS 2010 | BMW X6 SUV 2012(0.02) Chevrolet Camaro Convertible 2012(0.02) Hyundai Elantra Touring Hatchback 2012(0.02) BMW 1 Series Convertible 2012(0.02) Honda Odyssey Minivan 2012(0.02) |
+| Chevrolet Impala Sedan 2007 | Chevrolet Traverse SUV 2012(0.01) Ford Focus Sedan 2007(0.01) Honda Odyssey Minivan 2007(0.01) Chrysler Sebring Convertible 2010(0.01) Chevrolet Malibu Sedan 2007(0.01) |
+| Chevrolet Tahoe Hybrid SUV 2012 | Toyota 4Runner SUV 2012*(0.02) Toyota Sequoia SUV 2012(0.02) Land Rover LR2 SUV 2012(0.03) Isuzu Ascender SUV 2008(0.03) Ford Expedition EL SUV 2009(0.03) |
+| Chevrolet Sonic Sedan 2012 | Hyundai Genesis Sedan 2012(0.01) Mitsubishi Lancer Sedan 2012(0.01) Hyundai Azera Sedan 2012(0.01) Volkswagen Beetle Hatchback 2012*(0.01) Toyota Camry Sedan 2012*(0.01) |
+| Chevrolet Express Cargo Van 2007 | Chevrolet Express Van 2007(0.01) GMC Savana Van 2012(0.03) Mercedes-Benz Sprinter Van 2012(0.03) Nissan NV Passenger Van 2012(0.05) Ford E-Series Wagon Van 2012(0.05) |
+| Chevrolet Avalanche Crew Cab 2012 | Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.01) Chrysler Aspen SUV 2009(0.01) Cadillac Escalade EXT Crew Cab 2007(0.02) Ford Ranger SuperCab 2011(0.02) Dodge Dakota Crew Cab 2010(0.02) |
+| Chevrolet Cobalt SS 2010 | Toyota Camry Sedan 2012*(0.01) Suzuki Kizashi Sedan 2012(0.02) Buick Verano Sedan 2012(0.02) Mitsubishi Lancer Sedan 2012(0.02) Hyundai Elantra Touring Hatchback 2012(0.02) |
+| Chevrolet Malibu Hybrid Sedan 2010 | Toyota Corolla Sedan 2012*(0.01) Honda Accord Sedan 2012(0.01) Dodge Caliber Wagon 2012(0.01) Chrysler Sebring Convertible 2010(0.01) Hyundai Elantra Sedan 2007(0.01) |
+| Chevrolet TrailBlazer SS 2009 | Jeep Grand Cherokee SUV 2012(0.01) Volvo XC90 SUV 2007*(0.02) Mazda Tribute SUV 2011(0.02) Cadillac Escalade EXT Crew Cab 2007(0.02) GMC Acadia SUV 2012(0.02) |
+| Chevrolet Silverado 2500HD Regular Cab 2012 | GMC Savana Van 2012(0.02) Ford E-Series Wagon Van 2012(0.03) Ford F-150 Regular Cab 2012(0.03) Ford Ranger SuperCab 2011(0.04) Chevrolet Silverado 1500 Extended Cab 2012(0.04) |
+| Chevrolet Silverado 1500 Classic Extended Cab 2007 | Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.01) Ford Ranger SuperCab 2011(0.02) Chevrolet Avalanche Crew Cab 2012(0.02) Ford F-450 Super Duty Crew Cab 2012(0.02) Ford F-150 Regular Cab 2012(0.02) |
+| Chevrolet Express Van 2007 | Chevrolet Express Cargo Van 2007(0.01) GMC Savana Van 2012(0.02) Ford F-150 Regular Cab 2012(0.03) Mercedes-Benz Sprinter Van 2012(0.04) Ford F-150 Regular Cab 2007(0.04) |
+| Chevrolet Monte Carlo Coupe 2007 | Chevrolet Malibu Sedan 2007(0.01) Honda Accord Sedan 2012(0.01) Daewoo Nubira Wagon 2002(0.01) Ford Focus Sedan 2007(0.01) Chrysler Sebring Convertible 2010(0.01) |
+| Chevrolet Malibu Sedan 2007 | Chevrolet Monte Carlo Coupe 2007(0.01) Ford Focus Sedan 2007(0.01) Daewoo Nubira Wagon 2002(0.01) Honda Odyssey Minivan 2007(0.01) Chevrolet Impala Sedan 2007(0.01) |
+| Chevrolet Silverado 1500 Extended Cab 2012 | Dodge Dakota Club Cab 2007(0.02) GMC Canyon Extended Cab 2012(0.02) Ford F-150 Regular Cab 2007(0.02) Ford F-150 Regular Cab 2012(0.02) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.02) |
+| Chevrolet Silverado 1500 Regular Cab 2012 | Ford F-150 Regular Cab 2007(0.01) Dodge Ram Pickup 3500 Quad Cab 2009(0.01) GMC Canyon Extended Cab 2012(0.02) Jeep Liberty SUV 2012(0.02) Dodge Dakota Club Cab 2007(0.02) |
+| Chrysler Aspen SUV 2009 | Buick Rainier SUV 2007(0.01) GMC Terrain SUV 2012(0.01) Chevrolet Avalanche Crew Cab 2012(0.01) Cadillac Escalade EXT Crew Cab 2007(0.01) Jeep Grand Cherokee SUV 2012(0.01) |
+| Chrysler Sebring Convertible 2010 | Hyundai Elantra Sedan 2007(0.01) Chrysler PT Cruiser Convertible 2008(0.01) Chevrolet Impala Sedan 2007(0.01) Chevrolet Malibu Hybrid Sedan 2010(0.01) Chevrolet Monte Carlo Coupe 2007(0.01) |
+| Chrysler Town and Country Minivan 2012 | Honda Odyssey Minivan 2007(0.01) Chevrolet Traverse SUV 2012(0.01) Chevrolet Malibu Hybrid Sedan 2010(0.01) GMC Yukon Hybrid SUV 2012(0.01) Ford Focus Sedan 2007(0.01) |
+| Chrysler 300 SRT-8 2010 | Audi S4 Sedan 2007(0.01) Acura TL Type-S 2008(0.02) Buick Enclave SUV 2012(0.02) BMW 3 Series Wagon 2012(0.02) Mitsubishi Lancer Sedan 2012(0.02) |
+| Chrysler Crossfire Convertible 2008 | BMW 6 Series Convertible 2007(0.01) Cadillac CTS-V Sedan 2012(0.01) Honda Accord Sedan 2012(0.01) Ford Mustang Convertible 2007(0.02) Mercedes-Benz C-Class Sedan 2012(0.02) |
+| Chrysler PT Cruiser Convertible 2008 | Scion xD Hatchback 2012(0.01) Chrysler Sebring Convertible 2010(0.01) Hyundai Tucson SUV 2012(0.01) Toyota Camry Sedan 2012*(0.01) Suzuki SX4 Sedan 2012(0.01) |
+| Daewoo Nubira Wagon 2002 | Chevrolet Malibu Sedan 2007(0.01) Chevrolet Monte Carlo Coupe 2007(0.01) Ford Focus Sedan 2007(0.02) Buick Rainier SUV 2007(0.02) Honda Odyssey Minivan 2007(0.02) |
+| Dodge Caliber Wagon 2012 | Hyundai Elantra Touring Hatchback 2012(0.01) Chevrolet Malibu Hybrid Sedan 2010(0.01) Hyundai Elantra Sedan 2007(0.01) Bentley Continental Flying Spur Sedan 2007(0.01) Volvo XC90 SUV 2007*(0.01) |
+| Dodge Caliber Wagon 2007 | Dodge Charger SRT-8 2009(0.02) Dodge Caliber Wagon 2012(0.02) Cadillac SRX SUV 2012(0.02) Hyundai Elantra Sedan 2007(0.02) BMW X6 SUV 2012(0.02) |
+| Dodge Caravan Minivan 1997 | Ford Focus Sedan 2007(0.01) Honda Odyssey Minivan 2007(0.02) Chevrolet Impala Sedan 2007(0.02) Chevrolet Malibu Sedan 2007(0.02) Chevrolet Traverse SUV 2012(0.02) |
+| Dodge Ram Pickup 3500 Crew Cab 2010 | Ford F-450 Super Duty Crew Cab 2012(0.02) GMC Canyon Extended Cab 2012(0.02) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.03) Dodge Dakota Crew Cab 2010(0.03) Ford Ranger SuperCab 2011(0.03) |
+| Dodge Ram Pickup 3500 Quad Cab 2009 | GMC Canyon Extended Cab 2012(0.01) Ford F-150 Regular Cab 2007(0.01) Chevrolet Silverado 1500 Regular Cab 2012(0.01) Dodge Dakota Club Cab 2007(0.02) Ford F-150 Regular Cab 2012(0.02) |
+| Dodge Sprinter Cargo Van 2009 | Ford E-Series Wagon Van 2012(0.04) GMC Savana Van 2012(0.05) Mercedes-Benz Sprinter Van 2012(0.08) Chevrolet Silverado 2500HD Regular Cab 2012(0.08) Ram C/V Cargo Van Minivan 2012(0.08) |
+| Dodge Journey SUV 2012 | Dodge Durango SUV 2012(0.01) Chevrolet Traverse SUV 2012(0.01) Jeep Compass SUV 2012(0.01) Scion xD Hatchback 2012(0.01) Buick Enclave SUV 2012(0.02) |
+| Dodge Dakota Crew Cab 2010 | Jeep Grand Cherokee SUV 2012(0.02) Chrysler Aspen SUV 2009(0.02) Chevrolet Avalanche Crew Cab 2012(0.02) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.02) Ford Expedition EL SUV 2009(0.02) |
+| Dodge Dakota Club Cab 2007 | GMC Canyon Extended Cab 2012(0.01) Buick Rainier SUV 2007(0.01) Ford F-150 Regular Cab 2012(0.02) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.02) Dodge Ram Pickup 3500 Quad Cab 2009(0.02) |
+| Dodge Magnum Wagon 2008 | Ford Mustang Convertible 2007(0.01) Honda Accord Sedan 2012(0.01) Chevrolet Malibu Hybrid Sedan 2010(0.02) GMC Terrain SUV 2012(0.02) Toyota Corolla Sedan 2012*(0.02) |
+| Dodge Challenger SRT8 2011 | Volkswagen Beetle Hatchback 2012*(0.02) Ford GT Coupe 2006(0.02) Dodge Charger Sedan 2012(0.03) Chevrolet Sonic Sedan 2012(0.03) Mitsubishi Lancer Sedan 2012(0.03) |
+| Dodge Durango SUV 2012 | Dodge Journey SUV 2012(0.01) Buick Enclave SUV 2012(0.01) Scion xD Hatchback 2012(0.01) Audi S4 Sedan 2007(0.01) Jeep Compass SUV 2012(0.01) |
+| Dodge Durango SUV 2007 | Jeep Grand Cherokee SUV 2012(0.01) Buick Rainier SUV 2007(0.01) GMC Terrain SUV 2012(0.02) Chrysler Aspen SUV 2009(0.02) Ford Focus Sedan 2007(0.02) |
+| Dodge Charger Sedan 2012 | Hyundai Veloster Hatchback 2012(0.01) Volvo C30 Hatchback 2012*(0.02) Audi S4 Sedan 2007(0.02) Jaguar XK XKR 2012(0.02) Chevrolet Camaro Convertible 2012(0.02) |
+| Dodge Charger SRT-8 2009 | Ford Mustang Convertible 2007(0.01) Audi S4 Sedan 2007(0.01) Chevrolet Camaro Convertible 2012(0.01) Bentley Continental Flying Spur Sedan 2007(0.02) Hyundai Elantra Sedan 2007(0.02) |
+| Eagle Talon Hatchback 1998 | Plymouth Neon Coupe 1999(0.01) Nissan 240SX Coupe 1998(0.02) Acura TL Type-S 2008(0.03) Ford Focus Sedan 2007(0.03) Dodge Journey SUV 2012(0.03) |
+| FIAT 500 Abarth 2012 | Spyker C8 Convertible 2009(0.04) Spyker C8 Coupe 2009(0.04) Dodge Charger Sedan 2012(0.04) Jaguar XK XKR 2012(0.04) Tesla Model S Sedan 2012(0.04) |
+| FIAT 500 Convertible 2012 | Nissan Leaf Hatchback 2012(0.04) smart fortwo Convertible 2012*(0.04) Suzuki Kizashi Sedan 2012(0.04) Toyota Camry Sedan 2012*(0.04) Volkswagen Beetle Hatchback 2012*(0.04) |
+| Ferrari FF Coupe 2012 | Aston Martin Virage Coupe 2012(0.03) Porsche Panamera Sedan 2012(0.03) Hyundai Veloster Hatchback 2012(0.03) Bugatti Veyron 16.4 Coupe 2009(0.03) Fisker Karma Sedan 2012(0.03) |
+| Ferrari California Convertible 2012 | Ferrari 458 Italia Convertible 2012(0.01) Chevrolet Corvette Convertible 2012(0.01) Aston Martin Virage Coupe 2012(0.02) Dodge Charger Sedan 2012(0.02) Ferrari 458 Italia Coupe 2012(0.02) |
+| Ferrari 458 Italia Convertible 2012 | Ferrari California Convertible 2012(0.01) Ferrari 458 Italia Coupe 2012(0.02) Aston Martin Virage Coupe 2012(0.02) McLaren MP4-12C Coupe 2012(0.02) BMW Z4 Convertible 2012(0.02) |
+| Ferrari 458 Italia Coupe 2012 | Ferrari 458 Italia Convertible 2012(0.02) Ferrari California Convertible 2012(0.02) BMW Z4 Convertible 2012(0.02) Aston Martin V8 Vantage Convertible 2012(0.02) Chevrolet Corvette ZR1 2012(0.02) |
+| Fisker Karma Sedan 2012 | Aston Martin Virage Convertible 2012(0.01) BMW Z4 Convertible 2012(0.01) Chevrolet Corvette ZR1 2012(0.01) Audi R8 Coupe 2012(0.01) Mercedes-Benz SL-Class Coupe 2009(0.02) |
+| Ford F-450 Super Duty Crew Cab 2012 | Chevrolet Silverado 1500 Classic Extended Cab 2007(0.02) Dodge Ram Pickup 3500 Crew Cab 2010(0.02) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.03) Ford Ranger SuperCab 2011(0.03) Ford F-150 Regular Cab 2012(0.03) |
+| Ford Mustang Convertible 2007 | Dodge Magnum Wagon 2008(0.01) Dodge Charger SRT-8 2009(0.01) Honda Accord Sedan 2012(0.02) Chrysler Crossfire Convertible 2008(0.02) Chevrolet Monte Carlo Coupe 2007(0.02) |
+| Ford Freestar Minivan 2007 | Buick Rainier SUV 2007(0.01) Chrysler Aspen SUV 2009(0.02) Daewoo Nubira Wagon 2002(0.02) Isuzu Ascender SUV 2008(0.02) Chevrolet Avalanche Crew Cab 2012(0.02) |
+| Ford Expedition EL SUV 2009 | Isuzu Ascender SUV 2008(0.01) Jeep Grand Cherokee SUV 2012(0.02) Chrysler Aspen SUV 2009(0.02) Hyundai Santa Fe SUV 2012(0.02) Chevrolet Avalanche Crew Cab 2012(0.02) |
+| Ford Edge SUV 2012 | Cadillac SRX SUV 2012(0.01) Audi S4 Sedan 2007(0.01) Hyundai Elantra Touring Hatchback 2012(0.01) Volvo XC90 SUV 2007*(0.01) BMW X5 SUV 2007(0.01) |
+| Ford Ranger SuperCab 2011 | Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.01) Ford F-150 Regular Cab 2012(0.02) Chevrolet Avalanche Crew Cab 2012(0.02) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.02) GMC Canyon Extended Cab 2012(0.02) |
+| Ford GT Coupe 2006 | Jaguar XK XKR 2012(0.02) Chevrolet Corvette Convertible 2012(0.02) Dodge Challenger SRT8 2011(0.02) Ferrari California Convertible 2012(0.03) Dodge Charger Sedan 2012(0.03) |
+| Ford F-150 Regular Cab 2012 | Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.01) Ford Ranger SuperCab 2011(0.02) Dodge Dakota Club Cab 2007(0.02) Isuzu Ascender SUV 2008(0.02) GMC Canyon Extended Cab 2012(0.02) |
+| Ford F-150 Regular Cab 2007 | Chevrolet Silverado 1500 Regular Cab 2012(0.01) Dodge Ram Pickup 3500 Quad Cab 2009(0.01) GMC Canyon Extended Cab 2012(0.02) Dodge Dakota Club Cab 2007(0.02) Chevrolet Silverado 1500 Extended Cab 2012(0.02) |
+| Ford Focus Sedan 2007 | Honda Odyssey Minivan 2007(0.01) Chevrolet Malibu Sedan 2007(0.01) Chevrolet Traverse SUV 2012(0.01) Chevrolet Impala Sedan 2007(0.01) Chevrolet Monte Carlo Coupe 2007(0.01) |
+| Ford E-Series Wagon Van 2012 | GMC Savana Van 2012(0.02) Chevrolet Silverado 2500HD Regular Cab 2012(0.03) Ford F-150 Regular Cab 2012(0.03) Chevrolet Express Van 2007(0.04) Ford F-450 Super Duty Crew Cab 2012(0.04) |
+| Ford Fiesta Sedan 2012 | Hyundai Elantra Touring Hatchback 2012(0.01) Hyundai Elantra Sedan 2007(0.01) Hyundai Tucson SUV 2012(0.01) Chrysler Sebring Convertible 2010(0.01) Toyota Camry Sedan 2012*(0.01) |
+| GMC Terrain SUV 2012 | Chrysler Aspen SUV 2009(0.01) Buick Rainier SUV 2007(0.01) Dodge Durango SUV 2007(0.02) Cadillac Escalade EXT Crew Cab 2007(0.02) Jeep Grand Cherokee SUV 2012(0.02) |
+| GMC Savana Van 2012 | Ford E-Series Wagon Van 2012(0.02) Chevrolet Silverado 2500HD Regular Cab 2012(0.02) Chevrolet Express Van 2007(0.02) Ford F-150 Regular Cab 2012(0.03) Chevrolet Express Cargo Van 2007(0.03) |
+| GMC Yukon Hybrid SUV 2012 | Volvo XC90 SUV 2007*(0.01) Mazda Tribute SUV 2011(0.01) Land Rover LR2 SUV 2012(0.01) Toyota Sequoia SUV 2012(0.01) Chrysler Town and Country Minivan 2012(0.01) |
+| GMC Acadia SUV 2012 | Jeep Grand Cherokee SUV 2012(0.01) Hyundai Santa Fe SUV 2012(0.01) Volvo XC90 SUV 2007*(0.01) Dodge Caliber Wagon 2012(0.02) Cadillac Escalade EXT Crew Cab 2007(0.02) |
+| GMC Canyon Extended Cab 2012 | Dodge Dakota Club Cab 2007(0.01) Dodge Ram Pickup 3500 Quad Cab 2009(0.01) GMC Terrain SUV 2012(0.02) Ford F-150 Regular Cab 2007(0.02) Ford F-150 Regular Cab 2012(0.02) |
+| Geo Metro Convertible 1993 | Mercedes-Benz 300-Class Convertible 1993(0.03) Audi 100 Wagon 1994(0.04) Chevrolet Avalanche Crew Cab 2012(0.05) Ford Freestar Minivan 2007(0.06) Daewoo Nubira Wagon 2002(0.06) |
+| HUMMER H3T Crew Cab 2010 | HUMMER H2 SUT Crew Cab 2009(0.04) Jeep Wrangler SUV 2012(0.05) Dodge Ram Pickup 3500 Crew Cab 2010(0.07) GMC Canyon Extended Cab 2012(0.07) Ford F-450 Super Duty Crew Cab 2012(0.08) |
+| HUMMER H2 SUT Crew Cab 2009 | HUMMER H3T Crew Cab 2010(0.04) Ford F-450 Super Duty Crew Cab 2012(0.04) Dodge Ram Pickup 3500 Crew Cab 2010(0.06) Ford Ranger SuperCab 2011(0.06) Chevrolet Silverado 1500 Extended Cab 2012(0.06) |
+| Honda Odyssey Minivan 2012 | Hyundai Elantra Touring Hatchback 2012(0.01) Buick Verano Sedan 2012(0.01) Acura TL Sedan 2012(0.02) Cadillac SRX SUV 2012(0.02) Suzuki SX4 Sedan 2012(0.02) |
+| Honda Odyssey Minivan 2007 | Ford Focus Sedan 2007(0.01) Chrysler Town and Country Minivan 2012(0.01) Chevrolet Impala Sedan 2007(0.01) Chevrolet Malibu Sedan 2007(0.01) Chevrolet Traverse SUV 2012(0.01) |
+| Honda Accord Coupe 2012 | Hyundai Sonata Hybrid Sedan 2012(0.01) Audi TTS Coupe 2012(0.01) Cadillac CTS-V Sedan 2012(0.01) BMW 1 Series Convertible 2012(0.01) Chevrolet Camaro Convertible 2012(0.01) |
+| Honda Accord Sedan 2012 | Chevrolet Monte Carlo Coupe 2007(0.01) Toyota Corolla Sedan 2012*(0.01) Chevrolet Malibu Hybrid Sedan 2010(0.01) Dodge Magnum Wagon 2008(0.01) Chrysler Crossfire Convertible 2008(0.01) |
+| Hyundai Veloster Hatchback 2012 | Jaguar XK XKR 2012(0.01) Aston Martin Virage Convertible 2012(0.01) Dodge Charger Sedan 2012(0.01) Hyundai Azera Sedan 2012(0.02) Aston Martin Virage Coupe 2012(0.02) |
+| Hyundai Santa Fe SUV 2012 | GMC Acadia SUV 2012(0.01) Dodge Caliber Wagon 2012(0.02) Honda Accord Sedan 2012(0.02) Volkswagen Golf Hatchback 2012*(0.02) Chrysler Aspen SUV 2009(0.02) |
+| Hyundai Tucson SUV 2012 | Hyundai Genesis Sedan 2012(0.01) Toyota Camry Sedan 2012*(0.01) Suzuki SX4 Sedan 2012(0.01) Chrysler PT Cruiser Convertible 2008(0.01) Scion xD Hatchback 2012(0.01) |
+| Hyundai Veracruz SUV 2012 | Chevrolet Traverse SUV 2012(0.01) Buick Enclave SUV 2012(0.01) Scion xD Hatchback 2012(0.01) Ford Focus Sedan 2007(0.01) Dodge Durango SUV 2012(0.02) |
+| Hyundai Sonata Hybrid Sedan 2012 | Honda Accord Coupe 2012(0.01) Acura TL Sedan 2012(0.01) BMW M5 Sedan 2010(0.01) Audi A5 Coupe 2012(0.01) Chevrolet Camaro Convertible 2012(0.01) |
+| Hyundai Elantra Sedan 2007 | Hyundai Elantra Touring Hatchback 2012(0.01) Chrysler Sebring Convertible 2010(0.01) Ford Fiesta Sedan 2012(0.01) Toyota Camry Sedan 2012*(0.01) Acura TL Type-S 2008(0.01) |
+| Hyundai Accent Sedan 2012 | Honda Accord Coupe 2012(0.02) Audi S5 Coupe 2012(0.02) Audi TTS Coupe 2012(0.02) BMW 1 Series Convertible 2012(0.02) Acura RL Sedan 2012(0.02) |
+| Hyundai Genesis Sedan 2012 | Audi S4 Sedan 2007(0.01) Toyota Camry Sedan 2012*(0.01) Bentley Continental GT Coupe 2007(0.01) Mitsubishi Lancer Sedan 2012(0.01) Suzuki SX4 Sedan 2012(0.01) |
+| Hyundai Sonata Sedan 2012 | Acura TL Sedan 2012(0.01) Bentley Continental GT Coupe 2007(0.01) Hyundai Sonata Hybrid Sedan 2012(0.01) Acura TL Type-S 2008(0.02) Cadillac SRX SUV 2012(0.02) |
+| Hyundai Elantra Touring Hatchback 2012 | Hyundai Elantra Sedan 2007(0.01) Audi S4 Sedan 2007(0.01) Ford Fiesta Sedan 2012(0.01) Toyota Camry Sedan 2012*(0.01) Dodge Caliber Wagon 2012(0.01) |
+| Hyundai Azera Sedan 2012 | Chevrolet Sonic Sedan 2012(0.01) Hyundai Veloster Hatchback 2012(0.02) Hyundai Genesis Sedan 2012(0.02) Mercedes-Benz E-Class Sedan 2012(0.02) Tesla Model S Sedan 2012(0.02) |
+| Infiniti G Coupe IPL 2012 | Audi S5 Convertible 2012(0.01) Audi TT Hatchback 2011(0.01) Aston Martin V8 Vantage Coupe 2012(0.01) Audi S6 Sedan 2011(0.01) Audi S5 Coupe 2012(0.01) |
+| Infiniti QX56 SUV 2011 | BMW X3 SUV 2012(0.02) Land Rover LR2 SUV 2012(0.02) BMW X5 SUV 2007(0.02) Toyota 4Runner SUV 2012*(0.02) Audi S6 Sedan 2011(0.02) |
+| Isuzu Ascender SUV 2008 | Chrysler Aspen SUV 2009(0.01) Ford Expedition EL SUV 2009(0.01) Buick Rainier SUV 2007(0.02) Dodge Dakota Club Cab 2007(0.02) Ford F-150 Regular Cab 2012(0.02) |
+| Jaguar XK XKR 2012 | Hyundai Veloster Hatchback 2012(0.01) Aston Martin Virage Convertible 2012(0.01) Tesla Model S Sedan 2012(0.02) Mercedes-Benz E-Class Sedan 2012(0.02) Hyundai Azera Sedan 2012(0.02) |
+| Jeep Patriot SUV 2012 | Jeep Liberty SUV 2012(0.01) Land Rover Range Rover SUV 2012(0.02) Jeep Compass SUV 2012(0.03) Dodge Ram Pickup 3500 Quad Cab 2009(0.03) GMC Yukon Hybrid SUV 2012(0.03) |
+| Jeep Wrangler SUV 2012 | HUMMER H3T Crew Cab 2010(0.05) HUMMER H2 SUT Crew Cab 2009(0.06) Dodge Ram Pickup 3500 Crew Cab 2010(0.08) Jeep Liberty SUV 2012(0.08) Ford F-450 Super Duty Crew Cab 2012(0.09) |
+| Jeep Liberty SUV 2012 | Jeep Patriot SUV 2012(0.01) Chevrolet Silverado 1500 Regular Cab 2012(0.02) Jeep Compass SUV 2012(0.03) Dodge Durango SUV 2007(0.03) Dodge Ram Pickup 3500 Quad Cab 2009(0.03) |
+| Jeep Grand Cherokee SUV 2012 | Dodge Durango SUV 2007(0.01) Cadillac Escalade EXT Crew Cab 2007(0.01) GMC Acadia SUV 2012(0.01) Volvo XC90 SUV 2007*(0.01) Chevrolet TrailBlazer SS 2009(0.01) |
+| Jeep Compass SUV 2012 | Dodge Durango SUV 2012(0.01) Dodge Journey SUV 2012(0.01) Scion xD Hatchback 2012(0.02) Chevrolet Traverse SUV 2012(0.02) Hyundai Tucson SUV 2012(0.02) |
+| Lamborghini Reventon Coupe 2008 | Spyker C8 Coupe 2009(0.03) Jaguar XK XKR 2012(0.04) Tesla Model S Sedan 2012(0.04) Spyker C8 Convertible 2009(0.04) Hyundai Veloster Hatchback 2012(0.04) |
+| Lamborghini Aventador Coupe 2012 | McLaren MP4-12C Coupe 2012(0.02) Ferrari 458 Italia Coupe 2012(0.03) Chevrolet Corvette ZR1 2012(0.03) Lamborghini Gallardo LP 570-4 Superleggera 2012(0.03) Aston Martin V8 Vantage Coupe 2012(0.03) |
+| Lamborghini Gallardo LP 570-4 Superleggera 2012 | McLaren MP4-12C Coupe 2012(0.03) Lamborghini Aventador Coupe 2012(0.03) Spyker C8 Coupe 2009(0.03) Ferrari 458 Italia Convertible 2012(0.03) Ferrari 458 Italia Coupe 2012(0.04) |
+| Lamborghini Diablo Coupe 2001 | Acura Integra Type R 2001(0.03) Nissan Leaf Hatchback 2012(0.05) Dodge Charger SRT-8 2009(0.05) Chevrolet Corvette Ron Fellows Edition Z06 2007(0.05) Ford GT Coupe 2006(0.05) |
+| Land Rover Range Rover SUV 2012 | Volvo XC90 SUV 2007*(0.02) GMC Yukon Hybrid SUV 2012(0.02) Dodge Durango SUV 2012(0.02) Chrysler 300 SRT-8 2010(0.02) Ford Edge SUV 2012(0.02) |
+| Land Rover LR2 SUV 2012 | Volvo XC90 SUV 2007*(0.01) Toyota 4Runner SUV 2012*(0.01) Toyota Sequoia SUV 2012(0.01) GMC Yukon Hybrid SUV 2012(0.01) BMW X5 SUV 2007(0.01) |
+| Lincoln Town Car Sedan 2011 | Ford Freestar Minivan 2007(0.02) Chevrolet Monte Carlo Coupe 2007(0.02) Buick Rainier SUV 2007(0.02) Chevrolet Malibu Sedan 2007(0.03) Daewoo Nubira Wagon 2002(0.03) |
+| MINI Cooper Roadster Convertible 2012 | BMW M3 Coupe 2012(0.02) BMW X3 SUV 2012(0.03) Audi TT Hatchback 2011(0.03) Audi R8 Coupe 2012(0.03) BMW Z4 Convertible 2012(0.03) |
+| Maybach Landaulet Convertible 2012 | Chevrolet Corvette Ron Fellows Edition Z06 2007(0.04) Bentley Continental Supersports Conv. Convertible 2012(0.06) Mercedes-Benz S-Class Sedan 2012(0.07) Volkswagen Golf Hatchback 2012*(0.07) Rolls-Royce Phantom Drophead Coupe Convertible 2012(0.07) |
+| Mazda Tribute SUV 2011 | Volvo XC90 SUV 2007*(0.01) GMC Yukon Hybrid SUV 2012(0.01) Toyota Sequoia SUV 2012(0.01) Land Rover LR2 SUV 2012(0.02) Jeep Grand Cherokee SUV 2012(0.02) |
+| McLaren MP4-12C Coupe 2012 | Ferrari 458 Italia Convertible 2012(0.02) Lamborghini Aventador Coupe 2012(0.02) Hyundai Veloster Hatchback 2012(0.02) Aston Martin Virage Coupe 2012(0.02) Fisker Karma Sedan 2012(0.02) |
+| Mercedes-Benz 300-Class Convertible 1993 | Chevrolet Monte Carlo Coupe 2007(0.02) Daewoo Nubira Wagon 2002(0.02) Chevrolet Malibu Sedan 2007(0.02) Ford Mustang Convertible 2007(0.02) Chrysler Aspen SUV 2009(0.02) |
+| Mercedes-Benz C-Class Sedan 2012 | Cadillac CTS-V Sedan 2012(0.01) Audi TTS Coupe 2012(0.01) BMW 6 Series Convertible 2007(0.01) Mercedes-Benz S-Class Sedan 2012(0.02) Acura TSX Sedan 2012(0.02) |
+| Mercedes-Benz SL-Class Coupe 2009 | Porsche Panamera Sedan 2012(0.01) Aston Martin Virage Convertible 2012(0.02) Fisker Karma Sedan 2012(0.02) Mercedes-Benz E-Class Sedan 2012(0.02) Audi R8 Coupe 2012(0.02) |
+| Mercedes-Benz E-Class Sedan 2012 | Porsche Panamera Sedan 2012(0.01) Suzuki Kizashi Sedan 2012(0.01) BMW M5 Sedan 2010(0.01) Buick Regal GS 2012(0.01) Audi RS 4 Convertible 2008(0.02) |
+| Mercedes-Benz S-Class Sedan 2012 | Bentley Continental Flying Spur Sedan 2007(0.01) Toyota Corolla Sedan 2012*(0.01) Acura TL Sedan 2012(0.01) Chevrolet Malibu Hybrid Sedan 2010(0.01) Mercedes-Benz C-Class Sedan 2012(0.02) |
+| Mercedes-Benz Sprinter Van 2012 | Chevrolet Express Cargo Van 2007(0.03) GMC Savana Van 2012(0.04) Chevrolet Express Van 2007(0.04) Nissan NV Passenger Van 2012(0.05) Ford E-Series Wagon Van 2012(0.06) |
+| Mitsubishi Lancer Sedan 2012 | Toyota Camry Sedan 2012*(0.01) Suzuki SX4 Hatchback 2012(0.01) Suzuki Kizashi Sedan 2012(0.01) Hyundai Genesis Sedan 2012(0.01) Bentley Continental GT Coupe 2007(0.01) |
+| Nissan Leaf Hatchback 2012 | Toyota Camry Sedan 2012*(0.02) Suzuki Kizashi Sedan 2012(0.02) Suzuki SX4 Hatchback 2012(0.02) Volkswagen Beetle Hatchback 2012*(0.02) Mitsubishi Lancer Sedan 2012(0.02) |
+| Nissan NV Passenger Van 2012 | GMC Savana Van 2012(0.04) Chevrolet Express Van 2007(0.04) Dodge Ram Pickup 3500 Quad Cab 2009(0.04) Chevrolet Silverado 1500 Regular Cab 2012(0.04) Ford F-150 Regular Cab 2012(0.04) |
+| Nissan Juke Hatchback 2012 | Volvo C30 Hatchback 2012*(0.02) Chevrolet Sonic Sedan 2012(0.02) Jaguar XK XKR 2012(0.02) Suzuki Kizashi Sedan 2012(0.02) Volkswagen Beetle Hatchback 2012*(0.02) |
+| Nissan 240SX Coupe 1998 | Ford Focus Sedan 2007(0.01) Acura TL Type-S 2008(0.02) Eagle Talon Hatchback 1998(0.02) Scion xD Hatchback 2012(0.02) Hyundai Veracruz SUV 2012(0.02) |
+| Plymouth Neon Coupe 1999 | Eagle Talon Hatchback 1998(0.01) Dodge Caravan Minivan 1997(0.02) Nissan 240SX Coupe 1998(0.03) Volkswagen Golf Hatchback 1991*(0.03) Dodge Journey SUV 2012(0.03) |
+| Porsche Panamera Sedan 2012 | Audi RS 4 Convertible 2008(0.01) BMW M5 Sedan 2010(0.01) Mercedes-Benz E-Class Sedan 2012(0.01) BMW ActiveHybrid 5 Sedan 2012(0.01) Mercedes-Benz SL-Class Coupe 2009(0.01) |
+| Ram C/V Cargo Van Minivan 2012 | Lincoln Town Car Sedan 2011(0.04) Isuzu Ascender SUV 2008(0.04) Ford Freestar Minivan 2007(0.04) GMC Savana Van 2012(0.04) Chevrolet Tahoe Hybrid SUV 2012(0.04) |
+| Rolls-Royce Phantom Drophead Coupe Convertible 2012 | Rolls-Royce Phantom Sedan 2012(0.01) BMW 1 Series Convertible 2012(0.03) BMW 6 Series Convertible 2007(0.03) Dodge Magnum Wagon 2008(0.03) Ford Mustang Convertible 2007(0.03) |
+| Rolls-Royce Ghost Sedan 2012 | Chevrolet Sonic Sedan 2012(0.02) Audi S4 Sedan 2007(0.02) Volvo C30 Hatchback 2012*(0.02) Nissan Juke Hatchback 2012(0.03) Mitsubishi Lancer Sedan 2012(0.03) |
+| Rolls-Royce Phantom Sedan 2012 | Rolls-Royce Phantom Drophead Coupe Convertible 2012(0.01) BMW X3 SUV 2012(0.02) BMW 1 Series Convertible 2012(0.02) BMW 6 Series Convertible 2007(0.02) BMW 3 Series Wagon 2012(0.02) |
+| Scion xD Hatchback 2012 | Buick Enclave SUV 2012(0.01) Chevrolet Traverse SUV 2012(0.01) Hyundai Veracruz SUV 2012(0.01) Chrysler PT Cruiser Convertible 2008(0.01) Hyundai Tucson SUV 2012(0.01) |
+| Spyker C8 Convertible 2009 | Spyker C8 Coupe 2009(0.01) Tesla Model S Sedan 2012(0.04) FIAT 500 Abarth 2012(0.04) Lamborghini Reventon Coupe 2008(0.04) Ferrari 458 Italia Coupe 2012(0.04) |
+| Spyker C8 Coupe 2009 | Spyker C8 Convertible 2009(0.01) Tesla Model S Sedan 2012(0.02) Jaguar XK XKR 2012(0.03) Ferrari 458 Italia Convertible 2012(0.03) Ford GT Coupe 2006(0.03) |
+| Suzuki Aerio Sedan 2007 | Honda Odyssey Minivan 2007(0.02) Chrysler Town and Country Minivan 2012(0.02) Chevrolet Malibu Hybrid Sedan 2010(0.02) Toyota Sequoia SUV 2012(0.02) Ford Focus Sedan 2007(0.02) |
+| Suzuki Kizashi Sedan 2012 | Toyota Camry Sedan 2012*(0.01) Mitsubishi Lancer Sedan 2012(0.01) Suzuki SX4 Hatchback 2012(0.01) Buick Verano Sedan 2012(0.01) Suzuki SX4 Sedan 2012(0.01) |
+| Suzuki SX4 Hatchback 2012 | Mitsubishi Lancer Sedan 2012(0.01) Suzuki Kizashi Sedan 2012(0.01) Toyota Camry Sedan 2012*(0.01) Suzuki SX4 Sedan 2012(0.01) Hyundai Genesis Sedan 2012(0.01) |
+| Suzuki SX4 Sedan 2012 | Toyota Camry Sedan 2012*(0.01) Hyundai Genesis Sedan 2012(0.01) Suzuki SX4 Hatchback 2012(0.01) Hyundai Tucson SUV 2012(0.01) Suzuki Kizashi Sedan 2012(0.01) |
+| Tesla Model S Sedan 2012 | Aston Martin Virage Convertible 2012(0.01) Jaguar XK XKR 2012(0.02) Hyundai Azera Sedan 2012(0.02) Chevrolet Sonic Sedan 2012(0.02) Hyundai Veloster Hatchback 2012(0.02) |
+| Toyota Sequoia SUV 2012 | Land Rover LR2 SUV 2012(0.01) Volvo XC90 SUV 2007*(0.01) GMC Yukon Hybrid SUV 2012(0.01) Mazda Tribute SUV 2011(0.01) Toyota 4Runner SUV 2012*(0.02) |
+| Toyota Camry Sedan 2012* | Mitsubishi Lancer Sedan 2012(0.01) Suzuki Kizashi Sedan 2012(0.01) Suzuki SX4 Sedan 2012(0.01) Hyundai Genesis Sedan 2012(0.01) Suzuki SX4 Hatchback 2012(0.01) |
+| Toyota Corolla Sedan 2012* | Chevrolet Malibu Hybrid Sedan 2010(0.01) Honda Accord Sedan 2012(0.01) Hyundai Elantra Sedan 2007(0.01) Mercedes-Benz S-Class Sedan 2012(0.01) Chevrolet Monte Carlo Coupe 2007(0.01) |
+| Toyota 4Runner SUV 2012* | Land Rover LR2 SUV 2012(0.01) BMW X5 SUV 2007(0.02) Toyota Sequoia SUV 2012(0.02) Volvo XC90 SUV 2007*(0.02) BMW X3 SUV 2012(0.02) |
+| Volkswagen Golf Hatchback 2012* | Acura TSX Sedan 2012(0.01) Honda Accord Sedan 2012(0.01) Hyundai Santa Fe SUV 2012(0.02) Toyota Corolla Sedan 2012*(0.02) BMW 6 Series Convertible 2007(0.02) |
+| Volkswagen Golf Hatchback 1991* | Volvo 240 Sedan 1993*(0.02) Plymouth Neon Coupe 1999(0.03) Jeep Liberty SUV 2012(0.03) Jeep Patriot SUV 2012(0.04) Chevrolet Silverado 1500 Regular Cab 2012(0.04) |
+| Volkswagen Beetle Hatchback 2012* | Suzuki Kizashi Sedan 2012(0.01) Toyota Camry Sedan 2012*(0.01) Chevrolet Sonic Sedan 2012(0.01) Volvo C30 Hatchback 2012*(0.02) Audi S4 Sedan 2007(0.02) |
+| Volvo C30 Hatchback 2012* | Chevrolet Sonic Sedan 2012(0.02) Dodge Charger Sedan 2012(0.02) Volkswagen Beetle Hatchback 2012*(0.02) Buick Verano Sedan 2012(0.02) Suzuki Kizashi Sedan 2012(0.02) |
+| Volvo 240 Sedan 1993* | Volkswagen Golf Hatchback 1991*(0.02) Jeep Liberty SUV 2012(0.03) Chevrolet Silverado 1500 Regular Cab 2012(0.03) Jeep Patriot SUV 2012(0.03) Ford F-150 Regular Cab 2007(0.04) |
+| Volvo XC90 SUV 2007* | BMW X5 SUV 2007(0.01) GMC Yukon Hybrid SUV 2012(0.01) Mazda Tribute SUV 2011(0.01) Land Rover LR2 SUV 2012(0.01) Toyota Sequoia SUV 2012(0.01) |
+| smart fortwo Convertible 2012* | FIAT 500 Convertible 2012(0.04) Ford Edge SUV 2012(0.05) Volvo C30 Hatchback 2012*(0.06) Ford Fiesta Sedan 2012(0.06) Nissan Leaf Hatchback 2012(0.06) |
 
 ## simclr-ft  [cars_lejepa]
 
+agree@1=0.128 agree@5=0.111 (chance 0.040)  dendro-purity=0.138  silhouette=-0.194  within/between=0.912
+
 
 | class | 5 nearest class centroids (cosine dist) |
 |---|---|
-| class0 | class124(0.21) class123(0.29) class145(0.29) class105(0.35) class122(0.49) |
-| class1 | class21(0.37) class140(0.48) class8(0.49) class125(0.54) class18(0.56) |
-| class2 | class172(0.44) class104(0.49) class12(0.50) class20(0.52) class162(0.53) |
-| class3 | class97(0.57) class171(0.58) class78(0.60) class25(0.62) class31(0.63) |
-| class4 | class18(0.26) class189*(0.33) class13(0.38) class12(0.41) class21(0.42) |
-| class5 | class152(0.03) class151(0.17) class54(0.22) class159(0.41) class65(0.42) |
-| class6 | class139(0.52) class163(0.56) class9(0.56) class44(0.60) class125(0.60) |
-| class7 | class38(0.40) class8(0.42) class195*(0.44) class189*(0.45) class157(0.46) |
-| class8 | class18(0.30) class7(0.42) class37(0.45) class21(0.46) class24(0.48) |
-| class9 | class162(0.37) class163(0.38) class139(0.40) class104(0.44) class34(0.44) |
-| class10 | class95(0.23) class101(0.24) class102(0.24) class129(0.25) class100(0.30) |
-| class11 | class54(0.43) class152(0.43) class5(0.44) class151(0.50) class35(0.52) |
-| class12 | class18(0.33) class21(0.39) class4(0.41) class14(0.44) class164(0.46) |
-| class13 | class50(0.26) class21(0.37) class4(0.38) class30(0.39) class18(0.43) |
-| class14 | class162(0.34) class18(0.42) class156(0.42) class12(0.44) class8(0.48) |
-| class15 | class16(0.30) class17(0.35) class61(0.47) class188*(0.53) class75(0.55) |
-| class16 | class17(0.19) class15(0.30) class61(0.38) class122(0.41) class173(0.44) |
-| class17 | class16(0.19) class122(0.30) class15(0.35) class160(0.38) class173(0.42) |
-| class18 | class4(0.26) class8(0.30) class12(0.33) class14(0.42) class21(0.42) |
-| class19 | class34(0.39) class29(0.41) class172(0.44) class140(0.46) class12(0.49) |
-| class20 | class172(0.29) class104(0.34) class140(0.41) class8(0.48) class21(0.49) |
-| class21 | class13(0.37) class1(0.37) class12(0.39) class4(0.42) class18(0.42) |
-| class22 | class100(0.46) class41(0.52) class133(0.53) class27(0.55) class186*(0.55) |
-| class23 | class93(0.59) class175(0.61) class98(0.62) class136(0.63) class14(0.63) |
-| class24 | class102(0.31) class10(0.35) class150(0.39) class135(0.41) class192*(0.42) |
-| class25 | class162(0.39) class34(0.40) class29(0.42) class172(0.43) class163(0.45) |
-| class26 | class32(0.45) class14(0.48) class33(0.49) class18(0.50) class4(0.51) |
-| class27 | class100(0.33) class41(0.40) class32(0.43) class33(0.46) class127(0.46) |
-| class28 | class150(0.38) class135(0.39) class103(0.42) class27(0.48) class83(0.50) |
-| class29 | class19(0.41) class25(0.42) class172(0.43) class34(0.51) class78(0.51) |
-| class30 | class189*(0.31) class50(0.39) class13(0.39) class128(0.41) class79(0.44) |
-| class31 | class185(0.34) class194*(0.34) class188*(0.41) class119(0.47) class36(0.48) |
-| class32 | class83(0.39) class27(0.43) class26(0.45) class59(0.48) class127(0.50) |
-| class33 | class46(0.40) class27(0.46) class26(0.49) class41(0.52) class156(0.53) |
-| class34 | class163(0.37) class19(0.39) class25(0.40) class9(0.44) class29(0.51) |
-| class35 | class45(0.49) class11(0.52) class136(0.54) class149(0.57) class43(0.57) |
-| class36 | class31(0.48) class188*(0.51) class141(0.56) class51(0.57) class161(0.58) |
-| class37 | class150(0.40) class24(0.43) class103(0.45) class8(0.45) class159(0.46) |
-| class38 | class157(0.31) class156(0.37) class56(0.37) class44(0.37) class7(0.40) |
-| class39 | class98(0.39) class67(0.41) class175(0.56) class50(0.59) class176(0.61) |
-| class40 | class140(0.46) class25(0.47) class161(0.50) class34(0.52) class29(0.54) |
-| class41 | class27(0.40) class100(0.48) class18(0.50) class28(0.51) class33(0.52) |
-| class42 | class166(0.47) class136(0.55) class125(0.58) class167(0.61) class3(0.64) |
-| class43 | class161(0.44) class13(0.46) class50(0.50) class35(0.57) class30(0.57) |
-| class44 | class99(0.20) class156(0.37) class38(0.37) class157(0.39) class45(0.43) |
-| class45 | class143(0.38) class44(0.43) class35(0.49) class111(0.50) class9(0.50) |
-| class46 | class33(0.40) class191*(0.44) class92(0.46) class143(0.48) class181(0.48) |
-| class47 | class107(0.37) class75(0.37) class117(0.42) class90(0.43) class73(0.44) |
-| class48 | class169(0.47) class191*(0.49) class59(0.55) class138(0.56) class22(0.57) |
-| class49 | class132(0.56) class126(0.57) class57(0.59) class114(0.61) class78(0.62) |
-| class50 | class13(0.26) class79(0.32) class161(0.37) class30(0.39) class189*(0.44) |
-| class51 | class176(0.53) class36(0.57) class140(0.58) class1(0.58) class67(0.61) |
-| class52 | class147(0.40) class64(0.47) class67(0.52) class108(0.57) class75(0.58) |
-| class53 | class69(0.25) class105(0.26) class112(0.31) class64(0.33) class73(0.39) |
-| class54 | class159(0.22) class5(0.22) class152(0.23) class151(0.25) class65(0.35) |
-| class55 | class13(0.46) class176(0.49) class104(0.50) class140(0.52) class178(0.52) |
-| class56 | class38(0.37) class157(0.39) class173(0.40) class122(0.46) class160(0.51) |
-| class57 | class88(0.39) class177(0.44) class148(0.46) class183(0.51) class132(0.52) |
-| class58 | class100(0.53) class24(0.55) class37(0.56) class22(0.56) class27(0.56) |
-| class59 | class96(0.44) class83(0.47) class135(0.47) class32(0.48) class91(0.49) |
-| class60 | class131(0.41) class76(0.43) class114(0.47) class84(0.49) class126(0.52) |
-| class61 | class16(0.38) class17(0.42) class68(0.42) class142(0.43) class188*(0.43) |
-| class62 | class139(0.39) class92(0.40) class184(0.43) class169(0.43) class175(0.47) |
-| class63 | class70(0.05) class165(0.07) class118(0.19) class168(0.26) class113(0.48) |
-| class64 | class89(0.29) class53(0.33) class75(0.38) class69(0.39) class108(0.40) |
-| class65 | class159(0.34) class54(0.35) class5(0.42) class152(0.43) class151(0.45) |
-| class66 | class4(0.45) class155(0.52) class187*(0.55) class128(0.55) class76(0.62) |
-| class67 | class39(0.41) class147(0.45) class119(0.47) class153(0.51) class52(0.52) |
-| class68 | class115(0.18) class118(0.23) class112(0.28) class61(0.42) class165(0.45) |
-| class69 | class105(0.17) class53(0.25) class73(0.39) class64(0.39) class142(0.44) |
-| class70 | class63(0.05) class165(0.09) class118(0.18) class168(0.24) class74(0.40) |
-| class71 | class107(0.46) class81(0.47) class72(0.48) class106(0.51) class160(0.52) |
-| class72 | class114(0.39) class155(0.40) class81(0.47) class71(0.48) class107(0.49) |
-| class73 | class90(0.36) class113(0.37) class69(0.39) class53(0.39) class86(0.39) |
-| class74 | class113(0.24) class86(0.26) class168(0.30) class146(0.39) class70(0.40) |
-| class75 | class47(0.37) class64(0.38) class142(0.45) class130(0.50) class53(0.51) |
-| class76 | class60(0.43) class126(0.57) class114(0.60) class66(0.62) class116(0.63) |
-| class77 | class132(0.50) class84(0.53) class180(0.53) class57(0.55) class93(0.58) |
-| class78 | class29(0.51) class67(0.53) class153(0.53) class194*(0.56) class3(0.60) |
-| class79 | class50(0.32) class160(0.42) class30(0.44) class189*(0.44) class13(0.45) |
-| class80 | class183(0.45) class131(0.58) class191*(0.59) class57(0.60) class93(0.61) |
-| class81 | class72(0.47) class71(0.47) class107(0.54) class126(0.55) class84(0.58) |
-| class82 | class83(0.46) class59(0.57) class107(0.61) class134(0.61) class127(0.63) |
-| class83 | class32(0.39) class82(0.46) class59(0.47) class28(0.50) class134(0.51) |
-| class84 | class171(0.34) class60(0.49) class97(0.51) class77(0.53) class170(0.54) |
-| class85 | class105(0.32) class145(0.38) class123(0.41) class124(0.42) class153(0.43) |
-| class86 | class74(0.26) class113(0.35) class73(0.39) class144(0.44) class70(0.44) |
-| class87 | class115(0.25) class118(0.27) class173(0.33) class105(0.45) class16(0.45) |
-| class88 | class57(0.39) class148(0.46) class190*(0.56) class93(0.60) class171(0.60) |
-| class89 | class64(0.29) class110(0.39) class69(0.45) class53(0.46) class85(0.48) |
-| class90 | class73(0.36) class112(0.39) class113(0.40) class53(0.42) class47(0.43) |
-| class91 | class106(0.38) class135(0.44) class96(0.48) class59(0.49) class83(0.56) |
-| class92 | class62(0.40) class184(0.43) class179(0.44) class46(0.46) class139(0.48) |
-| class93 | class153(0.43) class94(0.47) class193*(0.52) class132(0.52) class109(0.53) |
-| class94 | class93(0.47) class193*(0.50) class147(0.52) class85(0.53) class108(0.54) |
-| class95 | class10(0.23) class129(0.32) class101(0.32) class54(0.35) class192*(0.38) |
-| class96 | class135(0.42) class192*(0.42) class59(0.44) class91(0.48) class83(0.52) |
-| class97 | class171(0.19) class170(0.45) class84(0.51) class190*(0.56) class3(0.57) |
-| class98 | class175(0.39) class39(0.39) class178(0.49) class62(0.57) class176(0.60) |
-| class99 | class44(0.20) class195*(0.34) class157(0.38) class38(0.44) class156(0.46) |
-| class100 | class10(0.30) class27(0.33) class95(0.42) class22(0.46) class129(0.48) |
-| class101 | class102(0.15) class10(0.24) class95(0.32) class182(0.34) class159(0.34) |
-| class102 | class101(0.15) class159(0.22) class103(0.22) class10(0.24) class150(0.30) |
-| class103 | class150(0.15) class102(0.22) class101(0.36) class159(0.39) class135(0.42) |
-| class104 | class20(0.34) class140(0.36) class9(0.44) class13(0.47) class2(0.49) |
-| class105 | class69(0.17) class53(0.26) class85(0.32) class112(0.34) class0(0.35) |
-| class106 | class91(0.38) class122(0.42) class17(0.48) class160(0.50) class71(0.51) |
-| class107 | class47(0.37) class71(0.46) class72(0.49) class75(0.51) class106(0.51) |
-| class108 | class147(0.34) class64(0.40) class142(0.45) class53(0.46) class185(0.47) |
-| class109 | class194*(0.52) class93(0.53) class153(0.58) class119(0.60) class78(0.60) |
-| class110 | class120(0.31) class112(0.38) class89(0.39) class64(0.42) class68(0.46) |
-| class111 | class101(0.34) class159(0.35) class102(0.39) class54(0.41) class129(0.41) |
-| class112 | class115(0.18) class68(0.28) class53(0.31) class105(0.34) class118(0.36) |
-| class113 | class74(0.24) class86(0.35) class73(0.37) class90(0.40) class70(0.43) |
-| class114 | class72(0.39) class134(0.47) class60(0.47) class170(0.47) class126(0.54) |
-| class115 | class112(0.18) class68(0.18) class118(0.19) class87(0.25) class105(0.36) |
-| class116 | class134(0.52) class138(0.56) class76(0.63) class186*(0.63) class65(0.65) |
-| class117 | class73(0.40) class47(0.42) class75(0.53) class142(0.56) class94(0.60) |
-| class118 | class165(0.13) class70(0.18) class63(0.19) class115(0.19) class68(0.23) |
-| class119 | class153(0.30) class194*(0.36) class31(0.47) class67(0.47) class154(0.47) |
-| class120 | class110(0.31) class194*(0.53) class89(0.57) class64(0.57) class142(0.59) |
-| class121 | class124(0.44) class69(0.45) class86(0.46) class110(0.47) class64(0.49) |
-| class122 | class160(0.20) class17(0.30) class16(0.41) class106(0.42) class173(0.46) |
-| class123 | class124(0.07) class145(0.10) class0(0.29) class85(0.41) class105(0.50) |
-| class124 | class123(0.07) class145(0.09) class0(0.21) class105(0.35) class85(0.42) |
-| class125 | class1(0.54) class141(0.58) class42(0.58) class6(0.60) class21(0.65) |
-| class126 | class132(0.44) class47(0.50) class60(0.52) class114(0.54) class81(0.55) |
-| class127 | class27(0.46) class13(0.47) class37(0.49) class32(0.50) class24(0.51) |
-| class128 | class189*(0.32) class30(0.41) class4(0.46) class79(0.51) class50(0.54) |
-| class129 | class10(0.25) class95(0.32) class159(0.36) class111(0.41) class102(0.42) |
-| class130 | class189*(0.44) class161(0.46) class64(0.49) class75(0.50) class50(0.53) |
-| class131 | class60(0.41) class186*(0.48) class148(0.52) class57(0.54) class136(0.54) |
-| class132 | class126(0.44) class180(0.49) class77(0.50) class57(0.52) class93(0.52) |
-| class133 | class22(0.53) class189*(0.53) class33(0.54) class8(0.54) class187*(0.56) |
-| class134 | class114(0.47) class186*(0.47) class83(0.51) class116(0.52) class60(0.54) |
-| class135 | class150(0.33) class28(0.39) class24(0.41) class96(0.42) class103(0.42) |
-| class136 | class175(0.46) class35(0.54) class2(0.54) class131(0.54) class42(0.55) |
-| class137 | class45(0.56) class172(0.59) class162(0.65) class9(0.66) class166(0.69) |
-| class138 | class48(0.56) class116(0.56) class114(0.57) class26(0.62) class3(0.63) |
-| class139 | class62(0.39) class9(0.40) class143(0.43) class183(0.47) class169(0.47) |
-| class140 | class104(0.36) class20(0.41) class21(0.43) class172(0.44) class40(0.46) |
-| class141 | class188*(0.38) class185(0.43) class61(0.49) class31(0.55) class36(0.56) |
-| class142 | class61(0.43) class69(0.44) class75(0.45) class108(0.45) class115(0.45) |
-| class143 | class45(0.38) class179(0.43) class139(0.43) class184(0.44) class111(0.46) |
-| class144 | class146(0.20) class153(0.34) class86(0.44) class148(0.46) class74(0.48) |
-| class145 | class124(0.09) class123(0.10) class0(0.29) class85(0.38) class105(0.47) |
-| class146 | class144(0.20) class148(0.33) class74(0.39) class193*(0.39) class153(0.43) |
-| class147 | class108(0.34) class52(0.40) class67(0.45) class85(0.48) class64(0.50) |
-| class148 | class146(0.33) class190*(0.39) class193*(0.46) class88(0.46) class57(0.46) |
-| class149 | class45(0.50) class175(0.51) class139(0.52) class169(0.53) class9(0.53) |
-| class150 | class103(0.15) class102(0.30) class159(0.33) class135(0.33) class28(0.38) |
-| class151 | class152(0.13) class5(0.17) class159(0.22) class54(0.25) class102(0.43) |
-| class152 | class5(0.03) class151(0.13) class54(0.23) class159(0.38) class65(0.43) |
-| class153 | class119(0.30) class144(0.34) class194*(0.38) class154(0.40) class85(0.43) |
-| class154 | class188*(0.38) class153(0.40) class185(0.46) class119(0.47) class144(0.51) |
-| class155 | class72(0.40) class189*(0.50) class187*(0.51) class107(0.52) class66(0.52) |
-| class156 | class162(0.36) class38(0.37) class44(0.37) class14(0.42) class99(0.46) |
-| class157 | class38(0.31) class195*(0.36) class99(0.38) class44(0.39) class56(0.39) |
-| class158 | class68(0.46) class185(0.48) class119(0.57) class108(0.57) class120(0.60) |
-| class159 | class54(0.22) class102(0.22) class151(0.22) class10(0.32) class150(0.33) |
-| class160 | class122(0.20) class17(0.38) class79(0.42) class16(0.47) class106(0.50) |
-| class161 | class50(0.37) class164(0.42) class43(0.44) class130(0.46) class13(0.48) |
-| class162 | class14(0.34) class156(0.36) class9(0.37) class25(0.39) class163(0.42) |
-| class163 | class34(0.37) class9(0.38) class162(0.42) class25(0.45) class139(0.48) |
-| class164 | class161(0.42) class174(0.44) class12(0.46) class189*(0.51) class18(0.51) |
-| class165 | class63(0.07) class70(0.09) class118(0.13) class168(0.20) class115(0.43) |
-| class166 | class167(0.43) class42(0.47) class169(0.49) class139(0.57) class182(0.58) |
-| class167 | class166(0.43) class181(0.47) class92(0.53) class149(0.58) class42(0.61) |
-| class168 | class165(0.20) class70(0.24) class118(0.24) class63(0.26) class74(0.30) |
-| class169 | class62(0.43) class139(0.47) class48(0.47) class166(0.49) class163(0.52) |
-| class170 | class97(0.45) class114(0.47) class171(0.53) class84(0.54) class134(0.57) |
-| class171 | class97(0.19) class84(0.34) class170(0.53) class190*(0.53) class3(0.58) |
-| class172 | class20(0.29) class25(0.43) class29(0.43) class2(0.44) class140(0.44) |
-| class173 | class87(0.33) class56(0.40) class17(0.42) class115(0.42) class16(0.44) |
-| class174 | class164(0.44) class4(0.44) class13(0.45) class18(0.48) class7(0.48) |
-| class175 | class98(0.39) class136(0.46) class62(0.47) class139(0.47) class149(0.51) |
-| class176 | class55(0.49) class51(0.53) class140(0.55) class13(0.58) class98(0.60) |
-| class177 | class57(0.44) class190*(0.52) class169(0.56) class191*(0.61) class48(0.62) |
-| class178 | class179(0.33) class184(0.44) class98(0.49) class62(0.52) class55(0.52) |
-| class179 | class184(0.23) class178(0.33) class102(0.42) class143(0.43) class92(0.44) |
-| class180 | class132(0.49) class77(0.53) class57(0.57) class155(0.58) class126(0.59) |
-| class181 | class191*(0.46) class167(0.47) class46(0.48) class183(0.48) class163(0.49) |
-| class182 | class101(0.34) class192*(0.36) class10(0.38) class95(0.42) class100(0.48) |
-| class183 | class186*(0.42) class80(0.45) class139(0.47) class181(0.48) class57(0.51) |
-| class184 | class179(0.23) class92(0.43) class62(0.43) class143(0.44) class178(0.44) |
-| class185 | class31(0.34) class188*(0.34) class141(0.43) class61(0.45) class154(0.46) |
-| class186* | class183(0.42) class134(0.47) class131(0.48) class60(0.53) class22(0.55) |
-| class187* | class189*(0.47) class155(0.51) class12(0.54) class38(0.55) class66(0.55) |
-| class188* | class185(0.34) class141(0.38) class154(0.38) class31(0.41) class61(0.43) |
-| class189* | class30(0.31) class128(0.32) class4(0.33) class21(0.43) class130(0.44) |
-| class190* | class193*(0.30) class148(0.39) class177(0.52) class171(0.53) class97(0.56) |
-| class191* | class46(0.44) class181(0.46) class48(0.49) class192*(0.54) class92(0.56) |
-| class192* | class182(0.36) class101(0.38) class95(0.38) class24(0.42) class96(0.42) |
-| class193* | class190*(0.30) class146(0.39) class148(0.46) class144(0.49) class94(0.50) |
-| class194* | class31(0.34) class119(0.36) class153(0.38) class109(0.52) class120(0.53) |
-| class195* | class99(0.34) class157(0.36) class7(0.44) class44(0.47) class111(0.52) |
+| AM General Hummer SUV 2000 | HUMMER H2 SUT Crew Cab 2009(0.21) HUMMER H3T Crew Cab 2010(0.29) Jeep Wrangler SUV 2012(0.29) Ford F-450 Super Duty Crew Cab 2012(0.35) Geo Metro Convertible 1993(0.49) |
+| Acura RL Sedan 2012 | Audi S5 Coupe 2012(0.37) Infiniti G Coupe IPL 2012(0.48) Aston Martin V8 Vantage Coupe 2012(0.49) Honda Odyssey Minivan 2012(0.54) Audi TT Hatchback 2011(0.56) |
+| Acura TL Sedan 2012 | Porsche Panamera Sedan 2012(0.44) Fisker Karma Sedan 2012(0.49) Audi A5 Coupe 2012(0.50) Audi S5 Convertible 2012(0.52) Mercedes-Benz SL-Class Coupe 2009(0.53) |
+| Acura TL Type-S 2008 | Eagle Talon Hatchback 1998(0.57) Plymouth Neon Coupe 1999(0.58) Chrysler 300 SRT-8 2010(0.60) BMW ActiveHybrid 5 Sedan 2012(0.62) BMW X5 SUV 2007(0.63) |
+| Acura TSX Sedan 2012 | Audi TT Hatchback 2011(0.26) Volkswagen Golf Hatchback 2012*(0.33) Audi TTS Coupe 2012(0.38) Audi A5 Coupe 2012(0.41) Audi S5 Coupe 2012(0.42) |
+| Acura Integra Type R 2001 | Lamborghini Diablo Coupe 2001(0.03) Lamborghini Gallardo LP 570-4 Superleggera 2012(0.17) Chevrolet Corvette Convertible 2012(0.22) McLaren MP4-12C Coupe 2012(0.41) Chevrolet Cobalt SS 2010(0.42) |
+| Acura ZDX Hatchback 2012 | Hyundai Azera Sedan 2012(0.52) Mercedes-Benz E-Class Sedan 2012(0.56) Aston Martin Virage Convertible 2012(0.56) Bugatti Veyron 16.4 Convertible 2009(0.60) Honda Odyssey Minivan 2012(0.60) |
+| Aston Martin V8 Vantage Convertible 2012 | Bentley Continental Supersports Conv. Convertible 2012(0.40) Aston Martin V8 Vantage Coupe 2012(0.42) smart fortwo Convertible 2012*(0.44) Volkswagen Golf Hatchback 2012*(0.45) Maybach Landaulet Convertible 2012(0.46) |
+| Aston Martin V8 Vantage Coupe 2012 | Audi TT Hatchback 2011(0.30) Aston Martin V8 Vantage Convertible 2012(0.42) BMW Z4 Convertible 2012(0.45) Audi S5 Coupe 2012(0.46) Audi TT RS Coupe 2012(0.48) |
+| Aston Martin Virage Convertible 2012 | Mercedes-Benz SL-Class Coupe 2009(0.37) Mercedes-Benz E-Class Sedan 2012(0.38) Hyundai Azera Sedan 2012(0.40) Fisker Karma Sedan 2012(0.44) BMW M5 Sedan 2010(0.44) |
+| Aston Martin Virage Coupe 2012 | Dodge Charger Sedan 2012(0.23) Ferrari California Convertible 2012(0.24) Ferrari 458 Italia Convertible 2012(0.24) Hyundai Veloster Hatchback 2012(0.25) Ferrari FF Coupe 2012(0.30) |
+| Audi RS 4 Convertible 2008 | Chevrolet Corvette Convertible 2012(0.43) Lamborghini Diablo Coupe 2001(0.43) Acura Integra Type R 2001(0.44) Lamborghini Gallardo LP 570-4 Superleggera 2012(0.50) BMW M6 Convertible 2010(0.52) |
+| Audi A5 Coupe 2012 | Audi TT Hatchback 2011(0.33) Audi S5 Coupe 2012(0.39) Acura TSX Sedan 2012(0.41) Audi R8 Coupe 2012(0.44) Mercedes-Benz S-Class Sedan 2012(0.46) |
+| Audi TTS Coupe 2012 | Cadillac CTS-V Sedan 2012(0.26) Audi S5 Coupe 2012(0.37) Acura TSX Sedan 2012(0.38) BMW 6 Series Convertible 2007(0.39) Audi TT Hatchback 2011(0.43) |
+| Audi R8 Coupe 2012 | Mercedes-Benz SL-Class Coupe 2009(0.34) Audi TT Hatchback 2011(0.42) MINI Cooper Roadster Convertible 2012(0.42) Audi A5 Coupe 2012(0.44) Aston Martin V8 Vantage Coupe 2012(0.48) |
+| Audi V8 Sedan 1994 | Audi 100 Sedan 1994(0.30) Audi 100 Wagon 1994(0.35) Chevrolet Tahoe Hybrid SUV 2012(0.47) Toyota 4Runner SUV 2012*(0.53) Chrysler Aspen SUV 2009(0.55) |
+| Audi 100 Sedan 1994 | Audi 100 Wagon 1994(0.19) Audi V8 Sedan 1994(0.30) Chevrolet Tahoe Hybrid SUV 2012(0.38) Geo Metro Convertible 1993(0.41) Ram C/V Cargo Van Minivan 2012(0.44) |
+| Audi 100 Wagon 1994 | Audi 100 Sedan 1994(0.19) Geo Metro Convertible 1993(0.30) Audi V8 Sedan 1994(0.35) Mercedes-Benz 300-Class Convertible 1993(0.38) Ram C/V Cargo Van Minivan 2012(0.42) |
+| Audi TT Hatchback 2011 | Acura TSX Sedan 2012(0.26) Aston Martin V8 Vantage Coupe 2012(0.30) Audi A5 Coupe 2012(0.33) Audi R8 Coupe 2012(0.42) Audi S5 Coupe 2012(0.42) |
+| Audi S6 Sedan 2011 | BMW M5 Sedan 2010(0.39) BMW 3 Series Wagon 2012(0.41) Porsche Panamera Sedan 2012(0.44) Infiniti G Coupe IPL 2012(0.46) Audi A5 Coupe 2012(0.49) |
+| Audi S5 Convertible 2012 | Porsche Panamera Sedan 2012(0.29) Fisker Karma Sedan 2012(0.34) Infiniti G Coupe IPL 2012(0.41) Aston Martin V8 Vantage Coupe 2012(0.48) Audi S5 Coupe 2012(0.49) |
+| Audi S5 Coupe 2012 | Audi TTS Coupe 2012(0.37) Acura RL Sedan 2012(0.37) Audi A5 Coupe 2012(0.39) Acura TSX Sedan 2012(0.42) Audi TT Hatchback 2011(0.42) |
+| Audi S4 Sedan 2012 | Ferrari FF Coupe 2012(0.46) Bentley Continental GT Coupe 2012(0.52) Hyundai Sonata Hybrid Sedan 2012(0.53) BMW 1 Series Coupe 2012(0.55) Toyota Camry Sedan 2012*(0.55) |
+| Audi S4 Sedan 2007 | Dodge Durango SUV 2012(0.59) Rolls-Royce Ghost Sedan 2012(0.61) FIAT 500 Abarth 2012(0.62) Hyundai Genesis Sedan 2012(0.63) Audi R8 Coupe 2012(0.63) |
+| Audi TT RS Coupe 2012 | Ferrari 458 Italia Convertible 2012(0.31) Aston Martin Virage Coupe 2012(0.35) Lamborghini Aventador Coupe 2012(0.39) Hyundai Accent Sedan 2012(0.41) Volvo C30 Hatchback 2012*(0.42) |
+| BMW ActiveHybrid 5 Sedan 2012 | Mercedes-Benz SL-Class Coupe 2009(0.39) BMW M5 Sedan 2010(0.40) BMW 3 Series Wagon 2012(0.42) Porsche Panamera Sedan 2012(0.43) Mercedes-Benz E-Class Sedan 2012(0.45) |
+| BMW 1 Series Convertible 2012 | BMW X6 SUV 2012(0.45) Audi R8 Coupe 2012(0.48) BMW M3 Coupe 2012(0.49) Audi TT Hatchback 2011(0.50) Acura TSX Sedan 2012(0.51) |
+| BMW 1 Series Coupe 2012 | Ferrari FF Coupe 2012(0.33) Bentley Continental GT Coupe 2012(0.40) BMW X6 SUV 2012(0.43) BMW M3 Coupe 2012(0.46) Honda Accord Coupe 2012(0.46) |
+| BMW 3 Series Sedan 2012 | Lamborghini Aventador Coupe 2012(0.38) Hyundai Accent Sedan 2012(0.39) Ferrari 458 Italia Coupe 2012(0.42) BMW 1 Series Coupe 2012(0.48) Dodge Caliber Wagon 2007(0.50) |
+| BMW 3 Series Wagon 2012 | Audi S6 Sedan 2011(0.41) BMW ActiveHybrid 5 Sedan 2012(0.42) Porsche Panamera Sedan 2012(0.43) BMW M5 Sedan 2010(0.51) Chrysler 300 SRT-8 2010(0.51) |
+| BMW 6 Series Convertible 2007 | Volkswagen Golf Hatchback 2012*(0.31) Cadillac CTS-V Sedan 2012(0.39) Audi TTS Coupe 2012(0.39) Honda Accord Sedan 2012(0.41) Chrysler Crossfire Convertible 2008(0.44) |
+| BMW X5 SUV 2007 | Toyota Sequoia SUV 2012(0.34) Volvo XC90 SUV 2007*(0.34) Toyota 4Runner SUV 2012*(0.41) GMC Yukon Hybrid SUV 2012(0.47) BMW X3 SUV 2012(0.48) |
+| BMW X6 SUV 2012 | Dodge Caliber Wagon 2007(0.39) BMW 1 Series Coupe 2012(0.43) BMW 1 Series Convertible 2012(0.45) Chevrolet HHR SS 2010(0.48) Honda Accord Coupe 2012(0.50) |
+| BMW M3 Coupe 2012 | Buick Regal GS 2012(0.40) BMW 1 Series Coupe 2012(0.46) BMW 1 Series Convertible 2012(0.49) Bentley Continental GT Coupe 2012(0.52) MINI Cooper Roadster Convertible 2012(0.53) |
+| BMW M5 Sedan 2010 | Mercedes-Benz E-Class Sedan 2012(0.37) Audi S6 Sedan 2011(0.39) BMW ActiveHybrid 5 Sedan 2012(0.40) Aston Martin Virage Convertible 2012(0.44) BMW 3 Series Wagon 2012(0.51) |
+| BMW M6 Convertible 2010 | Bugatti Veyron 16.4 Coupe 2009(0.49) Audi RS 4 Convertible 2008(0.52) Hyundai Genesis Sedan 2012(0.54) Lamborghini Reventon Coupe 2008(0.57) Bentley Continental Flying Spur Sedan 2007(0.57) |
+| BMW X3 SUV 2012 | BMW X5 SUV 2007(0.48) Toyota 4Runner SUV 2012*(0.51) Infiniti QX56 SUV 2011(0.56) Cadillac SRX SUV 2012(0.57) Mercedes-Benz C-Class Sedan 2012(0.58) |
+| BMW Z4 Convertible 2012 | Lamborghini Aventador Coupe 2012(0.40) Audi TT RS Coupe 2012(0.43) Ferrari 458 Italia Coupe 2012(0.45) Aston Martin V8 Vantage Coupe 2012(0.45) McLaren MP4-12C Coupe 2012(0.46) |
+| Bentley Continental Supersports Conv. Convertible 2012 | Maybach Landaulet Convertible 2012(0.31) MINI Cooper Roadster Convertible 2012(0.37) Chevrolet Corvette Ron Fellows Edition Z06 2007(0.37) Bugatti Veyron 16.4 Convertible 2009(0.37) Aston Martin V8 Vantage Convertible 2012(0.40) |
+| Bentley Arnage Sedan 2009 | FIAT 500 Abarth 2012(0.39) Chevrolet TrailBlazer SS 2009(0.41) Rolls-Royce Ghost Sedan 2012(0.56) Cadillac CTS-V Sedan 2012(0.59) Rolls-Royce Phantom Sedan 2012(0.61) |
+| Bentley Mulsanne Sedan 2011 | Infiniti G Coupe IPL 2012(0.46) BMW ActiveHybrid 5 Sedan 2012(0.47) Mercedes-Benz C-Class Sedan 2012(0.50) BMW M5 Sedan 2010(0.52) BMW 3 Series Wagon 2012(0.54) |
+| Bentley Continental GT Coupe 2012 | BMW 1 Series Coupe 2012(0.40) Ferrari FF Coupe 2012(0.48) Audi TT Hatchback 2011(0.50) BMW 3 Series Sedan 2012(0.51) BMW M3 Coupe 2012(0.52) |
+| Bentley Continental GT Coupe 2007 | Mitsubishi Lancer Sedan 2012(0.47) Hyundai Genesis Sedan 2012(0.55) Honda Odyssey Minivan 2012(0.58) Nissan Leaf Hatchback 2012(0.61) Acura TL Type-S 2008(0.64) |
+| Bentley Continental Flying Spur Sedan 2007 | Mercedes-Benz C-Class Sedan 2012(0.44) Audi TTS Coupe 2012(0.46) Cadillac CTS-V Sedan 2012(0.50) BMW M6 Convertible 2010(0.57) BMW 6 Series Convertible 2007(0.57) |
+| Bugatti Veyron 16.4 Convertible 2009 | FIAT 500 Convertible 2012(0.20) MINI Cooper Roadster Convertible 2012(0.37) Bentley Continental Supersports Conv. Convertible 2012(0.37) Maybach Landaulet Convertible 2012(0.39) Bugatti Veyron 16.4 Coupe 2009(0.43) |
+| Bugatti Veyron 16.4 Coupe 2009 | Jaguar XK XKR 2012(0.38) Bugatti Veyron 16.4 Convertible 2009(0.43) BMW M6 Convertible 2010(0.49) Ford GT Coupe 2006(0.50) Aston Martin Virage Convertible 2012(0.50) |
+| Buick Regal GS 2012 | BMW M3 Coupe 2012(0.40) Volkswagen Beetle Hatchback 2012*(0.44) Dodge Challenger SRT8 2011(0.46) Jaguar XK XKR 2012(0.48) Suzuki Kizashi Sedan 2012(0.48) |
+| Buick Rainier SUV 2007 | Ford Freestar Minivan 2007(0.37) Chrysler Aspen SUV 2009(0.37) GMC Terrain SUV 2012(0.42) Dodge Dakota Club Cab 2007(0.43) Chevrolet Silverado 1500 Extended Cab 2012(0.44) |
+| Buick Verano Sedan 2012 | Nissan Juke Hatchback 2012(0.47) Volkswagen Beetle Hatchback 2012*(0.49) Chevrolet HHR SS 2010(0.55) Hyundai Elantra Touring Hatchback 2012(0.56) Audi S4 Sedan 2012(0.57) |
+| Buick Enclave SUV 2012 | Hyundai Veracruz SUV 2012(0.56) Honda Odyssey Minivan 2007(0.57) Chevrolet Traverse SUV 2012(0.59) Ford Focus Sedan 2007(0.61) Chrysler 300 SRT-8 2010(0.62) |
+| Cadillac CTS-V Sedan 2012 | Audi TTS Coupe 2012(0.26) Chrysler Crossfire Convertible 2008(0.32) Mercedes-Benz C-Class Sedan 2012(0.37) BMW 6 Series Convertible 2007(0.39) Volkswagen Golf Hatchback 2012*(0.44) |
+| Cadillac SRX SUV 2012 | Rolls-Royce Phantom Sedan 2012(0.53) BMW X3 SUV 2012(0.57) Infiniti G Coupe IPL 2012(0.58) Acura RL Sedan 2012(0.58) Chevrolet TrailBlazer SS 2009(0.61) |
+| Cadillac Escalade EXT Crew Cab 2007 | Jeep Grand Cherokee SUV 2012(0.40) Chevrolet Avalanche Crew Cab 2012(0.47) Chevrolet TrailBlazer SS 2009(0.52) Ford Expedition EL SUV 2009(0.57) Chrysler Aspen SUV 2009(0.58) |
+| Chevrolet Silverado 1500 Hybrid Crew Cab 2012 | Chevrolet Silverado 1500 Classic Extended Cab 2007(0.25) Ford F-450 Super Duty Crew Cab 2012(0.26) Ford F-150 Regular Cab 2012(0.31) Chevrolet Avalanche Crew Cab 2012(0.33) Chevrolet Silverado 1500 Extended Cab 2012(0.39) |
+| Chevrolet Corvette Convertible 2012 | McLaren MP4-12C Coupe 2012(0.22) Acura Integra Type R 2001(0.22) Lamborghini Diablo Coupe 2001(0.23) Lamborghini Gallardo LP 570-4 Superleggera 2012(0.25) Chevrolet Cobalt SS 2010(0.35) |
+| Chevrolet Corvette ZR1 2012 | Audi TTS Coupe 2012(0.46) Rolls-Royce Phantom Sedan 2012(0.49) Fisker Karma Sedan 2012(0.50) Infiniti G Coupe IPL 2012(0.52) Spyker C8 Convertible 2009(0.52) |
+| Chevrolet Corvette Ron Fellows Edition Z06 2007 | Bentley Continental Supersports Conv. Convertible 2012(0.37) Maybach Landaulet Convertible 2012(0.39) Ram C/V Cargo Van Minivan 2012(0.40) Geo Metro Convertible 1993(0.46) Mercedes-Benz 300-Class Convertible 1993(0.51) |
+| Chevrolet Traverse SUV 2012 | Dodge Journey SUV 2012(0.39) Scion xD Hatchback 2012(0.44) Jeep Compass SUV 2012(0.46) Suzuki SX4 Sedan 2012(0.51) Hyundai Veracruz SUV 2012(0.52) |
+| Chevrolet Camaro Convertible 2012 | Ferrari FF Coupe 2012(0.53) Audi TT RS Coupe 2012(0.55) BMW Z4 Convertible 2012(0.56) Audi S4 Sedan 2012(0.56) BMW 1 Series Coupe 2012(0.56) |
+| Chevrolet HHR SS 2010 | Dodge Charger SRT-8 2009(0.44) Dodge Caliber Wagon 2007(0.47) Hyundai Accent Sedan 2012(0.47) BMW X6 SUV 2012(0.48) Dodge Magnum Wagon 2008(0.49) |
+| Chevrolet Impala Sedan 2007 | Hyundai Tucson SUV 2012(0.41) Chrysler Sebring Convertible 2010(0.43) Ford Focus Sedan 2007(0.47) Dodge Caravan Minivan 1997(0.49) Honda Odyssey Minivan 2007(0.52) |
+| Chevrolet Tahoe Hybrid SUV 2012 | Audi 100 Sedan 1994(0.38) Audi 100 Wagon 1994(0.42) Chevrolet Silverado 2500HD Regular Cab 2012(0.42) Isuzu Ascender SUV 2008(0.43) Toyota 4Runner SUV 2012*(0.43) |
+| Chevrolet Sonic Sedan 2012 | Hyundai Azera Sedan 2012(0.39) Dodge Challenger SRT8 2011(0.40) Tesla Model S Sedan 2012(0.43) Nissan Juke Hatchback 2012(0.43) Rolls-Royce Ghost Sedan 2012(0.47) |
+| Chevrolet Express Cargo Van 2007 | Chevrolet Express Van 2007(0.05) Mercedes-Benz Sprinter Van 2012(0.07) GMC Savana Van 2012(0.19) Nissan NV Passenger Van 2012(0.26) Ford F-150 Regular Cab 2007(0.48) |
+| Chevrolet Avalanche Crew Cab 2012 | Dodge Dakota Crew Cab 2010(0.29) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.33) Chrysler Aspen SUV 2009(0.38) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.39) Ford Expedition EL SUV 2009(0.40) |
+| Chevrolet Cobalt SS 2010 | McLaren MP4-12C Coupe 2012(0.34) Chevrolet Corvette Convertible 2012(0.35) Acura Integra Type R 2001(0.42) Lamborghini Diablo Coupe 2001(0.43) Lamborghini Gallardo LP 570-4 Superleggera 2012(0.45) |
+| Chevrolet Malibu Hybrid Sedan 2010 | Acura TSX Sedan 2012(0.45) Lincoln Town Car Sedan 2011(0.52) Toyota Corolla Sedan 2012*(0.55) Honda Accord Sedan 2012(0.55) Chrysler Sebring Convertible 2010(0.62) |
+| Chevrolet TrailBlazer SS 2009 | Bentley Arnage Sedan 2009(0.41) Jeep Grand Cherokee SUV 2012(0.45) GMC Yukon Hybrid SUV 2012(0.47) Land Rover Range Rover SUV 2012(0.51) Cadillac Escalade EXT Crew Cab 2007(0.52) |
+| Chevrolet Silverado 2500HD Regular Cab 2012 | Ford E-Series Wagon Van 2012(0.18) GMC Savana Van 2012(0.23) Ford F-150 Regular Cab 2012(0.28) Chevrolet Tahoe Hybrid SUV 2012(0.42) Mercedes-Benz Sprinter Van 2012(0.45) |
+| Chevrolet Silverado 1500 Classic Extended Cab 2007 | Ford F-450 Super Duty Crew Cab 2012(0.17) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.25) Chevrolet Silverado 1500 Extended Cab 2012(0.39) Chevrolet Avalanche Crew Cab 2012(0.39) Isuzu Ascender SUV 2008(0.44) |
+| Chevrolet Express Van 2007 | Chevrolet Express Cargo Van 2007(0.05) Mercedes-Benz Sprinter Van 2012(0.09) GMC Savana Van 2012(0.18) Nissan NV Passenger Van 2012(0.24) Chevrolet Silverado 1500 Regular Cab 2012(0.40) |
+| Chevrolet Monte Carlo Coupe 2007 | Ford Freestar Minivan 2007(0.46) Daewoo Nubira Wagon 2002(0.47) Chevrolet Malibu Sedan 2007(0.48) Ford Mustang Convertible 2007(0.51) Mercedes-Benz 300-Class Convertible 1993(0.52) |
+| Chevrolet Malibu Sedan 2007 | Ford Focus Sedan 2007(0.39) Lincoln Town Car Sedan 2011(0.40) Daewoo Nubira Wagon 2002(0.47) Chevrolet Monte Carlo Coupe 2007(0.48) Ford Freestar Minivan 2007(0.49) |
+| Chevrolet Silverado 1500 Extended Cab 2012 | Dodge Dakota Club Cab 2007(0.36) Ford F-150 Regular Cab 2007(0.37) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.39) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.39) Dodge Ram Pickup 3500 Quad Cab 2009(0.39) |
+| Chevrolet Silverado 1500 Regular Cab 2012 | Ford F-150 Regular Cab 2007(0.24) Dodge Ram Pickup 3500 Quad Cab 2009(0.26) Nissan NV Passenger Van 2012(0.30) Jeep Liberty SUV 2012(0.39) Chevrolet Express Van 2007(0.40) |
+| Chrysler Aspen SUV 2009 | Buick Rainier SUV 2007(0.37) Chevrolet Avalanche Crew Cab 2012(0.38) Isuzu Ascender SUV 2008(0.45) Hyundai Santa Fe SUV 2012(0.50) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.51) |
+| Chrysler Sebring Convertible 2010 | Chevrolet Impala Sedan 2007(0.43) Honda Odyssey Minivan 2007(0.57) Ford Focus Sedan 2007(0.60) Chevrolet Malibu Hybrid Sedan 2010(0.62) Ford Fiesta Sedan 2012(0.63) |
+| Chrysler Town and Country Minivan 2012 | Hyundai Veracruz SUV 2012(0.50) Dodge Caravan Minivan 1997(0.53) Suzuki Aerio Sedan 2007(0.53) Chevrolet Traverse SUV 2012(0.55) Dodge Durango SUV 2012(0.58) |
+| Chrysler 300 SRT-8 2010 | BMW 3 Series Wagon 2012(0.51) Chevrolet TrailBlazer SS 2009(0.53) Land Rover Range Rover SUV 2012(0.53) Volvo XC90 SUV 2007*(0.56) Acura TL Type-S 2008(0.60) |
+| Chrysler Crossfire Convertible 2008 | Cadillac CTS-V Sedan 2012(0.32) Mercedes-Benz 300-Class Convertible 1993(0.42) BMW 6 Series Convertible 2007(0.44) Volkswagen Golf Hatchback 2012*(0.44) Audi TTS Coupe 2012(0.45) |
+| Chrysler PT Cruiser Convertible 2008 | Suzuki SX4 Sedan 2012(0.45) Hyundai Tucson SUV 2012(0.58) Volkswagen Beetle Hatchback 2012*(0.59) Chevrolet Traverse SUV 2012(0.60) Dodge Durango SUV 2012(0.61) |
+| Daewoo Nubira Wagon 2002 | Chevrolet Malibu Sedan 2007(0.47) Chevrolet Monte Carlo Coupe 2007(0.47) Ford Freestar Minivan 2007(0.54) Honda Odyssey Minivan 2007(0.55) Dodge Caravan Minivan 1997(0.58) |
+| Dodge Caliber Wagon 2012 | Dodge Caliber Wagon 2007(0.46) Chevrolet HHR SS 2010(0.57) Ford Freestar Minivan 2007(0.61) Hyundai Elantra Sedan 2007(0.61) Honda Accord Coupe 2012(0.63) |
+| Dodge Caliber Wagon 2007 | BMW X6 SUV 2012(0.39) Dodge Caliber Wagon 2012(0.46) Chevrolet HHR SS 2010(0.47) BMW 3 Series Sedan 2012(0.50) Hyundai Elantra Sedan 2007(0.51) |
+| Dodge Caravan Minivan 1997 | Plymouth Neon Coupe 1999(0.34) Chevrolet Impala Sedan 2007(0.49) Eagle Talon Hatchback 1998(0.51) Chrysler Town and Country Minivan 2012(0.53) Nissan 240SX Coupe 1998(0.54) |
+| Dodge Ram Pickup 3500 Crew Cab 2010 | Ford F-450 Super Duty Crew Cab 2012(0.32) Jeep Wrangler SUV 2012(0.38) HUMMER H3T Crew Cab 2010(0.41) HUMMER H2 SUT Crew Cab 2009(0.42) Land Rover Range Rover SUV 2012(0.43) |
+| Dodge Ram Pickup 3500 Quad Cab 2009 | Chevrolet Silverado 1500 Regular Cab 2012(0.26) Ford F-150 Regular Cab 2007(0.35) Chevrolet Silverado 1500 Extended Cab 2012(0.39) Jeep Patriot SUV 2012(0.44) Chevrolet Express Van 2007(0.44) |
+| Dodge Sprinter Cargo Van 2009 | Ford E-Series Wagon Van 2012(0.25) GMC Savana Van 2012(0.27) Ram C/V Cargo Van Minivan 2012(0.33) Ford F-450 Super Duty Crew Cab 2012(0.45) Audi 100 Sedan 1994(0.45) |
+| Dodge Journey SUV 2012 | Chevrolet Traverse SUV 2012(0.39) Jeep Compass SUV 2012(0.46) Volkswagen Golf Hatchback 1991*(0.56) Dodge Durango SUV 2012(0.60) Plymouth Neon Coupe 1999(0.60) |
+| Dodge Dakota Crew Cab 2010 | Chevrolet Avalanche Crew Cab 2012(0.29) Ford Ranger SuperCab 2011(0.39) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.45) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.46) Dodge Ram Pickup 3500 Crew Cab 2010(0.48) |
+| Dodge Dakota Club Cab 2007 | Chevrolet Silverado 1500 Extended Cab 2012(0.36) Ford F-150 Regular Cab 2012(0.39) Ford F-150 Regular Cab 2007(0.40) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.42) Buick Rainier SUV 2007(0.43) |
+| Dodge Magnum Wagon 2008 | Ford Mustang Convertible 2007(0.38) Hyundai Accent Sedan 2012(0.44) Dodge Charger SRT-8 2009(0.48) Chevrolet HHR SS 2010(0.49) Dodge Caliber Wagon 2007(0.56) |
+| Dodge Challenger SRT8 2011 | Chevrolet Sonic Sedan 2012(0.40) Tesla Model S Sedan 2012(0.43) Spyker C8 Coupe 2009(0.44) Buick Regal GS 2012(0.46) Hyundai Azera Sedan 2012(0.48) |
+| Dodge Durango SUV 2012 | Land Rover Range Rover SUV 2012(0.43) Dodge Durango SUV 2007(0.47) Volvo 240 Sedan 1993*(0.52) Hyundai Veracruz SUV 2012(0.52) Ford Edge SUV 2012(0.53) |
+| Dodge Durango SUV 2007 | Dodge Durango SUV 2012(0.47) Volvo 240 Sedan 1993*(0.50) Jeep Grand Cherokee SUV 2012(0.52) Dodge Ram Pickup 3500 Crew Cab 2010(0.53) Ford Expedition EL SUV 2009(0.54) |
+| Dodge Charger Sedan 2012 | Aston Martin Virage Coupe 2012(0.23) Hyundai Veloster Hatchback 2012(0.32) Ferrari California Convertible 2012(0.32) Chevrolet Corvette Convertible 2012(0.35) Volvo C30 Hatchback 2012*(0.38) |
+| Dodge Charger SRT-8 2009 | Hyundai Accent Sedan 2012(0.42) Volvo C30 Hatchback 2012*(0.42) Chevrolet HHR SS 2010(0.44) Dodge Magnum Wagon 2008(0.48) Dodge Caliber Wagon 2007(0.52) |
+| Eagle Talon Hatchback 1998 | Plymouth Neon Coupe 1999(0.19) Nissan 240SX Coupe 1998(0.45) Dodge Caravan Minivan 1997(0.51) Volkswagen Golf Hatchback 1991*(0.56) Acura TL Type-S 2008(0.57) |
+| FIAT 500 Abarth 2012 | Rolls-Royce Ghost Sedan 2012(0.39) Bentley Arnage Sedan 2009(0.39) Spyker C8 Convertible 2009(0.49) Chevrolet Sonic Sedan 2012(0.57) Rolls-Royce Phantom Sedan 2012(0.60) |
+| FIAT 500 Convertible 2012 | Bugatti Veyron 16.4 Convertible 2009(0.20) smart fortwo Convertible 2012*(0.34) Maybach Landaulet Convertible 2012(0.38) Bentley Continental Supersports Conv. Convertible 2012(0.44) MINI Cooper Roadster Convertible 2012(0.46) |
+| Ferrari FF Coupe 2012 | Aston Martin Virage Coupe 2012(0.30) BMW 1 Series Coupe 2012(0.33) Dodge Charger Sedan 2012(0.42) Audi S4 Sedan 2012(0.46) Hyundai Veloster Hatchback 2012(0.48) |
+| Ferrari California Convertible 2012 | Ferrari 458 Italia Convertible 2012(0.15) Aston Martin Virage Coupe 2012(0.24) Dodge Charger Sedan 2012(0.32) Suzuki SX4 Hatchback 2012(0.34) McLaren MP4-12C Coupe 2012(0.34) |
+| Ferrari 458 Italia Convertible 2012 | Ferrari California Convertible 2012(0.15) McLaren MP4-12C Coupe 2012(0.22) Ferrari 458 Italia Coupe 2012(0.22) Aston Martin Virage Coupe 2012(0.24) Lamborghini Aventador Coupe 2012(0.30) |
+| Ferrari 458 Italia Coupe 2012 | Lamborghini Aventador Coupe 2012(0.15) Ferrari 458 Italia Convertible 2012(0.22) Ferrari California Convertible 2012(0.36) McLaren MP4-12C Coupe 2012(0.39) Hyundai Accent Sedan 2012(0.42) |
+| Fisker Karma Sedan 2012 | Audi S5 Convertible 2012(0.34) Infiniti G Coupe IPL 2012(0.36) Aston Martin Virage Convertible 2012(0.44) Audi TTS Coupe 2012(0.47) Acura TL Sedan 2012(0.49) |
+| Ford F-450 Super Duty Crew Cab 2012 | Chevrolet Silverado 1500 Classic Extended Cab 2007(0.17) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.26) Dodge Ram Pickup 3500 Crew Cab 2010(0.32) Ford F-150 Regular Cab 2012(0.34) AM General Hummer SUV 2000(0.35) |
+| Ford Mustang Convertible 2007 | Dodge Magnum Wagon 2008(0.38) Geo Metro Convertible 1993(0.42) Audi 100 Wagon 1994(0.48) Mercedes-Benz 300-Class Convertible 1993(0.50) Chevrolet Monte Carlo Coupe 2007(0.51) |
+| Ford Freestar Minivan 2007 | Buick Rainier SUV 2007(0.37) Chevrolet Monte Carlo Coupe 2007(0.46) Chevrolet Malibu Sedan 2007(0.49) Chrysler Aspen SUV 2009(0.51) Ford Mustang Convertible 2007(0.51) |
+| Ford Expedition EL SUV 2009 | Jeep Grand Cherokee SUV 2012(0.34) Chevrolet Avalanche Crew Cab 2012(0.40) Isuzu Ascender SUV 2008(0.45) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.46) Toyota Sequoia SUV 2012(0.47) |
+| Ford Edge SUV 2012 | Volvo XC90 SUV 2007*(0.52) Dodge Durango SUV 2012(0.53) Land Rover Range Rover SUV 2012(0.58) GMC Yukon Hybrid SUV 2012(0.60) Chrysler 300 SRT-8 2010(0.60) |
+| Ford Ranger SuperCab 2011 | GMC Acadia SUV 2012(0.31) Ford F-150 Regular Cab 2012(0.38) Dodge Dakota Crew Cab 2010(0.39) Chevrolet Avalanche Crew Cab 2012(0.42) Chevrolet Silverado 2500HD Regular Cab 2012(0.46) |
+| Ford GT Coupe 2006 | Ferrari California Convertible 2012(0.34) McLaren MP4-12C Coupe 2012(0.35) Ferrari 458 Italia Convertible 2012(0.39) Chevrolet Corvette Convertible 2012(0.41) Hyundai Veloster Hatchback 2012(0.41) |
+| Ford F-150 Regular Cab 2012 | Ford E-Series Wagon Van 2012(0.18) Chevrolet Silverado 2500HD Regular Cab 2012(0.28) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.31) Ford F-450 Super Duty Crew Cab 2012(0.34) GMC Savana Van 2012(0.36) |
+| Ford F-150 Regular Cab 2007 | Chevrolet Silverado 1500 Regular Cab 2012(0.24) Dodge Ram Pickup 3500 Quad Cab 2009(0.35) Chevrolet Silverado 1500 Extended Cab 2012(0.37) Dodge Dakota Club Cab 2007(0.40) Chevrolet Express Van 2007(0.43) |
+| Ford Focus Sedan 2007 | Chevrolet Malibu Sedan 2007(0.39) Hyundai Elantra Sedan 2007(0.47) Chevrolet Impala Sedan 2007(0.47) Nissan 240SX Coupe 1998(0.47) Honda Odyssey Minivan 2007(0.54) |
+| Ford E-Series Wagon Van 2012 | Ford F-150 Regular Cab 2012(0.18) Chevrolet Silverado 2500HD Regular Cab 2012(0.18) GMC Savana Van 2012(0.19) Dodge Sprinter Cargo Van 2009(0.25) Ford F-450 Super Duty Crew Cab 2012(0.36) |
+| Ford Fiesta Sedan 2012 | Hyundai Elantra Sedan 2007(0.52) Hyundai Elantra Touring Hatchback 2012(0.56) Chrysler Sebring Convertible 2010(0.63) Toyota Camry Sedan 2012*(0.63) Chevrolet Cobalt SS 2010(0.65) |
+| GMC Terrain SUV 2012 | Chevrolet Silverado 1500 Extended Cab 2012(0.40) Buick Rainier SUV 2007(0.42) Chrysler Aspen SUV 2009(0.53) Isuzu Ascender SUV 2008(0.56) Dodge Durango SUV 2007(0.60) |
+| GMC Savana Van 2012 | Mercedes-Benz Sprinter Van 2012(0.13) Chevrolet Express Van 2007(0.18) Chevrolet Express Cargo Van 2007(0.19) Ford E-Series Wagon Van 2012(0.19) Chevrolet Silverado 2500HD Regular Cab 2012(0.23) |
+| GMC Yukon Hybrid SUV 2012 | Land Rover Range Rover SUV 2012(0.30) Volvo XC90 SUV 2007*(0.36) BMW X5 SUV 2007(0.47) Chevrolet TrailBlazer SS 2009(0.47) Land Rover LR2 SUV 2012(0.47) |
+| GMC Acadia SUV 2012 | Ford Ranger SuperCab 2011(0.31) Volvo XC90 SUV 2007*(0.53) Dodge Dakota Crew Cab 2010(0.57) Chevrolet Avalanche Crew Cab 2012(0.57) Isuzu Ascender SUV 2008(0.59) |
+| GMC Canyon Extended Cab 2012 | HUMMER H2 SUT Crew Cab 2009(0.44) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.45) Dodge Ram Pickup 3500 Quad Cab 2009(0.46) Ford Ranger SuperCab 2011(0.47) Chevrolet Avalanche Crew Cab 2012(0.49) |
+| Geo Metro Convertible 1993 | Mercedes-Benz 300-Class Convertible 1993(0.20) Audi 100 Wagon 1994(0.30) Audi 100 Sedan 1994(0.41) Ford Mustang Convertible 2007(0.42) Ram C/V Cargo Van Minivan 2012(0.46) |
+| HUMMER H3T Crew Cab 2010 | HUMMER H2 SUT Crew Cab 2009(0.07) Jeep Wrangler SUV 2012(0.10) AM General Hummer SUV 2000(0.29) Dodge Ram Pickup 3500 Crew Cab 2010(0.41) Ford F-450 Super Duty Crew Cab 2012(0.50) |
+| HUMMER H2 SUT Crew Cab 2009 | HUMMER H3T Crew Cab 2010(0.07) Jeep Wrangler SUV 2012(0.09) AM General Hummer SUV 2000(0.21) Ford F-450 Super Duty Crew Cab 2012(0.35) Dodge Ram Pickup 3500 Crew Cab 2010(0.42) |
+| Honda Odyssey Minivan 2012 | Acura RL Sedan 2012(0.54) Infiniti QX56 SUV 2011(0.58) Bentley Continental GT Coupe 2007(0.58) Acura ZDX Hatchback 2012(0.60) Audi S5 Coupe 2012(0.65) |
+| Honda Odyssey Minivan 2007 | Hyundai Veracruz SUV 2012(0.44) Buick Rainier SUV 2007(0.50) Chevrolet Impala Sedan 2007(0.52) Ford Focus Sedan 2007(0.54) Daewoo Nubira Wagon 2002(0.55) |
+| Honda Accord Coupe 2012 | BMW 1 Series Coupe 2012(0.46) Audi TTS Coupe 2012(0.47) BMW Z4 Convertible 2012(0.49) BMW X6 SUV 2012(0.50) Audi TT RS Coupe 2012(0.51) |
+| Honda Accord Sedan 2012 | Volkswagen Golf Hatchback 2012*(0.32) BMW 6 Series Convertible 2007(0.41) Acura TSX Sedan 2012(0.46) Chrysler Crossfire Convertible 2008(0.51) Cadillac CTS-V Sedan 2012(0.54) |
+| Hyundai Veloster Hatchback 2012 | Aston Martin Virage Coupe 2012(0.25) Dodge Charger Sedan 2012(0.32) McLaren MP4-12C Coupe 2012(0.36) Ford GT Coupe 2006(0.41) Ferrari 458 Italia Convertible 2012(0.42) |
+| Hyundai Santa Fe SUV 2012 | Volkswagen Golf Hatchback 2012*(0.44) Mercedes-Benz C-Class Sedan 2012(0.46) Chevrolet Avalanche Crew Cab 2012(0.49) Chrysler Aspen SUV 2009(0.50) Cadillac CTS-V Sedan 2012(0.53) |
+| Hyundai Tucson SUV 2012 | Chevrolet Impala Sedan 2007(0.41) Toyota Camry Sedan 2012*(0.48) Jeep Compass SUV 2012(0.52) Chevrolet Traverse SUV 2012(0.54) Hyundai Genesis Sedan 2012(0.54) |
+| Hyundai Veracruz SUV 2012 | Honda Odyssey Minivan 2007(0.44) Suzuki Aerio Sedan 2007(0.49) Chrysler Town and Country Minivan 2012(0.50) Chevrolet Traverse SUV 2012(0.52) Dodge Durango SUV 2012(0.52) |
+| Hyundai Sonata Hybrid Sedan 2012 | Audi S4 Sedan 2012(0.53) Volkswagen Golf Hatchback 2012*(0.53) BMW M3 Coupe 2012(0.54) Aston Martin V8 Vantage Coupe 2012(0.54) Toyota Corolla Sedan 2012*(0.56) |
+| Hyundai Elantra Sedan 2007 | Ford Focus Sedan 2007(0.47) Toyota Camry Sedan 2012*(0.47) Dodge Caliber Wagon 2007(0.51) Ford Fiesta Sedan 2012(0.52) Chevrolet Impala Sedan 2007(0.54) |
+| Hyundai Accent Sedan 2012 | Lamborghini Aventador Coupe 2012(0.33) BMW 3 Series Sedan 2012(0.39) Audi TT RS Coupe 2012(0.41) Dodge Charger SRT-8 2009(0.42) Ferrari 458 Italia Coupe 2012(0.42) |
+| Hyundai Genesis Sedan 2012 | Rolls-Royce Ghost Sedan 2012(0.46) BMW M6 Convertible 2010(0.54) Acura TL Sedan 2012(0.54) Hyundai Tucson SUV 2012(0.54) Bentley Continental GT Coupe 2007(0.55) |
+| Hyundai Sonata Sedan 2012 | Bugatti Veyron 16.4 Coupe 2009(0.56) Porsche Panamera Sedan 2012(0.59) Mercedes-Benz SL-Class Coupe 2009(0.65) Aston Martin Virage Convertible 2012(0.66) Mitsubishi Lancer Sedan 2012(0.69) |
+| Hyundai Elantra Touring Hatchback 2012 | Buick Verano Sedan 2012(0.56) Ford Fiesta Sedan 2012(0.56) Ford Focus Sedan 2007(0.57) BMW 1 Series Convertible 2012(0.62) Acura TL Type-S 2008(0.63) |
+| Hyundai Azera Sedan 2012 | Chevrolet Sonic Sedan 2012(0.39) Aston Martin Virage Convertible 2012(0.40) Jaguar XK XKR 2012(0.43) Suzuki SX4 Sedan 2012(0.47) Nissan Juke Hatchback 2012(0.47) |
+| Infiniti G Coupe IPL 2012 | Fisker Karma Sedan 2012(0.36) Audi S5 Convertible 2012(0.41) Audi S5 Coupe 2012(0.43) Porsche Panamera Sedan 2012(0.44) Bentley Mulsanne Sedan 2011(0.46) |
+| Infiniti QX56 SUV 2011 | Toyota 4Runner SUV 2012*(0.38) Toyota Sequoia SUV 2012(0.43) Chevrolet Tahoe Hybrid SUV 2012(0.49) BMW X5 SUV 2007(0.55) BMW X3 SUV 2012(0.56) |
+| Isuzu Ascender SUV 2008 | Chevrolet Tahoe Hybrid SUV 2012(0.43) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.44) Chrysler Aspen SUV 2009(0.45) Ford Expedition EL SUV 2009(0.45) Ford E-Series Wagon Van 2012(0.45) |
+| Jaguar XK XKR 2012 | Bugatti Veyron 16.4 Coupe 2009(0.38) Spyker C8 Coupe 2009(0.43) Hyundai Azera Sedan 2012(0.43) Tesla Model S Sedan 2012(0.44) Ford GT Coupe 2006(0.46) |
+| Jeep Patriot SUV 2012 | Jeep Liberty SUV 2012(0.20) Land Rover Range Rover SUV 2012(0.34) Dodge Ram Pickup 3500 Quad Cab 2009(0.44) Jeep Compass SUV 2012(0.46) Chevrolet Silverado 1500 Regular Cab 2012(0.48) |
+| Jeep Wrangler SUV 2012 | HUMMER H2 SUT Crew Cab 2009(0.09) HUMMER H3T Crew Cab 2010(0.10) AM General Hummer SUV 2000(0.29) Dodge Ram Pickup 3500 Crew Cab 2010(0.38) Ford F-450 Super Duty Crew Cab 2012(0.47) |
+| Jeep Liberty SUV 2012 | Jeep Patriot SUV 2012(0.20) Jeep Compass SUV 2012(0.33) Chevrolet Silverado 1500 Regular Cab 2012(0.39) Volvo 240 Sedan 1993*(0.39) Land Rover Range Rover SUV 2012(0.43) |
+| Jeep Grand Cherokee SUV 2012 | Ford Expedition EL SUV 2009(0.34) Cadillac Escalade EXT Crew Cab 2007(0.40) Chevrolet TrailBlazer SS 2009(0.45) Dodge Ram Pickup 3500 Crew Cab 2010(0.48) Chevrolet Avalanche Crew Cab 2012(0.50) |
+| Jeep Compass SUV 2012 | Jeep Liberty SUV 2012(0.33) Volkswagen Golf Hatchback 1991*(0.39) Volvo 240 Sedan 1993*(0.46) Dodge Journey SUV 2012(0.46) Chevrolet Traverse SUV 2012(0.46) |
+| Lamborghini Reventon Coupe 2008 | Bugatti Veyron 16.4 Coupe 2009(0.50) Rolls-Royce Ghost Sedan 2012(0.51) Hyundai Azera Sedan 2012(0.52) Nissan Juke Hatchback 2012(0.53) Aston Martin Virage Convertible 2012(0.53) |
+| Lamborghini Aventador Coupe 2012 | Ferrari 458 Italia Coupe 2012(0.15) Ferrari 458 Italia Convertible 2012(0.30) McLaren MP4-12C Coupe 2012(0.33) Hyundai Accent Sedan 2012(0.33) BMW 3 Series Sedan 2012(0.38) |
+| Lamborghini Gallardo LP 570-4 Superleggera 2012 | Lamborghini Diablo Coupe 2001(0.13) Acura Integra Type R 2001(0.17) McLaren MP4-12C Coupe 2012(0.22) Chevrolet Corvette Convertible 2012(0.25) Ferrari 458 Italia Convertible 2012(0.43) |
+| Lamborghini Diablo Coupe 2001 | Acura Integra Type R 2001(0.03) Lamborghini Gallardo LP 570-4 Superleggera 2012(0.13) Chevrolet Corvette Convertible 2012(0.23) McLaren MP4-12C Coupe 2012(0.38) Chevrolet Cobalt SS 2010(0.43) |
+| Land Rover Range Rover SUV 2012 | GMC Yukon Hybrid SUV 2012(0.30) Jeep Patriot SUV 2012(0.34) Volvo XC90 SUV 2007*(0.38) Land Rover LR2 SUV 2012(0.40) Dodge Ram Pickup 3500 Crew Cab 2010(0.43) |
+| Land Rover LR2 SUV 2012 | Toyota 4Runner SUV 2012*(0.38) Land Rover Range Rover SUV 2012(0.40) Toyota Sequoia SUV 2012(0.46) GMC Yukon Hybrid SUV 2012(0.47) Jeep Patriot SUV 2012(0.51) |
+| Lincoln Town Car Sedan 2011 | Chevrolet Malibu Sedan 2007(0.40) Volkswagen Golf Hatchback 2012*(0.50) Toyota Corolla Sedan 2012*(0.51) Ford Freestar Minivan 2007(0.52) Chevrolet Malibu Hybrid Sedan 2010(0.52) |
+| MINI Cooper Roadster Convertible 2012 | Mercedes-Benz SL-Class Coupe 2009(0.36) Bentley Continental Supersports Conv. Convertible 2012(0.37) Bugatti Veyron 16.4 Convertible 2009(0.37) Audi R8 Coupe 2012(0.42) FIAT 500 Convertible 2012(0.46) |
+| Maybach Landaulet Convertible 2012 | Bentley Continental Supersports Conv. Convertible 2012(0.31) smart fortwo Convertible 2012*(0.36) FIAT 500 Convertible 2012(0.38) Bugatti Veyron 16.4 Convertible 2009(0.39) Chevrolet Corvette Ron Fellows Edition Z06 2007(0.39) |
+| Mazda Tribute SUV 2011 | Chevrolet Silverado 2500HD Regular Cab 2012(0.46) Toyota Sequoia SUV 2012(0.48) GMC Yukon Hybrid SUV 2012(0.57) Ford Expedition EL SUV 2009(0.57) GMC Acadia SUV 2012(0.60) |
+| McLaren MP4-12C Coupe 2012 | Chevrolet Corvette Convertible 2012(0.22) Ferrari 458 Italia Convertible 2012(0.22) Lamborghini Gallardo LP 570-4 Superleggera 2012(0.22) Aston Martin Virage Coupe 2012(0.32) Lamborghini Aventador Coupe 2012(0.33) |
+| Mercedes-Benz 300-Class Convertible 1993 | Geo Metro Convertible 1993(0.20) Audi 100 Wagon 1994(0.38) Chrysler Crossfire Convertible 2008(0.42) Audi 100 Sedan 1994(0.47) Ford Mustang Convertible 2007(0.50) |
+| Mercedes-Benz C-Class Sedan 2012 | Cadillac CTS-V Sedan 2012(0.37) Mercedes-Benz S-Class Sedan 2012(0.42) Bentley Continental Flying Spur Sedan 2007(0.44) Hyundai Santa Fe SUV 2012(0.46) Audi TTS Coupe 2012(0.48) |
+| Mercedes-Benz SL-Class Coupe 2009 | Audi R8 Coupe 2012(0.34) MINI Cooper Roadster Convertible 2012(0.36) Aston Martin Virage Convertible 2012(0.37) BMW ActiveHybrid 5 Sedan 2012(0.39) Mercedes-Benz E-Class Sedan 2012(0.42) |
+| Mercedes-Benz E-Class Sedan 2012 | BMW M5 Sedan 2010(0.37) Aston Martin Virage Convertible 2012(0.38) Mercedes-Benz SL-Class Coupe 2009(0.42) BMW ActiveHybrid 5 Sedan 2012(0.45) Hyundai Azera Sedan 2012(0.48) |
+| Mercedes-Benz S-Class Sedan 2012 | Mercedes-Benz C-Class Sedan 2012(0.42) Rolls-Royce Phantom Drophead Coupe Convertible 2012(0.44) Audi A5 Coupe 2012(0.46) Volkswagen Golf Hatchback 2012*(0.51) Audi TT Hatchback 2011(0.51) |
+| Mercedes-Benz Sprinter Van 2012 | Chevrolet Express Cargo Van 2007(0.07) Chevrolet Express Van 2007(0.09) GMC Savana Van 2012(0.13) Nissan NV Passenger Van 2012(0.20) Ford E-Series Wagon Van 2012(0.43) |
+| Mitsubishi Lancer Sedan 2012 | Nissan Leaf Hatchback 2012(0.43) Bentley Continental GT Coupe 2007(0.47) Nissan Juke Hatchback 2012(0.49) Hyundai Azera Sedan 2012(0.57) Suzuki SX4 Hatchback 2012(0.58) |
+| Nissan Leaf Hatchback 2012 | Mitsubishi Lancer Sedan 2012(0.43) Suzuki Kizashi Sedan 2012(0.47) Dodge Challenger SRT8 2011(0.53) Lamborghini Reventon Coupe 2008(0.58) Bentley Continental GT Coupe 2007(0.61) |
+| Nissan NV Passenger Van 2012 | Mercedes-Benz Sprinter Van 2012(0.20) Chevrolet Express Van 2007(0.24) GMC Savana Van 2012(0.24) Chevrolet Express Cargo Van 2007(0.26) Chevrolet Silverado 1500 Regular Cab 2012(0.30) |
+| Nissan Juke Hatchback 2012 | Chevrolet Sonic Sedan 2012(0.43) Hyundai Azera Sedan 2012(0.47) Buick Verano Sedan 2012(0.47) Mitsubishi Lancer Sedan 2012(0.49) Mercedes-Benz E-Class Sedan 2012(0.52) |
+| Nissan 240SX Coupe 1998 | Eagle Talon Hatchback 1998(0.45) Ford Focus Sedan 2007(0.47) Plymouth Neon Coupe 1999(0.53) Dodge Caravan Minivan 1997(0.54) Hyundai Elantra Sedan 2007(0.57) |
+| Plymouth Neon Coupe 1999 | Eagle Talon Hatchback 1998(0.19) Dodge Caravan Minivan 1997(0.34) Nissan 240SX Coupe 1998(0.53) Volkswagen Golf Hatchback 1991*(0.53) Acura TL Type-S 2008(0.58) |
+| Porsche Panamera Sedan 2012 | Audi S5 Convertible 2012(0.29) BMW ActiveHybrid 5 Sedan 2012(0.43) BMW 3 Series Wagon 2012(0.43) Acura TL Sedan 2012(0.44) Infiniti G Coupe IPL 2012(0.44) |
+| Ram C/V Cargo Van Minivan 2012 | Dodge Sprinter Cargo Van 2009(0.33) Chevrolet Corvette Ron Fellows Edition Z06 2007(0.40) Audi 100 Wagon 1994(0.42) Ford E-Series Wagon Van 2012(0.42) Audi 100 Sedan 1994(0.44) |
+| Rolls-Royce Phantom Drophead Coupe Convertible 2012 | Mercedes-Benz S-Class Sedan 2012(0.44) Acura TSX Sedan 2012(0.44) Audi TTS Coupe 2012(0.45) Audi TT Hatchback 2011(0.48) Aston Martin V8 Vantage Convertible 2012(0.48) |
+| Rolls-Royce Ghost Sedan 2012 | FIAT 500 Abarth 2012(0.39) Hyundai Genesis Sedan 2012(0.46) Chevrolet Sonic Sedan 2012(0.47) Hyundai Azera Sedan 2012(0.47) Lamborghini Reventon Coupe 2008(0.51) |
+| Rolls-Royce Phantom Sedan 2012 | Chevrolet Corvette ZR1 2012(0.49) Cadillac SRX SUV 2012(0.53) Infiniti G Coupe IPL 2012(0.55) Audi TTS Coupe 2012(0.58) FIAT 500 Abarth 2012(0.60) |
+| Scion xD Hatchback 2012 | Chevrolet Traverse SUV 2012(0.44) Volkswagen Golf Hatchback 1991*(0.52) Nissan Juke Hatchback 2012(0.56) Volkswagen Beetle Hatchback 2012*(0.61) Buick Verano Sedan 2012(0.62) |
+| Spyker C8 Convertible 2009 | Spyker C8 Coupe 2009(0.33) Tesla Model S Sedan 2012(0.44) FIAT 500 Abarth 2012(0.49) Chevrolet Sonic Sedan 2012(0.52) Chevrolet Corvette ZR1 2012(0.52) |
+| Spyker C8 Coupe 2009 | Tesla Model S Sedan 2012(0.23) Spyker C8 Convertible 2009(0.33) Ferrari 458 Italia Convertible 2012(0.42) Jaguar XK XKR 2012(0.43) Dodge Challenger SRT8 2011(0.44) |
+| Suzuki Aerio Sedan 2007 | Hyundai Veracruz SUV 2012(0.49) Chrysler Town and Country Minivan 2012(0.53) Chevrolet Traverse SUV 2012(0.57) Lincoln Town Car Sedan 2011(0.58) Honda Odyssey Minivan 2007(0.59) |
+| Suzuki Kizashi Sedan 2012 | Volkswagen Beetle Hatchback 2012*(0.46) Nissan Leaf Hatchback 2012(0.47) Buick Regal GS 2012(0.48) Suzuki SX4 Sedan 2012(0.48) Mercedes-Benz E-Class Sedan 2012(0.49) |
+| Suzuki SX4 Hatchback 2012 | Ferrari California Convertible 2012(0.34) Volvo C30 Hatchback 2012*(0.36) Aston Martin Virage Coupe 2012(0.38) Dodge Charger Sedan 2012(0.42) Ferrari FF Coupe 2012(0.48) |
+| Suzuki SX4 Sedan 2012 | Toyota Camry Sedan 2012*(0.42) Chrysler PT Cruiser Convertible 2008(0.45) Hyundai Azera Sedan 2012(0.47) Suzuki Kizashi Sedan 2012(0.48) Chevrolet Traverse SUV 2012(0.51) |
+| Tesla Model S Sedan 2012 | Spyker C8 Coupe 2009(0.23) Dodge Challenger SRT8 2011(0.43) Chevrolet Sonic Sedan 2012(0.43) Jaguar XK XKR 2012(0.44) Spyker C8 Convertible 2009(0.44) |
+| Toyota Sequoia SUV 2012 | BMW X5 SUV 2007(0.34) Toyota 4Runner SUV 2012*(0.34) Infiniti QX56 SUV 2011(0.43) Chevrolet Tahoe Hybrid SUV 2012(0.45) Land Rover LR2 SUV 2012(0.46) |
+| Toyota Camry Sedan 2012* | Suzuki SX4 Sedan 2012(0.42) Hyundai Elantra Sedan 2007(0.47) Hyundai Tucson SUV 2012(0.48) Chevrolet Impala Sedan 2007(0.53) Audi S4 Sedan 2012(0.55) |
+| Toyota Corolla Sedan 2012* | Volkswagen Golf Hatchback 2012*(0.47) Lincoln Town Car Sedan 2011(0.51) Audi A5 Coupe 2012(0.54) Bentley Continental Supersports Conv. Convertible 2012(0.55) Chevrolet Malibu Hybrid Sedan 2010(0.55) |
+| Toyota 4Runner SUV 2012* | Toyota Sequoia SUV 2012(0.34) Infiniti QX56 SUV 2011(0.38) Land Rover LR2 SUV 2012(0.38) BMW X5 SUV 2007(0.41) Chevrolet Tahoe Hybrid SUV 2012(0.43) |
+| Volkswagen Golf Hatchback 2012* | BMW 6 Series Convertible 2007(0.31) Honda Accord Sedan 2012(0.32) Acura TSX Sedan 2012(0.33) Audi S5 Coupe 2012(0.43) Hyundai Santa Fe SUV 2012(0.44) |
+| Volkswagen Golf Hatchback 1991* | Volvo 240 Sedan 1993*(0.30) Jeep Compass SUV 2012(0.39) Scion xD Hatchback 2012(0.52) Plymouth Neon Coupe 1999(0.53) Eagle Talon Hatchback 1998(0.56) |
+| Volkswagen Beetle Hatchback 2012* | Buick Regal GS 2012(0.44) Suzuki Kizashi Sedan 2012(0.46) Buick Verano Sedan 2012(0.49) Volvo C30 Hatchback 2012*(0.54) Dodge Challenger SRT8 2011(0.56) |
+| Volvo C30 Hatchback 2012* | Suzuki SX4 Hatchback 2012(0.36) Ferrari California Convertible 2012(0.38) Dodge Charger Sedan 2012(0.38) Audi TT RS Coupe 2012(0.42) Dodge Charger SRT-8 2009(0.42) |
+| Volvo 240 Sedan 1993* | Volkswagen Golf Hatchback 1991*(0.30) Jeep Liberty SUV 2012(0.39) Jeep Compass SUV 2012(0.46) Jeep Patriot SUV 2012(0.49) Dodge Durango SUV 2007(0.50) |
+| Volvo XC90 SUV 2007* | BMW X5 SUV 2007(0.34) GMC Yukon Hybrid SUV 2012(0.36) Land Rover Range Rover SUV 2012(0.38) Ford Edge SUV 2012(0.52) GMC Acadia SUV 2012(0.53) |
+| smart fortwo Convertible 2012* | FIAT 500 Convertible 2012(0.34) Maybach Landaulet Convertible 2012(0.36) Aston Martin V8 Vantage Convertible 2012(0.44) Bugatti Veyron 16.4 Convertible 2009(0.47) Ford GT Coupe 2006(0.52) |
 
 ## sigreg-ssl-ft  [cars_lejepa]
 
+agree@1=0.143 agree@5=0.098 (chance 0.040)  dendro-purity=0.146  silhouette=-0.329  within/between=0.860
+
 
 | class | 5 nearest class centroids (cosine dist) |
 |---|---|
-| class0 | class124(0.07) class123(0.14) class145(0.16) class105(0.27) class85(0.32) |
-| class1 | class20(0.25) class21(0.26) class19(0.37) class22(0.38) class140(0.39) |
-| class2 | class136(0.25) class6(0.30) class104(0.32) class25(0.32) class140(0.33) |
-| class3 | class6(0.36) class78(0.39) class42(0.43) class97(0.43) class31(0.43) |
-| class4 | class189*(0.14) class18(0.17) class30(0.23) class12(0.24) class174(0.24) |
-| class5 | class152(0.04) class151(0.24) class54(0.26) class99(0.35) class159(0.36) |
-| class6 | class163(0.27) class2(0.30) class141(0.36) class3(0.36) class25(0.36) |
-| class7 | class18(0.28) class195*(0.31) class38(0.31) class8(0.31) class4(0.32) |
-| class8 | class18(0.25) class20(0.27) class45(0.29) class7(0.31) class55(0.36) |
-| class9 | class162(0.16) class163(0.22) class45(0.23) class143(0.25) class139(0.25) |
-| class10 | class101(0.10) class95(0.10) class102(0.10) class129(0.13) class159(0.14) |
-| class11 | class172(0.22) class45(0.23) class143(0.27) class104(0.27) class35(0.28) |
-| class12 | class4(0.24) class18(0.27) class174(0.31) class164(0.34) class189*(0.34) |
-| class13 | class30(0.19) class43(0.21) class50(0.21) class161(0.27) class4(0.32) |
-| class14 | class156(0.29) class162(0.32) class174(0.33) class7(0.34) class12(0.37) |
-| class15 | class17(0.15) class16(0.21) class147(0.43) class128(0.43) class188*(0.46) |
-| class16 | class15(0.21) class17(0.25) class61(0.30) class188*(0.35) class142(0.43) |
-| class17 | class15(0.15) class16(0.25) class79(0.35) class128(0.36) class75(0.43) |
-| class18 | class4(0.17) class8(0.25) class12(0.27) class41(0.27) class7(0.28) |
-| class19 | class140(0.19) class172(0.28) class35(0.32) class34(0.32) class25(0.36) |
-| class20 | class1(0.25) class8(0.27) class35(0.28) class172(0.31) class140(0.32) |
-| class21 | class1(0.26) class13(0.34) class12(0.36) class26(0.36) class30(0.37) |
-| class22 | class1(0.38) class138(0.43) class133(0.45) class48(0.47) class186*(0.52) |
-| class23 | class136(0.34) class93(0.36) class183(0.43) class42(0.44) class80(0.45) |
-| class24 | class150(0.13) class102(0.15) class159(0.16) class10(0.16) class101(0.20) |
-| class25 | class162(0.21) class34(0.21) class163(0.22) class172(0.25) class36(0.28) |
-| class26 | class21(0.36) class4(0.38) class18(0.38) class135(0.41) class189*(0.42) |
-| class27 | class32(0.11) class28(0.12) class41(0.19) class100(0.21) class83(0.32) |
-| class28 | class27(0.12) class32(0.13) class83(0.23) class127(0.26) class103(0.29) |
-| class29 | class172(0.22) class140(0.34) class40(0.35) class25(0.36) class35(0.39) |
-| class30 | class189*(0.18) class13(0.19) class128(0.22) class4(0.23) class50(0.27) |
-| class31 | class194*(0.24) class188*(0.24) class40(0.32) class185(0.34) class36(0.35) |
-| class32 | class27(0.11) class28(0.13) class83(0.23) class127(0.27) class41(0.30) |
-| class33 | class46(0.27) class41(0.33) class37(0.35) class18(0.37) class24(0.38) |
-| class34 | class25(0.21) class163(0.21) class40(0.26) class162(0.31) class19(0.32) |
-| class35 | class172(0.19) class20(0.28) class11(0.28) class104(0.29) class19(0.32) |
-| class36 | class25(0.28) class40(0.31) class31(0.35) class141(0.36) class140(0.39) |
-| class37 | class150(0.20) class24(0.23) class103(0.24) class102(0.28) class159(0.30) |
-| class38 | class157(0.20) class99(0.22) class156(0.23) class56(0.27) class44(0.27) |
-| class39 | class67(0.15) class98(0.24) class175(0.36) class147(0.41) class109(0.44) |
-| class40 | class140(0.19) class34(0.26) class36(0.31) class25(0.31) class31(0.32) |
-| class41 | class27(0.19) class133(0.22) class18(0.27) class32(0.30) class33(0.33) |
-| class42 | class136(0.28) class166(0.29) class131(0.34) class138(0.35) class80(0.35) |
-| class43 | class13(0.21) class50(0.27) class30(0.27) class128(0.28) class161(0.32) |
-| class44 | class99(0.11) class162(0.24) class156(0.24) class38(0.27) class46(0.28) |
-| class45 | class11(0.23) class9(0.23) class172(0.25) class143(0.25) class162(0.28) |
-| class46 | class191*(0.25) class181(0.26) class33(0.27) class44(0.28) class162(0.29) |
-| class47 | class107(0.23) class72(0.31) class126(0.33) class90(0.34) class64(0.38) |
-| class48 | class65(0.28) class182(0.29) class58(0.31) class100(0.35) class138(0.36) |
-| class49 | class132(0.31) class78(0.33) class57(0.33) class177(0.34) class93(0.43) |
-| class50 | class13(0.21) class161(0.25) class79(0.25) class30(0.27) class43(0.27) |
-| class51 | class140(0.30) class172(0.38) class104(0.41) class19(0.41) class109(0.43) |
-| class52 | class147(0.22) class53(0.29) class69(0.31) class64(0.35) class67(0.38) |
-| class53 | class69(0.09) class105(0.10) class112(0.14) class64(0.15) class108(0.16) |
-| class54 | class10(0.14) class111(0.16) class95(0.16) class159(0.17) class101(0.18) |
-| class55 | class104(0.25) class8(0.36) class20(0.38) class11(0.41) class140(0.42) |
-| class56 | class99(0.25) class157(0.26) class38(0.27) class44(0.30) class46(0.35) |
-| class57 | class177(0.26) class88(0.27) class132(0.27) class80(0.28) class60(0.29) |
-| class58 | class59(0.27) class96(0.27) class65(0.28) class48(0.31) class135(0.31) |
-| class59 | class83(0.24) class96(0.26) class101(0.27) class58(0.27) class65(0.29) |
-| class60 | class76(0.08) class131(0.19) class126(0.21) class80(0.22) class114(0.23) |
-| class61 | class185(0.26) class16(0.30) class188*(0.34) class141(0.37) class68(0.44) |
-| class62 | class184(0.19) class139(0.25) class169(0.25) class149(0.26) class175(0.27) |
-| class63 | class70(0.06) class165(0.07) class118(0.10) class168(0.11) class86(0.17) |
-| class64 | class69(0.12) class53(0.15) class105(0.21) class89(0.23) class112(0.24) |
-| class65 | class54(0.24) class96(0.26) class101(0.27) class48(0.28) class58(0.28) |
-| class66 | class155(0.25) class81(0.37) class76(0.37) class77(0.40) class187*(0.42) |
-| class67 | class39(0.15) class147(0.22) class194*(0.35) class78(0.36) class52(0.38) |
-| class68 | class118(0.06) class115(0.08) class87(0.18) class112(0.21) class165(0.24) |
-| class69 | class53(0.09) class105(0.09) class64(0.12) class85(0.20) class108(0.20) |
-| class70 | class63(0.06) class86(0.09) class112(0.11) class118(0.11) class168(0.12) |
-| class71 | class160(0.15) class81(0.19) class72(0.20) class107(0.26) class76(0.27) |
-| class72 | class71(0.20) class60(0.24) class114(0.25) class76(0.25) class81(0.25) |
-| class73 | class113(0.20) class105(0.21) class87(0.21) class115(0.22) class53(0.24) |
-| class74 | class86(0.05) class113(0.08) class146(0.14) class70(0.15) class168(0.18) |
-| class75 | class130(0.27) class142(0.30) class64(0.32) class128(0.38) class107(0.39) |
-| class76 | class60(0.08) class81(0.25) class72(0.25) class71(0.27) class126(0.29) |
-| class77 | class132(0.31) class60(0.37) class57(0.39) class66(0.40) class180(0.42) |
-| class78 | class49(0.33) class67(0.36) class93(0.36) class194*(0.37) class125(0.38) |
-| class79 | class160(0.14) class128(0.20) class50(0.25) class30(0.31) class43(0.33) |
-| class80 | class183(0.14) class60(0.22) class131(0.25) class57(0.28) class126(0.32) |
-| class81 | class71(0.19) class76(0.25) class72(0.25) class60(0.26) class160(0.32) |
-| class82 | class127(0.24) class134(0.28) class133(0.35) class135(0.36) class116(0.37) |
-| class83 | class103(0.20) class32(0.23) class28(0.23) class96(0.24) class59(0.24) |
-| class84 | class171(0.18) class72(0.27) class60(0.28) class97(0.31) class81(0.33) |
-| class85 | class105(0.06) class121(0.16) class53(0.19) class69(0.20) class124(0.20) |
-| class86 | class74(0.05) class70(0.09) class113(0.10) class112(0.16) class144(0.16) |
-| class87 | class115(0.12) class68(0.18) class73(0.21) class118(0.22) class112(0.23) |
-| class88 | class57(0.27) class171(0.33) class148(0.33) class190*(0.35) class93(0.39) |
-| class89 | class69(0.21) class64(0.23) class110(0.28) class53(0.30) class105(0.32) |
-| class90 | class112(0.15) class121(0.18) class113(0.21) class74(0.21) class86(0.22) |
-| class91 | class106(0.23) class96(0.31) class135(0.32) class59(0.35) class122(0.37) |
-| class92 | class191*(0.20) class184(0.23) class62(0.28) class139(0.29) class181(0.31) |
-| class93 | class148(0.26) class136(0.32) class132(0.33) class153(0.34) class23(0.36) |
-| class94 | class85(0.29) class113(0.30) class193*(0.30) class146(0.32) class147(0.34) |
-| class95 | class10(0.10) class101(0.15) class54(0.16) class111(0.17) class192*(0.19) |
-| class96 | class83(0.24) class101(0.25) class59(0.26) class65(0.26) class58(0.27) |
-| class97 | class171(0.09) class84(0.31) class190*(0.34) class170(0.38) class3(0.43) |
-| class98 | class39(0.24) class109(0.26) class175(0.27) class178(0.32) class104(0.43) |
-| class99 | class44(0.11) class38(0.22) class56(0.25) class156(0.28) class5(0.35) |
-| class100 | class10(0.15) class27(0.21) class95(0.23) class182(0.25) class101(0.26) |
-| class101 | class102(0.06) class10(0.10) class95(0.15) class103(0.16) class54(0.18) |
-| class102 | class101(0.06) class159(0.09) class10(0.10) class103(0.11) class24(0.15) |
-| class103 | class102(0.11) class150(0.13) class101(0.16) class83(0.20) class159(0.20) |
-| class104 | class55(0.25) class140(0.25) class11(0.27) class35(0.29) class45(0.31) |
-| class105 | class85(0.06) class69(0.09) class53(0.10) class112(0.14) class121(0.19) |
-| class106 | class91(0.23) class122(0.26) class96(0.30) class79(0.41) class160(0.43) |
-| class107 | class47(0.23) class71(0.26) class160(0.30) class64(0.31) class72(0.34) |
-| class108 | class53(0.16) class69(0.20) class105(0.22) class142(0.23) class64(0.26) |
-| class109 | class98(0.26) class51(0.43) class153(0.43) class78(0.43) class39(0.44) |
-| class110 | class112(0.25) class121(0.26) class105(0.27) class89(0.28) class64(0.29) |
-| class111 | class129(0.13) class10(0.15) class54(0.16) class95(0.17) class159(0.19) |
-| class112 | class70(0.11) class115(0.12) class53(0.14) class105(0.14) class90(0.15) |
-| class113 | class74(0.08) class86(0.10) class73(0.20) class90(0.21) class70(0.22) |
-| class114 | class60(0.23) class126(0.23) class72(0.25) class170(0.25) class57(0.30) |
-| class115 | class118(0.06) class68(0.08) class87(0.12) class112(0.12) class70(0.16) |
-| class116 | class134(0.26) class138(0.32) class82(0.37) class76(0.41) class114(0.44) |
-| class117 | class73(0.29) class87(0.42) class115(0.43) class70(0.43) class142(0.45) |
-| class118 | class115(0.06) class68(0.06) class165(0.10) class63(0.10) class70(0.11) |
-| class119 | class153(0.26) class146(0.27) class74(0.30) class86(0.30) class194*(0.31) |
-| class120 | class110(0.41) class161(0.53) class17(0.55) class89(0.56) class50(0.57) |
-| class121 | class124(0.16) class85(0.16) class86(0.18) class145(0.18) class90(0.18) |
-| class122 | class106(0.26) class160(0.36) class91(0.37) class152(0.41) class107(0.44) |
-| class123 | class145(0.06) class124(0.06) class0(0.14) class121(0.25) class144(0.29) |
-| class124 | class123(0.06) class0(0.07) class145(0.07) class121(0.16) class105(0.19) |
-| class125 | class78(0.38) class48(0.47) class6(0.48) class42(0.48) class49(0.49) |
-| class126 | class60(0.21) class114(0.23) class132(0.26) class76(0.29) class72(0.30) |
-| class127 | class135(0.21) class82(0.24) class103(0.25) class28(0.26) class32(0.27) |
-| class128 | class79(0.20) class160(0.21) class30(0.22) class43(0.28) class71(0.31) |
-| class129 | class10(0.13) class111(0.13) class159(0.16) class95(0.21) class192*(0.21) |
-| class130 | class189*(0.22) class75(0.27) class30(0.29) class128(0.32) class164(0.36) |
-| class131 | class60(0.19) class80(0.25) class76(0.29) class136(0.29) class166(0.31) |
-| class132 | class126(0.26) class57(0.27) class49(0.31) class77(0.31) class80(0.33) |
-| class133 | class41(0.22) class187*(0.34) class82(0.35) class127(0.35) class58(0.38) |
-| class134 | class116(0.26) class82(0.28) class187*(0.36) class58(0.38) class76(0.38) |
-| class135 | class127(0.21) class150(0.24) class24(0.26) class59(0.29) class103(0.31) |
-| class136 | class2(0.25) class42(0.28) class131(0.29) class93(0.32) class23(0.34) |
-| class137 | class45(0.37) class42(0.40) class43(0.42) class172(0.44) class51(0.45) |
-| class138 | class116(0.32) class42(0.35) class48(0.36) class22(0.43) class134(0.46) |
-| class139 | class149(0.18) class143(0.21) class184(0.23) class62(0.25) class9(0.25) |
-| class140 | class19(0.19) class40(0.19) class104(0.25) class176(0.28) class51(0.30) |
-| class141 | class185(0.35) class36(0.36) class6(0.36) class61(0.37) class25(0.37) |
-| class142 | class105(0.21) class115(0.22) class108(0.23) class69(0.23) class53(0.25) |
-| class143 | class139(0.21) class129(0.24) class9(0.25) class45(0.25) class184(0.26) |
-| class144 | class146(0.10) class86(0.16) class74(0.19) class145(0.19) class193*(0.25) |
-| class145 | class123(0.06) class124(0.07) class0(0.16) class121(0.18) class144(0.19) |
-| class146 | class144(0.10) class74(0.14) class86(0.17) class145(0.22) class193*(0.22) |
-| class147 | class52(0.22) class67(0.22) class108(0.30) class53(0.33) class85(0.33) |
-| class148 | class193*(0.25) class93(0.26) class190*(0.28) class88(0.33) class57(0.34) |
-| class149 | class139(0.18) class62(0.26) class9(0.27) class178(0.31) class143(0.32) |
-| class150 | class24(0.13) class103(0.13) class159(0.15) class102(0.18) class37(0.20) |
-| class151 | class152(0.15) class159(0.19) class179(0.23) class5(0.24) class129(0.33) |
-| class152 | class5(0.04) class151(0.15) class54(0.23) class159(0.24) class65(0.34) |
-| class153 | class119(0.26) class146(0.28) class144(0.28) class194*(0.32) class85(0.33) |
-| class154 | class188*(0.29) class119(0.39) class185(0.42) class153(0.46) class123(0.46) |
-| class155 | class173(0.22) class66(0.25) class189*(0.31) class72(0.43) class12(0.43) |
-| class156 | class162(0.16) class38(0.23) class44(0.24) class99(0.28) class14(0.29) |
-| class157 | class38(0.20) class56(0.26) class99(0.38) class7(0.41) class44(0.41) |
-| class158 | class119(0.37) class194*(0.37) class67(0.40) class185(0.41) class193*(0.46) |
-| class159 | class102(0.09) class10(0.14) class150(0.15) class24(0.16) class129(0.16) |
-| class160 | class79(0.14) class71(0.15) class128(0.21) class107(0.30) class81(0.32) |
-| class161 | class50(0.25) class13(0.27) class43(0.32) class164(0.33) class40(0.37) |
-| class162 | class156(0.16) class9(0.16) class25(0.21) class163(0.22) class44(0.24) |
-| class163 | class34(0.21) class9(0.22) class162(0.22) class25(0.22) class172(0.25) |
-| class164 | class161(0.33) class4(0.33) class12(0.34) class130(0.36) class30(0.36) |
-| class165 | class63(0.07) class168(0.10) class118(0.10) class70(0.12) class86(0.21) |
-| class166 | class42(0.29) class186*(0.30) class131(0.31) class169(0.32) class167(0.35) |
-| class167 | class181(0.29) class191*(0.30) class183(0.31) class92(0.32) class166(0.35) |
-| class168 | class165(0.10) class63(0.11) class118(0.11) class70(0.12) class86(0.18) |
-| class169 | class62(0.25) class166(0.32) class149(0.35) class139(0.37) class48(0.38) |
-| class170 | class114(0.25) class97(0.38) class177(0.41) class49(0.44) class190*(0.44) |
-| class171 | class97(0.09) class84(0.18) class190*(0.29) class88(0.33) class114(0.44) |
-| class172 | class35(0.19) class11(0.22) class29(0.22) class25(0.25) class163(0.25) |
-| class173 | class155(0.22) class87(0.30) class68(0.38) class115(0.39) class118(0.46) |
-| class174 | class4(0.24) class12(0.31) class18(0.31) class14(0.33) class156(0.33) |
-| class175 | class98(0.27) class62(0.27) class178(0.30) class39(0.36) class149(0.39) |
-| class176 | class140(0.28) class104(0.36) class40(0.36) class188*(0.39) class174(0.40) |
-| class177 | class57(0.26) class49(0.34) class114(0.40) class170(0.41) class190*(0.43) |
-| class178 | class62(0.28) class179(0.29) class184(0.30) class175(0.30) class149(0.31) |
-| class179 | class184(0.14) class151(0.23) class178(0.29) class129(0.31) class139(0.32) |
-| class180 | class77(0.42) class126(0.45) class56(0.47) class185(0.49) class132(0.49) |
-| class181 | class191*(0.18) class46(0.26) class167(0.29) class92(0.31) class163(0.32) |
-| class182 | class101(0.20) class10(0.23) class95(0.23) class111(0.24) class100(0.25) |
-| class183 | class80(0.14) class167(0.31) class131(0.32) class60(0.33) class186*(0.36) |
-| class184 | class179(0.14) class62(0.19) class139(0.23) class92(0.23) class191*(0.25) |
-| class185 | class61(0.26) class188*(0.34) class31(0.34) class141(0.35) class158(0.41) |
-| class186* | class166(0.30) class183(0.36) class182(0.39) class134(0.42) class167(0.43) |
-| class187* | class133(0.34) class134(0.36) class189*(0.37) class4(0.41) class66(0.42) |
-| class188* | class31(0.24) class154(0.29) class153(0.33) class61(0.34) class185(0.34) |
-| class189* | class4(0.14) class30(0.18) class130(0.22) class155(0.31) class128(0.31) |
-| class190* | class193*(0.21) class148(0.28) class171(0.29) class97(0.34) class88(0.35) |
-| class191* | class181(0.18) class92(0.20) class46(0.25) class184(0.25) class62(0.28) |
-| class192* | class10(0.16) class101(0.18) class102(0.19) class95(0.19) class129(0.21) |
-| class193* | class190*(0.21) class146(0.22) class148(0.25) class144(0.25) class74(0.27) |
-| class194* | class31(0.24) class119(0.31) class153(0.32) class67(0.35) class78(0.37) |
-| class195* | class7(0.31) class99(0.38) class151(0.40) class157(0.44) class44(0.46) |
+| AM General Hummer SUV 2000 | HUMMER H2 SUT Crew Cab 2009(0.07) HUMMER H3T Crew Cab 2010(0.14) Jeep Wrangler SUV 2012(0.16) Ford F-450 Super Duty Crew Cab 2012(0.27) Dodge Ram Pickup 3500 Crew Cab 2010(0.32) |
+| Acura RL Sedan 2012 | Audi S5 Convertible 2012(0.25) Audi S5 Coupe 2012(0.26) Audi S6 Sedan 2011(0.37) Audi S4 Sedan 2012(0.38) Infiniti G Coupe IPL 2012(0.39) |
+| Acura TL Sedan 2012 | Hyundai Genesis Sedan 2012(0.25) Acura ZDX Hatchback 2012(0.30) Fisker Karma Sedan 2012(0.32) BMW ActiveHybrid 5 Sedan 2012(0.32) Infiniti G Coupe IPL 2012(0.33) |
+| Acura TL Type-S 2008 | Acura ZDX Hatchback 2012(0.36) Chrysler 300 SRT-8 2010(0.39) Bentley Continental GT Coupe 2007(0.43) Eagle Talon Hatchback 1998(0.43) BMW X5 SUV 2007(0.43) |
+| Acura TSX Sedan 2012 | Volkswagen Golf Hatchback 2012*(0.14) Audi TT Hatchback 2011(0.17) BMW 6 Series Convertible 2007(0.23) Audi A5 Coupe 2012(0.24) Rolls-Royce Phantom Drophead Coupe Convertible 2012(0.24) |
+| Acura Integra Type R 2001 | Lamborghini Diablo Coupe 2001(0.04) Lamborghini Gallardo LP 570-4 Superleggera 2012(0.24) Chevrolet Corvette Convertible 2012(0.26) FIAT 500 Convertible 2012(0.35) McLaren MP4-12C Coupe 2012(0.36) |
+| Acura ZDX Hatchback 2012 | Mercedes-Benz E-Class Sedan 2012(0.27) Acura TL Sedan 2012(0.30) Infiniti QX56 SUV 2011(0.36) Acura TL Type-S 2008(0.36) BMW ActiveHybrid 5 Sedan 2012(0.36) |
+| Aston Martin V8 Vantage Convertible 2012 | Audi TT Hatchback 2011(0.28) smart fortwo Convertible 2012*(0.31) Bentley Continental Supersports Conv. Convertible 2012(0.31) Aston Martin V8 Vantage Coupe 2012(0.31) Acura TSX Sedan 2012(0.32) |
+| Aston Martin V8 Vantage Coupe 2012 | Audi TT Hatchback 2011(0.25) Audi S5 Convertible 2012(0.27) Bugatti Veyron 16.4 Coupe 2009(0.29) Aston Martin V8 Vantage Convertible 2012(0.31) Chevrolet Corvette ZR1 2012(0.36) |
+| Aston Martin Virage Convertible 2012 | Mercedes-Benz SL-Class Coupe 2009(0.16) Mercedes-Benz E-Class Sedan 2012(0.22) Bugatti Veyron 16.4 Coupe 2009(0.23) Jaguar XK XKR 2012(0.25) Hyundai Azera Sedan 2012(0.25) |
+| Aston Martin Virage Coupe 2012 | Ferrari California Convertible 2012(0.10) Dodge Charger Sedan 2012(0.10) Ferrari 458 Italia Convertible 2012(0.10) Hyundai Veloster Hatchback 2012(0.13) McLaren MP4-12C Coupe 2012(0.14) |
+| Audi RS 4 Convertible 2008 | Porsche Panamera Sedan 2012(0.22) Bugatti Veyron 16.4 Coupe 2009(0.23) Jaguar XK XKR 2012(0.27) Fisker Karma Sedan 2012(0.27) BMW M6 Convertible 2010(0.28) |
+| Audi A5 Coupe 2012 | Acura TSX Sedan 2012(0.24) Audi TT Hatchback 2011(0.27) Rolls-Royce Phantom Drophead Coupe Convertible 2012(0.31) Mercedes-Benz S-Class Sedan 2012(0.34) Volkswagen Golf Hatchback 2012*(0.34) |
+| Audi TTS Coupe 2012 | BMW 6 Series Convertible 2007(0.19) Bentley Continental Flying Spur Sedan 2007(0.21) Cadillac CTS-V Sedan 2012(0.21) Mercedes-Benz C-Class Sedan 2012(0.27) Acura TSX Sedan 2012(0.32) |
+| Audi R8 Coupe 2012 | MINI Cooper Roadster Convertible 2012(0.29) Mercedes-Benz SL-Class Coupe 2009(0.32) Rolls-Royce Phantom Drophead Coupe Convertible 2012(0.33) Aston Martin V8 Vantage Convertible 2012(0.34) Audi A5 Coupe 2012(0.37) |
+| Audi V8 Sedan 1994 | Audi 100 Wagon 1994(0.15) Audi 100 Sedan 1994(0.21) Jeep Grand Cherokee SUV 2012(0.43) Honda Accord Sedan 2012(0.43) Toyota 4Runner SUV 2012*(0.46) |
+| Audi 100 Sedan 1994 | Audi V8 Sedan 1994(0.21) Audi 100 Wagon 1994(0.25) Chevrolet Tahoe Hybrid SUV 2012(0.30) Toyota 4Runner SUV 2012*(0.35) Isuzu Ascender SUV 2008(0.43) |
+| Audi 100 Wagon 1994 | Audi V8 Sedan 1994(0.15) Audi 100 Sedan 1994(0.25) Chrysler Crossfire Convertible 2008(0.35) Honda Accord Sedan 2012(0.36) Chrysler Aspen SUV 2009(0.43) |
+| Audi TT Hatchback 2011 | Acura TSX Sedan 2012(0.17) Aston Martin V8 Vantage Coupe 2012(0.25) Audi A5 Coupe 2012(0.27) Bentley Continental GT Coupe 2012(0.27) Aston Martin V8 Vantage Convertible 2012(0.28) |
+| Audi S6 Sedan 2011 | Infiniti G Coupe IPL 2012(0.19) Porsche Panamera Sedan 2012(0.28) BMW M6 Convertible 2010(0.32) BMW M5 Sedan 2010(0.32) BMW ActiveHybrid 5 Sedan 2012(0.36) |
+| Audi S5 Convertible 2012 | Acura RL Sedan 2012(0.25) Aston Martin V8 Vantage Coupe 2012(0.27) BMW M6 Convertible 2010(0.28) Porsche Panamera Sedan 2012(0.31) Infiniti G Coupe IPL 2012(0.32) |
+| Audi S5 Coupe 2012 | Acura RL Sedan 2012(0.26) Audi TTS Coupe 2012(0.34) Audi A5 Coupe 2012(0.36) BMW 1 Series Convertible 2012(0.36) BMW 6 Series Convertible 2007(0.37) |
+| Audi S4 Sedan 2012 | Acura RL Sedan 2012(0.38) Hyundai Elantra Touring Hatchback 2012(0.43) Hyundai Sonata Hybrid Sedan 2012(0.45) Buick Verano Sedan 2012(0.47) Toyota Camry Sedan 2012*(0.52) |
+| Audi S4 Sedan 2007 | Hyundai Genesis Sedan 2012(0.34) Dodge Durango SUV 2012(0.36) Suzuki SX4 Sedan 2012(0.43) Bentley Continental GT Coupe 2007(0.44) Chrysler PT Cruiser Convertible 2008(0.45) |
+| Audi TT RS Coupe 2012 | Lamborghini Aventador Coupe 2012(0.13) Ferrari 458 Italia Convertible 2012(0.15) McLaren MP4-12C Coupe 2012(0.16) Aston Martin Virage Coupe 2012(0.16) Ferrari California Convertible 2012(0.20) |
+| BMW ActiveHybrid 5 Sedan 2012 | Mercedes-Benz SL-Class Coupe 2009(0.21) BMW M5 Sedan 2010(0.21) Mercedes-Benz E-Class Sedan 2012(0.22) Porsche Panamera Sedan 2012(0.25) BMW X3 SUV 2012(0.28) |
+| BMW 1 Series Convertible 2012 | Audi S5 Coupe 2012(0.36) Acura TSX Sedan 2012(0.38) Audi TT Hatchback 2011(0.38) Hyundai Accent Sedan 2012(0.41) Volkswagen Golf Hatchback 2012*(0.42) |
+| BMW 1 Series Coupe 2012 | BMW X6 SUV 2012(0.11) BMW 3 Series Sedan 2012(0.12) Bentley Continental GT Coupe 2012(0.19) Ferrari FF Coupe 2012(0.21) Dodge Caliber Wagon 2007(0.32) |
+| BMW 3 Series Sedan 2012 | BMW 1 Series Coupe 2012(0.12) BMW X6 SUV 2012(0.13) Dodge Caliber Wagon 2007(0.23) Honda Accord Coupe 2012(0.26) Ferrari 458 Italia Coupe 2012(0.29) |
+| BMW 3 Series Wagon 2012 | Porsche Panamera Sedan 2012(0.22) Infiniti G Coupe IPL 2012(0.34) Bentley Mulsanne Sedan 2011(0.35) BMW ActiveHybrid 5 Sedan 2012(0.36) BMW M6 Convertible 2010(0.39) |
+| BMW 6 Series Convertible 2007 | Volkswagen Golf Hatchback 2012*(0.18) Audi TTS Coupe 2012(0.19) Honda Accord Sedan 2012(0.22) Acura TSX Sedan 2012(0.23) Cadillac CTS-V Sedan 2012(0.27) |
+| BMW X5 SUV 2007 | Volvo XC90 SUV 2007*(0.24) Toyota 4Runner SUV 2012*(0.24) Bentley Mulsanne Sedan 2011(0.32) Toyota Sequoia SUV 2012(0.34) BMW X3 SUV 2012(0.35) |
+| BMW X6 SUV 2012 | BMW 1 Series Coupe 2012(0.11) BMW 3 Series Sedan 2012(0.13) Dodge Caliber Wagon 2007(0.23) Honda Accord Coupe 2012(0.27) Bentley Continental GT Coupe 2012(0.30) |
+| BMW M3 Coupe 2012 | Buick Regal GS 2012(0.27) Bentley Continental GT Coupe 2012(0.33) BMW Z4 Convertible 2012(0.35) Audi TT Hatchback 2011(0.37) Audi TT RS Coupe 2012(0.38) |
+| BMW M5 Sedan 2010 | BMW ActiveHybrid 5 Sedan 2012(0.21) Mercedes-Benz E-Class Sedan 2012(0.21) Bentley Mulsanne Sedan 2011(0.26) Mercedes-Benz SL-Class Coupe 2009(0.31) Audi S6 Sedan 2011(0.32) |
+| BMW M6 Convertible 2010 | Porsche Panamera Sedan 2012(0.19) Audi S5 Convertible 2012(0.28) Audi RS 4 Convertible 2008(0.28) Fisker Karma Sedan 2012(0.29) Audi S6 Sedan 2011(0.32) |
+| BMW X3 SUV 2012 | BMW ActiveHybrid 5 Sedan 2012(0.28) Bentley Mulsanne Sedan 2011(0.31) BMW X5 SUV 2007(0.35) Infiniti QX56 SUV 2011(0.36) Infiniti G Coupe IPL 2012(0.39) |
+| BMW Z4 Convertible 2012 | Lamborghini Aventador Coupe 2012(0.20) Audi TT RS Coupe 2012(0.23) Ferrari 458 Italia Coupe 2012(0.24) Ferrari 458 Italia Convertible 2012(0.28) McLaren MP4-12C Coupe 2012(0.30) |
+| Bentley Continental Supersports Conv. Convertible 2012 | Maybach Landaulet Convertible 2012(0.20) FIAT 500 Convertible 2012(0.22) MINI Cooper Roadster Convertible 2012(0.23) Chevrolet Corvette Ron Fellows Edition Z06 2007(0.27) Bugatti Veyron 16.4 Convertible 2009(0.27) |
+| Bentley Arnage Sedan 2009 | Chevrolet TrailBlazer SS 2009(0.15) FIAT 500 Abarth 2012(0.24) Rolls-Royce Ghost Sedan 2012(0.36) Jeep Grand Cherokee SUV 2012(0.41) Ford Edge SUV 2012(0.44) |
+| Bentley Mulsanne Sedan 2011 | Infiniti G Coupe IPL 2012(0.19) BMW M5 Sedan 2010(0.26) BMW X3 SUV 2012(0.31) BMW ActiveHybrid 5 Sedan 2012(0.31) BMW X5 SUV 2007(0.32) |
+| Bentley Continental GT Coupe 2012 | BMW 1 Series Coupe 2012(0.19) Hyundai Sonata Hybrid Sedan 2012(0.22) Audi TT Hatchback 2011(0.27) BMW X6 SUV 2012(0.30) BMW M3 Coupe 2012(0.33) |
+| Bentley Continental GT Coupe 2007 | Hyundai Genesis Sedan 2012(0.28) Mitsubishi Lancer Sedan 2012(0.29) Hyundai Tucson SUV 2012(0.34) Hyundai Elantra Touring Hatchback 2012(0.35) Chrysler PT Cruiser Convertible 2008(0.35) |
+| Bentley Continental Flying Spur Sedan 2007 | Audi TTS Coupe 2012(0.21) Cadillac CTS-V Sedan 2012(0.27) BMW 6 Series Convertible 2007(0.27) Honda Accord Sedan 2012(0.28) Mercedes-Benz C-Class Sedan 2012(0.32) |
+| Bugatti Veyron 16.4 Convertible 2009 | FIAT 500 Convertible 2012(0.11) Mercedes-Benz SL-Class Coupe 2009(0.24) MINI Cooper Roadster Convertible 2012(0.24) Bentley Continental Supersports Conv. Convertible 2012(0.27) Buick Regal GS 2012(0.28) |
+| Bugatti Veyron 16.4 Coupe 2009 | Audi RS 4 Convertible 2008(0.23) Aston Martin Virage Convertible 2012(0.23) Porsche Panamera Sedan 2012(0.25) Jaguar XK XKR 2012(0.25) Mercedes-Benz SL-Class Coupe 2009(0.28) |
+| Buick Regal GS 2012 | Volkswagen Beetle Hatchback 2012*(0.25) Suzuki Kizashi Sedan 2012(0.26) BMW M3 Coupe 2012(0.27) Bugatti Veyron 16.4 Convertible 2009(0.28) Mercedes-Benz SL-Class Coupe 2009(0.29) |
+| Buick Rainier SUV 2007 | Ford Freestar Minivan 2007(0.23) Chevrolet Malibu Sedan 2007(0.31) Honda Odyssey Minivan 2007(0.33) Dodge Dakota Club Cab 2007(0.34) Chevrolet Avalanche Crew Cab 2012(0.38) |
+| Buick Verano Sedan 2012 | Chevrolet Cobalt SS 2010(0.28) Suzuki SX4 Hatchback 2012(0.29) Chevrolet Camaro Convertible 2012(0.31) Ferrari FF Coupe 2012(0.35) Hyundai Elantra Touring Hatchback 2012(0.36) |
+| Buick Enclave SUV 2012 | Hyundai Veracruz SUV 2012(0.31) Chrysler 300 SRT-8 2010(0.33) Chevrolet Traverse SUV 2012(0.33) Scion xD Hatchback 2012(0.34) Dodge Durango SUV 2012(0.43) |
+| Cadillac CTS-V Sedan 2012 | Audi TTS Coupe 2012(0.21) Mercedes-Benz C-Class Sedan 2012(0.25) Chrysler Crossfire Convertible 2008(0.25) BMW 6 Series Convertible 2007(0.27) Bentley Continental Flying Spur Sedan 2007(0.27) |
+| Cadillac SRX SUV 2012 | Infiniti G Coupe IPL 2012(0.30) Porsche Panamera Sedan 2012(0.38) Fisker Karma Sedan 2012(0.41) Audi S6 Sedan 2011(0.41) Ford Edge SUV 2012(0.43) |
+| Cadillac Escalade EXT Crew Cab 2007 | Jeep Grand Cherokee SUV 2012(0.22) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.29) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.31) Chevrolet Avalanche Crew Cab 2012(0.35) Chevrolet TrailBlazer SS 2009(0.38) |
+| Chevrolet Silverado 1500 Hybrid Crew Cab 2012 | Chevrolet Silverado 1500 Classic Extended Cab 2007(0.09) Ford F-450 Super Duty Crew Cab 2012(0.10) Ford F-150 Regular Cab 2012(0.14) Chevrolet Avalanche Crew Cab 2012(0.15) Ford Expedition EL SUV 2009(0.16) |
+| Chevrolet Corvette Convertible 2012 | Aston Martin Virage Coupe 2012(0.14) Ford GT Coupe 2006(0.16) Dodge Charger Sedan 2012(0.16) McLaren MP4-12C Coupe 2012(0.17) Ferrari California Convertible 2012(0.18) |
+| Chevrolet Corvette ZR1 2012 | Fisker Karma Sedan 2012(0.25) Aston Martin V8 Vantage Coupe 2012(0.36) Audi S5 Convertible 2012(0.38) Audi RS 4 Convertible 2008(0.41) Infiniti G Coupe IPL 2012(0.42) |
+| Chevrolet Corvette Ron Fellows Edition Z06 2007 | FIAT 500 Convertible 2012(0.25) Maybach Landaulet Convertible 2012(0.26) Bentley Continental Supersports Conv. Convertible 2012(0.27) Bugatti Veyron 16.4 Convertible 2009(0.30) Buick Regal GS 2012(0.35) |
+| Chevrolet Traverse SUV 2012 | Scion xD Hatchback 2012(0.26) Dodge Journey SUV 2012(0.27) Hyundai Veracruz SUV 2012(0.27) Chrysler PT Cruiser Convertible 2008(0.28) Chevrolet Impala Sedan 2007(0.29) |
+| Chevrolet Camaro Convertible 2012 | Chevrolet HHR SS 2010(0.27) Dodge Charger SRT-8 2009(0.27) Chevrolet Cobalt SS 2010(0.28) Buick Verano Sedan 2012(0.31) Hyundai Accent Sedan 2012(0.31) |
+| Chevrolet HHR SS 2010 | Dodge Caliber Wagon 2007(0.24) Dodge Charger SRT-8 2009(0.26) Ferrari California Convertible 2012(0.27) Chevrolet Camaro Convertible 2012(0.27) Chevrolet Cobalt SS 2010(0.29) |
+| Chevrolet Impala Sedan 2007 | Chrysler Sebring Convertible 2010(0.08) Hyundai Tucson SUV 2012(0.19) Honda Odyssey Minivan 2007(0.21) Chrysler PT Cruiser Convertible 2008(0.22) Ford Focus Sedan 2007(0.23) |
+| Chevrolet Tahoe Hybrid SUV 2012 | Toyota Sequoia SUV 2012(0.26) Audi 100 Sedan 1994(0.30) Toyota 4Runner SUV 2012*(0.34) Infiniti QX56 SUV 2011(0.37) Chevrolet Silverado 2500HD Regular Cab 2012(0.44) |
+| Chevrolet Sonic Sedan 2012 | Tesla Model S Sedan 2012(0.19) Hyundai Azera Sedan 2012(0.25) Nissan Juke Hatchback 2012(0.25) Lamborghini Reventon Coupe 2008(0.26) Rolls-Royce Ghost Sedan 2012(0.27) |
+| Chevrolet Express Cargo Van 2007 | Chevrolet Express Van 2007(0.06) Mercedes-Benz Sprinter Van 2012(0.07) GMC Savana Van 2012(0.10) Nissan NV Passenger Van 2012(0.11) Dodge Ram Pickup 3500 Quad Cab 2009(0.17) |
+| Chevrolet Avalanche Crew Cab 2012 | Chevrolet Silverado 1500 Classic Extended Cab 2007(0.12) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.15) Ford F-450 Super Duty Crew Cab 2012(0.21) Dodge Dakota Crew Cab 2010(0.23) Ford F-150 Regular Cab 2012(0.24) |
+| Chevrolet Cobalt SS 2010 | Chevrolet Corvette Convertible 2012(0.24) Dodge Charger SRT-8 2009(0.26) Ferrari California Convertible 2012(0.27) Buick Verano Sedan 2012(0.28) Chevrolet Camaro Convertible 2012(0.28) |
+| Chevrolet Malibu Hybrid Sedan 2010 | Lincoln Town Car Sedan 2011(0.25) Daewoo Nubira Wagon 2002(0.37) Chrysler Sebring Convertible 2010(0.37) Chrysler Town and Country Minivan 2012(0.40) Toyota Corolla Sedan 2012*(0.42) |
+| Chevrolet TrailBlazer SS 2009 | Bentley Arnage Sedan 2009(0.15) Jeep Grand Cherokee SUV 2012(0.22) Volvo XC90 SUV 2007*(0.35) Chrysler 300 SRT-8 2010(0.36) Cadillac Escalade EXT Crew Cab 2007(0.38) |
+| Chevrolet Silverado 2500HD Regular Cab 2012 | GMC Savana Van 2012(0.06) Ford E-Series Wagon Van 2012(0.08) Dodge Sprinter Cargo Van 2009(0.18) Ford F-150 Regular Cab 2012(0.21) Mercedes-Benz Sprinter Van 2012(0.24) |
+| Chevrolet Silverado 1500 Classic Extended Cab 2007 | Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.09) Ford F-450 Super Duty Crew Cab 2012(0.09) Chevrolet Avalanche Crew Cab 2012(0.12) Dodge Ram Pickup 3500 Crew Cab 2010(0.20) Ford Expedition EL SUV 2009(0.20) |
+| Chevrolet Express Van 2007 | Chevrolet Express Cargo Van 2007(0.06) Dodge Ram Pickup 3500 Quad Cab 2009(0.09) Ford F-150 Regular Cab 2012(0.11) GMC Savana Van 2012(0.11) Nissan NV Passenger Van 2012(0.12) |
+| Chevrolet Monte Carlo Coupe 2007 | Mercedes-Benz 300-Class Convertible 1993(0.15) Daewoo Nubira Wagon 2002(0.19) Chevrolet Malibu Sedan 2007(0.20) Ford Freestar Minivan 2007(0.26) Chrysler Sebring Convertible 2010(0.27) |
+| Chevrolet Malibu Sedan 2007 | Chevrolet Monte Carlo Coupe 2007(0.20) Chevrolet Impala Sedan 2007(0.24) Ford Focus Sedan 2007(0.25) Chrysler Sebring Convertible 2010(0.25) Daewoo Nubira Wagon 2002(0.25) |
+| Chevrolet Silverado 1500 Extended Cab 2012 | Ford F-150 Regular Cab 2007(0.20) Ford F-450 Super Duty Crew Cab 2012(0.21) Dodge Sprinter Cargo Van 2009(0.21) Ford E-Series Wagon Van 2012(0.22) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.24) |
+| Chevrolet Silverado 1500 Regular Cab 2012 | Dodge Ram Pickup 3500 Quad Cab 2009(0.05) Ford F-150 Regular Cab 2007(0.08) Jeep Liberty SUV 2012(0.14) Chevrolet Express Van 2007(0.15) Nissan NV Passenger Van 2012(0.18) |
+| Chrysler Aspen SUV 2009 | Hyundai Santa Fe SUV 2012(0.27) Isuzu Ascender SUV 2008(0.30) Chevrolet Avalanche Crew Cab 2012(0.32) Honda Accord Sedan 2012(0.38) Ford Freestar Minivan 2007(0.39) |
+| Chrysler Sebring Convertible 2010 | Chevrolet Impala Sedan 2007(0.08) Daewoo Nubira Wagon 2002(0.25) Chevrolet Malibu Sedan 2007(0.25) Chevrolet Monte Carlo Coupe 2007(0.27) Honda Odyssey Minivan 2007(0.29) |
+| Chrysler Town and Country Minivan 2012 | Hyundai Veracruz SUV 2012(0.31) Chevrolet Impala Sedan 2007(0.37) Chevrolet Traverse SUV 2012(0.39) Chevrolet Malibu Hybrid Sedan 2010(0.40) Suzuki Aerio Sedan 2007(0.42) |
+| Chrysler 300 SRT-8 2010 | Buick Enclave SUV 2012(0.33) Chevrolet TrailBlazer SS 2009(0.36) Dodge Durango SUV 2012(0.36) Volvo XC90 SUV 2007*(0.37) Honda Odyssey Minivan 2012(0.38) |
+| Chrysler Crossfire Convertible 2008 | Mercedes-Benz 300-Class Convertible 1993(0.14) Honda Accord Sedan 2012(0.20) Cadillac CTS-V Sedan 2012(0.25) BMW 6 Series Convertible 2007(0.31) Bentley Continental Flying Spur Sedan 2007(0.33) |
+| Chrysler PT Cruiser Convertible 2008 | Suzuki SX4 Sedan 2012(0.14) Chevrolet Impala Sedan 2007(0.22) Hyundai Tucson SUV 2012(0.25) Chevrolet Traverse SUV 2012(0.28) Honda Odyssey Minivan 2007(0.32) |
+| Daewoo Nubira Wagon 2002 | Chevrolet Monte Carlo Coupe 2007(0.19) Chrysler Sebring Convertible 2010(0.25) Chevrolet Malibu Sedan 2007(0.25) Chevrolet Impala Sedan 2007(0.26) Mercedes-Benz 300-Class Convertible 1993(0.32) |
+| Dodge Caliber Wagon 2012 | Honda Accord Coupe 2012(0.24) Hyundai Elantra Sedan 2007(0.28) Hyundai Sonata Hybrid Sedan 2012(0.35) Hyundai Accent Sedan 2012(0.36) Ford Fiesta Sedan 2012(0.37) |
+| Dodge Caliber Wagon 2007 | Ferrari 458 Italia Coupe 2012(0.20) BMW X6 SUV 2012(0.23) BMW 3 Series Sedan 2012(0.23) Dodge Charger SRT-8 2009(0.24) Chevrolet HHR SS 2010(0.24) |
+| Dodge Caravan Minivan 1997 | Plymouth Neon Coupe 1999(0.18) Chevrolet Malibu Sedan 2007(0.27) Chevrolet Impala Sedan 2007(0.28) Eagle Talon Hatchback 1998(0.31) Daewoo Nubira Wagon 2002(0.33) |
+| Dodge Ram Pickup 3500 Crew Cab 2010 | Ford F-450 Super Duty Crew Cab 2012(0.06) GMC Canyon Extended Cab 2012(0.16) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.19) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.20) HUMMER H2 SUT Crew Cab 2009(0.20) |
+| Dodge Ram Pickup 3500 Quad Cab 2009 | Chevrolet Silverado 1500 Regular Cab 2012(0.05) Chevrolet Express Van 2007(0.09) Ford F-150 Regular Cab 2007(0.10) Ford F-150 Regular Cab 2012(0.16) Jeep Patriot SUV 2012(0.16) |
+| Dodge Sprinter Cargo Van 2009 | Ford E-Series Wagon Van 2012(0.12) Chevrolet Silverado 2500HD Regular Cab 2012(0.18) Chevrolet Silverado 1500 Extended Cab 2012(0.21) GMC Savana Van 2012(0.22) Ford F-150 Regular Cab 2012(0.23) |
+| Dodge Journey SUV 2012 | Chevrolet Traverse SUV 2012(0.27) Plymouth Neon Coupe 1999(0.33) Jeep Compass SUV 2012(0.33) Volkswagen Golf Hatchback 1991*(0.35) Dodge Durango SUV 2012(0.39) |
+| Dodge Dakota Crew Cab 2010 | Chevrolet Silverado 1500 Classic Extended Cab 2007(0.21) Chevrolet Avalanche Crew Cab 2012(0.23) Ford Ranger SuperCab 2011(0.28) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.30) Ford F-450 Super Duty Crew Cab 2012(0.32) |
+| Dodge Dakota Club Cab 2007 | Ford F-150 Regular Cab 2012(0.15) GMC Canyon Extended Cab 2012(0.18) Ford F-150 Regular Cab 2007(0.21) Chevrolet Silverado 1500 Regular Cab 2012(0.21) Dodge Ram Pickup 3500 Quad Cab 2009(0.22) |
+| Dodge Magnum Wagon 2008 | Ford Mustang Convertible 2007(0.23) Dodge Charger SRT-8 2009(0.31) Hyundai Accent Sedan 2012(0.32) Chevrolet HHR SS 2010(0.35) Geo Metro Convertible 1993(0.37) |
+| Dodge Challenger SRT8 2011 | Volkswagen Beetle Hatchback 2012*(0.20) Tesla Model S Sedan 2012(0.23) Chevrolet Sonic Sedan 2012(0.28) Hyundai Azera Sedan 2012(0.29) Suzuki Kizashi Sedan 2012(0.31) |
+| Dodge Durango SUV 2012 | Jeep Compass SUV 2012(0.26) Hyundai Genesis Sedan 2012(0.32) Hyundai Veracruz SUV 2012(0.33) Land Rover Range Rover SUV 2012(0.34) Audi S4 Sedan 2007(0.36) |
+| Dodge Durango SUV 2007 | Dodge Ram Pickup 3500 Crew Cab 2010(0.29) Ford F-150 Regular Cab 2007(0.30) Volvo 240 Sedan 1993*(0.30) Jeep Liberty SUV 2012(0.32) Jeep Grand Cherokee SUV 2012(0.34) |
+| Dodge Charger Sedan 2012 | Aston Martin Virage Coupe 2012(0.10) Ferrari California Convertible 2012(0.15) Chevrolet Corvette Convertible 2012(0.16) Ford GT Coupe 2006(0.17) Volvo C30 Hatchback 2012*(0.19) |
+| Dodge Charger SRT-8 2009 | Dodge Caliber Wagon 2007(0.24) Ferrari California Convertible 2012(0.25) Chevrolet HHR SS 2010(0.26) Chevrolet Cobalt SS 2010(0.26) Chevrolet Camaro Convertible 2012(0.27) |
+| Eagle Talon Hatchback 1998 | Plymouth Neon Coupe 1999(0.09) Dodge Caravan Minivan 1997(0.31) Volkswagen Golf Hatchback 1991*(0.34) Nissan 240SX Coupe 1998(0.38) Acura TL Type-S 2008(0.43) |
+| FIAT 500 Abarth 2012 | Bentley Arnage Sedan 2009(0.24) Ford Edge SUV 2012(0.26) Rolls-Royce Ghost Sedan 2012(0.27) Spyker C8 Convertible 2009(0.32) Fisker Karma Sedan 2012(0.43) |
+| FIAT 500 Convertible 2012 | Bugatti Veyron 16.4 Convertible 2009(0.11) Bentley Continental Supersports Conv. Convertible 2012(0.22) Chevrolet Corvette Ron Fellows Edition Z06 2007(0.25) MINI Cooper Roadster Convertible 2012(0.28) Acura Integra Type R 2001(0.35) |
+| Ferrari FF Coupe 2012 | Aston Martin Virage Coupe 2012(0.15) BMW 1 Series Coupe 2012(0.21) Dodge Charger Sedan 2012(0.23) Suzuki SX4 Hatchback 2012(0.25) Ferrari California Convertible 2012(0.26) |
+| Ferrari California Convertible 2012 | Ferrari 458 Italia Convertible 2012(0.06) Aston Martin Virage Coupe 2012(0.10) Dodge Charger Sedan 2012(0.15) Ferrari 458 Italia Coupe 2012(0.16) Chevrolet Corvette Convertible 2012(0.18) |
+| Ferrari 458 Italia Convertible 2012 | Ferrari California Convertible 2012(0.06) McLaren MP4-12C Coupe 2012(0.09) Aston Martin Virage Coupe 2012(0.10) Ferrari 458 Italia Coupe 2012(0.11) Audi TT RS Coupe 2012(0.15) |
+| Ferrari 458 Italia Coupe 2012 | Ferrari 458 Italia Convertible 2012(0.11) Lamborghini Aventador Coupe 2012(0.13) Ferrari California Convertible 2012(0.16) Dodge Caliber Wagon 2007(0.20) McLaren MP4-12C Coupe 2012(0.20) |
+| Fisker Karma Sedan 2012 | Chevrolet Corvette ZR1 2012(0.25) Infiniti G Coupe IPL 2012(0.25) Audi RS 4 Convertible 2008(0.27) BMW M6 Convertible 2010(0.29) Bugatti Veyron 16.4 Coupe 2009(0.31) |
+| Ford F-450 Super Duty Crew Cab 2012 | Dodge Ram Pickup 3500 Crew Cab 2010(0.06) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.09) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.10) Ford F-150 Regular Cab 2012(0.14) GMC Canyon Extended Cab 2012(0.19) |
+| Ford Mustang Convertible 2007 | Dodge Magnum Wagon 2008(0.23) Geo Metro Convertible 1993(0.26) Dodge Charger SRT-8 2009(0.30) Chrysler Crossfire Convertible 2008(0.41) Mercedes-Benz 300-Class Convertible 1993(0.43) |
+| Ford Freestar Minivan 2007 | Buick Rainier SUV 2007(0.23) Chevrolet Monte Carlo Coupe 2007(0.26) Mercedes-Benz 300-Class Convertible 1993(0.30) Chevrolet Avalanche Crew Cab 2012(0.31) Chevrolet Malibu Sedan 2007(0.34) |
+| Ford Expedition EL SUV 2009 | Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.16) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.20) Ford F-450 Super Duty Crew Cab 2012(0.22) Isuzu Ascender SUV 2008(0.23) Chevrolet Avalanche Crew Cab 2012(0.26) |
+| Ford Edge SUV 2012 | FIAT 500 Abarth 2012(0.26) Cadillac SRX SUV 2012(0.43) Land Rover Range Rover SUV 2012(0.43) Chrysler 300 SRT-8 2010(0.43) Bentley Arnage Sedan 2009(0.44) |
+| Ford Ranger SuperCab 2011 | Ford F-150 Regular Cab 2012(0.25) GMC Canyon Extended Cab 2012(0.26) Ford F-450 Super Duty Crew Cab 2012(0.27) Dodge Dakota Crew Cab 2010(0.28) Chevrolet Avalanche Crew Cab 2012(0.29) |
+| Ford GT Coupe 2006 | Hyundai Veloster Hatchback 2012(0.13) Aston Martin Virage Coupe 2012(0.15) Chevrolet Corvette Convertible 2012(0.16) Dodge Charger Sedan 2012(0.17) McLaren MP4-12C Coupe 2012(0.19) |
+| Ford F-150 Regular Cab 2012 | Chevrolet Express Van 2007(0.11) Ford E-Series Wagon Van 2012(0.12) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.14) Ford F-450 Super Duty Crew Cab 2012(0.14) Dodge Dakota Club Cab 2007(0.15) |
+| Ford F-150 Regular Cab 2007 | Chevrolet Silverado 1500 Regular Cab 2012(0.08) Dodge Ram Pickup 3500 Quad Cab 2009(0.10) Chevrolet Silverado 1500 Extended Cab 2012(0.20) Dodge Dakota Club Cab 2007(0.21) Chevrolet Express Van 2007(0.22) |
+| Ford Focus Sedan 2007 | Chevrolet Impala Sedan 2007(0.23) Honda Odyssey Minivan 2007(0.23) Chevrolet Malibu Sedan 2007(0.25) Nissan 240SX Coupe 1998(0.25) Chevrolet Traverse SUV 2012(0.30) |
+| Ford E-Series Wagon Van 2012 | GMC Savana Van 2012(0.06) Chevrolet Silverado 2500HD Regular Cab 2012(0.08) Dodge Sprinter Cargo Van 2009(0.12) Ford F-150 Regular Cab 2012(0.12) Chevrolet Express Van 2007(0.16) |
+| Ford Fiesta Sedan 2012 | Hyundai Elantra Sedan 2007(0.26) Hyundai Elantra Touring Hatchback 2012(0.32) Dodge Caliber Wagon 2012(0.37) Chrysler Sebring Convertible 2010(0.41) Ford Focus Sedan 2007(0.44) |
+| GMC Terrain SUV 2012 | Chevrolet Silverado 1500 Extended Cab 2012(0.29) Dodge Sprinter Cargo Van 2009(0.42) Ford E-Series Wagon Van 2012(0.43) Chevrolet Express Van 2007(0.43) Isuzu Ascender SUV 2008(0.45) |
+| GMC Savana Van 2012 | Ford E-Series Wagon Van 2012(0.06) Chevrolet Silverado 2500HD Regular Cab 2012(0.06) Mercedes-Benz Sprinter Van 2012(0.10) Chevrolet Express Cargo Van 2007(0.10) Chevrolet Express Van 2007(0.11) |
+| GMC Yukon Hybrid SUV 2012 | Land Rover Range Rover SUV 2012(0.26) Jeep Liberty SUV 2012(0.27) Chevrolet Silverado 1500 Regular Cab 2012(0.30) Dodge Ram Pickup 3500 Quad Cab 2009(0.30) Volvo XC90 SUV 2007*(0.31) |
+| GMC Acadia SUV 2012 | Ford Ranger SuperCab 2011(0.41) Mercedes-Benz C-Class Sedan 2012(0.53) Audi 100 Wagon 1994(0.55) Dodge Dakota Crew Cab 2010(0.56) Cadillac CTS-V Sedan 2012(0.57) |
+| GMC Canyon Extended Cab 2012 | HUMMER H2 SUT Crew Cab 2009(0.16) Dodge Ram Pickup 3500 Crew Cab 2010(0.16) Dodge Ram Pickup 3500 Quad Cab 2009(0.18) Jeep Wrangler SUV 2012(0.18) Dodge Dakota Club Cab 2007(0.18) |
+| Geo Metro Convertible 1993 | Ford Mustang Convertible 2007(0.26) Mercedes-Benz 300-Class Convertible 1993(0.36) Dodge Magnum Wagon 2008(0.37) Lamborghini Diablo Coupe 2001(0.41) Ford Freestar Minivan 2007(0.44) |
+| HUMMER H3T Crew Cab 2010 | Jeep Wrangler SUV 2012(0.06) HUMMER H2 SUT Crew Cab 2009(0.06) AM General Hummer SUV 2000(0.14) GMC Canyon Extended Cab 2012(0.25) Jeep Patriot SUV 2012(0.29) |
+| HUMMER H2 SUT Crew Cab 2009 | HUMMER H3T Crew Cab 2010(0.06) AM General Hummer SUV 2000(0.07) Jeep Wrangler SUV 2012(0.07) GMC Canyon Extended Cab 2012(0.16) Ford F-450 Super Duty Crew Cab 2012(0.19) |
+| Honda Odyssey Minivan 2012 | Chrysler 300 SRT-8 2010(0.38) Buick Verano Sedan 2012(0.47) Acura ZDX Hatchback 2012(0.48) Bentley Continental GT Coupe 2007(0.48) Buick Enclave SUV 2012(0.49) |
+| Honda Odyssey Minivan 2007 | Chevrolet Impala Sedan 2007(0.21) Ford Focus Sedan 2007(0.23) Hyundai Veracruz SUV 2012(0.26) Chrysler Sebring Convertible 2010(0.29) Chevrolet Malibu Sedan 2007(0.30) |
+| Honda Accord Coupe 2012 | Hyundai Accent Sedan 2012(0.21) Dodge Caliber Wagon 2012(0.24) Ferrari 458 Italia Coupe 2012(0.25) BMW 3 Series Sedan 2012(0.26) BMW X6 SUV 2012(0.27) |
+| Honda Accord Sedan 2012 | Chrysler Crossfire Convertible 2008(0.20) Mercedes-Benz 300-Class Convertible 1993(0.21) BMW 6 Series Convertible 2007(0.22) Bentley Continental Flying Spur Sedan 2007(0.28) Chevrolet Monte Carlo Coupe 2007(0.31) |
+| Hyundai Veloster Hatchback 2012 | Aston Martin Virage Coupe 2012(0.13) Ford GT Coupe 2006(0.13) McLaren MP4-12C Coupe 2012(0.16) Dodge Charger Sedan 2012(0.21) Volvo C30 Hatchback 2012*(0.21) |
+| Hyundai Santa Fe SUV 2012 | Volkswagen Golf Hatchback 2012*(0.22) Chrysler Aspen SUV 2009(0.27) BMW 6 Series Convertible 2007(0.29) Honda Accord Sedan 2012(0.32) Mercedes-Benz S-Class Sedan 2012(0.36) |
+| Hyundai Tucson SUV 2012 | Chevrolet Impala Sedan 2007(0.19) Chrysler PT Cruiser Convertible 2008(0.25) Chrysler Sebring Convertible 2010(0.29) Hyundai Genesis Sedan 2012(0.29) Mitsubishi Lancer Sedan 2012(0.31) |
+| Hyundai Veracruz SUV 2012 | Honda Odyssey Minivan 2007(0.26) Chevrolet Traverse SUV 2012(0.27) Buick Enclave SUV 2012(0.31) Chrysler Town and Country Minivan 2012(0.31) Chrysler PT Cruiser Convertible 2008(0.33) |
+| Hyundai Sonata Hybrid Sedan 2012 | Bentley Continental GT Coupe 2012(0.22) Toyota Corolla Sedan 2012*(0.34) Dodge Caliber Wagon 2012(0.35) Honda Accord Coupe 2012(0.35) Chevrolet Camaro Convertible 2012(0.38) |
+| Hyundai Elantra Sedan 2007 | Ford Fiesta Sedan 2012(0.26) Dodge Caliber Wagon 2012(0.28) Toyota Corolla Sedan 2012*(0.36) Chevrolet Camaro Convertible 2012(0.38) Chrysler Sebring Convertible 2010(0.38) |
+| Hyundai Accent Sedan 2012 | Honda Accord Coupe 2012(0.21) Lamborghini Aventador Coupe 2012(0.24) Audi TT RS Coupe 2012(0.26) Chevrolet HHR SS 2010(0.29) Ferrari 458 Italia Coupe 2012(0.31) |
+| Hyundai Genesis Sedan 2012 | Acura TL Sedan 2012(0.25) Bentley Continental GT Coupe 2007(0.28) Hyundai Tucson SUV 2012(0.29) Dodge Durango SUV 2012(0.32) Audi S4 Sedan 2007(0.34) |
+| Hyundai Sonata Sedan 2012 | Bugatti Veyron 16.4 Coupe 2009(0.37) Bentley Continental GT Coupe 2007(0.40) Bentley Continental Flying Spur Sedan 2007(0.42) Porsche Panamera Sedan 2012(0.44) Cadillac SRX SUV 2012(0.45) |
+| Hyundai Elantra Touring Hatchback 2012 | Ford Fiesta Sedan 2012(0.32) Bentley Continental GT Coupe 2007(0.35) Buick Verano Sedan 2012(0.36) Audi S4 Sedan 2012(0.43) Hyundai Elantra Sedan 2007(0.46) |
+| Hyundai Azera Sedan 2012 | Lamborghini Reventon Coupe 2008(0.18) Jaguar XK XKR 2012(0.21) Tesla Model S Sedan 2012(0.23) Chevrolet Sonic Sedan 2012(0.25) Aston Martin Virage Convertible 2012(0.25) |
+| Infiniti G Coupe IPL 2012 | Audi S6 Sedan 2011(0.19) Bentley Mulsanne Sedan 2011(0.19) Fisker Karma Sedan 2012(0.25) Rolls-Royce Phantom Sedan 2012(0.28) Cadillac SRX SUV 2012(0.30) |
+| Infiniti QX56 SUV 2011 | Toyota Sequoia SUV 2012(0.35) BMW X3 SUV 2012(0.36) Acura ZDX Hatchback 2012(0.36) Chevrolet Tahoe Hybrid SUV 2012(0.37) BMW ActiveHybrid 5 Sedan 2012(0.37) |
+| Isuzu Ascender SUV 2008 | Ford F-450 Super Duty Crew Cab 2012(0.21) Ford E-Series Wagon Van 2012(0.22) Ford Expedition EL SUV 2009(0.23) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.23) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.25) |
+| Jaguar XK XKR 2012 | Hyundai Azera Sedan 2012(0.21) Hyundai Veloster Hatchback 2012(0.24) Aston Martin Virage Convertible 2012(0.25) Bugatti Veyron 16.4 Coupe 2009(0.25) Tesla Model S Sedan 2012(0.26) |
+| Jeep Patriot SUV 2012 | Jeep Liberty SUV 2012(0.10) Dodge Ram Pickup 3500 Quad Cab 2009(0.16) Chevrolet Silverado 1500 Regular Cab 2012(0.19) Jeep Wrangler SUV 2012(0.19) Volvo 240 Sedan 1993*(0.25) |
+| Jeep Wrangler SUV 2012 | HUMMER H3T Crew Cab 2010(0.06) HUMMER H2 SUT Crew Cab 2009(0.07) AM General Hummer SUV 2000(0.16) GMC Canyon Extended Cab 2012(0.18) Jeep Patriot SUV 2012(0.19) |
+| Jeep Liberty SUV 2012 | Jeep Patriot SUV 2012(0.10) Chevrolet Silverado 1500 Regular Cab 2012(0.14) Dodge Ram Pickup 3500 Quad Cab 2009(0.17) Jeep Wrangler SUV 2012(0.22) Volvo 240 Sedan 1993*(0.22) |
+| Jeep Grand Cherokee SUV 2012 | Cadillac Escalade EXT Crew Cab 2007(0.22) Chevrolet TrailBlazer SS 2009(0.22) Ford Expedition EL SUV 2009(0.30) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.33) Dodge Ram Pickup 3500 Crew Cab 2010(0.33) |
+| Jeep Compass SUV 2012 | Volvo 240 Sedan 1993*(0.25) Dodge Durango SUV 2012(0.26) Volkswagen Golf Hatchback 1991*(0.28) Dodge Journey SUV 2012(0.33) Chevrolet Traverse SUV 2012(0.34) |
+| Lamborghini Reventon Coupe 2008 | Hyundai Azera Sedan 2012(0.18) Chevrolet Sonic Sedan 2012(0.26) Aston Martin Virage Convertible 2012(0.27) Spyker C8 Convertible 2009(0.31) Jaguar XK XKR 2012(0.32) |
+| Lamborghini Aventador Coupe 2012 | Audi TT RS Coupe 2012(0.13) Ferrari 458 Italia Coupe 2012(0.13) McLaren MP4-12C Coupe 2012(0.15) Ferrari 458 Italia Convertible 2012(0.18) BMW Z4 Convertible 2012(0.20) |
+| Lamborghini Gallardo LP 570-4 Superleggera 2012 | Lamborghini Diablo Coupe 2001(0.15) McLaren MP4-12C Coupe 2012(0.19) Spyker C8 Coupe 2009(0.23) Acura Integra Type R 2001(0.24) Hyundai Veloster Hatchback 2012(0.33) |
+| Lamborghini Diablo Coupe 2001 | Acura Integra Type R 2001(0.04) Lamborghini Gallardo LP 570-4 Superleggera 2012(0.15) Chevrolet Corvette Convertible 2012(0.23) McLaren MP4-12C Coupe 2012(0.24) Chevrolet Cobalt SS 2010(0.34) |
+| Land Rover Range Rover SUV 2012 | GMC Yukon Hybrid SUV 2012(0.26) Jeep Liberty SUV 2012(0.28) Jeep Patriot SUV 2012(0.28) Volvo XC90 SUV 2007*(0.32) Dodge Ram Pickup 3500 Crew Cab 2010(0.33) |
+| Land Rover LR2 SUV 2012 | Toyota 4Runner SUV 2012*(0.29) GMC Yukon Hybrid SUV 2012(0.39) Toyota Sequoia SUV 2012(0.42) Land Rover Range Rover SUV 2012(0.46) HUMMER H3T Crew Cab 2010(0.46) |
+| Lincoln Town Car Sedan 2011 | Ram C/V Cargo Van Minivan 2012(0.22) Chevrolet Malibu Hybrid Sedan 2010(0.25) Volkswagen Golf Hatchback 2012*(0.31) Chevrolet Malibu Sedan 2007(0.43) Audi A5 Coupe 2012(0.43) |
+| MINI Cooper Roadster Convertible 2012 | Mercedes-Benz SL-Class Coupe 2009(0.16) Bentley Continental Supersports Conv. Convertible 2012(0.23) Bugatti Veyron 16.4 Convertible 2009(0.24) FIAT 500 Convertible 2012(0.28) Audi R8 Coupe 2012(0.29) |
+| Maybach Landaulet Convertible 2012 | Bentley Continental Supersports Conv. Convertible 2012(0.20) Chevrolet Corvette Ron Fellows Edition Z06 2007(0.26) FIAT 500 Convertible 2012(0.38) Aston Martin V8 Vantage Convertible 2012(0.41) Bugatti Veyron 16.4 Convertible 2009(0.41) |
+| Mazda Tribute SUV 2011 | GMC Yukon Hybrid SUV 2012(0.37) Volvo XC90 SUV 2007*(0.37) Chevrolet TrailBlazer SS 2009(0.40) Toyota Sequoia SUV 2012(0.41) Volvo 240 Sedan 1993*(0.46) |
+| McLaren MP4-12C Coupe 2012 | Ferrari 458 Italia Convertible 2012(0.09) Aston Martin Virage Coupe 2012(0.14) Lamborghini Aventador Coupe 2012(0.15) Audi TT RS Coupe 2012(0.16) Hyundai Veloster Hatchback 2012(0.16) |
+| Mercedes-Benz 300-Class Convertible 1993 | Chrysler Crossfire Convertible 2008(0.14) Chevrolet Monte Carlo Coupe 2007(0.15) Honda Accord Sedan 2012(0.21) Ford Freestar Minivan 2007(0.30) Daewoo Nubira Wagon 2002(0.32) |
+| Mercedes-Benz C-Class Sedan 2012 | Cadillac CTS-V Sedan 2012(0.25) Audi TTS Coupe 2012(0.27) Bentley Continental Flying Spur Sedan 2007(0.32) Mercedes-Benz S-Class Sedan 2012(0.33) Bentley Mulsanne Sedan 2011(0.37) |
+| Mercedes-Benz SL-Class Coupe 2009 | MINI Cooper Roadster Convertible 2012(0.16) Aston Martin Virage Convertible 2012(0.16) BMW ActiveHybrid 5 Sedan 2012(0.21) Mercedes-Benz E-Class Sedan 2012(0.22) Bugatti Veyron 16.4 Convertible 2009(0.24) |
+| Mercedes-Benz E-Class Sedan 2012 | BMW M5 Sedan 2010(0.21) Aston Martin Virage Convertible 2012(0.22) Mercedes-Benz SL-Class Coupe 2009(0.22) BMW ActiveHybrid 5 Sedan 2012(0.22) Porsche Panamera Sedan 2012(0.25) |
+| Mercedes-Benz S-Class Sedan 2012 | Mercedes-Benz C-Class Sedan 2012(0.33) Acura TSX Sedan 2012(0.33) Audi A5 Coupe 2012(0.34) Hyundai Santa Fe SUV 2012(0.36) BMW 6 Series Convertible 2007(0.36) |
+| Mercedes-Benz Sprinter Van 2012 | Chevrolet Express Cargo Van 2007(0.07) Nissan NV Passenger Van 2012(0.10) GMC Savana Van 2012(0.10) Chevrolet Express Van 2007(0.12) Dodge Ram Pickup 3500 Quad Cab 2009(0.21) |
+| Mitsubishi Lancer Sedan 2012 | Bentley Continental GT Coupe 2007(0.29) Toyota Camry Sedan 2012*(0.30) Hyundai Tucson SUV 2012(0.31) Nissan Juke Hatchback 2012(0.32) Nissan Leaf Hatchback 2012(0.35) |
+| Nissan Leaf Hatchback 2012 | Suzuki Kizashi Sedan 2012(0.29) Volkswagen Beetle Hatchback 2012*(0.30) Suzuki SX4 Sedan 2012(0.31) Dodge Challenger SRT8 2011(0.32) Mitsubishi Lancer Sedan 2012(0.35) |
+| Nissan NV Passenger Van 2012 | Mercedes-Benz Sprinter Van 2012(0.10) Chevrolet Express Cargo Van 2007(0.11) GMC Savana Van 2012(0.11) Chevrolet Express Van 2007(0.12) Dodge Ram Pickup 3500 Quad Cab 2009(0.18) |
+| Nissan Juke Hatchback 2012 | Chevrolet Sonic Sedan 2012(0.25) Mitsubishi Lancer Sedan 2012(0.32) Lamborghini Reventon Coupe 2008(0.35) Hyundai Azera Sedan 2012(0.37) Buick Verano Sedan 2012(0.38) |
+| Nissan 240SX Coupe 1998 | Ford Focus Sedan 2007(0.25) Eagle Talon Hatchback 1998(0.38) Scion xD Hatchback 2012(0.41) Buick Enclave SUV 2012(0.44) Volkswagen Golf Hatchback 1991*(0.44) |
+| Plymouth Neon Coupe 1999 | Eagle Talon Hatchback 1998(0.09) Dodge Caravan Minivan 1997(0.18) Volkswagen Golf Hatchback 1991*(0.29) Dodge Journey SUV 2012(0.33) Ford Focus Sedan 2007(0.44) |
+| Porsche Panamera Sedan 2012 | BMW M6 Convertible 2010(0.19) Audi RS 4 Convertible 2008(0.22) BMW 3 Series Wagon 2012(0.22) BMW ActiveHybrid 5 Sedan 2012(0.25) Mercedes-Benz E-Class Sedan 2012(0.25) |
+| Ram C/V Cargo Van Minivan 2012 | Lincoln Town Car Sedan 2011(0.22) Dodge Sprinter Cargo Van 2009(0.30) Chevrolet Silverado 2500HD Regular Cab 2012(0.38) Ford E-Series Wagon Van 2012(0.39) GMC Savana Van 2012(0.46) |
+| Rolls-Royce Phantom Drophead Coupe Convertible 2012 | Acura TSX Sedan 2012(0.24) Audi A5 Coupe 2012(0.31) Audi TT Hatchback 2011(0.31) Audi R8 Coupe 2012(0.33) MINI Cooper Roadster Convertible 2012(0.33) |
+| Rolls-Royce Ghost Sedan 2012 | FIAT 500 Abarth 2012(0.27) Chevrolet Sonic Sedan 2012(0.27) Spyker C8 Convertible 2009(0.30) Bentley Arnage Sedan 2009(0.36) Lamborghini Reventon Coupe 2008(0.39) |
+| Rolls-Royce Phantom Sedan 2012 | Infiniti G Coupe IPL 2012(0.28) Fisker Karma Sedan 2012(0.36) Bentley Mulsanne Sedan 2011(0.36) Toyota 4Runner SUV 2012*(0.39) Rolls-Royce Phantom Drophead Coupe Convertible 2012(0.40) |
+| Scion xD Hatchback 2012 | Chevrolet Traverse SUV 2012(0.26) Buick Enclave SUV 2012(0.34) Ford Focus Sedan 2007(0.40) Nissan 240SX Coupe 1998(0.41) Volkswagen Golf Hatchback 1991*(0.43) |
+| Spyker C8 Convertible 2009 | Chevrolet Sonic Sedan 2012(0.28) Spyker C8 Coupe 2009(0.29) Tesla Model S Sedan 2012(0.30) Rolls-Royce Ghost Sedan 2012(0.30) Lamborghini Reventon Coupe 2008(0.31) |
+| Spyker C8 Coupe 2009 | Tesla Model S Sedan 2012(0.14) Lamborghini Gallardo LP 570-4 Superleggera 2012(0.23) Spyker C8 Convertible 2009(0.29) Hyundai Veloster Hatchback 2012(0.31) Hyundai Azera Sedan 2012(0.32) |
+| Suzuki Aerio Sedan 2007 | Chrysler Town and Country Minivan 2012(0.42) Honda Odyssey Minivan 2007(0.45) Chevrolet Corvette Ron Fellows Edition Z06 2007(0.47) Toyota Sequoia SUV 2012(0.49) Hyundai Veracruz SUV 2012(0.49) |
+| Suzuki Kizashi Sedan 2012 | Volkswagen Beetle Hatchback 2012*(0.18) Buick Regal GS 2012(0.26) Nissan Leaf Hatchback 2012(0.29) Dodge Challenger SRT8 2011(0.31) Mercedes-Benz E-Class Sedan 2012(0.32) |
+| Suzuki SX4 Hatchback 2012 | Ferrari California Convertible 2012(0.20) Aston Martin Virage Coupe 2012(0.23) Dodge Charger Sedan 2012(0.23) Ford GT Coupe 2006(0.24) Ferrari FF Coupe 2012(0.25) |
+| Suzuki SX4 Sedan 2012 | Chrysler PT Cruiser Convertible 2008(0.14) Nissan Leaf Hatchback 2012(0.31) Hyundai Tucson SUV 2012(0.32) Chevrolet Impala Sedan 2007(0.33) Toyota Camry Sedan 2012*(0.36) |
+| Tesla Model S Sedan 2012 | Spyker C8 Coupe 2009(0.14) Chevrolet Sonic Sedan 2012(0.19) Hyundai Azera Sedan 2012(0.23) Dodge Challenger SRT8 2011(0.23) Volkswagen Beetle Hatchback 2012*(0.25) |
+| Toyota Sequoia SUV 2012 | Chevrolet Tahoe Hybrid SUV 2012(0.26) Toyota 4Runner SUV 2012*(0.34) BMW X5 SUV 2007(0.34) Infiniti QX56 SUV 2011(0.35) Mazda Tribute SUV 2011(0.41) |
+| Toyota Camry Sedan 2012* | Mitsubishi Lancer Sedan 2012(0.30) Suzuki SX4 Sedan 2012(0.36) Suzuki SX4 Hatchback 2012(0.39) Hyundai Elantra Sedan 2007(0.42) Nissan Leaf Hatchback 2012(0.43) |
+| Toyota Corolla Sedan 2012* | Hyundai Sonata Hybrid Sedan 2012(0.34) Hyundai Elantra Sedan 2007(0.36) Volkswagen Golf Hatchback 2012*(0.37) Acura TSX Sedan 2012(0.41) Chevrolet Malibu Hybrid Sedan 2010(0.42) |
+| Toyota 4Runner SUV 2012* | BMW X5 SUV 2007(0.24) Land Rover LR2 SUV 2012(0.29) Land Rover Range Rover SUV 2012(0.33) Chevrolet Tahoe Hybrid SUV 2012(0.34) Toyota Sequoia SUV 2012(0.34) |
+| Volkswagen Golf Hatchback 2012* | Acura TSX Sedan 2012(0.14) BMW 6 Series Convertible 2007(0.18) Hyundai Santa Fe SUV 2012(0.22) Lincoln Town Car Sedan 2011(0.31) Honda Accord Sedan 2012(0.31) |
+| Volkswagen Golf Hatchback 1991* | Volvo 240 Sedan 1993*(0.21) Jeep Compass SUV 2012(0.28) Plymouth Neon Coupe 1999(0.29) Eagle Talon Hatchback 1998(0.34) Dodge Journey SUV 2012(0.35) |
+| Volkswagen Beetle Hatchback 2012* | Suzuki Kizashi Sedan 2012(0.18) Dodge Challenger SRT8 2011(0.20) Buick Regal GS 2012(0.25) Tesla Model S Sedan 2012(0.25) Chevrolet Sonic Sedan 2012(0.28) |
+| Volvo C30 Hatchback 2012* | Aston Martin Virage Coupe 2012(0.16) Ferrari California Convertible 2012(0.18) Ferrari 458 Italia Convertible 2012(0.19) Dodge Charger Sedan 2012(0.19) Hyundai Veloster Hatchback 2012(0.21) |
+| Volvo 240 Sedan 1993* | Volkswagen Golf Hatchback 1991*(0.21) Jeep Liberty SUV 2012(0.22) Jeep Compass SUV 2012(0.25) Jeep Patriot SUV 2012(0.25) Chevrolet Silverado 1500 Regular Cab 2012(0.27) |
+| Volvo XC90 SUV 2007* | BMW X5 SUV 2007(0.24) GMC Yukon Hybrid SUV 2012(0.31) Land Rover Range Rover SUV 2012(0.32) Chevrolet TrailBlazer SS 2009(0.35) Chrysler 300 SRT-8 2010(0.37) |
+| smart fortwo Convertible 2012* | Aston Martin V8 Vantage Convertible 2012(0.31) FIAT 500 Convertible 2012(0.38) Lamborghini Gallardo LP 570-4 Superleggera 2012(0.40) Maybach Landaulet Convertible 2012(0.44) Bugatti Veyron 16.4 Convertible 2009(0.46) |
 
 ## nplm-bil-ft  [cars_lejepa]
 
+agree@1=0.230 agree@5=0.157 (chance 0.040)  dendro-purity=0.148  silhouette=-0.190  within/between=0.840
+
 
 | class | 5 nearest class centroids (cosine dist) |
 |---|---|
-| class0 | class124(0.17) class123(0.28) class145(0.28) class121(0.51) class144(0.52) |
-| class1 | class125(0.44) class137(0.44) class4(0.48) class34(0.48) class21(0.49) |
-| class2 | class25(0.38) class34(0.38) class12(0.40) class128(0.41) class186*(0.41) |
-| class3 | class97(0.46) class2(0.48) class34(0.49) class140(0.50) class25(0.50) |
-| class4 | class189*(0.26) class187*(0.43) class128(0.44) class2(0.45) class1(0.48) |
-| class5 | class152(0.15) class151(0.31) class159(0.40) class65(0.49) class54(0.51) |
-| class6 | class34(0.46) class140(0.46) class104(0.47) class149(0.49) class9(0.50) |
-| class7 | class8(0.31) class38(0.34) class44(0.35) class104(0.36) class13(0.38) |
-| class8 | class20(0.30) class7(0.31) class104(0.32) class9(0.36) class41(0.36) |
-| class9 | class104(0.32) class8(0.36) class162(0.37) class139(0.41) class184(0.41) |
-| class10 | class102(0.18) class54(0.24) class101(0.28) class159(0.33) class95(0.34) |
-| class11 | class20(0.44) class92(0.49) class55(0.51) class19(0.52) class156(0.55) |
-| class12 | class18(0.32) class13(0.38) class22(0.39) class2(0.40) class21(0.42) |
-| class13 | class7(0.38) class12(0.38) class50(0.39) class26(0.40) class104(0.40) |
-| class14 | class13(0.42) class104(0.45) class45(0.50) class12(0.53) class162(0.54) |
-| class15 | class17(0.28) class16(0.37) class160(0.45) class142(0.45) class193*(0.49) |
-| class16 | class15(0.37) class17(0.39) class142(0.52) class61(0.53) class69(0.55) |
-| class17 | class15(0.28) class16(0.39) class160(0.51) class142(0.53) class81(0.55) |
-| class18 | class12(0.32) class41(0.34) class26(0.39) class8(0.40) class20(0.42) |
-| class19 | class40(0.43) class32(0.45) class20(0.45) class36(0.46) class41(0.49) |
-| class20 | class8(0.30) class18(0.42) class13(0.42) class26(0.42) class172(0.44) |
-| class21 | class12(0.42) class50(0.43) class140(0.44) class18(0.44) class13(0.46) |
-| class22 | class12(0.39) class23(0.44) class191*(0.44) class20(0.49) class58(0.49) |
-| class23 | class22(0.44) class136(0.48) class19(0.53) class176(0.56) class93(0.62) |
-| class24 | class102(0.37) class150(0.37) class10(0.41) class192*(0.42) class54(0.46) |
-| class25 | class34(0.29) class2(0.38) class104(0.47) class172(0.49) class136(0.50) |
-| class26 | class37(0.34) class18(0.39) class13(0.40) class20(0.42) class12(0.50) |
-| class27 | class32(0.40) class59(0.44) class41(0.49) class100(0.51) class54(0.52) |
-| class28 | class127(0.41) class29(0.48) class37(0.51) class135(0.51) class26(0.57) |
-| class29 | class28(0.48) class172(0.58) class67(0.60) class39(0.61) class25(0.63) |
-| class30 | class79(0.28) class35(0.39) class43(0.40) class7(0.43) class50(0.43) |
-| class31 | class194*(0.34) class185(0.35) class188*(0.47) class147(0.50) class61(0.51) |
-| class32 | class27(0.40) class83(0.42) class36(0.42) class19(0.45) class59(0.52) |
-| class33 | class46(0.33) class18(0.49) class181(0.51) class38(0.51) class12(0.52) |
-| class34 | class25(0.29) class42(0.35) class2(0.38) class104(0.42) class172(0.46) |
-| class35 | class30(0.39) class7(0.40) class13(0.41) class104(0.42) class172(0.48) |
-| class36 | class32(0.42) class141(0.44) class40(0.46) class19(0.46) class164(0.47) |
-| class37 | class26(0.34) class41(0.36) class38(0.43) class7(0.43) class8(0.44) |
-| class38 | class44(0.30) class7(0.34) class56(0.35) class157(0.37) class99(0.41) |
-| class39 | class176(0.43) class67(0.45) class153(0.48) class175(0.48) class13(0.53) |
-| class40 | class19(0.43) class41(0.43) class176(0.45) class36(0.46) class161(0.47) |
-| class41 | class18(0.34) class8(0.36) class37(0.36) class40(0.43) class20(0.48) |
-| class42 | class43(0.30) class34(0.35) class9(0.43) class30(0.47) class172(0.50) |
-| class43 | class42(0.30) class50(0.38) class30(0.40) class79(0.40) class164(0.48) |
-| class44 | class38(0.30) class7(0.35) class56(0.37) class99(0.46) class92(0.48) |
-| class45 | class55(0.36) class143(0.38) class172(0.43) class149(0.43) class14(0.50) |
-| class46 | class33(0.33) class164(0.40) class56(0.44) class34(0.50) class181(0.50) |
-| class47 | class158(0.32) class107(0.36) class108(0.36) class126(0.38) class53(0.38) |
-| class48 | class186*(0.43) class133(0.45) class125(0.47) class127(0.48) class2(0.50) |
-| class49 | class57(0.46) class93(0.47) class132(0.47) class62(0.50) class88(0.53) |
-| class50 | class43(0.38) class13(0.39) class21(0.43) class30(0.43) class79(0.46) |
-| class51 | class140(0.54) class31(0.55) class125(0.57) class1(0.58) class137(0.58) |
-| class52 | class69(0.32) class53(0.34) class147(0.38) class94(0.46) class64(0.46) |
-| class53 | class69(0.16) class112(0.17) class110(0.25) class90(0.25) class73(0.26) |
-| class54 | class101(0.21) class10(0.24) class65(0.31) class102(0.32) class159(0.38) |
-| class55 | class45(0.36) class178(0.42) class104(0.45) class172(0.46) class140(0.46) |
-| class56 | class38(0.35) class44(0.37) class92(0.40) class46(0.44) class157(0.45) |
-| class57 | class132(0.34) class88(0.37) class126(0.39) class60(0.42) class119(0.42) |
-| class58 | class96(0.41) class101(0.42) class95(0.45) class37(0.45) class106(0.45) |
-| class59 | class83(0.33) class91(0.35) class27(0.44) class82(0.47) class96(0.48) |
-| class60 | class114(0.20) class126(0.30) class72(0.31) class76(0.31) class116(0.38) |
-| class61 | class185(0.33) class188*(0.34) class158(0.45) class154(0.46) class142(0.47) |
-| class62 | class181(0.46) class139(0.47) class191*(0.47) class163(0.49) class49(0.50) |
-| class63 | class70(0.12) class118(0.18) class165(0.26) class68(0.29) class115(0.34) |
-| class64 | class53(0.31) class69(0.32) class110(0.36) class112(0.40) class147(0.41) |
-| class65 | class54(0.31) class101(0.38) class116(0.46) class96(0.48) class159(0.49) |
-| class66 | class155(0.30) class76(0.36) class72(0.41) class81(0.41) class60(0.44) |
-| class67 | class194*(0.45) class39(0.45) class153(0.45) class188*(0.49) class119(0.50) |
-| class68 | class118(0.16) class115(0.19) class112(0.26) class110(0.29) class63(0.29) |
-| class69 | class53(0.16) class105(0.21) class112(0.26) class90(0.30) class142(0.30) |
-| class70 | class118(0.12) class63(0.12) class115(0.20) class165(0.24) class112(0.26) |
-| class71 | class72(0.32) class187*(0.36) class114(0.38) class134(0.39) class60(0.44) |
-| class72 | class114(0.23) class60(0.31) class71(0.32) class155(0.35) class126(0.37) |
-| class73 | class86(0.15) class113(0.17) class53(0.26) class74(0.27) class112(0.30) |
-| class74 | class113(0.20) class86(0.23) class73(0.27) class168(0.29) class53(0.29) |
-| class75 | class94(0.38) class89(0.39) class194*(0.41) class53(0.43) class69(0.43) |
-| class76 | class60(0.31) class66(0.36) class72(0.46) class155(0.48) class71(0.50) |
-| class77 | class107(0.39) class126(0.41) class185(0.44) class47(0.48) class81(0.49) |
-| class78 | class40(0.48) class169(0.58) class93(0.60) class194*(0.61) class153(0.61) |
-| class79 | class30(0.28) class160(0.34) class43(0.40) class7(0.42) class50(0.46) |
-| class80 | class93(0.55) class191*(0.55) class185(0.60) class76(0.61) class183(0.62) |
-| class81 | class66(0.41) class107(0.42) class160(0.44) class155(0.46) class126(0.48) |
-| class82 | class83(0.35) class107(0.44) class47(0.44) class59(0.47) class158(0.49) |
-| class83 | class59(0.33) class82(0.35) class32(0.42) class91(0.48) class134(0.50) |
-| class84 | class171(0.30) class97(0.46) class114(0.48) class170(0.49) class134(0.49) |
-| class85 | class105(0.15) class94(0.35) class108(0.36) class53(0.36) class89(0.37) |
-| class86 | class73(0.15) class113(0.18) class112(0.22) class74(0.23) class121(0.28) |
-| class87 | class165(0.21) class118(0.23) class115(0.32) class70(0.32) class68(0.39) |
-| class88 | class57(0.37) class93(0.42) class177(0.48) class77(0.49) class94(0.52) |
-| class89 | class69(0.31) class105(0.32) class90(0.35) class110(0.36) class85(0.37) |
-| class90 | class53(0.25) class121(0.28) class112(0.29) class69(0.30) class89(0.35) |
-| class91 | class59(0.35) class96(0.45) class83(0.48) class66(0.54) class82(0.55) |
-| class92 | class56(0.40) class175(0.45) class156(0.46) class111(0.47) class44(0.48) |
-| class93 | class153(0.42) class88(0.42) class194*(0.43) class49(0.47) class185(0.52) |
-| class94 | class53(0.34) class85(0.35) class105(0.36) class75(0.38) class74(0.40) |
-| class95 | class192*(0.34) class10(0.34) class129(0.36) class102(0.36) class101(0.42) |
-| class96 | class58(0.41) class95(0.42) class101(0.43) class91(0.45) class192*(0.45) |
-| class97 | class171(0.23) class84(0.46) class3(0.46) class71(0.49) class122(0.49) |
-| class98 | class178(0.50) class55(0.55) class6(0.59) class39(0.67) class179(0.68) |
-| class99 | class38(0.41) class195*(0.44) class44(0.46) class56(0.48) class156(0.50) |
-| class100 | class10(0.48) class102(0.50) class95(0.50) class159(0.50) class27(0.51) |
-| class101 | class102(0.15) class54(0.21) class103(0.24) class10(0.28) class159(0.37) |
-| class102 | class101(0.15) class10(0.18) class103(0.23) class159(0.25) class150(0.27) |
-| class103 | class102(0.23) class159(0.23) class101(0.24) class150(0.28) class10(0.39) |
-| class104 | class9(0.32) class8(0.32) class7(0.36) class162(0.38) class13(0.40) |
-| class105 | class85(0.15) class69(0.21) class53(0.27) class112(0.27) class115(0.32) |
-| class106 | class58(0.45) class96(0.49) class91(0.59) class71(0.59) class122(0.61) |
-| class107 | class47(0.36) class72(0.38) class77(0.39) class81(0.42) class126(0.42) |
-| class108 | class53(0.32) class147(0.35) class85(0.36) class47(0.36) class69(0.39) |
-| class109 | class119(0.44) class188*(0.49) class148(0.50) class147(0.52) class31(0.55) |
-| class110 | class53(0.25) class112(0.28) class68(0.29) class69(0.30) class121(0.35) |
-| class111 | class102(0.34) class101(0.40) class143(0.43) class54(0.45) class92(0.47) |
-| class112 | class53(0.17) class115(0.22) class86(0.22) class113(0.23) class68(0.26) |
-| class113 | class73(0.17) class86(0.18) class74(0.20) class112(0.23) class121(0.29) |
-| class114 | class60(0.20) class72(0.23) class126(0.28) class116(0.31) class134(0.35) |
-| class115 | class118(0.15) class68(0.19) class70(0.20) class112(0.22) class105(0.32) |
-| class116 | class114(0.31) class138(0.32) class134(0.38) class60(0.38) class186*(0.43) |
-| class117 | class73(0.40) class53(0.42) class47(0.43) class108(0.44) class74(0.46) |
-| class118 | class70(0.12) class115(0.15) class68(0.16) class63(0.18) class165(0.19) |
-| class119 | class74(0.32) class154(0.38) class86(0.40) class57(0.42) class188*(0.42) |
-| class120 | class130(0.39) class89(0.47) class75(0.47) class194*(0.50) class110(0.50) |
-| class121 | class124(0.25) class86(0.28) class90(0.28) class113(0.29) class145(0.30) |
-| class122 | class171(0.45) class160(0.47) class97(0.49) class170(0.50) class84(0.51) |
-| class123 | class124(0.19) class145(0.25) class0(0.28) class121(0.39) class144(0.40) |
-| class124 | class0(0.17) class145(0.18) class123(0.19) class121(0.25) class144(0.37) |
-| class125 | class1(0.44) class126(0.47) class48(0.47) class177(0.49) class119(0.54) |
-| class126 | class114(0.28) class60(0.30) class72(0.37) class47(0.38) class57(0.39) |
-| class127 | class135(0.36) class28(0.41) class187*(0.42) class133(0.42) class101(0.44) |
-| class128 | class72(0.38) class189*(0.38) class2(0.41) class4(0.44) class187*(0.47) |
-| class129 | class95(0.36) class192*(0.40) class10(0.41) class159(0.49) class24(0.51) |
-| class130 | class120(0.39) class75(0.46) class147(0.52) class161(0.54) class108(0.55) |
-| class131 | class132(0.39) class57(0.42) class149(0.49) class139(0.56) class125(0.57) |
-| class132 | class57(0.34) class131(0.39) class126(0.45) class49(0.47) class62(0.53) |
-| class133 | class127(0.42) class48(0.45) class187*(0.46) class2(0.47) class104(0.47) |
-| class134 | class187*(0.35) class114(0.35) class116(0.38) class71(0.39) class60(0.39) |
-| class135 | class127(0.36) class103(0.47) class133(0.50) class28(0.51) class4(0.52) |
-| class136 | class139(0.46) class60(0.47) class183(0.47) class23(0.48) class25(0.50) |
-| class137 | class1(0.44) class50(0.48) class133(0.48) class43(0.49) class2(0.49) |
-| class138 | class116(0.32) class134(0.40) class186*(0.41) class114(0.46) class60(0.49) |
-| class139 | class163(0.40) class9(0.41) class184(0.42) class136(0.46) class62(0.47) |
-| class140 | class172(0.32) class21(0.44) class6(0.46) class55(0.46) class3(0.50) |
-| class141 | class185(0.41) class36(0.44) class40(0.49) class93(0.53) class188*(0.54) |
-| class142 | class69(0.30) class115(0.40) class105(0.41) class188*(0.42) class73(0.43) |
-| class143 | class178(0.30) class45(0.38) class179(0.39) class111(0.43) class55(0.47) |
-| class144 | class146(0.18) class145(0.26) class153(0.29) class190*(0.32) class121(0.36) |
-| class145 | class124(0.18) class123(0.25) class144(0.26) class0(0.28) class121(0.30) |
-| class146 | class144(0.18) class74(0.35) class193*(0.36) class145(0.37) class153(0.39) |
-| class147 | class108(0.35) class52(0.38) class85(0.41) class64(0.41) class53(0.43) |
-| class148 | class144(0.37) class146(0.40) class57(0.48) class109(0.50) class119(0.50) |
-| class149 | class45(0.43) class184(0.44) class9(0.47) class6(0.49) class131(0.49) |
-| class150 | class159(0.21) class102(0.27) class103(0.28) class24(0.37) class151(0.41) |
-| class151 | class5(0.31) class152(0.33) class159(0.33) class150(0.41) class10(0.48) |
-| class152 | class5(0.15) class151(0.33) class159(0.35) class150(0.50) class54(0.51) |
-| class153 | class144(0.29) class85(0.37) class146(0.39) class105(0.39) class93(0.42) |
-| class154 | class188*(0.25) class86(0.31) class119(0.38) class121(0.38) class145(0.42) |
-| class155 | class66(0.30) class72(0.35) class47(0.44) class189*(0.45) class81(0.46) |
-| class156 | class38(0.43) class162(0.44) class92(0.46) class56(0.49) class46(0.50) |
-| class157 | class38(0.37) class56(0.45) class44(0.55) class99(0.56) class7(0.57) |
-| class158 | class185(0.31) class47(0.32) class61(0.45) class194*(0.46) class86(0.46) |
-| class159 | class150(0.21) class103(0.23) class102(0.25) class10(0.33) class151(0.33) |
-| class160 | class79(0.34) class81(0.44) class15(0.45) class170(0.46) class122(0.47) |
-| class161 | class164(0.41) class40(0.47) class15(0.50) class43(0.51) class36(0.51) |
-| class162 | class9(0.37) class104(0.38) class156(0.44) class163(0.45) class25(0.51) |
-| class163 | class139(0.40) class164(0.44) class162(0.45) class175(0.46) class36(0.48) |
-| class164 | class46(0.40) class161(0.41) class163(0.44) class40(0.47) class36(0.47) |
-| class165 | class118(0.19) class87(0.21) class70(0.24) class63(0.26) class115(0.33) |
-| class166 | class186*(0.41) class182(0.43) class183(0.44) class167(0.48) class181(0.49) |
-| class167 | class186*(0.40) class181(0.46) class166(0.48) class116(0.51) class138(0.53) |
-| class168 | class118(0.23) class74(0.29) class165(0.34) class70(0.35) class63(0.39) |
-| class169 | class184(0.46) class181(0.49) class143(0.50) class179(0.54) class166(0.55) |
-| class170 | class171(0.45) class160(0.46) class84(0.49) class97(0.50) class122(0.50) |
-| class171 | class97(0.23) class84(0.30) class122(0.45) class170(0.45) class3(0.52) |
-| class172 | class140(0.32) class104(0.42) class45(0.43) class20(0.44) class34(0.46) |
-| class173 | class87(0.48) class118(0.53) class68(0.57) class165(0.57) class99(0.60) |
-| class174 | class176(0.44) class38(0.44) class40(0.48) class37(0.48) class175(0.48) |
-| class175 | class176(0.31) class92(0.45) class163(0.46) class39(0.48) class174(0.48) |
-| class176 | class175(0.31) class39(0.43) class174(0.44) class40(0.45) class43(0.52) |
-| class177 | class57(0.42) class114(0.46) class88(0.48) class125(0.49) class60(0.52) |
-| class178 | class179(0.22) class143(0.30) class55(0.42) class104(0.43) class7(0.47) |
-| class179 | class178(0.22) class184(0.39) class143(0.39) class102(0.42) class56(0.46) |
-| class180 | class126(0.42) class155(0.47) class66(0.50) class60(0.53) class114(0.54) |
-| class181 | class167(0.46) class62(0.46) class186*(0.47) class191*(0.48) class169(0.49) |
-| class182 | class166(0.43) class57(0.51) class88(0.54) class183(0.54) class84(0.58) |
-| class183 | class60(0.43) class166(0.44) class136(0.47) class126(0.49) class181(0.50) |
-| class184 | class179(0.39) class9(0.41) class139(0.42) class149(0.44) class104(0.45) |
-| class185 | class158(0.31) class61(0.33) class188*(0.33) class194*(0.34) class31(0.35) |
-| class186* | class134(0.39) class167(0.40) class138(0.41) class166(0.41) class2(0.41) |
-| class187* | class134(0.35) class71(0.36) class189*(0.36) class127(0.42) class4(0.43) |
-| class188* | class154(0.25) class185(0.33) class61(0.34) class194*(0.34) class119(0.42) |
-| class189* | class4(0.26) class187*(0.36) class128(0.38) class155(0.45) class79(0.47) |
-| class190* | class193*(0.18) class144(0.32) class146(0.41) class153(0.49) class121(0.49) |
-| class191* | class22(0.44) class186*(0.47) class62(0.47) class181(0.48) class58(0.51) |
-| class192* | class95(0.34) class129(0.40) class24(0.42) class96(0.45) class101(0.46) |
-| class193* | class190*(0.18) class146(0.36) class144(0.37) class121(0.43) class145(0.45) |
-| class194* | class31(0.34) class185(0.34) class188*(0.34) class75(0.41) class93(0.43) |
-| class195* | class99(0.44) class111(0.49) class157(0.61) class0(0.64) class159(0.65) |
+| AM General Hummer SUV 2000 | HUMMER H2 SUT Crew Cab 2009(0.17) HUMMER H3T Crew Cab 2010(0.28) Jeep Wrangler SUV 2012(0.28) GMC Canyon Extended Cab 2012(0.51) Jeep Patriot SUV 2012(0.52) |
+| Acura RL Sedan 2012 | Honda Odyssey Minivan 2012(0.44) Hyundai Sonata Sedan 2012(0.44) Acura TSX Sedan 2012(0.48) BMW M5 Sedan 2010(0.48) Audi S5 Coupe 2012(0.49) |
+| Acura TL Sedan 2012 | BMW ActiveHybrid 5 Sedan 2012(0.38) BMW M5 Sedan 2010(0.38) Audi A5 Coupe 2012(0.40) Honda Accord Sedan 2012(0.41) Toyota Camry Sedan 2012*(0.41) |
+| Acura TL Type-S 2008 | Eagle Talon Hatchback 1998(0.46) Acura TL Sedan 2012(0.48) BMW M5 Sedan 2010(0.49) Infiniti G Coupe IPL 2012(0.50) BMW ActiveHybrid 5 Sedan 2012(0.50) |
+| Acura TSX Sedan 2012 | Volkswagen Golf Hatchback 2012*(0.26) Toyota Corolla Sedan 2012*(0.43) Honda Accord Sedan 2012(0.44) Acura TL Sedan 2012(0.45) Acura RL Sedan 2012(0.48) |
+| Acura Integra Type R 2001 | Lamborghini Diablo Coupe 2001(0.15) Lamborghini Gallardo LP 570-4 Superleggera 2012(0.31) McLaren MP4-12C Coupe 2012(0.40) Chevrolet Cobalt SS 2010(0.49) Chevrolet Corvette Convertible 2012(0.51) |
+| Acura ZDX Hatchback 2012 | BMW M5 Sedan 2010(0.46) Infiniti G Coupe IPL 2012(0.46) Fisker Karma Sedan 2012(0.47) Lamborghini Reventon Coupe 2008(0.49) Aston Martin Virage Convertible 2012(0.50) |
+| Aston Martin V8 Vantage Convertible 2012 | Aston Martin V8 Vantage Coupe 2012(0.31) Bentley Continental Supersports Conv. Convertible 2012(0.34) Bugatti Veyron 16.4 Convertible 2009(0.35) Fisker Karma Sedan 2012(0.36) Audi TTS Coupe 2012(0.38) |
+| Aston Martin V8 Vantage Coupe 2012 | Audi S5 Convertible 2012(0.30) Aston Martin V8 Vantage Convertible 2012(0.31) Fisker Karma Sedan 2012(0.32) Aston Martin Virage Convertible 2012(0.36) Bentley Continental GT Coupe 2012(0.36) |
+| Aston Martin Virage Convertible 2012 | Fisker Karma Sedan 2012(0.32) Aston Martin V8 Vantage Coupe 2012(0.36) Mercedes-Benz SL-Class Coupe 2009(0.37) Hyundai Azera Sedan 2012(0.41) Tesla Model S Sedan 2012(0.41) |
+| Aston Martin Virage Coupe 2012 | Ferrari 458 Italia Convertible 2012(0.18) Chevrolet Corvette Convertible 2012(0.24) Ferrari California Convertible 2012(0.28) McLaren MP4-12C Coupe 2012(0.33) Dodge Charger Sedan 2012(0.34) |
+| Audi RS 4 Convertible 2008 | Audi S5 Convertible 2012(0.44) Dodge Challenger SRT8 2011(0.49) Chevrolet Corvette ZR1 2012(0.51) Audi S6 Sedan 2011(0.52) MINI Cooper Roadster Convertible 2012(0.55) |
+| Audi A5 Coupe 2012 | Audi TT Hatchback 2011(0.32) Audi TTS Coupe 2012(0.38) Audi S4 Sedan 2012(0.39) Acura TL Sedan 2012(0.40) Audi S5 Coupe 2012(0.42) |
+| Audi TTS Coupe 2012 | Aston Martin V8 Vantage Convertible 2012(0.38) Audi A5 Coupe 2012(0.38) Cadillac CTS-V Sedan 2012(0.39) BMW 1 Series Convertible 2012(0.40) Fisker Karma Sedan 2012(0.40) |
+| Audi R8 Coupe 2012 | Audi TTS Coupe 2012(0.42) Fisker Karma Sedan 2012(0.45) Bugatti Veyron 16.4 Coupe 2009(0.50) Audi A5 Coupe 2012(0.53) Mercedes-Benz SL-Class Coupe 2009(0.54) |
+| Audi V8 Sedan 1994 | Audi 100 Wagon 1994(0.28) Audi 100 Sedan 1994(0.37) Mercedes-Benz 300-Class Convertible 1993(0.45) Isuzu Ascender SUV 2008(0.45) Volvo 240 Sedan 1993*(0.49) |
+| Audi 100 Sedan 1994 | Audi V8 Sedan 1994(0.37) Audi 100 Wagon 1994(0.39) Isuzu Ascender SUV 2008(0.52) Chevrolet Tahoe Hybrid SUV 2012(0.53) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.55) |
+| Audi 100 Wagon 1994 | Audi V8 Sedan 1994(0.28) Audi 100 Sedan 1994(0.39) Mercedes-Benz 300-Class Convertible 1993(0.51) Isuzu Ascender SUV 2008(0.53) Daewoo Nubira Wagon 2002(0.55) |
+| Audi TT Hatchback 2011 | Audi A5 Coupe 2012(0.32) Bentley Continental GT Coupe 2012(0.34) BMW 1 Series Convertible 2012(0.39) Aston Martin V8 Vantage Coupe 2012(0.40) Audi S5 Convertible 2012(0.42) |
+| Audi S6 Sedan 2011 | Bentley Mulsanne Sedan 2011(0.43) BMW X6 SUV 2012(0.45) Audi S5 Convertible 2012(0.45) BMW X3 SUV 2012(0.46) Bentley Continental GT Coupe 2012(0.49) |
+| Audi S5 Convertible 2012 | Aston Martin V8 Vantage Coupe 2012(0.30) Audi TT Hatchback 2011(0.42) Audi TTS Coupe 2012(0.42) BMW 1 Series Convertible 2012(0.42) Porsche Panamera Sedan 2012(0.44) |
+| Audi S5 Coupe 2012 | Audi A5 Coupe 2012(0.42) Cadillac CTS-V Sedan 2012(0.43) Infiniti G Coupe IPL 2012(0.44) Audi TT Hatchback 2011(0.44) Audi TTS Coupe 2012(0.46) |
+| Audi S4 Sedan 2012 | Audi A5 Coupe 2012(0.39) Audi S4 Sedan 2007(0.44) Volkswagen Beetle Hatchback 2012*(0.44) Audi S5 Convertible 2012(0.49) Chevrolet Camaro Convertible 2012(0.49) |
+| Audi S4 Sedan 2007 | Audi S4 Sedan 2012(0.44) Hyundai Genesis Sedan 2012(0.48) Audi S6 Sedan 2011(0.53) Rolls-Royce Phantom Sedan 2012(0.56) Dodge Durango SUV 2012(0.62) |
+| Audi TT RS Coupe 2012 | Ferrari 458 Italia Convertible 2012(0.37) Lamborghini Aventador Coupe 2012(0.37) Aston Martin Virage Coupe 2012(0.41) Volvo C30 Hatchback 2012*(0.42) Chevrolet Corvette Convertible 2012(0.46) |
+| BMW ActiveHybrid 5 Sedan 2012 | BMW M5 Sedan 2010(0.29) Acura TL Sedan 2012(0.38) Fisker Karma Sedan 2012(0.47) Porsche Panamera Sedan 2012(0.49) Hyundai Genesis Sedan 2012(0.50) |
+| BMW 1 Series Convertible 2012 | BMW Z4 Convertible 2012(0.34) Audi TT Hatchback 2011(0.39) Audi TTS Coupe 2012(0.40) Audi S5 Convertible 2012(0.42) Audi A5 Coupe 2012(0.50) |
+| BMW 1 Series Coupe 2012 | BMW X6 SUV 2012(0.40) Chevrolet HHR SS 2010(0.44) Bentley Continental GT Coupe 2012(0.49) Ferrari FF Coupe 2012(0.51) Chevrolet Corvette Convertible 2012(0.52) |
+| BMW 3 Series Sedan 2012 | Honda Accord Coupe 2012(0.41) BMW 3 Series Wagon 2012(0.48) BMW Z4 Convertible 2012(0.51) Hyundai Accent Sedan 2012(0.51) BMW 1 Series Convertible 2012(0.57) |
+| BMW 3 Series Wagon 2012 | BMW 3 Series Sedan 2012(0.48) Porsche Panamera Sedan 2012(0.58) Chevrolet TrailBlazer SS 2009(0.60) Bentley Arnage Sedan 2009(0.61) BMW ActiveHybrid 5 Sedan 2012(0.63) |
+| BMW 6 Series Convertible 2007 | Chrysler Crossfire Convertible 2008(0.28) BMW M6 Convertible 2010(0.39) Bentley Continental Flying Spur Sedan 2007(0.40) Aston Martin V8 Vantage Convertible 2012(0.43) Cadillac CTS-V Sedan 2012(0.43) |
+| BMW X5 SUV 2007 | Volvo XC90 SUV 2007*(0.34) Toyota Sequoia SUV 2012(0.35) Toyota 4Runner SUV 2012*(0.47) Jeep Grand Cherokee SUV 2012(0.50) Chevrolet Tahoe Hybrid SUV 2012(0.51) |
+| BMW X6 SUV 2012 | BMW 1 Series Coupe 2012(0.40) Dodge Caliber Wagon 2007(0.42) BMW X3 SUV 2012(0.42) Audi S6 Sedan 2011(0.45) Chevrolet HHR SS 2010(0.52) |
+| BMW M3 Coupe 2012 | Buick Regal GS 2012(0.33) Audi TT Hatchback 2011(0.49) Suzuki Kizashi Sedan 2012(0.51) Bentley Continental Supersports Conv. Convertible 2012(0.51) Audi A5 Coupe 2012(0.52) |
+| BMW M5 Sedan 2010 | BMW ActiveHybrid 5 Sedan 2012(0.29) Bentley Continental GT Coupe 2007(0.35) Acura TL Sedan 2012(0.38) Fisker Karma Sedan 2012(0.42) Porsche Panamera Sedan 2012(0.46) |
+| BMW M6 Convertible 2010 | BMW 6 Series Convertible 2007(0.39) Aston Martin V8 Vantage Convertible 2012(0.40) Audi TTS Coupe 2012(0.41) Fisker Karma Sedan 2012(0.42) Porsche Panamera Sedan 2012(0.48) |
+| BMW X3 SUV 2012 | BMW X6 SUV 2012(0.42) Infiniti QX56 SUV 2011(0.44) Bentley Mulsanne Sedan 2011(0.46) Audi S6 Sedan 2011(0.46) Mercedes-Benz S-Class Sedan 2012(0.47) |
+| BMW Z4 Convertible 2012 | BMW 1 Series Convertible 2012(0.34) Bentley Continental GT Coupe 2012(0.36) Bentley Continental Supersports Conv. Convertible 2012(0.43) Aston Martin V8 Vantage Convertible 2012(0.43) Aston Martin V8 Vantage Coupe 2012(0.44) |
+| Bentley Continental Supersports Conv. Convertible 2012 | Bugatti Veyron 16.4 Convertible 2009(0.30) Aston Martin V8 Vantage Convertible 2012(0.34) Chevrolet Corvette Ron Fellows Edition Z06 2007(0.35) Maybach Landaulet Convertible 2012(0.37) FIAT 500 Convertible 2012(0.41) |
+| Bentley Arnage Sedan 2009 | Rolls-Royce Phantom Sedan 2012(0.43) Chevrolet TrailBlazer SS 2009(0.45) Land Rover Range Rover SUV 2012(0.48) Rolls-Royce Ghost Sedan 2012(0.48) Audi TTS Coupe 2012(0.53) |
+| Bentley Mulsanne Sedan 2011 | Audi S6 Sedan 2011(0.43) Bentley Continental GT Coupe 2012(0.43) Rolls-Royce Phantom Sedan 2012(0.45) BMW X3 SUV 2012(0.46) Mercedes-Benz C-Class Sedan 2012(0.47) |
+| Bentley Continental GT Coupe 2012 | Audi TT Hatchback 2011(0.34) Aston Martin V8 Vantage Coupe 2012(0.36) BMW Z4 Convertible 2012(0.36) Bentley Mulsanne Sedan 2011(0.43) Audi S5 Convertible 2012(0.48) |
+| Bentley Continental GT Coupe 2007 | Bentley Continental Flying Spur Sedan 2007(0.30) BMW M5 Sedan 2010(0.35) Aston Martin Virage Convertible 2012(0.43) BMW 6 Series Convertible 2007(0.47) Porsche Panamera Sedan 2012(0.50) |
+| Bentley Continental Flying Spur Sedan 2007 | Bentley Continental GT Coupe 2007(0.30) Cadillac CTS-V Sedan 2012(0.38) BMW 6 Series Convertible 2007(0.40) Chrysler Crossfire Convertible 2008(0.40) Mercedes-Benz S-Class Sedan 2012(0.48) |
+| Bugatti Veyron 16.4 Convertible 2009 | Bentley Continental Supersports Conv. Convertible 2012(0.30) Aston Martin V8 Vantage Convertible 2012(0.35) Chevrolet Corvette Ron Fellows Edition Z06 2007(0.37) FIAT 500 Convertible 2012(0.46) Dodge Challenger SRT8 2011(0.48) |
+| Bugatti Veyron 16.4 Coupe 2009 | Chevrolet Corvette ZR1 2012(0.36) Jaguar XK XKR 2012(0.38) Porsche Panamera Sedan 2012(0.43) Lamborghini Reventon Coupe 2008(0.43) Audi R8 Coupe 2012(0.50) |
+| Buick Regal GS 2012 | BMW M3 Coupe 2012(0.33) Mercedes-Benz S-Class Sedan 2012(0.40) Chevrolet Corvette Ron Fellows Edition Z06 2007(0.44) BMW M5 Sedan 2010(0.50) Suzuki Kizashi Sedan 2012(0.50) |
+| Buick Rainier SUV 2007 | Mazda Tribute SUV 2011(0.32) Ford Freestar Minivan 2007(0.36) Ford Expedition EL SUV 2009(0.36) Honda Odyssey Minivan 2007(0.38) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.38) |
+| Buick Verano Sedan 2012 | Toyota Camry Sedan 2012*(0.43) Hyundai Sonata Hybrid Sedan 2012(0.45) Honda Odyssey Minivan 2012(0.47) Honda Accord Coupe 2012(0.48) Acura TL Sedan 2012(0.50) |
+| Buick Enclave SUV 2012 | Chevrolet Traverse SUV 2012(0.46) Dodge Durango SUV 2012(0.47) Hyundai Veracruz SUV 2012(0.47) Chevrolet Sonic Sedan 2012(0.50) Dodge Journey SUV 2012(0.53) |
+| Cadillac CTS-V Sedan 2012 | Bentley Continental Flying Spur Sedan 2007(0.38) Audi TTS Coupe 2012(0.39) Audi S5 Coupe 2012(0.43) BMW 6 Series Convertible 2007(0.43) Chrysler Crossfire Convertible 2008(0.46) |
+| Cadillac SRX SUV 2012 | Infiniti G Coupe IPL 2012(0.54) BMW X5 SUV 2007(0.55) Honda Odyssey Minivan 2012(0.57) Acura RL Sedan 2012(0.58) Hyundai Sonata Sedan 2012(0.58) |
+| Cadillac Escalade EXT Crew Cab 2007 | Chevrolet Silverado 1500 Classic Extended Cab 2007(0.32) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.34) Jeep Grand Cherokee SUV 2012(0.38) Dodge Durango SUV 2007(0.46) Chevrolet Avalanche Crew Cab 2012(0.46) |
+| Chevrolet Silverado 1500 Hybrid Crew Cab 2012 | Chevrolet Silverado 1500 Classic Extended Cab 2007(0.16) Ford F-150 Regular Cab 2012(0.17) Ford Ranger SuperCab 2011(0.25) Dodge Dakota Club Cab 2007(0.25) Chevrolet Silverado 1500 Extended Cab 2012(0.26) |
+| Chevrolet Corvette Convertible 2012 | Ferrari California Convertible 2012(0.21) Aston Martin Virage Coupe 2012(0.24) Chevrolet Cobalt SS 2010(0.31) Ferrari 458 Italia Convertible 2012(0.32) McLaren MP4-12C Coupe 2012(0.38) |
+| Chevrolet Corvette ZR1 2012 | Bugatti Veyron 16.4 Coupe 2009(0.36) Spyker C8 Convertible 2009(0.42) Fisker Karma Sedan 2012(0.45) Porsche Panamera Sedan 2012(0.46) Infiniti G Coupe IPL 2012(0.46) |
+| Chevrolet Corvette Ron Fellows Edition Z06 2007 | Bentley Continental Supersports Conv. Convertible 2012(0.35) Bugatti Veyron 16.4 Convertible 2009(0.37) Dodge Challenger SRT8 2011(0.40) Buick Regal GS 2012(0.44) Maybach Landaulet Convertible 2012(0.45) |
+| Chevrolet Traverse SUV 2012 | Hyundai Veracruz SUV 2012(0.34) Dodge Journey SUV 2012(0.37) Honda Odyssey Minivan 2007(0.39) Chevrolet Impala Sedan 2007(0.42) GMC Yukon Hybrid SUV 2012(0.42) |
+| Chevrolet Camaro Convertible 2012 | Dodge Charger SRT-8 2009(0.41) Ferrari California Convertible 2012(0.42) Dodge Charger Sedan 2012(0.45) BMW Z4 Convertible 2012(0.45) Ford Mustang Convertible 2007(0.45) |
+| Chevrolet HHR SS 2010 | Dodge Caliber Wagon 2007(0.33) Dodge Magnum Wagon 2008(0.35) BMW 1 Series Coupe 2012(0.44) Dodge Caliber Wagon 2012(0.47) Dodge Charger SRT-8 2009(0.48) |
+| Chevrolet Impala Sedan 2007 | Ford Focus Sedan 2007(0.20) Honda Odyssey Minivan 2007(0.30) Chevrolet Malibu Sedan 2007(0.31) Chrysler Sebring Convertible 2010(0.31) Ford Fiesta Sedan 2012(0.38) |
+| Chevrolet Tahoe Hybrid SUV 2012 | Toyota Sequoia SUV 2012(0.33) Toyota 4Runner SUV 2012*(0.34) Mazda Tribute SUV 2011(0.45) Land Rover LR2 SUV 2012(0.46) Isuzu Ascender SUV 2008(0.47) |
+| Chevrolet Sonic Sedan 2012 | Suzuki Kizashi Sedan 2012(0.46) Hyundai Azera Sedan 2012(0.47) Volkswagen Beetle Hatchback 2012*(0.47) Mercedes-Benz E-Class Sedan 2012(0.49) Buick Enclave SUV 2012(0.50) |
+| Chevrolet Express Cargo Van 2007 | Chevrolet Express Van 2007(0.12) GMC Savana Van 2012(0.18) Mercedes-Benz Sprinter Van 2012(0.26) Chevrolet Silverado 2500HD Regular Cab 2012(0.29) Ford E-Series Wagon Van 2012(0.34) |
+| Chevrolet Avalanche Crew Cab 2012 | Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.31) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.32) Ford Ranger SuperCab 2011(0.36) Ford F-150 Regular Cab 2012(0.40) Jeep Grand Cherokee SUV 2012(0.41) |
+| Chevrolet Cobalt SS 2010 | Chevrolet Corvette Convertible 2012(0.31) Ferrari California Convertible 2012(0.38) Ford Fiesta Sedan 2012(0.46) Dodge Charger SRT-8 2009(0.48) McLaren MP4-12C Coupe 2012(0.49) |
+| Chevrolet Malibu Hybrid Sedan 2010 | Lincoln Town Car Sedan 2011(0.30) Chrysler Sebring Convertible 2010(0.36) Chevrolet Malibu Sedan 2007(0.41) Daewoo Nubira Wagon 2002(0.41) Chevrolet Impala Sedan 2007(0.44) |
+| Chevrolet TrailBlazer SS 2009 | Volvo XC90 SUV 2007*(0.45) Bentley Arnage Sedan 2009(0.45) Land Rover Range Rover SUV 2012(0.45) Toyota 4Runner SUV 2012*(0.49) GMC Yukon Hybrid SUV 2012(0.50) |
+| Chevrolet Silverado 2500HD Regular Cab 2012 | GMC Savana Van 2012(0.16) Ford E-Series Wagon Van 2012(0.19) Ford F-150 Regular Cab 2012(0.26) Ford Ranger SuperCab 2011(0.29) Chevrolet Express Cargo Van 2007(0.29) |
+| Chevrolet Silverado 1500 Classic Extended Cab 2007 | Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.16) Ford F-450 Super Duty Crew Cab 2012(0.21) Ford F-150 Regular Cab 2012(0.26) Dodge Dakota Club Cab 2007(0.30) Isuzu Ascender SUV 2008(0.30) |
+| Chevrolet Express Van 2007 | GMC Savana Van 2012(0.12) Chevrolet Express Cargo Van 2007(0.12) Ford E-Series Wagon Van 2012(0.20) Mercedes-Benz Sprinter Van 2012(0.24) Ford F-150 Regular Cab 2012(0.26) |
+| Chevrolet Monte Carlo Coupe 2007 | Chevrolet Malibu Sedan 2007(0.32) Toyota Corolla Sedan 2012*(0.36) Ford Focus Sedan 2007(0.38) Hyundai Elantra Sedan 2007(0.39) Chevrolet Impala Sedan 2007(0.44) |
+| Chevrolet Malibu Sedan 2007 | Ford Focus Sedan 2007(0.23) Chevrolet Impala Sedan 2007(0.31) Chevrolet Monte Carlo Coupe 2007(0.32) Lincoln Town Car Sedan 2011(0.35) Honda Odyssey Minivan 2007(0.37) |
+| Chevrolet Silverado 1500 Extended Cab 2012 | Dodge Ram Pickup 3500 Quad Cab 2009(0.15) Ford F-150 Regular Cab 2007(0.17) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.26) Chevrolet Silverado 1500 Regular Cab 2012(0.27) Ford F-150 Regular Cab 2012(0.30) |
+| Chevrolet Silverado 1500 Regular Cab 2012 | Ford F-150 Regular Cab 2007(0.20) Dodge Ram Pickup 3500 Quad Cab 2009(0.23) Chevrolet Silverado 1500 Extended Cab 2012(0.27) Nissan NV Passenger Van 2012(0.29) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.29) |
+| Chrysler Aspen SUV 2009 | Dodge Durango SUV 2007(0.38) Dodge Dakota Crew Cab 2010(0.39) Volvo XC90 SUV 2007*(0.41) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.43) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.43) |
+| Chrysler Sebring Convertible 2010 | Chevrolet Impala Sedan 2007(0.31) Chevrolet Malibu Hybrid Sedan 2010(0.36) Chevrolet Malibu Sedan 2007(0.46) Lincoln Town Car Sedan 2011(0.48) Chevrolet Monte Carlo Coupe 2007(0.50) |
+| Chrysler Town and Country Minivan 2012 | Ford Freestar Minivan 2007(0.39) Honda Odyssey Minivan 2007(0.41) Toyota Sequoia SUV 2012(0.44) Buick Rainier SUV 2007(0.48) Daewoo Nubira Wagon 2002(0.49) |
+| Chrysler 300 SRT-8 2010 | Bentley Mulsanne Sedan 2011(0.48) Nissan Juke Hatchback 2012(0.58) Dodge Durango SUV 2012(0.60) Volvo XC90 SUV 2007*(0.61) Land Rover Range Rover SUV 2012(0.61) |
+| Chrysler Crossfire Convertible 2008 | BMW 6 Series Convertible 2007(0.28) Mercedes-Benz 300-Class Convertible 1993(0.34) Bentley Continental Flying Spur Sedan 2007(0.40) Aston Martin V8 Vantage Convertible 2012(0.42) Cadillac CTS-V Sedan 2012(0.46) |
+| Chrysler PT Cruiser Convertible 2008 | Dodge Durango SUV 2012(0.55) Volkswagen Beetle Hatchback 2012*(0.55) Toyota Sequoia SUV 2012(0.60) Chrysler Sebring Convertible 2010(0.61) Suzuki SX4 Sedan 2012(0.62) |
+| Daewoo Nubira Wagon 2002 | Chevrolet Malibu Hybrid Sedan 2010(0.41) Ford Freestar Minivan 2007(0.42) Mercedes-Benz 300-Class Convertible 1993(0.44) Lincoln Town Car Sedan 2011(0.46) Honda Odyssey Minivan 2007(0.48) |
+| Dodge Caliber Wagon 2012 | Dodge Caliber Wagon 2007(0.35) Ford Freestar Minivan 2007(0.44) Buick Rainier SUV 2007(0.44) Chevrolet HHR SS 2010(0.47) Mazda Tribute SUV 2011(0.49) |
+| Dodge Caliber Wagon 2007 | Chevrolet HHR SS 2010(0.33) Dodge Caliber Wagon 2012(0.35) BMW X6 SUV 2012(0.42) Dodge Magnum Wagon 2008(0.48) Hyundai Elantra Sedan 2007(0.50) |
+| Dodge Caravan Minivan 1997 | Plymouth Neon Coupe 1999(0.30) Eagle Talon Hatchback 1998(0.46) Ford Focus Sedan 2007(0.48) Nissan 240SX Coupe 1998(0.49) Hyundai Elantra Sedan 2007(0.49) |
+| Dodge Ram Pickup 3500 Crew Cab 2010 | Ford F-450 Super Duty Crew Cab 2012(0.15) Dodge Durango SUV 2007(0.35) Ford Expedition EL SUV 2009(0.36) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.36) Dodge Dakota Crew Cab 2010(0.37) |
+| Dodge Ram Pickup 3500 Quad Cab 2009 | Chevrolet Silverado 1500 Extended Cab 2012(0.15) Ford F-150 Regular Cab 2007(0.18) Ford F-150 Regular Cab 2012(0.22) Chevrolet Silverado 1500 Regular Cab 2012(0.23) GMC Canyon Extended Cab 2012(0.28) |
+| Dodge Sprinter Cargo Van 2009 | Mercedes-Benz Sprinter Van 2012(0.21) GMC Savana Van 2012(0.23) Ford E-Series Wagon Van 2012(0.32) Chevrolet Express Van 2007(0.32) Chevrolet Silverado 2500HD Regular Cab 2012(0.39) |
+| Dodge Journey SUV 2012 | Chevrolet Traverse SUV 2012(0.37) Dodge Durango SUV 2012(0.42) Scion xD Hatchback 2012(0.48) Chrysler Town and Country Minivan 2012(0.49) Dodge Durango SUV 2007(0.52) |
+| Dodge Dakota Crew Cab 2010 | Chevrolet Silverado 1500 Classic Extended Cab 2007(0.31) Ford F-450 Super Duty Crew Cab 2012(0.32) Dodge Dakota Club Cab 2007(0.35) Ford Ranger SuperCab 2011(0.36) Dodge Ram Pickup 3500 Crew Cab 2010(0.37) |
+| Dodge Dakota Club Cab 2007 | Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.25) GMC Canyon Extended Cab 2012(0.28) Ford F-150 Regular Cab 2012(0.29) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.30) Dodge Dakota Crew Cab 2010(0.35) |
+| Dodge Magnum Wagon 2008 | Chevrolet HHR SS 2010(0.35) Dodge Charger SRT-8 2009(0.45) Dodge Caliber Wagon 2007(0.48) Chevrolet Malibu Hybrid Sedan 2010(0.54) Dodge Caliber Wagon 2012(0.55) |
+| Dodge Challenger SRT8 2011 | Chevrolet Corvette Ron Fellows Edition Z06 2007(0.40) Rolls-Royce Ghost Sedan 2012(0.45) MINI Cooper Roadster Convertible 2012(0.46) Ford GT Coupe 2006(0.47) Bugatti Veyron 16.4 Convertible 2009(0.48) |
+| Dodge Durango SUV 2012 | Land Rover Range Rover SUV 2012(0.42) Dodge Journey SUV 2012(0.42) Volvo XC90 SUV 2007*(0.43) Buick Enclave SUV 2012(0.47) Toyota Sequoia SUV 2012(0.52) |
+| Dodge Durango SUV 2007 | Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.34) Dodge Ram Pickup 3500 Crew Cab 2010(0.35) Ford F-450 Super Duty Crew Cab 2012(0.36) Chrysler Aspen SUV 2009(0.38) Chevrolet Silverado 1500 Regular Cab 2012(0.40) |
+| Dodge Charger Sedan 2012 | Volvo C30 Hatchback 2012*(0.34) Aston Martin Virage Coupe 2012(0.34) Hyundai Veloster Hatchback 2012(0.36) Ferrari 458 Italia Convertible 2012(0.36) Ferrari California Convertible 2012(0.42) |
+| Dodge Charger SRT-8 2009 | Chevrolet Camaro Convertible 2012(0.41) Dodge Charger Sedan 2012(0.42) Ferrari California Convertible 2012(0.43) Dodge Magnum Wagon 2008(0.45) Volvo C30 Hatchback 2012*(0.45) |
+| Eagle Talon Hatchback 1998 | Plymouth Neon Coupe 1999(0.23) Dodge Caravan Minivan 1997(0.46) Acura TL Type-S 2008(0.46) Chevrolet Monte Carlo Coupe 2007(0.49) Geo Metro Convertible 1993(0.49) |
+| FIAT 500 Abarth 2012 | Spyker C8 Convertible 2009(0.50) Chevrolet Corvette ZR1 2012(0.55) Acura ZDX Hatchback 2012(0.59) Bentley Arnage Sedan 2009(0.67) Spyker C8 Coupe 2009(0.68) |
+| FIAT 500 Convertible 2012 | Bentley Continental Supersports Conv. Convertible 2012(0.41) smart fortwo Convertible 2012*(0.44) Bugatti Veyron 16.4 Convertible 2009(0.46) Chevrolet Corvette Ron Fellows Edition Z06 2007(0.48) MINI Cooper Roadster Convertible 2012(0.50) |
+| Ferrari FF Coupe 2012 | Aston Martin Virage Coupe 2012(0.48) Ferrari 458 Italia Convertible 2012(0.50) Dodge Charger Sedan 2012(0.50) McLaren MP4-12C Coupe 2012(0.50) BMW 1 Series Coupe 2012(0.51) |
+| Ferrari California Convertible 2012 | Ferrari 458 Italia Convertible 2012(0.15) Chevrolet Corvette Convertible 2012(0.21) Ferrari 458 Italia Coupe 2012(0.24) Aston Martin Virage Coupe 2012(0.28) McLaren MP4-12C Coupe 2012(0.37) |
+| Ferrari 458 Italia Convertible 2012 | Ferrari California Convertible 2012(0.15) Aston Martin Virage Coupe 2012(0.18) Ferrari 458 Italia Coupe 2012(0.23) McLaren MP4-12C Coupe 2012(0.25) Lamborghini Aventador Coupe 2012(0.27) |
+| Ferrari 458 Italia Coupe 2012 | Ferrari 458 Italia Convertible 2012(0.23) McLaren MP4-12C Coupe 2012(0.23) Ferrari California Convertible 2012(0.24) Lamborghini Aventador Coupe 2012(0.28) Aston Martin Virage Coupe 2012(0.39) |
+| Fisker Karma Sedan 2012 | Aston Martin Virage Convertible 2012(0.32) Aston Martin V8 Vantage Coupe 2012(0.32) Aston Martin V8 Vantage Convertible 2012(0.36) Mercedes-Benz SL-Class Coupe 2009(0.38) Audi TTS Coupe 2012(0.40) |
+| Ford F-450 Super Duty Crew Cab 2012 | Dodge Ram Pickup 3500 Crew Cab 2010(0.15) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.21) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.27) Ford F-150 Regular Cab 2012(0.27) Ford E-Series Wagon Van 2012(0.32) |
+| Ford Mustang Convertible 2007 | Chevrolet Camaro Convertible 2012(0.45) Dodge Charger SRT-8 2009(0.49) Dodge Magnum Wagon 2008(0.59) Chevrolet Monte Carlo Coupe 2007(0.59) Geo Metro Convertible 1993(0.61) |
+| Ford Freestar Minivan 2007 | Buick Rainier SUV 2007(0.36) Chevrolet Malibu Sedan 2007(0.38) Chrysler Town and Country Minivan 2012(0.39) Daewoo Nubira Wagon 2002(0.42) Honda Odyssey Minivan 2007(0.42) |
+| Ford Expedition EL SUV 2009 | Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.32) Jeep Grand Cherokee SUV 2012(0.35) Dodge Ram Pickup 3500 Crew Cab 2010(0.36) Buick Rainier SUV 2007(0.36) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.39) |
+| Ford Edge SUV 2012 | GMC Yukon Hybrid SUV 2012(0.44) Toyota 4Runner SUV 2012*(0.49) Jeep Compass SUV 2012(0.50) Jeep Grand Cherokee SUV 2012(0.52) BMW X5 SUV 2007(0.55) |
+| Ford Ranger SuperCab 2011 | Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.25) Ford F-150 Regular Cab 2012(0.28) Chevrolet Silverado 2500HD Regular Cab 2012(0.29) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.30) GMC Canyon Extended Cab 2012(0.35) |
+| Ford GT Coupe 2006 | Ferrari 458 Italia Convertible 2012(0.34) Ferrari California Convertible 2012(0.40) Jaguar XK XKR 2012(0.43) Chevrolet Corvette Convertible 2012(0.45) Dodge Challenger SRT8 2011(0.47) |
+| Ford F-150 Regular Cab 2012 | Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.17) Ford E-Series Wagon Van 2012(0.22) Dodge Ram Pickup 3500 Quad Cab 2009(0.22) Ford F-150 Regular Cab 2007(0.23) Chevrolet Silverado 2500HD Regular Cab 2012(0.26) |
+| Ford F-150 Regular Cab 2007 | Chevrolet Silverado 1500 Extended Cab 2012(0.17) Dodge Ram Pickup 3500 Quad Cab 2009(0.18) Chevrolet Silverado 1500 Regular Cab 2012(0.20) Ford F-150 Regular Cab 2012(0.23) GMC Canyon Extended Cab 2012(0.29) |
+| Ford Focus Sedan 2007 | Chevrolet Impala Sedan 2007(0.20) Chevrolet Malibu Sedan 2007(0.23) Honda Odyssey Minivan 2007(0.28) Ford Fiesta Sedan 2012(0.31) Hyundai Elantra Sedan 2007(0.35) |
+| Ford E-Series Wagon Van 2012 | GMC Savana Van 2012(0.15) Chevrolet Silverado 2500HD Regular Cab 2012(0.19) Chevrolet Express Van 2007(0.20) Ford F-150 Regular Cab 2012(0.22) Ford F-450 Super Duty Crew Cab 2012(0.32) |
+| Ford Fiesta Sedan 2012 | Ford Focus Sedan 2007(0.31) Hyundai Elantra Touring Hatchback 2012(0.32) Hyundai Elantra Sedan 2007(0.38) Chevrolet Impala Sedan 2007(0.38) Toyota Camry Sedan 2012*(0.43) |
+| GMC Terrain SUV 2012 | Chevrolet Silverado 1500 Extended Cab 2012(0.40) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.42) Buick Rainier SUV 2007(0.43) Ford Expedition EL SUV 2009(0.44) Chevrolet Silverado 1500 Regular Cab 2012(0.46) |
+| GMC Savana Van 2012 | Chevrolet Express Van 2007(0.12) Ford E-Series Wagon Van 2012(0.15) Chevrolet Silverado 2500HD Regular Cab 2012(0.16) Chevrolet Express Cargo Van 2007(0.18) Mercedes-Benz Sprinter Van 2012(0.19) |
+| GMC Yukon Hybrid SUV 2012 | Chevrolet Silverado 1500 Regular Cab 2012(0.32) Land Rover LR2 SUV 2012(0.38) Dodge Ram Pickup 3500 Quad Cab 2009(0.40) Chevrolet Traverse SUV 2012(0.42) Toyota 4Runner SUV 2012*(0.42) |
+| GMC Acadia SUV 2012 | Hyundai Santa Fe SUV 2012(0.39) Dodge Dakota Crew Cab 2010(0.47) Chrysler Aspen SUV 2009(0.47) Volvo XC90 SUV 2007*(0.50) Ford Ranger SuperCab 2011(0.50) |
+| GMC Canyon Extended Cab 2012 | HUMMER H2 SUT Crew Cab 2009(0.25) Dodge Ram Pickup 3500 Quad Cab 2009(0.28) Dodge Dakota Club Cab 2007(0.28) Ford F-150 Regular Cab 2007(0.29) Jeep Wrangler SUV 2012(0.30) |
+| Geo Metro Convertible 1993 | Plymouth Neon Coupe 1999(0.45) Mercedes-Benz 300-Class Convertible 1993(0.47) Eagle Talon Hatchback 1998(0.49) Nissan 240SX Coupe 1998(0.50) Dodge Caravan Minivan 1997(0.51) |
+| HUMMER H3T Crew Cab 2010 | HUMMER H2 SUT Crew Cab 2009(0.19) Jeep Wrangler SUV 2012(0.25) AM General Hummer SUV 2000(0.28) GMC Canyon Extended Cab 2012(0.39) Jeep Patriot SUV 2012(0.40) |
+| HUMMER H2 SUT Crew Cab 2009 | AM General Hummer SUV 2000(0.17) Jeep Wrangler SUV 2012(0.18) HUMMER H3T Crew Cab 2010(0.19) GMC Canyon Extended Cab 2012(0.25) Jeep Patriot SUV 2012(0.37) |
+| Honda Odyssey Minivan 2012 | Acura RL Sedan 2012(0.44) Honda Odyssey Minivan 2007(0.47) Buick Verano Sedan 2012(0.47) Scion xD Hatchback 2012(0.49) GMC Yukon Hybrid SUV 2012(0.54) |
+| Honda Odyssey Minivan 2007 | Ford Focus Sedan 2007(0.28) Chevrolet Impala Sedan 2007(0.30) Chevrolet Malibu Sedan 2007(0.37) Buick Rainier SUV 2007(0.38) Chevrolet Traverse SUV 2012(0.39) |
+| Honda Accord Coupe 2012 | Hyundai Accent Sedan 2012(0.36) BMW 3 Series Sedan 2012(0.41) Toyota Corolla Sedan 2012*(0.42) Hyundai Sonata Hybrid Sedan 2012(0.42) Ferrari California Convertible 2012(0.44) |
+| Honda Accord Sedan 2012 | Chevrolet Malibu Sedan 2007(0.38) Volkswagen Golf Hatchback 2012*(0.38) Acura TL Sedan 2012(0.41) Acura TSX Sedan 2012(0.44) Toyota Corolla Sedan 2012*(0.47) |
+| Hyundai Veloster Hatchback 2012 | Dodge Charger Sedan 2012(0.36) Volvo C30 Hatchback 2012*(0.40) Aston Martin Virage Coupe 2012(0.41) McLaren MP4-12C Coupe 2012(0.49) Audi TT RS Coupe 2012(0.51) |
+| Hyundai Santa Fe SUV 2012 | GMC Acadia SUV 2012(0.39) Chrysler Aspen SUV 2009(0.46) Jeep Grand Cherokee SUV 2012(0.52) Mercedes-Benz C-Class Sedan 2012(0.54) Ford Expedition EL SUV 2009(0.55) |
+| Hyundai Tucson SUV 2012 | Hyundai Veracruz SUV 2012(0.39) Chevrolet Traverse SUV 2012(0.42) Lamborghini Reventon Coupe 2008(0.49) Hyundai Azera Sedan 2012(0.56) Honda Odyssey Minivan 2012(0.57) |
+| Hyundai Veracruz SUV 2012 | Chevrolet Traverse SUV 2012(0.34) Hyundai Tucson SUV 2012(0.39) Honda Odyssey Minivan 2007(0.45) Buick Enclave SUV 2012(0.47) Chevrolet Sonic Sedan 2012(0.53) |
+| Hyundai Sonata Hybrid Sedan 2012 | Honda Accord Coupe 2012(0.42) Buick Verano Sedan 2012(0.45) Toyota Corolla Sedan 2012*(0.46) Acura TL Sedan 2012(0.47) Fisker Karma Sedan 2012(0.47) |
+| Hyundai Elantra Sedan 2007 | Toyota Corolla Sedan 2012*(0.35) Ford Focus Sedan 2007(0.35) Ford Fiesta Sedan 2012(0.38) Chevrolet Monte Carlo Coupe 2007(0.39) Chevrolet Impala Sedan 2007(0.39) |
+| Hyundai Accent Sedan 2012 | Honda Accord Coupe 2012(0.36) Ferrari 458 Italia Coupe 2012(0.47) Hyundai Sonata Hybrid Sedan 2012(0.50) BMW 3 Series Sedan 2012(0.51) Acura TSX Sedan 2012(0.52) |
+| Hyundai Genesis Sedan 2012 | Hyundai Azera Sedan 2012(0.46) Chevrolet Impala Sedan 2007(0.47) Suzuki SX4 Sedan 2012(0.47) Audi S4 Sedan 2007(0.48) BMW ActiveHybrid 5 Sedan 2012(0.50) |
+| Hyundai Sonata Sedan 2012 | Acura RL Sedan 2012(0.44) Cadillac CTS-V Sedan 2012(0.48) Hyundai Sonata Hybrid Sedan 2012(0.48) Bentley Continental Flying Spur Sedan 2007(0.49) Acura TL Sedan 2012(0.49) |
+| Hyundai Elantra Touring Hatchback 2012 | Ford Fiesta Sedan 2012(0.32) Hyundai Elantra Sedan 2007(0.40) Toyota Camry Sedan 2012*(0.41) Ford Focus Sedan 2007(0.46) Chevrolet Impala Sedan 2007(0.49) |
+| Hyundai Azera Sedan 2012 | Mercedes-Benz E-Class Sedan 2012(0.40) Aston Martin Virage Convertible 2012(0.41) Tesla Model S Sedan 2012(0.42) Hyundai Genesis Sedan 2012(0.46) Chevrolet Sonic Sedan 2012(0.47) |
+| Infiniti G Coupe IPL 2012 | Porsche Panamera Sedan 2012(0.32) Audi S5 Coupe 2012(0.44) Acura ZDX Hatchback 2012(0.46) Chevrolet Corvette ZR1 2012(0.46) Acura TL Type-S 2008(0.50) |
+| Infiniti QX56 SUV 2011 | Toyota Sequoia SUV 2012(0.41) BMW X3 SUV 2012(0.44) Bentley Mulsanne Sedan 2011(0.49) Dodge Durango SUV 2012(0.53) Toyota 4Runner SUV 2012*(0.54) |
+| Isuzu Ascender SUV 2008 | Chevrolet Silverado 1500 Classic Extended Cab 2007(0.30) Ford E-Series Wagon Van 2012(0.40) Ford F-450 Super Duty Crew Cab 2012(0.41) Toyota 4Runner SUV 2012*(0.42) Chevrolet Silverado 1500 Extended Cab 2012(0.43) |
+| Jaguar XK XKR 2012 | Spyker C8 Convertible 2009(0.30) Bugatti Veyron 16.4 Coupe 2009(0.38) Spyker C8 Coupe 2009(0.39) Ford GT Coupe 2006(0.43) Chevrolet Corvette ZR1 2012(0.47) |
+| Jeep Patriot SUV 2012 | Jeep Liberty SUV 2012(0.18) Jeep Wrangler SUV 2012(0.26) Land Rover Range Rover SUV 2012(0.29) Volkswagen Golf Hatchback 1991*(0.32) GMC Canyon Extended Cab 2012(0.36) |
+| Jeep Wrangler SUV 2012 | HUMMER H2 SUT Crew Cab 2009(0.18) HUMMER H3T Crew Cab 2010(0.25) Jeep Patriot SUV 2012(0.26) AM General Hummer SUV 2000(0.28) GMC Canyon Extended Cab 2012(0.30) |
+| Jeep Liberty SUV 2012 | Jeep Patriot SUV 2012(0.18) Chevrolet Silverado 1500 Regular Cab 2012(0.35) Volvo 240 Sedan 1993*(0.36) Jeep Wrangler SUV 2012(0.37) Land Rover Range Rover SUV 2012(0.39) |
+| Jeep Grand Cherokee SUV 2012 | Ford Expedition EL SUV 2009(0.35) Cadillac Escalade EXT Crew Cab 2007(0.38) Dodge Ram Pickup 3500 Crew Cab 2010(0.41) Chevrolet Avalanche Crew Cab 2012(0.41) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.43) |
+| Jeep Compass SUV 2012 | Jeep Patriot SUV 2012(0.37) Jeep Liberty SUV 2012(0.40) Chevrolet Traverse SUV 2012(0.48) Ford Edge SUV 2012(0.50) GMC Yukon Hybrid SUV 2012(0.50) |
+| Lamborghini Reventon Coupe 2008 | Bugatti Veyron 16.4 Coupe 2009(0.43) Tesla Model S Sedan 2012(0.44) Aston Martin Virage Convertible 2012(0.47) Acura ZDX Hatchback 2012(0.49) Hyundai Tucson SUV 2012(0.49) |
+| Lamborghini Aventador Coupe 2012 | McLaren MP4-12C Coupe 2012(0.21) Ferrari 458 Italia Convertible 2012(0.27) Ferrari 458 Italia Coupe 2012(0.28) Audi TT RS Coupe 2012(0.37) Lamborghini Gallardo LP 570-4 Superleggera 2012(0.41) |
+| Lamborghini Gallardo LP 570-4 Superleggera 2012 | Acura Integra Type R 2001(0.31) Lamborghini Diablo Coupe 2001(0.33) McLaren MP4-12C Coupe 2012(0.33) Lamborghini Aventador Coupe 2012(0.41) Aston Martin Virage Coupe 2012(0.48) |
+| Lamborghini Diablo Coupe 2001 | Acura Integra Type R 2001(0.15) Lamborghini Gallardo LP 570-4 Superleggera 2012(0.33) McLaren MP4-12C Coupe 2012(0.35) Lamborghini Aventador Coupe 2012(0.50) Chevrolet Corvette Convertible 2012(0.51) |
+| Land Rover Range Rover SUV 2012 | Jeep Patriot SUV 2012(0.29) Dodge Ram Pickup 3500 Crew Cab 2010(0.37) Jeep Liberty SUV 2012(0.39) Ford F-450 Super Duty Crew Cab 2012(0.39) Dodge Durango SUV 2012(0.42) |
+| Land Rover LR2 SUV 2012 | Toyota 4Runner SUV 2012*(0.25) Dodge Ram Pickup 3500 Quad Cab 2009(0.31) GMC Yukon Hybrid SUV 2012(0.38) GMC Canyon Extended Cab 2012(0.38) Jeep Wrangler SUV 2012(0.42) |
+| Lincoln Town Car Sedan 2011 | Chevrolet Malibu Hybrid Sedan 2010(0.30) Chevrolet Malibu Sedan 2007(0.35) Buick Rainier SUV 2007(0.44) Volkswagen Golf Hatchback 2012*(0.45) Daewoo Nubira Wagon 2002(0.46) |
+| MINI Cooper Roadster Convertible 2012 | Bentley Continental Supersports Conv. Convertible 2012(0.43) Mercedes-Benz SL-Class Coupe 2009(0.44) Dodge Challenger SRT8 2011(0.46) Chevrolet Corvette Ron Fellows Edition Z06 2007(0.49) Buick Regal GS 2012(0.50) |
+| Maybach Landaulet Convertible 2012 | Bentley Continental Supersports Conv. Convertible 2012(0.37) Chevrolet Corvette Ron Fellows Edition Z06 2007(0.45) Bugatti Veyron 16.4 Convertible 2009(0.55) FIAT 500 Convertible 2012(0.56) Aston Martin V8 Vantage Convertible 2012(0.57) |
+| Mazda Tribute SUV 2011 | Toyota Sequoia SUV 2012(0.31) Buick Rainier SUV 2007(0.32) Chevrolet Tahoe Hybrid SUV 2012(0.45) Volvo XC90 SUV 2007*(0.46) Dodge Ram Pickup 3500 Quad Cab 2009(0.46) |
+| McLaren MP4-12C Coupe 2012 | Lamborghini Aventador Coupe 2012(0.21) Ferrari 458 Italia Coupe 2012(0.23) Ferrari 458 Italia Convertible 2012(0.25) Aston Martin Virage Coupe 2012(0.33) Lamborghini Gallardo LP 570-4 Superleggera 2012(0.33) |
+| Mercedes-Benz 300-Class Convertible 1993 | Chrysler Crossfire Convertible 2008(0.34) Daewoo Nubira Wagon 2002(0.44) Audi V8 Sedan 1994(0.45) Nissan 240SX Coupe 1998(0.46) Geo Metro Convertible 1993(0.47) |
+| Mercedes-Benz C-Class Sedan 2012 | Mercedes-Benz S-Class Sedan 2012(0.41) Bentley Mulsanne Sedan 2011(0.47) Audi V8 Sedan 1994(0.50) Bentley Continental Flying Spur Sedan 2007(0.51) BMW X3 SUV 2012(0.51) |
+| Mercedes-Benz SL-Class Coupe 2009 | Aston Martin Virage Convertible 2012(0.37) Fisker Karma Sedan 2012(0.38) MINI Cooper Roadster Convertible 2012(0.44) Mercedes-Benz E-Class Sedan 2012(0.45) BMW ActiveHybrid 5 Sedan 2012(0.51) |
+| Mercedes-Benz E-Class Sedan 2012 | Hyundai Azera Sedan 2012(0.40) Mercedes-Benz S-Class Sedan 2012(0.44) Mercedes-Benz SL-Class Coupe 2009(0.45) Rolls-Royce Ghost Sedan 2012(0.46) BMW X3 SUV 2012(0.48) |
+| Mercedes-Benz S-Class Sedan 2012 | Buick Regal GS 2012(0.40) Mercedes-Benz C-Class Sedan 2012(0.41) Mercedes-Benz E-Class Sedan 2012(0.44) Bentley Mulsanne Sedan 2011(0.47) BMW X3 SUV 2012(0.47) |
+| Mercedes-Benz Sprinter Van 2012 | GMC Savana Van 2012(0.19) Dodge Sprinter Cargo Van 2009(0.21) Chevrolet Express Van 2007(0.24) Chevrolet Express Cargo Van 2007(0.26) Ford E-Series Wagon Van 2012(0.33) |
+| Mitsubishi Lancer Sedan 2012 | Toyota Camry Sedan 2012*(0.41) Suzuki SX4 Hatchback 2012(0.43) Suzuki SX4 Sedan 2012(0.44) Nissan Leaf Hatchback 2012(0.48) Suzuki Kizashi Sedan 2012(0.49) |
+| Nissan Leaf Hatchback 2012 | Toyota Camry Sedan 2012*(0.40) Suzuki Kizashi Sedan 2012(0.46) Mitsubishi Lancer Sedan 2012(0.48) Ford Fiesta Sedan 2012(0.51) Hyundai Elantra Touring Hatchback 2012(0.53) |
+| Nissan NV Passenger Van 2012 | GMC Savana Van 2012(0.23) Chevrolet Silverado 1500 Regular Cab 2012(0.29) Mercedes-Benz Sprinter Van 2012(0.34) Chevrolet Express Van 2007(0.35) Chevrolet Express Cargo Van 2007(0.39) |
+| Nissan Juke Hatchback 2012 | Tesla Model S Sedan 2012(0.46) Suzuki Kizashi Sedan 2012(0.49) Jaguar XK XKR 2012(0.50) Spyker C8 Coupe 2009(0.54) Mitsubishi Lancer Sedan 2012(0.55) |
+| Nissan 240SX Coupe 1998 | Plymouth Neon Coupe 1999(0.45) Mercedes-Benz 300-Class Convertible 1993(0.46) Dodge Caravan Minivan 1997(0.49) Eagle Talon Hatchback 1998(0.50) Geo Metro Convertible 1993(0.50) |
+| Plymouth Neon Coupe 1999 | Eagle Talon Hatchback 1998(0.23) Dodge Caravan Minivan 1997(0.30) Geo Metro Convertible 1993(0.45) Nissan 240SX Coupe 1998(0.45) Acura TL Type-S 2008(0.52) |
+| Porsche Panamera Sedan 2012 | Infiniti G Coupe IPL 2012(0.32) Fisker Karma Sedan 2012(0.42) Bugatti Veyron 16.4 Coupe 2009(0.43) Audi S5 Convertible 2012(0.44) BMW M5 Sedan 2010(0.46) |
+| Ram C/V Cargo Van Minivan 2012 | Dodge Sprinter Cargo Van 2009(0.48) GMC Savana Van 2012(0.53) Chevrolet Silverado 2500HD Regular Cab 2012(0.57) Mercedes-Benz Sprinter Van 2012(0.57) FIAT 500 Convertible 2012(0.60) |
+| Rolls-Royce Phantom Drophead Coupe Convertible 2012 | Rolls-Royce Phantom Sedan 2012(0.44) Bentley Continental Supersports Conv. Convertible 2012(0.44) Bentley Mulsanne Sedan 2011(0.48) BMW Z4 Convertible 2012(0.48) Rolls-Royce Ghost Sedan 2012(0.48) |
+| Rolls-Royce Ghost Sedan 2012 | Rolls-Royce Phantom Sedan 2012(0.31) Dodge Challenger SRT8 2011(0.45) Mercedes-Benz E-Class Sedan 2012(0.46) Bentley Arnage Sedan 2009(0.48) Rolls-Royce Phantom Drophead Coupe Convertible 2012(0.48) |
+| Rolls-Royce Phantom Sedan 2012 | Rolls-Royce Ghost Sedan 2012(0.31) Bentley Arnage Sedan 2009(0.43) Rolls-Royce Phantom Drophead Coupe Convertible 2012(0.44) Bentley Mulsanne Sedan 2011(0.45) Bentley Continental Flying Spur Sedan 2007(0.52) |
+| Scion xD Hatchback 2012 | Chevrolet Traverse SUV 2012(0.42) Ford Focus Sedan 2007(0.46) Dodge Journey SUV 2012(0.48) Honda Odyssey Minivan 2012(0.49) Chevrolet Impala Sedan 2007(0.52) |
+| Spyker C8 Convertible 2009 | Spyker C8 Coupe 2009(0.22) Jaguar XK XKR 2012(0.30) Chevrolet Corvette ZR1 2012(0.42) Fisker Karma Sedan 2012(0.43) Aston Martin V8 Vantage Convertible 2012(0.47) |
+| Spyker C8 Coupe 2009 | Spyker C8 Convertible 2009(0.22) Tesla Model S Sedan 2012(0.39) Jaguar XK XKR 2012(0.39) Ferrari 458 Italia Convertible 2012(0.42) Chevrolet Corvette Ron Fellows Edition Z06 2007(0.46) |
+| Suzuki Aerio Sedan 2007 | Honda Odyssey Minivan 2007(0.42) Lincoln Town Car Sedan 2011(0.47) Chevrolet Malibu Hybrid Sedan 2010(0.50) Chevrolet Impala Sedan 2007(0.53) Ford Focus Sedan 2007(0.54) |
+| Suzuki Kizashi Sedan 2012 | Nissan Leaf Hatchback 2012(0.46) Chevrolet Sonic Sedan 2012(0.46) Toyota Camry Sedan 2012*(0.47) Volkswagen Beetle Hatchback 2012*(0.48) Nissan Juke Hatchback 2012(0.49) |
+| Suzuki SX4 Hatchback 2012 | Mitsubishi Lancer Sedan 2012(0.43) Chevrolet Traverse SUV 2012(0.51) Dodge Journey SUV 2012(0.54) Suzuki SX4 Sedan 2012(0.54) Dodge Caravan Minivan 1997(0.58) |
+| Suzuki SX4 Sedan 2012 | Chevrolet Impala Sedan 2007(0.43) Mitsubishi Lancer Sedan 2012(0.44) Hyundai Genesis Sedan 2012(0.47) Honda Odyssey Minivan 2007(0.49) Suzuki Kizashi Sedan 2012(0.50) |
+| Tesla Model S Sedan 2012 | Spyker C8 Coupe 2009(0.39) Aston Martin Virage Convertible 2012(0.41) Hyundai Azera Sedan 2012(0.42) Lamborghini Reventon Coupe 2008(0.44) Fisker Karma Sedan 2012(0.45) |
+| Toyota Sequoia SUV 2012 | Mazda Tribute SUV 2011(0.31) Chevrolet Tahoe Hybrid SUV 2012(0.33) Toyota 4Runner SUV 2012*(0.33) Volvo XC90 SUV 2007*(0.34) BMW X5 SUV 2007(0.35) |
+| Toyota Camry Sedan 2012* | Hyundai Elantra Sedan 2007(0.39) Nissan Leaf Hatchback 2012(0.40) Hyundai Elantra Touring Hatchback 2012(0.41) Mitsubishi Lancer Sedan 2012(0.41) Acura TL Sedan 2012(0.41) |
+| Toyota Corolla Sedan 2012* | Hyundai Elantra Sedan 2007(0.35) Chevrolet Monte Carlo Coupe 2007(0.36) Volkswagen Golf Hatchback 2012*(0.36) Honda Accord Coupe 2012(0.42) Acura TSX Sedan 2012(0.43) |
+| Toyota 4Runner SUV 2012* | Land Rover LR2 SUV 2012(0.25) Toyota Sequoia SUV 2012(0.33) Chevrolet Tahoe Hybrid SUV 2012(0.34) Volvo XC90 SUV 2007*(0.34) GMC Yukon Hybrid SUV 2012(0.42) |
+| Volkswagen Golf Hatchback 2012* | Acura TSX Sedan 2012(0.26) Toyota Corolla Sedan 2012*(0.36) Honda Accord Sedan 2012(0.38) Lincoln Town Car Sedan 2011(0.45) Chrysler Crossfire Convertible 2008(0.47) |
+| Volkswagen Golf Hatchback 1991* | Volvo 240 Sedan 1993*(0.18) Jeep Patriot SUV 2012(0.32) Jeep Liberty SUV 2012(0.41) Land Rover Range Rover SUV 2012(0.49) GMC Canyon Extended Cab 2012(0.49) |
+| Volkswagen Beetle Hatchback 2012* | Audi S4 Sedan 2012(0.44) Toyota Camry Sedan 2012*(0.47) Chevrolet Sonic Sedan 2012(0.47) Suzuki Kizashi Sedan 2012(0.48) Chevrolet Camaro Convertible 2012(0.51) |
+| Volvo C30 Hatchback 2012* | Dodge Charger Sedan 2012(0.34) Hyundai Veloster Hatchback 2012(0.40) Audi TT RS Coupe 2012(0.42) Dodge Charger SRT-8 2009(0.45) Ferrari California Convertible 2012(0.46) |
+| Volvo 240 Sedan 1993* | Volkswagen Golf Hatchback 1991*(0.18) Jeep Liberty SUV 2012(0.36) Jeep Patriot SUV 2012(0.37) GMC Canyon Extended Cab 2012(0.43) Jeep Wrangler SUV 2012(0.45) |
+| Volvo XC90 SUV 2007* | BMW X5 SUV 2007(0.34) Toyota Sequoia SUV 2012(0.34) Toyota 4Runner SUV 2012*(0.34) Chrysler Aspen SUV 2009(0.41) Dodge Durango SUV 2012(0.43) |
+| smart fortwo Convertible 2012* | FIAT 500 Convertible 2012(0.44) Ford GT Coupe 2006(0.49) Maybach Landaulet Convertible 2012(0.61) AM General Hummer SUV 2000(0.64) McLaren MP4-12C Coupe 2012(0.65) |
 
 ## supcon-ft  [cars_lejepa]
 
+agree@1=0.413 agree@5=0.259 (chance 0.040)  dendro-purity=0.289  silhouette=-0.182  within/between=0.747
+
 
 | class | 5 nearest class centroids (cosine dist) |
 |---|---|
-| class0 | class124(0.10) class145(0.19) class123(0.25) class105(0.64) class133(0.70) |
-| class1 | class128(0.13) class4(0.18) class2(0.19) class136(0.20) class3(0.21) |
-| class2 | class4(0.15) class1(0.19) class127(0.24) class6(0.24) class3(0.26) |
-| class3 | class166(0.15) class1(0.21) class2(0.26) class128(0.30) class186*(0.32) |
-| class4 | class2(0.15) class127(0.15) class189*(0.17) class135(0.18) class1(0.18) |
-| class5 | class170(0.22) class97(0.24) class152(0.27) class71(0.27) class171(0.29) |
-| class6 | class2(0.24) class133(0.27) class139(0.28) class131(0.30) class137(0.30) |
-| class7 | class8(0.06) class9(0.08) class35(0.13) class37(0.14) class104(0.17) |
-| class8 | class7(0.06) class37(0.10) class9(0.11) class143(0.16) class35(0.16) |
-| class9 | class7(0.08) class8(0.11) class104(0.13) class35(0.15) class143(0.24) |
-| class10 | class37(0.18) class8(0.21) class143(0.22) class159(0.24) class101(0.28) |
-| class11 | class20(0.09) class19(0.12) class23(0.17) class12(0.20) class22(0.22) |
-| class12 | class21(0.06) class18(0.06) class22(0.08) class13(0.08) class19(0.12) |
-| class13 | class18(0.04) class21(0.05) class12(0.08) class14(0.10) class22(0.13) |
-| class14 | class13(0.10) class18(0.13) class21(0.14) class24(0.18) class12(0.19) |
-| class15 | class16(0.03) class17(0.06) class190*(0.18) class193*(0.20) class160(0.22) |
-| class16 | class15(0.03) class17(0.04) class190*(0.17) class193*(0.22) class160(0.23) |
-| class17 | class16(0.04) class15(0.06) class190*(0.16) class160(0.23) class81(0.26) |
-| class18 | class13(0.04) class12(0.06) class21(0.07) class24(0.11) class22(0.12) |
-| class19 | class23(0.05) class22(0.08) class11(0.12) class12(0.12) class20(0.18) |
-| class20 | class11(0.09) class12(0.13) class18(0.13) class13(0.13) class21(0.14) |
-| class21 | class13(0.05) class12(0.06) class18(0.07) class22(0.11) class14(0.14) |
-| class22 | class12(0.08) class19(0.08) class21(0.11) class18(0.12) class13(0.13) |
-| class23 | class19(0.05) class22(0.13) class11(0.17) class12(0.20) class78(0.27) |
-| class24 | class18(0.11) class13(0.15) class22(0.16) class14(0.18) class21(0.19) |
-| class25 | class34(0.12) class29(0.20) class172(0.27) class140(0.28) class163(0.29) |
-| class26 | class27(0.13) class33(0.17) class28(0.20) class35(0.23) class79(0.23) |
-| class27 | class28(0.12) class26(0.13) class33(0.14) class34(0.27) class32(0.28) |
-| class28 | class27(0.12) class33(0.15) class29(0.16) class22(0.19) class34(0.20) |
-| class29 | class28(0.16) class34(0.16) class25(0.20) class163(0.23) class161(0.25) |
-| class30 | class35(0.16) class79(0.17) class162(0.24) class26(0.24) class7(0.32) |
-| class31 | class36(0.18) class194*(0.23) class120(0.24) class93(0.27) class82(0.28) |
-| class32 | class36(0.17) class192*(0.22) class27(0.28) class28(0.34) class141(0.36) |
-| class33 | class27(0.14) class28(0.15) class26(0.17) class34(0.21) class21(0.23) |
-| class34 | class25(0.12) class29(0.16) class181(0.19) class28(0.20) class163(0.20) |
-| class35 | class7(0.13) class9(0.15) class8(0.16) class30(0.16) class37(0.19) |
-| class36 | class32(0.17) class31(0.18) class141(0.19) class130(0.26) class80(0.30) |
-| class37 | class8(0.10) class7(0.14) class10(0.18) class143(0.18) class35(0.19) |
-| class38 | class156(0.14) class41(0.22) class44(0.26) class26(0.27) class7(0.28) |
-| class39 | class40(0.21) class176(0.21) class78(0.26) class43(0.33) class193*(0.34) |
-| class40 | class43(0.13) class41(0.20) class39(0.21) class176(0.21) class42(0.22) |
-| class41 | class42(0.10) class43(0.17) class40(0.20) class38(0.22) class26(0.25) |
-| class42 | class41(0.10) class43(0.12) class40(0.22) class35(0.26) class172(0.31) |
-| class43 | class42(0.12) class40(0.13) class41(0.17) class39(0.33) class26(0.35) |
-| class44 | class45(0.16) class179(0.19) class56(0.20) class7(0.25) class38(0.26) |
-| class45 | class55(0.14) class104(0.16) class44(0.16) class179(0.20) class7(0.20) |
-| class46 | class181(0.16) class48(0.17) class139(0.24) class140(0.25) class184(0.28) |
-| class47 | class75(0.10) class94(0.12) class194*(0.17) class158(0.18) class52(0.19) |
-| class48 | class186*(0.10) class139(0.13) class133(0.13) class181(0.14) class135(0.15) |
-| class49 | class132(0.13) class57(0.20) class93(0.21) class141(0.25) class177(0.26) |
-| class50 | class21(0.26) class13(0.28) class163(0.31) class34(0.32) class12(0.32) |
-| class51 | class57(0.14) class109(0.15) class125(0.15) class132(0.23) class183(0.26) |
-| class52 | class119(0.08) class94(0.12) class75(0.12) class64(0.17) class117(0.17) |
-| class53 | class73(0.05) class68(0.06) class74(0.10) class86(0.11) class90(0.12) |
-| class54 | class55(0.14) class101(0.15) class111(0.16) class102(0.16) class150(0.22) |
-| class55 | class45(0.14) class54(0.14) class101(0.19) class179(0.20) class150(0.20) |
-| class56 | class44(0.20) class111(0.22) class55(0.23) class179(0.26) class54(0.26) |
-| class57 | class132(0.14) class51(0.14) class183(0.17) class182(0.19) class77(0.20) |
-| class58 | class92(0.14) class96(0.16) class106(0.18) class95(0.19) class54(0.26) |
-| class59 | class91(0.28) class80(0.30) class83(0.33) class32(0.36) class78(0.37) |
-| class60 | class72(0.07) class114(0.10) class71(0.12) class180(0.17) class76(0.19) |
-| class61 | class142(0.16) class119(0.17) class64(0.18) class188*(0.19) class108(0.19) |
-| class62 | class177(0.18) class192*(0.19) class169(0.21) class167(0.22) class181(0.22) |
-| class63 | class70(0.01) class118(0.05) class87(0.27) class115(0.30) class165(0.32) |
-| class64 | class89(0.16) class52(0.17) class61(0.18) class117(0.19) class142(0.20) |
-| class65 | class187*(0.29) class166(0.32) class192*(0.32) class191*(0.35) class138(0.36) |
-| class66 | class138(0.16) class128(0.18) class187*(0.23) class134(0.25) class189*(0.25) |
-| class67 | class153(0.21) class194*(0.22) class52(0.24) class119(0.27) class94(0.30) |
-| class68 | class73(0.06) class53(0.06) class74(0.10) class121(0.15) class86(0.16) |
-| class69 | class110(0.11) class53(0.12) class90(0.14) class73(0.16) class68(0.19) |
-| class70 | class63(0.01) class118(0.03) class115(0.24) class87(0.24) class165(0.30) |
-| class71 | class60(0.12) class72(0.13) class114(0.21) class76(0.22) class155(0.24) |
-| class72 | class60(0.07) class114(0.08) class71(0.13) class180(0.15) class155(0.19) |
-| class73 | class53(0.05) class68(0.06) class74(0.07) class90(0.10) class86(0.11) |
-| class74 | class73(0.07) class53(0.10) class68(0.10) class86(0.13) class113(0.14) |
-| class75 | class94(0.07) class47(0.10) class185(0.12) class52(0.12) class154(0.13) |
-| class76 | class60(0.19) class71(0.22) class66(0.26) class72(0.27) class134(0.28) |
-| class77 | class126(0.17) class47(0.20) class57(0.20) class173(0.20) class82(0.26) |
-| class78 | class176(0.18) class175(0.21) class40(0.24) class39(0.26) class91(0.27) |
-| class79 | class30(0.17) class11(0.22) class26(0.23) class35(0.26) class106(0.27) |
-| class80 | class141(0.21) class59(0.30) class36(0.30) class40(0.32) class99(0.33) |
-| class81 | class155(0.11) class180(0.17) class72(0.21) class160(0.25) class17(0.26) |
-| class82 | class83(0.07) class120(0.17) class194*(0.17) class47(0.23) class77(0.26) |
-| class83 | class82(0.07) class91(0.29) class194*(0.30) class120(0.31) class47(0.31) |
-| class84 | class107(0.15) class171(0.25) class114(0.30) class126(0.34) class122(0.38) |
-| class85 | class105(0.13) class112(0.16) class86(0.22) class53(0.24) class121(0.26) |
-| class86 | class73(0.11) class53(0.11) class74(0.13) class90(0.14) class113(0.15) |
-| class87 | class165(0.04) class70(0.24) class118(0.26) class63(0.27) class115(0.36) |
-| class88 | class109(0.17) class57(0.22) class93(0.22) class147(0.26) class148(0.26) |
-| class89 | class121(0.11) class90(0.14) class110(0.14) class64(0.16) class53(0.16) |
-| class90 | class110(0.09) class73(0.10) class53(0.12) class89(0.14) class69(0.14) |
-| class91 | class106(0.26) class78(0.27) class59(0.28) class82(0.28) class83(0.29) |
-| class92 | class58(0.14) class106(0.18) class111(0.21) class96(0.22) class174(0.31) |
-| class93 | class120(0.18) class147(0.19) class141(0.19) class148(0.20) class49(0.21) |
-| class94 | class75(0.07) class108(0.11) class47(0.12) class158(0.12) class154(0.12) |
-| class95 | class96(0.11) class58(0.19) class24(0.23) class106(0.24) class11(0.25) |
-| class96 | class106(0.07) class95(0.11) class58(0.16) class92(0.22) class11(0.27) |
-| class97 | class170(0.13) class171(0.23) class5(0.24) class71(0.24) class122(0.41) |
-| class98 | class169(0.34) class191*(0.35) class62(0.38) class192*(0.41) class141(0.44) |
-| class99 | class195*(0.25) class192*(0.26) class156(0.31) class80(0.33) class191*(0.34) |
-| class100 | class103(0.19) class101(0.23) class102(0.23) class104(0.24) class159(0.28) |
-| class101 | class102(0.03) class103(0.06) class150(0.13) class54(0.15) class55(0.19) |
-| class102 | class101(0.03) class103(0.04) class150(0.08) class159(0.12) class54(0.16) |
-| class103 | class102(0.04) class101(0.06) class150(0.08) class159(0.10) class100(0.19) |
-| class104 | class9(0.13) class45(0.16) class179(0.16) class7(0.17) class8(0.17) |
-| class105 | class85(0.13) class115(0.23) class112(0.24) class124(0.36) class121(0.37) |
-| class106 | class96(0.07) class58(0.18) class92(0.18) class95(0.24) class91(0.26) |
-| class107 | class84(0.15) class173(0.30) class114(0.30) class126(0.30) class17(0.32) |
-| class108 | class94(0.11) class142(0.14) class75(0.15) class52(0.19) class61(0.19) |
-| class109 | class51(0.15) class88(0.17) class57(0.21) class125(0.23) class130(0.23) |
-| class110 | class90(0.09) class69(0.11) class53(0.13) class89(0.14) class73(0.15) |
-| class111 | class54(0.16) class92(0.21) class55(0.22) class56(0.22) class102(0.28) |
-| class112 | class113(0.15) class85(0.16) class86(0.20) class53(0.20) class121(0.21) |
-| class113 | class74(0.14) class86(0.15) class112(0.15) class73(0.20) class121(0.22) |
-| class114 | class72(0.08) class60(0.10) class180(0.10) class126(0.15) class71(0.21) |
-| class115 | class118(0.16) class105(0.23) class70(0.24) class168(0.24) class63(0.30) |
-| class116 | class131(0.10) class186*(0.13) class183(0.19) class134(0.19) class187*(0.20) |
-| class117 | class188*(0.12) class147(0.14) class52(0.17) class119(0.19) class64(0.19) |
-| class118 | class70(0.03) class63(0.05) class115(0.16) class87(0.26) class168(0.29) |
-| class119 | class52(0.08) class94(0.14) class61(0.17) class185(0.17) class117(0.19) |
-| class120 | class147(0.12) class194*(0.15) class185(0.16) class82(0.17) class93(0.18) |
-| class121 | class89(0.11) class73(0.12) class53(0.12) class86(0.15) class68(0.15) |
-| class122 | class171(0.16) class160(0.20) class17(0.31) class190*(0.31) class5(0.31) |
-| class123 | class124(0.08) class145(0.11) class0(0.25) class146(0.37) class144(0.41) |
-| class124 | class123(0.08) class0(0.10) class145(0.12) class105(0.36) class146(0.54) |
-| class125 | class51(0.15) class183(0.15) class131(0.21) class132(0.23) class109(0.23) |
-| class126 | class114(0.15) class77(0.17) class180(0.18) class183(0.19) class57(0.21) |
-| class127 | class4(0.15) class135(0.16) class186*(0.22) class133(0.22) class137(0.23) |
-| class128 | class189*(0.12) class1(0.13) class136(0.15) class187*(0.17) class138(0.17) |
-| class129 | class133(0.25) class159(0.29) class48(0.30) class10(0.31) class135(0.31) |
-| class130 | class109(0.23) class36(0.26) class49(0.27) class141(0.27) class120(0.28) |
-| class131 | class116(0.10) class186*(0.16) class132(0.20) class48(0.20) class125(0.21) |
-| class132 | class49(0.13) class57(0.14) class131(0.20) class183(0.20) class182(0.21) |
-| class133 | class137(0.07) class135(0.10) class48(0.13) class139(0.18) class186*(0.19) |
-| class134 | class187*(0.11) class138(0.12) class116(0.19) class60(0.20) class128(0.21) |
-| class135 | class133(0.10) class48(0.15) class127(0.16) class137(0.16) class186*(0.17) |
-| class136 | class139(0.12) class128(0.15) class163(0.16) class164(0.17) class137(0.18) |
-| class137 | class133(0.07) class139(0.14) class135(0.16) class48(0.17) class136(0.18) |
-| class138 | class134(0.12) class183(0.16) class66(0.16) class187*(0.17) class128(0.17) |
-| class139 | class136(0.12) class48(0.13) class137(0.14) class133(0.18) class186*(0.20) |
-| class140 | class172(0.13) class184(0.18) class34(0.22) class46(0.25) class21(0.25) |
-| class141 | class93(0.19) class36(0.19) class80(0.21) class49(0.25) class130(0.27) |
-| class142 | class108(0.14) class61(0.16) class64(0.20) class94(0.24) class52(0.24) |
-| class143 | class8(0.16) class37(0.18) class172(0.19) class35(0.20) class184(0.21) |
-| class144 | class146(0.04) class188*(0.27) class153(0.32) class121(0.40) class123(0.41) |
-| class145 | class123(0.11) class124(0.12) class0(0.19) class146(0.36) class144(0.43) |
-| class146 | class144(0.04) class188*(0.32) class145(0.36) class123(0.37) class153(0.39) |
-| class147 | class185(0.10) class188*(0.12) class120(0.12) class148(0.13) class154(0.14) |
-| class148 | class147(0.13) class93(0.20) class154(0.22) class194*(0.24) class117(0.25) |
-| class149 | class45(0.26) class179(0.29) class150(0.31) class178(0.31) class111(0.32) |
-| class150 | class159(0.06) class103(0.08) class102(0.08) class101(0.13) class151(0.16) |
-| class151 | class150(0.16) class159(0.19) class152(0.24) class102(0.26) class103(0.29) |
-| class152 | class151(0.24) class5(0.27) class54(0.27) class111(0.34) class150(0.36) |
-| class153 | class194*(0.19) class67(0.21) class119(0.23) class154(0.23) class188*(0.24) |
-| class154 | class158(0.11) class194*(0.12) class94(0.12) class185(0.12) class75(0.13) |
-| class155 | class81(0.11) class72(0.19) class160(0.21) class180(0.24) class71(0.24) |
-| class156 | class38(0.14) class99(0.31) class44(0.32) class26(0.33) class174(0.39) |
-| class157 | class99(0.38) class174(0.39) class156(0.42) class43(0.42) class40(0.43) |
-| class158 | class154(0.11) class94(0.12) class185(0.13) class75(0.16) class47(0.18) |
-| class159 | class150(0.06) class103(0.10) class102(0.12) class151(0.19) class101(0.20) |
-| class160 | class122(0.20) class155(0.21) class15(0.22) class17(0.23) class170(0.23) |
-| class161 | class164(0.15) class163(0.17) class29(0.25) class28(0.28) class19(0.29) |
-| class162 | class35(0.23) class172(0.23) class30(0.24) class184(0.25) class140(0.26) |
-| class163 | class164(0.14) class136(0.16) class161(0.17) class34(0.20) class29(0.23) |
-| class164 | class163(0.14) class161(0.15) class136(0.17) class128(0.32) class50(0.32) |
-| class165 | class87(0.04) class70(0.30) class63(0.32) class168(0.33) class118(0.34) |
-| class166 | class3(0.15) class62(0.23) class181(0.27) class186*(0.28) class65(0.32) |
-| class167 | class169(0.19) class62(0.22) class116(0.22) class131(0.23) class186*(0.28) |
-| class168 | class115(0.24) class118(0.29) class165(0.33) class70(0.35) class63(0.35) |
-| class169 | class167(0.19) class62(0.21) class191*(0.30) class192*(0.30) class129(0.34) |
-| class170 | class97(0.13) class5(0.22) class171(0.23) class160(0.23) class71(0.24) |
-| class171 | class122(0.16) class97(0.23) class170(0.23) class160(0.25) class190*(0.25) |
-| class172 | class140(0.13) class143(0.19) class184(0.20) class35(0.22) class162(0.23) |
-| class173 | class77(0.20) class107(0.30) class126(0.34) class47(0.35) class57(0.36) |
-| class174 | class176(0.07) class175(0.14) class40(0.27) class106(0.30) class79(0.31) |
-| class175 | class176(0.08) class174(0.14) class78(0.21) class40(0.25) class92(0.37) |
-| class176 | class174(0.07) class175(0.08) class78(0.18) class40(0.21) class39(0.21) |
-| class177 | class182(0.17) class62(0.18) class183(0.18) class57(0.20) class132(0.24) |
-| class178 | class179(0.04) class55(0.21) class45(0.23) class104(0.24) class44(0.27) |
-| class179 | class178(0.04) class104(0.16) class44(0.19) class55(0.20) class45(0.20) |
-| class180 | class114(0.10) class72(0.15) class60(0.17) class81(0.17) class126(0.18) |
-| class181 | class186*(0.14) class48(0.14) class46(0.16) class192*(0.18) class34(0.19) |
-| class182 | class183(0.11) class177(0.17) class57(0.19) class132(0.21) class138(0.22) |
-| class183 | class182(0.11) class125(0.15) class138(0.16) class57(0.17) class177(0.18) |
-| class184 | class140(0.18) class172(0.20) class104(0.20) class143(0.21) class162(0.25) |
-| class185 | class147(0.10) class75(0.12) class154(0.12) class158(0.13) class94(0.14) |
-| class186* | class48(0.10) class116(0.13) class181(0.14) class131(0.16) class135(0.17) |
-| class187* | class189*(0.10) class134(0.11) class128(0.17) class138(0.17) class186*(0.17) |
-| class188* | class117(0.12) class147(0.12) class185(0.15) class154(0.17) class61(0.19) |
-| class189* | class187*(0.10) class128(0.12) class4(0.17) class135(0.18) class138(0.21) |
-| class190* | class193*(0.09) class17(0.16) class16(0.17) class15(0.18) class171(0.25) |
-| class191* | class192*(0.21) class41(0.29) class169(0.30) class181(0.32) class62(0.32) |
-| class192* | class181(0.18) class62(0.19) class191*(0.21) class32(0.22) class99(0.26) |
-| class193* | class190*(0.09) class15(0.20) class16(0.22) class17(0.27) class160(0.31) |
-| class194* | class154(0.12) class75(0.14) class120(0.15) class185(0.16) class147(0.16) |
-| class195* | class99(0.25) class167(0.30) class62(0.36) class169(0.40) class177(0.46) |
+| AM General Hummer SUV 2000 | HUMMER H2 SUT Crew Cab 2009(0.10) Jeep Wrangler SUV 2012(0.19) HUMMER H3T Crew Cab 2010(0.25) Ford F-450 Super Duty Crew Cab 2012(0.64) Hyundai Sonata Hybrid Sedan 2012(0.70) |
+| Acura RL Sedan 2012 | Honda Accord Sedan 2012(0.13) Acura TSX Sedan 2012(0.18) Acura TL Sedan 2012(0.19) Hyundai Genesis Sedan 2012(0.20) Acura TL Type-S 2008(0.21) |
+| Acura TL Sedan 2012 | Acura TSX Sedan 2012(0.15) Acura RL Sedan 2012(0.19) Honda Accord Coupe 2012(0.24) Acura ZDX Hatchback 2012(0.24) Acura TL Type-S 2008(0.26) |
+| Acura TL Type-S 2008 | Mitsubishi Lancer Sedan 2012(0.15) Acura RL Sedan 2012(0.21) Acura TL Sedan 2012(0.26) Honda Accord Sedan 2012(0.30) Toyota Camry Sedan 2012*(0.32) |
+| Acura TSX Sedan 2012 | Acura TL Sedan 2012(0.15) Honda Accord Coupe 2012(0.15) Volkswagen Golf Hatchback 2012*(0.17) Hyundai Accent Sedan 2012(0.18) Acura RL Sedan 2012(0.18) |
+| Acura Integra Type R 2001 | Nissan 240SX Coupe 1998(0.22) Eagle Talon Hatchback 1998(0.24) Lamborghini Diablo Coupe 2001(0.27) Chevrolet Monte Carlo Coupe 2007(0.27) Plymouth Neon Coupe 1999(0.29) |
+| Acura ZDX Hatchback 2012 | Acura TL Sedan 2012(0.24) Hyundai Sonata Hybrid Sedan 2012(0.27) Hyundai Azera Sedan 2012(0.28) Hyundai Tucson SUV 2012(0.30) Hyundai Sonata Sedan 2012(0.30) |
+| Aston Martin V8 Vantage Convertible 2012 | Aston Martin V8 Vantage Coupe 2012(0.06) Aston Martin Virage Convertible 2012(0.08) BMW M6 Convertible 2010(0.13) BMW Z4 Convertible 2012(0.14) Fisker Karma Sedan 2012(0.17) |
+| Aston Martin V8 Vantage Coupe 2012 | Aston Martin V8 Vantage Convertible 2012(0.06) BMW Z4 Convertible 2012(0.10) Aston Martin Virage Convertible 2012(0.11) Jaguar XK XKR 2012(0.16) BMW M6 Convertible 2010(0.16) |
+| Aston Martin Virage Convertible 2012 | Aston Martin V8 Vantage Convertible 2012(0.08) Aston Martin V8 Vantage Coupe 2012(0.11) Fisker Karma Sedan 2012(0.13) BMW M6 Convertible 2010(0.15) Jaguar XK XKR 2012(0.24) |
+| Aston Martin Virage Coupe 2012 | BMW Z4 Convertible 2012(0.18) Aston Martin V8 Vantage Coupe 2012(0.21) Jaguar XK XKR 2012(0.22) McLaren MP4-12C Coupe 2012(0.24) Ferrari California Convertible 2012(0.28) |
+| Audi RS 4 Convertible 2008 | Audi S5 Convertible 2012(0.09) Audi S6 Sedan 2011(0.12) Audi S4 Sedan 2007(0.17) Audi A5 Coupe 2012(0.20) Audi S4 Sedan 2012(0.22) |
+| Audi A5 Coupe 2012 | Audi S5 Coupe 2012(0.06) Audi TT Hatchback 2011(0.06) Audi S4 Sedan 2012(0.08) Audi TTS Coupe 2012(0.08) Audi S6 Sedan 2011(0.12) |
+| Audi TTS Coupe 2012 | Audi TT Hatchback 2011(0.04) Audi S5 Coupe 2012(0.05) Audi A5 Coupe 2012(0.08) Audi R8 Coupe 2012(0.10) Audi S4 Sedan 2012(0.13) |
+| Audi R8 Coupe 2012 | Audi TTS Coupe 2012(0.10) Audi TT Hatchback 2011(0.13) Audi S5 Coupe 2012(0.14) Audi TT RS Coupe 2012(0.18) Audi A5 Coupe 2012(0.19) |
+| Audi V8 Sedan 1994 | Audi 100 Sedan 1994(0.03) Audi 100 Wagon 1994(0.06) Volkswagen Golf Hatchback 1991*(0.18) Volvo 240 Sedan 1993*(0.20) Mercedes-Benz 300-Class Convertible 1993(0.22) |
+| Audi 100 Sedan 1994 | Audi V8 Sedan 1994(0.03) Audi 100 Wagon 1994(0.04) Volkswagen Golf Hatchback 1991*(0.17) Volvo 240 Sedan 1993*(0.22) Mercedes-Benz 300-Class Convertible 1993(0.23) |
+| Audi 100 Wagon 1994 | Audi 100 Sedan 1994(0.04) Audi V8 Sedan 1994(0.06) Volkswagen Golf Hatchback 1991*(0.16) Mercedes-Benz 300-Class Convertible 1993(0.23) Daewoo Nubira Wagon 2002(0.26) |
+| Audi TT Hatchback 2011 | Audi TTS Coupe 2012(0.04) Audi A5 Coupe 2012(0.06) Audi S5 Coupe 2012(0.07) Audi TT RS Coupe 2012(0.11) Audi S4 Sedan 2012(0.12) |
+| Audi S6 Sedan 2011 | Audi S4 Sedan 2007(0.05) Audi S4 Sedan 2012(0.08) Audi RS 4 Convertible 2008(0.12) Audi A5 Coupe 2012(0.12) Audi S5 Convertible 2012(0.18) |
+| Audi S5 Convertible 2012 | Audi RS 4 Convertible 2008(0.09) Audi A5 Coupe 2012(0.13) Audi TT Hatchback 2011(0.13) Audi TTS Coupe 2012(0.13) Audi S5 Coupe 2012(0.14) |
+| Audi S5 Coupe 2012 | Audi TTS Coupe 2012(0.05) Audi A5 Coupe 2012(0.06) Audi TT Hatchback 2011(0.07) Audi S4 Sedan 2012(0.11) Audi R8 Coupe 2012(0.14) |
+| Audi S4 Sedan 2012 | Audi A5 Coupe 2012(0.08) Audi S6 Sedan 2011(0.08) Audi S5 Coupe 2012(0.11) Audi TT Hatchback 2011(0.12) Audi TTS Coupe 2012(0.13) |
+| Audi S4 Sedan 2007 | Audi S6 Sedan 2011(0.05) Audi S4 Sedan 2012(0.13) Audi RS 4 Convertible 2008(0.17) Audi A5 Coupe 2012(0.20) Chrysler 300 SRT-8 2010(0.27) |
+| Audi TT RS Coupe 2012 | Audi TT Hatchback 2011(0.11) Audi TTS Coupe 2012(0.15) Audi S4 Sedan 2012(0.16) Audi R8 Coupe 2012(0.18) Audi S5 Coupe 2012(0.19) |
+| BMW ActiveHybrid 5 Sedan 2012 | BMW M5 Sedan 2010(0.12) BMW 3 Series Wagon 2012(0.20) Porsche Panamera Sedan 2012(0.27) Infiniti G Coupe IPL 2012(0.28) Mercedes-Benz E-Class Sedan 2012(0.29) |
+| BMW 1 Series Convertible 2012 | BMW 1 Series Coupe 2012(0.13) BMW M3 Coupe 2012(0.17) BMW 3 Series Sedan 2012(0.20) BMW M6 Convertible 2010(0.23) Chrysler Crossfire Convertible 2008(0.23) |
+| BMW 1 Series Coupe 2012 | BMW 3 Series Sedan 2012(0.12) BMW 1 Series Convertible 2012(0.13) BMW M3 Coupe 2012(0.14) BMW M5 Sedan 2010(0.27) BMW X6 SUV 2012(0.28) |
+| BMW 3 Series Sedan 2012 | BMW 1 Series Coupe 2012(0.12) BMW M3 Coupe 2012(0.15) BMW 3 Series Wagon 2012(0.16) Audi S4 Sedan 2012(0.19) BMW M5 Sedan 2010(0.20) |
+| BMW 3 Series Wagon 2012 | BMW 3 Series Sedan 2012(0.16) BMW M5 Sedan 2010(0.16) BMW ActiveHybrid 5 Sedan 2012(0.20) Mercedes-Benz E-Class Sedan 2012(0.23) Mercedes-Benz C-Class Sedan 2012(0.25) |
+| BMW 6 Series Convertible 2007 | BMW M6 Convertible 2010(0.16) Chrysler Crossfire Convertible 2008(0.17) Mercedes-Benz SL-Class Coupe 2009(0.24) BMW 1 Series Convertible 2012(0.24) Aston Martin V8 Vantage Convertible 2012(0.32) |
+| BMW X5 SUV 2007 | BMW X3 SUV 2012(0.18) Volvo XC90 SUV 2007*(0.23) GMC Acadia SUV 2012(0.24) Dodge Durango SUV 2012(0.27) Dodge Caliber Wagon 2012(0.28) |
+| BMW X6 SUV 2012 | BMW X3 SUV 2012(0.17) Volvo C30 Hatchback 2012*(0.22) BMW 1 Series Coupe 2012(0.28) BMW 3 Series Sedan 2012(0.34) Infiniti QX56 SUV 2011(0.36) |
+| BMW M3 Coupe 2012 | BMW 1 Series Coupe 2012(0.14) BMW 3 Series Sedan 2012(0.15) BMW 1 Series Convertible 2012(0.17) BMW M5 Sedan 2010(0.21) Audi S5 Coupe 2012(0.23) |
+| BMW M5 Sedan 2010 | BMW ActiveHybrid 5 Sedan 2012(0.12) BMW 3 Series Wagon 2012(0.16) Suzuki Kizashi Sedan 2012(0.19) BMW 3 Series Sedan 2012(0.20) Mercedes-Benz E-Class Sedan 2012(0.20) |
+| BMW M6 Convertible 2010 | Aston Martin V8 Vantage Convertible 2012(0.13) Aston Martin Virage Convertible 2012(0.15) Aston Martin V8 Vantage Coupe 2012(0.16) BMW 6 Series Convertible 2007(0.16) BMW Z4 Convertible 2012(0.19) |
+| BMW X3 SUV 2012 | BMW X6 SUV 2012(0.17) BMW X5 SUV 2007(0.18) Infiniti QX56 SUV 2011(0.19) Hyundai Santa Fe SUV 2012(0.26) Chrysler PT Cruiser Convertible 2008(0.30) |
+| BMW Z4 Convertible 2012 | Aston Martin V8 Vantage Coupe 2012(0.10) Aston Martin V8 Vantage Convertible 2012(0.14) Aston Martin Virage Coupe 2012(0.18) Jaguar XK XKR 2012(0.18) BMW M6 Convertible 2010(0.19) |
+| Bentley Continental Supersports Conv. Convertible 2012 | MINI Cooper Roadster Convertible 2012(0.14) Bentley Continental GT Coupe 2012(0.22) Bugatti Veyron 16.4 Convertible 2009(0.26) BMW 1 Series Convertible 2012(0.27) Aston Martin V8 Vantage Convertible 2012(0.28) |
+| Bentley Arnage Sedan 2009 | Bentley Mulsanne Sedan 2011(0.21) Rolls-Royce Phantom Sedan 2012(0.21) Chrysler 300 SRT-8 2010(0.26) Bentley Continental Flying Spur Sedan 2007(0.33) Volvo 240 Sedan 1993*(0.34) |
+| Bentley Mulsanne Sedan 2011 | Bentley Continental Flying Spur Sedan 2007(0.13) Bentley Continental GT Coupe 2012(0.20) Bentley Arnage Sedan 2009(0.21) Rolls-Royce Phantom Sedan 2012(0.21) Bentley Continental GT Coupe 2007(0.22) |
+| Bentley Continental GT Coupe 2012 | Bentley Continental GT Coupe 2007(0.10) Bentley Continental Flying Spur Sedan 2007(0.17) Bentley Mulsanne Sedan 2011(0.20) Bentley Continental Supersports Conv. Convertible 2012(0.22) BMW 1 Series Convertible 2012(0.25) |
+| Bentley Continental GT Coupe 2007 | Bentley Continental GT Coupe 2012(0.10) Bentley Continental Flying Spur Sedan 2007(0.12) Bentley Mulsanne Sedan 2011(0.22) BMW M6 Convertible 2010(0.26) Porsche Panamera Sedan 2012(0.31) |
+| Bentley Continental Flying Spur Sedan 2007 | Bentley Continental GT Coupe 2007(0.12) Bentley Mulsanne Sedan 2011(0.13) Bentley Continental GT Coupe 2012(0.17) Bentley Arnage Sedan 2009(0.33) BMW 1 Series Convertible 2012(0.35) |
+| Bugatti Veyron 16.4 Convertible 2009 | Bugatti Veyron 16.4 Coupe 2009(0.16) Spyker C8 Coupe 2009(0.19) Chevrolet Corvette Ron Fellows Edition Z06 2007(0.20) Aston Martin V8 Vantage Convertible 2012(0.25) Bentley Continental Supersports Conv. Convertible 2012(0.26) |
+| Bugatti Veyron 16.4 Coupe 2009 | Chevrolet Corvette ZR1 2012(0.14) Fisker Karma Sedan 2012(0.16) Bugatti Veyron 16.4 Convertible 2009(0.16) Spyker C8 Coupe 2009(0.20) Aston Martin V8 Vantage Convertible 2012(0.20) |
+| Buick Regal GS 2012 | Suzuki Kizashi Sedan 2012(0.16) Buick Verano Sedan 2012(0.17) Hyundai Azera Sedan 2012(0.24) Infiniti G Coupe IPL 2012(0.25) Tesla Model S Sedan 2012(0.28) |
+| Buick Rainier SUV 2007 | Chrysler Aspen SUV 2009(0.10) Dodge Durango SUV 2007(0.12) Volvo XC90 SUV 2007*(0.17) Mazda Tribute SUV 2011(0.18) Cadillac Escalade EXT Crew Cab 2007(0.19) |
+| Buick Verano Sedan 2012 | Toyota Camry Sedan 2012*(0.10) Hyundai Azera Sedan 2012(0.13) Hyundai Sonata Hybrid Sedan 2012(0.13) Suzuki Kizashi Sedan 2012(0.14) Hyundai Accent Sedan 2012(0.15) |
+| Buick Enclave SUV 2012 | Hyundai Veracruz SUV 2012(0.13) Chevrolet Traverse SUV 2012(0.20) Dodge Durango SUV 2012(0.21) Infiniti QX56 SUV 2011(0.25) Scion xD Hatchback 2012(0.26) |
+| Cadillac CTS-V Sedan 2012 | Audi S5 Coupe 2012(0.26) Audi TTS Coupe 2012(0.28) Mercedes-Benz E-Class Sedan 2012(0.31) BMW M5 Sedan 2010(0.32) Audi A5 Coupe 2012(0.32) |
+| Cadillac SRX SUV 2012 | Chevrolet Traverse SUV 2012(0.14) Ford Edge SUV 2012(0.15) Honda Odyssey Minivan 2012(0.15) Hyundai Veracruz SUV 2012(0.23) Suzuki SX4 Sedan 2012(0.26) |
+| Cadillac Escalade EXT Crew Cab 2007 | GMC Yukon Hybrid SUV 2012(0.08) Dodge Durango SUV 2007(0.12) Chrysler Aspen SUV 2009(0.12) Chevrolet Avalanche Crew Cab 2012(0.17) GMC Terrain SUV 2012(0.17) |
+| Chevrolet Silverado 1500 Hybrid Crew Cab 2012 | Chevrolet Silverado 1500 Extended Cab 2012(0.05) Chevrolet Silverado 2500HD Regular Cab 2012(0.06) Chevrolet Silverado 1500 Regular Cab 2012(0.10) Dodge Ram Pickup 3500 Quad Cab 2009(0.11) Dodge Dakota Club Cab 2007(0.12) |
+| Chevrolet Corvette Convertible 2012 | Chevrolet Corvette ZR1 2012(0.14) Ferrari California Convertible 2012(0.15) Ford GT Coupe 2006(0.16) Ferrari 458 Italia Convertible 2012(0.16) Lamborghini Aventador Coupe 2012(0.22) |
+| Chevrolet Corvette ZR1 2012 | Bugatti Veyron 16.4 Coupe 2009(0.14) Chevrolet Corvette Convertible 2012(0.14) Ferrari California Convertible 2012(0.19) Spyker C8 Coupe 2009(0.20) Lamborghini Aventador Coupe 2012(0.20) |
+| Chevrolet Corvette Ron Fellows Edition Z06 2007 | Bugatti Veyron 16.4 Convertible 2009(0.20) Ford GT Coupe 2006(0.22) Chevrolet Corvette ZR1 2012(0.23) Spyker C8 Coupe 2009(0.26) Chevrolet Corvette Convertible 2012(0.26) |
+| Chevrolet Traverse SUV 2012 | Hyundai Veracruz SUV 2012(0.14) Cadillac SRX SUV 2012(0.14) Suzuki SX4 Sedan 2012(0.17) Suzuki SX4 Hatchback 2012(0.19) Chrysler Town and Country Minivan 2012(0.20) |
+| Chevrolet Camaro Convertible 2012 | Dodge Challenger SRT8 2011(0.14) Dodge Charger SRT-8 2009(0.16) Ford Mustang Convertible 2007(0.18) Dodge Charger Sedan 2012(0.19) Chevrolet Corvette Convertible 2012(0.26) |
+| Chevrolet HHR SS 2010 | Dodge Magnum Wagon 2008(0.28) Chrysler PT Cruiser Convertible 2008(0.30) Dodge Caliber Wagon 2007(0.33) BMW X6 SUV 2012(0.36) Chrysler 300 SRT-8 2010(0.37) |
+| Chevrolet Impala Sedan 2007 | Chevrolet Malibu Sedan 2007(0.07) Ford Focus Sedan 2007(0.10) Chevrolet Monte Carlo Coupe 2007(0.12) Suzuki Aerio Sedan 2007(0.17) Chrysler Sebring Convertible 2010(0.19) |
+| Chevrolet Tahoe Hybrid SUV 2012 | Isuzu Ascender SUV 2008(0.16) GMC Yukon Hybrid SUV 2012(0.17) Chevrolet Avalanche Crew Cab 2012(0.18) Toyota 4Runner SUV 2012*(0.19) Ford Expedition EL SUV 2009(0.19) |
+| Chevrolet Sonic Sedan 2012 | Scion xD Hatchback 2012(0.18) Volvo C30 Hatchback 2012*(0.19) Nissan Juke Hatchback 2012(0.21) Nissan Leaf Hatchback 2012(0.22) Suzuki Kizashi Sedan 2012(0.22) |
+| Chevrolet Express Cargo Van 2007 | Chevrolet Express Van 2007(0.01) GMC Savana Van 2012(0.05) Dodge Sprinter Cargo Van 2009(0.27) Ford E-Series Wagon Van 2012(0.30) Mercedes-Benz Sprinter Van 2012(0.32) |
+| Chevrolet Avalanche Crew Cab 2012 | Dodge Dakota Crew Cab 2010(0.16) Cadillac Escalade EXT Crew Cab 2007(0.17) Chevrolet Tahoe Hybrid SUV 2012(0.18) GMC Terrain SUV 2012(0.19) Isuzu Ascender SUV 2008(0.20) |
+| Chevrolet Cobalt SS 2010 | Toyota Corolla Sedan 2012*(0.29) Mitsubishi Lancer Sedan 2012(0.32) Volvo C30 Hatchback 2012*(0.32) Volkswagen Beetle Hatchback 2012*(0.35) Hyundai Elantra Touring Hatchback 2012(0.36) |
+| Chevrolet Malibu Hybrid Sedan 2010 | Hyundai Elantra Touring Hatchback 2012(0.16) Honda Accord Sedan 2012(0.18) Toyota Corolla Sedan 2012*(0.23) Hyundai Elantra Sedan 2007(0.25) Volkswagen Golf Hatchback 2012*(0.25) |
+| Chevrolet TrailBlazer SS 2009 | Land Rover Range Rover SUV 2012(0.21) Volvo XC90 SUV 2007*(0.22) Cadillac Escalade EXT Crew Cab 2007(0.24) GMC Yukon Hybrid SUV 2012(0.27) Dodge Durango SUV 2007(0.30) |
+| Chevrolet Silverado 2500HD Regular Cab 2012 | Chevrolet Silverado 1500 Extended Cab 2012(0.06) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.06) Chevrolet Silverado 1500 Regular Cab 2012(0.10) GMC Canyon Extended Cab 2012(0.15) Dodge Ram Pickup 3500 Quad Cab 2009(0.16) |
+| Chevrolet Silverado 1500 Classic Extended Cab 2007 | Ford Ranger SuperCab 2011(0.11) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.12) Dodge Dakota Club Cab 2007(0.14) Chevrolet Silverado 1500 Extended Cab 2012(0.16) Chevrolet Silverado 2500HD Regular Cab 2012(0.19) |
+| Chevrolet Express Van 2007 | Chevrolet Express Cargo Van 2007(0.01) GMC Savana Van 2012(0.03) Ford E-Series Wagon Van 2012(0.24) Dodge Sprinter Cargo Van 2009(0.24) Mercedes-Benz Sprinter Van 2012(0.30) |
+| Chevrolet Monte Carlo Coupe 2007 | Chevrolet Impala Sedan 2007(0.12) Chevrolet Malibu Sedan 2007(0.13) Ford Focus Sedan 2007(0.21) Chrysler Sebring Convertible 2010(0.22) Lincoln Town Car Sedan 2011(0.24) |
+| Chevrolet Malibu Sedan 2007 | Chevrolet Impala Sedan 2007(0.07) Ford Focus Sedan 2007(0.08) Chevrolet Monte Carlo Coupe 2007(0.13) Suzuki Aerio Sedan 2007(0.15) Lincoln Town Car Sedan 2011(0.19) |
+| Chevrolet Silverado 1500 Extended Cab 2012 | Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.05) Chevrolet Silverado 2500HD Regular Cab 2012(0.06) Chevrolet Silverado 1500 Regular Cab 2012(0.07) Dodge Dakota Club Cab 2007(0.10) Dodge Ram Pickup 3500 Quad Cab 2009(0.11) |
+| Chevrolet Silverado 1500 Regular Cab 2012 | Chevrolet Silverado 1500 Extended Cab 2012(0.07) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.10) Chevrolet Silverado 2500HD Regular Cab 2012(0.10) Dodge Ram Pickup 3500 Quad Cab 2009(0.13) Ford F-150 Regular Cab 2007(0.14) |
+| Chrysler Aspen SUV 2009 | Dodge Durango SUV 2007(0.07) Buick Rainier SUV 2007(0.10) Toyota Sequoia SUV 2012(0.12) Cadillac Escalade EXT Crew Cab 2007(0.12) Land Rover LR2 SUV 2012(0.13) |
+| Chrysler Sebring Convertible 2010 | Chevrolet Impala Sedan 2007(0.19) Chevrolet Monte Carlo Coupe 2007(0.22) Chevrolet Malibu Hybrid Sedan 2010(0.26) Chevrolet Malibu Sedan 2007(0.27) Hyundai Elantra Sedan 2007(0.28) |
+| Chrysler Town and Country Minivan 2012 | Honda Odyssey Minivan 2007(0.17) Buick Rainier SUV 2007(0.20) Chevrolet Traverse SUV 2012(0.20) Ram C/V Cargo Van Minivan 2012(0.20) Dodge Caliber Wagon 2012(0.26) |
+| Chrysler 300 SRT-8 2010 | Rolls-Royce Phantom Sedan 2012(0.18) Rolls-Royce Ghost Sedan 2012(0.21) Bentley Mulsanne Sedan 2011(0.24) Bentley Arnage Sedan 2009(0.26) Dodge Magnum Wagon 2008(0.27) |
+| Chrysler Crossfire Convertible 2008 | BMW 6 Series Convertible 2007(0.17) Audi RS 4 Convertible 2008(0.22) BMW 1 Series Convertible 2012(0.23) BMW M6 Convertible 2010(0.26) Ford Mustang Convertible 2007(0.27) |
+| Chrysler PT Cruiser Convertible 2008 | Infiniti QX56 SUV 2011(0.21) Chevrolet HHR SS 2010(0.30) BMW X3 SUV 2012(0.30) Bentley Mulsanne Sedan 2011(0.32) FIAT 500 Convertible 2012(0.33) |
+| Daewoo Nubira Wagon 2002 | Lincoln Town Car Sedan 2011(0.11) Suzuki Aerio Sedan 2007(0.17) Chevrolet Malibu Sedan 2007(0.21) Mercedes-Benz 300-Class Convertible 1993(0.25) Audi 100 Wagon 1994(0.26) |
+| Dodge Caliber Wagon 2012 | Dodge Caliber Wagon 2007(0.07) GMC Acadia SUV 2012(0.17) Volvo XC90 SUV 2007*(0.17) Buick Rainier SUV 2007(0.23) Chrysler Town and Country Minivan 2012(0.26) |
+| Dodge Caliber Wagon 2007 | Dodge Caliber Wagon 2012(0.07) Dodge Magnum Wagon 2008(0.29) Volvo XC90 SUV 2007*(0.30) GMC Acadia SUV 2012(0.31) Buick Rainier SUV 2007(0.31) |
+| Dodge Caravan Minivan 1997 | Ford Freestar Minivan 2007(0.15) Plymouth Neon Coupe 1999(0.25) Ford Focus Sedan 2007(0.30) Honda Odyssey Minivan 2007(0.34) Geo Metro Convertible 1993(0.38) |
+| Dodge Ram Pickup 3500 Crew Cab 2010 | Ford F-450 Super Duty Crew Cab 2012(0.13) Ford F-150 Regular Cab 2012(0.16) Dodge Ram Pickup 3500 Quad Cab 2009(0.22) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.24) GMC Canyon Extended Cab 2012(0.26) |
+| Dodge Ram Pickup 3500 Quad Cab 2009 | Chevrolet Silverado 1500 Extended Cab 2012(0.11) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.11) Chevrolet Silverado 1500 Regular Cab 2012(0.13) Dodge Dakota Club Cab 2007(0.14) Ford F-150 Regular Cab 2007(0.15) |
+| Dodge Sprinter Cargo Van 2009 | Mercedes-Benz Sprinter Van 2012(0.04) Chevrolet Express Van 2007(0.24) GMC Savana Van 2012(0.26) Chevrolet Express Cargo Van 2007(0.27) Ford E-Series Wagon Van 2012(0.36) |
+| Dodge Journey SUV 2012 | Ford Edge SUV 2012(0.17) Chevrolet Traverse SUV 2012(0.22) Dodge Durango SUV 2012(0.22) Jeep Grand Cherokee SUV 2012(0.26) Jeep Compass SUV 2012(0.26) |
+| Dodge Dakota Crew Cab 2010 | GMC Canyon Extended Cab 2012(0.11) Dodge Dakota Club Cab 2007(0.14) Ford Ranger SuperCab 2011(0.14) Chevrolet Avalanche Crew Cab 2012(0.16) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.16) |
+| Dodge Dakota Club Cab 2007 | Ford Ranger SuperCab 2011(0.09) Chevrolet Silverado 1500 Extended Cab 2012(0.10) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.12) Dodge Dakota Crew Cab 2010(0.14) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.14) |
+| Dodge Magnum Wagon 2008 | Ford Mustang Convertible 2007(0.26) Chrysler 300 SRT-8 2010(0.27) Chevrolet HHR SS 2010(0.28) Dodge Caliber Wagon 2012(0.28) Dodge Caliber Wagon 2007(0.29) |
+| Dodge Challenger SRT8 2011 | Chevrolet Camaro Convertible 2012(0.14) Ford Mustang Convertible 2007(0.18) Ford GT Coupe 2006(0.21) Dodge Charger SRT-8 2009(0.22) Rolls-Royce Phantom Drophead Coupe Convertible 2012(0.31) |
+| Dodge Durango SUV 2012 | GMC Acadia SUV 2012(0.18) Jeep Grand Cherokee SUV 2012(0.19) Infiniti QX56 SUV 2011(0.19) Jeep Compass SUV 2012(0.20) Buick Enclave SUV 2012(0.21) |
+| Dodge Durango SUV 2007 | Chrysler Aspen SUV 2009(0.07) Ford Expedition EL SUV 2009(0.11) Buick Rainier SUV 2007(0.12) Mazda Tribute SUV 2011(0.12) Land Rover LR2 SUV 2012(0.12) |
+| Dodge Charger Sedan 2012 | Dodge Charger SRT-8 2009(0.11) Chevrolet Camaro Convertible 2012(0.19) Audi TT RS Coupe 2012(0.23) Ford Mustang Convertible 2007(0.24) Audi RS 4 Convertible 2008(0.25) |
+| Dodge Charger SRT-8 2009 | Ford Mustang Convertible 2007(0.07) Dodge Charger Sedan 2012(0.11) Chevrolet Camaro Convertible 2012(0.16) Dodge Challenger SRT8 2011(0.22) Audi RS 4 Convertible 2008(0.27) |
+| Eagle Talon Hatchback 1998 | Nissan 240SX Coupe 1998(0.13) Plymouth Neon Coupe 1999(0.23) Acura Integra Type R 2001(0.24) Chevrolet Monte Carlo Coupe 2007(0.24) Geo Metro Convertible 1993(0.41) |
+| FIAT 500 Abarth 2012 | Nissan Juke Hatchback 2012(0.34) Volkswagen Beetle Hatchback 2012*(0.35) Chevrolet Sonic Sedan 2012(0.38) Volvo C30 Hatchback 2012*(0.41) Infiniti QX56 SUV 2011(0.44) |
+| FIAT 500 Convertible 2012 | smart fortwo Convertible 2012*(0.25) Volvo C30 Hatchback 2012*(0.26) MINI Cooper Roadster Convertible 2012(0.31) Chrysler PT Cruiser Convertible 2008(0.33) Volkswagen Beetle Hatchback 2012*(0.34) |
+| Ferrari FF Coupe 2012 | Ferrari 458 Italia Coupe 2012(0.19) Ferrari California Convertible 2012(0.23) Ferrari 458 Italia Convertible 2012(0.23) Fisker Karma Sedan 2012(0.24) McLaren MP4-12C Coupe 2012(0.28) |
+| Ferrari California Convertible 2012 | Ferrari 458 Italia Convertible 2012(0.03) Ferrari 458 Italia Coupe 2012(0.06) Lamborghini Aventador Coupe 2012(0.13) Chevrolet Corvette Convertible 2012(0.15) Chevrolet Corvette ZR1 2012(0.19) |
+| Ferrari 458 Italia Convertible 2012 | Ferrari California Convertible 2012(0.03) Ferrari 458 Italia Coupe 2012(0.04) Lamborghini Aventador Coupe 2012(0.08) McLaren MP4-12C Coupe 2012(0.12) Chevrolet Corvette Convertible 2012(0.16) |
+| Ferrari 458 Italia Coupe 2012 | Ferrari 458 Italia Convertible 2012(0.04) Ferrari California Convertible 2012(0.06) Lamborghini Aventador Coupe 2012(0.08) McLaren MP4-12C Coupe 2012(0.10) Ferrari FF Coupe 2012(0.19) |
+| Fisker Karma Sedan 2012 | Aston Martin Virage Convertible 2012(0.13) Bugatti Veyron 16.4 Coupe 2009(0.16) Spyker C8 Coupe 2009(0.16) Aston Martin V8 Vantage Convertible 2012(0.17) Aston Martin V8 Vantage Coupe 2012(0.17) |
+| Ford F-450 Super Duty Crew Cab 2012 | Dodge Ram Pickup 3500 Crew Cab 2010(0.13) Ford E-Series Wagon Van 2012(0.23) Ford F-150 Regular Cab 2012(0.24) HUMMER H2 SUT Crew Cab 2009(0.36) GMC Canyon Extended Cab 2012(0.37) |
+| Ford Mustang Convertible 2007 | Dodge Charger SRT-8 2009(0.07) Chevrolet Camaro Convertible 2012(0.18) Dodge Challenger SRT8 2011(0.18) Dodge Charger Sedan 2012(0.24) Dodge Magnum Wagon 2008(0.26) |
+| Ford Freestar Minivan 2007 | Dodge Caravan Minivan 1997(0.15) Ram C/V Cargo Van Minivan 2012(0.30) Ford Focus Sedan 2007(0.30) Honda Odyssey Minivan 2007(0.30) Audi 100 Wagon 1994(0.32) |
+| Ford Expedition EL SUV 2009 | Dodge Durango SUV 2007(0.11) Isuzu Ascender SUV 2008(0.14) Chrysler Aspen SUV 2009(0.15) Cadillac Escalade EXT Crew Cab 2007(0.19) Chevrolet Tahoe Hybrid SUV 2012(0.19) |
+| Ford Edge SUV 2012 | Cadillac SRX SUV 2012(0.15) Dodge Journey SUV 2012(0.17) Chevrolet Traverse SUV 2012(0.21) Honda Odyssey Minivan 2012(0.23) Hyundai Santa Fe SUV 2012(0.23) |
+| Ford Ranger SuperCab 2011 | Dodge Dakota Club Cab 2007(0.09) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.11) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.13) Dodge Dakota Crew Cab 2010(0.14) Chevrolet Silverado 1500 Extended Cab 2012(0.15) |
+| Ford GT Coupe 2006 | Chevrolet Corvette Convertible 2012(0.16) Dodge Challenger SRT8 2011(0.21) Chevrolet Corvette ZR1 2012(0.22) Chevrolet Corvette Ron Fellows Edition Z06 2007(0.22) Ferrari 458 Italia Convertible 2012(0.28) |
+| Ford F-150 Regular Cab 2012 | Ford F-150 Regular Cab 2007(0.15) Dodge Ram Pickup 3500 Crew Cab 2010(0.16) Dodge Ram Pickup 3500 Quad Cab 2009(0.20) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.20) GMC Canyon Extended Cab 2012(0.21) |
+| Ford F-150 Regular Cab 2007 | Chevrolet Silverado 1500 Regular Cab 2012(0.14) Dodge Ram Pickup 3500 Quad Cab 2009(0.15) Ford F-150 Regular Cab 2012(0.15) Chevrolet Silverado 1500 Extended Cab 2012(0.20) GMC Canyon Extended Cab 2012(0.22) |
+| Ford Focus Sedan 2007 | Chevrolet Malibu Sedan 2007(0.08) Chevrolet Impala Sedan 2007(0.10) Suzuki Aerio Sedan 2007(0.10) Honda Odyssey Minivan 2007(0.15) Chevrolet Monte Carlo Coupe 2007(0.21) |
+| Ford E-Series Wagon Van 2012 | GMC Savana Van 2012(0.16) Ford F-450 Super Duty Crew Cab 2012(0.23) Chevrolet Express Van 2007(0.24) Nissan NV Passenger Van 2012(0.24) Chevrolet Express Cargo Van 2007(0.30) |
+| Ford Fiesta Sedan 2012 | Hyundai Tucson SUV 2012(0.10) Toyota Camry Sedan 2012*(0.13) Suzuki SX4 Sedan 2012(0.19) Hyundai Elantra Sedan 2007(0.19) Toyota Corolla Sedan 2012*(0.20) |
+| GMC Terrain SUV 2012 | Toyota 4Runner SUV 2012*(0.12) Jeep Grand Cherokee SUV 2012(0.14) Cadillac Escalade EXT Crew Cab 2007(0.17) GMC Yukon Hybrid SUV 2012(0.19) Chevrolet Avalanche Crew Cab 2012(0.19) |
+| GMC Savana Van 2012 | Chevrolet Express Van 2007(0.03) Chevrolet Express Cargo Van 2007(0.05) Ford E-Series Wagon Van 2012(0.16) Dodge Sprinter Cargo Van 2009(0.26) Nissan NV Passenger Van 2012(0.29) |
+| GMC Yukon Hybrid SUV 2012 | Cadillac Escalade EXT Crew Cab 2007(0.08) Dodge Durango SUV 2007(0.14) Chevrolet Tahoe Hybrid SUV 2012(0.17) Toyota Sequoia SUV 2012(0.17) GMC Terrain SUV 2012(0.19) |
+| GMC Acadia SUV 2012 | Jeep Grand Cherokee SUV 2012(0.12) Volvo XC90 SUV 2007*(0.15) Toyota Sequoia SUV 2012(0.16) Dodge Caliber Wagon 2012(0.17) Dodge Durango SUV 2012(0.18) |
+| GMC Canyon Extended Cab 2012 | Dodge Dakota Crew Cab 2010(0.11) Chevrolet Silverado 1500 Extended Cab 2012(0.12) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.12) Dodge Ram Pickup 3500 Quad Cab 2009(0.15) Chevrolet Silverado 2500HD Regular Cab 2012(0.15) |
+| Geo Metro Convertible 1993 | Plymouth Neon Coupe 1999(0.16) Mercedes-Benz 300-Class Convertible 1993(0.20) Audi 100 Wagon 1994(0.31) Volkswagen Golf Hatchback 1991*(0.31) Acura Integra Type R 2001(0.31) |
+| HUMMER H3T Crew Cab 2010 | HUMMER H2 SUT Crew Cab 2009(0.08) Jeep Wrangler SUV 2012(0.11) AM General Hummer SUV 2000(0.25) Jeep Liberty SUV 2012(0.37) Jeep Patriot SUV 2012(0.41) |
+| HUMMER H2 SUT Crew Cab 2009 | HUMMER H3T Crew Cab 2010(0.08) AM General Hummer SUV 2000(0.10) Jeep Wrangler SUV 2012(0.12) Ford F-450 Super Duty Crew Cab 2012(0.36) Jeep Liberty SUV 2012(0.54) |
+| Honda Odyssey Minivan 2012 | Cadillac SRX SUV 2012(0.15) Suzuki SX4 Sedan 2012(0.15) Hyundai Tucson SUV 2012(0.21) Hyundai Veracruz SUV 2012(0.23) Ford Edge SUV 2012(0.23) |
+| Honda Odyssey Minivan 2007 | Ford Focus Sedan 2007(0.15) Chrysler Town and Country Minivan 2012(0.17) Suzuki Aerio Sedan 2007(0.18) Suzuki SX4 Sedan 2012(0.19) Chevrolet Traverse SUV 2012(0.21) |
+| Honda Accord Coupe 2012 | Acura TSX Sedan 2012(0.15) Hyundai Accent Sedan 2012(0.16) Toyota Camry Sedan 2012*(0.22) Hyundai Sonata Hybrid Sedan 2012(0.22) Hyundai Sonata Sedan 2012(0.23) |
+| Honda Accord Sedan 2012 | Volkswagen Golf Hatchback 2012*(0.12) Acura RL Sedan 2012(0.13) Hyundai Genesis Sedan 2012(0.15) Toyota Corolla Sedan 2012*(0.17) Hyundai Elantra Touring Hatchback 2012(0.17) |
+| Hyundai Veloster Hatchback 2012 | Hyundai Sonata Hybrid Sedan 2012(0.25) McLaren MP4-12C Coupe 2012(0.29) Buick Verano Sedan 2012(0.30) Aston Martin Virage Coupe 2012(0.31) Hyundai Accent Sedan 2012(0.31) |
+| Hyundai Santa Fe SUV 2012 | Ford Edge SUV 2012(0.23) BMW X3 SUV 2012(0.26) Buick Enclave SUV 2012(0.27) Infiniti QX56 SUV 2011(0.27) GMC Acadia SUV 2012(0.28) |
+| Hyundai Tucson SUV 2012 | Ford Fiesta Sedan 2012(0.10) Toyota Camry Sedan 2012*(0.16) Hyundai Veracruz SUV 2012(0.20) Buick Verano Sedan 2012(0.20) Honda Odyssey Minivan 2012(0.21) |
+| Hyundai Veracruz SUV 2012 | Buick Enclave SUV 2012(0.13) Chevrolet Traverse SUV 2012(0.14) Hyundai Tucson SUV 2012(0.20) Suzuki SX4 Sedan 2012(0.20) Suzuki SX4 Hatchback 2012(0.21) |
+| Hyundai Sonata Hybrid Sedan 2012 | Hyundai Sonata Sedan 2012(0.07) Hyundai Accent Sedan 2012(0.10) Buick Verano Sedan 2012(0.13) Hyundai Azera Sedan 2012(0.18) Toyota Camry Sedan 2012*(0.19) |
+| Hyundai Elantra Sedan 2007 | Toyota Corolla Sedan 2012*(0.11) Hyundai Elantra Touring Hatchback 2012(0.12) Ford Fiesta Sedan 2012(0.19) Chevrolet Impala Sedan 2007(0.20) Honda Accord Sedan 2012(0.21) |
+| Hyundai Accent Sedan 2012 | Hyundai Sonata Hybrid Sedan 2012(0.10) Buick Verano Sedan 2012(0.15) Honda Accord Coupe 2012(0.16) Hyundai Sonata Sedan 2012(0.16) Toyota Camry Sedan 2012*(0.17) |
+| Hyundai Genesis Sedan 2012 | Hyundai Azera Sedan 2012(0.12) Honda Accord Sedan 2012(0.15) Mercedes-Benz E-Class Sedan 2012(0.16) Mercedes-Benz S-Class Sedan 2012(0.17) Hyundai Sonata Sedan 2012(0.18) |
+| Hyundai Sonata Sedan 2012 | Hyundai Sonata Hybrid Sedan 2012(0.07) Hyundai Azera Sedan 2012(0.14) Hyundai Accent Sedan 2012(0.16) Buick Verano Sedan 2012(0.17) Hyundai Genesis Sedan 2012(0.18) |
+| Hyundai Elantra Touring Hatchback 2012 | Hyundai Elantra Sedan 2007(0.12) Suzuki SX4 Sedan 2012(0.16) Chevrolet Malibu Hybrid Sedan 2010(0.16) Toyota Corolla Sedan 2012*(0.17) Honda Accord Sedan 2012(0.17) |
+| Hyundai Azera Sedan 2012 | Hyundai Genesis Sedan 2012(0.12) Buick Verano Sedan 2012(0.13) Hyundai Sonata Sedan 2012(0.14) Hyundai Sonata Hybrid Sedan 2012(0.18) Toyota Camry Sedan 2012*(0.20) |
+| Infiniti G Coupe IPL 2012 | Porsche Panamera Sedan 2012(0.13) Tesla Model S Sedan 2012(0.18) BMW M5 Sedan 2010(0.22) Buick Regal GS 2012(0.25) Audi S5 Coupe 2012(0.25) |
+| Infiniti QX56 SUV 2011 | Dodge Durango SUV 2012(0.19) BMW X3 SUV 2012(0.19) Chrysler PT Cruiser Convertible 2008(0.21) Buick Enclave SUV 2012(0.25) Hyundai Santa Fe SUV 2012(0.27) |
+| Isuzu Ascender SUV 2008 | Ford Expedition EL SUV 2009(0.14) Chevrolet Tahoe Hybrid SUV 2012(0.16) Chevrolet Avalanche Crew Cab 2012(0.20) Dodge Durango SUV 2007(0.24) Cadillac Escalade EXT Crew Cab 2007(0.24) |
+| Jaguar XK XKR 2012 | Aston Martin V8 Vantage Coupe 2012(0.16) BMW Z4 Convertible 2012(0.18) Porsche Panamera Sedan 2012(0.19) BMW M6 Convertible 2010(0.20) Tesla Model S Sedan 2012(0.21) |
+| Jeep Patriot SUV 2012 | Jeep Liberty SUV 2012(0.04) Toyota 4Runner SUV 2012*(0.27) Land Rover Range Rover SUV 2012(0.32) GMC Canyon Extended Cab 2012(0.40) HUMMER H3T Crew Cab 2010(0.41) |
+| Jeep Wrangler SUV 2012 | HUMMER H3T Crew Cab 2010(0.11) HUMMER H2 SUT Crew Cab 2009(0.12) AM General Hummer SUV 2000(0.19) Jeep Liberty SUV 2012(0.36) Jeep Patriot SUV 2012(0.43) |
+| Jeep Liberty SUV 2012 | Jeep Patriot SUV 2012(0.04) Toyota 4Runner SUV 2012*(0.32) Jeep Wrangler SUV 2012(0.36) HUMMER H3T Crew Cab 2010(0.37) Land Rover Range Rover SUV 2012(0.39) |
+| Jeep Grand Cherokee SUV 2012 | Toyota Sequoia SUV 2012(0.10) Toyota 4Runner SUV 2012*(0.12) GMC Acadia SUV 2012(0.12) Jeep Compass SUV 2012(0.13) Land Rover LR2 SUV 2012(0.14) |
+| Jeep Compass SUV 2012 | Jeep Grand Cherokee SUV 2012(0.13) Dodge Durango SUV 2012(0.20) Land Rover LR2 SUV 2012(0.22) Volvo XC90 SUV 2007*(0.24) GMC Terrain SUV 2012(0.25) |
+| Lamborghini Reventon Coupe 2008 | Bugatti Veyron 16.4 Coupe 2009(0.26) Spyker C8 Coupe 2009(0.29) Lamborghini Aventador Coupe 2012(0.31) Spyker C8 Convertible 2009(0.31) Ford GT Coupe 2006(0.32) |
+| Lamborghini Aventador Coupe 2012 | McLaren MP4-12C Coupe 2012(0.06) Ferrari 458 Italia Coupe 2012(0.08) Ferrari 458 Italia Convertible 2012(0.08) Ferrari California Convertible 2012(0.13) Lamborghini Gallardo LP 570-4 Superleggera 2012(0.16) |
+| Lamborghini Gallardo LP 570-4 Superleggera 2012 | Lamborghini Aventador Coupe 2012(0.16) McLaren MP4-12C Coupe 2012(0.19) Lamborghini Diablo Coupe 2001(0.24) Ferrari 458 Italia Convertible 2012(0.26) Ferrari 458 Italia Coupe 2012(0.29) |
+| Lamborghini Diablo Coupe 2001 | Lamborghini Gallardo LP 570-4 Superleggera 2012(0.24) Acura Integra Type R 2001(0.27) Chevrolet Corvette Convertible 2012(0.27) Ford GT Coupe 2006(0.34) Lamborghini Aventador Coupe 2012(0.36) |
+| Land Rover Range Rover SUV 2012 | Volvo XC90 SUV 2007*(0.19) Chevrolet TrailBlazer SS 2009(0.21) GMC Yukon Hybrid SUV 2012(0.23) Land Rover LR2 SUV 2012(0.23) Toyota 4Runner SUV 2012*(0.24) |
+| Land Rover LR2 SUV 2012 | Mazda Tribute SUV 2011(0.11) Volvo XC90 SUV 2007*(0.12) Dodge Durango SUV 2007(0.12) Toyota Sequoia SUV 2012(0.12) Chrysler Aspen SUV 2009(0.13) |
+| Lincoln Town Car Sedan 2011 | Daewoo Nubira Wagon 2002(0.11) Chevrolet Malibu Sedan 2007(0.19) Mercedes-Benz 300-Class Convertible 1993(0.21) Suzuki Aerio Sedan 2007(0.24) Chevrolet Monte Carlo Coupe 2007(0.24) |
+| MINI Cooper Roadster Convertible 2012 | Bentley Continental Supersports Conv. Convertible 2012(0.14) FIAT 500 Convertible 2012(0.31) Bugatti Veyron 16.4 Convertible 2009(0.32) BMW 1 Series Convertible 2012(0.33) Rolls-Royce Phantom Drophead Coupe Convertible 2012(0.39) |
+| Maybach Landaulet Convertible 2012 | FIAT 500 Convertible 2012(0.38) Rolls-Royce Phantom Drophead Coupe Convertible 2012(0.39) MINI Cooper Roadster Convertible 2012(0.42) Bentley Continental Flying Spur Sedan 2007(0.42) Bentley Mulsanne Sedan 2011(0.43) |
+| Mazda Tribute SUV 2011 | Land Rover LR2 SUV 2012(0.11) Dodge Durango SUV 2007(0.12) Toyota Sequoia SUV 2012(0.13) Chrysler Aspen SUV 2009(0.16) Buick Rainier SUV 2007(0.18) |
+| McLaren MP4-12C Coupe 2012 | Lamborghini Aventador Coupe 2012(0.06) Ferrari 458 Italia Coupe 2012(0.10) Ferrari 458 Italia Convertible 2012(0.12) Lamborghini Gallardo LP 570-4 Superleggera 2012(0.19) Ferrari California Convertible 2012(0.20) |
+| Mercedes-Benz 300-Class Convertible 1993 | Geo Metro Convertible 1993(0.20) Lincoln Town Car Sedan 2011(0.21) Audi V8 Sedan 1994(0.22) Audi 100 Wagon 1994(0.23) Nissan 240SX Coupe 1998(0.23) |
+| Mercedes-Benz C-Class Sedan 2012 | Mercedes-Benz S-Class Sedan 2012(0.15) Mercedes-Benz E-Class Sedan 2012(0.17) BMW 3 Series Wagon 2012(0.25) BMW 3 Series Sedan 2012(0.28) Audi S6 Sedan 2011(0.29) |
+| Mercedes-Benz SL-Class Coupe 2009 | BMW M6 Convertible 2010(0.23) Porsche Panamera Sedan 2012(0.23) BMW 6 Series Convertible 2007(0.24) Tesla Model S Sedan 2012(0.25) Infiniti G Coupe IPL 2012(0.26) |
+| Mercedes-Benz E-Class Sedan 2012 | Mercedes-Benz S-Class Sedan 2012(0.14) Hyundai Genesis Sedan 2012(0.16) Mercedes-Benz C-Class Sedan 2012(0.17) BMW M5 Sedan 2010(0.20) BMW 3 Series Wagon 2012(0.23) |
+| Mercedes-Benz S-Class Sedan 2012 | Mercedes-Benz E-Class Sedan 2012(0.14) Mercedes-Benz C-Class Sedan 2012(0.15) Hyundai Genesis Sedan 2012(0.17) Honda Accord Sedan 2012(0.32) Cadillac CTS-V Sedan 2012(0.32) |
+| Mercedes-Benz Sprinter Van 2012 | Dodge Sprinter Cargo Van 2009(0.04) Chevrolet Express Van 2007(0.30) Chevrolet Express Cargo Van 2007(0.32) Nissan NV Passenger Van 2012(0.33) GMC Savana Van 2012(0.34) |
+| Mitsubishi Lancer Sedan 2012 | Acura TL Type-S 2008(0.15) Chevrolet Sonic Sedan 2012(0.23) Suzuki Kizashi Sedan 2012(0.27) Toyota Camry Sedan 2012*(0.28) Chevrolet Cobalt SS 2010(0.32) |
+| Nissan Leaf Hatchback 2012 | Nissan Juke Hatchback 2012(0.19) Chevrolet Sonic Sedan 2012(0.22) Ford Fiesta Sedan 2012(0.22) Hyundai Tucson SUV 2012(0.23) Toyota Camry Sedan 2012*(0.28) |
+| Nissan NV Passenger Van 2012 | Ford E-Series Wagon Van 2012(0.24) GMC Savana Van 2012(0.29) Mercedes-Benz Sprinter Van 2012(0.33) Chevrolet Express Van 2007(0.35) Chevrolet Express Cargo Van 2007(0.35) |
+| Nissan Juke Hatchback 2012 | Nissan Leaf Hatchback 2012(0.19) Chevrolet Sonic Sedan 2012(0.21) Volkswagen Beetle Hatchback 2012*(0.30) Volvo C30 Hatchback 2012*(0.30) Hyundai Veloster Hatchback 2012(0.34) |
+| Nissan 240SX Coupe 1998 | Eagle Talon Hatchback 1998(0.13) Acura Integra Type R 2001(0.22) Plymouth Neon Coupe 1999(0.23) Mercedes-Benz 300-Class Convertible 1993(0.23) Chevrolet Monte Carlo Coupe 2007(0.24) |
+| Plymouth Neon Coupe 1999 | Geo Metro Convertible 1993(0.16) Eagle Talon Hatchback 1998(0.23) Nissan 240SX Coupe 1998(0.23) Mercedes-Benz 300-Class Convertible 1993(0.25) Volkswagen Golf Hatchback 1991*(0.25) |
+| Porsche Panamera Sedan 2012 | Infiniti G Coupe IPL 2012(0.13) Jaguar XK XKR 2012(0.19) Tesla Model S Sedan 2012(0.20) BMW M6 Convertible 2010(0.22) Mercedes-Benz SL-Class Coupe 2009(0.23) |
+| Ram C/V Cargo Van Minivan 2012 | Chrysler Town and Country Minivan 2012(0.20) Ford Freestar Minivan 2007(0.30) Honda Odyssey Minivan 2007(0.34) Buick Rainier SUV 2007(0.35) Chevrolet Traverse SUV 2012(0.36) |
+| Rolls-Royce Phantom Drophead Coupe Convertible 2012 | Rolls-Royce Phantom Sedan 2012(0.07) Rolls-Royce Ghost Sedan 2012(0.14) Bentley Mulsanne Sedan 2011(0.27) Ford Mustang Convertible 2007(0.30) Chrysler Crossfire Convertible 2008(0.31) |
+| Rolls-Royce Ghost Sedan 2012 | Rolls-Royce Phantom Sedan 2012(0.08) Rolls-Royce Phantom Drophead Coupe Convertible 2012(0.14) Chrysler 300 SRT-8 2010(0.21) Bentley Mulsanne Sedan 2011(0.25) Dodge Challenger SRT8 2011(0.37) |
+| Rolls-Royce Phantom Sedan 2012 | Rolls-Royce Phantom Drophead Coupe Convertible 2012(0.07) Rolls-Royce Ghost Sedan 2012(0.08) Chrysler 300 SRT-8 2010(0.18) Bentley Mulsanne Sedan 2011(0.21) Bentley Arnage Sedan 2009(0.21) |
+| Scion xD Hatchback 2012 | Suzuki SX4 Hatchback 2012(0.17) Chevrolet Sonic Sedan 2012(0.18) Suzuki SX4 Sedan 2012(0.18) Chevrolet Traverse SUV 2012(0.20) Hyundai Veracruz SUV 2012(0.24) |
+| Spyker C8 Convertible 2009 | Spyker C8 Coupe 2009(0.04) Chevrolet Corvette ZR1 2012(0.21) Bugatti Veyron 16.4 Coupe 2009(0.23) Fisker Karma Sedan 2012(0.24) Bugatti Veyron 16.4 Convertible 2009(0.27) |
+| Spyker C8 Coupe 2009 | Spyker C8 Convertible 2009(0.04) Fisker Karma Sedan 2012(0.16) Bugatti Veyron 16.4 Convertible 2009(0.19) Chevrolet Corvette ZR1 2012(0.20) Bugatti Veyron 16.4 Coupe 2009(0.20) |
+| Suzuki Aerio Sedan 2007 | Ford Focus Sedan 2007(0.10) Chevrolet Malibu Sedan 2007(0.15) Chevrolet Impala Sedan 2007(0.17) Daewoo Nubira Wagon 2002(0.17) Honda Odyssey Minivan 2007(0.18) |
+| Suzuki Kizashi Sedan 2012 | Toyota Camry Sedan 2012*(0.14) Buick Verano Sedan 2012(0.14) Buick Regal GS 2012(0.16) Volvo C30 Hatchback 2012*(0.18) BMW M5 Sedan 2010(0.19) |
+| Suzuki SX4 Hatchback 2012 | Suzuki SX4 Sedan 2012(0.11) Scion xD Hatchback 2012(0.17) Chevrolet Traverse SUV 2012(0.19) Hyundai Veracruz SUV 2012(0.21) Hyundai Elantra Touring Hatchback 2012(0.22) |
+| Suzuki SX4 Sedan 2012 | Suzuki SX4 Hatchback 2012(0.11) Honda Odyssey Minivan 2012(0.15) Hyundai Elantra Touring Hatchback 2012(0.16) Chevrolet Traverse SUV 2012(0.17) Scion xD Hatchback 2012(0.18) |
+| Tesla Model S Sedan 2012 | Infiniti G Coupe IPL 2012(0.18) Porsche Panamera Sedan 2012(0.20) Fisker Karma Sedan 2012(0.20) Jaguar XK XKR 2012(0.21) Mercedes-Benz SL-Class Coupe 2009(0.25) |
+| Toyota Sequoia SUV 2012 | Jeep Grand Cherokee SUV 2012(0.10) Chrysler Aspen SUV 2009(0.12) Land Rover LR2 SUV 2012(0.12) Mazda Tribute SUV 2011(0.13) Dodge Durango SUV 2007(0.14) |
+| Toyota Camry Sedan 2012* | Buick Verano Sedan 2012(0.10) Ford Fiesta Sedan 2012(0.13) Suzuki Kizashi Sedan 2012(0.14) Hyundai Tucson SUV 2012(0.16) Hyundai Accent Sedan 2012(0.17) |
+| Toyota Corolla Sedan 2012* | Volkswagen Golf Hatchback 2012*(0.10) Hyundai Elantra Sedan 2007(0.11) Honda Accord Sedan 2012(0.17) Hyundai Elantra Touring Hatchback 2012(0.17) Toyota Camry Sedan 2012*(0.17) |
+| Toyota 4Runner SUV 2012* | GMC Terrain SUV 2012(0.12) Jeep Grand Cherokee SUV 2012(0.12) Toyota Sequoia SUV 2012(0.15) Land Rover LR2 SUV 2012(0.17) Chevrolet Tahoe Hybrid SUV 2012(0.19) |
+| Volkswagen Golf Hatchback 2012* | Toyota Corolla Sedan 2012*(0.10) Honda Accord Sedan 2012(0.12) Acura TSX Sedan 2012(0.17) Hyundai Accent Sedan 2012(0.18) Hyundai Elantra Touring Hatchback 2012(0.21) |
+| Volkswagen Golf Hatchback 1991* | Volvo 240 Sedan 1993*(0.09) Audi 100 Wagon 1994(0.16) Audi 100 Sedan 1994(0.17) Audi V8 Sedan 1994(0.18) Plymouth Neon Coupe 1999(0.25) |
+| Volkswagen Beetle Hatchback 2012* | Volvo C30 Hatchback 2012*(0.21) Bentley Continental GT Coupe 2012(0.29) Nissan Juke Hatchback 2012(0.30) Suzuki Kizashi Sedan 2012(0.32) Chevrolet Sonic Sedan 2012(0.32) |
+| Volvo C30 Hatchback 2012* | Suzuki Kizashi Sedan 2012(0.18) Chevrolet Sonic Sedan 2012(0.19) Volkswagen Beetle Hatchback 2012*(0.21) BMW X6 SUV 2012(0.22) FIAT 500 Convertible 2012(0.26) |
+| Volvo 240 Sedan 1993* | Volkswagen Golf Hatchback 1991*(0.09) Audi V8 Sedan 1994(0.20) Audi 100 Sedan 1994(0.22) Audi 100 Wagon 1994(0.27) Mercedes-Benz 300-Class Convertible 1993(0.31) |
+| Volvo XC90 SUV 2007* | Land Rover LR2 SUV 2012(0.12) Chrysler Aspen SUV 2009(0.14) GMC Acadia SUV 2012(0.15) Toyota Sequoia SUV 2012(0.16) Jeep Grand Cherokee SUV 2012(0.16) |
+| smart fortwo Convertible 2012* | FIAT 500 Convertible 2012(0.25) Nissan Leaf Hatchback 2012(0.30) Chevrolet Sonic Sedan 2012(0.36) Nissan Juke Hatchback 2012(0.40) Scion xD Hatchback 2012(0.46) |
 
 ## ss-ft  [cars_lejepa]
 
+agree@1=0.311 agree@5=0.179 (chance 0.040)  dendro-purity=0.218  silhouette=-0.264  within/between=0.771
+
 
 | class | 5 nearest class centroids (cosine dist) |
 |---|---|
-| class0 | class124(0.10) class145(0.12) class123(0.15) class105(0.49) class146(0.59) |
-| class1 | class136(0.15) class2(0.16) class137(0.16) class4(0.17) class186*(0.21) |
-| class2 | class136(0.09) class137(0.14) class4(0.15) class1(0.16) class186*(0.20) |
-| class3 | class34(0.25) class128(0.28) class29(0.29) class136(0.31) class2(0.31) |
-| class4 | class189*(0.09) class2(0.15) class1(0.17) class187*(0.17) class128(0.17) |
-| class5 | class152(0.17) class65(0.32) class122(0.34) class170(0.35) class171(0.43) |
-| class6 | class139(0.25) class2(0.27) class48(0.31) class137(0.32) class1(0.32) |
-| class7 | class8(0.06) class9(0.12) class35(0.14) class14(0.17) class37(0.19) |
-| class8 | class7(0.06) class9(0.09) class104(0.13) class37(0.16) class14(0.17) |
-| class9 | class104(0.07) class8(0.09) class7(0.12) class35(0.15) class45(0.18) |
-| class10 | class101(0.11) class103(0.13) class102(0.13) class37(0.15) class159(0.18) |
-| class11 | class20(0.10) class19(0.22) class26(0.28) class13(0.28) class40(0.29) |
-| class12 | class22(0.06) class18(0.07) class21(0.11) class13(0.12) class19(0.14) |
-| class13 | class21(0.10) class18(0.12) class12(0.12) class20(0.13) class35(0.19) |
-| class14 | class35(0.16) class8(0.17) class7(0.17) class9(0.18) class104(0.20) |
-| class15 | class16(0.03) class17(0.09) class160(0.18) class190*(0.21) class193*(0.22) |
-| class16 | class15(0.03) class17(0.05) class160(0.19) class190*(0.26) class81(0.30) |
-| class17 | class16(0.05) class15(0.09) class160(0.21) class81(0.27) class190*(0.29) |
-| class18 | class12(0.07) class13(0.12) class21(0.13) class26(0.13) class22(0.16) |
-| class19 | class23(0.08) class22(0.13) class12(0.14) class43(0.20) class11(0.22) |
-| class20 | class11(0.10) class13(0.13) class35(0.17) class21(0.19) class18(0.21) |
-| class21 | class13(0.10) class12(0.11) class18(0.13) class26(0.19) class22(0.19) |
-| class22 | class12(0.06) class19(0.13) class23(0.15) class18(0.16) class21(0.19) |
-| class23 | class19(0.08) class22(0.15) class12(0.19) class43(0.20) class29(0.29) |
-| class24 | class41(0.19) class18(0.21) class26(0.26) class22(0.26) class58(0.28) |
-| class25 | class34(0.14) class29(0.21) class172(0.23) class140(0.28) class2(0.32) |
-| class26 | class18(0.13) class41(0.16) class12(0.17) class21(0.19) class13(0.21) |
-| class27 | class28(0.13) class41(0.23) class33(0.27) class26(0.29) class24(0.30) |
-| class28 | class27(0.13) class26(0.27) class22(0.29) class41(0.33) class33(0.33) |
-| class29 | class34(0.20) class25(0.21) class43(0.26) class163(0.28) class23(0.29) |
-| class30 | class79(0.20) class21(0.23) class13(0.23) class35(0.28) class50(0.29) |
-| class31 | class36(0.16) class194*(0.18) class147(0.25) class120(0.26) class141(0.26) |
-| class32 | class36(0.20) class59(0.25) class83(0.34) class27(0.36) class192*(0.38) |
-| class33 | class18(0.24) class26(0.26) class27(0.27) class21(0.29) class24(0.29) |
-| class34 | class25(0.14) class29(0.20) class2(0.20) class163(0.24) class3(0.25) |
-| class35 | class7(0.14) class9(0.15) class14(0.16) class8(0.17) class20(0.17) |
-| class36 | class31(0.16) class32(0.20) class141(0.25) class80(0.34) class120(0.35) |
-| class37 | class10(0.15) class8(0.16) class7(0.19) class101(0.24) class103(0.26) |
-| class38 | class156(0.20) class41(0.27) class58(0.28) class26(0.32) class7(0.33) |
-| class39 | class176(0.17) class78(0.21) class40(0.26) class175(0.27) class174(0.31) |
-| class40 | class176(0.16) class78(0.17) class175(0.17) class174(0.24) class39(0.26) |
-| class41 | class26(0.16) class18(0.18) class24(0.19) class27(0.23) class42(0.26) |
-| class42 | class43(0.20) class13(0.26) class26(0.26) class41(0.26) class21(0.28) |
-| class43 | class50(0.19) class19(0.20) class23(0.20) class42(0.20) class12(0.21) |
-| class44 | class45(0.19) class149(0.26) class56(0.28) class179(0.30) class178(0.35) |
-| class45 | class149(0.15) class179(0.17) class178(0.17) class55(0.18) class9(0.18) |
-| class46 | class181(0.19) class34(0.29) class139(0.30) class48(0.30) class2(0.31) |
-| class47 | class158(0.12) class75(0.13) class185(0.14) class94(0.16) class52(0.16) |
-| class48 | class186*(0.09) class181(0.15) class116(0.19) class2(0.20) class139(0.20) |
-| class49 | class57(0.15) class132(0.16) class177(0.16) class125(0.22) class109(0.25) |
-| class50 | class43(0.19) class13(0.24) class161(0.26) class30(0.29) class12(0.31) |
-| class51 | class109(0.12) class132(0.18) class125(0.18) class57(0.21) class130(0.23) |
-| class52 | class94(0.11) class147(0.12) class75(0.12) class64(0.13) class117(0.14) |
-| class53 | class69(0.05) class73(0.05) class121(0.07) class110(0.07) class112(0.08) |
-| class54 | class101(0.12) class102(0.16) class151(0.16) class111(0.17) class55(0.21) |
-| class55 | class178(0.09) class179(0.09) class45(0.18) class101(0.18) class111(0.19) |
-| class56 | class151(0.24) class111(0.26) class44(0.28) class179(0.29) class92(0.32) |
-| class57 | class177(0.11) class132(0.12) class49(0.15) class125(0.18) class183(0.18) |
-| class58 | class106(0.24) class20(0.25) class96(0.26) class95(0.27) class38(0.28) |
-| class59 | class83(0.18) class91(0.20) class32(0.25) class82(0.32) class36(0.40) |
-| class60 | class72(0.11) class114(0.13) class76(0.13) class71(0.13) class134(0.18) |
-| class61 | class142(0.12) class108(0.14) class188*(0.15) class158(0.16) class185(0.17) |
-| class62 | class181(0.22) class166(0.24) class167(0.26) class131(0.26) class169(0.27) |
-| class63 | class70(0.02) class118(0.03) class87(0.17) class168(0.18) class165(0.21) |
-| class64 | class52(0.13) class108(0.15) class117(0.16) class94(0.18) class89(0.18) |
-| class65 | class5(0.32) class192*(0.40) class134(0.49) class116(0.49) class97(0.50) |
-| class66 | class128(0.13) class76(0.16) class138(0.20) class189*(0.21) class187*(0.21) |
-| class67 | class194*(0.16) class52(0.19) class154(0.21) class153(0.22) class147(0.22) |
-| class68 | class73(0.07) class53(0.09) class112(0.10) class69(0.12) class110(0.13) |
-| class69 | class53(0.05) class73(0.07) class110(0.08) class121(0.10) class68(0.12) |
-| class70 | class63(0.02) class118(0.03) class87(0.16) class115(0.20) class168(0.20) |
-| class71 | class60(0.13) class72(0.15) class76(0.17) class114(0.23) class134(0.25) |
-| class72 | class60(0.11) class114(0.12) class71(0.15) class81(0.19) class155(0.19) |
-| class73 | class53(0.05) class121(0.06) class69(0.07) class86(0.07) class68(0.07) |
-| class74 | class86(0.08) class113(0.10) class73(0.11) class53(0.11) class112(0.12) |
-| class75 | class185(0.10) class94(0.10) class52(0.12) class47(0.13) class147(0.15) |
-| class76 | class60(0.13) class66(0.16) class71(0.17) class128(0.17) class189*(0.23) |
-| class77 | class47(0.18) class57(0.19) class185(0.25) class126(0.25) class158(0.26) |
-| class78 | class40(0.17) class175(0.21) class39(0.21) class176(0.22) class19(0.32) |
-| class79 | class30(0.20) class26(0.24) class13(0.25) class20(0.29) class43(0.32) |
-| class80 | class93(0.29) class141(0.31) class36(0.34) class49(0.35) class88(0.39) |
-| class81 | class155(0.12) class72(0.19) class160(0.25) class60(0.26) class17(0.27) |
-| class82 | class83(0.12) class120(0.19) class47(0.24) class194*(0.25) class75(0.27) |
-| class83 | class82(0.12) class59(0.18) class91(0.24) class32(0.34) class120(0.40) |
-| class84 | class107(0.15) class126(0.27) class114(0.27) class171(0.30) class180(0.37) |
-| class85 | class105(0.07) class53(0.12) class112(0.12) class121(0.15) class69(0.16) |
-| class86 | class121(0.06) class73(0.07) class74(0.08) class53(0.10) class113(0.12) |
-| class87 | class165(0.06) class70(0.16) class63(0.17) class118(0.17) class115(0.38) |
-| class88 | class93(0.15) class109(0.26) class57(0.26) class148(0.28) class77(0.30) |
-| class89 | class90(0.11) class121(0.13) class110(0.14) class64(0.18) class53(0.19) |
-| class90 | class121(0.08) class110(0.08) class73(0.10) class89(0.11) class53(0.12) |
-| class91 | class59(0.20) class83(0.24) class82(0.28) class106(0.31) class96(0.38) |
-| class92 | class111(0.29) class56(0.32) class174(0.35) class38(0.37) class106(0.38) |
-| class93 | class88(0.15) class147(0.23) class109(0.24) class120(0.26) class194*(0.27) |
-| class94 | class75(0.10) class119(0.10) class52(0.11) class147(0.11) class108(0.12) |
-| class95 | class96(0.21) class58(0.27) class24(0.29) class22(0.36) class27(0.38) |
-| class96 | class106(0.12) class95(0.21) class58(0.26) class78(0.38) class91(0.38) |
-| class97 | class171(0.21) class170(0.21) class71(0.30) class122(0.42) class5(0.46) |
-| class98 | class169(0.57) class11(0.60) class92(0.61) class62(0.62) class95(0.63) |
-| class99 | class195*(0.22) class156(0.43) class157(0.48) class191*(0.49) class192*(0.52) |
-| class100 | class10(0.26) class143(0.29) class129(0.31) class159(0.34) class103(0.34) |
-| class101 | class102(0.03) class103(0.05) class10(0.11) class54(0.12) class159(0.12) |
-| class102 | class101(0.03) class103(0.05) class159(0.07) class150(0.07) class10(0.13) |
-| class103 | class102(0.05) class101(0.05) class159(0.07) class150(0.08) class10(0.13) |
-| class104 | class9(0.07) class8(0.13) class162(0.18) class7(0.20) class179(0.20) |
-| class105 | class85(0.07) class68(0.13) class53(0.16) class69(0.16) class112(0.17) |
-| class106 | class96(0.12) class58(0.24) class174(0.30) class91(0.31) class176(0.36) |
-| class107 | class84(0.15) class173(0.21) class126(0.26) class17(0.31) class77(0.32) |
-| class108 | class94(0.12) class142(0.13) class61(0.14) class64(0.15) class52(0.16) |
-| class109 | class51(0.12) class57(0.23) class93(0.24) class130(0.24) class49(0.25) |
-| class110 | class53(0.07) class73(0.08) class69(0.08) class90(0.08) class121(0.08) |
-| class111 | class54(0.17) class151(0.18) class179(0.19) class55(0.19) class178(0.20) |
-| class112 | class53(0.08) class113(0.09) class68(0.10) class74(0.12) class121(0.12) |
-| class113 | class112(0.09) class74(0.10) class86(0.12) class121(0.13) class53(0.15) |
-| class114 | class126(0.11) class72(0.12) class60(0.13) class180(0.17) class134(0.19) |
-| class115 | class118(0.13) class68(0.17) class70(0.20) class168(0.21) class63(0.21) |
-| class116 | class134(0.13) class138(0.13) class186*(0.14) class131(0.14) class187*(0.18) |
-| class117 | class188*(0.13) class52(0.14) class147(0.15) class64(0.16) class75(0.19) |
-| class118 | class70(0.03) class63(0.03) class115(0.13) class168(0.15) class87(0.17) |
-| class119 | class154(0.09) class94(0.10) class158(0.11) class147(0.13) class185(0.13) |
-| class120 | class147(0.15) class82(0.19) class75(0.20) class194*(0.20) class154(0.21) |
-| class121 | class86(0.06) class73(0.06) class53(0.07) class90(0.08) class110(0.08) |
-| class122 | class171(0.21) class160(0.22) class170(0.28) class5(0.34) class17(0.36) |
-| class123 | class124(0.04) class145(0.08) class0(0.15) class146(0.24) class144(0.30) |
-| class124 | class123(0.04) class0(0.10) class145(0.10) class105(0.29) class146(0.38) |
-| class125 | class132(0.10) class183(0.13) class57(0.18) class131(0.18) class51(0.18) |
-| class126 | class114(0.11) class180(0.13) class57(0.20) class72(0.21) class183(0.22) |
-| class127 | class135(0.09) class133(0.13) class4(0.18) class137(0.19) class187*(0.25) |
-| class128 | class189*(0.10) class66(0.13) class187*(0.16) class4(0.17) class76(0.17) |
-| class129 | class159(0.28) class10(0.29) class143(0.29) class100(0.31) class103(0.36) |
-| class130 | class51(0.23) class109(0.24) class120(0.26) class57(0.34) class49(0.36) |
-| class131 | class116(0.14) class132(0.16) class183(0.18) class125(0.18) class48(0.22) |
-| class132 | class125(0.10) class57(0.12) class177(0.14) class49(0.16) class131(0.16) |
-| class133 | class137(0.06) class127(0.13) class135(0.17) class4(0.19) class2(0.20) |
-| class134 | class138(0.09) class187*(0.10) class116(0.13) class60(0.18) class183(0.19) |
-| class135 | class127(0.09) class133(0.17) class4(0.22) class48(0.23) class187*(0.23) |
-| class136 | class2(0.09) class1(0.15) class186*(0.16) class137(0.17) class139(0.20) |
-| class137 | class133(0.06) class2(0.14) class1(0.16) class136(0.17) class4(0.18) |
-| class138 | class134(0.09) class116(0.13) class186*(0.14) class183(0.15) class187*(0.17) |
-| class139 | class136(0.20) class48(0.20) class2(0.20) class181(0.20) class186*(0.23) |
-| class140 | class172(0.18) class104(0.26) class184(0.27) class21(0.27) class2(0.27) |
-| class141 | class36(0.25) class31(0.26) class49(0.31) class93(0.31) class80(0.31) |
-| class142 | class61(0.12) class108(0.13) class64(0.20) class75(0.22) class113(0.23) |
-| class143 | class45(0.20) class9(0.21) class184(0.22) class104(0.23) class8(0.24) |
-| class144 | class146(0.02) class123(0.30) class145(0.32) class153(0.39) class188*(0.41) |
-| class145 | class123(0.08) class124(0.10) class0(0.12) class146(0.28) class144(0.32) |
-| class146 | class144(0.02) class123(0.24) class145(0.28) class124(0.38) class153(0.41) |
-| class147 | class154(0.10) class94(0.11) class194*(0.11) class52(0.12) class119(0.13) |
-| class148 | class93(0.27) class88(0.28) class147(0.28) class194*(0.30) class154(0.32) |
-| class149 | class178(0.15) class45(0.15) class179(0.17) class150(0.26) class44(0.26) |
-| class150 | class159(0.04) class102(0.07) class103(0.08) class151(0.11) class101(0.12) |
-| class151 | class150(0.11) class159(0.15) class54(0.16) class102(0.16) class111(0.18) |
-| class152 | class5(0.17) class151(0.25) class54(0.29) class111(0.33) class159(0.38) |
-| class153 | class119(0.22) class67(0.22) class147(0.23) class194*(0.23) class188*(0.24) |
-| class154 | class185(0.08) class119(0.09) class147(0.10) class158(0.10) class194*(0.12) |
-| class155 | class81(0.12) class72(0.19) class71(0.28) class160(0.28) class60(0.29) |
-| class156 | class38(0.20) class174(0.40) class44(0.40) class99(0.43) class41(0.44) |
-| class157 | class156(0.45) class99(0.48) class56(0.56) class174(0.57) class160(0.58) |
-| class158 | class185(0.07) class154(0.10) class119(0.11) class47(0.12) class94(0.13) |
-| class159 | class150(0.04) class103(0.07) class102(0.07) class101(0.12) class151(0.15) |
-| class160 | class15(0.18) class16(0.19) class17(0.21) class122(0.22) class170(0.22) |
-| class161 | class164(0.18) class50(0.26) class43(0.29) class136(0.35) class29(0.35) |
-| class162 | class104(0.18) class9(0.21) class14(0.22) class35(0.28) class184(0.28) |
-| class163 | class136(0.23) class34(0.24) class164(0.26) class29(0.28) class181(0.31) |
-| class164 | class161(0.18) class136(0.22) class163(0.26) class2(0.32) class34(0.34) |
-| class165 | class87(0.06) class63(0.21) class70(0.21) class118(0.25) class168(0.43) |
-| class166 | class181(0.23) class62(0.24) class186*(0.27) class138(0.33) class3(0.33) |
-| class167 | class62(0.26) class131(0.30) class181(0.30) class48(0.31) class169(0.32) |
-| class168 | class118(0.15) class63(0.18) class70(0.20) class115(0.21) class68(0.30) |
-| class169 | class62(0.27) class167(0.32) class131(0.44) class177(0.45) class191*(0.45) |
-| class170 | class171(0.14) class97(0.21) class160(0.22) class122(0.28) class71(0.30) |
-| class171 | class170(0.14) class97(0.21) class122(0.21) class160(0.26) class81(0.27) |
-| class172 | class140(0.18) class35(0.22) class25(0.23) class184(0.26) class34(0.27) |
-| class173 | class107(0.21) class77(0.32) class47(0.39) class126(0.40) class180(0.41) |
-| class174 | class176(0.07) class175(0.20) class40(0.24) class106(0.30) class39(0.31) |
-| class175 | class176(0.14) class40(0.17) class174(0.20) class78(0.21) class39(0.27) |
-| class176 | class174(0.07) class175(0.14) class40(0.16) class39(0.17) class78(0.22) |
-| class177 | class57(0.11) class132(0.14) class182(0.15) class49(0.16) class125(0.20) |
-| class178 | class179(0.04) class55(0.09) class149(0.15) class45(0.17) class111(0.20) |
-| class179 | class178(0.04) class55(0.09) class150(0.17) class101(0.17) class149(0.17) |
-| class180 | class126(0.13) class114(0.17) class72(0.19) class60(0.20) class81(0.28) |
-| class181 | class48(0.15) class186*(0.17) class46(0.19) class139(0.20) class62(0.22) |
-| class182 | class183(0.15) class177(0.15) class57(0.19) class125(0.26) class49(0.26) |
-| class183 | class125(0.13) class182(0.15) class138(0.15) class131(0.18) class116(0.18) |
-| class184 | class104(0.21) class143(0.22) class172(0.26) class133(0.26) class140(0.27) |
-| class185 | class158(0.07) class154(0.08) class75(0.10) class94(0.13) class194*(0.13) |
-| class186* | class48(0.09) class116(0.14) class138(0.14) class136(0.16) class181(0.17) |
-| class187* | class189*(0.10) class134(0.10) class128(0.16) class4(0.17) class138(0.17) |
-| class188* | class117(0.13) class154(0.14) class61(0.15) class185(0.16) class147(0.16) |
-| class189* | class4(0.09) class187*(0.10) class128(0.10) class66(0.21) class76(0.23) |
-| class190* | class193*(0.08) class15(0.21) class160(0.23) class16(0.26) class17(0.29) |
-| class191* | class192*(0.26) class41(0.36) class46(0.37) class181(0.40) class62(0.41) |
-| class192* | class191*(0.26) class62(0.35) class32(0.38) class65(0.40) class95(0.43) |
-| class193* | class190*(0.08) class15(0.22) class160(0.30) class16(0.31) class90(0.34) |
-| class194* | class147(0.11) class154(0.12) class185(0.13) class75(0.16) class67(0.16) |
-| class195* | class99(0.22) class167(0.39) class169(0.48) class62(0.50) class177(0.52) |
+| AM General Hummer SUV 2000 | HUMMER H2 SUT Crew Cab 2009(0.10) Jeep Wrangler SUV 2012(0.12) HUMMER H3T Crew Cab 2010(0.15) Ford F-450 Super Duty Crew Cab 2012(0.49) Jeep Liberty SUV 2012(0.59) |
+| Acura RL Sedan 2012 | Hyundai Genesis Sedan 2012(0.15) Acura TL Sedan 2012(0.16) Hyundai Sonata Sedan 2012(0.16) Acura TSX Sedan 2012(0.17) Toyota Camry Sedan 2012*(0.21) |
+| Acura TL Sedan 2012 | Hyundai Genesis Sedan 2012(0.09) Hyundai Sonata Sedan 2012(0.14) Acura TSX Sedan 2012(0.15) Acura RL Sedan 2012(0.16) Toyota Camry Sedan 2012*(0.20) |
+| Acura TL Type-S 2008 | BMW M5 Sedan 2010(0.25) Honda Accord Sedan 2012(0.28) BMW 3 Series Wagon 2012(0.29) Hyundai Genesis Sedan 2012(0.31) Acura TL Sedan 2012(0.31) |
+| Acura TSX Sedan 2012 | Volkswagen Golf Hatchback 2012*(0.09) Acura TL Sedan 2012(0.15) Acura RL Sedan 2012(0.17) Toyota Corolla Sedan 2012*(0.17) Honda Accord Sedan 2012(0.17) |
+| Acura Integra Type R 2001 | Lamborghini Diablo Coupe 2001(0.17) Chevrolet Cobalt SS 2010(0.32) Geo Metro Convertible 1993(0.34) Nissan 240SX Coupe 1998(0.35) Plymouth Neon Coupe 1999(0.43) |
+| Acura ZDX Hatchback 2012 | Hyundai Azera Sedan 2012(0.25) Acura TL Sedan 2012(0.27) Buick Verano Sedan 2012(0.31) Hyundai Sonata Sedan 2012(0.32) Acura RL Sedan 2012(0.32) |
+| Aston Martin V8 Vantage Convertible 2012 | Aston Martin V8 Vantage Coupe 2012(0.06) Aston Martin Virage Convertible 2012(0.12) BMW M6 Convertible 2010(0.14) Audi R8 Coupe 2012(0.17) BMW Z4 Convertible 2012(0.19) |
+| Aston Martin V8 Vantage Coupe 2012 | Aston Martin V8 Vantage Convertible 2012(0.06) Aston Martin Virage Convertible 2012(0.09) Fisker Karma Sedan 2012(0.13) BMW Z4 Convertible 2012(0.16) Audi R8 Coupe 2012(0.17) |
+| Aston Martin Virage Convertible 2012 | Fisker Karma Sedan 2012(0.07) Aston Martin V8 Vantage Coupe 2012(0.09) Aston Martin V8 Vantage Convertible 2012(0.12) BMW M6 Convertible 2010(0.15) Bugatti Veyron 16.4 Coupe 2009(0.18) |
+| Aston Martin Virage Coupe 2012 | Ferrari California Convertible 2012(0.11) Ferrari 458 Italia Coupe 2012(0.13) Ferrari 458 Italia Convertible 2012(0.13) BMW Z4 Convertible 2012(0.15) McLaren MP4-12C Coupe 2012(0.18) |
+| Audi RS 4 Convertible 2008 | Audi S5 Convertible 2012(0.10) Audi S6 Sedan 2011(0.22) BMW 1 Series Convertible 2012(0.28) Audi TTS Coupe 2012(0.28) Bentley Mulsanne Sedan 2011(0.29) |
+| Audi A5 Coupe 2012 | Audi S4 Sedan 2012(0.06) Audi TT Hatchback 2011(0.07) Audi S5 Coupe 2012(0.11) Audi TTS Coupe 2012(0.12) Audi S6 Sedan 2011(0.14) |
+| Audi TTS Coupe 2012 | Audi S5 Coupe 2012(0.10) Audi TT Hatchback 2011(0.12) Audi A5 Coupe 2012(0.12) Audi S5 Convertible 2012(0.13) BMW M6 Convertible 2010(0.19) |
+| Audi R8 Coupe 2012 | BMW M6 Convertible 2010(0.16) Aston Martin V8 Vantage Coupe 2012(0.17) Aston Martin V8 Vantage Convertible 2012(0.17) Aston Martin Virage Convertible 2012(0.18) Fisker Karma Sedan 2012(0.20) |
+| Audi V8 Sedan 1994 | Audi 100 Sedan 1994(0.03) Audi 100 Wagon 1994(0.09) Mercedes-Benz 300-Class Convertible 1993(0.18) Volkswagen Golf Hatchback 1991*(0.21) Volvo 240 Sedan 1993*(0.22) |
+| Audi 100 Sedan 1994 | Audi V8 Sedan 1994(0.03) Audi 100 Wagon 1994(0.05) Mercedes-Benz 300-Class Convertible 1993(0.19) Volkswagen Golf Hatchback 1991*(0.26) Daewoo Nubira Wagon 2002(0.30) |
+| Audi 100 Wagon 1994 | Audi 100 Sedan 1994(0.05) Audi V8 Sedan 1994(0.09) Mercedes-Benz 300-Class Convertible 1993(0.21) Daewoo Nubira Wagon 2002(0.27) Volkswagen Golf Hatchback 1991*(0.29) |
+| Audi TT Hatchback 2011 | Audi A5 Coupe 2012(0.07) Audi TTS Coupe 2012(0.12) Audi S5 Coupe 2012(0.13) BMW 1 Series Convertible 2012(0.13) Audi S4 Sedan 2012(0.16) |
+| Audi S6 Sedan 2011 | Audi S4 Sedan 2007(0.08) Audi S4 Sedan 2012(0.13) Audi A5 Coupe 2012(0.14) Bentley Continental Flying Spur Sedan 2007(0.20) Audi RS 4 Convertible 2008(0.22) |
+| Audi S5 Convertible 2012 | Audi RS 4 Convertible 2008(0.10) Audi TTS Coupe 2012(0.13) BMW M6 Convertible 2010(0.17) Audi S5 Coupe 2012(0.19) Audi TT Hatchback 2011(0.21) |
+| Audi S5 Coupe 2012 | Audi TTS Coupe 2012(0.10) Audi A5 Coupe 2012(0.11) Audi TT Hatchback 2011(0.13) BMW 1 Series Convertible 2012(0.19) Audi S4 Sedan 2012(0.19) |
+| Audi S4 Sedan 2012 | Audi A5 Coupe 2012(0.06) Audi S6 Sedan 2011(0.13) Audi S4 Sedan 2007(0.15) Audi TT Hatchback 2011(0.16) Audi S5 Coupe 2012(0.19) |
+| Audi S4 Sedan 2007 | Audi S6 Sedan 2011(0.08) Audi S4 Sedan 2012(0.15) Audi A5 Coupe 2012(0.19) Bentley Continental Flying Spur Sedan 2007(0.20) BMW 3 Series Wagon 2012(0.29) |
+| Audi TT RS Coupe 2012 | Bentley Continental GT Coupe 2012(0.19) Audi TT Hatchback 2011(0.21) BMW 1 Series Convertible 2012(0.26) Audi S4 Sedan 2012(0.26) Chevrolet Camaro Convertible 2012(0.28) |
+| BMW ActiveHybrid 5 Sedan 2012 | BMW M5 Sedan 2010(0.14) BMW 3 Series Wagon 2012(0.21) Porsche Panamera Sedan 2012(0.23) Infiniti G Coupe IPL 2012(0.28) Acura TL Sedan 2012(0.32) |
+| BMW 1 Series Convertible 2012 | Audi TT Hatchback 2011(0.13) Bentley Continental GT Coupe 2012(0.16) Audi A5 Coupe 2012(0.17) Audi S5 Coupe 2012(0.19) Audi TTS Coupe 2012(0.21) |
+| BMW 1 Series Coupe 2012 | BMW 3 Series Sedan 2012(0.13) Bentley Continental GT Coupe 2012(0.23) BMW M3 Coupe 2012(0.27) BMW 1 Series Convertible 2012(0.29) Audi TT RS Coupe 2012(0.30) |
+| BMW 3 Series Sedan 2012 | BMW 1 Series Coupe 2012(0.13) BMW 1 Series Convertible 2012(0.27) Audi S4 Sedan 2012(0.29) Bentley Continental GT Coupe 2012(0.33) BMW M3 Coupe 2012(0.33) |
+| BMW 3 Series Wagon 2012 | BMW M5 Sedan 2010(0.20) BMW ActiveHybrid 5 Sedan 2012(0.21) Bentley Continental Flying Spur Sedan 2007(0.26) Mercedes-Benz E-Class Sedan 2012(0.28) Audi S4 Sedan 2007(0.29) |
+| BMW 6 Series Convertible 2007 | Chrysler Crossfire Convertible 2008(0.20) Audi S5 Coupe 2012(0.23) Audi TTS Coupe 2012(0.23) BMW M6 Convertible 2010(0.28) Cadillac CTS-V Sedan 2012(0.29) |
+| BMW X5 SUV 2007 | BMW X3 SUV 2012(0.16) Volvo XC90 SUV 2007*(0.18) Jeep Grand Cherokee SUV 2012(0.25) GMC Acadia SUV 2012(0.26) Infiniti QX56 SUV 2011(0.26) |
+| BMW X6 SUV 2012 | BMW X3 SUV 2012(0.20) Chevrolet HHR SS 2010(0.25) Dodge Caliber Wagon 2007(0.34) BMW 1 Series Coupe 2012(0.36) Volvo C30 Hatchback 2012*(0.38) |
+| BMW M3 Coupe 2012 | Audi TT Hatchback 2011(0.24) BMW 1 Series Convertible 2012(0.26) BMW 1 Series Coupe 2012(0.27) Audi S5 Coupe 2012(0.29) Audi TT RS Coupe 2012(0.29) |
+| BMW M5 Sedan 2010 | BMW ActiveHybrid 5 Sedan 2012(0.14) BMW 3 Series Wagon 2012(0.20) Acura TL Sedan 2012(0.20) Mercedes-Benz E-Class Sedan 2012(0.24) Acura TL Type-S 2008(0.25) |
+| BMW M6 Convertible 2010 | Aston Martin V8 Vantage Convertible 2012(0.14) Aston Martin Virage Convertible 2012(0.15) Audi R8 Coupe 2012(0.16) Aston Martin V8 Vantage Coupe 2012(0.17) Audi S5 Convertible 2012(0.17) |
+| BMW X3 SUV 2012 | BMW X5 SUV 2007(0.16) BMW X6 SUV 2012(0.20) Infiniti QX56 SUV 2011(0.25) Chrysler PT Cruiser Convertible 2008(0.34) GMC Acadia SUV 2012(0.35) |
+| BMW Z4 Convertible 2012 | Aston Martin Virage Coupe 2012(0.15) Aston Martin V8 Vantage Coupe 2012(0.16) Aston Martin V8 Vantage Convertible 2012(0.19) Ferrari California Convertible 2012(0.24) Ferrari 458 Italia Coupe 2012(0.26) |
+| Bentley Continental Supersports Conv. Convertible 2012 | MINI Cooper Roadster Convertible 2012(0.20) Bentley Continental GT Coupe 2012(0.27) Chevrolet Camaro Convertible 2012(0.28) BMW 1 Series Convertible 2012(0.32) Aston Martin V8 Vantage Convertible 2012(0.33) |
+| Bentley Arnage Sedan 2009 | Rolls-Royce Phantom Sedan 2012(0.17) Chrysler 300 SRT-8 2010(0.21) Bentley Mulsanne Sedan 2011(0.26) Rolls-Royce Ghost Sedan 2012(0.27) Rolls-Royce Phantom Drophead Coupe Convertible 2012(0.31) |
+| Bentley Mulsanne Sedan 2011 | Rolls-Royce Phantom Sedan 2012(0.16) Chrysler 300 SRT-8 2010(0.17) Rolls-Royce Ghost Sedan 2012(0.17) Rolls-Royce Phantom Drophead Coupe Convertible 2012(0.24) Bentley Arnage Sedan 2009(0.26) |
+| Bentley Continental GT Coupe 2012 | BMW 1 Series Convertible 2012(0.16) Audi TT Hatchback 2011(0.18) Audi TT RS Coupe 2012(0.19) BMW 1 Series Coupe 2012(0.23) Bentley Continental GT Coupe 2007(0.26) |
+| Bentley Continental GT Coupe 2007 | Bentley Continental Flying Spur Sedan 2007(0.20) Audi TTS Coupe 2012(0.26) BMW 1 Series Convertible 2012(0.26) Bentley Continental GT Coupe 2012(0.26) Audi S5 Coupe 2012(0.28) |
+| Bentley Continental Flying Spur Sedan 2007 | Cadillac CTS-V Sedan 2012(0.19) Audi S6 Sedan 2011(0.20) Audi S4 Sedan 2007(0.20) Bentley Continental GT Coupe 2007(0.20) Audi A5 Coupe 2012(0.21) |
+| Bugatti Veyron 16.4 Convertible 2009 | Bugatti Veyron 16.4 Coupe 2009(0.19) Lamborghini Reventon Coupe 2008(0.26) Chevrolet Corvette Ron Fellows Edition Z06 2007(0.28) Spyker C8 Coupe 2009(0.30) Spyker C8 Convertible 2009(0.35) |
+| Bugatti Veyron 16.4 Coupe 2009 | Lamborghini Reventon Coupe 2008(0.15) Spyker C8 Coupe 2009(0.17) Spyker C8 Convertible 2009(0.17) Chevrolet Corvette ZR1 2012(0.18) Aston Martin Virage Convertible 2012(0.18) |
+| Buick Regal GS 2012 | Suzuki Kizashi Sedan 2012(0.19) BMW M5 Sedan 2010(0.29) Hyundai Azera Sedan 2012(0.30) Buick Verano Sedan 2012(0.30) Acura TL Sedan 2012(0.31) |
+| Buick Rainier SUV 2007 | Mazda Tribute SUV 2011(0.12) Chrysler Aspen SUV 2009(0.13) Toyota Sequoia SUV 2012(0.14) Dodge Durango SUV 2007(0.16) Cadillac Escalade EXT Crew Cab 2007(0.16) |
+| Buick Verano Sedan 2012 | Toyota Camry Sedan 2012*(0.09) Suzuki Kizashi Sedan 2012(0.15) Ford Fiesta Sedan 2012(0.19) Acura TL Sedan 2012(0.20) Hyundai Azera Sedan 2012(0.20) |
+| Buick Enclave SUV 2012 | Chevrolet Traverse SUV 2012(0.15) Hyundai Veracruz SUV 2012(0.16) Scion xD Hatchback 2012(0.16) Honda Odyssey Minivan 2012(0.22) Ford Edge SUV 2012(0.25) |
+| Cadillac CTS-V Sedan 2012 | Bentley Continental Flying Spur Sedan 2007(0.19) Audi TTS Coupe 2012(0.24) Mercedes-Benz C-Class Sedan 2012(0.26) BMW 6 Series Convertible 2007(0.29) Audi A5 Coupe 2012(0.31) |
+| Cadillac SRX SUV 2012 | Ford Edge SUV 2012(0.12) Hyundai Veracruz SUV 2012(0.18) Honda Odyssey Minivan 2012(0.18) Chevrolet Traverse SUV 2012(0.21) Hyundai Santa Fe SUV 2012(0.23) |
+| Cadillac Escalade EXT Crew Cab 2007 | Dodge Durango SUV 2007(0.11) Jeep Grand Cherokee SUV 2012(0.12) Chrysler Aspen SUV 2009(0.12) Chevrolet Avalanche Crew Cab 2012(0.13) GMC Terrain SUV 2012(0.14) |
+| Chevrolet Silverado 1500 Hybrid Crew Cab 2012 | Chevrolet Silverado 1500 Classic Extended Cab 2007(0.05) Chevrolet Silverado 1500 Extended Cab 2012(0.05) GMC Canyon Extended Cab 2012(0.07) Ford Ranger SuperCab 2011(0.07) Ford F-150 Regular Cab 2012(0.08) |
+| Chevrolet Corvette Convertible 2012 | Ferrari California Convertible 2012(0.12) Ferrari 458 Italia Convertible 2012(0.16) Lamborghini Gallardo LP 570-4 Superleggera 2012(0.16) Ford GT Coupe 2006(0.17) Chevrolet Corvette ZR1 2012(0.21) |
+| Chevrolet Corvette ZR1 2012 | Spyker C8 Convertible 2009(0.09) Spyker C8 Coupe 2009(0.09) Bugatti Veyron 16.4 Coupe 2009(0.18) Ferrari California Convertible 2012(0.18) Ford GT Coupe 2006(0.19) |
+| Chevrolet Corvette Ron Fellows Edition Z06 2007 | Lamborghini Gallardo LP 570-4 Superleggera 2012(0.24) Ford GT Coupe 2006(0.26) Bugatti Veyron 16.4 Convertible 2009(0.28) Spyker C8 Coupe 2009(0.29) Dodge Challenger SRT8 2011(0.32) |
+| Chevrolet Traverse SUV 2012 | Scion xD Hatchback 2012(0.11) Hyundai Veracruz SUV 2012(0.12) Buick Enclave SUV 2012(0.15) Honda Odyssey Minivan 2012(0.18) Suzuki SX4 Sedan 2012(0.18) |
+| Chevrolet Camaro Convertible 2012 | Ford Mustang Convertible 2007(0.24) Audi S5 Convertible 2012(0.25) Dodge Charger SRT-8 2009(0.26) Dodge Charger Sedan 2012(0.27) Bentley Continental Supersports Conv. Convertible 2012(0.28) |
+| Chevrolet HHR SS 2010 | Dodge Caliber Wagon 2007(0.18) Dodge Magnum Wagon 2008(0.20) BMW X6 SUV 2012(0.25) Dodge Caliber Wagon 2012(0.32) BMW X3 SUV 2012(0.40) |
+| Chevrolet Impala Sedan 2007 | Chevrolet Malibu Sedan 2007(0.11) Ford Focus Sedan 2007(0.13) Chrysler Sebring Convertible 2010(0.13) Chevrolet Monte Carlo Coupe 2007(0.13) Hyundai Elantra Sedan 2007(0.18) |
+| Chevrolet Tahoe Hybrid SUV 2012 | Isuzu Ascender SUV 2008(0.12) Ford Expedition EL SUV 2009(0.14) Toyota 4Runner SUV 2012*(0.15) Mazda Tribute SUV 2011(0.16) Toyota Sequoia SUV 2012(0.17) |
+| Chevrolet Sonic Sedan 2012 | Suzuki Kizashi Sedan 2012(0.22) Mitsubishi Lancer Sedan 2012(0.24) Nissan Leaf Hatchback 2012(0.26) Hyundai Tucson SUV 2012(0.26) Nissan Juke Hatchback 2012(0.27) |
+| Chevrolet Express Cargo Van 2007 | Chevrolet Express Van 2007(0.02) GMC Savana Van 2012(0.03) Dodge Sprinter Cargo Van 2009(0.17) Nissan NV Passenger Van 2012(0.18) Mercedes-Benz Sprinter Van 2012(0.21) |
+| Chevrolet Avalanche Crew Cab 2012 | Cadillac Escalade EXT Crew Cab 2007(0.13) Ford Expedition EL SUV 2009(0.15) GMC Terrain SUV 2012(0.16) Dodge Durango SUV 2007(0.18) Dodge Dakota Crew Cab 2010(0.18) |
+| Chevrolet Cobalt SS 2010 | Acura Integra Type R 2001(0.32) Volvo C30 Hatchback 2012*(0.40) Hyundai Elantra Sedan 2007(0.49) Ford Fiesta Sedan 2012(0.49) Eagle Talon Hatchback 1998(0.50) |
+| Chevrolet Malibu Hybrid Sedan 2010 | Honda Accord Sedan 2012(0.13) Chrysler Sebring Convertible 2010(0.16) Hyundai Elantra Touring Hatchback 2012(0.20) Volkswagen Golf Hatchback 2012*(0.21) Toyota Corolla Sedan 2012*(0.21) |
+| Chevrolet TrailBlazer SS 2009 | Volvo XC90 SUV 2007*(0.16) Cadillac Escalade EXT Crew Cab 2007(0.19) Land Rover LR2 SUV 2012(0.21) Land Rover Range Rover SUV 2012(0.22) Jeep Grand Cherokee SUV 2012(0.22) |
+| Chevrolet Silverado 2500HD Regular Cab 2012 | Chevrolet Silverado 1500 Extended Cab 2012(0.07) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.09) Ford F-150 Regular Cab 2012(0.10) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.12) Ford Ranger SuperCab 2011(0.13) |
+| Chevrolet Silverado 1500 Classic Extended Cab 2007 | Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.05) Chevrolet Silverado 1500 Extended Cab 2012(0.07) Ford Ranger SuperCab 2011(0.08) GMC Canyon Extended Cab 2012(0.10) Chevrolet Silverado 2500HD Regular Cab 2012(0.12) |
+| Chevrolet Express Van 2007 | Chevrolet Express Cargo Van 2007(0.02) GMC Savana Van 2012(0.03) Dodge Sprinter Cargo Van 2009(0.16) Ford E-Series Wagon Van 2012(0.20) Nissan NV Passenger Van 2012(0.20) |
+| Chevrolet Monte Carlo Coupe 2007 | Chevrolet Impala Sedan 2007(0.13) Chevrolet Malibu Sedan 2007(0.15) Chrysler Sebring Convertible 2010(0.17) Ford Focus Sedan 2007(0.23) Hyundai Elantra Sedan 2007(0.25) |
+| Chevrolet Malibu Sedan 2007 | Chevrolet Impala Sedan 2007(0.11) Ford Focus Sedan 2007(0.12) Chevrolet Monte Carlo Coupe 2007(0.15) Daewoo Nubira Wagon 2002(0.19) Lincoln Town Car Sedan 2011(0.19) |
+| Chevrolet Silverado 1500 Extended Cab 2012 | Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.05) GMC Canyon Extended Cab 2012(0.06) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.07) Dodge Ram Pickup 3500 Quad Cab 2009(0.07) Chevrolet Silverado 2500HD Regular Cab 2012(0.07) |
+| Chevrolet Silverado 1500 Regular Cab 2012 | Dodge Ram Pickup 3500 Quad Cab 2009(0.08) Ford F-150 Regular Cab 2007(0.10) Chevrolet Silverado 1500 Extended Cab 2012(0.11) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.11) Ford F-150 Regular Cab 2012(0.12) |
+| Chrysler Aspen SUV 2009 | Toyota Sequoia SUV 2012(0.10) Dodge Durango SUV 2007(0.10) Cadillac Escalade EXT Crew Cab 2007(0.12) Buick Rainier SUV 2007(0.13) Jeep Grand Cherokee SUV 2012(0.15) |
+| Chrysler Sebring Convertible 2010 | Chevrolet Impala Sedan 2007(0.13) Chevrolet Malibu Hybrid Sedan 2010(0.16) Chevrolet Monte Carlo Coupe 2007(0.17) Honda Accord Sedan 2012(0.17) Volkswagen Golf Hatchback 2012*(0.23) |
+| Chrysler Town and Country Minivan 2012 | Buick Rainier SUV 2007(0.18) Chevrolet Traverse SUV 2012(0.19) Toyota Sequoia SUV 2012(0.25) Honda Odyssey Minivan 2007(0.25) Mazda Tribute SUV 2011(0.26) |
+| Chrysler 300 SRT-8 2010 | Bentley Mulsanne Sedan 2011(0.17) Rolls-Royce Ghost Sedan 2012(0.21) Bentley Arnage Sedan 2009(0.21) Rolls-Royce Phantom Sedan 2012(0.22) Audi S6 Sedan 2011(0.32) |
+| Chrysler Crossfire Convertible 2008 | BMW 6 Series Convertible 2007(0.20) BMW 1 Series Convertible 2012(0.24) Audi TTS Coupe 2012(0.25) Audi S5 Convertible 2012(0.29) Bentley Continental Flying Spur Sedan 2007(0.32) |
+| Chrysler PT Cruiser Convertible 2008 | Dodge Durango SUV 2012(0.29) Infiniti QX56 SUV 2011(0.31) BMW X3 SUV 2012(0.34) Buick Enclave SUV 2012(0.35) Dodge Journey SUV 2012(0.39) |
+| Daewoo Nubira Wagon 2002 | Lincoln Town Car Sedan 2011(0.12) Chevrolet Malibu Sedan 2007(0.19) Mercedes-Benz 300-Class Convertible 1993(0.25) Chevrolet Impala Sedan 2007(0.26) Audi 100 Wagon 1994(0.27) |
+| Dodge Caliber Wagon 2012 | Dodge Caliber Wagon 2007(0.12) GMC Acadia SUV 2012(0.19) Buick Rainier SUV 2007(0.24) Volvo XC90 SUV 2007*(0.25) Chrysler Aspen SUV 2009(0.27) |
+| Dodge Caliber Wagon 2007 | Dodge Caliber Wagon 2012(0.12) Chevrolet HHR SS 2010(0.18) Dodge Magnum Wagon 2008(0.24) BMW X6 SUV 2012(0.34) GMC Acadia SUV 2012(0.40) |
+| Dodge Caravan Minivan 1997 | Ford Freestar Minivan 2007(0.15) Honda Odyssey Minivan 2007(0.27) Ford Focus Sedan 2007(0.27) Plymouth Neon Coupe 1999(0.30) Suzuki Aerio Sedan 2007(0.37) |
+| Dodge Ram Pickup 3500 Crew Cab 2010 | Ford F-450 Super Duty Crew Cab 2012(0.07) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.12) Ford F-150 Regular Cab 2012(0.12) GMC Canyon Extended Cab 2012(0.15) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.16) |
+| Dodge Ram Pickup 3500 Quad Cab 2009 | GMC Canyon Extended Cab 2012(0.06) Chevrolet Silverado 1500 Extended Cab 2012(0.07) Chevrolet Silverado 1500 Regular Cab 2012(0.08) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.10) Ford F-150 Regular Cab 2007(0.12) |
+| Dodge Sprinter Cargo Van 2009 | Mercedes-Benz Sprinter Van 2012(0.06) Chevrolet Express Van 2007(0.16) Chevrolet Express Cargo Van 2007(0.17) GMC Savana Van 2012(0.17) Ford E-Series Wagon Van 2012(0.38) |
+| Dodge Journey SUV 2012 | Dodge Durango SUV 2012(0.15) Ford Edge SUV 2012(0.26) Chevrolet Traverse SUV 2012(0.26) Jeep Compass SUV 2012(0.28) Chrysler Town and Country Minivan 2012(0.30) |
+| Dodge Dakota Crew Cab 2010 | Dodge Dakota Club Cab 2007(0.11) GMC Canyon Extended Cab 2012(0.13) Ford Ranger SuperCab 2011(0.14) Chevrolet Avalanche Crew Cab 2012(0.18) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.19) |
+| Dodge Dakota Club Cab 2007 | GMC Canyon Extended Cab 2012(0.08) Ford Ranger SuperCab 2011(0.08) Chevrolet Silverado 1500 Extended Cab 2012(0.10) Dodge Dakota Crew Cab 2010(0.11) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.12) |
+| Dodge Magnum Wagon 2008 | Chevrolet HHR SS 2010(0.20) Dodge Caliber Wagon 2007(0.24) Dodge Caliber Wagon 2012(0.28) Ford Mustang Convertible 2007(0.31) Dodge Charger SRT-8 2009(0.38) |
+| Dodge Challenger SRT8 2011 | Ford GT Coupe 2006(0.29) Chevrolet Corvette Ron Fellows Edition Z06 2007(0.32) Rolls-Royce Phantom Drophead Coupe Convertible 2012(0.35) Bentley Continental Supersports Conv. Convertible 2012(0.37) Ford Mustang Convertible 2007(0.38) |
+| Dodge Durango SUV 2012 | Dodge Journey SUV 2012(0.15) Jeep Grand Cherokee SUV 2012(0.23) Ford Edge SUV 2012(0.24) GMC Acadia SUV 2012(0.26) Volvo XC90 SUV 2007*(0.27) |
+| Dodge Durango SUV 2007 | Chrysler Aspen SUV 2009(0.10) GMC Yukon Hybrid SUV 2012(0.10) Cadillac Escalade EXT Crew Cab 2007(0.11) Jeep Grand Cherokee SUV 2012(0.11) Ford Expedition EL SUV 2009(0.12) |
+| Dodge Charger Sedan 2012 | Dodge Charger SRT-8 2009(0.21) Chevrolet Camaro Convertible 2012(0.27) Audi TT RS Coupe 2012(0.29) Audi S4 Sedan 2012(0.36) BMW 1 Series Coupe 2012(0.38) |
+| Dodge Charger SRT-8 2009 | Ford Mustang Convertible 2007(0.12) Dodge Charger Sedan 2012(0.21) Chevrolet Camaro Convertible 2012(0.26) Chrysler 300 SRT-8 2010(0.38) Dodge Magnum Wagon 2008(0.38) |
+| Eagle Talon Hatchback 1998 | Plymouth Neon Coupe 1999(0.21) Nissan 240SX Coupe 1998(0.21) Chevrolet Monte Carlo Coupe 2007(0.30) Geo Metro Convertible 1993(0.42) Acura Integra Type R 2001(0.46) |
+| FIAT 500 Abarth 2012 | Nissan Juke Hatchback 2012(0.57) Audi RS 4 Convertible 2008(0.60) Dodge Challenger SRT8 2011(0.61) Chevrolet Sonic Sedan 2012(0.62) Dodge Charger Sedan 2012(0.63) |
+| FIAT 500 Convertible 2012 | smart fortwo Convertible 2012*(0.22) MINI Cooper Roadster Convertible 2012(0.43) Maybach Landaulet Convertible 2012(0.48) Volkswagen Beetle Hatchback 2012*(0.49) Volvo C30 Hatchback 2012*(0.52) |
+| Ferrari FF Coupe 2012 | Aston Martin Virage Coupe 2012(0.26) Jaguar XK XKR 2012(0.29) Hyundai Veloster Hatchback 2012(0.31) McLaren MP4-12C Coupe 2012(0.34) Ferrari 458 Italia Coupe 2012(0.34) |
+| Ferrari California Convertible 2012 | Ferrari 458 Italia Convertible 2012(0.03) Ferrari 458 Italia Coupe 2012(0.05) Aston Martin Virage Coupe 2012(0.11) Chevrolet Corvette Convertible 2012(0.12) McLaren MP4-12C Coupe 2012(0.12) |
+| Ferrari 458 Italia Convertible 2012 | Ferrari California Convertible 2012(0.03) Ferrari 458 Italia Coupe 2012(0.05) McLaren MP4-12C Coupe 2012(0.07) Lamborghini Aventador Coupe 2012(0.07) Aston Martin Virage Coupe 2012(0.13) |
+| Ferrari 458 Italia Coupe 2012 | Ferrari 458 Italia Convertible 2012(0.05) Ferrari California Convertible 2012(0.05) McLaren MP4-12C Coupe 2012(0.07) Lamborghini Aventador Coupe 2012(0.08) Aston Martin Virage Coupe 2012(0.13) |
+| Fisker Karma Sedan 2012 | Aston Martin Virage Convertible 2012(0.07) Aston Martin V8 Vantage Coupe 2012(0.13) Mercedes-Benz SL-Class Coupe 2009(0.18) Aston Martin V8 Vantage Convertible 2012(0.20) Spyker C8 Coupe 2009(0.20) |
+| Ford F-450 Super Duty Crew Cab 2012 | Dodge Ram Pickup 3500 Crew Cab 2010(0.07) Chevrolet Silverado 2500HD Regular Cab 2012(0.13) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.16) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.16) Ford F-150 Regular Cab 2012(0.17) |
+| Ford Mustang Convertible 2007 | Dodge Charger SRT-8 2009(0.12) Chevrolet Camaro Convertible 2012(0.24) Rolls-Royce Phantom Drophead Coupe Convertible 2012(0.30) Dodge Magnum Wagon 2008(0.31) Rolls-Royce Phantom Sedan 2012(0.36) |
+| Ford Freestar Minivan 2007 | Dodge Caravan Minivan 1997(0.15) Ram C/V Cargo Van Minivan 2012(0.21) Honda Odyssey Minivan 2007(0.26) Audi 100 Wagon 1994(0.31) Chrysler Town and Country Minivan 2012(0.32) |
+| Ford Expedition EL SUV 2009 | Dodge Durango SUV 2007(0.12) Isuzu Ascender SUV 2008(0.13) Chevrolet Tahoe Hybrid SUV 2012(0.14) Chevrolet Avalanche Crew Cab 2012(0.15) Cadillac Escalade EXT Crew Cab 2007(0.16) |
+| Ford Edge SUV 2012 | Cadillac SRX SUV 2012(0.12) Chevrolet Traverse SUV 2012(0.23) Dodge Durango SUV 2012(0.24) Hyundai Santa Fe SUV 2012(0.24) Buick Enclave SUV 2012(0.25) |
+| Ford Ranger SuperCab 2011 | Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.07) Chevrolet Silverado 1500 Extended Cab 2012(0.08) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.08) Dodge Dakota Club Cab 2007(0.08) GMC Canyon Extended Cab 2012(0.08) |
+| Ford GT Coupe 2006 | Chevrolet Corvette Convertible 2012(0.17) Lamborghini Gallardo LP 570-4 Superleggera 2012(0.18) Spyker C8 Coupe 2009(0.19) Chevrolet Corvette ZR1 2012(0.19) Spyker C8 Convertible 2009(0.20) |
+| Ford F-150 Regular Cab 2012 | Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.08) Ford F-150 Regular Cab 2007(0.09) Chevrolet Silverado 2500HD Regular Cab 2012(0.10) Chevrolet Silverado 1500 Regular Cab 2012(0.12) GMC Canyon Extended Cab 2012(0.12) |
+| Ford F-150 Regular Cab 2007 | Ford F-150 Regular Cab 2012(0.09) Chevrolet Silverado 1500 Regular Cab 2012(0.10) Dodge Ram Pickup 3500 Quad Cab 2009(0.12) GMC Canyon Extended Cab 2012(0.13) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.15) |
+| Ford Focus Sedan 2007 | Honda Odyssey Minivan 2007(0.11) Chevrolet Malibu Sedan 2007(0.12) Chevrolet Impala Sedan 2007(0.13) Suzuki Aerio Sedan 2007(0.17) Hyundai Elantra Sedan 2007(0.19) |
+| Ford E-Series Wagon Van 2012 | GMC Savana Van 2012(0.13) Chevrolet Silverado 2500HD Regular Cab 2012(0.17) Chevrolet Express Van 2007(0.20) Nissan NV Passenger Van 2012(0.21) Chevrolet Express Cargo Van 2007(0.21) |
+| Ford Fiesta Sedan 2012 | Hyundai Elantra Sedan 2007(0.13) Hyundai Elantra Touring Hatchback 2012(0.13) Toyota Camry Sedan 2012*(0.14) Hyundai Tucson SUV 2012(0.14) Toyota Corolla Sedan 2012*(0.18) |
+| GMC Terrain SUV 2012 | Toyota 4Runner SUV 2012*(0.13) Cadillac Escalade EXT Crew Cab 2007(0.14) Jeep Grand Cherokee SUV 2012(0.15) Chevrolet Avalanche Crew Cab 2012(0.16) Chrysler Aspen SUV 2009(0.19) |
+| GMC Savana Van 2012 | Chevrolet Express Van 2007(0.03) Chevrolet Express Cargo Van 2007(0.03) Ford E-Series Wagon Van 2012(0.13) Nissan NV Passenger Van 2012(0.15) Dodge Sprinter Cargo Van 2009(0.17) |
+| GMC Yukon Hybrid SUV 2012 | Land Rover LR2 SUV 2012(0.09) Dodge Durango SUV 2007(0.10) Mazda Tribute SUV 2011(0.11) Jeep Grand Cherokee SUV 2012(0.13) Toyota Sequoia SUV 2012(0.13) |
+| GMC Acadia SUV 2012 | Jeep Grand Cherokee SUV 2012(0.15) Dodge Caliber Wagon 2012(0.19) Chrysler Aspen SUV 2009(0.20) Volvo XC90 SUV 2007*(0.20) Land Rover LR2 SUV 2012(0.21) |
+| GMC Canyon Extended Cab 2012 | Dodge Ram Pickup 3500 Quad Cab 2009(0.06) Chevrolet Silverado 1500 Extended Cab 2012(0.06) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.07) Dodge Dakota Club Cab 2007(0.08) Ford Ranger SuperCab 2011(0.08) |
+| Geo Metro Convertible 1993 | Plymouth Neon Coupe 1999(0.21) Mercedes-Benz 300-Class Convertible 1993(0.22) Nissan 240SX Coupe 1998(0.28) Acura Integra Type R 2001(0.34) Audi 100 Wagon 1994(0.36) |
+| HUMMER H3T Crew Cab 2010 | HUMMER H2 SUT Crew Cab 2009(0.04) Jeep Wrangler SUV 2012(0.08) AM General Hummer SUV 2000(0.15) Jeep Liberty SUV 2012(0.24) Jeep Patriot SUV 2012(0.30) |
+| HUMMER H2 SUT Crew Cab 2009 | HUMMER H3T Crew Cab 2010(0.04) AM General Hummer SUV 2000(0.10) Jeep Wrangler SUV 2012(0.10) Ford F-450 Super Duty Crew Cab 2012(0.29) Jeep Liberty SUV 2012(0.38) |
+| Honda Odyssey Minivan 2012 | Hyundai Veracruz SUV 2012(0.10) Suzuki SX4 Sedan 2012(0.13) Chevrolet Traverse SUV 2012(0.18) Hyundai Tucson SUV 2012(0.18) Cadillac SRX SUV 2012(0.18) |
+| Honda Odyssey Minivan 2007 | Ford Focus Sedan 2007(0.11) Suzuki Aerio Sedan 2007(0.13) Chevrolet Traverse SUV 2012(0.20) Chevrolet Malibu Sedan 2007(0.21) Suzuki SX4 Sedan 2012(0.22) |
+| Honda Accord Coupe 2012 | Hyundai Accent Sedan 2012(0.09) Hyundai Sonata Hybrid Sedan 2012(0.13) Acura TSX Sedan 2012(0.18) Hyundai Sonata Sedan 2012(0.19) Toyota Corolla Sedan 2012*(0.25) |
+| Honda Accord Sedan 2012 | Volkswagen Golf Hatchback 2012*(0.10) Chevrolet Malibu Hybrid Sedan 2010(0.13) Toyota Corolla Sedan 2012*(0.16) Acura TSX Sedan 2012(0.17) Chrysler Sebring Convertible 2010(0.17) |
+| Hyundai Veloster Hatchback 2012 | McLaren MP4-12C Coupe 2012(0.28) Aston Martin Virage Coupe 2012(0.29) Jaguar XK XKR 2012(0.29) Ferrari FF Coupe 2012(0.31) Ferrari 458 Italia Coupe 2012(0.36) |
+| Hyundai Santa Fe SUV 2012 | Cadillac SRX SUV 2012(0.23) Ford Edge SUV 2012(0.24) GMC Acadia SUV 2012(0.26) Chevrolet Traverse SUV 2012(0.34) Buick Enclave SUV 2012(0.36) |
+| Hyundai Tucson SUV 2012 | Ford Fiesta Sedan 2012(0.14) Hyundai Veracruz SUV 2012(0.16) Suzuki SX4 Sedan 2012(0.18) Honda Odyssey Minivan 2012(0.18) Buick Verano Sedan 2012(0.22) |
+| Hyundai Veracruz SUV 2012 | Honda Odyssey Minivan 2012(0.10) Chevrolet Traverse SUV 2012(0.12) Scion xD Hatchback 2012(0.14) Buick Enclave SUV 2012(0.16) Hyundai Tucson SUV 2012(0.16) |
+| Hyundai Sonata Hybrid Sedan 2012 | Hyundai Sonata Sedan 2012(0.06) Honda Accord Coupe 2012(0.13) Hyundai Accent Sedan 2012(0.17) Acura TSX Sedan 2012(0.19) Acura TL Sedan 2012(0.20) |
+| Hyundai Elantra Sedan 2007 | Hyundai Elantra Touring Hatchback 2012(0.09) Toyota Corolla Sedan 2012*(0.10) Ford Fiesta Sedan 2012(0.13) Chevrolet Impala Sedan 2007(0.18) Suzuki SX4 Sedan 2012(0.19) |
+| Hyundai Accent Sedan 2012 | Honda Accord Coupe 2012(0.09) Hyundai Sonata Hybrid Sedan 2012(0.17) Acura TSX Sedan 2012(0.22) Buick Verano Sedan 2012(0.23) Toyota Corolla Sedan 2012*(0.23) |
+| Hyundai Genesis Sedan 2012 | Acura TL Sedan 2012(0.09) Acura RL Sedan 2012(0.15) Toyota Camry Sedan 2012*(0.16) Hyundai Sonata Sedan 2012(0.17) Hyundai Azera Sedan 2012(0.20) |
+| Hyundai Sonata Sedan 2012 | Hyundai Sonata Hybrid Sedan 2012(0.06) Acura TL Sedan 2012(0.14) Acura RL Sedan 2012(0.16) Hyundai Genesis Sedan 2012(0.17) Acura TSX Sedan 2012(0.18) |
+| Hyundai Elantra Touring Hatchback 2012 | Hyundai Elantra Sedan 2007(0.09) Ford Fiesta Sedan 2012(0.13) Toyota Camry Sedan 2012*(0.14) Suzuki SX4 Sedan 2012(0.15) Toyota Corolla Sedan 2012*(0.17) |
+| Hyundai Azera Sedan 2012 | Hyundai Genesis Sedan 2012(0.20) Buick Verano Sedan 2012(0.20) Acura TL Sedan 2012(0.20) Suzuki Kizashi Sedan 2012(0.20) Toyota Camry Sedan 2012*(0.23) |
+| Infiniti G Coupe IPL 2012 | Porsche Panamera Sedan 2012(0.18) Fisker Karma Sedan 2012(0.26) Tesla Model S Sedan 2012(0.27) Audi S5 Coupe 2012(0.27) Acura TL Sedan 2012(0.27) |
+| Infiniti QX56 SUV 2011 | BMW X3 SUV 2012(0.25) BMW X5 SUV 2007(0.26) Buick Enclave SUV 2012(0.31) Dodge Durango SUV 2012(0.31) Chrysler PT Cruiser Convertible 2008(0.31) |
+| Isuzu Ascender SUV 2008 | Chevrolet Tahoe Hybrid SUV 2012(0.12) Ford Expedition EL SUV 2009(0.13) Chevrolet Avalanche Crew Cab 2012(0.20) Chrysler Aspen SUV 2009(0.22) Ford F-150 Regular Cab 2007(0.23) |
+| Jaguar XK XKR 2012 | Bugatti Veyron 16.4 Coupe 2009(0.20) Aston Martin Virage Convertible 2012(0.21) Tesla Model S Sedan 2012(0.22) Fisker Karma Sedan 2012(0.23) Aston Martin V8 Vantage Coupe 2012(0.24) |
+| Jeep Patriot SUV 2012 | Jeep Liberty SUV 2012(0.02) HUMMER H3T Crew Cab 2010(0.30) Jeep Wrangler SUV 2012(0.32) Land Rover Range Rover SUV 2012(0.39) Toyota 4Runner SUV 2012*(0.41) |
+| Jeep Wrangler SUV 2012 | HUMMER H3T Crew Cab 2010(0.08) HUMMER H2 SUT Crew Cab 2009(0.10) AM General Hummer SUV 2000(0.12) Jeep Liberty SUV 2012(0.28) Jeep Patriot SUV 2012(0.32) |
+| Jeep Liberty SUV 2012 | Jeep Patriot SUV 2012(0.02) HUMMER H3T Crew Cab 2010(0.24) Jeep Wrangler SUV 2012(0.28) HUMMER H2 SUT Crew Cab 2009(0.38) Land Rover Range Rover SUV 2012(0.41) |
+| Jeep Grand Cherokee SUV 2012 | Land Rover LR2 SUV 2012(0.10) Dodge Durango SUV 2007(0.11) Volvo XC90 SUV 2007*(0.11) Cadillac Escalade EXT Crew Cab 2007(0.12) GMC Yukon Hybrid SUV 2012(0.13) |
+| Jeep Compass SUV 2012 | Dodge Durango SUV 2012(0.27) Dodge Journey SUV 2012(0.28) Jeep Grand Cherokee SUV 2012(0.28) Volvo XC90 SUV 2007*(0.30) Land Rover LR2 SUV 2012(0.32) |
+| Lamborghini Reventon Coupe 2008 | Spyker C8 Convertible 2009(0.15) Bugatti Veyron 16.4 Coupe 2009(0.15) Spyker C8 Coupe 2009(0.17) Lamborghini Aventador Coupe 2012(0.26) Bugatti Veyron 16.4 Convertible 2009(0.26) |
+| Lamborghini Aventador Coupe 2012 | McLaren MP4-12C Coupe 2012(0.04) Ferrari 458 Italia Convertible 2012(0.07) Ferrari 458 Italia Coupe 2012(0.08) Lamborghini Gallardo LP 570-4 Superleggera 2012(0.11) Ferrari California Convertible 2012(0.12) |
+| Lamborghini Gallardo LP 570-4 Superleggera 2012 | Lamborghini Aventador Coupe 2012(0.11) McLaren MP4-12C Coupe 2012(0.15) Chevrolet Corvette Convertible 2012(0.16) Ferrari 458 Italia Convertible 2012(0.16) Ford GT Coupe 2006(0.18) |
+| Lamborghini Diablo Coupe 2001 | Acura Integra Type R 2001(0.17) Lamborghini Gallardo LP 570-4 Superleggera 2012(0.25) Chevrolet Corvette Convertible 2012(0.29) Ford GT Coupe 2006(0.33) McLaren MP4-12C Coupe 2012(0.38) |
+| Land Rover Range Rover SUV 2012 | GMC Yukon Hybrid SUV 2012(0.22) Chevrolet TrailBlazer SS 2009(0.22) Jeep Grand Cherokee SUV 2012(0.23) Volvo XC90 SUV 2007*(0.23) Toyota 4Runner SUV 2012*(0.24) |
+| Land Rover LR2 SUV 2012 | Toyota Sequoia SUV 2012(0.08) GMC Yukon Hybrid SUV 2012(0.09) Jeep Grand Cherokee SUV 2012(0.10) Mazda Tribute SUV 2011(0.10) Volvo XC90 SUV 2007*(0.12) |
+| Lincoln Town Car Sedan 2011 | Daewoo Nubira Wagon 2002(0.12) Chevrolet Malibu Sedan 2007(0.19) Chevrolet Monte Carlo Coupe 2007(0.28) Mercedes-Benz 300-Class Convertible 1993(0.28) Chevrolet Impala Sedan 2007(0.29) |
+| MINI Cooper Roadster Convertible 2012 | Bentley Continental Supersports Conv. Convertible 2012(0.20) Rolls-Royce Phantom Drophead Coupe Convertible 2012(0.40) Bugatti Veyron 16.4 Convertible 2009(0.40) FIAT 500 Convertible 2012(0.43) Bentley Continental GT Coupe 2012(0.44) |
+| Maybach Landaulet Convertible 2012 | MINI Cooper Roadster Convertible 2012(0.45) FIAT 500 Convertible 2012(0.48) Chevrolet Corvette Ron Fellows Edition Z06 2007(0.56) Rolls-Royce Phantom Drophead Coupe Convertible 2012(0.57) Mercedes-Benz 300-Class Convertible 1993(0.58) |
+| Mazda Tribute SUV 2011 | Toyota Sequoia SUV 2012(0.07) Land Rover LR2 SUV 2012(0.10) GMC Yukon Hybrid SUV 2012(0.11) Buick Rainier SUV 2007(0.12) Dodge Durango SUV 2007(0.13) |
+| McLaren MP4-12C Coupe 2012 | Lamborghini Aventador Coupe 2012(0.04) Ferrari 458 Italia Coupe 2012(0.07) Ferrari 458 Italia Convertible 2012(0.07) Ferrari California Convertible 2012(0.12) Lamborghini Gallardo LP 570-4 Superleggera 2012(0.15) |
+| Mercedes-Benz 300-Class Convertible 1993 | Audi V8 Sedan 1994(0.18) Audi 100 Sedan 1994(0.19) Audi 100 Wagon 1994(0.21) Geo Metro Convertible 1993(0.22) Nissan 240SX Coupe 1998(0.22) |
+| Mercedes-Benz C-Class Sedan 2012 | Mercedes-Benz S-Class Sedan 2012(0.18) Cadillac CTS-V Sedan 2012(0.26) Bentley Continental Flying Spur Sedan 2007(0.29) Hyundai Genesis Sedan 2012(0.35) BMW 3 Series Wagon 2012(0.35) |
+| Mercedes-Benz SL-Class Coupe 2009 | Fisker Karma Sedan 2012(0.18) Aston Martin Virage Convertible 2012(0.21) Audi R8 Coupe 2012(0.22) BMW M6 Convertible 2010(0.28) Tesla Model S Sedan 2012(0.28) |
+| Mercedes-Benz E-Class Sedan 2012 | Hyundai Genesis Sedan 2012(0.23) BMW M5 Sedan 2010(0.24) Mercedes-Benz S-Class Sedan 2012(0.26) BMW 3 Series Wagon 2012(0.28) Suzuki Kizashi Sedan 2012(0.31) |
+| Mercedes-Benz S-Class Sedan 2012 | Mercedes-Benz C-Class Sedan 2012(0.18) Hyundai Genesis Sedan 2012(0.22) Mercedes-Benz E-Class Sedan 2012(0.26) Acura TL Sedan 2012(0.32) BMW M5 Sedan 2010(0.34) |
+| Mercedes-Benz Sprinter Van 2012 | Dodge Sprinter Cargo Van 2009(0.06) Chevrolet Express Cargo Van 2007(0.21) Chevrolet Express Van 2007(0.21) GMC Savana Van 2012(0.25) Nissan NV Passenger Van 2012(0.43) |
+| Mitsubishi Lancer Sedan 2012 | Suzuki Kizashi Sedan 2012(0.23) Chevrolet Sonic Sedan 2012(0.24) Toyota Camry Sedan 2012*(0.27) Hyundai Elantra Touring Hatchback 2012(0.33) Acura TL Type-S 2008(0.33) |
+| Nissan Leaf Hatchback 2012 | Chevrolet Sonic Sedan 2012(0.26) Hyundai Tucson SUV 2012(0.30) Suzuki Kizashi Sedan 2012(0.30) Buick Verano Sedan 2012(0.31) Nissan Juke Hatchback 2012(0.32) |
+| Nissan NV Passenger Van 2012 | GMC Savana Van 2012(0.15) Chevrolet Express Cargo Van 2007(0.18) Chevrolet Express Van 2007(0.20) Ford E-Series Wagon Van 2012(0.21) Chevrolet Silverado 2500HD Regular Cab 2012(0.30) |
+| Nissan Juke Hatchback 2012 | Chevrolet Sonic Sedan 2012(0.27) Nissan Leaf Hatchback 2012(0.32) Hyundai Tucson SUV 2012(0.44) Scion xD Hatchback 2012(0.45) Volkswagen Beetle Hatchback 2012*(0.45) |
+| Nissan 240SX Coupe 1998 | Plymouth Neon Coupe 1999(0.14) Eagle Talon Hatchback 1998(0.21) Mercedes-Benz 300-Class Convertible 1993(0.22) Geo Metro Convertible 1993(0.28) Chevrolet Monte Carlo Coupe 2007(0.30) |
+| Plymouth Neon Coupe 1999 | Nissan 240SX Coupe 1998(0.14) Eagle Talon Hatchback 1998(0.21) Geo Metro Convertible 1993(0.21) Mercedes-Benz 300-Class Convertible 1993(0.26) Daewoo Nubira Wagon 2002(0.27) |
+| Porsche Panamera Sedan 2012 | Infiniti G Coupe IPL 2012(0.18) BMW M6 Convertible 2010(0.22) BMW ActiveHybrid 5 Sedan 2012(0.23) Tesla Model S Sedan 2012(0.26) BMW M5 Sedan 2010(0.27) |
+| Ram C/V Cargo Van Minivan 2012 | Ford Freestar Minivan 2007(0.21) Chrysler Town and Country Minivan 2012(0.32) Buick Rainier SUV 2007(0.39) Honda Odyssey Minivan 2007(0.40) Suzuki Aerio Sedan 2007(0.41) |
+| Rolls-Royce Phantom Drophead Coupe Convertible 2012 | Rolls-Royce Phantom Sedan 2012(0.07) Rolls-Royce Ghost Sedan 2012(0.20) Bentley Mulsanne Sedan 2011(0.24) Ford Mustang Convertible 2007(0.30) Bentley Arnage Sedan 2009(0.31) |
+| Rolls-Royce Ghost Sedan 2012 | Rolls-Royce Phantom Sedan 2012(0.14) Bentley Mulsanne Sedan 2011(0.17) Rolls-Royce Phantom Drophead Coupe Convertible 2012(0.20) Chrysler 300 SRT-8 2010(0.21) Bentley Arnage Sedan 2009(0.27) |
+| Rolls-Royce Phantom Sedan 2012 | Rolls-Royce Phantom Drophead Coupe Convertible 2012(0.07) Rolls-Royce Ghost Sedan 2012(0.14) Bentley Mulsanne Sedan 2011(0.16) Bentley Arnage Sedan 2009(0.17) Chrysler 300 SRT-8 2010(0.22) |
+| Scion xD Hatchback 2012 | Chevrolet Traverse SUV 2012(0.11) Hyundai Veracruz SUV 2012(0.14) Suzuki SX4 Hatchback 2012(0.15) Buick Enclave SUV 2012(0.16) Honda Odyssey Minivan 2012(0.20) |
+| Spyker C8 Convertible 2009 | Spyker C8 Coupe 2009(0.04) Chevrolet Corvette ZR1 2012(0.09) Lamborghini Reventon Coupe 2008(0.15) Bugatti Veyron 16.4 Coupe 2009(0.17) Ford GT Coupe 2006(0.20) |
+| Spyker C8 Coupe 2009 | Spyker C8 Convertible 2009(0.04) Chevrolet Corvette ZR1 2012(0.09) Lamborghini Aventador Coupe 2012(0.17) Ferrari California Convertible 2012(0.17) Lamborghini Reventon Coupe 2008(0.17) |
+| Suzuki Aerio Sedan 2007 | Honda Odyssey Minivan 2007(0.13) Ford Focus Sedan 2007(0.17) Chevrolet Malibu Sedan 2007(0.19) Chevrolet Impala Sedan 2007(0.20) Daewoo Nubira Wagon 2002(0.28) |
+| Suzuki Kizashi Sedan 2012 | Buick Verano Sedan 2012(0.15) Toyota Camry Sedan 2012*(0.17) Buick Regal GS 2012(0.19) Hyundai Azera Sedan 2012(0.20) Chevrolet Sonic Sedan 2012(0.22) |
+| Suzuki SX4 Hatchback 2012 | Suzuki SX4 Sedan 2012(0.15) Scion xD Hatchback 2012(0.15) Chevrolet Traverse SUV 2012(0.19) Honda Odyssey Minivan 2012(0.26) Buick Enclave SUV 2012(0.26) |
+| Suzuki SX4 Sedan 2012 | Honda Odyssey Minivan 2012(0.13) Suzuki SX4 Hatchback 2012(0.15) Hyundai Elantra Touring Hatchback 2012(0.15) Hyundai Tucson SUV 2012(0.18) Ford Fiesta Sedan 2012(0.18) |
+| Tesla Model S Sedan 2012 | Fisker Karma Sedan 2012(0.21) Jaguar XK XKR 2012(0.22) Porsche Panamera Sedan 2012(0.26) Hyundai Sonata Hybrid Sedan 2012(0.26) Infiniti G Coupe IPL 2012(0.27) |
+| Toyota Sequoia SUV 2012 | Mazda Tribute SUV 2011(0.07) Land Rover LR2 SUV 2012(0.08) Chrysler Aspen SUV 2009(0.10) Dodge Durango SUV 2007(0.13) Volvo XC90 SUV 2007*(0.13) |
+| Toyota Camry Sedan 2012* | Buick Verano Sedan 2012(0.09) Ford Fiesta Sedan 2012(0.14) Hyundai Elantra Touring Hatchback 2012(0.14) Hyundai Genesis Sedan 2012(0.16) Suzuki Kizashi Sedan 2012(0.17) |
+| Toyota Corolla Sedan 2012* | Volkswagen Golf Hatchback 2012*(0.10) Hyundai Elantra Sedan 2007(0.10) Honda Accord Sedan 2012(0.16) Acura TSX Sedan 2012(0.17) Hyundai Elantra Touring Hatchback 2012(0.17) |
+| Toyota 4Runner SUV 2012* | GMC Terrain SUV 2012(0.13) Land Rover LR2 SUV 2012(0.14) Chevrolet Tahoe Hybrid SUV 2012(0.15) Toyota Sequoia SUV 2012(0.16) Jeep Grand Cherokee SUV 2012(0.16) |
+| Volkswagen Golf Hatchback 2012* | Acura TSX Sedan 2012(0.09) Toyota Corolla Sedan 2012*(0.10) Honda Accord Sedan 2012(0.10) Chevrolet Malibu Hybrid Sedan 2010(0.21) Chrysler Sebring Convertible 2010(0.23) |
+| Volkswagen Golf Hatchback 1991* | Volvo 240 Sedan 1993*(0.08) Audi V8 Sedan 1994(0.21) Mercedes-Benz 300-Class Convertible 1993(0.23) Audi 100 Sedan 1994(0.26) Audi 100 Wagon 1994(0.29) |
+| Volkswagen Beetle Hatchback 2012* | Volvo C30 Hatchback 2012*(0.26) Bentley Continental GT Coupe 2012(0.36) Buick Regal GS 2012(0.37) Suzuki Kizashi Sedan 2012(0.40) Chevrolet Sonic Sedan 2012(0.41) |
+| Volvo C30 Hatchback 2012* | Volkswagen Beetle Hatchback 2012*(0.26) Chevrolet Sonic Sedan 2012(0.35) BMW X6 SUV 2012(0.38) Chevrolet Cobalt SS 2010(0.40) Dodge Charger Sedan 2012(0.43) |
+| Volvo 240 Sedan 1993* | Volkswagen Golf Hatchback 1991*(0.08) Audi V8 Sedan 1994(0.22) Mercedes-Benz 300-Class Convertible 1993(0.30) Audi 100 Sedan 1994(0.31) Dodge Dakota Club Cab 2007(0.34) |
+| Volvo XC90 SUV 2007* | Jeep Grand Cherokee SUV 2012(0.11) Land Rover LR2 SUV 2012(0.12) Toyota Sequoia SUV 2012(0.13) Chrysler Aspen SUV 2009(0.16) Chevrolet TrailBlazer SS 2009(0.16) |
+| smart fortwo Convertible 2012* | FIAT 500 Convertible 2012(0.22) Nissan Leaf Hatchback 2012(0.39) Nissan Juke Hatchback 2012(0.48) Chevrolet Sonic Sedan 2012(0.50) Scion xD Hatchback 2012(0.52) |
 
 ## nplm-sup-ft  [cars_lejepa]
 
+agree@1=0.199 agree@5=0.148 (chance 0.040)  dendro-purity=0.177  silhouette=-0.681  within/between=0.733
+
 
 | class | 5 nearest class centroids (cosine dist) |
 |---|---|
-| class0 | class145(0.00) class123(0.00) class124(0.00) class193*(0.00) class144(0.00) |
-| class1 | class136(0.00) class139(0.01) class3(0.01) class164(0.01) class4(0.01) |
-| class2 | class6(0.00) class133(0.00) class135(0.00) class137(0.00) class29(0.01) |
-| class3 | class137(0.00) class135(0.00) class133(0.01) class48(0.01) class2(0.01) |
-| class4 | class137(0.01) class2(0.01) class135(0.01) class3(0.01) class164(0.01) |
-| class5 | class152(0.01) class111(0.02) class102(0.02) class151(0.02) class54(0.02) |
-| class6 | class133(0.00) class2(0.00) class135(0.00) class137(0.00) class166(0.01) |
-| class7 | class37(0.00) class8(0.00) class55(0.00) class45(0.00) class14(0.00) |
-| class8 | class9(0.00) class14(0.00) class7(0.00) class37(0.00) class104(0.00) |
-| class9 | class104(0.00) class8(0.00) class33(0.00) class35(0.00) class14(0.00) |
-| class10 | class178(0.00) class179(0.00) class100(0.00) class101(0.00) class149(0.00) |
-| class11 | class41(0.00) class20(0.00) class18(0.00) class27(0.00) class28(0.00) |
-| class12 | class21(0.00) class22(0.00) class140(0.00) class13(0.00) class43(0.01) |
-| class13 | class21(0.00) class18(0.00) class26(0.00) class20(0.00) class12(0.00) |
-| class14 | class8(0.00) class33(0.00) class9(0.00) class37(0.00) class35(0.00) |
-| class15 | class16(0.00) class190*(0.00) class91(0.01) class17(0.01) class193*(0.01) |
-| class16 | class15(0.00) class17(0.00) class190*(0.01) class47(0.01) class113(0.01) |
-| class17 | class16(0.00) class15(0.01) class91(0.02) class107(0.02) class190*(0.02) |
-| class18 | class26(0.00) class20(0.00) class13(0.00) class41(0.00) class21(0.00) |
-| class19 | class23(0.01) class12(0.01) class43(0.01) class32(0.01) class22(0.02) |
-| class20 | class41(0.00) class18(0.00) class11(0.00) class26(0.00) class13(0.00) |
-| class21 | class13(0.00) class12(0.00) class18(0.00) class26(0.00) class22(0.00) |
-| class22 | class12(0.00) class140(0.00) class21(0.00) class23(0.00) class172(0.01) |
-| class23 | class25(0.00) class22(0.00) class34(0.00) class140(0.01) class43(0.01) |
-| class24 | class55(0.00) class37(0.00) class45(0.00) class58(0.00) class100(0.00) |
-| class25 | class34(0.00) class23(0.00) class29(0.01) class43(0.01) class163(0.01) |
-| class26 | class18(0.00) class20(0.00) class41(0.00) class13(0.00) class21(0.00) |
-| class27 | class28(0.00) class11(0.00) class41(0.00) class35(0.00) class98(0.00) |
-| class28 | class27(0.00) class35(0.00) class20(0.00) class11(0.00) class41(0.00) |
-| class29 | class34(0.00) class163(0.00) class25(0.01) class2(0.01) class23(0.01) |
-| class30 | class21(0.01) class13(0.01) class79(0.01) class140(0.01) class42(0.01) |
-| class31 | class93(0.03) class120(0.09) class194*(0.09) class88(0.10) class148(0.10) |
-| class32 | class19(0.01) class23(0.03) class175(0.03) class22(0.04) class25(0.04) |
-| class33 | class9(0.00) class35(0.00) class104(0.00) class14(0.00) class8(0.00) |
-| class34 | class29(0.00) class25(0.00) class23(0.00) class140(0.01) class163(0.01) |
-| class35 | class104(0.00) class33(0.00) class9(0.00) class14(0.00) class8(0.00) |
-| class36 | class141(0.09) class78(0.35) class161(0.36) class32(0.36) class40(0.37) |
-| class37 | class7(0.00) class55(0.00) class45(0.00) class8(0.00) class24(0.00) |
-| class38 | class156(0.00) class58(0.00) class24(0.01) class37(0.01) class7(0.01) |
-| class39 | class0(0.17) class145(0.17) class123(0.18) class124(0.18) class193*(0.19) |
-| class40 | class78(0.02) class175(0.02) class19(0.04) class32(0.05) class12(0.08) |
-| class41 | class20(0.00) class11(0.00) class18(0.00) class26(0.00) class27(0.00) |
-| class42 | class172(0.00) class184(0.00) class162(0.00) class140(0.01) class127(0.01) |
-| class43 | class50(0.00) class23(0.01) class140(0.01) class12(0.01) class25(0.01) |
-| class44 | class56(0.00) class179(0.00) class150(0.00) class149(0.00) class178(0.01) |
-| class45 | class37(0.00) class55(0.00) class100(0.00) class178(0.00) class7(0.00) |
-| class46 | class42(0.01) class184(0.01) class162(0.01) class172(0.01) class34(0.01) |
-| class47 | class118(0.00) class168(0.00) class70(0.00) class158(0.00) class63(0.00) |
-| class48 | class181(0.00) class139(0.00) class137(0.01) class3(0.01) class186*(0.01) |
-| class49 | class132(0.07) class109(0.09) class80(0.09) class130(0.10) class51(0.10) |
-| class50 | class43(0.00) class12(0.01) class140(0.01) class21(0.01) class30(0.01) |
-| class51 | class80(0.08) class130(0.10) class49(0.10) class132(0.11) class125(0.14) |
-| class52 | class64(0.00) class86(0.00) class119(0.00) class53(0.00) class68(0.00) |
-| class53 | class73(0.00) class69(0.00) class64(0.00) class86(0.00) class68(0.00) |
-| class54 | class102(0.00) class159(0.00) class101(0.00) class111(0.00) class151(0.00) |
-| class55 | class37(0.00) class45(0.00) class24(0.00) class58(0.00) class7(0.00) |
-| class56 | class44(0.00) class151(0.00) class150(0.01) class111(0.01) class54(0.01) |
-| class57 | class126(0.03) class77(0.07) class88(0.07) class109(0.09) class84(0.09) |
-| class58 | class55(0.00) class24(0.00) class37(0.00) class178(0.00) class179(0.00) |
-| class59 | class190*(0.04) class193*(0.05) class0(0.06) class67(0.06) class145(0.06) |
-| class60 | class183(0.04) class177(0.07) class134(0.10) class125(0.11) class132(0.12) |
-| class61 | class142(0.00) class108(0.00) class112(0.00) class94(0.00) class113(0.00) |
-| class62 | class186*(0.01) class48(0.01) class181(0.01) class139(0.01) class167(0.02) |
-| class63 | class70(0.00) class118(0.00) class168(0.00) class47(0.00) class115(0.00) |
-| class64 | class73(0.00) class53(0.00) class69(0.00) class86(0.00) class90(0.00) |
-| class65 | class97(0.02) class195*(0.02) class5(0.03) class192*(0.03) class169(0.04) |
-| class66 | class128(0.01) class76(0.01) class189*(0.02) class187*(0.02) class186*(0.03) |
-| class67 | class117(0.00) class146(0.00) class144(0.00) class153(0.00) class89(0.00) |
-| class68 | class74(0.00) class86(0.00) class53(0.00) class112(0.00) class142(0.00) |
-| class69 | class73(0.00) class53(0.00) class90(0.00) class64(0.00) class110(0.00) |
-| class70 | class63(0.00) class118(0.00) class168(0.00) class47(0.00) class115(0.00) |
-| class71 | class116(0.09) class187*(0.09) class134(0.09) class76(0.10) class97(0.13) |
-| class72 | class114(0.02) class180(0.02) class81(0.06) class126(0.07) class57(0.17) |
-| class73 | class69(0.00) class53(0.00) class64(0.00) class86(0.00) class90(0.00) |
-| class74 | class68(0.00) class112(0.00) class86(0.00) class142(0.00) class113(0.00) |
-| class75 | class108(0.00) class94(0.00) class61(0.00) class119(0.00) class142(0.00) |
-| class76 | class187*(0.01) class66(0.01) class116(0.02) class128(0.02) class131(0.03) |
-| class77 | class88(0.01) class165(0.02) class82(0.02) class87(0.02) class173(0.03) |
-| class78 | class40(0.02) class175(0.03) class32(0.04) class19(0.07) class98(0.11) |
-| class79 | class30(0.01) class26(0.01) class18(0.01) class13(0.01) class8(0.01) |
-| class80 | class132(0.04) class183(0.08) class51(0.08) class125(0.09) class49(0.09) |
-| class81 | class155(0.05) class126(0.06) class72(0.06) class180(0.07) class114(0.08) |
-| class82 | class165(0.01) class87(0.01) class173(0.01) class63(0.01) class120(0.01) |
-| class83 | class47(0.02) class158(0.02) class70(0.02) class63(0.02) class118(0.02) |
-| class84 | class107(0.03) class77(0.04) class165(0.05) class87(0.05) class173(0.05) |
-| class85 | class53(0.00) class64(0.00) class86(0.00) class73(0.00) class121(0.00) |
-| class86 | class53(0.00) class73(0.00) class68(0.00) class74(0.00) class64(0.00) |
-| class87 | class165(0.00) class173(0.00) class63(0.00) class70(0.01) class82(0.01) |
-| class88 | class77(0.01) class82(0.03) class93(0.03) class165(0.03) class87(0.04) |
-| class89 | class121(0.00) class105(0.00) class110(0.00) class90(0.00) class64(0.00) |
-| class90 | class110(0.00) class69(0.00) class73(0.00) class64(0.00) class53(0.00) |
-| class91 | class15(0.01) class190*(0.01) class16(0.01) class17(0.02) class193*(0.02) |
-| class92 | class111(0.01) class151(0.01) class54(0.01) class56(0.01) class96(0.01) |
-| class93 | class88(0.03) class31(0.03) class82(0.05) class77(0.05) class120(0.06) |
-| class94 | class61(0.00) class108(0.00) class119(0.00) class75(0.00) class142(0.00) |
-| class95 | class100(0.00) class10(0.00) class24(0.00) class178(0.01) class179(0.01) |
-| class96 | class58(0.01) class92(0.01) class54(0.01) class101(0.01) class95(0.01) |
-| class97 | class65(0.02) class195*(0.03) class170(0.04) class5(0.05) class167(0.06) |
-| class98 | class27(0.00) class28(0.01) class11(0.01) class172(0.01) class41(0.01) |
-| class99 | class195*(0.02) class65(0.05) class5(0.06) class157(0.06) class167(0.07) |
-| class100 | class45(0.00) class10(0.00) class55(0.00) class178(0.00) class95(0.00) |
-| class101 | class159(0.00) class103(0.00) class102(0.00) class54(0.00) class150(0.00) |
-| class102 | class54(0.00) class159(0.00) class101(0.00) class103(0.00) class150(0.00) |
-| class103 | class101(0.00) class159(0.00) class150(0.00) class102(0.00) class54(0.00) |
-| class104 | class9(0.00) class35(0.00) class33(0.00) class8(0.00) class14(0.00) |
-| class105 | class121(0.00) class89(0.00) class110(0.00) class85(0.00) class146(0.00) |
-| class106 | class96(0.01) class58(0.02) class151(0.02) class92(0.03) class150(0.03) |
-| class107 | class173(0.00) class87(0.01) class165(0.01) class63(0.01) class70(0.01) |
-| class108 | class61(0.00) class142(0.00) class112(0.00) class94(0.00) class113(0.00) |
-| class109 | class49(0.09) class57(0.09) class93(0.09) class130(0.09) class88(0.11) |
-| class110 | class90(0.00) class69(0.00) class73(0.00) class121(0.00) class64(0.00) |
-| class111 | class54(0.00) class102(0.00) class151(0.00) class159(0.00) class101(0.00) |
-| class112 | class113(0.00) class142(0.00) class74(0.00) class61(0.00) class108(0.00) |
-| class113 | class112(0.00) class142(0.00) class61(0.00) class108(0.00) class74(0.00) |
-| class114 | class72(0.02) class180(0.02) class126(0.06) class81(0.08) class57(0.13) |
-| class115 | class113(0.00) class108(0.00) class112(0.00) class168(0.00) class118(0.00) |
-| class116 | class131(0.01) class187*(0.02) class138(0.02) class76(0.02) class134(0.03) |
-| class117 | class153(0.00) class146(0.00) class188*(0.00) class105(0.00) class121(0.00) |
-| class118 | class70(0.00) class63(0.00) class168(0.00) class47(0.00) class115(0.00) |
-| class119 | class94(0.00) class154(0.00) class52(0.00) class75(0.00) class61(0.00) |
-| class120 | class185(0.00) class194*(0.00) class75(0.00) class158(0.00) class168(0.00) |
-| class121 | class105(0.00) class110(0.00) class73(0.00) class89(0.00) class64(0.00) |
-| class122 | class160(0.07) class171(0.15) class155(0.28) class81(0.31) class84(0.32) |
-| class123 | class124(0.00) class145(0.00) class0(0.00) class144(0.00) class146(0.00) |
-| class124 | class123(0.00) class145(0.00) class144(0.00) class0(0.00) class146(0.00) |
-| class125 | class183(0.03) class80(0.09) class134(0.11) class60(0.11) class138(0.11) |
-| class126 | class57(0.03) class180(0.04) class81(0.06) class114(0.06) class72(0.07) |
-| class127 | class42(0.01) class133(0.01) class6(0.01) class184(0.01) class2(0.01) |
-| class128 | class66(0.01) class189*(0.01) class76(0.02) class136(0.03) class187*(0.03) |
-| class129 | class191*(0.00) class143(0.00) class184(0.01) class100(0.01) class149(0.01) |
-| class130 | class109(0.09) class51(0.10) class49(0.10) class126(0.11) class57(0.15) |
-| class131 | class138(0.00) class116(0.01) class76(0.03) class134(0.03) class66(0.04) |
-| class132 | class80(0.04) class183(0.06) class182(0.07) class49(0.07) class177(0.07) |
-| class133 | class6(0.00) class135(0.00) class2(0.00) class137(0.00) class3(0.01) |
-| class134 | class116(0.03) class138(0.03) class131(0.03) class76(0.07) class187*(0.08) |
-| class135 | class137(0.00) class133(0.00) class3(0.00) class2(0.00) class6(0.00) |
-| class136 | class1(0.00) class139(0.01) class3(0.01) class137(0.01) class4(0.01) |
-| class137 | class135(0.00) class3(0.00) class133(0.00) class2(0.00) class6(0.00) |
-| class138 | class131(0.00) class116(0.02) class134(0.03) class76(0.04) class66(0.05) |
-| class139 | class48(0.00) class181(0.00) class136(0.01) class137(0.01) class186*(0.01) |
-| class140 | class22(0.00) class12(0.00) class21(0.00) class42(0.01) class23(0.01) |
-| class141 | class36(0.09) class125(0.28) class136(0.28) class1(0.30) class131(0.30) |
-| class142 | class61(0.00) class112(0.00) class108(0.00) class113(0.00) class74(0.00) |
-| class143 | class9(0.00) class45(0.00) class104(0.00) class33(0.00) class8(0.00) |
-| class144 | class146(0.00) class117(0.00) class105(0.00) class89(0.00) class124(0.00) |
-| class145 | class0(0.00) class123(0.00) class124(0.00) class144(0.00) class146(0.00) |
-| class146 | class144(0.00) class105(0.00) class117(0.00) class89(0.00) class121(0.00) |
-| class147 | class188*(0.00) class154(0.00) class153(0.00) class85(0.00) class119(0.00) |
-| class148 | class194*(0.00) class154(0.00) class147(0.00) class119(0.00) class185(0.00) |
-| class149 | class178(0.00) class179(0.00) class45(0.00) class10(0.00) class55(0.00) |
-| class150 | class103(0.00) class159(0.00) class101(0.00) class151(0.00) class102(0.00) |
-| class151 | class54(0.00) class150(0.00) class102(0.00) class159(0.00) class111(0.00) |
-| class152 | class111(0.00) class151(0.01) class54(0.01) class102(0.01) class5(0.01) |
-| class153 | class188*(0.00) class117(0.00) class146(0.00) class144(0.00) class67(0.00) |
-| class154 | class119(0.00) class94(0.00) class75(0.00) class52(0.00) class61(0.00) |
-| class155 | class81(0.05) class84(0.07) class107(0.08) class173(0.10) class77(0.11) |
-| class156 | class38(0.00) class24(0.01) class58(0.01) class14(0.01) class37(0.01) |
-| class157 | class56(0.04) class44(0.05) class5(0.06) class151(0.06) class99(0.06) |
-| class158 | class47(0.00) class168(0.00) class75(0.00) class115(0.00) class94(0.00) |
-| class159 | class101(0.00) class103(0.00) class102(0.00) class150(0.00) class54(0.00) |
-| class160 | class122(0.07) class155(0.16) class17(0.16) class91(0.19) class16(0.20) |
-| class161 | class50(0.02) class43(0.02) class25(0.03) class164(0.03) class19(0.03) |
-| class162 | class172(0.00) class104(0.00) class33(0.00) class184(0.00) class35(0.00) |
-| class163 | class29(0.00) class34(0.01) class25(0.01) class2(0.01) class6(0.01) |
-| class164 | class4(0.01) class1(0.01) class136(0.02) class163(0.02) class2(0.02) |
-| class165 | class87(0.00) class173(0.01) class82(0.01) class63(0.01) class70(0.01) |
-| class166 | class181(0.01) class48(0.01) class6(0.01) class133(0.01) class169(0.01) |
-| class167 | class62(0.02) class186*(0.02) class166(0.03) class48(0.03) class187*(0.04) |
-| class168 | class118(0.00) class70(0.00) class63(0.00) class115(0.00) class47(0.00) |
-| class169 | class192*(0.00) class166(0.01) class191*(0.02) class129(0.02) class181(0.03) |
-| class170 | class97(0.04) class195*(0.06) class5(0.06) class65(0.07) class152(0.10) |
-| class171 | class122(0.15) class114(0.19) class72(0.23) class81(0.23) class180(0.29) |
-| class172 | class42(0.00) class162(0.00) class184(0.00) class35(0.00) class104(0.00) |
-| class173 | class87(0.00) class107(0.00) class165(0.01) class63(0.01) class70(0.01) |
-| class174 | class156(0.09) class106(0.09) class175(0.10) class38(0.10) class40(0.11) |
-| class175 | class40(0.02) class19(0.03) class78(0.03) class32(0.03) class11(0.03) |
-| class176 | class39(0.35) class174(0.40) class40(0.47) class78(0.48) class175(0.57) |
-| class177 | class182(0.04) class183(0.05) class60(0.07) class132(0.07) class125(0.12) |
-| class178 | class179(0.00) class10(0.00) class149(0.00) class45(0.00) class55(0.00) |
-| class179 | class178(0.00) class10(0.00) class149(0.00) class150(0.00) class103(0.00) |
-| class180 | class72(0.02) class114(0.02) class126(0.04) class81(0.07) class57(0.11) |
-| class181 | class48(0.00) class139(0.00) class166(0.01) class6(0.01) class133(0.01) |
-| class182 | class177(0.04) class132(0.07) class183(0.12) class80(0.13) class49(0.15) |
-| class183 | class125(0.03) class60(0.04) class177(0.05) class132(0.06) class80(0.08) |
-| class184 | class162(0.00) class42(0.00) class172(0.00) class143(0.00) class104(0.00) |
-| class185 | class158(0.00) class120(0.00) class75(0.00) class154(0.00) class194*(0.00) |
-| class186* | class62(0.01) class48(0.01) class139(0.01) class181(0.01) class3(0.02) |
-| class187* | class76(0.01) class66(0.02) class116(0.02) class186*(0.02) class189*(0.03) |
-| class188* | class153(0.00) class117(0.00) class147(0.00) class146(0.00) class144(0.00) |
-| class189* | class128(0.01) class4(0.01) class66(0.02) class3(0.02) class1(0.02) |
-| class190* | class193*(0.00) class15(0.00) class110(0.01) class90(0.01) class89(0.01) |
-| class191* | class129(0.00) class192*(0.01) class143(0.01) class184(0.01) class100(0.02) |
-| class192* | class169(0.00) class191*(0.01) class129(0.01) class166(0.02) class184(0.03) |
-| class193* | class144(0.00) class89(0.00) class123(0.00) class124(0.00) class67(0.00) |
-| class194* | class147(0.00) class120(0.00) class185(0.00) class148(0.00) class154(0.00) |
-| class195* | class99(0.02) class65(0.02) class97(0.03) class5(0.04) class167(0.05) |
+| AM General Hummer SUV 2000 | Jeep Wrangler SUV 2012(0.00) HUMMER H3T Crew Cab 2010(0.00) HUMMER H2 SUT Crew Cab 2009(0.00) Volvo 240 Sedan 1993*(0.00) Jeep Patriot SUV 2012(0.00) |
+| Acura RL Sedan 2012 | Hyundai Genesis Sedan 2012(0.00) Hyundai Azera Sedan 2012(0.01) Acura TL Type-S 2008(0.01) Mercedes-Benz S-Class Sedan 2012(0.01) Acura TSX Sedan 2012(0.01) |
+| Acura TL Sedan 2012 | Acura ZDX Hatchback 2012(0.00) Hyundai Sonata Hybrid Sedan 2012(0.00) Hyundai Accent Sedan 2012(0.00) Hyundai Sonata Sedan 2012(0.00) BMW 3 Series Wagon 2012(0.01) |
+| Acura TL Type-S 2008 | Hyundai Sonata Sedan 2012(0.00) Hyundai Accent Sedan 2012(0.00) Hyundai Sonata Hybrid Sedan 2012(0.01) Buick Verano Sedan 2012(0.01) Acura TL Sedan 2012(0.01) |
+| Acura TSX Sedan 2012 | Hyundai Sonata Sedan 2012(0.01) Acura TL Sedan 2012(0.01) Hyundai Accent Sedan 2012(0.01) Acura TL Type-S 2008(0.01) Mercedes-Benz S-Class Sedan 2012(0.01) |
+| Acura Integra Type R 2001 | Lamborghini Diablo Coupe 2001(0.01) Ford GT Coupe 2006(0.02) Ferrari 458 Italia Convertible 2012(0.02) Lamborghini Gallardo LP 570-4 Superleggera 2012(0.02) Chevrolet Corvette Convertible 2012(0.02) |
+| Acura ZDX Hatchback 2012 | Hyundai Sonata Hybrid Sedan 2012(0.00) Acura TL Sedan 2012(0.00) Hyundai Accent Sedan 2012(0.00) Hyundai Sonata Sedan 2012(0.00) Mitsubishi Lancer Sedan 2012(0.01) |
+| Aston Martin V8 Vantage Convertible 2012 | BMW Z4 Convertible 2012(0.00) Aston Martin V8 Vantage Coupe 2012(0.00) Chevrolet Corvette ZR1 2012(0.00) Bugatti Veyron 16.4 Coupe 2009(0.00) Audi R8 Coupe 2012(0.00) |
+| Aston Martin V8 Vantage Coupe 2012 | Aston Martin Virage Convertible 2012(0.00) Audi R8 Coupe 2012(0.00) Aston Martin V8 Vantage Convertible 2012(0.00) BMW Z4 Convertible 2012(0.00) Fisker Karma Sedan 2012(0.00) |
+| Aston Martin Virage Convertible 2012 | Fisker Karma Sedan 2012(0.00) Aston Martin V8 Vantage Coupe 2012(0.00) BMW M3 Coupe 2012(0.00) BMW M6 Convertible 2010(0.00) Audi R8 Coupe 2012(0.00) |
+| Aston Martin Virage Coupe 2012 | Spyker C8 Convertible 2009(0.00) Spyker C8 Coupe 2009(0.00) Ferrari FF Coupe 2012(0.00) Ferrari California Convertible 2012(0.00) Lamborghini Reventon Coupe 2008(0.00) |
+| Audi RS 4 Convertible 2008 | Bentley Continental GT Coupe 2012(0.00) Audi S5 Convertible 2012(0.00) Audi TT Hatchback 2011(0.00) BMW 1 Series Coupe 2012(0.00) BMW 3 Series Sedan 2012(0.00) |
+| Audi A5 Coupe 2012 | Audi S5 Coupe 2012(0.00) Audi S4 Sedan 2012(0.00) Infiniti G Coupe IPL 2012(0.00) Audi TTS Coupe 2012(0.00) Bentley Continental Flying Spur Sedan 2007(0.01) |
+| Audi TTS Coupe 2012 | Audi S5 Coupe 2012(0.00) Audi TT Hatchback 2011(0.00) BMW 1 Series Convertible 2012(0.00) Audi S5 Convertible 2012(0.00) Audi A5 Coupe 2012(0.00) |
+| Audi R8 Coupe 2012 | Aston Martin V8 Vantage Coupe 2012(0.00) BMW M3 Coupe 2012(0.00) Aston Martin Virage Convertible 2012(0.00) BMW Z4 Convertible 2012(0.00) BMW M6 Convertible 2010(0.00) |
+| Audi V8 Sedan 1994 | Audi 100 Sedan 1994(0.00) Volkswagen Golf Hatchback 1991*(0.00) Dodge Magnum Wagon 2008(0.01) Audi 100 Wagon 1994(0.01) Volvo 240 Sedan 1993*(0.01) |
+| Audi 100 Sedan 1994 | Audi V8 Sedan 1994(0.00) Audi 100 Wagon 1994(0.00) Volkswagen Golf Hatchback 1991*(0.01) Buick Rainier SUV 2007(0.01) Ford F-150 Regular Cab 2007(0.01) |
+| Audi 100 Wagon 1994 | Audi 100 Sedan 1994(0.00) Audi V8 Sedan 1994(0.01) Dodge Magnum Wagon 2008(0.02) Ford Freestar Minivan 2007(0.02) Volkswagen Golf Hatchback 1991*(0.02) |
+| Audi TT Hatchback 2011 | BMW 1 Series Convertible 2012(0.00) Audi S5 Convertible 2012(0.00) Audi TTS Coupe 2012(0.00) Bentley Continental GT Coupe 2012(0.00) Audi S5 Coupe 2012(0.00) |
+| Audi S6 Sedan 2011 | Audi S4 Sedan 2007(0.01) Audi A5 Coupe 2012(0.01) Bentley Continental Flying Spur Sedan 2007(0.01) BMW X6 SUV 2012(0.01) Audi S4 Sedan 2012(0.02) |
+| Audi S5 Convertible 2012 | Bentley Continental GT Coupe 2012(0.00) Audi TT Hatchback 2011(0.00) Audi RS 4 Convertible 2008(0.00) BMW 1 Series Convertible 2012(0.00) Audi TTS Coupe 2012(0.00) |
+| Audi S5 Coupe 2012 | Audi TTS Coupe 2012(0.00) Audi A5 Coupe 2012(0.00) Audi TT Hatchback 2011(0.00) BMW 1 Series Convertible 2012(0.00) Audi S4 Sedan 2012(0.00) |
+| Audi S4 Sedan 2012 | Audi A5 Coupe 2012(0.00) Infiniti G Coupe IPL 2012(0.00) Audi S5 Coupe 2012(0.00) Audi S4 Sedan 2007(0.00) Porsche Panamera Sedan 2012(0.01) |
+| Audi S4 Sedan 2007 | BMW ActiveHybrid 5 Sedan 2012(0.00) Audi S4 Sedan 2012(0.00) BMW M5 Sedan 2010(0.00) Infiniti G Coupe IPL 2012(0.01) Bentley Continental Flying Spur Sedan 2007(0.01) |
+| Audi TT RS Coupe 2012 | Chevrolet Corvette ZR1 2012(0.00) BMW Z4 Convertible 2012(0.00) Bugatti Veyron 16.4 Coupe 2009(0.00) Chevrolet Camaro Convertible 2012(0.00) Ferrari FF Coupe 2012(0.00) |
+| BMW ActiveHybrid 5 Sedan 2012 | BMW M5 Sedan 2010(0.00) Audi S4 Sedan 2007(0.00) BMW 3 Series Wagon 2012(0.01) Bentley Continental Flying Spur Sedan 2007(0.01) Mercedes-Benz E-Class Sedan 2012(0.01) |
+| BMW 1 Series Convertible 2012 | Audi TT Hatchback 2011(0.00) Audi S5 Convertible 2012(0.00) Bentley Continental GT Coupe 2012(0.00) Audi TTS Coupe 2012(0.00) Audi S5 Coupe 2012(0.00) |
+| BMW 1 Series Coupe 2012 | BMW 3 Series Sedan 2012(0.00) Audi RS 4 Convertible 2008(0.00) Bentley Continental GT Coupe 2012(0.00) BMW M6 Convertible 2010(0.00) FIAT 500 Abarth 2012(0.00) |
+| BMW 3 Series Sedan 2012 | BMW 1 Series Coupe 2012(0.00) BMW M6 Convertible 2010(0.00) Audi S5 Convertible 2012(0.00) Audi RS 4 Convertible 2008(0.00) Bentley Continental GT Coupe 2012(0.00) |
+| BMW 3 Series Wagon 2012 | BMW M5 Sedan 2010(0.00) Mercedes-Benz E-Class Sedan 2012(0.00) BMW ActiveHybrid 5 Sedan 2012(0.01) Acura TL Sedan 2012(0.01) Audi S4 Sedan 2007(0.01) |
+| BMW 6 Series Convertible 2007 | Audi S5 Coupe 2012(0.01) Audi TTS Coupe 2012(0.01) Chrysler Crossfire Convertible 2008(0.01) Infiniti G Coupe IPL 2012(0.01) Bentley Continental GT Coupe 2007(0.01) |
+| BMW X5 SUV 2007 | Dodge Durango SUV 2012(0.03) GMC Acadia SUV 2012(0.09) Volvo XC90 SUV 2007*(0.09) Dodge Journey SUV 2012(0.10) Jeep Compass SUV 2012(0.10) |
+| BMW X6 SUV 2012 | Audi S6 Sedan 2011(0.01) Audi S4 Sedan 2007(0.03) Rolls-Royce Ghost Sedan 2012(0.03) Audi S4 Sedan 2012(0.04) BMW ActiveHybrid 5 Sedan 2012(0.04) |
+| BMW M3 Coupe 2012 | Aston Martin Virage Convertible 2012(0.00) BMW M6 Convertible 2010(0.00) Fisker Karma Sedan 2012(0.00) Audi R8 Coupe 2012(0.00) Aston Martin V8 Vantage Coupe 2012(0.00) |
+| BMW M5 Sedan 2010 | BMW 3 Series Wagon 2012(0.00) BMW ActiveHybrid 5 Sedan 2012(0.00) Audi S4 Sedan 2007(0.00) Infiniti G Coupe IPL 2012(0.01) Mercedes-Benz E-Class Sedan 2012(0.01) |
+| BMW M6 Convertible 2010 | Fisker Karma Sedan 2012(0.00) BMW M3 Coupe 2012(0.00) Aston Martin Virage Convertible 2012(0.00) Audi R8 Coupe 2012(0.00) Aston Martin V8 Vantage Coupe 2012(0.00) |
+| BMW X3 SUV 2012 | Infiniti QX56 SUV 2011(0.09) Chrysler 300 SRT-8 2010(0.35) Mercedes-Benz C-Class Sedan 2012(0.36) BMW X6 SUV 2012(0.36) Bentley Mulsanne Sedan 2011(0.37) |
+| BMW Z4 Convertible 2012 | Aston Martin V8 Vantage Convertible 2012(0.00) Chevrolet Corvette ZR1 2012(0.00) Bugatti Veyron 16.4 Coupe 2009(0.00) Aston Martin V8 Vantage Coupe 2012(0.00) Audi TT RS Coupe 2012(0.00) |
+| Bentley Continental Supersports Conv. Convertible 2012 | MINI Cooper Roadster Convertible 2012(0.00) Chevrolet Camaro Convertible 2012(0.00) Audi TT RS Coupe 2012(0.01) BMW Z4 Convertible 2012(0.01) Aston Martin V8 Vantage Convertible 2012(0.01) |
+| Bentley Arnage Sedan 2009 | AM General Hummer SUV 2000(0.17) Jeep Wrangler SUV 2012(0.17) HUMMER H3T Crew Cab 2010(0.18) HUMMER H2 SUT Crew Cab 2009(0.18) Volvo 240 Sedan 1993*(0.19) |
+| Bentley Mulsanne Sedan 2011 | Chrysler 300 SRT-8 2010(0.02) Rolls-Royce Ghost Sedan 2012(0.02) Audi S6 Sedan 2011(0.04) BMW X6 SUV 2012(0.05) Audi A5 Coupe 2012(0.08) |
+| Bentley Continental GT Coupe 2012 | Audi S5 Convertible 2012(0.00) Audi RS 4 Convertible 2008(0.00) Audi TT Hatchback 2011(0.00) BMW 1 Series Convertible 2012(0.00) BMW 1 Series Coupe 2012(0.00) |
+| Bentley Continental GT Coupe 2007 | Porsche Panamera Sedan 2012(0.00) Tesla Model S Sedan 2012(0.00) Mercedes-Benz SL-Class Coupe 2009(0.00) Infiniti G Coupe IPL 2012(0.01) Honda Accord Coupe 2012(0.01) |
+| Bentley Continental Flying Spur Sedan 2007 | Cadillac CTS-V Sedan 2012(0.00) Audi S4 Sedan 2007(0.01) Infiniti G Coupe IPL 2012(0.01) Audi A5 Coupe 2012(0.01) BMW ActiveHybrid 5 Sedan 2012(0.01) |
+| Bugatti Veyron 16.4 Convertible 2009 | Chevrolet Corvette Ron Fellows Edition Z06 2007(0.00) Spyker C8 Coupe 2009(0.00) Lamborghini Aventador Coupe 2012(0.00) Lamborghini Reventon Coupe 2008(0.00) Spyker C8 Convertible 2009(0.01) |
+| Bugatti Veyron 16.4 Coupe 2009 | BMW Z4 Convertible 2012(0.00) Chevrolet Corvette ZR1 2012(0.00) Ferrari FF Coupe 2012(0.00) Spyker C8 Convertible 2009(0.00) Aston Martin V8 Vantage Convertible 2012(0.00) |
+| Buick Regal GS 2012 | Bentley Continental GT Coupe 2007(0.01) Tesla Model S Sedan 2012(0.01) Mercedes-Benz SL-Class Coupe 2009(0.01) Porsche Panamera Sedan 2012(0.01) BMW M5 Sedan 2010(0.01) |
+| Buick Rainier SUV 2007 | GMC Savana Van 2012(0.00) Nissan NV Passenger Van 2012(0.00) Chevrolet Express Van 2007(0.00) Mazda Tribute SUV 2011(0.00) Chevrolet Express Cargo Van 2007(0.00) |
+| Buick Verano Sedan 2012 | Suzuki Kizashi Sedan 2012(0.00) Hyundai Azera Sedan 2012(0.00) Hyundai Sonata Sedan 2012(0.01) Acura TL Type-S 2008(0.01) Toyota Camry Sedan 2012*(0.01) |
+| Buick Enclave SUV 2012 | Hyundai Veracruz SUV 2012(0.07) Ford Edge SUV 2012(0.09) Chrysler PT Cruiser Convertible 2008(0.09) Hyundai Santa Fe SUV 2012(0.10) Cadillac SRX SUV 2012(0.10) |
+| Cadillac CTS-V Sedan 2012 | Bentley Continental Flying Spur Sedan 2007(0.00) Audi A5 Coupe 2012(0.01) Infiniti G Coupe IPL 2012(0.01) Audi S5 Coupe 2012(0.01) BMW 6 Series Convertible 2007(0.01) |
+| Cadillac SRX SUV 2012 | Chrysler PT Cruiser Convertible 2008(0.08) Hyundai Santa Fe SUV 2012(0.10) Buick Enclave SUV 2012(0.10) Hyundai Veracruz SUV 2012(0.11) Honda Odyssey Minivan 2012(0.14) |
+| Cadillac Escalade EXT Crew Cab 2007 | Chevrolet Avalanche Crew Cab 2012(0.00) Dodge Ram Pickup 3500 Quad Cab 2009(0.00) GMC Yukon Hybrid SUV 2012(0.00) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.00) Chevrolet Silverado 2500HD Regular Cab 2012(0.00) |
+| Chevrolet Silverado 1500 Hybrid Crew Cab 2012 | Chevrolet Silverado 1500 Extended Cab 2012(0.00) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.00) Chevrolet Avalanche Crew Cab 2012(0.00) Dodge Ram Pickup 3500 Quad Cab 2009(0.00) Chevrolet Silverado 2500HD Regular Cab 2012(0.00) |
+| Chevrolet Corvette Convertible 2012 | Ferrari 458 Italia Convertible 2012(0.00) McLaren MP4-12C Coupe 2012(0.00) Ferrari California Convertible 2012(0.00) Ford GT Coupe 2006(0.00) Lamborghini Gallardo LP 570-4 Superleggera 2012(0.00) |
+| Chevrolet Corvette ZR1 2012 | BMW Z4 Convertible 2012(0.00) Bugatti Veyron 16.4 Coupe 2009(0.00) Audi TT RS Coupe 2012(0.00) Chevrolet Camaro Convertible 2012(0.00) Aston Martin V8 Vantage Convertible 2012(0.00) |
+| Chevrolet Corvette Ron Fellows Edition Z06 2007 | Bugatti Veyron 16.4 Convertible 2009(0.00) Lamborghini Gallardo LP 570-4 Superleggera 2012(0.00) Lamborghini Aventador Coupe 2012(0.01) Ford GT Coupe 2006(0.01) Chevrolet Corvette Convertible 2012(0.01) |
+| Chevrolet Traverse SUV 2012 | Honda Odyssey Minivan 2007(0.03) Chrysler Town and Country Minivan 2012(0.07) Dodge Journey SUV 2012(0.07) Ford Edge SUV 2012(0.09) Dodge Caravan Minivan 1997(0.09) |
+| Chevrolet Camaro Convertible 2012 | Chevrolet Corvette ZR1 2012(0.00) Audi TT RS Coupe 2012(0.00) BMW Z4 Convertible 2012(0.00) Spyker C8 Convertible 2009(0.00) Spyker C8 Coupe 2009(0.00) |
+| Chevrolet HHR SS 2010 | Volkswagen Golf Hatchback 1991*(0.04) Volvo 240 Sedan 1993*(0.05) AM General Hummer SUV 2000(0.06) Chevrolet TrailBlazer SS 2009(0.06) Jeep Wrangler SUV 2012(0.06) |
+| Chevrolet Impala Sedan 2007 | Suzuki SX4 Sedan 2012(0.04) Scion xD Hatchback 2012(0.07) Hyundai Elantra Sedan 2007(0.10) Honda Odyssey Minivan 2012(0.11) Hyundai Veracruz SUV 2012(0.12) |
+| Chevrolet Tahoe Hybrid SUV 2012 | Isuzu Ascender SUV 2008(0.00) Ford Expedition EL SUV 2009(0.00) Ford F-150 Regular Cab 2012(0.00) Dodge Durango SUV 2007(0.00) Ford F-150 Regular Cab 2007(0.00) |
+| Chevrolet Sonic Sedan 2012 | Toyota Camry Sedan 2012*(0.01) Buick Verano Sedan 2012(0.01) Suzuki Kizashi Sedan 2012(0.01) Hyundai Azera Sedan 2012(0.01) Nissan Leaf Hatchback 2012(0.02) |
+| Chevrolet Express Cargo Van 2007 | Chevrolet Express Van 2007(0.00) GMC Savana Van 2012(0.00) Nissan NV Passenger Van 2012(0.00) Buick Rainier SUV 2007(0.00) Ford E-Series Wagon Van 2012(0.00) |
+| Chevrolet Avalanche Crew Cab 2012 | Chevrolet Silverado 1500 Extended Cab 2012(0.00) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.00) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.00) Dodge Ram Pickup 3500 Quad Cab 2009(0.00) Dodge Dakota Club Cab 2007(0.00) |
+| Chevrolet Cobalt SS 2010 | Eagle Talon Hatchback 1998(0.02) smart fortwo Convertible 2012*(0.02) Acura Integra Type R 2001(0.03) Volvo C30 Hatchback 2012*(0.03) Nissan Juke Hatchback 2012(0.04) |
+| Chevrolet Malibu Hybrid Sedan 2010 | Honda Accord Sedan 2012(0.01) Chrysler Sebring Convertible 2010(0.01) Volkswagen Golf Hatchback 2012*(0.02) Toyota Corolla Sedan 2012*(0.02) Toyota Camry Sedan 2012*(0.03) |
+| Chevrolet TrailBlazer SS 2009 | GMC Terrain SUV 2012(0.00) Jeep Liberty SUV 2012(0.00) Jeep Patriot SUV 2012(0.00) Land Rover Range Rover SUV 2012(0.00) Dodge Dakota Crew Cab 2010(0.00) |
+| Chevrolet Silverado 2500HD Regular Cab 2012 | Chevrolet Silverado 1500 Regular Cab 2012(0.00) Dodge Ram Pickup 3500 Quad Cab 2009(0.00) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.00) Ford F-150 Regular Cab 2012(0.00) Isuzu Ascender SUV 2008(0.00) |
+| Chevrolet Silverado 1500 Classic Extended Cab 2007 | Chevrolet Silverado 1500 Extended Cab 2012(0.00) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.00) Dodge Dakota Club Cab 2007(0.00) Chevrolet Avalanche Crew Cab 2012(0.00) Ford Ranger SuperCab 2011(0.00) |
+| Chevrolet Express Van 2007 | Chevrolet Express Cargo Van 2007(0.00) GMC Savana Van 2012(0.00) Nissan NV Passenger Van 2012(0.00) Buick Rainier SUV 2007(0.00) Ford E-Series Wagon Van 2012(0.00) |
+| Chevrolet Monte Carlo Coupe 2007 | Ford Fiesta Sedan 2012(0.09) Toyota Corolla Sedan 2012*(0.09) Hyundai Elantra Sedan 2007(0.09) Chrysler Sebring Convertible 2010(0.10) Eagle Talon Hatchback 1998(0.13) |
+| Chevrolet Malibu Sedan 2007 | Ford Focus Sedan 2007(0.02) Suzuki Aerio Sedan 2007(0.02) Daewoo Nubira Wagon 2002(0.06) Honda Odyssey Minivan 2007(0.07) Chevrolet Traverse SUV 2012(0.17) |
+| Chevrolet Silverado 1500 Extended Cab 2012 | Chevrolet Silverado 1500 Classic Extended Cab 2007(0.00) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.00) Chevrolet Avalanche Crew Cab 2012(0.00) Dodge Ram Pickup 3500 Quad Cab 2009(0.00) Dodge Dakota Club Cab 2007(0.00) |
+| Chevrolet Silverado 1500 Regular Cab 2012 | Chevrolet Silverado 2500HD Regular Cab 2012(0.00) Ford F-150 Regular Cab 2012(0.00) Dodge Ram Pickup 3500 Quad Cab 2009(0.00) Isuzu Ascender SUV 2008(0.00) Ford F-150 Regular Cab 2007(0.00) |
+| Chrysler Aspen SUV 2009 | Ford Expedition EL SUV 2009(0.00) Dodge Durango SUV 2007(0.00) Chevrolet Tahoe Hybrid SUV 2012(0.00) GMC Yukon Hybrid SUV 2012(0.00) Isuzu Ascender SUV 2008(0.00) |
+| Chrysler Sebring Convertible 2010 | Toyota Corolla Sedan 2012*(0.01) Chevrolet Malibu Hybrid Sedan 2010(0.01) Ford Fiesta Sedan 2012(0.02) Honda Accord Sedan 2012(0.02) Hyundai Tucson SUV 2012(0.03) |
+| Chrysler Town and Country Minivan 2012 | Dodge Journey SUV 2012(0.01) Mercedes-Benz Sprinter Van 2012(0.02) Dodge Caliber Wagon 2012(0.02) Dodge Sprinter Cargo Van 2009(0.02) Ram C/V Cargo Van Minivan 2012(0.03) |
+| Chrysler 300 SRT-8 2010 | Bentley Mulsanne Sedan 2011(0.02) Rolls-Royce Ghost Sedan 2012(0.03) BMW X6 SUV 2012(0.04) Audi S6 Sedan 2011(0.07) FIAT 500 Abarth 2012(0.11) |
+| Chrysler Crossfire Convertible 2008 | BMW 6 Series Convertible 2007(0.01) BMW 1 Series Convertible 2012(0.01) Audi TT Hatchback 2011(0.01) Audi TTS Coupe 2012(0.01) Aston Martin V8 Vantage Coupe 2012(0.01) |
+| Chrysler PT Cruiser Convertible 2008 | Hyundai Veracruz SUV 2012(0.04) Suzuki SX4 Sedan 2012(0.08) Cadillac SRX SUV 2012(0.08) Honda Odyssey Minivan 2012(0.09) Buick Enclave SUV 2012(0.09) |
+| Daewoo Nubira Wagon 2002 | Lincoln Town Car Sedan 2011(0.05) Honda Odyssey Minivan 2007(0.06) Chevrolet Malibu Sedan 2007(0.06) Suzuki Aerio Sedan 2007(0.07) Ford Focus Sedan 2007(0.08) |
+| Dodge Caliber Wagon 2012 | Mercedes-Benz Sprinter Van 2012(0.01) Dodge Sprinter Cargo Van 2009(0.01) Ram C/V Cargo Van Minivan 2012(0.01) Chevrolet Express Cargo Van 2007(0.01) GMC Acadia SUV 2012(0.01) |
+| Dodge Caliber Wagon 2007 | Buick Rainier SUV 2007(0.02) Mazda Tribute SUV 2011(0.02) Chevrolet Express Van 2007(0.02) Chevrolet Express Cargo Van 2007(0.02) GMC Savana Van 2012(0.02) |
+| Dodge Caravan Minivan 1997 | Ford Freestar Minivan 2007(0.03) Chrysler Town and Country Minivan 2012(0.04) Mercedes-Benz Sprinter Van 2012(0.05) Dodge Sprinter Cargo Van 2009(0.05) Ram C/V Cargo Van Minivan 2012(0.05) |
+| Dodge Ram Pickup 3500 Crew Cab 2010 | Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.00) Chevrolet Avalanche Crew Cab 2012(0.00) Dodge Ram Pickup 3500 Quad Cab 2009(0.00) Chevrolet Silverado 1500 Extended Cab 2012(0.00) GMC Canyon Extended Cab 2012(0.00) |
+| Dodge Ram Pickup 3500 Quad Cab 2009 | Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.00) Chevrolet Silverado 1500 Extended Cab 2012(0.00) Chevrolet Silverado 2500HD Regular Cab 2012(0.00) Chevrolet Silverado 1500 Regular Cab 2012(0.00) Chevrolet Avalanche Crew Cab 2012(0.00) |
+| Dodge Sprinter Cargo Van 2009 | Mercedes-Benz Sprinter Van 2012(0.00) Ram C/V Cargo Van Minivan 2012(0.00) Chevrolet Express Cargo Van 2007(0.00) Chevrolet Express Van 2007(0.01) Dodge Caliber Wagon 2012(0.01) |
+| Dodge Journey SUV 2012 | Chrysler Town and Country Minivan 2012(0.01) Dodge Caliber Wagon 2012(0.03) Dodge Durango SUV 2012(0.03) Mercedes-Benz Sprinter Van 2012(0.03) Dodge Sprinter Cargo Van 2009(0.04) |
+| Dodge Dakota Crew Cab 2010 | GMC Canyon Extended Cab 2012(0.00) Ford F-450 Super Duty Crew Cab 2012(0.00) Ford Ranger SuperCab 2011(0.00) Dodge Dakota Club Cab 2007(0.00) Chevrolet Avalanche Crew Cab 2012(0.00) |
+| Dodge Dakota Club Cab 2007 | Ford Ranger SuperCab 2011(0.00) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.00) Chevrolet Silverado 1500 Extended Cab 2012(0.00) Chevrolet Avalanche Crew Cab 2012(0.00) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.00) |
+| Dodge Magnum Wagon 2008 | Audi V8 Sedan 1994(0.01) Volkswagen Golf Hatchback 1991*(0.01) Audi 100 Sedan 1994(0.01) Audi 100 Wagon 1994(0.02) Volvo 240 Sedan 1993*(0.02) |
+| Dodge Challenger SRT8 2011 | Ford GT Coupe 2006(0.01) Lamborghini Gallardo LP 570-4 Superleggera 2012(0.01) Chevrolet Corvette Convertible 2012(0.01) Chevrolet Corvette Ron Fellows Edition Z06 2007(0.01) Dodge Charger SRT-8 2009(0.01) |
+| Dodge Durango SUV 2012 | Dodge Journey SUV 2012(0.03) BMW X5 SUV 2007(0.03) Dodge Caliber Wagon 2012(0.05) Chrysler Town and Country Minivan 2012(0.05) GMC Acadia SUV 2012(0.06) |
+| Dodge Durango SUV 2007 | Chevrolet Tahoe Hybrid SUV 2012(0.00) Ford Expedition EL SUV 2009(0.00) GMC Yukon Hybrid SUV 2012(0.00) Chrysler Aspen SUV 2009(0.00) Isuzu Ascender SUV 2008(0.00) |
+| Dodge Charger Sedan 2012 | Ferrari FF Coupe 2012(0.00) Aston Martin Virage Coupe 2012(0.00) Audi TT RS Coupe 2012(0.00) Spyker C8 Convertible 2009(0.01) Spyker C8 Coupe 2009(0.01) |
+| Dodge Charger SRT-8 2009 | Chevrolet Camaro Convertible 2012(0.01) Dodge Challenger SRT8 2011(0.01) Chevrolet Corvette Convertible 2012(0.01) Ferrari California Convertible 2012(0.01) Dodge Charger Sedan 2012(0.01) |
+| Eagle Talon Hatchback 1998 | Chevrolet Cobalt SS 2010(0.02) smart fortwo Convertible 2012*(0.03) Nissan 240SX Coupe 1998(0.04) Acura Integra Type R 2001(0.05) Nissan Leaf Hatchback 2012(0.06) |
+| FIAT 500 Abarth 2012 | BMW 1 Series Coupe 2012(0.00) BMW 3 Series Sedan 2012(0.01) Audi RS 4 Convertible 2008(0.01) Porsche Panamera Sedan 2012(0.01) Bentley Continental GT Coupe 2012(0.01) |
+| FIAT 500 Convertible 2012 | smart fortwo Convertible 2012*(0.02) Chevrolet Cobalt SS 2010(0.05) Acura Integra Type R 2001(0.06) Maybach Landaulet Convertible 2012(0.06) Nissan Leaf Hatchback 2012(0.07) |
+| Ferrari FF Coupe 2012 | Bugatti Veyron 16.4 Coupe 2009(0.00) Aston Martin Virage Coupe 2012(0.00) Chevrolet Corvette ZR1 2012(0.00) Spyker C8 Convertible 2009(0.00) Dodge Charger Sedan 2012(0.00) |
+| Ferrari California Convertible 2012 | McLaren MP4-12C Coupe 2012(0.00) Ferrari 458 Italia Coupe 2012(0.00) Ferrari 458 Italia Convertible 2012(0.00) Chevrolet Corvette Convertible 2012(0.00) Lamborghini Aventador Coupe 2012(0.00) |
+| Ferrari 458 Italia Convertible 2012 | Chevrolet Corvette Convertible 2012(0.00) McLaren MP4-12C Coupe 2012(0.00) Ferrari California Convertible 2012(0.00) Ferrari 458 Italia Coupe 2012(0.00) Lamborghini Aventador Coupe 2012(0.00) |
+| Ferrari 458 Italia Coupe 2012 | Ferrari California Convertible 2012(0.00) McLaren MP4-12C Coupe 2012(0.00) Lamborghini Aventador Coupe 2012(0.00) Ferrari 458 Italia Convertible 2012(0.00) Chevrolet Corvette Convertible 2012(0.00) |
+| Fisker Karma Sedan 2012 | Aston Martin Virage Convertible 2012(0.00) BMW M6 Convertible 2010(0.00) BMW M3 Coupe 2012(0.00) Aston Martin V8 Vantage Coupe 2012(0.00) Audi R8 Coupe 2012(0.00) |
+| Ford F-450 Super Duty Crew Cab 2012 | GMC Canyon Extended Cab 2012(0.00) Dodge Dakota Crew Cab 2010(0.00) Ford Ranger SuperCab 2011(0.00) Dodge Ram Pickup 3500 Crew Cab 2010(0.00) Jeep Liberty SUV 2012(0.00) |
+| Ford Mustang Convertible 2007 | Dodge Charger SRT-8 2009(0.01) Chevrolet Camaro Convertible 2012(0.02) Lamborghini Gallardo LP 570-4 Superleggera 2012(0.02) Dodge Challenger SRT8 2011(0.03) Lamborghini Aventador Coupe 2012(0.03) |
+| Ford Freestar Minivan 2007 | Ram C/V Cargo Van Minivan 2012(0.00) Dodge Sprinter Cargo Van 2009(0.01) Mercedes-Benz Sprinter Van 2012(0.01) Chevrolet Express Cargo Van 2007(0.01) Chevrolet Express Van 2007(0.01) |
+| Ford Expedition EL SUV 2009 | Chevrolet Tahoe Hybrid SUV 2012(0.00) Isuzu Ascender SUV 2008(0.00) Ford F-150 Regular Cab 2012(0.00) Dodge Durango SUV 2007(0.00) Ford F-150 Regular Cab 2007(0.00) |
+| Ford Edge SUV 2012 | Buick Enclave SUV 2012(0.09) Chevrolet Traverse SUV 2012(0.09) Dodge Durango SUV 2012(0.09) Hyundai Santa Fe SUV 2012(0.09) Dodge Journey SUV 2012(0.11) |
+| Ford Ranger SuperCab 2011 | Dodge Dakota Club Cab 2007(0.00) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.00) Chevrolet Silverado 1500 Extended Cab 2012(0.00) GMC Canyon Extended Cab 2012(0.00) Chevrolet Avalanche Crew Cab 2012(0.00) |
+| Ford GT Coupe 2006 | Chevrolet Corvette Convertible 2012(0.00) Ferrari 458 Italia Convertible 2012(0.00) Lamborghini Gallardo LP 570-4 Superleggera 2012(0.00) McLaren MP4-12C Coupe 2012(0.00) Ferrari California Convertible 2012(0.00) |
+| Ford F-150 Regular Cab 2012 | Ford F-150 Regular Cab 2007(0.00) Isuzu Ascender SUV 2008(0.00) Chevrolet Silverado 1500 Regular Cab 2012(0.00) Chevrolet Tahoe Hybrid SUV 2012(0.00) Ford Expedition EL SUV 2009(0.00) |
+| Ford F-150 Regular Cab 2007 | Ford F-150 Regular Cab 2012(0.00) Isuzu Ascender SUV 2008(0.00) Chevrolet Tahoe Hybrid SUV 2012(0.00) Ford Expedition EL SUV 2009(0.00) Chevrolet Silverado 1500 Regular Cab 2012(0.00) |
+| Ford Focus Sedan 2007 | Chevrolet Malibu Sedan 2007(0.02) Suzuki Aerio Sedan 2007(0.02) Honda Odyssey Minivan 2007(0.06) Daewoo Nubira Wagon 2002(0.08) Chevrolet Traverse SUV 2012(0.13) |
+| Ford E-Series Wagon Van 2012 | Ford F-150 Regular Cab 2007(0.00) Ford Expedition EL SUV 2009(0.00) Ford F-150 Regular Cab 2012(0.00) Nissan NV Passenger Van 2012(0.00) GMC Savana Van 2012(0.00) |
+| Ford Fiesta Sedan 2012 | Hyundai Tucson SUV 2012(0.01) Toyota Corolla Sedan 2012*(0.02) Hyundai Elantra Touring Hatchback 2012(0.02) Chrysler Sebring Convertible 2010(0.02) Hyundai Elantra Sedan 2007(0.03) |
+| GMC Terrain SUV 2012 | Land Rover Range Rover SUV 2012(0.00) Jeep Liberty SUV 2012(0.00) Toyota 4Runner SUV 2012*(0.00) Ford F-450 Super Duty Crew Cab 2012(0.00) GMC Canyon Extended Cab 2012(0.00) |
+| GMC Savana Van 2012 | Chevrolet Express Van 2007(0.00) Chevrolet Express Cargo Van 2007(0.00) Nissan NV Passenger Van 2012(0.00) Buick Rainier SUV 2007(0.00) Ford E-Series Wagon Van 2012(0.00) |
+| GMC Yukon Hybrid SUV 2012 | Dodge Durango SUV 2007(0.00) Land Rover LR2 SUV 2012(0.00) Cadillac Escalade EXT Crew Cab 2007(0.00) Chrysler Aspen SUV 2009(0.00) Chevrolet Tahoe Hybrid SUV 2012(0.00) |
+| GMC Acadia SUV 2012 | Toyota Sequoia SUV 2012(0.00) Volvo XC90 SUV 2007*(0.00) Chrysler Aspen SUV 2009(0.00) Mazda Tribute SUV 2011(0.00) Nissan NV Passenger Van 2012(0.00) |
+| GMC Canyon Extended Cab 2012 | Ford F-450 Super Duty Crew Cab 2012(0.00) Ford Ranger SuperCab 2011(0.00) Chevrolet Silverado 1500 Extended Cab 2012(0.00) Dodge Dakota Crew Cab 2010(0.00) Chevrolet Avalanche Crew Cab 2012(0.00) |
+| Geo Metro Convertible 1993 | Mercedes-Benz 300-Class Convertible 1993(0.07) Plymouth Neon Coupe 1999(0.15) Lincoln Town Car Sedan 2011(0.28) Daewoo Nubira Wagon 2002(0.31) Dodge Caravan Minivan 1997(0.32) |
+| HUMMER H3T Crew Cab 2010 | HUMMER H2 SUT Crew Cab 2009(0.00) Jeep Wrangler SUV 2012(0.00) AM General Hummer SUV 2000(0.00) Jeep Patriot SUV 2012(0.00) Jeep Liberty SUV 2012(0.00) |
+| HUMMER H2 SUT Crew Cab 2009 | HUMMER H3T Crew Cab 2010(0.00) Jeep Wrangler SUV 2012(0.00) Jeep Patriot SUV 2012(0.00) AM General Hummer SUV 2000(0.00) Jeep Liberty SUV 2012(0.00) |
+| Honda Odyssey Minivan 2012 | Suzuki SX4 Sedan 2012(0.03) Chrysler PT Cruiser Convertible 2008(0.09) Hyundai Elantra Sedan 2007(0.11) Chevrolet Impala Sedan 2007(0.11) Hyundai Elantra Touring Hatchback 2012(0.11) |
+| Honda Odyssey Minivan 2007 | Chevrolet Traverse SUV 2012(0.03) Suzuki Aerio Sedan 2007(0.04) Daewoo Nubira Wagon 2002(0.06) Ford Focus Sedan 2007(0.06) Chevrolet Malibu Sedan 2007(0.07) |
+| Honda Accord Coupe 2012 | Bentley Continental GT Coupe 2007(0.01) Hyundai Sonata Hybrid Sedan 2012(0.01) Acura ZDX Hatchback 2012(0.01) Tesla Model S Sedan 2012(0.01) Acura TL Sedan 2012(0.01) |
+| Honda Accord Sedan 2012 | Chevrolet Malibu Hybrid Sedan 2010(0.01) Volkswagen Golf Hatchback 2012*(0.01) Chrysler Sebring Convertible 2010(0.02) Hyundai Genesis Sedan 2012(0.03) Toyota Corolla Sedan 2012*(0.03) |
+| Hyundai Veloster Hatchback 2012 | Volkswagen Beetle Hatchback 2012*(0.00) Jaguar XK XKR 2012(0.00) Tesla Model S Sedan 2012(0.01) Ferrari FF Coupe 2012(0.01) Lamborghini Reventon Coupe 2008(0.01) |
+| Hyundai Santa Fe SUV 2012 | Ford Edge SUV 2012(0.09) Cadillac SRX SUV 2012(0.10) Buick Enclave SUV 2012(0.10) Honda Odyssey Minivan 2007(0.11) Chevrolet Traverse SUV 2012(0.15) |
+| Hyundai Tucson SUV 2012 | Hyundai Elantra Touring Hatchback 2012(0.00) Ford Fiesta Sedan 2012(0.01) Chrysler Sebring Convertible 2010(0.03) Hyundai Elantra Sedan 2007(0.03) Chevrolet Malibu Hybrid Sedan 2010(0.04) |
+| Hyundai Veracruz SUV 2012 | Chrysler PT Cruiser Convertible 2008(0.04) Suzuki SX4 Sedan 2012(0.06) Suzuki SX4 Hatchback 2012(0.07) Buick Enclave SUV 2012(0.07) Scion xD Hatchback 2012(0.07) |
+| Hyundai Sonata Hybrid Sedan 2012 | Acura ZDX Hatchback 2012(0.00) Hyundai Accent Sedan 2012(0.00) Acura TL Sedan 2012(0.00) Hyundai Sonata Sedan 2012(0.00) Acura TL Type-S 2008(0.01) |
+| Hyundai Elantra Sedan 2007 | Ford Fiesta Sedan 2012(0.03) Hyundai Elantra Touring Hatchback 2012(0.03) Hyundai Tucson SUV 2012(0.03) Chrysler Sebring Convertible 2010(0.07) Toyota Corolla Sedan 2012*(0.08) |
+| Hyundai Accent Sedan 2012 | Hyundai Sonata Sedan 2012(0.00) Hyundai Sonata Hybrid Sedan 2012(0.00) Acura TL Type-S 2008(0.00) Acura TL Sedan 2012(0.00) Acura ZDX Hatchback 2012(0.00) |
+| Hyundai Genesis Sedan 2012 | Acura RL Sedan 2012(0.00) Hyundai Azera Sedan 2012(0.01) Acura TL Type-S 2008(0.01) Hyundai Sonata Sedan 2012(0.01) Acura TSX Sedan 2012(0.01) |
+| Hyundai Sonata Sedan 2012 | Hyundai Accent Sedan 2012(0.00) Acura TL Type-S 2008(0.00) Hyundai Sonata Hybrid Sedan 2012(0.00) Acura TL Sedan 2012(0.00) Acura ZDX Hatchback 2012(0.00) |
+| Hyundai Elantra Touring Hatchback 2012 | Hyundai Tucson SUV 2012(0.00) Ford Fiesta Sedan 2012(0.02) Hyundai Elantra Sedan 2007(0.03) Chrysler Sebring Convertible 2010(0.04) Chevrolet Malibu Hybrid Sedan 2010(0.05) |
+| Hyundai Azera Sedan 2012 | Buick Verano Sedan 2012(0.00) Suzuki Kizashi Sedan 2012(0.00) Hyundai Genesis Sedan 2012(0.01) Hyundai Sonata Sedan 2012(0.01) Toyota Camry Sedan 2012*(0.01) |
+| Infiniti G Coupe IPL 2012 | Audi S4 Sedan 2012(0.00) Audi A5 Coupe 2012(0.00) Audi S5 Coupe 2012(0.00) Bentley Continental GT Coupe 2007(0.01) Audi S4 Sedan 2007(0.01) |
+| Infiniti QX56 SUV 2011 | BMW X3 SUV 2012(0.09) Honda Odyssey Minivan 2012(0.28) Hyundai Genesis Sedan 2012(0.28) Acura RL Sedan 2012(0.30) Hyundai Tucson SUV 2012(0.30) |
+| Isuzu Ascender SUV 2008 | Chevrolet Tahoe Hybrid SUV 2012(0.00) Ford F-150 Regular Cab 2012(0.00) Ford Expedition EL SUV 2009(0.00) Ford F-150 Regular Cab 2007(0.00) Chevrolet Silverado 1500 Regular Cab 2012(0.00) |
+| Jaguar XK XKR 2012 | Aston Martin Virage Convertible 2012(0.00) Bugatti Veyron 16.4 Coupe 2009(0.00) Fisker Karma Sedan 2012(0.00) BMW M3 Coupe 2012(0.00) Aston Martin V8 Vantage Coupe 2012(0.00) |
+| Jeep Patriot SUV 2012 | Jeep Liberty SUV 2012(0.00) GMC Terrain SUV 2012(0.00) Ford F-450 Super Duty Crew Cab 2012(0.00) Dodge Dakota Crew Cab 2010(0.00) HUMMER H2 SUT Crew Cab 2009(0.00) |
+| Jeep Wrangler SUV 2012 | AM General Hummer SUV 2000(0.00) HUMMER H3T Crew Cab 2010(0.00) HUMMER H2 SUT Crew Cab 2009(0.00) Jeep Patriot SUV 2012(0.00) Jeep Liberty SUV 2012(0.00) |
+| Jeep Liberty SUV 2012 | Jeep Patriot SUV 2012(0.00) Ford F-450 Super Duty Crew Cab 2012(0.00) GMC Terrain SUV 2012(0.00) Dodge Dakota Crew Cab 2010(0.00) GMC Canyon Extended Cab 2012(0.00) |
+| Jeep Grand Cherokee SUV 2012 | Toyota 4Runner SUV 2012*(0.00) Land Rover LR2 SUV 2012(0.00) Land Rover Range Rover SUV 2012(0.00) Dodge Ram Pickup 3500 Crew Cab 2010(0.00) GMC Yukon Hybrid SUV 2012(0.00) |
+| Jeep Compass SUV 2012 | Volvo XC90 SUV 2007*(0.00) Land Rover LR2 SUV 2012(0.00) Jeep Grand Cherokee SUV 2012(0.00) GMC Yukon Hybrid SUV 2012(0.00) Toyota Sequoia SUV 2012(0.00) |
+| Lamborghini Reventon Coupe 2008 | Spyker C8 Convertible 2009(0.00) Spyker C8 Coupe 2009(0.00) Bugatti Veyron 16.4 Coupe 2009(0.00) Aston Martin Virage Coupe 2012(0.00) Chevrolet Corvette ZR1 2012(0.00) |
+| Lamborghini Aventador Coupe 2012 | Ferrari 458 Italia Coupe 2012(0.00) McLaren MP4-12C Coupe 2012(0.00) Ferrari California Convertible 2012(0.00) Lamborghini Gallardo LP 570-4 Superleggera 2012(0.00) Ferrari 458 Italia Convertible 2012(0.00) |
+| Lamborghini Gallardo LP 570-4 Superleggera 2012 | Chevrolet Corvette Convertible 2012(0.00) Lamborghini Aventador Coupe 2012(0.00) Ferrari 458 Italia Convertible 2012(0.00) McLaren MP4-12C Coupe 2012(0.00) Ford GT Coupe 2006(0.00) |
+| Lamborghini Diablo Coupe 2001 | Ford GT Coupe 2006(0.00) Lamborghini Gallardo LP 570-4 Superleggera 2012(0.01) Chevrolet Corvette Convertible 2012(0.01) Ferrari 458 Italia Convertible 2012(0.01) Acura Integra Type R 2001(0.01) |
+| Land Rover Range Rover SUV 2012 | Toyota 4Runner SUV 2012*(0.00) GMC Terrain SUV 2012(0.00) Jeep Liberty SUV 2012(0.00) Jeep Patriot SUV 2012(0.00) Chevrolet TrailBlazer SS 2009(0.00) |
+| Land Rover LR2 SUV 2012 | GMC Yukon Hybrid SUV 2012(0.00) Dodge Durango SUV 2007(0.00) Chrysler Aspen SUV 2009(0.00) Cadillac Escalade EXT Crew Cab 2007(0.00) Chevrolet Tahoe Hybrid SUV 2012(0.00) |
+| Lincoln Town Car Sedan 2011 | Daewoo Nubira Wagon 2002(0.05) Dodge Caravan Minivan 1997(0.07) Ford Freestar Minivan 2007(0.08) Ram C/V Cargo Van Minivan 2012(0.10) Chrysler Town and Country Minivan 2012(0.11) |
+| MINI Cooper Roadster Convertible 2012 | Bentley Continental Supersports Conv. Convertible 2012(0.00) Audi TT RS Coupe 2012(0.01) Chevrolet Camaro Convertible 2012(0.01) Audi R8 Coupe 2012(0.01) BMW Z4 Convertible 2012(0.01) |
+| Maybach Landaulet Convertible 2012 | Chevrolet Corvette Ron Fellows Edition Z06 2007(0.04) Bugatti Veyron 16.4 Convertible 2009(0.05) Acura Integra Type R 2001(0.06) Lamborghini Gallardo LP 570-4 Superleggera 2012(0.06) FIAT 500 Convertible 2012(0.06) |
+| Mazda Tribute SUV 2011 | Buick Rainier SUV 2007(0.00) Nissan NV Passenger Van 2012(0.00) Chrysler Aspen SUV 2009(0.00) Ford E-Series Wagon Van 2012(0.00) Dodge Durango SUV 2007(0.00) |
+| McLaren MP4-12C Coupe 2012 | Ferrari California Convertible 2012(0.00) Ferrari 458 Italia Coupe 2012(0.00) Ferrari 458 Italia Convertible 2012(0.00) Lamborghini Aventador Coupe 2012(0.00) Chevrolet Corvette Convertible 2012(0.00) |
+| Mercedes-Benz 300-Class Convertible 1993 | Geo Metro Convertible 1993(0.07) Lincoln Town Car Sedan 2011(0.16) Audi 100 Wagon 1994(0.16) Dodge Magnum Wagon 2008(0.19) Audi 100 Sedan 1994(0.20) |
+| Mercedes-Benz C-Class Sedan 2012 | Cadillac CTS-V Sedan 2012(0.02) Bentley Continental Flying Spur Sedan 2007(0.02) BMW ActiveHybrid 5 Sedan 2012(0.03) Mercedes-Benz S-Class Sedan 2012(0.03) Audi S6 Sedan 2011(0.03) |
+| Mercedes-Benz SL-Class Coupe 2009 | Porsche Panamera Sedan 2012(0.00) Fisker Karma Sedan 2012(0.00) BMW M3 Coupe 2012(0.00) Tesla Model S Sedan 2012(0.00) BMW M6 Convertible 2010(0.00) |
+| Mercedes-Benz E-Class Sedan 2012 | BMW 3 Series Wagon 2012(0.00) BMW M5 Sedan 2010(0.01) BMW ActiveHybrid 5 Sedan 2012(0.01) Acura TL Sedan 2012(0.01) Acura ZDX Hatchback 2012(0.01) |
+| Mercedes-Benz S-Class Sedan 2012 | Acura TSX Sedan 2012(0.01) Acura RL Sedan 2012(0.01) Hyundai Genesis Sedan 2012(0.02) Mercedes-Benz E-Class Sedan 2012(0.02) Acura TL Sedan 2012(0.02) |
+| Mercedes-Benz Sprinter Van 2012 | Dodge Sprinter Cargo Van 2009(0.00) Ram C/V Cargo Van Minivan 2012(0.01) Dodge Caliber Wagon 2012(0.01) Chevrolet Express Cargo Van 2007(0.01) Chevrolet Express Van 2007(0.01) |
+| Mitsubishi Lancer Sedan 2012 | Suzuki Kizashi Sedan 2012(0.01) Buick Verano Sedan 2012(0.01) Acura ZDX Hatchback 2012(0.01) Hyundai Sonata Hybrid Sedan 2012(0.01) Nissan Juke Hatchback 2012(0.01) |
+| Nissan Leaf Hatchback 2012 | Chevrolet Sonic Sedan 2012(0.02) Toyota Camry Sedan 2012*(0.02) Mitsubishi Lancer Sedan 2012(0.03) Buick Verano Sedan 2012(0.03) Toyota Corolla Sedan 2012*(0.04) |
+| Nissan NV Passenger Van 2012 | GMC Savana Van 2012(0.00) Chevrolet Express Van 2007(0.00) Chevrolet Express Cargo Van 2007(0.00) Ford E-Series Wagon Van 2012(0.00) Buick Rainier SUV 2007(0.00) |
+| Nissan Juke Hatchback 2012 | Volvo C30 Hatchback 2012*(0.00) Mitsubishi Lancer Sedan 2012(0.01) Volkswagen Beetle Hatchback 2012*(0.02) Hyundai Veloster Hatchback 2012(0.02) Suzuki Kizashi Sedan 2012(0.03) |
+| Nissan 240SX Coupe 1998 | Eagle Talon Hatchback 1998(0.04) smart fortwo Convertible 2012*(0.06) Acura Integra Type R 2001(0.06) Chevrolet Cobalt SS 2010(0.07) Lamborghini Diablo Coupe 2001(0.10) |
+| Plymouth Neon Coupe 1999 | Geo Metro Convertible 1993(0.15) Ford Focus Sedan 2007(0.19) Chevrolet Malibu Sedan 2007(0.23) Daewoo Nubira Wagon 2002(0.23) Suzuki Aerio Sedan 2007(0.29) |
+| Porsche Panamera Sedan 2012 | Bentley Continental GT Coupe 2007(0.00) Mercedes-Benz SL-Class Coupe 2009(0.00) Tesla Model S Sedan 2012(0.00) BMW M6 Convertible 2010(0.00) Fisker Karma Sedan 2012(0.00) |
+| Ram C/V Cargo Van Minivan 2012 | Dodge Sprinter Cargo Van 2009(0.00) Ford Freestar Minivan 2007(0.00) Mercedes-Benz Sprinter Van 2012(0.01) Chevrolet Express Cargo Van 2007(0.01) Chevrolet Express Van 2007(0.01) |
+| Rolls-Royce Phantom Drophead Coupe Convertible 2012 | MINI Cooper Roadster Convertible 2012(0.09) Ford Mustang Convertible 2007(0.09) Rolls-Royce Ghost Sedan 2012(0.10) Bentley Continental Supersports Conv. Convertible 2012(0.10) Bentley Mulsanne Sedan 2011(0.11) |
+| Rolls-Royce Ghost Sedan 2012 | Bentley Mulsanne Sedan 2011(0.02) Audi S6 Sedan 2011(0.03) Chrysler 300 SRT-8 2010(0.03) BMW X6 SUV 2012(0.03) Audi RS 4 Convertible 2008(0.03) |
+| Rolls-Royce Phantom Sedan 2012 | Bentley Arnage Sedan 2009(0.35) Rolls-Royce Phantom Drophead Coupe Convertible 2012(0.40) Bentley Mulsanne Sedan 2011(0.47) Chrysler 300 SRT-8 2010(0.48) Rolls-Royce Ghost Sedan 2012(0.57) |
+| Scion xD Hatchback 2012 | Suzuki SX4 Hatchback 2012(0.04) Suzuki SX4 Sedan 2012(0.05) Chevrolet Impala Sedan 2007(0.07) Hyundai Veracruz SUV 2012(0.07) Honda Odyssey Minivan 2012(0.12) |
+| Spyker C8 Convertible 2009 | Spyker C8 Coupe 2009(0.00) Aston Martin Virage Coupe 2012(0.00) Lamborghini Reventon Coupe 2008(0.00) Bugatti Veyron 16.4 Coupe 2009(0.00) Chevrolet Corvette ZR1 2012(0.00) |
+| Spyker C8 Coupe 2009 | Spyker C8 Convertible 2009(0.00) Aston Martin Virage Coupe 2012(0.00) Lamborghini Reventon Coupe 2008(0.00) Lamborghini Aventador Coupe 2012(0.00) Ferrari 458 Italia Coupe 2012(0.00) |
+| Suzuki Aerio Sedan 2007 | Chevrolet Malibu Sedan 2007(0.02) Ford Focus Sedan 2007(0.02) Honda Odyssey Minivan 2007(0.04) Daewoo Nubira Wagon 2002(0.07) Chevrolet Traverse SUV 2012(0.11) |
+| Suzuki Kizashi Sedan 2012 | Buick Verano Sedan 2012(0.00) Hyundai Azera Sedan 2012(0.00) Mitsubishi Lancer Sedan 2012(0.01) Acura ZDX Hatchback 2012(0.01) Hyundai Sonata Hybrid Sedan 2012(0.01) |
+| Suzuki SX4 Hatchback 2012 | Scion xD Hatchback 2012(0.04) Hyundai Veracruz SUV 2012(0.07) Suzuki SX4 Sedan 2012(0.12) Chrysler PT Cruiser Convertible 2008(0.13) Buick Enclave SUV 2012(0.15) |
+| Suzuki SX4 Sedan 2012 | Honda Odyssey Minivan 2012(0.03) Chevrolet Impala Sedan 2007(0.04) Scion xD Hatchback 2012(0.05) Hyundai Veracruz SUV 2012(0.06) Chrysler PT Cruiser Convertible 2008(0.08) |
+| Tesla Model S Sedan 2012 | Mercedes-Benz SL-Class Coupe 2009(0.00) Bentley Continental GT Coupe 2007(0.00) Porsche Panamera Sedan 2012(0.00) Jaguar XK XKR 2012(0.00) Fisker Karma Sedan 2012(0.00) |
+| Toyota Sequoia SUV 2012 | Mazda Tribute SUV 2011(0.00) GMC Acadia SUV 2012(0.00) Chrysler Aspen SUV 2009(0.00) Land Rover LR2 SUV 2012(0.00) Volvo XC90 SUV 2007*(0.00) |
+| Toyota Camry Sedan 2012* | Chevrolet Sonic Sedan 2012(0.01) Buick Verano Sedan 2012(0.01) Hyundai Azera Sedan 2012(0.01) Suzuki Kizashi Sedan 2012(0.01) Acura TL Type-S 2008(0.02) |
+| Toyota Corolla Sedan 2012* | Chrysler Sebring Convertible 2010(0.01) Chevrolet Malibu Hybrid Sedan 2010(0.02) Ford Fiesta Sedan 2012(0.02) Toyota Camry Sedan 2012*(0.02) Volkswagen Golf Hatchback 2012*(0.03) |
+| Toyota 4Runner SUV 2012* | Land Rover Range Rover SUV 2012(0.00) GMC Terrain SUV 2012(0.00) Jeep Grand Cherokee SUV 2012(0.00) Jeep Liberty SUV 2012(0.00) Jeep Patriot SUV 2012(0.00) |
+| Volkswagen Golf Hatchback 2012* | Honda Accord Sedan 2012(0.01) Acura TSX Sedan 2012(0.01) Chevrolet Malibu Hybrid Sedan 2010(0.02) Acura TL Type-S 2008(0.02) Acura RL Sedan 2012(0.02) |
+| Volkswagen Golf Hatchback 1991* | Volvo 240 Sedan 1993*(0.00) Audi V8 Sedan 1994(0.00) Ford Ranger SuperCab 2011(0.01) Dodge Dakota Club Cab 2007(0.01) Dodge Dakota Crew Cab 2010(0.01) |
+| Volkswagen Beetle Hatchback 2012* | Hyundai Veloster Hatchback 2012(0.00) Volvo C30 Hatchback 2012*(0.01) Jaguar XK XKR 2012(0.01) Tesla Model S Sedan 2012(0.01) Ferrari FF Coupe 2012(0.02) |
+| Volvo C30 Hatchback 2012* | Nissan Juke Hatchback 2012(0.00) Volkswagen Beetle Hatchback 2012*(0.01) Hyundai Veloster Hatchback 2012(0.01) Mitsubishi Lancer Sedan 2012(0.02) Tesla Model S Sedan 2012(0.03) |
+| Volvo 240 Sedan 1993* | Jeep Patriot SUV 2012(0.00) Dodge Dakota Crew Cab 2010(0.00) HUMMER H3T Crew Cab 2010(0.00) HUMMER H2 SUT Crew Cab 2009(0.00) Chevrolet TrailBlazer SS 2009(0.00) |
+| Volvo XC90 SUV 2007* | Jeep Grand Cherokee SUV 2012(0.00) GMC Acadia SUV 2012(0.00) Toyota Sequoia SUV 2012(0.00) Jeep Compass SUV 2012(0.00) Land Rover LR2 SUV 2012(0.00) |
+| smart fortwo Convertible 2012* | FIAT 500 Convertible 2012(0.02) Chevrolet Cobalt SS 2010(0.02) Eagle Talon Hatchback 1998(0.03) Acura Integra Type R 2001(0.04) Nissan Leaf Hatchback 2012(0.05) |
 
 ## supcon-ft-res (residual)  [cars_lejepa]
 
+agree@1=0.224 agree@5=0.166 (chance 0.040)  dendro-purity=0.170  silhouette=-0.144  within/between=0.857
+
 
 | class | 5 nearest class centroids (cosine dist) |
 |---|---|
-| class0 | class124(0.15) class123(0.30) class145(0.34) class152(0.59) class122(0.60) |
-| class1 | class125(0.36) class6(0.45) class21(0.48) class104(0.49) class140(0.50) |
-| class2 | class4(0.39) class128(0.42) class104(0.42) class6(0.47) class12(0.47) |
-| class3 | class138(0.42) class2(0.51) class128(0.55) class34(0.58) class78(0.60) |
-| class4 | class189*(0.22) class12(0.38) class128(0.38) class2(0.39) class66(0.40) |
-| class5 | class152(0.06) class151(0.11) class54(0.22) class159(0.29) class65(0.37) |
-| class6 | class125(0.43) class104(0.43) class1(0.45) class139(0.47) class2(0.47) |
-| class7 | class8(0.27) class38(0.38) class174(0.41) class79(0.44) class45(0.45) |
-| class8 | class7(0.27) class20(0.31) class18(0.33) class45(0.39) class172(0.42) |
-| class9 | class104(0.34) class162(0.34) class25(0.35) class42(0.38) class35(0.38) |
-| class10 | class95(0.18) class159(0.20) class129(0.21) class102(0.28) class54(0.28) |
-| class11 | class20(0.35) class172(0.43) class143(0.44) class55(0.46) class19(0.47) |
-| class12 | class18(0.22) class22(0.36) class21(0.36) class4(0.38) class13(0.38) |
-| class13 | class21(0.32) class50(0.32) class18(0.34) class12(0.38) class14(0.43) |
-| class14 | class18(0.36) class45(0.39) class12(0.40) class13(0.43) class33(0.46) |
-| class15 | class16(0.18) class17(0.20) class160(0.55) class69(0.56) class193*(0.57) |
-| class16 | class15(0.18) class17(0.23) class61(0.47) class188*(0.55) class69(0.58) |
-| class17 | class15(0.20) class16(0.23) class160(0.50) class61(0.54) class142(0.56) |
-| class18 | class12(0.22) class41(0.33) class8(0.33) class13(0.34) class33(0.35) |
-| class19 | class172(0.32) class34(0.32) class23(0.37) class20(0.38) class140(0.42) |
-| class20 | class8(0.31) class11(0.35) class172(0.35) class19(0.38) class174(0.47) |
-| class21 | class13(0.32) class12(0.36) class140(0.37) class18(0.44) class14(0.46) |
-| class22 | class12(0.36) class18(0.47) class13(0.49) class19(0.51) class23(0.53) |
-| class23 | class19(0.37) class143(0.49) class92(0.51) class11(0.52) class22(0.53) |
-| class24 | class192*(0.31) class150(0.34) class102(0.35) class103(0.37) class37(0.44) |
-| class25 | class34(0.28) class162(0.34) class9(0.35) class29(0.41) class104(0.41) |
-| class26 | class33(0.43) class18(0.44) class32(0.44) class156(0.45) class12(0.51) |
-| class27 | class41(0.29) class32(0.30) class28(0.35) class33(0.39) class127(0.45) |
-| class28 | class32(0.34) class27(0.35) class100(0.42) class83(0.43) class33(0.43) |
-| class29 | class162(0.38) class25(0.41) class34(0.45) class36(0.46) class31(0.46) |
-| class30 | class43(0.46) class79(0.51) class9(0.51) class189*(0.52) class7(0.52) |
-| class31 | class194*(0.40) class185(0.41) class188*(0.42) class36(0.43) class29(0.46) |
-| class32 | class27(0.30) class83(0.30) class28(0.34) class59(0.39) class41(0.39) |
-| class33 | class46(0.33) class18(0.35) class27(0.39) class41(0.39) class26(0.43) |
-| class34 | class172(0.27) class25(0.28) class19(0.32) class9(0.40) class104(0.42) |
-| class35 | class9(0.38) class43(0.41) class98(0.42) class40(0.43) class45(0.44) |
-| class36 | class31(0.43) class29(0.46) class176(0.46) class188*(0.48) class162(0.51) |
-| class37 | class38(0.34) class18(0.38) class41(0.44) class24(0.44) class33(0.45) |
-| class38 | class156(0.30) class157(0.34) class37(0.34) class44(0.35) class7(0.38) |
-| class39 | class98(0.31) class43(0.36) class40(0.41) class176(0.43) class35(0.47) |
-| class40 | class176(0.30) class39(0.41) class43(0.42) class35(0.43) class175(0.43) |
-| class41 | class27(0.29) class18(0.33) class32(0.39) class33(0.39) class37(0.44) |
-| class42 | class9(0.38) class43(0.38) class175(0.41) class40(0.45) class35(0.49) |
-| class43 | class39(0.36) class176(0.38) class42(0.38) class35(0.41) class50(0.42) |
-| class44 | class99(0.21) class156(0.29) class38(0.35) class46(0.38) class56(0.41) |
-| class45 | class172(0.35) class143(0.38) class14(0.39) class8(0.39) class55(0.42) |
-| class46 | class181(0.28) class191*(0.31) class33(0.33) class44(0.38) class163(0.40) |
-| class47 | class107(0.33) class94(0.34) class75(0.39) class117(0.42) class126(0.42) |
-| class48 | class177(0.41) class181(0.42) class186*(0.47) class33(0.51) class191*(0.52) |
-| class49 | class57(0.29) class132(0.32) class131(0.43) class177(0.47) class117(0.52) |
-| class50 | class161(0.29) class13(0.32) class130(0.41) class43(0.42) class52(0.46) |
-| class51 | class109(0.39) class125(0.41) class137(0.46) class140(0.48) class31(0.50) |
-| class52 | class147(0.38) class69(0.38) class53(0.40) class67(0.44) class64(0.44) |
-| class53 | class105(0.19) class64(0.26) class85(0.30) class112(0.30) class69(0.33) |
-| class54 | class5(0.22) class159(0.24) class152(0.25) class151(0.25) class10(0.28) |
-| class55 | class140(0.40) class45(0.42) class11(0.46) class104(0.50) class13(0.50) |
-| class56 | class157(0.29) class99(0.39) class38(0.39) class92(0.40) class46(0.40) |
-| class57 | class131(0.26) class49(0.29) class88(0.32) class132(0.34) class60(0.34) |
-| class58 | class59(0.45) class100(0.45) class27(0.46) class32(0.49) class96(0.50) |
-| class59 | class91(0.38) class83(0.38) class32(0.39) class58(0.45) class65(0.45) |
-| class60 | class76(0.25) class114(0.29) class131(0.31) class72(0.32) class57(0.34) |
-| class61 | class185(0.29) class188*(0.31) class16(0.47) class141(0.48) class180(0.52) |
-| class62 | class169(0.37) class139(0.40) class181(0.41) class163(0.46) class184(0.46) |
-| class63 | class70(0.03) class165(0.08) class118(0.12) class115(0.26) class168(0.26) |
-| class64 | class53(0.26) class105(0.36) class85(0.37) class110(0.40) class130(0.40) |
-| class65 | class54(0.31) class5(0.37) class96(0.38) class151(0.39) class152(0.41) |
-| class66 | class76(0.36) class128(0.37) class77(0.39) class4(0.40) class60(0.41) |
-| class67 | class78(0.43) class52(0.44) class194*(0.44) class147(0.50) class119(0.52) |
-| class68 | class115(0.13) class118(0.13) class70(0.26) class63(0.28) class87(0.29) |
-| class69 | class105(0.24) class53(0.33) class142(0.37) class52(0.38) class110(0.42) |
-| class70 | class63(0.03) class118(0.10) class165(0.11) class115(0.22) class168(0.25) |
-| class71 | class72(0.36) class107(0.41) class155(0.42) class81(0.43) class114(0.43) |
-| class72 | class114(0.24) class60(0.32) class71(0.36) class134(0.38) class76(0.40) |
-| class73 | class86(0.30) class113(0.34) class68(0.36) class115(0.39) class74(0.44) |
-| class74 | class86(0.18) class113(0.19) class168(0.31) class112(0.37) class121(0.38) |
-| class75 | class47(0.39) class130(0.40) class64(0.41) class117(0.44) class142(0.46) |
-| class76 | class60(0.25) class66(0.36) class126(0.37) class72(0.40) class114(0.43) |
-| class77 | class57(0.37) class66(0.39) class183(0.42) class60(0.44) class126(0.45) |
-| class78 | class194*(0.43) class67(0.43) class19(0.46) class93(0.49) class153(0.52) |
-| class79 | class189*(0.40) class160(0.40) class7(0.44) class50(0.50) class71(0.50) |
-| class80 | class183(0.53) class76(0.59) class167(0.60) class23(0.62) class57(0.62) |
-| class81 | class160(0.40) class71(0.43) class72(0.43) class155(0.48) class66(0.48) |
-| class82 | class83(0.32) class32(0.46) class59(0.47) class127(0.47) class134(0.51) |
-| class83 | class32(0.30) class82(0.32) class59(0.38) class28(0.43) class170(0.50) |
-| class84 | class171(0.27) class97(0.40) class170(0.49) class165(0.54) class114(0.56) |
-| class85 | class105(0.19) class53(0.30) class147(0.36) class108(0.36) class64(0.37) |
-| class86 | class74(0.18) class113(0.20) class73(0.30) class90(0.35) class121(0.36) |
-| class87 | class115(0.14) class118(0.18) class165(0.23) class68(0.29) class70(0.30) |
-| class88 | class57(0.32) class182(0.43) class77(0.49) class148(0.49) class93(0.57) |
-| class89 | class110(0.41) class64(0.47) class85(0.47) class90(0.48) class69(0.48) |
-| class90 | class113(0.34) class86(0.35) class112(0.36) class110(0.41) class47(0.42) |
-| class91 | class135(0.34) class106(0.36) class59(0.38) class96(0.49) class83(0.51) |
-| class92 | class143(0.36) class56(0.40) class169(0.43) class184(0.45) class46(0.46) |
-| class93 | class153(0.33) class119(0.40) class194*(0.42) class147(0.43) class94(0.45) |
-| class94 | class47(0.34) class147(0.36) class85(0.45) class93(0.45) class194*(0.46) |
-| class95 | class10(0.18) class102(0.29) class129(0.32) class159(0.33) class54(0.33) |
-| class96 | class65(0.38) class103(0.39) class95(0.40) class101(0.41) class102(0.45) |
-| class97 | class171(0.26) class170(0.29) class84(0.40) class190*(0.43) class114(0.57) |
-| class98 | class39(0.31) class178(0.35) class35(0.42) class11(0.50) class153(0.53) |
-| class99 | class44(0.21) class156(0.27) class157(0.34) class195*(0.38) class56(0.39) |
-| class100 | class101(0.41) class28(0.42) class102(0.45) class58(0.45) class95(0.46) |
-| class101 | class102(0.08) class103(0.19) class95(0.34) class111(0.34) class54(0.37) |
-| class102 | class101(0.08) class103(0.13) class150(0.22) class10(0.28) class95(0.29) |
-| class103 | class102(0.13) class101(0.19) class150(0.21) class24(0.37) class96(0.39) |
-| class104 | class9(0.34) class140(0.36) class172(0.40) class25(0.41) class162(0.42) |
-| class105 | class85(0.19) class53(0.19) class69(0.24) class142(0.35) class64(0.36) |
-| class106 | class91(0.36) class96(0.48) class71(0.48) class83(0.51) class170(0.52) |
-| class107 | class47(0.33) class155(0.40) class71(0.41) class90(0.43) class72(0.43) |
-| class108 | class147(0.31) class85(0.36) class53(0.42) class185(0.45) class142(0.45) |
-| class109 | class51(0.39) class119(0.42) class194*(0.45) class188*(0.48) class153(0.49) |
-| class110 | class112(0.35) class64(0.40) class53(0.40) class121(0.40) class89(0.41) |
-| class111 | class101(0.34) class102(0.37) class54(0.37) class103(0.44) class159(0.46) |
-| class112 | class53(0.30) class110(0.35) class113(0.35) class105(0.36) class90(0.36) |
-| class113 | class74(0.19) class86(0.20) class73(0.34) class90(0.34) class112(0.35) |
-| class114 | class72(0.24) class60(0.29) class134(0.34) class126(0.37) class76(0.43) |
-| class115 | class68(0.13) class87(0.14) class118(0.14) class70(0.22) class165(0.24) |
-| class116 | class134(0.48) class114(0.50) class138(0.51) class60(0.53) class186*(0.56) |
-| class117 | class47(0.42) class75(0.44) class185(0.51) class49(0.52) class73(0.54) |
-| class118 | class70(0.10) class63(0.12) class165(0.13) class68(0.13) class115(0.14) |
-| class119 | class194*(0.33) class153(0.35) class147(0.37) class93(0.40) class146(0.41) |
-| class120 | class130(0.33) class64(0.47) class189*(0.47) class94(0.48) class187*(0.49) |
-| class121 | class86(0.36) class74(0.38) class110(0.40) class113(0.46) class90(0.49) |
-| class122 | class160(0.33) class195*(0.48) class106(0.53) class38(0.53) class71(0.54) |
-| class123 | class145(0.16) class124(0.17) class0(0.30) class144(0.45) class121(0.54) |
-| class124 | class0(0.15) class123(0.17) class145(0.24) class105(0.51) class73(0.56) |
-| class125 | class1(0.36) class51(0.41) class6(0.43) class177(0.46) class66(0.49) |
-| class126 | class132(0.33) class76(0.37) class114(0.37) class60(0.40) class72(0.41) |
-| class127 | class28(0.43) class27(0.45) class32(0.46) class82(0.47) class135(0.48) |
-| class128 | class66(0.37) class4(0.38) class2(0.42) class189*(0.44) class72(0.49) |
-| class129 | class10(0.21) class159(0.24) class95(0.32) class151(0.44) class54(0.44) |
-| class130 | class120(0.33) class189*(0.33) class64(0.40) class75(0.40) class50(0.41) |
-| class131 | class57(0.26) class60(0.31) class136(0.41) class49(0.43) class183(0.43) |
-| class132 | class49(0.32) class126(0.33) class57(0.34) class72(0.42) class131(0.44) |
-| class133 | class187*(0.47) class186*(0.52) class127(0.55) class76(0.57) class4(0.57) |
-| class134 | class114(0.34) class60(0.36) class72(0.38) class186*(0.43) class76(0.46) |
-| class135 | class91(0.34) class127(0.48) class59(0.49) class103(0.49) class28(0.50) |
-| class136 | class131(0.41) class139(0.44) class9(0.51) class66(0.52) class60(0.52) |
-| class137 | class51(0.46) class131(0.48) class183(0.55) class2(0.59) class136(0.61) |
-| class138 | class3(0.42) class186*(0.50) class116(0.51) class166(0.55) class134(0.56) |
-| class139 | class62(0.40) class163(0.43) class136(0.44) class6(0.47) class183(0.49) |
-| class140 | class104(0.36) class21(0.37) class172(0.40) class55(0.40) class19(0.42) |
-| class141 | class188*(0.40) class153(0.42) class185(0.44) class61(0.48) class194*(0.53) |
-| class142 | class105(0.35) class69(0.37) class112(0.43) class108(0.45) class75(0.46) |
-| class143 | class172(0.31) class92(0.36) class45(0.38) class11(0.44) class34(0.45) |
-| class144 | class146(0.13) class145(0.35) class74(0.39) class193*(0.41) class86(0.42) |
-| class145 | class123(0.16) class124(0.24) class0(0.34) class144(0.35) class146(0.39) |
-| class146 | class144(0.13) class145(0.39) class148(0.39) class74(0.40) class153(0.41) |
-| class147 | class108(0.31) class85(0.36) class94(0.36) class119(0.37) class52(0.38) |
-| class148 | class146(0.39) class144(0.43) class169(0.45) class166(0.45) class88(0.49) |
-| class149 | class62(0.52) class178(0.53) class45(0.54) class6(0.55) class175(0.59) |
-| class150 | class103(0.21) class159(0.22) class102(0.22) class24(0.34) class10(0.39) |
-| class151 | class152(0.08) class5(0.11) class159(0.21) class54(0.25) class65(0.39) |
-| class152 | class5(0.06) class151(0.08) class54(0.25) class159(0.26) class65(0.41) |
-| class153 | class93(0.33) class119(0.35) class194*(0.37) class146(0.41) class141(0.42) |
-| class154 | class188*(0.45) class185(0.47) class119(0.51) class109(0.52) class158(0.53) |
-| class155 | class107(0.40) class66(0.42) class72(0.42) class71(0.42) class180(0.42) |
-| class156 | class99(0.27) class44(0.29) class38(0.30) class157(0.42) class162(0.43) |
-| class157 | class56(0.29) class195*(0.34) class38(0.34) class99(0.34) class44(0.41) |
-| class158 | class185(0.44) class126(0.45) class194*(0.51) class154(0.53) class47(0.53) |
-| class159 | class10(0.20) class151(0.21) class150(0.22) class129(0.24) class54(0.24) |
-| class160 | class122(0.33) class81(0.40) class79(0.40) class71(0.47) class17(0.50) |
-| class161 | class50(0.29) class13(0.44) class140(0.46) class164(0.48) class43(0.50) |
-| class162 | class163(0.26) class9(0.34) class25(0.34) class29(0.38) class104(0.42) |
-| class163 | class162(0.26) class181(0.35) class46(0.40) class139(0.43) class175(0.44) |
-| class164 | class163(0.48) class161(0.48) class130(0.51) class162(0.51) class157(0.53) |
-| class165 | class63(0.08) class70(0.11) class118(0.13) class87(0.23) class115(0.24) |
-| class166 | class186*(0.40) class181(0.44) class148(0.45) class2(0.50) class169(0.51) |
-| class167 | class92(0.48) class166(0.55) class183(0.55) class62(0.56) class2(0.56) |
-| class168 | class118(0.22) class70(0.25) class63(0.26) class165(0.27) class74(0.31) |
-| class169 | class181(0.37) class62(0.37) class92(0.43) class148(0.45) class143(0.46) |
-| class170 | class97(0.29) class171(0.39) class190*(0.42) class84(0.49) class83(0.50) |
-| class171 | class97(0.26) class190*(0.27) class84(0.27) class170(0.39) class193*(0.54) |
-| class172 | class34(0.27) class143(0.31) class19(0.32) class45(0.35) class20(0.35) |
-| class173 | class68(0.38) class87(0.44) class189*(0.46) class155(0.46) class118(0.46) |
-| class174 | class7(0.41) class176(0.47) class20(0.47) class8(0.48) class38(0.48) |
-| class175 | class176(0.32) class42(0.41) class9(0.42) class40(0.43) class163(0.44) |
-| class176 | class40(0.30) class175(0.32) class43(0.38) class39(0.43) class35(0.45) |
-| class177 | class57(0.40) class48(0.41) class125(0.46) class49(0.47) class114(0.49) |
-| class178 | class179(0.27) class98(0.35) class39(0.48) class184(0.50) class149(0.53) |
-| class179 | class178(0.27) class184(0.34) class111(0.59) class92(0.60) class10(0.60) |
-| class180 | class155(0.42) class126(0.46) class132(0.51) class185(0.52) class61(0.52) |
-| class181 | class46(0.28) class163(0.35) class191*(0.35) class169(0.37) class62(0.41) |
-| class182 | class88(0.43) class192*(0.46) class186*(0.51) class181(0.52) class129(0.52) |
-| class183 | class57(0.37) class60(0.39) class77(0.42) class186*(0.43) class131(0.43) |
-| class184 | class179(0.34) class46(0.45) class92(0.45) class62(0.46) class56(0.49) |
-| class185 | class61(0.29) class188*(0.30) class31(0.41) class194*(0.42) class141(0.44) |
-| class186* | class166(0.40) class181(0.41) class183(0.43) class134(0.43) class60(0.47) |
-| class187* | class189*(0.39) class71(0.43) class4(0.45) class134(0.46) class133(0.47) |
-| class188* | class185(0.30) class61(0.31) class194*(0.35) class141(0.40) class31(0.42) |
-| class189* | class4(0.22) class130(0.33) class187*(0.39) class79(0.40) class128(0.44) |
-| class190* | class193*(0.26) class171(0.27) class170(0.42) class97(0.43) class144(0.50) |
-| class191* | class46(0.31) class181(0.35) class92(0.49) class169(0.51) class62(0.51) |
-| class192* | class24(0.31) class95(0.34) class102(0.40) class101(0.44) class182(0.46) |
-| class193* | class190*(0.26) class144(0.41) class146(0.44) class171(0.54) class145(0.56) |
-| class194* | class119(0.33) class188*(0.35) class153(0.37) class147(0.39) class31(0.40) |
-| class195* | class157(0.34) class99(0.38) class122(0.48) class44(0.51) class156(0.52) |
+| AM General Hummer SUV 2000 | HUMMER H2 SUT Crew Cab 2009(0.15) HUMMER H3T Crew Cab 2010(0.30) Jeep Wrangler SUV 2012(0.34) Lamborghini Diablo Coupe 2001(0.59) Geo Metro Convertible 1993(0.60) |
+| Acura RL Sedan 2012 | Honda Odyssey Minivan 2012(0.36) Acura ZDX Hatchback 2012(0.45) Audi S5 Coupe 2012(0.48) Fisker Karma Sedan 2012(0.49) Infiniti G Coupe IPL 2012(0.50) |
+| Acura TL Sedan 2012 | Acura TSX Sedan 2012(0.39) Honda Accord Sedan 2012(0.42) Fisker Karma Sedan 2012(0.42) Acura ZDX Hatchback 2012(0.47) Audi A5 Coupe 2012(0.47) |
+| Acura TL Type-S 2008 | Hyundai Elantra Touring Hatchback 2012(0.42) Acura TL Sedan 2012(0.51) Honda Accord Sedan 2012(0.55) BMW M5 Sedan 2010(0.58) Chrysler 300 SRT-8 2010(0.60) |
+| Acura TSX Sedan 2012 | Volkswagen Golf Hatchback 2012*(0.22) Audi A5 Coupe 2012(0.38) Honda Accord Sedan 2012(0.38) Acura TL Sedan 2012(0.39) Chevrolet Malibu Hybrid Sedan 2010(0.40) |
+| Acura Integra Type R 2001 | Lamborghini Diablo Coupe 2001(0.06) Lamborghini Gallardo LP 570-4 Superleggera 2012(0.11) Chevrolet Corvette Convertible 2012(0.22) McLaren MP4-12C Coupe 2012(0.29) Chevrolet Cobalt SS 2010(0.37) |
+| Acura ZDX Hatchback 2012 | Honda Odyssey Minivan 2012(0.43) Fisker Karma Sedan 2012(0.43) Acura RL Sedan 2012(0.45) Hyundai Azera Sedan 2012(0.47) Acura TL Sedan 2012(0.47) |
+| Aston Martin V8 Vantage Convertible 2012 | Aston Martin V8 Vantage Coupe 2012(0.27) Bentley Continental Supersports Conv. Convertible 2012(0.38) Rolls-Royce Phantom Drophead Coupe Convertible 2012(0.41) Chrysler Crossfire Convertible 2008(0.44) Bugatti Veyron 16.4 Coupe 2009(0.45) |
+| Aston Martin V8 Vantage Coupe 2012 | Aston Martin V8 Vantage Convertible 2012(0.27) Audi S5 Convertible 2012(0.31) Audi TT Hatchback 2011(0.33) Bugatti Veyron 16.4 Coupe 2009(0.39) Porsche Panamera Sedan 2012(0.42) |
+| Aston Martin Virage Convertible 2012 | Fisker Karma Sedan 2012(0.34) Mercedes-Benz SL-Class Coupe 2009(0.34) BMW ActiveHybrid 5 Sedan 2012(0.35) Bentley Continental GT Coupe 2007(0.38) BMW M6 Convertible 2010(0.38) |
+| Aston Martin Virage Coupe 2012 | Dodge Charger Sedan 2012(0.18) McLaren MP4-12C Coupe 2012(0.20) Hyundai Veloster Hatchback 2012(0.21) Ferrari 458 Italia Convertible 2012(0.28) Chevrolet Corvette Convertible 2012(0.28) |
+| Audi RS 4 Convertible 2008 | Audi S5 Convertible 2012(0.35) Porsche Panamera Sedan 2012(0.43) Jaguar XK XKR 2012(0.44) Chevrolet Corvette ZR1 2012(0.46) Audi S6 Sedan 2011(0.47) |
+| Audi A5 Coupe 2012 | Audi TT Hatchback 2011(0.22) Audi S4 Sedan 2012(0.36) Audi S5 Coupe 2012(0.36) Acura TSX Sedan 2012(0.38) Audi TTS Coupe 2012(0.38) |
+| Audi TTS Coupe 2012 | Audi S5 Coupe 2012(0.32) Cadillac CTS-V Sedan 2012(0.32) Audi TT Hatchback 2011(0.34) Audi A5 Coupe 2012(0.38) Audi R8 Coupe 2012(0.43) |
+| Audi R8 Coupe 2012 | Audi TT Hatchback 2011(0.36) Bugatti Veyron 16.4 Coupe 2009(0.39) Audi A5 Coupe 2012(0.40) Audi TTS Coupe 2012(0.43) BMW M3 Coupe 2012(0.46) |
+| Audi V8 Sedan 1994 | Audi 100 Sedan 1994(0.18) Audi 100 Wagon 1994(0.20) Mercedes-Benz 300-Class Convertible 1993(0.55) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.56) Volvo 240 Sedan 1993*(0.57) |
+| Audi 100 Sedan 1994 | Audi V8 Sedan 1994(0.18) Audi 100 Wagon 1994(0.23) Chevrolet Tahoe Hybrid SUV 2012(0.47) Toyota 4Runner SUV 2012*(0.55) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.58) |
+| Audi 100 Wagon 1994 | Audi V8 Sedan 1994(0.20) Audi 100 Sedan 1994(0.23) Mercedes-Benz 300-Class Convertible 1993(0.50) Chevrolet Tahoe Hybrid SUV 2012(0.54) Isuzu Ascender SUV 2008(0.56) |
+| Audi TT Hatchback 2011 | Audi A5 Coupe 2012(0.22) Bentley Continental GT Coupe 2012(0.33) Aston Martin V8 Vantage Coupe 2012(0.33) Audi TTS Coupe 2012(0.34) BMW M3 Coupe 2012(0.35) |
+| Audi S6 Sedan 2011 | Porsche Panamera Sedan 2012(0.32) BMW M5 Sedan 2010(0.32) Audi S4 Sedan 2007(0.37) Audi S5 Convertible 2012(0.38) Infiniti G Coupe IPL 2012(0.42) |
+| Audi S5 Convertible 2012 | Aston Martin V8 Vantage Coupe 2012(0.31) Audi RS 4 Convertible 2008(0.35) Porsche Panamera Sedan 2012(0.35) Audi S6 Sedan 2011(0.38) Rolls-Royce Phantom Drophead Coupe Convertible 2012(0.47) |
+| Audi S5 Coupe 2012 | Audi TTS Coupe 2012(0.32) Audi A5 Coupe 2012(0.36) Infiniti G Coupe IPL 2012(0.37) Audi TT Hatchback 2011(0.44) Audi R8 Coupe 2012(0.46) |
+| Audi S4 Sedan 2012 | Audi A5 Coupe 2012(0.36) Audi TT Hatchback 2011(0.47) Audi TTS Coupe 2012(0.49) Audi S6 Sedan 2011(0.51) Audi S4 Sedan 2007(0.53) |
+| Audi S4 Sedan 2007 | Audi S6 Sedan 2011(0.37) Jaguar XK XKR 2012(0.49) Dodge Challenger SRT8 2011(0.51) Audi RS 4 Convertible 2008(0.52) Audi S4 Sedan 2012(0.53) |
+| Audi TT RS Coupe 2012 | Volvo C30 Hatchback 2012*(0.31) Lamborghini Aventador Coupe 2012(0.34) Ferrari 458 Italia Convertible 2012(0.35) Ferrari 458 Italia Coupe 2012(0.37) BMW Z4 Convertible 2012(0.44) |
+| BMW ActiveHybrid 5 Sedan 2012 | BMW M5 Sedan 2010(0.28) Mercedes-Benz SL-Class Coupe 2009(0.34) Aston Martin Virage Convertible 2012(0.35) BMW 3 Series Wagon 2012(0.41) Fisker Karma Sedan 2012(0.41) |
+| BMW 1 Series Convertible 2012 | BMW M3 Coupe 2012(0.43) Audi TT Hatchback 2011(0.44) BMW X6 SUV 2012(0.44) MINI Cooper Roadster Convertible 2012(0.45) Audi A5 Coupe 2012(0.51) |
+| BMW 1 Series Coupe 2012 | Bentley Continental GT Coupe 2012(0.29) BMW X6 SUV 2012(0.30) BMW 3 Series Sedan 2012(0.35) BMW M3 Coupe 2012(0.39) Honda Accord Coupe 2012(0.45) |
+| BMW 3 Series Sedan 2012 | BMW X6 SUV 2012(0.34) BMW 1 Series Coupe 2012(0.35) Ferrari FF Coupe 2012(0.42) Dodge Caliber Wagon 2007(0.43) BMW M3 Coupe 2012(0.43) |
+| BMW 3 Series Wagon 2012 | Mercedes-Benz SL-Class Coupe 2009(0.38) BMW ActiveHybrid 5 Sedan 2012(0.41) BMW M5 Sedan 2010(0.45) BMW X3 SUV 2012(0.46) BMW X5 SUV 2007(0.46) |
+| BMW 6 Series Convertible 2007 | Bentley Continental Flying Spur Sedan 2007(0.46) Chrysler Crossfire Convertible 2008(0.51) Aston Martin Virage Convertible 2012(0.51) Volkswagen Golf Hatchback 2012*(0.52) Aston Martin V8 Vantage Convertible 2012(0.52) |
+| BMW X5 SUV 2007 | Volvo XC90 SUV 2007*(0.40) Toyota Sequoia SUV 2012(0.41) Toyota 4Runner SUV 2012*(0.42) BMW X3 SUV 2012(0.43) BMW 3 Series Wagon 2012(0.46) |
+| BMW X6 SUV 2012 | BMW 1 Series Coupe 2012(0.30) Dodge Caliber Wagon 2007(0.30) BMW 3 Series Sedan 2012(0.34) Chevrolet HHR SS 2010(0.39) Bentley Continental GT Coupe 2012(0.39) |
+| BMW M3 Coupe 2012 | Buick Regal GS 2012(0.33) Audi TT Hatchback 2011(0.35) BMW 1 Series Coupe 2012(0.39) Bentley Continental GT Coupe 2012(0.39) BMW 1 Series Convertible 2012(0.43) |
+| BMW M5 Sedan 2010 | Porsche Panamera Sedan 2012(0.27) BMW ActiveHybrid 5 Sedan 2012(0.28) Audi S6 Sedan 2011(0.32) Aston Martin Virage Convertible 2012(0.40) Fisker Karma Sedan 2012(0.42) |
+| BMW M6 Convertible 2010 | Aston Martin Virage Convertible 2012(0.38) Bentley Continental Flying Spur Sedan 2007(0.41) FIAT 500 Abarth 2012(0.42) Bentley Mulsanne Sedan 2011(0.43) Bugatti Veyron 16.4 Coupe 2009(0.44) |
+| BMW X3 SUV 2012 | BMW X5 SUV 2007(0.43) BMW 3 Series Wagon 2012(0.46) Rolls-Royce Phantom Sedan 2012(0.46) Toyota 4Runner SUV 2012*(0.48) Mercedes-Benz SL-Class Coupe 2009(0.51) |
+| BMW Z4 Convertible 2012 | Bentley Continental Supersports Conv. Convertible 2012(0.34) Audi TT Hatchback 2011(0.38) Bentley Continental GT Coupe 2012(0.44) Audi TT RS Coupe 2012(0.44) BMW M3 Coupe 2012(0.45) |
+| Bentley Continental Supersports Conv. Convertible 2012 | MINI Cooper Roadster Convertible 2012(0.30) Maybach Landaulet Convertible 2012(0.34) BMW Z4 Convertible 2012(0.34) Bugatti Veyron 16.4 Convertible 2009(0.35) Aston Martin V8 Vantage Convertible 2012(0.38) |
+| Bentley Arnage Sedan 2009 | FIAT 500 Abarth 2012(0.31) Bentley Continental Flying Spur Sedan 2007(0.36) Bentley Mulsanne Sedan 2011(0.41) Rolls-Royce Phantom Sedan 2012(0.43) BMW M6 Convertible 2010(0.47) |
+| Bentley Mulsanne Sedan 2011 | Rolls-Royce Phantom Sedan 2012(0.30) Bentley Arnage Sedan 2009(0.41) Bentley Continental Flying Spur Sedan 2007(0.42) BMW M6 Convertible 2010(0.43) Rolls-Royce Ghost Sedan 2012(0.43) |
+| Bentley Continental GT Coupe 2012 | BMW 1 Series Coupe 2012(0.29) Audi TT Hatchback 2011(0.33) BMW X6 SUV 2012(0.39) BMW M3 Coupe 2012(0.39) BMW Z4 Convertible 2012(0.44) |
+| Bentley Continental GT Coupe 2007 | Aston Martin Virage Convertible 2012(0.38) Bentley Continental Flying Spur Sedan 2007(0.38) Rolls-Royce Ghost Sedan 2012(0.41) Bentley Mulsanne Sedan 2011(0.45) BMW M6 Convertible 2010(0.49) |
+| Bentley Continental Flying Spur Sedan 2007 | Bentley Arnage Sedan 2009(0.36) Rolls-Royce Phantom Sedan 2012(0.38) Bentley Continental GT Coupe 2007(0.38) BMW M6 Convertible 2010(0.41) Cadillac CTS-V Sedan 2012(0.42) |
+| Bugatti Veyron 16.4 Convertible 2009 | FIAT 500 Convertible 2012(0.21) MINI Cooper Roadster Convertible 2012(0.29) Bentley Continental Supersports Conv. Convertible 2012(0.35) Buick Regal GS 2012(0.38) Chevrolet Corvette Ron Fellows Edition Z06 2007(0.41) |
+| Bugatti Veyron 16.4 Coupe 2009 | Porsche Panamera Sedan 2012(0.35) Jaguar XK XKR 2012(0.38) Audi R8 Coupe 2012(0.39) Aston Martin V8 Vantage Coupe 2012(0.39) Chevrolet Corvette ZR1 2012(0.42) |
+| Buick Regal GS 2012 | Suzuki Kizashi Sedan 2012(0.28) Volkswagen Beetle Hatchback 2012*(0.31) BMW M3 Coupe 2012(0.33) Bugatti Veyron 16.4 Convertible 2009(0.38) Mercedes-Benz E-Class Sedan 2012(0.40) |
+| Buick Rainier SUV 2007 | Ford Freestar Minivan 2007(0.33) Dodge Durango SUV 2007(0.34) Chrysler Aspen SUV 2009(0.39) GMC Terrain SUV 2012(0.42) Honda Odyssey Minivan 2007(0.42) |
+| Buick Verano Sedan 2012 | Scion xD Hatchback 2012(0.41) Suzuki Kizashi Sedan 2012(0.42) Toyota Camry Sedan 2012*(0.47) BMW M3 Coupe 2012(0.51) Volkswagen Beetle Hatchback 2012*(0.52) |
+| Buick Enclave SUV 2012 | Chevrolet Traverse SUV 2012(0.29) Hyundai Veracruz SUV 2012(0.32) Hyundai Tucson SUV 2012(0.43) Scion xD Hatchback 2012(0.47) GMC Terrain SUV 2012(0.52) |
+| Cadillac CTS-V Sedan 2012 | Mercedes-Benz C-Class Sedan 2012(0.29) Audi TTS Coupe 2012(0.32) Hyundai Santa Fe SUV 2012(0.41) Bentley Continental Flying Spur Sedan 2007(0.42) Cadillac Escalade EXT Crew Cab 2007(0.46) |
+| Cadillac SRX SUV 2012 | Ford Edge SUV 2012(0.39) Honda Odyssey Minivan 2012(0.41) Hyundai Sonata Sedan 2012(0.46) Infiniti G Coupe IPL 2012(0.48) BMW X5 SUV 2007(0.50) |
+| Cadillac Escalade EXT Crew Cab 2007 | Jeep Grand Cherokee SUV 2012(0.38) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.38) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.40) Chevrolet TrailBlazer SS 2009(0.44) Chevrolet Avalanche Crew Cab 2012(0.44) |
+| Chevrolet Silverado 1500 Hybrid Crew Cab 2012 | Ford F-450 Super Duty Crew Cab 2012(0.19) Chevrolet Avalanche Crew Cab 2012(0.26) Dodge Ram Pickup 3500 Crew Cab 2010(0.30) Ford F-150 Regular Cab 2012(0.30) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.33) |
+| Chevrolet Corvette Convertible 2012 | Acura Integra Type R 2001(0.22) McLaren MP4-12C Coupe 2012(0.24) Lamborghini Diablo Coupe 2001(0.25) Lamborghini Gallardo LP 570-4 Superleggera 2012(0.25) Aston Martin Virage Coupe 2012(0.28) |
+| Chevrolet Corvette ZR1 2012 | Infiniti G Coupe IPL 2012(0.40) Bugatti Veyron 16.4 Coupe 2009(0.42) Audi RS 4 Convertible 2008(0.46) Fisker Karma Sedan 2012(0.50) Audi TTS Coupe 2012(0.50) |
+| Chevrolet Corvette Ron Fellows Edition Z06 2007 | Maybach Landaulet Convertible 2012(0.29) FIAT 500 Convertible 2012(0.39) Bentley Continental Supersports Conv. Convertible 2012(0.39) Dodge Challenger SRT8 2011(0.40) Buick Regal GS 2012(0.40) |
+| Chevrolet Traverse SUV 2012 | Hyundai Tucson SUV 2012(0.26) Buick Enclave SUV 2012(0.29) Dodge Journey SUV 2012(0.32) Hyundai Veracruz SUV 2012(0.34) Chevrolet Impala Sedan 2007(0.34) |
+| Chevrolet Camaro Convertible 2012 | Chevrolet HHR SS 2010(0.45) Ferrari FF Coupe 2012(0.45) BMW 1 Series Coupe 2012(0.46) BMW X6 SUV 2012(0.49) Dodge Charger SRT-8 2009(0.50) |
+| Chevrolet HHR SS 2010 | Dodge Magnum Wagon 2008(0.38) Dodge Caliber Wagon 2007(0.38) BMW X6 SUV 2012(0.39) Chevrolet Camaro Convertible 2012(0.45) Chevrolet Cobalt SS 2010(0.45) |
+| Chevrolet Impala Sedan 2007 | Chrysler Sebring Convertible 2010(0.25) Ford Focus Sedan 2007(0.29) Hyundai Tucson SUV 2012(0.31) Chevrolet Malibu Sedan 2007(0.32) Chevrolet Traverse SUV 2012(0.34) |
+| Chevrolet Tahoe Hybrid SUV 2012 | Toyota Sequoia SUV 2012(0.29) Toyota 4Runner SUV 2012*(0.31) Audi 100 Sedan 1994(0.47) Infiniti QX56 SUV 2011(0.48) Suzuki Aerio Sedan 2007(0.52) |
+| Chevrolet Sonic Sedan 2012 | Nissan Juke Hatchback 2012(0.37) Hyundai Azera Sedan 2012(0.40) Suzuki Kizashi Sedan 2012(0.41) Mercedes-Benz E-Class Sedan 2012(0.46) Tesla Model S Sedan 2012(0.46) |
+| Chevrolet Express Cargo Van 2007 | Chevrolet Express Van 2007(0.03) Mercedes-Benz Sprinter Van 2012(0.08) GMC Savana Van 2012(0.12) Ford E-Series Wagon Van 2012(0.26) Nissan NV Passenger Van 2012(0.26) |
+| Chevrolet Avalanche Crew Cab 2012 | Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.26) Ford F-450 Super Duty Crew Cab 2012(0.36) Dodge Ram Pickup 3500 Crew Cab 2010(0.37) Ford Ranger SuperCab 2011(0.40) Hyundai Santa Fe SUV 2012(0.40) |
+| Chevrolet Cobalt SS 2010 | Chevrolet Corvette Convertible 2012(0.31) Acura Integra Type R 2001(0.37) Dodge Charger SRT-8 2009(0.38) Lamborghini Gallardo LP 570-4 Superleggera 2012(0.39) Lamborghini Diablo Coupe 2001(0.41) |
+| Chevrolet Malibu Hybrid Sedan 2010 | Chrysler Sebring Convertible 2010(0.36) Honda Accord Sedan 2012(0.37) Chrysler Town and Country Minivan 2012(0.39) Acura TSX Sedan 2012(0.40) Chevrolet Impala Sedan 2007(0.41) |
+| Chevrolet TrailBlazer SS 2009 | Chrysler 300 SRT-8 2010(0.43) Cadillac Escalade EXT Crew Cab 2007(0.44) Volvo XC90 SUV 2007*(0.44) Jeep Grand Cherokee SUV 2012(0.50) GMC Yukon Hybrid SUV 2012(0.52) |
+| Chevrolet Silverado 2500HD Regular Cab 2012 | Ford E-Series Wagon Van 2012(0.13) GMC Savana Van 2012(0.13) Chevrolet Express Van 2007(0.26) Chevrolet Express Cargo Van 2007(0.28) Dodge Sprinter Cargo Van 2009(0.29) |
+| Chevrolet Silverado 1500 Classic Extended Cab 2007 | Ford F-450 Super Duty Crew Cab 2012(0.24) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.33) Isuzu Ascender SUV 2008(0.37) Cadillac Escalade EXT Crew Cab 2007(0.38) Ford Ranger SuperCab 2011(0.42) |
+| Chevrolet Express Van 2007 | Chevrolet Express Cargo Van 2007(0.03) GMC Savana Van 2012(0.10) Mercedes-Benz Sprinter Van 2012(0.11) Ford E-Series Wagon Van 2012(0.22) Nissan NV Passenger Van 2012(0.25) |
+| Chevrolet Monte Carlo Coupe 2007 | Chevrolet Malibu Sedan 2007(0.36) Ford Freestar Minivan 2007(0.41) Lincoln Town Car Sedan 2011(0.42) Daewoo Nubira Wagon 2002(0.43) Ford Focus Sedan 2007(0.43) |
+| Chevrolet Malibu Sedan 2007 | Ford Focus Sedan 2007(0.24) Chevrolet Impala Sedan 2007(0.32) Chevrolet Monte Carlo Coupe 2007(0.36) Hyundai Elantra Sedan 2007(0.38) Chrysler Sebring Convertible 2010(0.40) |
+| Chevrolet Silverado 1500 Extended Cab 2012 | Dodge Ram Pickup 3500 Quad Cab 2009(0.30) Ford F-150 Regular Cab 2007(0.34) Chevrolet Silverado 2500HD Regular Cab 2012(0.36) Ford E-Series Wagon Van 2012(0.39) Chevrolet Silverado 1500 Regular Cab 2012(0.44) |
+| Chevrolet Silverado 1500 Regular Cab 2012 | Dodge Ram Pickup 3500 Quad Cab 2009(0.18) Ford F-150 Regular Cab 2007(0.19) Nissan NV Passenger Van 2012(0.31) Ford F-150 Regular Cab 2012(0.37) GMC Canyon Extended Cab 2012(0.38) |
+| Chrysler Aspen SUV 2009 | Buick Rainier SUV 2007(0.39) Hyundai Santa Fe SUV 2012(0.40) Chevrolet Avalanche Crew Cab 2012(0.41) GMC Terrain SUV 2012(0.44) Isuzu Ascender SUV 2008(0.46) |
+| Chrysler Sebring Convertible 2010 | Chevrolet Impala Sedan 2007(0.25) Chevrolet Malibu Hybrid Sedan 2010(0.36) Honda Odyssey Minivan 2007(0.37) Chevrolet Malibu Sedan 2007(0.40) Ford Focus Sedan 2007(0.43) |
+| Chrysler Town and Country Minivan 2012 | Chevrolet Traverse SUV 2012(0.37) Chevrolet Malibu Hybrid Sedan 2010(0.39) Suzuki SX4 Sedan 2012(0.42) Chevrolet Impala Sedan 2007(0.44) Honda Odyssey Minivan 2007(0.45) |
+| Chrysler 300 SRT-8 2010 | Volvo XC90 SUV 2007*(0.43) Chevrolet TrailBlazer SS 2009(0.43) Audi S6 Sedan 2011(0.46) Dodge Durango SUV 2012(0.49) Land Rover Range Rover SUV 2012(0.52) |
+| Chrysler Crossfire Convertible 2008 | Volkswagen Golf Hatchback 2012*(0.40) Mercedes-Benz 300-Class Convertible 1993(0.40) Aston Martin V8 Vantage Convertible 2012(0.44) Cadillac CTS-V Sedan 2012(0.50) Chevrolet Monte Carlo Coupe 2007(0.50) |
+| Chrysler PT Cruiser Convertible 2008 | Suzuki SX4 Sedan 2012(0.53) Chrysler Sebring Convertible 2010(0.59) Nissan Leaf Hatchback 2012(0.60) Audi S4 Sedan 2007(0.62) Chevrolet Traverse SUV 2012(0.62) |
+| Daewoo Nubira Wagon 2002 | Mercedes-Benz 300-Class Convertible 1993(0.40) Chevrolet Monte Carlo Coupe 2007(0.43) Chevrolet Malibu Sedan 2007(0.43) Lincoln Town Car Sedan 2011(0.48) Chevrolet Malibu Hybrid Sedan 2010(0.48) |
+| Dodge Caliber Wagon 2012 | Dodge Caliber Wagon 2007(0.32) BMW X6 SUV 2012(0.46) Chevrolet HHR SS 2010(0.47) Honda Accord Coupe 2012(0.47) Hyundai Elantra Sedan 2007(0.51) |
+| Dodge Caliber Wagon 2007 | BMW X6 SUV 2012(0.30) Dodge Caliber Wagon 2012(0.32) Chevrolet HHR SS 2010(0.38) BMW 3 Series Sedan 2012(0.43) Nissan 240SX Coupe 1998(0.50) |
+| Dodge Caravan Minivan 1997 | Plymouth Neon Coupe 1999(0.27) Eagle Talon Hatchback 1998(0.40) Nissan 240SX Coupe 1998(0.49) Mercedes-Benz Sprinter Van 2012(0.54) Ford Focus Sedan 2007(0.56) |
+| Dodge Ram Pickup 3500 Crew Cab 2010 | Ford F-450 Super Duty Crew Cab 2012(0.19) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.30) Jeep Grand Cherokee SUV 2012(0.36) Ford Expedition EL SUV 2009(0.36) Chevrolet Avalanche Crew Cab 2012(0.37) |
+| Dodge Ram Pickup 3500 Quad Cab 2009 | Chevrolet Silverado 1500 Regular Cab 2012(0.18) Ford F-150 Regular Cab 2007(0.20) Chevrolet Silverado 1500 Extended Cab 2012(0.30) Dodge Dakota Club Cab 2007(0.35) GMC Canyon Extended Cab 2012(0.36) |
+| Dodge Sprinter Cargo Van 2009 | Ford E-Series Wagon Van 2012(0.14) GMC Savana Van 2012(0.18) Mercedes-Benz Sprinter Van 2012(0.23) Chevrolet Silverado 2500HD Regular Cab 2012(0.29) Chevrolet Express Van 2007(0.30) |
+| Dodge Journey SUV 2012 | Chevrolet Traverse SUV 2012(0.32) Suzuki SX4 Hatchback 2012(0.43) Chrysler Town and Country Minivan 2012(0.49) Jeep Compass SUV 2012(0.49) Dodge Durango SUV 2012(0.57) |
+| Dodge Dakota Crew Cab 2010 | Ford Ranger SuperCab 2011(0.41) Chevrolet Avalanche Crew Cab 2012(0.47) Dodge Ram Pickup 3500 Crew Cab 2010(0.47) Dodge Dakota Club Cab 2007(0.48) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.48) |
+| Dodge Dakota Club Cab 2007 | Ford F-150 Regular Cab 2007(0.34) Dodge Ram Pickup 3500 Quad Cab 2009(0.35) Ford F-150 Regular Cab 2012(0.36) Ford Ranger SuperCab 2011(0.41) Buick Rainier SUV 2007(0.42) |
+| Dodge Magnum Wagon 2008 | Hyundai Accent Sedan 2012(0.34) Ford Mustang Convertible 2007(0.36) Chevrolet HHR SS 2010(0.38) Dodge Charger SRT-8 2009(0.49) Dodge Caliber Wagon 2007(0.51) |
+| Dodge Challenger SRT8 2011 | Jaguar XK XKR 2012(0.36) Chevrolet Corvette Ron Fellows Edition Z06 2007(0.40) Nissan Juke Hatchback 2012(0.43) Tesla Model S Sedan 2012(0.45) Buick Regal GS 2012(0.46) |
+| Dodge Durango SUV 2012 | Land Rover Range Rover SUV 2012(0.33) GMC Yukon Hybrid SUV 2012(0.40) Volvo XC90 SUV 2007*(0.42) Jeep Grand Cherokee SUV 2012(0.43) Dodge Durango SUV 2007(0.45) |
+| Dodge Durango SUV 2007 | Buick Rainier SUV 2007(0.34) Jeep Grand Cherokee SUV 2012(0.36) Dodge Ram Pickup 3500 Crew Cab 2010(0.45) Dodge Durango SUV 2012(0.45) Volvo XC90 SUV 2007*(0.46) |
+| Dodge Charger Sedan 2012 | Aston Martin Virage Coupe 2012(0.18) Ferrari 458 Italia Convertible 2012(0.29) Hyundai Veloster Hatchback 2012(0.32) McLaren MP4-12C Coupe 2012(0.33) Chevrolet Corvette Convertible 2012(0.33) |
+| Dodge Charger SRT-8 2009 | Chevrolet Cobalt SS 2010(0.38) Ferrari 458 Italia Coupe 2012(0.39) Dodge Charger Sedan 2012(0.40) Ferrari California Convertible 2012(0.41) Ferrari 458 Italia Convertible 2012(0.45) |
+| Eagle Talon Hatchback 1998 | Plymouth Neon Coupe 1999(0.26) Nissan 240SX Coupe 1998(0.29) Dodge Caravan Minivan 1997(0.40) Volkswagen Golf Hatchback 1991*(0.43) Ford Focus Sedan 2007(0.57) |
+| FIAT 500 Abarth 2012 | Bentley Arnage Sedan 2009(0.31) Spyker C8 Convertible 2009(0.35) BMW M6 Convertible 2010(0.42) Audi RS 4 Convertible 2008(0.50) Land Rover Range Rover SUV 2012(0.53) |
+| FIAT 500 Convertible 2012 | Bugatti Veyron 16.4 Convertible 2009(0.21) MINI Cooper Roadster Convertible 2012(0.27) Maybach Landaulet Convertible 2012(0.34) smart fortwo Convertible 2012*(0.38) Chevrolet Corvette Ron Fellows Edition Z06 2007(0.39) |
+| Ferrari FF Coupe 2012 | Ferrari California Convertible 2012(0.41) BMW 3 Series Sedan 2012(0.42) Ferrari 458 Italia Convertible 2012(0.45) Chevrolet Camaro Convertible 2012(0.45) Dodge Charger Sedan 2012(0.46) |
+| Ferrari California Convertible 2012 | Ferrari 458 Italia Convertible 2012(0.08) Ferrari 458 Italia Coupe 2012(0.19) Dodge Charger Sedan 2012(0.34) Ford GT Coupe 2006(0.34) Chevrolet Corvette Convertible 2012(0.37) |
+| Ferrari 458 Italia Convertible 2012 | Ferrari California Convertible 2012(0.08) Ferrari 458 Italia Coupe 2012(0.13) Lamborghini Aventador Coupe 2012(0.22) Aston Martin Virage Coupe 2012(0.28) Dodge Charger Sedan 2012(0.29) |
+| Ferrari 458 Italia Coupe 2012 | Ferrari 458 Italia Convertible 2012(0.13) Ferrari California Convertible 2012(0.19) Lamborghini Aventador Coupe 2012(0.21) Audi TT RS Coupe 2012(0.37) Dodge Charger SRT-8 2009(0.39) |
+| Fisker Karma Sedan 2012 | Aston Martin Virage Convertible 2012(0.34) Infiniti G Coupe IPL 2012(0.36) Porsche Panamera Sedan 2012(0.40) BMW ActiveHybrid 5 Sedan 2012(0.41) Mercedes-Benz SL-Class Coupe 2009(0.42) |
+| Ford F-450 Super Duty Crew Cab 2012 | Dodge Ram Pickup 3500 Crew Cab 2010(0.19) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.19) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.24) Isuzu Ascender SUV 2008(0.35) Chevrolet Avalanche Crew Cab 2012(0.36) |
+| Ford Mustang Convertible 2007 | Dodge Magnum Wagon 2008(0.36) Dodge Charger SRT-8 2009(0.48) Chevrolet Monte Carlo Coupe 2007(0.48) Dodge Caliber Wagon 2007(0.51) Nissan 240SX Coupe 1998(0.52) |
+| Ford Freestar Minivan 2007 | Buick Rainier SUV 2007(0.33) Lincoln Town Car Sedan 2011(0.40) Chevrolet Monte Carlo Coupe 2007(0.41) Dodge Dakota Club Cab 2007(0.43) Chevrolet Malibu Sedan 2007(0.43) |
+| Ford Expedition EL SUV 2009 | Jeep Grand Cherokee SUV 2012(0.31) Dodge Ram Pickup 3500 Crew Cab 2010(0.36) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.42) Toyota Sequoia SUV 2012(0.45) Isuzu Ascender SUV 2008(0.45) |
+| Ford Edge SUV 2012 | Cadillac SRX SUV 2012(0.39) GMC Yukon Hybrid SUV 2012(0.42) Volvo XC90 SUV 2007*(0.45) Toyota 4Runner SUV 2012*(0.48) Land Rover Range Rover SUV 2012(0.49) |
+| Ford Ranger SuperCab 2011 | Ford F-150 Regular Cab 2012(0.35) Chevrolet Avalanche Crew Cab 2012(0.40) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.40) GMC Canyon Extended Cab 2012(0.40) Dodge Dakota Crew Cab 2010(0.41) |
+| Ford GT Coupe 2006 | Ferrari California Convertible 2012(0.34) Ferrari 458 Italia Convertible 2012(0.37) Chevrolet Corvette Convertible 2012(0.37) Ferrari 458 Italia Coupe 2012(0.44) McLaren MP4-12C Coupe 2012(0.46) |
+| Ford F-150 Regular Cab 2012 | Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.30) Ford Ranger SuperCab 2011(0.35) Ford F-150 Regular Cab 2007(0.35) Ford F-450 Super Duty Crew Cab 2012(0.36) Dodge Dakota Club Cab 2007(0.36) |
+| Ford F-150 Regular Cab 2007 | Chevrolet Silverado 1500 Regular Cab 2012(0.19) Dodge Ram Pickup 3500 Quad Cab 2009(0.20) Chevrolet Silverado 1500 Extended Cab 2012(0.34) Dodge Dakota Club Cab 2007(0.34) Ford F-150 Regular Cab 2012(0.35) |
+| Ford Focus Sedan 2007 | Chevrolet Malibu Sedan 2007(0.24) Chevrolet Impala Sedan 2007(0.29) Hyundai Elantra Sedan 2007(0.34) Honda Odyssey Minivan 2007(0.37) Chrysler Sebring Convertible 2010(0.43) |
+| Ford E-Series Wagon Van 2012 | Chevrolet Silverado 2500HD Regular Cab 2012(0.13) Dodge Sprinter Cargo Van 2009(0.14) GMC Savana Van 2012(0.14) Chevrolet Express Van 2007(0.22) Mercedes-Benz Sprinter Van 2012(0.24) |
+| Ford Fiesta Sedan 2012 | Hyundai Elantra Sedan 2007(0.48) Ford Focus Sedan 2007(0.50) Hyundai Elantra Touring Hatchback 2012(0.51) Chevrolet Impala Sedan 2007(0.53) Toyota Camry Sedan 2012*(0.56) |
+| GMC Terrain SUV 2012 | Buick Rainier SUV 2007(0.42) Chrysler Aspen SUV 2009(0.44) Toyota Sequoia SUV 2012(0.51) Buick Enclave SUV 2012(0.52) Chevrolet Silverado 1500 Extended Cab 2012(0.54) |
+| GMC Savana Van 2012 | Chevrolet Express Van 2007(0.10) Chevrolet Express Cargo Van 2007(0.12) Mercedes-Benz Sprinter Van 2012(0.13) Chevrolet Silverado 2500HD Regular Cab 2012(0.13) Ford E-Series Wagon Van 2012(0.14) |
+| GMC Yukon Hybrid SUV 2012 | Volvo XC90 SUV 2007*(0.33) Land Rover Range Rover SUV 2012(0.35) Jeep Grand Cherokee SUV 2012(0.37) Dodge Durango SUV 2012(0.40) Jeep Liberty SUV 2012(0.41) |
+| GMC Acadia SUV 2012 | Hyundai Santa Fe SUV 2012(0.33) Chevrolet Avalanche Crew Cab 2012(0.47) Volkswagen Golf Hatchback 2012*(0.47) Dodge Durango SUV 2007(0.48) Toyota Corolla Sedan 2012*(0.49) |
+| GMC Canyon Extended Cab 2012 | Dodge Ram Pickup 3500 Quad Cab 2009(0.36) Chevrolet Silverado 1500 Regular Cab 2012(0.38) Ford Ranger SuperCab 2011(0.40) Ford F-150 Regular Cab 2007(0.46) Dodge Dakota Club Cab 2007(0.49) |
+| Geo Metro Convertible 1993 | Mercedes-Benz 300-Class Convertible 1993(0.33) smart fortwo Convertible 2012*(0.48) Ford Mustang Convertible 2007(0.53) Bentley Continental Supersports Conv. Convertible 2012(0.53) Chevrolet Monte Carlo Coupe 2007(0.54) |
+| HUMMER H3T Crew Cab 2010 | Jeep Wrangler SUV 2012(0.16) HUMMER H2 SUT Crew Cab 2009(0.17) AM General Hummer SUV 2000(0.30) Jeep Patriot SUV 2012(0.45) GMC Canyon Extended Cab 2012(0.54) |
+| HUMMER H2 SUT Crew Cab 2009 | AM General Hummer SUV 2000(0.15) HUMMER H3T Crew Cab 2010(0.17) Jeep Wrangler SUV 2012(0.24) Ford F-450 Super Duty Crew Cab 2012(0.51) Chevrolet Silverado 1500 Extended Cab 2012(0.56) |
+| Honda Odyssey Minivan 2012 | Acura RL Sedan 2012(0.36) Cadillac SRX SUV 2012(0.41) Acura ZDX Hatchback 2012(0.43) Scion xD Hatchback 2012(0.46) Chevrolet Malibu Hybrid Sedan 2010(0.49) |
+| Honda Odyssey Minivan 2007 | Hyundai Veracruz SUV 2012(0.33) Chrysler Sebring Convertible 2010(0.37) Ford Focus Sedan 2007(0.37) Chevrolet Impala Sedan 2007(0.40) Chevrolet Malibu Sedan 2007(0.41) |
+| Honda Accord Coupe 2012 | BMW 3 Series Sedan 2012(0.43) BMW 1 Series Coupe 2012(0.45) BMW X6 SUV 2012(0.46) Dodge Caliber Wagon 2012(0.47) Hyundai Accent Sedan 2012(0.48) |
+| Honda Accord Sedan 2012 | Chevrolet Malibu Hybrid Sedan 2010(0.37) Acura TSX Sedan 2012(0.38) Acura TL Sedan 2012(0.42) Volkswagen Golf Hatchback 2012*(0.44) Chevrolet Malibu Sedan 2007(0.49) |
+| Hyundai Veloster Hatchback 2012 | Aston Martin Virage Coupe 2012(0.21) McLaren MP4-12C Coupe 2012(0.24) Dodge Charger Sedan 2012(0.32) Lamborghini Gallardo LP 570-4 Superleggera 2012(0.44) Chevrolet Corvette Convertible 2012(0.44) |
+| Hyundai Santa Fe SUV 2012 | GMC Acadia SUV 2012(0.33) Volkswagen Golf Hatchback 2012*(0.33) Chevrolet Avalanche Crew Cab 2012(0.40) Chrysler Aspen SUV 2009(0.40) Cadillac CTS-V Sedan 2012(0.41) |
+| Hyundai Tucson SUV 2012 | Chevrolet Traverse SUV 2012(0.26) Chevrolet Impala Sedan 2007(0.31) Hyundai Genesis Sedan 2012(0.41) Buick Enclave SUV 2012(0.43) Suzuki SX4 Sedan 2012(0.43) |
+| Hyundai Veracruz SUV 2012 | Buick Enclave SUV 2012(0.32) Honda Odyssey Minivan 2007(0.33) Chevrolet Traverse SUV 2012(0.34) Chevrolet Malibu Sedan 2007(0.42) Hyundai Tucson SUV 2012(0.44) |
+| Hyundai Sonata Hybrid Sedan 2012 | Toyota Corolla Sedan 2012*(0.47) Toyota Camry Sedan 2012*(0.52) Honda Accord Coupe 2012(0.55) Chrysler Sebring Convertible 2010(0.57) Acura TSX Sedan 2012(0.57) |
+| Hyundai Elantra Sedan 2007 | Ford Focus Sedan 2007(0.34) Chevrolet Impala Sedan 2007(0.36) Chevrolet Malibu Sedan 2007(0.38) Toyota Camry Sedan 2012*(0.43) Chrysler Sebring Convertible 2010(0.46) |
+| Hyundai Accent Sedan 2012 | Dodge Magnum Wagon 2008(0.34) Honda Accord Coupe 2012(0.48) Chevrolet HHR SS 2010(0.49) Ferrari 458 Italia Coupe 2012(0.49) BMW 3 Series Sedan 2012(0.50) |
+| Hyundai Genesis Sedan 2012 | Hyundai Tucson SUV 2012(0.41) Hyundai Azera Sedan 2012(0.44) Aston Martin Virage Convertible 2012(0.51) Chevrolet Malibu Hybrid Sedan 2010(0.52) Chevrolet Impala Sedan 2007(0.52) |
+| Hyundai Sonata Sedan 2012 | Cadillac SRX SUV 2012(0.46) Hyundai Tucson SUV 2012(0.48) Suzuki SX4 Sedan 2012(0.55) Acura TL Sedan 2012(0.59) Hyundai Genesis Sedan 2012(0.61) |
+| Hyundai Elantra Touring Hatchback 2012 | Acura TL Type-S 2008(0.42) Toyota Camry Sedan 2012*(0.50) Ford Fiesta Sedan 2012(0.51) Mitsubishi Lancer Sedan 2012(0.55) Hyundai Elantra Sedan 2007(0.56) |
+| Hyundai Azera Sedan 2012 | Chevrolet Sonic Sedan 2012(0.40) Mercedes-Benz E-Class Sedan 2012(0.43) Hyundai Genesis Sedan 2012(0.44) Acura ZDX Hatchback 2012(0.47) Suzuki SX4 Sedan 2012(0.49) |
+| Infiniti G Coupe IPL 2012 | Fisker Karma Sedan 2012(0.36) Audi S5 Coupe 2012(0.37) Porsche Panamera Sedan 2012(0.40) Chevrolet Corvette ZR1 2012(0.40) Audi S6 Sedan 2011(0.42) |
+| Infiniti QX56 SUV 2011 | Toyota 4Runner SUV 2012*(0.40) Land Rover Range Rover SUV 2012(0.42) Toyota Sequoia SUV 2012(0.44) Chevrolet Tahoe Hybrid SUV 2012(0.48) Volvo XC90 SUV 2007*(0.53) |
+| Isuzu Ascender SUV 2008 | Ford F-450 Super Duty Crew Cab 2012(0.35) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.37) Ford F-150 Regular Cab 2012(0.43) Ford Expedition EL SUV 2009(0.45) Chrysler Aspen SUV 2009(0.46) |
+| Jaguar XK XKR 2012 | Porsche Panamera Sedan 2012(0.31) Dodge Challenger SRT8 2011(0.36) Bugatti Veyron 16.4 Coupe 2009(0.38) Audi RS 4 Convertible 2008(0.44) BMW M5 Sedan 2010(0.45) |
+| Jeep Patriot SUV 2012 | Jeep Liberty SUV 2012(0.13) Jeep Wrangler SUV 2012(0.35) Chevrolet Silverado 1500 Regular Cab 2012(0.39) Volvo 240 Sedan 1993*(0.41) Dodge Ram Pickup 3500 Quad Cab 2009(0.42) |
+| Jeep Wrangler SUV 2012 | HUMMER H3T Crew Cab 2010(0.16) HUMMER H2 SUT Crew Cab 2009(0.24) AM General Hummer SUV 2000(0.34) Jeep Patriot SUV 2012(0.35) Jeep Liberty SUV 2012(0.39) |
+| Jeep Liberty SUV 2012 | Jeep Patriot SUV 2012(0.13) Jeep Wrangler SUV 2012(0.39) Jeep Compass SUV 2012(0.39) Chevrolet Silverado 1500 Regular Cab 2012(0.40) Land Rover Range Rover SUV 2012(0.41) |
+| Jeep Grand Cherokee SUV 2012 | Ford Expedition EL SUV 2009(0.31) Dodge Ram Pickup 3500 Crew Cab 2010(0.36) Dodge Durango SUV 2007(0.36) GMC Yukon Hybrid SUV 2012(0.37) Cadillac Escalade EXT Crew Cab 2007(0.38) |
+| Jeep Compass SUV 2012 | Jeep Liberty SUV 2012(0.39) Jeep Patriot SUV 2012(0.43) Nissan Juke Hatchback 2012(0.45) Mitsubishi Lancer Sedan 2012(0.45) Dodge Journey SUV 2012(0.49) |
+| Lamborghini Reventon Coupe 2008 | Chevrolet Sonic Sedan 2012(0.52) Spyker C8 Convertible 2009(0.53) Bugatti Veyron 16.4 Coupe 2009(0.54) Acura ZDX Hatchback 2012(0.55) Rolls-Royce Ghost Sedan 2012(0.59) |
+| Lamborghini Aventador Coupe 2012 | Ferrari 458 Italia Coupe 2012(0.21) McLaren MP4-12C Coupe 2012(0.22) Ferrari 458 Italia Convertible 2012(0.22) Audi TT RS Coupe 2012(0.34) Aston Martin Virage Coupe 2012(0.39) |
+| Lamborghini Gallardo LP 570-4 Superleggera 2012 | Lamborghini Diablo Coupe 2001(0.08) Acura Integra Type R 2001(0.11) McLaren MP4-12C Coupe 2012(0.21) Chevrolet Corvette Convertible 2012(0.25) Chevrolet Cobalt SS 2010(0.39) |
+| Lamborghini Diablo Coupe 2001 | Acura Integra Type R 2001(0.06) Lamborghini Gallardo LP 570-4 Superleggera 2012(0.08) Chevrolet Corvette Convertible 2012(0.25) McLaren MP4-12C Coupe 2012(0.26) Chevrolet Cobalt SS 2010(0.41) |
+| Land Rover Range Rover SUV 2012 | Dodge Durango SUV 2012(0.33) GMC Yukon Hybrid SUV 2012(0.35) Volvo XC90 SUV 2007*(0.37) Jeep Liberty SUV 2012(0.41) Infiniti QX56 SUV 2011(0.42) |
+| Land Rover LR2 SUV 2012 | Toyota 4Runner SUV 2012*(0.45) Toyota Sequoia SUV 2012(0.47) GMC Yukon Hybrid SUV 2012(0.51) Ford Edge SUV 2012(0.52) Mazda Tribute SUV 2011(0.53) |
+| Lincoln Town Car Sedan 2011 | Ford Freestar Minivan 2007(0.40) Chevrolet Malibu Hybrid Sedan 2010(0.42) Chevrolet Malibu Sedan 2007(0.42) Chevrolet Monte Carlo Coupe 2007(0.42) Suzuki Aerio Sedan 2007(0.42) |
+| MINI Cooper Roadster Convertible 2012 | FIAT 500 Convertible 2012(0.27) Bugatti Veyron 16.4 Convertible 2009(0.29) Bentley Continental Supersports Conv. Convertible 2012(0.30) Maybach Landaulet Convertible 2012(0.42) Mercedes-Benz SL-Class Coupe 2009(0.43) |
+| Maybach Landaulet Convertible 2012 | Chevrolet Corvette Ron Fellows Edition Z06 2007(0.29) smart fortwo Convertible 2012*(0.34) Bentley Continental Supersports Conv. Convertible 2012(0.34) FIAT 500 Convertible 2012(0.34) Bugatti Veyron 16.4 Convertible 2009(0.41) |
+| Mazda Tribute SUV 2011 | Toyota Sequoia SUV 2012(0.44) Honda Odyssey Minivan 2007(0.45) Volvo XC90 SUV 2007*(0.51) Land Rover LR2 SUV 2012(0.53) Buick Rainier SUV 2007(0.53) |
+| McLaren MP4-12C Coupe 2012 | Aston Martin Virage Coupe 2012(0.20) Lamborghini Gallardo LP 570-4 Superleggera 2012(0.21) Lamborghini Aventador Coupe 2012(0.22) Hyundai Veloster Hatchback 2012(0.24) Chevrolet Corvette Convertible 2012(0.24) |
+| Mercedes-Benz 300-Class Convertible 1993 | Geo Metro Convertible 1993(0.33) Daewoo Nubira Wagon 2002(0.40) Chrysler Crossfire Convertible 2008(0.40) Chevrolet Monte Carlo Coupe 2007(0.47) Audi 100 Wagon 1994(0.50) |
+| Mercedes-Benz C-Class Sedan 2012 | Cadillac CTS-V Sedan 2012(0.29) Audi TTS Coupe 2012(0.44) Infiniti G Coupe IPL 2012(0.46) Mercedes-Benz S-Class Sedan 2012(0.48) Bentley Continental Flying Spur Sedan 2007(0.50) |
+| Mercedes-Benz SL-Class Coupe 2009 | Mercedes-Benz E-Class Sedan 2012(0.26) Aston Martin Virage Convertible 2012(0.34) BMW ActiveHybrid 5 Sedan 2012(0.34) BMW 3 Series Wagon 2012(0.38) Fisker Karma Sedan 2012(0.42) |
+| Mercedes-Benz E-Class Sedan 2012 | Mercedes-Benz SL-Class Coupe 2009(0.26) Suzuki Kizashi Sedan 2012(0.35) Buick Regal GS 2012(0.40) Hyundai Azera Sedan 2012(0.43) Rolls-Royce Ghost Sedan 2012(0.44) |
+| Mercedes-Benz S-Class Sedan 2012 | Mercedes-Benz E-Class Sedan 2012(0.48) Mercedes-Benz C-Class Sedan 2012(0.48) Hyundai Santa Fe SUV 2012(0.51) Mercedes-Benz SL-Class Coupe 2009(0.51) Maybach Landaulet Convertible 2012(0.53) |
+| Mercedes-Benz Sprinter Van 2012 | Chevrolet Express Cargo Van 2007(0.08) Chevrolet Express Van 2007(0.11) GMC Savana Van 2012(0.13) Dodge Sprinter Cargo Van 2009(0.23) Ford E-Series Wagon Van 2012(0.24) |
+| Mitsubishi Lancer Sedan 2012 | Toyota Camry Sedan 2012*(0.40) Suzuki Kizashi Sedan 2012(0.44) Jeep Compass SUV 2012(0.45) Acura TL Sedan 2012(0.50) Nissan Juke Hatchback 2012(0.51) |
+| Nissan Leaf Hatchback 2012 | Dodge Challenger SRT8 2011(0.48) Mitsubishi Lancer Sedan 2012(0.55) Suzuki SX4 Sedan 2012(0.55) Chevrolet Sonic Sedan 2012(0.56) Acura TL Sedan 2012(0.56) |
+| Nissan NV Passenger Van 2012 | GMC Savana Van 2012(0.22) Chevrolet Express Van 2007(0.25) Chevrolet Express Cargo Van 2007(0.26) Mercedes-Benz Sprinter Van 2012(0.27) Chevrolet Silverado 1500 Regular Cab 2012(0.31) |
+| Nissan Juke Hatchback 2012 | Suzuki Kizashi Sedan 2012(0.37) Chevrolet Sonic Sedan 2012(0.37) Dodge Challenger SRT8 2011(0.43) Jeep Compass SUV 2012(0.45) Jaguar XK XKR 2012(0.46) |
+| Nissan 240SX Coupe 1998 | Eagle Talon Hatchback 1998(0.29) Plymouth Neon Coupe 1999(0.39) Volkswagen Golf Hatchback 1991*(0.42) Dodge Caravan Minivan 1997(0.49) Dodge Caliber Wagon 2007(0.50) |
+| Plymouth Neon Coupe 1999 | Eagle Talon Hatchback 1998(0.26) Volkswagen Golf Hatchback 1991*(0.27) Dodge Caravan Minivan 1997(0.27) Nissan 240SX Coupe 1998(0.39) Volvo 240 Sedan 1993*(0.54) |
+| Porsche Panamera Sedan 2012 | BMW M5 Sedan 2010(0.27) Jaguar XK XKR 2012(0.31) Audi S6 Sedan 2011(0.32) Bugatti Veyron 16.4 Coupe 2009(0.35) Audi S5 Convertible 2012(0.35) |
+| Ram C/V Cargo Van Minivan 2012 | Chevrolet Silverado 2500HD Regular Cab 2012(0.38) Dodge Sprinter Cargo Van 2009(0.44) Volkswagen Golf Hatchback 2012*(0.46) Lincoln Town Car Sedan 2011(0.46) GMC Savana Van 2012(0.46) |
+| Rolls-Royce Phantom Drophead Coupe Convertible 2012 | Aston Martin V8 Vantage Convertible 2012(0.41) Rolls-Royce Phantom Sedan 2012(0.47) Audi S5 Convertible 2012(0.47) Aston Martin V8 Vantage Coupe 2012(0.48) Bentley Continental Supersports Conv. Convertible 2012(0.48) |
+| Rolls-Royce Ghost Sedan 2012 | Rolls-Royce Phantom Sedan 2012(0.32) Bentley Continental GT Coupe 2007(0.41) Aston Martin Virage Convertible 2012(0.42) Bentley Mulsanne Sedan 2011(0.43) Mercedes-Benz E-Class Sedan 2012(0.44) |
+| Rolls-Royce Phantom Sedan 2012 | Bentley Mulsanne Sedan 2011(0.30) Rolls-Royce Ghost Sedan 2012(0.32) Bentley Continental Flying Spur Sedan 2007(0.38) Bentley Arnage Sedan 2009(0.43) BMW M6 Convertible 2010(0.45) |
+| Scion xD Hatchback 2012 | Chevrolet Traverse SUV 2012(0.40) Buick Verano Sedan 2012(0.41) Honda Odyssey Minivan 2012(0.46) Buick Enclave SUV 2012(0.47) Ford Focus Sedan 2007(0.49) |
+| Spyker C8 Convertible 2009 | Spyker C8 Coupe 2009(0.27) FIAT 500 Abarth 2012(0.35) Bentley Arnage Sedan 2009(0.48) Tesla Model S Sedan 2012(0.50) Lamborghini Reventon Coupe 2008(0.53) |
+| Spyker C8 Coupe 2009 | Spyker C8 Convertible 2009(0.27) Tesla Model S Sedan 2012(0.34) Ford GT Coupe 2006(0.59) Dodge Challenger SRT8 2011(0.60) Aston Martin Virage Coupe 2012(0.60) |
+| Suzuki Aerio Sedan 2007 | Lincoln Town Car Sedan 2011(0.42) Honda Odyssey Minivan 2007(0.46) Hyundai Veracruz SUV 2012(0.51) Toyota Sequoia SUV 2012(0.52) Chevrolet Tahoe Hybrid SUV 2012(0.52) |
+| Suzuki Kizashi Sedan 2012 | Buick Regal GS 2012(0.28) Mercedes-Benz E-Class Sedan 2012(0.35) Volkswagen Beetle Hatchback 2012*(0.35) Nissan Juke Hatchback 2012(0.37) Chevrolet Sonic Sedan 2012(0.41) |
+| Suzuki SX4 Hatchback 2012 | Dodge Journey SUV 2012(0.43) Volvo C30 Hatchback 2012*(0.46) Toyota Camry Sedan 2012*(0.51) Suzuki Kizashi Sedan 2012(0.52) Hyundai Veloster Hatchback 2012(0.52) |
+| Suzuki SX4 Sedan 2012 | Chevrolet Traverse SUV 2012(0.37) Chevrolet Impala Sedan 2007(0.39) Chrysler Town and Country Minivan 2012(0.42) Toyota Camry Sedan 2012*(0.43) Hyundai Tucson SUV 2012(0.43) |
+| Tesla Model S Sedan 2012 | Spyker C8 Coupe 2009(0.34) Buick Regal GS 2012(0.45) Dodge Challenger SRT8 2011(0.45) Chevrolet Sonic Sedan 2012(0.46) Chevrolet Corvette Ron Fellows Edition Z06 2007(0.49) |
+| Toyota Sequoia SUV 2012 | Chevrolet Tahoe Hybrid SUV 2012(0.29) Toyota 4Runner SUV 2012*(0.30) BMW X5 SUV 2007(0.41) Volvo XC90 SUV 2007*(0.42) Infiniti QX56 SUV 2011(0.44) |
+| Toyota Camry Sedan 2012* | Mitsubishi Lancer Sedan 2012(0.40) Suzuki Kizashi Sedan 2012(0.41) Suzuki SX4 Sedan 2012(0.43) Hyundai Elantra Sedan 2007(0.43) Chevrolet Impala Sedan 2007(0.47) |
+| Toyota Corolla Sedan 2012* | Volkswagen Golf Hatchback 2012*(0.39) Chevrolet Monte Carlo Coupe 2007(0.43) Acura TSX Sedan 2012(0.45) Hyundai Elantra Sedan 2007(0.46) Hyundai Sonata Hybrid Sedan 2012(0.47) |
+| Toyota 4Runner SUV 2012* | Toyota Sequoia SUV 2012(0.30) Chevrolet Tahoe Hybrid SUV 2012(0.31) Volvo XC90 SUV 2007*(0.35) Infiniti QX56 SUV 2011(0.40) BMW X5 SUV 2007(0.42) |
+| Volkswagen Golf Hatchback 2012* | Acura TSX Sedan 2012(0.22) Hyundai Santa Fe SUV 2012(0.33) Toyota Corolla Sedan 2012*(0.39) Chrysler Crossfire Convertible 2008(0.40) Honda Accord Sedan 2012(0.44) |
+| Volkswagen Golf Hatchback 1991* | Volvo 240 Sedan 1993*(0.26) Plymouth Neon Coupe 1999(0.27) Nissan 240SX Coupe 1998(0.42) Eagle Talon Hatchback 1998(0.43) Jeep Patriot SUV 2012(0.50) |
+| Volkswagen Beetle Hatchback 2012* | Buick Regal GS 2012(0.31) Suzuki Kizashi Sedan 2012(0.35) Dodge Challenger SRT8 2011(0.49) Nissan Juke Hatchback 2012(0.51) Chevrolet Sonic Sedan 2012(0.51) |
+| Volvo C30 Hatchback 2012* | Audi TT RS Coupe 2012(0.31) Dodge Charger Sedan 2012(0.34) Ferrari 458 Italia Convertible 2012(0.40) Ferrari California Convertible 2012(0.44) Suzuki SX4 Hatchback 2012(0.46) |
+| Volvo 240 Sedan 1993* | Volkswagen Golf Hatchback 1991*(0.26) Jeep Patriot SUV 2012(0.41) Jeep Liberty SUV 2012(0.44) Plymouth Neon Coupe 1999(0.54) Jeep Wrangler SUV 2012(0.56) |
+| Volvo XC90 SUV 2007* | GMC Yukon Hybrid SUV 2012(0.33) Toyota 4Runner SUV 2012*(0.35) Land Rover Range Rover SUV 2012(0.37) Jeep Grand Cherokee SUV 2012(0.39) BMW X5 SUV 2007(0.40) |
+| smart fortwo Convertible 2012* | Maybach Landaulet Convertible 2012(0.34) FIAT 500 Convertible 2012(0.38) Geo Metro Convertible 1993(0.48) Bugatti Veyron 16.4 Convertible 2009(0.51) MINI Cooper Roadster Convertible 2012(0.52) |
 
 ## supcon-ft-res (concat)  [cars_lejepa]
 
+agree@1=0.327 agree@5=0.231 (chance 0.040)  dendro-purity=0.239  silhouette=-0.136  within/between=0.802
+
 
 | class | 5 nearest class centroids (cosine dist) |
 |---|---|
-| class0 | class124(0.12) class145(0.25) class123(0.28) class105(0.65) class152(0.69) |
-| class1 | class125(0.34) class4(0.38) class2(0.38) class6(0.41) class128(0.42) |
-| class2 | class4(0.28) class6(0.36) class128(0.37) class1(0.38) class186*(0.40) |
-| class3 | class138(0.40) class2(0.41) class166(0.43) class128(0.45) class34(0.49) |
-| class4 | class189*(0.20) class2(0.28) class128(0.30) class187*(0.33) class1(0.38) |
-| class5 | class152(0.12) class151(0.32) class54(0.35) class65(0.38) class122(0.49) |
-| class6 | class2(0.36) class139(0.38) class1(0.41) class125(0.43) class140(0.45) |
-| class7 | class8(0.15) class37(0.26) class9(0.27) class104(0.30) class45(0.32) |
-| class8 | class7(0.15) class37(0.27) class9(0.31) class45(0.32) class104(0.34) |
-| class9 | class104(0.22) class35(0.27) class7(0.27) class8(0.31) class162(0.33) |
-| class10 | class159(0.23) class129(0.25) class102(0.31) class54(0.34) class95(0.34) |
-| class11 | class20(0.23) class19(0.30) class23(0.34) class13(0.43) class35(0.43) |
-| class12 | class18(0.14) class21(0.20) class22(0.20) class13(0.23) class14(0.28) |
-| class13 | class21(0.17) class18(0.18) class12(0.23) class14(0.25) class22(0.29) |
-| class14 | class18(0.23) class13(0.25) class21(0.27) class12(0.28) class8(0.37) |
-| class15 | class16(0.09) class17(0.13) class160(0.35) class193*(0.35) class190*(0.39) |
-| class16 | class15(0.09) class17(0.13) class160(0.39) class190*(0.46) class193*(0.48) |
-| class17 | class15(0.13) class16(0.13) class160(0.35) class190*(0.41) class122(0.46) |
-| class18 | class12(0.14) class13(0.18) class14(0.23) class21(0.23) class22(0.27) |
-| class19 | class23(0.19) class22(0.27) class20(0.28) class12(0.29) class11(0.30) |
-| class20 | class11(0.23) class19(0.28) class18(0.30) class13(0.32) class22(0.36) |
-| class21 | class13(0.17) class12(0.20) class18(0.23) class14(0.27) class22(0.30) |
-| class22 | class12(0.20) class19(0.27) class18(0.27) class13(0.29) class23(0.29) |
-| class23 | class19(0.19) class22(0.29) class11(0.34) class78(0.39) class12(0.39) |
-| class24 | class18(0.29) class95(0.34) class22(0.37) class192*(0.38) class33(0.40) |
-| class25 | class34(0.25) class162(0.35) class29(0.36) class172(0.38) class9(0.45) |
-| class26 | class33(0.30) class37(0.38) class28(0.39) class18(0.39) class41(0.40) |
-| class27 | class28(0.27) class32(0.29) class41(0.30) class33(0.30) class26(0.43) |
-| class28 | class27(0.27) class33(0.31) class32(0.34) class26(0.39) class127(0.43) |
-| class29 | class34(0.31) class25(0.36) class163(0.38) class19(0.44) class36(0.44) |
-| class30 | class79(0.32) class35(0.35) class7(0.40) class9(0.42) class43(0.44) |
-| class31 | class36(0.32) class194*(0.32) class185(0.43) class147(0.43) class188*(0.45) |
-| class32 | class27(0.29) class28(0.34) class83(0.36) class36(0.37) class59(0.38) |
-| class33 | class18(0.29) class26(0.30) class27(0.30) class28(0.31) class46(0.34) |
-| class34 | class25(0.25) class172(0.26) class29(0.31) class19(0.33) class140(0.36) |
-| class35 | class9(0.27) class7(0.34) class30(0.35) class42(0.38) class104(0.38) |
-| class36 | class31(0.32) class32(0.37) class141(0.41) class29(0.44) class130(0.48) |
-| class37 | class7(0.26) class8(0.27) class38(0.32) class33(0.34) class26(0.38) |
-| class38 | class156(0.23) class44(0.31) class37(0.32) class7(0.33) class41(0.37) |
-| class39 | class40(0.32) class176(0.32) class43(0.35) class98(0.40) class175(0.43) |
-| class40 | class176(0.27) class43(0.28) class39(0.32) class41(0.33) class42(0.35) |
-| class41 | class27(0.30) class40(0.33) class43(0.35) class33(0.35) class42(0.37) |
-| class42 | class43(0.25) class40(0.35) class41(0.37) class35(0.38) class9(0.40) |
-| class43 | class42(0.25) class40(0.28) class39(0.35) class41(0.35) class176(0.40) |
-| class44 | class156(0.30) class38(0.31) class56(0.33) class45(0.35) class7(0.37) |
-| class45 | class55(0.29) class143(0.32) class104(0.32) class8(0.32) class7(0.32) |
-| class46 | class181(0.24) class191*(0.33) class33(0.34) class48(0.38) class184(0.38) |
-| class47 | class94(0.20) class75(0.22) class52(0.29) class108(0.31) class77(0.32) |
-| class48 | class186*(0.26) class181(0.27) class133(0.33) class131(0.33) class137(0.35) |
-| class49 | class132(0.22) class57(0.24) class131(0.34) class177(0.35) class93(0.37) |
-| class50 | class161(0.30) class13(0.31) class21(0.41) class43(0.44) class140(0.45) |
-| class51 | class109(0.25) class125(0.27) class57(0.35) class132(0.39) class183(0.41) |
-| class52 | class94(0.26) class147(0.27) class47(0.29) class75(0.29) class64(0.30) |
-| class53 | class69(0.20) class73(0.23) class64(0.24) class110(0.24) class112(0.24) |
-| class54 | class102(0.25) class111(0.26) class159(0.26) class101(0.27) class151(0.28) |
-| class55 | class45(0.29) class104(0.34) class178(0.38) class111(0.38) class7(0.38) |
-| class56 | class44(0.33) class38(0.37) class92(0.37) class157(0.39) class179(0.48) |
-| class57 | class132(0.23) class49(0.24) class183(0.25) class88(0.26) class77(0.27) |
-| class58 | class96(0.28) class106(0.29) class95(0.34) class54(0.41) class92(0.44) |
-| class59 | class91(0.33) class83(0.37) class32(0.38) class82(0.42) class96(0.47) |
-| class60 | class114(0.20) class72(0.20) class76(0.23) class134(0.28) class71(0.32) |
-| class61 | class188*(0.25) class185(0.26) class142(0.38) class158(0.40) class108(0.45) |
-| class62 | class169(0.28) class181(0.31) class177(0.37) class166(0.37) class167(0.39) |
-| class63 | class70(0.04) class118(0.11) class165(0.21) class115(0.30) class168(0.31) |
-| class64 | class53(0.24) class52(0.30) class89(0.31) class110(0.34) class108(0.34) |
-| class65 | class5(0.38) class96(0.43) class192*(0.47) class95(0.48) class59(0.50) |
-| class66 | class128(0.28) class76(0.31) class60(0.34) class187*(0.36) class189*(0.39) |
-| class67 | class194*(0.33) class52(0.33) class119(0.39) class147(0.43) class94(0.44) |
-| class68 | class73(0.20) class115(0.26) class53(0.26) class118(0.29) class112(0.30) |
-| class69 | class53(0.20) class110(0.24) class90(0.28) class121(0.32) class89(0.32) |
-| class70 | class63(0.04) class118(0.07) class165(0.21) class115(0.23) class87(0.29) |
-| class71 | class72(0.24) class114(0.30) class155(0.32) class60(0.32) class81(0.35) |
-| class72 | class114(0.16) class60(0.20) class71(0.24) class155(0.30) class81(0.32) |
-| class73 | class86(0.20) class68(0.20) class53(0.23) class74(0.23) class90(0.24) |
-| class74 | class86(0.15) class113(0.16) class73(0.23) class121(0.26) class90(0.28) |
-| class75 | class47(0.22) class94(0.24) class52(0.29) class185(0.29) class108(0.31) |
-| class76 | class60(0.23) class66(0.31) class72(0.34) class134(0.38) class71(0.39) |
-| class77 | class57(0.27) class126(0.28) class47(0.32) class185(0.35) class88(0.36) |
-| class78 | class176(0.37) class23(0.39) class40(0.39) class19(0.41) class39(0.44) |
-| class79 | class30(0.32) class160(0.37) class106(0.41) class7(0.43) class174(0.45) |
-| class80 | class141(0.47) class49(0.50) class191*(0.52) class93(0.53) class99(0.55) |
-| class81 | class155(0.28) class160(0.32) class72(0.32) class71(0.35) class180(0.36) |
-| class82 | class83(0.24) class47(0.41) class91(0.41) class59(0.42) class120(0.42) |
-| class83 | class82(0.24) class32(0.36) class59(0.37) class91(0.44) class182(0.47) |
-| class84 | class171(0.26) class107(0.37) class114(0.41) class97(0.48) class165(0.50) |
-| class85 | class105(0.16) class53(0.27) class112(0.32) class108(0.34) class64(0.38) |
-| class86 | class74(0.15) class113(0.17) class73(0.20) class90(0.23) class121(0.24) |
-| class87 | class165(0.12) class118(0.23) class115(0.26) class70(0.29) class63(0.34) |
-| class88 | class57(0.26) class77(0.36) class148(0.37) class182(0.38) class93(0.39) |
-| class89 | class110(0.26) class121(0.27) class90(0.28) class64(0.31) class69(0.32) |
-| class90 | class110(0.22) class86(0.23) class73(0.24) class74(0.28) class89(0.28) |
-| class91 | class106(0.30) class59(0.33) class96(0.40) class82(0.41) class83(0.44) |
-| class92 | class111(0.35) class56(0.37) class58(0.44) class11(0.45) class174(0.47) |
-| class93 | class147(0.29) class194*(0.32) class148(0.35) class153(0.37) class49(0.37) |
-| class94 | class47(0.20) class75(0.24) class147(0.25) class108(0.26) class52(0.26) |
-| class95 | class96(0.25) class10(0.34) class58(0.34) class24(0.34) class192*(0.40) |
-| class96 | class106(0.22) class95(0.25) class58(0.28) class91(0.40) class170(0.42) |
-| class97 | class170(0.23) class171(0.25) class71(0.46) class84(0.48) class114(0.53) |
-| class98 | class39(0.40) class178(0.52) class35(0.52) class11(0.55) class43(0.57) |
-| class99 | class156(0.29) class195*(0.34) class157(0.36) class44(0.38) class38(0.44) |
-| class100 | class101(0.34) class103(0.35) class102(0.35) class150(0.46) class10(0.47) |
-| class101 | class102(0.06) class103(0.13) class54(0.27) class150(0.29) class111(0.33) |
-| class102 | class101(0.06) class103(0.08) class150(0.15) class159(0.22) class54(0.25) |
-| class103 | class102(0.08) class101(0.13) class150(0.14) class159(0.29) class100(0.35) |
-| class104 | class9(0.22) class7(0.30) class45(0.32) class8(0.34) class55(0.34) |
-| class105 | class85(0.16) class112(0.29) class53(0.32) class115(0.34) class69(0.35) |
-| class106 | class96(0.22) class58(0.29) class91(0.30) class170(0.35) class79(0.41) |
-| class107 | class47(0.33) class84(0.37) class126(0.41) class155(0.41) class114(0.42) |
-| class108 | class94(0.26) class142(0.27) class47(0.31) class75(0.31) class147(0.32) |
-| class109 | class51(0.25) class147(0.35) class93(0.39) class125(0.39) class154(0.41) |
-| class110 | class90(0.22) class53(0.24) class69(0.24) class121(0.26) class89(0.26) |
-| class111 | class54(0.26) class102(0.32) class101(0.33) class92(0.35) class55(0.38) |
-| class112 | class53(0.24) class113(0.25) class86(0.28) class105(0.29) class110(0.30) |
-| class113 | class74(0.16) class86(0.17) class112(0.25) class73(0.26) class90(0.29) |
-| class114 | class72(0.16) class60(0.20) class126(0.24) class134(0.28) class71(0.30) |
-| class115 | class118(0.15) class70(0.23) class68(0.26) class87(0.26) class63(0.30) |
-| class116 | class131(0.26) class186*(0.30) class134(0.31) class138(0.32) class183(0.34) |
-| class117 | class147(0.30) class185(0.33) class75(0.34) class52(0.36) class64(0.37) |
-| class118 | class70(0.07) class63(0.11) class115(0.15) class87(0.23) class165(0.24) |
-| class119 | class194*(0.26) class147(0.29) class94(0.29) class153(0.30) class52(0.30) |
-| class120 | class130(0.30) class147(0.31) class194*(0.32) class94(0.34) class52(0.38) |
-| class121 | class86(0.24) class74(0.26) class110(0.26) class89(0.27) class73(0.30) |
-| class122 | class160(0.27) class171(0.39) class190*(0.45) class17(0.46) class170(0.48) |
-| class123 | class124(0.12) class145(0.14) class0(0.28) class144(0.43) class146(0.46) |
-| class124 | class0(0.12) class123(0.12) class145(0.17) class105(0.42) class115(0.61) |
-| class125 | class51(0.27) class183(0.33) class1(0.34) class177(0.35) class132(0.36) |
-| class126 | class114(0.24) class77(0.28) class180(0.31) class57(0.33) class132(0.33) |
-| class127 | class135(0.31) class133(0.35) class4(0.39) class187*(0.41) class28(0.43) |
-| class128 | class66(0.28) class189*(0.29) class4(0.30) class2(0.37) class134(0.39) |
-| class129 | class10(0.25) class159(0.26) class150(0.46) class192*(0.46) class143(0.47) |
-| class130 | class120(0.30) class189*(0.37) class77(0.44) class109(0.45) class147(0.47) |
-| class131 | class116(0.26) class57(0.29) class183(0.31) class132(0.31) class48(0.33) |
-| class132 | class49(0.22) class57(0.23) class131(0.31) class126(0.33) class125(0.36) |
-| class133 | class137(0.30) class186*(0.31) class48(0.33) class127(0.35) class135(0.35) |
-| class134 | class60(0.28) class114(0.28) class187*(0.29) class138(0.31) class116(0.31) |
-| class135 | class127(0.31) class133(0.35) class187*(0.37) class48(0.43) class4(0.44) |
-| class136 | class139(0.28) class164(0.36) class137(0.37) class131(0.38) class163(0.41) |
-| class137 | class133(0.30) class48(0.35) class136(0.37) class131(0.37) class186*(0.39) |
-| class138 | class134(0.31) class116(0.32) class186*(0.33) class183(0.33) class128(0.39) |
-| class139 | class136(0.28) class163(0.36) class131(0.37) class6(0.38) class181(0.38) |
-| class140 | class172(0.28) class21(0.31) class34(0.36) class13(0.38) class104(0.40) |
-| class141 | class93(0.41) class36(0.41) class185(0.44) class31(0.46) class80(0.47) |
-| class142 | class108(0.27) class69(0.32) class112(0.33) class75(0.35) class47(0.36) |
-| class143 | class172(0.26) class45(0.32) class8(0.35) class184(0.39) class104(0.41) |
-| class144 | class146(0.08) class153(0.38) class145(0.40) class86(0.41) class123(0.43) |
-| class145 | class123(0.14) class124(0.17) class0(0.25) class146(0.38) class144(0.40) |
-| class146 | class144(0.08) class145(0.38) class153(0.40) class86(0.44) class119(0.46) |
-| class147 | class194*(0.24) class94(0.25) class52(0.27) class188*(0.28) class185(0.28) |
-| class148 | class93(0.35) class88(0.37) class147(0.41) class194*(0.41) class119(0.42) |
-| class149 | class45(0.42) class178(0.42) class179(0.45) class104(0.50) class111(0.52) |
-| class150 | class159(0.14) class103(0.14) class102(0.15) class101(0.29) class151(0.35) |
-| class151 | class152(0.14) class159(0.21) class54(0.28) class5(0.32) class150(0.35) |
-| class152 | class5(0.12) class151(0.14) class54(0.29) class159(0.32) class111(0.51) |
-| class153 | class194*(0.29) class119(0.30) class93(0.37) class188*(0.37) class144(0.38) |
-| class154 | class185(0.27) class194*(0.28) class188*(0.29) class158(0.29) class94(0.33) |
-| class155 | class81(0.28) class72(0.30) class71(0.32) class180(0.33) class160(0.38) |
-| class156 | class38(0.23) class99(0.29) class44(0.30) class26(0.40) class157(0.43) |
-| class157 | class99(0.36) class56(0.39) class38(0.39) class156(0.43) class195*(0.46) |
-| class158 | class185(0.28) class154(0.29) class47(0.33) class194*(0.35) class94(0.37) |
-| class159 | class150(0.14) class151(0.21) class102(0.22) class10(0.23) class54(0.26) |
-| class160 | class122(0.27) class81(0.32) class15(0.35) class17(0.35) class170(0.36) |
-| class161 | class50(0.30) class164(0.34) class13(0.42) class140(0.46) class43(0.52) |
-| class162 | class163(0.28) class9(0.33) class25(0.35) class172(0.36) class35(0.38) |
-| class163 | class162(0.28) class181(0.34) class164(0.34) class139(0.36) class34(0.38) |
-| class164 | class161(0.34) class163(0.34) class136(0.36) class162(0.47) class50(0.49) |
-| class165 | class87(0.12) class63(0.21) class70(0.21) class118(0.24) class168(0.30) |
-| class166 | class186*(0.35) class181(0.36) class62(0.37) class3(0.43) class2(0.43) |
-| class167 | class62(0.39) class116(0.41) class169(0.41) class183(0.45) class186*(0.47) |
-| class168 | class118(0.25) class70(0.29) class165(0.30) class63(0.31) class115(0.32) |
-| class169 | class62(0.28) class181(0.36) class191*(0.39) class167(0.41) class192*(0.46) |
-| class170 | class97(0.23) class171(0.30) class106(0.35) class160(0.36) class71(0.39) |
-| class171 | class97(0.25) class190*(0.26) class84(0.26) class170(0.30) class160(0.39) |
-| class172 | class34(0.26) class143(0.26) class140(0.28) class8(0.34) class20(0.36) |
-| class173 | class180(0.49) class107(0.51) class77(0.51) class120(0.52) class87(0.54) |
-| class174 | class176(0.22) class40(0.42) class38(0.42) class175(0.42) class79(0.45) |
-| class175 | class176(0.21) class40(0.36) class42(0.41) class174(0.42) class39(0.43) |
-| class176 | class175(0.21) class174(0.22) class40(0.27) class39(0.32) class78(0.37) |
-| class177 | class57(0.28) class49(0.35) class125(0.35) class62(0.37) class132(0.40) |
-| class178 | class179(0.13) class55(0.38) class104(0.38) class149(0.42) class111(0.43) |
-| class179 | class178(0.13) class104(0.36) class7(0.40) class184(0.40) class111(0.42) |
-| class180 | class126(0.31) class155(0.33) class114(0.35) class81(0.36) class72(0.41) |
-| class181 | class46(0.24) class186*(0.26) class48(0.27) class62(0.31) class191*(0.34) |
-| class182 | class183(0.30) class57(0.37) class88(0.38) class177(0.40) class116(0.40) |
-| class183 | class57(0.25) class182(0.30) class131(0.31) class138(0.33) class125(0.33) |
-| class184 | class104(0.36) class46(0.38) class143(0.39) class179(0.40) class9(0.44) |
-| class185 | class188*(0.22) class61(0.26) class154(0.27) class194*(0.27) class158(0.28) |
-| class186* | class48(0.26) class181(0.26) class116(0.30) class133(0.31) class138(0.33) |
-| class187* | class189*(0.26) class134(0.29) class4(0.33) class66(0.36) class135(0.37) |
-| class188* | class185(0.22) class61(0.25) class194*(0.28) class147(0.28) class154(0.29) |
-| class189* | class4(0.20) class187*(0.26) class128(0.29) class130(0.37) class66(0.39) |
-| class190* | class193*(0.17) class171(0.26) class15(0.39) class17(0.41) class160(0.42) |
-| class191* | class46(0.33) class181(0.34) class192*(0.39) class169(0.39) class62(0.41) |
-| class192* | class24(0.38) class191*(0.39) class95(0.40) class182(0.44) class181(0.45) |
-| class193* | class190*(0.17) class15(0.35) class160(0.41) class144(0.45) class90(0.48) |
-| class194* | class147(0.24) class119(0.26) class185(0.27) class94(0.28) class188*(0.28) |
-| class195* | class99(0.34) class157(0.46) class167(0.48) class62(0.51) class156(0.52) |
+| AM General Hummer SUV 2000 | HUMMER H2 SUT Crew Cab 2009(0.12) Jeep Wrangler SUV 2012(0.25) HUMMER H3T Crew Cab 2010(0.28) Ford F-450 Super Duty Crew Cab 2012(0.65) Lamborghini Diablo Coupe 2001(0.69) |
+| Acura RL Sedan 2012 | Honda Odyssey Minivan 2012(0.34) Acura TSX Sedan 2012(0.38) Acura TL Sedan 2012(0.38) Acura ZDX Hatchback 2012(0.41) Honda Accord Sedan 2012(0.42) |
+| Acura TL Sedan 2012 | Acura TSX Sedan 2012(0.28) Acura ZDX Hatchback 2012(0.36) Honda Accord Sedan 2012(0.37) Acura RL Sedan 2012(0.38) Toyota Camry Sedan 2012*(0.40) |
+| Acura TL Type-S 2008 | Hyundai Elantra Touring Hatchback 2012(0.40) Acura TL Sedan 2012(0.41) Mitsubishi Lancer Sedan 2012(0.43) Honda Accord Sedan 2012(0.45) BMW M5 Sedan 2010(0.49) |
+| Acura TSX Sedan 2012 | Volkswagen Golf Hatchback 2012*(0.20) Acura TL Sedan 2012(0.28) Honda Accord Sedan 2012(0.30) Toyota Corolla Sedan 2012*(0.33) Acura RL Sedan 2012(0.38) |
+| Acura Integra Type R 2001 | Lamborghini Diablo Coupe 2001(0.12) Lamborghini Gallardo LP 570-4 Superleggera 2012(0.32) Chevrolet Corvette Convertible 2012(0.35) Chevrolet Cobalt SS 2010(0.38) Geo Metro Convertible 1993(0.49) |
+| Acura ZDX Hatchback 2012 | Acura TL Sedan 2012(0.36) Hyundai Azera Sedan 2012(0.38) Acura RL Sedan 2012(0.41) Honda Odyssey Minivan 2012(0.43) Infiniti G Coupe IPL 2012(0.45) |
+| Aston Martin V8 Vantage Convertible 2012 | Aston Martin V8 Vantage Coupe 2012(0.15) BMW Z4 Convertible 2012(0.26) Aston Martin Virage Convertible 2012(0.27) Fisker Karma Sedan 2012(0.30) Bugatti Veyron 16.4 Coupe 2009(0.32) |
+| Aston Martin V8 Vantage Coupe 2012 | Aston Martin V8 Vantage Convertible 2012(0.15) BMW Z4 Convertible 2012(0.27) Aston Martin Virage Convertible 2012(0.31) Bugatti Veyron 16.4 Coupe 2009(0.32) Fisker Karma Sedan 2012(0.34) |
+| Aston Martin Virage Convertible 2012 | Fisker Karma Sedan 2012(0.22) BMW M6 Convertible 2010(0.27) Aston Martin V8 Vantage Convertible 2012(0.27) Aston Martin V8 Vantage Coupe 2012(0.31) Mercedes-Benz SL-Class Coupe 2009(0.33) |
+| Aston Martin Virage Coupe 2012 | McLaren MP4-12C Coupe 2012(0.23) Hyundai Veloster Hatchback 2012(0.25) Ferrari 458 Italia Convertible 2012(0.31) Chevrolet Corvette Convertible 2012(0.34) Dodge Charger Sedan 2012(0.34) |
+| Audi RS 4 Convertible 2008 | Audi S5 Convertible 2012(0.23) Audi S6 Sedan 2011(0.30) Audi S4 Sedan 2007(0.34) Audi TTS Coupe 2012(0.43) BMW M6 Convertible 2010(0.43) |
+| Audi A5 Coupe 2012 | Audi TT Hatchback 2011(0.14) Audi S5 Coupe 2012(0.20) Audi S4 Sedan 2012(0.20) Audi TTS Coupe 2012(0.23) Audi R8 Coupe 2012(0.28) |
+| Audi TTS Coupe 2012 | Audi S5 Coupe 2012(0.17) Audi TT Hatchback 2011(0.18) Audi A5 Coupe 2012(0.23) Audi R8 Coupe 2012(0.25) Audi S4 Sedan 2012(0.29) |
+| Audi R8 Coupe 2012 | Audi TT Hatchback 2011(0.23) Audi TTS Coupe 2012(0.25) Audi S5 Coupe 2012(0.27) Audi A5 Coupe 2012(0.28) Aston Martin V8 Vantage Coupe 2012(0.37) |
+| Audi V8 Sedan 1994 | Audi 100 Sedan 1994(0.09) Audi 100 Wagon 1994(0.13) Mercedes-Benz 300-Class Convertible 1993(0.35) Volvo 240 Sedan 1993*(0.35) Volkswagen Golf Hatchback 1991*(0.39) |
+| Audi 100 Sedan 1994 | Audi V8 Sedan 1994(0.09) Audi 100 Wagon 1994(0.13) Mercedes-Benz 300-Class Convertible 1993(0.39) Volkswagen Golf Hatchback 1991*(0.46) Volvo 240 Sedan 1993*(0.48) |
+| Audi 100 Wagon 1994 | Audi V8 Sedan 1994(0.13) Audi 100 Sedan 1994(0.13) Mercedes-Benz 300-Class Convertible 1993(0.35) Volkswagen Golf Hatchback 1991*(0.41) Geo Metro Convertible 1993(0.46) |
+| Audi TT Hatchback 2011 | Audi A5 Coupe 2012(0.14) Audi TTS Coupe 2012(0.18) Audi R8 Coupe 2012(0.23) Audi S5 Coupe 2012(0.23) Audi S4 Sedan 2012(0.27) |
+| Audi S6 Sedan 2011 | Audi S4 Sedan 2007(0.19) Audi S4 Sedan 2012(0.27) Audi S5 Convertible 2012(0.28) Audi A5 Coupe 2012(0.29) Audi RS 4 Convertible 2008(0.30) |
+| Audi S5 Convertible 2012 | Audi RS 4 Convertible 2008(0.23) Audi S6 Sedan 2011(0.28) Audi TT Hatchback 2011(0.30) Audi TTS Coupe 2012(0.32) Audi S4 Sedan 2012(0.36) |
+| Audi S5 Coupe 2012 | Audi TTS Coupe 2012(0.17) Audi A5 Coupe 2012(0.20) Audi TT Hatchback 2011(0.23) Audi R8 Coupe 2012(0.27) Audi S4 Sedan 2012(0.30) |
+| Audi S4 Sedan 2012 | Audi A5 Coupe 2012(0.20) Audi S6 Sedan 2011(0.27) Audi TT Hatchback 2011(0.27) Audi TTS Coupe 2012(0.29) Audi S4 Sedan 2007(0.29) |
+| Audi S4 Sedan 2007 | Audi S6 Sedan 2011(0.19) Audi S4 Sedan 2012(0.29) Audi RS 4 Convertible 2008(0.34) Chrysler 300 SRT-8 2010(0.39) Audi A5 Coupe 2012(0.39) |
+| Audi TT RS Coupe 2012 | Audi TT Hatchback 2011(0.29) Dodge Charger Sedan 2012(0.34) Audi S4 Sedan 2012(0.37) Volvo C30 Hatchback 2012*(0.38) BMW M3 Coupe 2012(0.40) |
+| BMW ActiveHybrid 5 Sedan 2012 | BMW M5 Sedan 2010(0.25) Mercedes-Benz SL-Class Coupe 2009(0.35) BMW 3 Series Wagon 2012(0.36) Porsche Panamera Sedan 2012(0.38) Aston Martin Virage Convertible 2012(0.45) |
+| BMW 1 Series Convertible 2012 | BMW M3 Coupe 2012(0.30) BMW Z4 Convertible 2012(0.38) BMW 3 Series Sedan 2012(0.39) Audi TT Hatchback 2011(0.39) Bentley Continental GT Coupe 2012(0.40) |
+| BMW 1 Series Coupe 2012 | BMW 3 Series Sedan 2012(0.27) BMW X6 SUV 2012(0.29) Bentley Continental GT Coupe 2012(0.30) BMW M3 Coupe 2012(0.30) BMW 1 Series Convertible 2012(0.43) |
+| BMW 3 Series Sedan 2012 | BMW 1 Series Coupe 2012(0.27) BMW M3 Coupe 2012(0.31) BMW X6 SUV 2012(0.34) BMW 1 Series Convertible 2012(0.39) Honda Accord Coupe 2012(0.43) |
+| BMW 3 Series Wagon 2012 | BMW M5 Sedan 2010(0.31) BMW ActiveHybrid 5 Sedan 2012(0.36) Mercedes-Benz E-Class Sedan 2012(0.38) Audi S6 Sedan 2011(0.44) BMW X3 SUV 2012(0.44) |
+| BMW 6 Series Convertible 2007 | Chrysler Crossfire Convertible 2008(0.32) BMW M6 Convertible 2010(0.35) Aston Martin V8 Vantage Convertible 2012(0.40) Aston Martin Virage Convertible 2012(0.42) Bentley Continental Flying Spur Sedan 2007(0.44) |
+| BMW X5 SUV 2007 | BMW X3 SUV 2012(0.32) Volvo XC90 SUV 2007*(0.32) Toyota Sequoia SUV 2012(0.43) Jeep Grand Cherokee SUV 2012(0.43) Toyota 4Runner SUV 2012*(0.45) |
+| BMW X6 SUV 2012 | BMW 1 Series Coupe 2012(0.29) BMW 3 Series Sedan 2012(0.34) Dodge Caliber Wagon 2007(0.36) BMW X3 SUV 2012(0.37) Chevrolet HHR SS 2010(0.38) |
+| BMW M3 Coupe 2012 | Audi TT Hatchback 2011(0.29) BMW 1 Series Convertible 2012(0.30) BMW 1 Series Coupe 2012(0.30) BMW 3 Series Sedan 2012(0.31) Buick Regal GS 2012(0.34) |
+| BMW M5 Sedan 2010 | BMW ActiveHybrid 5 Sedan 2012(0.25) Porsche Panamera Sedan 2012(0.26) BMW 3 Series Wagon 2012(0.31) Audi S6 Sedan 2011(0.33) Infiniti G Coupe IPL 2012(0.36) |
+| BMW M6 Convertible 2010 | Aston Martin Virage Convertible 2012(0.27) Aston Martin V8 Vantage Convertible 2012(0.34) BMW 6 Series Convertible 2007(0.35) Bentley Continental GT Coupe 2007(0.38) Fisker Karma Sedan 2012(0.38) |
+| BMW X3 SUV 2012 | BMW X5 SUV 2007(0.32) BMW X6 SUV 2012(0.37) Infiniti QX56 SUV 2011(0.41) BMW 3 Series Wagon 2012(0.44) Hyundai Santa Fe SUV 2012(0.48) |
+| BMW Z4 Convertible 2012 | Aston Martin V8 Vantage Convertible 2012(0.26) Aston Martin V8 Vantage Coupe 2012(0.27) Bentley Continental Supersports Conv. Convertible 2012(0.32) BMW M3 Coupe 2012(0.34) BMW 1 Series Convertible 2012(0.38) |
+| Bentley Continental Supersports Conv. Convertible 2012 | MINI Cooper Roadster Convertible 2012(0.23) Bugatti Veyron 16.4 Convertible 2009(0.31) BMW Z4 Convertible 2012(0.32) Aston Martin V8 Vantage Convertible 2012(0.33) Bentley Continental GT Coupe 2012(0.37) |
+| Bentley Arnage Sedan 2009 | Bentley Mulsanne Sedan 2011(0.32) Rolls-Royce Phantom Sedan 2012(0.32) Bentley Continental Flying Spur Sedan 2007(0.35) FIAT 500 Abarth 2012(0.40) Rolls-Royce Ghost Sedan 2012(0.43) |
+| Bentley Mulsanne Sedan 2011 | Rolls-Royce Phantom Sedan 2012(0.27) Bentley Continental Flying Spur Sedan 2007(0.28) Bentley Arnage Sedan 2009(0.32) Bentley Continental GT Coupe 2012(0.33) Bentley Continental GT Coupe 2007(0.35) |
+| Bentley Continental GT Coupe 2012 | BMW 1 Series Coupe 2012(0.30) Bentley Mulsanne Sedan 2011(0.33) Bentley Continental Flying Spur Sedan 2007(0.35) BMW M3 Coupe 2012(0.35) Bentley Continental GT Coupe 2007(0.37) |
+| Bentley Continental GT Coupe 2007 | Bentley Continental Flying Spur Sedan 2007(0.25) Bentley Mulsanne Sedan 2011(0.35) Bentley Continental GT Coupe 2012(0.37) BMW M6 Convertible 2010(0.38) Aston Martin Virage Convertible 2012(0.40) |
+| Bentley Continental Flying Spur Sedan 2007 | Bentley Continental GT Coupe 2007(0.25) Bentley Mulsanne Sedan 2011(0.28) Bentley Arnage Sedan 2009(0.35) Bentley Continental GT Coupe 2012(0.35) Rolls-Royce Phantom Sedan 2012(0.40) |
+| Bugatti Veyron 16.4 Convertible 2009 | MINI Cooper Roadster Convertible 2012(0.30) Bentley Continental Supersports Conv. Convertible 2012(0.31) Chevrolet Corvette Ron Fellows Edition Z06 2007(0.33) Bugatti Veyron 16.4 Coupe 2009(0.35) Aston Martin V8 Vantage Convertible 2012(0.37) |
+| Bugatti Veyron 16.4 Coupe 2009 | Chevrolet Corvette ZR1 2012(0.29) Jaguar XK XKR 2012(0.32) Fisker Karma Sedan 2012(0.32) Aston Martin V8 Vantage Coupe 2012(0.32) Aston Martin V8 Vantage Convertible 2012(0.32) |
+| Buick Regal GS 2012 | Suzuki Kizashi Sedan 2012(0.24) Volkswagen Beetle Hatchback 2012*(0.33) BMW M3 Coupe 2012(0.34) Buick Verano Sedan 2012(0.38) Tesla Model S Sedan 2012(0.38) |
+| Buick Rainier SUV 2007 | Dodge Durango SUV 2007(0.20) Chrysler Aspen SUV 2009(0.22) Cadillac Escalade EXT Crew Cab 2007(0.29) Ford Expedition EL SUV 2009(0.31) Chrysler Town and Country Minivan 2012(0.32) |
+| Buick Verano Sedan 2012 | Toyota Camry Sedan 2012*(0.26) Suzuki Kizashi Sedan 2012(0.27) Hyundai Sonata Hybrid Sedan 2012(0.33) Hyundai Tucson SUV 2012(0.33) Hyundai Sonata Sedan 2012(0.35) |
+| Buick Enclave SUV 2012 | Hyundai Veracruz SUV 2012(0.22) Chevrolet Traverse SUV 2012(0.24) Hyundai Tucson SUV 2012(0.34) Scion xD Hatchback 2012(0.35) Dodge Durango SUV 2012(0.37) |
+| Cadillac CTS-V Sedan 2012 | Mercedes-Benz C-Class Sedan 2012(0.30) Audi TTS Coupe 2012(0.31) Audi S5 Coupe 2012(0.41) Bentley Continental Flying Spur Sedan 2007(0.44) Infiniti G Coupe IPL 2012(0.45) |
+| Cadillac SRX SUV 2012 | Ford Edge SUV 2012(0.25) Honda Odyssey Minivan 2012(0.27) Chevrolet Traverse SUV 2012(0.35) Hyundai Veracruz SUV 2012(0.39) Suzuki SX4 Sedan 2012(0.41) |
+| Cadillac Escalade EXT Crew Cab 2007 | Dodge Durango SUV 2007(0.26) Jeep Grand Cherokee SUV 2012(0.27) Buick Rainier SUV 2007(0.29) Chrysler Aspen SUV 2009(0.29) Chevrolet Avalanche Crew Cab 2012(0.30) |
+| Chevrolet Silverado 1500 Hybrid Crew Cab 2012 | Chevrolet Silverado 1500 Classic Extended Cab 2007(0.20) Chevrolet Silverado 1500 Extended Cab 2012(0.23) Chevrolet Avalanche Crew Cab 2012(0.24) Ford Ranger SuperCab 2011(0.24) Ford F-150 Regular Cab 2012(0.24) |
+| Chevrolet Corvette Convertible 2012 | Ferrari 458 Italia Convertible 2012(0.25) Ford GT Coupe 2006(0.26) McLaren MP4-12C Coupe 2012(0.26) Ferrari California Convertible 2012(0.27) Lamborghini Gallardo LP 570-4 Superleggera 2012(0.28) |
+| Chevrolet Corvette ZR1 2012 | Bugatti Veyron 16.4 Coupe 2009(0.29) Fisker Karma Sedan 2012(0.34) Spyker C8 Convertible 2009(0.38) Ford GT Coupe 2006(0.38) Aston Martin V8 Vantage Convertible 2012(0.38) |
+| Chevrolet Corvette Ron Fellows Edition Z06 2007 | Bugatti Veyron 16.4 Convertible 2009(0.33) Bentley Continental Supersports Conv. Convertible 2012(0.37) Dodge Challenger SRT8 2011(0.37) Maybach Landaulet Convertible 2012(0.39) Spyker C8 Coupe 2009(0.48) |
+| Chevrolet Traverse SUV 2012 | Hyundai Veracruz SUV 2012(0.23) Buick Enclave SUV 2012(0.24) Suzuki SX4 Sedan 2012(0.25) Dodge Journey SUV 2012(0.26) Chrysler Town and Country Minivan 2012(0.27) |
+| Chevrolet Camaro Convertible 2012 | Dodge Charger SRT-8 2009(0.28) Ford Mustang Convertible 2007(0.29) Dodge Charger Sedan 2012(0.34) Chevrolet Corvette Convertible 2012(0.41) Dodge Challenger SRT8 2011(0.44) |
+| Chevrolet HHR SS 2010 | Dodge Magnum Wagon 2008(0.33) Dodge Caliber Wagon 2007(0.37) BMW X6 SUV 2012(0.38) Dodge Caliber Wagon 2012(0.42) Dodge Charger SRT-8 2009(0.47) |
+| Chevrolet Impala Sedan 2007 | Ford Focus Sedan 2007(0.20) Chevrolet Malibu Sedan 2007(0.20) Chrysler Sebring Convertible 2010(0.23) Hyundai Elantra Sedan 2007(0.28) Chevrolet Monte Carlo Coupe 2007(0.32) |
+| Chevrolet Tahoe Hybrid SUV 2012 | Toyota 4Runner SUV 2012*(0.25) Toyota Sequoia SUV 2012(0.26) Isuzu Ascender SUV 2008(0.38) Mazda Tribute SUV 2011(0.40) Ford Expedition EL SUV 2009(0.45) |
+| Chevrolet Sonic Sedan 2012 | Nissan Juke Hatchback 2012(0.28) Suzuki Kizashi Sedan 2012(0.31) Scion xD Hatchback 2012(0.37) Mitsubishi Lancer Sedan 2012(0.37) Nissan Leaf Hatchback 2012(0.39) |
+| Chevrolet Express Cargo Van 2007 | Chevrolet Express Van 2007(0.04) GMC Savana Van 2012(0.11) Mercedes-Benz Sprinter Van 2012(0.21) Ford E-Series Wagon Van 2012(0.30) Nissan NV Passenger Van 2012(0.31) |
+| Chevrolet Avalanche Crew Cab 2012 | Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.24) Cadillac Escalade EXT Crew Cab 2007(0.30) Dodge Dakota Crew Cab 2010(0.31) Ford Ranger SuperCab 2011(0.34) Ford Expedition EL SUV 2009(0.34) |
+| Chevrolet Cobalt SS 2010 | Acura Integra Type R 2001(0.38) Dodge Charger SRT-8 2009(0.43) Volvo C30 Hatchback 2012*(0.47) Dodge Charger Sedan 2012(0.48) Chevrolet HHR SS 2010(0.50) |
+| Chevrolet Malibu Hybrid Sedan 2010 | Honda Accord Sedan 2012(0.28) Chrysler Sebring Convertible 2010(0.31) Chevrolet Impala Sedan 2007(0.34) Toyota Corolla Sedan 2012*(0.36) Volkswagen Golf Hatchback 2012*(0.39) |
+| Chevrolet TrailBlazer SS 2009 | Volvo XC90 SUV 2007*(0.33) Cadillac Escalade EXT Crew Cab 2007(0.33) GMC Yukon Hybrid SUV 2012(0.39) Jeep Grand Cherokee SUV 2012(0.43) Dodge Durango SUV 2007(0.44) |
+| Chevrolet Silverado 2500HD Regular Cab 2012 | Chevrolet Silverado 1500 Extended Cab 2012(0.20) Ford E-Series Wagon Van 2012(0.26) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.26) GMC Savana Van 2012(0.29) Ford F-150 Regular Cab 2012(0.30) |
+| Chevrolet Silverado 1500 Classic Extended Cab 2007 | Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.20) Ford Ranger SuperCab 2011(0.24) Dodge Dakota Club Cab 2007(0.28) GMC Canyon Extended Cab 2012(0.32) Dodge Dakota Crew Cab 2010(0.32) |
+| Chevrolet Express Van 2007 | Chevrolet Express Cargo Van 2007(0.04) GMC Savana Van 2012(0.07) Mercedes-Benz Sprinter Van 2012(0.21) Ford E-Series Wagon Van 2012(0.23) Dodge Sprinter Cargo Van 2009(0.29) |
+| Chevrolet Monte Carlo Coupe 2007 | Chevrolet Malibu Sedan 2007(0.24) Ford Focus Sedan 2007(0.30) Lincoln Town Car Sedan 2011(0.32) Chevrolet Impala Sedan 2007(0.32) Daewoo Nubira Wagon 2002(0.35) |
+| Chevrolet Malibu Sedan 2007 | Ford Focus Sedan 2007(0.16) Chevrolet Impala Sedan 2007(0.20) Chevrolet Monte Carlo Coupe 2007(0.24) Lincoln Town Car Sedan 2011(0.30) Daewoo Nubira Wagon 2002(0.32) |
+| Chevrolet Silverado 1500 Extended Cab 2012 | Dodge Ram Pickup 3500 Quad Cab 2009(0.20) Chevrolet Silverado 2500HD Regular Cab 2012(0.20) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.23) Chevrolet Silverado 1500 Regular Cab 2012(0.23) Dodge Dakota Club Cab 2007(0.24) |
+| Chevrolet Silverado 1500 Regular Cab 2012 | Dodge Ram Pickup 3500 Quad Cab 2009(0.15) Ford F-150 Regular Cab 2007(0.16) Chevrolet Silverado 1500 Extended Cab 2012(0.23) GMC Canyon Extended Cab 2012(0.26) Dodge Dakota Club Cab 2007(0.28) |
+| Chrysler Aspen SUV 2009 | Buick Rainier SUV 2007(0.22) Dodge Durango SUV 2007(0.24) Cadillac Escalade EXT Crew Cab 2007(0.29) Toyota Sequoia SUV 2012(0.29) Ford Expedition EL SUV 2009(0.31) |
+| Chrysler Sebring Convertible 2010 | Chevrolet Impala Sedan 2007(0.23) Chevrolet Malibu Hybrid Sedan 2010(0.31) Chevrolet Malibu Sedan 2007(0.34) Hyundai Elantra Sedan 2007(0.38) Chevrolet Monte Carlo Coupe 2007(0.39) |
+| Chrysler Town and Country Minivan 2012 | Chevrolet Traverse SUV 2012(0.27) Honda Odyssey Minivan 2007(0.28) Buick Rainier SUV 2007(0.32) Toyota Sequoia SUV 2012(0.35) Dodge Journey SUV 2012(0.36) |
+| Chrysler 300 SRT-8 2010 | Rolls-Royce Phantom Sedan 2012(0.37) Audi S4 Sedan 2007(0.39) Bentley Mulsanne Sedan 2011(0.39) Audi S6 Sedan 2011(0.41) Bentley Arnage Sedan 2009(0.44) |
+| Chrysler Crossfire Convertible 2008 | BMW 6 Series Convertible 2007(0.32) Mercedes-Benz 300-Class Convertible 1993(0.37) Ford Mustang Convertible 2007(0.41) Aston Martin V8 Vantage Convertible 2012(0.43) Rolls-Royce Phantom Drophead Coupe Convertible 2012(0.45) |
+| Chrysler PT Cruiser Convertible 2008 | Infiniti QX56 SUV 2011(0.47) Buick Enclave SUV 2012(0.50) Volkswagen Beetle Hatchback 2012*(0.52) Dodge Durango SUV 2012(0.53) FIAT 500 Convertible 2012(0.55) |
+| Daewoo Nubira Wagon 2002 | Lincoln Town Car Sedan 2011(0.28) Mercedes-Benz 300-Class Convertible 1993(0.32) Chevrolet Malibu Sedan 2007(0.32) Chevrolet Monte Carlo Coupe 2007(0.35) Suzuki Aerio Sedan 2007(0.36) |
+| Dodge Caliber Wagon 2012 | Dodge Caliber Wagon 2007(0.24) Buick Rainier SUV 2007(0.41) Dodge Magnum Wagon 2008(0.41) Chevrolet HHR SS 2010(0.42) GMC Acadia SUV 2012(0.42) |
+| Dodge Caliber Wagon 2007 | Dodge Caliber Wagon 2012(0.24) BMW X6 SUV 2012(0.36) Chevrolet HHR SS 2010(0.37) Dodge Magnum Wagon 2008(0.44) Suzuki SX4 Hatchback 2012(0.47) |
+| Dodge Caravan Minivan 1997 | Plymouth Neon Coupe 1999(0.26) Ford Freestar Minivan 2007(0.37) Ford Focus Sedan 2007(0.41) Eagle Talon Hatchback 1998(0.48) Mercedes-Benz Sprinter Van 2012(0.50) |
+| Dodge Ram Pickup 3500 Crew Cab 2010 | Ford F-450 Super Duty Crew Cab 2012(0.16) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.27) Ford F-150 Regular Cab 2012(0.32) Ford Expedition EL SUV 2009(0.34) Chevrolet Avalanche Crew Cab 2012(0.38) |
+| Dodge Ram Pickup 3500 Quad Cab 2009 | Chevrolet Silverado 1500 Regular Cab 2012(0.15) Ford F-150 Regular Cab 2007(0.17) Chevrolet Silverado 1500 Extended Cab 2012(0.20) Dodge Dakota Club Cab 2007(0.23) GMC Canyon Extended Cab 2012(0.24) |
+| Dodge Sprinter Cargo Van 2009 | Mercedes-Benz Sprinter Van 2012(0.12) GMC Savana Van 2012(0.23) Ford E-Series Wagon Van 2012(0.26) Chevrolet Express Van 2007(0.29) Chevrolet Express Cargo Van 2007(0.34) |
+| Dodge Journey SUV 2012 | Chevrolet Traverse SUV 2012(0.26) Chrysler Town and Country Minivan 2012(0.36) Jeep Compass SUV 2012(0.37) Suzuki SX4 Hatchback 2012(0.38) Dodge Durango SUV 2012(0.39) |
+| Dodge Dakota Crew Cab 2010 | Ford Ranger SuperCab 2011(0.26) GMC Canyon Extended Cab 2012(0.27) Dodge Dakota Club Cab 2007(0.28) Chevrolet Avalanche Crew Cab 2012(0.31) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.32) |
+| Dodge Dakota Club Cab 2007 | Ford Ranger SuperCab 2011(0.22) Dodge Ram Pickup 3500 Quad Cab 2009(0.23) Chevrolet Silverado 1500 Extended Cab 2012(0.24) Chevrolet Silverado 1500 Regular Cab 2012(0.28) Dodge Dakota Crew Cab 2010(0.28) |
+| Dodge Magnum Wagon 2008 | Ford Mustang Convertible 2007(0.30) Chevrolet HHR SS 2010(0.33) Dodge Charger SRT-8 2009(0.40) Dodge Caliber Wagon 2012(0.41) Dodge Caliber Wagon 2007(0.44) |
+| Dodge Challenger SRT8 2011 | Ford GT Coupe 2006(0.35) Chevrolet Corvette Ron Fellows Edition Z06 2007(0.37) Chevrolet Camaro Convertible 2012(0.44) Audi RS 4 Convertible 2008(0.45) Rolls-Royce Phantom Drophead Coupe Convertible 2012(0.47) |
+| Dodge Durango SUV 2012 | Jeep Grand Cherokee SUV 2012(0.29) Volvo XC90 SUV 2007*(0.32) Jeep Compass SUV 2012(0.35) Land Rover Range Rover SUV 2012(0.37) Buick Enclave SUV 2012(0.37) |
+| Dodge Durango SUV 2007 | Buick Rainier SUV 2007(0.20) Chrysler Aspen SUV 2009(0.24) Jeep Grand Cherokee SUV 2012(0.25) Ford Expedition EL SUV 2009(0.26) Cadillac Escalade EXT Crew Cab 2007(0.26) |
+| Dodge Charger Sedan 2012 | Dodge Charger SRT-8 2009(0.25) Aston Martin Virage Coupe 2012(0.34) Chevrolet Camaro Convertible 2012(0.34) Audi TT RS Coupe 2012(0.34) Volvo C30 Hatchback 2012*(0.40) |
+| Dodge Charger SRT-8 2009 | Ford Mustang Convertible 2007(0.22) Dodge Charger Sedan 2012(0.25) Chevrolet Camaro Convertible 2012(0.28) Dodge Magnum Wagon 2008(0.40) Nissan 240SX Coupe 1998(0.42) |
+| Eagle Talon Hatchback 1998 | Nissan 240SX Coupe 1998(0.23) Plymouth Neon Coupe 1999(0.25) Chevrolet Monte Carlo Coupe 2007(0.46) Dodge Caravan Minivan 1997(0.48) Ford Focus Sedan 2007(0.53) |
+| FIAT 500 Abarth 2012 | Bentley Arnage Sedan 2009(0.40) Spyker C8 Convertible 2009(0.52) BMW M6 Convertible 2010(0.52) Audi RS 4 Convertible 2008(0.55) Bentley Continental Flying Spur Sedan 2007(0.57) |
+| FIAT 500 Convertible 2012 | MINI Cooper Roadster Convertible 2012(0.29) smart fortwo Convertible 2012*(0.34) Maybach Landaulet Convertible 2012(0.36) Bugatti Veyron 16.4 Convertible 2009(0.38) Bentley Continental Supersports Conv. Convertible 2012(0.44) |
+| Ferrari FF Coupe 2012 | Ferrari California Convertible 2012(0.34) Ferrari 458 Italia Coupe 2012(0.35) Ferrari 458 Italia Convertible 2012(0.35) Lamborghini Aventador Coupe 2012(0.46) Aston Martin Virage Coupe 2012(0.47) |
+| Ferrari California Convertible 2012 | Ferrari 458 Italia Convertible 2012(0.06) Ferrari 458 Italia Coupe 2012(0.13) Chevrolet Corvette Convertible 2012(0.27) Lamborghini Aventador Coupe 2012(0.29) Ford GT Coupe 2006(0.33) |
+| Ferrari 458 Italia Convertible 2012 | Ferrari California Convertible 2012(0.06) Ferrari 458 Italia Coupe 2012(0.08) Lamborghini Aventador Coupe 2012(0.15) McLaren MP4-12C Coupe 2012(0.22) Chevrolet Corvette Convertible 2012(0.25) |
+| Ferrari 458 Italia Coupe 2012 | Ferrari 458 Italia Convertible 2012(0.08) Ferrari California Convertible 2012(0.13) Lamborghini Aventador Coupe 2012(0.14) McLaren MP4-12C Coupe 2012(0.29) Ferrari FF Coupe 2012(0.35) |
+| Fisker Karma Sedan 2012 | Aston Martin Virage Convertible 2012(0.22) Aston Martin V8 Vantage Convertible 2012(0.30) Bugatti Veyron 16.4 Coupe 2009(0.32) Aston Martin V8 Vantage Coupe 2012(0.34) Chevrolet Corvette ZR1 2012(0.34) |
+| Ford F-450 Super Duty Crew Cab 2012 | Dodge Ram Pickup 3500 Crew Cab 2010(0.16) Ford F-150 Regular Cab 2012(0.29) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.32) Ford E-Series Wagon Van 2012(0.34) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.35) |
+| Ford Mustang Convertible 2007 | Dodge Charger SRT-8 2009(0.22) Chevrolet Camaro Convertible 2012(0.29) Dodge Magnum Wagon 2008(0.30) Nissan 240SX Coupe 1998(0.35) Chrysler Crossfire Convertible 2008(0.41) |
+| Ford Freestar Minivan 2007 | Buick Rainier SUV 2007(0.33) Dodge Caravan Minivan 1997(0.37) Honda Odyssey Minivan 2007(0.41) Lincoln Town Car Sedan 2011(0.41) Ford Focus Sedan 2007(0.42) |
+| Ford Expedition EL SUV 2009 | Dodge Durango SUV 2007(0.26) Isuzu Ascender SUV 2008(0.27) Buick Rainier SUV 2007(0.31) Chrysler Aspen SUV 2009(0.31) Jeep Grand Cherokee SUV 2012(0.32) |
+| Ford Edge SUV 2012 | Cadillac SRX SUV 2012(0.25) Jeep Grand Cherokee SUV 2012(0.35) Dodge Durango SUV 2012(0.39) Honda Odyssey Minivan 2012(0.39) Land Rover LR2 SUV 2012(0.41) |
+| Ford Ranger SuperCab 2011 | Dodge Dakota Club Cab 2007(0.22) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.24) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.24) GMC Canyon Extended Cab 2012(0.26) Dodge Dakota Crew Cab 2010(0.26) |
+| Ford GT Coupe 2006 | Chevrolet Corvette Convertible 2012(0.26) Ferrari 458 Italia Convertible 2012(0.32) Ferrari California Convertible 2012(0.33) Dodge Challenger SRT8 2011(0.35) Chevrolet Corvette ZR1 2012(0.38) |
+| Ford F-150 Regular Cab 2012 | Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.24) Ford F-150 Regular Cab 2007(0.25) Dodge Ram Pickup 3500 Quad Cab 2009(0.28) Ford F-450 Super Duty Crew Cab 2012(0.29) Ford Ranger SuperCab 2011(0.30) |
+| Ford F-150 Regular Cab 2007 | Chevrolet Silverado 1500 Regular Cab 2012(0.16) Dodge Ram Pickup 3500 Quad Cab 2009(0.17) Ford F-150 Regular Cab 2012(0.25) Chevrolet Silverado 1500 Extended Cab 2012(0.26) Dodge Dakota Club Cab 2007(0.29) |
+| Ford Focus Sedan 2007 | Chevrolet Malibu Sedan 2007(0.16) Chevrolet Impala Sedan 2007(0.20) Honda Odyssey Minivan 2007(0.24) Hyundai Elantra Sedan 2007(0.28) Chevrolet Monte Carlo Coupe 2007(0.30) |
+| Ford E-Series Wagon Van 2012 | GMC Savana Van 2012(0.15) Chevrolet Express Van 2007(0.23) Chevrolet Silverado 2500HD Regular Cab 2012(0.26) Dodge Sprinter Cargo Van 2009(0.26) Chevrolet Express Cargo Van 2007(0.30) |
+| Ford Fiesta Sedan 2012 | Hyundai Tucson SUV 2012(0.26) Toyota Camry Sedan 2012*(0.30) Hyundai Elantra Sedan 2007(0.31) Hyundai Elantra Touring Hatchback 2012(0.32) Suzuki SX4 Sedan 2012(0.34) |
+| GMC Terrain SUV 2012 | Jeep Grand Cherokee SUV 2012(0.30) Toyota Sequoia SUV 2012(0.33) Chrysler Aspen SUV 2009(0.34) Cadillac Escalade EXT Crew Cab 2007(0.36) Chevrolet Avalanche Crew Cab 2012(0.37) |
+| GMC Savana Van 2012 | Chevrolet Express Van 2007(0.07) Chevrolet Express Cargo Van 2007(0.11) Ford E-Series Wagon Van 2012(0.15) Dodge Sprinter Cargo Van 2009(0.23) Mercedes-Benz Sprinter Van 2012(0.24) |
+| GMC Yukon Hybrid SUV 2012 | Volvo XC90 SUV 2007*(0.26) Jeep Grand Cherokee SUV 2012(0.29) Dodge Durango SUV 2007(0.29) Land Rover Range Rover SUV 2012(0.30) Cadillac Escalade EXT Crew Cab 2007(0.30) |
+| GMC Acadia SUV 2012 | Hyundai Santa Fe SUV 2012(0.30) Jeep Grand Cherokee SUV 2012(0.31) Volvo XC90 SUV 2007*(0.32) Dodge Durango SUV 2007(0.34) Cadillac Escalade EXT Crew Cab 2007(0.38) |
+| GMC Canyon Extended Cab 2012 | Dodge Ram Pickup 3500 Quad Cab 2009(0.24) Chevrolet Silverado 1500 Regular Cab 2012(0.26) Ford Ranger SuperCab 2011(0.26) Dodge Dakota Crew Cab 2010(0.27) Chevrolet Silverado 1500 Extended Cab 2012(0.30) |
+| Geo Metro Convertible 1993 | Mercedes-Benz 300-Class Convertible 1993(0.27) Plymouth Neon Coupe 1999(0.39) Volkswagen Golf Hatchback 1991*(0.45) Audi 100 Wagon 1994(0.46) Nissan 240SX Coupe 1998(0.48) |
+| HUMMER H3T Crew Cab 2010 | HUMMER H2 SUT Crew Cab 2009(0.12) Jeep Wrangler SUV 2012(0.14) AM General Hummer SUV 2000(0.28) Jeep Patriot SUV 2012(0.43) Jeep Liberty SUV 2012(0.46) |
+| HUMMER H2 SUT Crew Cab 2009 | AM General Hummer SUV 2000(0.12) HUMMER H3T Crew Cab 2010(0.12) Jeep Wrangler SUV 2012(0.17) Ford F-450 Super Duty Crew Cab 2012(0.42) Ford E-Series Wagon Van 2012(0.61) |
+| Honda Odyssey Minivan 2012 | Cadillac SRX SUV 2012(0.27) Suzuki SX4 Sedan 2012(0.33) Acura RL Sedan 2012(0.34) Scion xD Hatchback 2012(0.35) Hyundai Veracruz SUV 2012(0.36) |
+| Honda Odyssey Minivan 2007 | Ford Focus Sedan 2007(0.24) Chrysler Town and Country Minivan 2012(0.28) Suzuki Aerio Sedan 2007(0.31) Chevrolet Traverse SUV 2012(0.33) Hyundai Veracruz SUV 2012(0.33) |
+| Honda Accord Coupe 2012 | Hyundai Accent Sedan 2012(0.31) Hyundai Sonata Hybrid Sedan 2012(0.35) Acura TSX Sedan 2012(0.39) Toyota Corolla Sedan 2012*(0.41) BMW 3 Series Sedan 2012(0.43) |
+| Honda Accord Sedan 2012 | Chevrolet Malibu Hybrid Sedan 2010(0.28) Volkswagen Golf Hatchback 2012*(0.29) Acura TSX Sedan 2012(0.30) Acura TL Sedan 2012(0.37) Hyundai Elantra Sedan 2007(0.39) |
+| Hyundai Veloster Hatchback 2012 | Aston Martin Virage Coupe 2012(0.25) McLaren MP4-12C Coupe 2012(0.26) Lamborghini Aventador Coupe 2012(0.46) Volvo C30 Hatchback 2012*(0.46) Jaguar XK XKR 2012(0.47) |
+| Hyundai Santa Fe SUV 2012 | GMC Acadia SUV 2012(0.30) Volkswagen Golf Hatchback 2012*(0.37) Chrysler Town and Country Minivan 2012(0.44) Ford Edge SUV 2012(0.45) Jeep Grand Cherokee SUV 2012(0.47) |
+| Hyundai Tucson SUV 2012 | Ford Fiesta Sedan 2012(0.26) Chevrolet Traverse SUV 2012(0.29) Suzuki SX4 Sedan 2012(0.31) Hyundai Veracruz SUV 2012(0.31) Buick Verano Sedan 2012(0.33) |
+| Hyundai Veracruz SUV 2012 | Buick Enclave SUV 2012(0.22) Chevrolet Traverse SUV 2012(0.23) Hyundai Tucson SUV 2012(0.31) Honda Odyssey Minivan 2007(0.33) Honda Odyssey Minivan 2012(0.36) |
+| Hyundai Sonata Hybrid Sedan 2012 | Hyundai Sonata Sedan 2012(0.30) Toyota Camry Sedan 2012*(0.31) Buick Verano Sedan 2012(0.33) Honda Accord Coupe 2012(0.35) Hyundai Accent Sedan 2012(0.35) |
+| Hyundai Elantra Sedan 2007 | Chevrolet Impala Sedan 2007(0.28) Ford Focus Sedan 2007(0.28) Toyota Corolla Sedan 2012*(0.29) Hyundai Elantra Touring Hatchback 2012(0.31) Ford Fiesta Sedan 2012(0.31) |
+| Hyundai Accent Sedan 2012 | Honda Accord Coupe 2012(0.31) Hyundai Sonata Hybrid Sedan 2012(0.35) Toyota Corolla Sedan 2012*(0.37) Buick Verano Sedan 2012(0.43) Acura TSX Sedan 2012(0.44) |
+| Hyundai Genesis Sedan 2012 | Hyundai Azera Sedan 2012(0.28) Mercedes-Benz S-Class Sedan 2012(0.36) Hyundai Sonata Sedan 2012(0.37) Hyundai Tucson SUV 2012(0.38) Mercedes-Benz E-Class Sedan 2012(0.41) |
+| Hyundai Sonata Sedan 2012 | Hyundai Sonata Hybrid Sedan 2012(0.30) Buick Verano Sedan 2012(0.35) Hyundai Genesis Sedan 2012(0.37) Hyundai Tucson SUV 2012(0.37) Toyota Camry Sedan 2012*(0.39) |
+| Hyundai Elantra Touring Hatchback 2012 | Hyundai Elantra Sedan 2007(0.31) Ford Fiesta Sedan 2012(0.32) Toyota Camry Sedan 2012*(0.33) Suzuki SX4 Sedan 2012(0.33) Honda Accord Sedan 2012(0.39) |
+| Hyundai Azera Sedan 2012 | Hyundai Genesis Sedan 2012(0.28) Mercedes-Benz E-Class Sedan 2012(0.36) Hyundai Tucson SUV 2012(0.37) Acura ZDX Hatchback 2012(0.38) Suzuki Kizashi Sedan 2012(0.38) |
+| Infiniti G Coupe IPL 2012 | Porsche Panamera Sedan 2012(0.28) Audi S5 Coupe 2012(0.31) BMW M5 Sedan 2010(0.36) Audi TTS Coupe 2012(0.38) Fisker Karma Sedan 2012(0.40) |
+| Infiniti QX56 SUV 2011 | Dodge Durango SUV 2012(0.41) BMW X3 SUV 2012(0.41) Toyota Sequoia SUV 2012(0.44) BMW X5 SUV 2007(0.46) Chrysler PT Cruiser Convertible 2008(0.47) |
+| Isuzu Ascender SUV 2008 | Ford Expedition EL SUV 2009(0.27) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.32) Ford F-150 Regular Cab 2012(0.33) Chrysler Aspen SUV 2009(0.35) Buick Rainier SUV 2007(0.36) |
+| Jaguar XK XKR 2012 | Porsche Panamera Sedan 2012(0.26) Bugatti Veyron 16.4 Coupe 2009(0.32) Aston Martin V8 Vantage Coupe 2012(0.35) Tesla Model S Sedan 2012(0.39) Fisker Karma Sedan 2012(0.41) |
+| Jeep Patriot SUV 2012 | Jeep Liberty SUV 2012(0.08) Land Rover Range Rover SUV 2012(0.38) Jeep Wrangler SUV 2012(0.40) Dodge Ram Pickup 3500 Quad Cab 2009(0.41) HUMMER H3T Crew Cab 2010(0.43) |
+| Jeep Wrangler SUV 2012 | HUMMER H3T Crew Cab 2010(0.14) HUMMER H2 SUT Crew Cab 2009(0.17) AM General Hummer SUV 2000(0.25) Jeep Liberty SUV 2012(0.38) Jeep Patriot SUV 2012(0.40) |
+| Jeep Liberty SUV 2012 | Jeep Patriot SUV 2012(0.08) Jeep Wrangler SUV 2012(0.38) Land Rover Range Rover SUV 2012(0.40) Dodge Ram Pickup 3500 Quad Cab 2009(0.44) GMC Yukon Hybrid SUV 2012(0.46) |
+| Jeep Grand Cherokee SUV 2012 | Volvo XC90 SUV 2007*(0.24) Dodge Durango SUV 2007(0.25) Cadillac Escalade EXT Crew Cab 2007(0.27) Toyota 4Runner SUV 2012*(0.28) Toyota Sequoia SUV 2012(0.28) |
+| Jeep Compass SUV 2012 | Dodge Durango SUV 2012(0.35) Dodge Journey SUV 2012(0.37) Jeep Grand Cherokee SUV 2012(0.41) Volvo XC90 SUV 2007*(0.41) GMC Yukon Hybrid SUV 2012(0.42) |
+| Lamborghini Reventon Coupe 2008 | Bugatti Veyron 16.4 Coupe 2009(0.42) Spyker C8 Convertible 2009(0.42) Spyker C8 Coupe 2009(0.45) Fisker Karma Sedan 2012(0.50) Ford GT Coupe 2006(0.52) |
+| Lamborghini Aventador Coupe 2012 | McLaren MP4-12C Coupe 2012(0.14) Ferrari 458 Italia Coupe 2012(0.14) Ferrari 458 Italia Convertible 2012(0.15) Ferrari California Convertible 2012(0.29) Lamborghini Gallardo LP 570-4 Superleggera 2012(0.35) |
+| Lamborghini Gallardo LP 570-4 Superleggera 2012 | Lamborghini Diablo Coupe 2001(0.14) McLaren MP4-12C Coupe 2012(0.21) Chevrolet Corvette Convertible 2012(0.28) Acura Integra Type R 2001(0.32) Lamborghini Aventador Coupe 2012(0.35) |
+| Lamborghini Diablo Coupe 2001 | Acura Integra Type R 2001(0.12) Lamborghini Gallardo LP 570-4 Superleggera 2012(0.14) Chevrolet Corvette Convertible 2012(0.29) McLaren MP4-12C Coupe 2012(0.32) Ford GT Coupe 2006(0.51) |
+| Land Rover Range Rover SUV 2012 | Volvo XC90 SUV 2007*(0.29) GMC Yukon Hybrid SUV 2012(0.30) Dodge Durango SUV 2012(0.37) Toyota 4Runner SUV 2012*(0.37) Jeep Patriot SUV 2012(0.38) |
+| Land Rover LR2 SUV 2012 | Toyota Sequoia SUV 2012(0.27) Volvo XC90 SUV 2007*(0.28) Toyota 4Runner SUV 2012*(0.29) Mazda Tribute SUV 2011(0.29) Dodge Durango SUV 2007(0.33) |
+| Lincoln Town Car Sedan 2011 | Daewoo Nubira Wagon 2002(0.28) Chevrolet Malibu Sedan 2007(0.30) Chevrolet Monte Carlo Coupe 2007(0.32) Suzuki Aerio Sedan 2007(0.33) Mercedes-Benz 300-Class Convertible 1993(0.38) |
+| MINI Cooper Roadster Convertible 2012 | Bentley Continental Supersports Conv. Convertible 2012(0.23) FIAT 500 Convertible 2012(0.29) Bugatti Veyron 16.4 Convertible 2009(0.30) BMW 1 Series Convertible 2012(0.40) Maybach Landaulet Convertible 2012(0.43) |
+| Maybach Landaulet Convertible 2012 | FIAT 500 Convertible 2012(0.36) Chevrolet Corvette Ron Fellows Edition Z06 2007(0.39) Bentley Continental Supersports Conv. Convertible 2012(0.39) MINI Cooper Roadster Convertible 2012(0.43) smart fortwo Convertible 2012*(0.46) |
+| Mazda Tribute SUV 2011 | Toyota Sequoia SUV 2012(0.28) Land Rover LR2 SUV 2012(0.29) Buick Rainier SUV 2007(0.33) Volvo XC90 SUV 2007*(0.35) Dodge Durango SUV 2007(0.37) |
+| McLaren MP4-12C Coupe 2012 | Lamborghini Aventador Coupe 2012(0.14) Lamborghini Gallardo LP 570-4 Superleggera 2012(0.21) Ferrari 458 Italia Convertible 2012(0.22) Aston Martin Virage Coupe 2012(0.23) Chevrolet Corvette Convertible 2012(0.26) |
+| Mercedes-Benz 300-Class Convertible 1993 | Geo Metro Convertible 1993(0.27) Daewoo Nubira Wagon 2002(0.32) Audi V8 Sedan 1994(0.35) Audi 100 Wagon 1994(0.35) Nissan 240SX Coupe 1998(0.36) |
+| Mercedes-Benz C-Class Sedan 2012 | Cadillac CTS-V Sedan 2012(0.30) Mercedes-Benz S-Class Sedan 2012(0.34) Audi TTS Coupe 2012(0.42) Infiniti G Coupe IPL 2012(0.46) Bentley Continental Flying Spur Sedan 2007(0.52) |
+| Mercedes-Benz SL-Class Coupe 2009 | Mercedes-Benz E-Class Sedan 2012(0.28) Aston Martin Virage Convertible 2012(0.33) BMW ActiveHybrid 5 Sedan 2012(0.35) Porsche Panamera Sedan 2012(0.36) BMW M6 Convertible 2010(0.38) |
+| Mercedes-Benz E-Class Sedan 2012 | Mercedes-Benz SL-Class Coupe 2009(0.28) Suzuki Kizashi Sedan 2012(0.34) Mercedes-Benz S-Class Sedan 2012(0.34) Hyundai Azera Sedan 2012(0.36) BMW M5 Sedan 2010(0.38) |
+| Mercedes-Benz S-Class Sedan 2012 | Mercedes-Benz C-Class Sedan 2012(0.34) Mercedes-Benz E-Class Sedan 2012(0.34) Hyundai Genesis Sedan 2012(0.36) Mercedes-Benz SL-Class Coupe 2009(0.47) Cadillac CTS-V Sedan 2012(0.49) |
+| Mercedes-Benz Sprinter Van 2012 | Dodge Sprinter Cargo Van 2009(0.12) Chevrolet Express Cargo Van 2007(0.21) Chevrolet Express Van 2007(0.21) GMC Savana Van 2012(0.24) Nissan NV Passenger Van 2012(0.30) |
+| Mitsubishi Lancer Sedan 2012 | Toyota Camry Sedan 2012*(0.35) Suzuki Kizashi Sedan 2012(0.36) Chevrolet Sonic Sedan 2012(0.37) Acura TL Type-S 2008(0.43) Acura TL Sedan 2012(0.43) |
+| Nissan Leaf Hatchback 2012 | Chevrolet Sonic Sedan 2012(0.39) Ford Fiesta Sedan 2012(0.41) Nissan Juke Hatchback 2012(0.41) Suzuki SX4 Sedan 2012(0.45) Toyota Camry Sedan 2012*(0.47) |
+| Nissan NV Passenger Van 2012 | GMC Savana Van 2012(0.25) Chevrolet Express Van 2007(0.29) Mercedes-Benz Sprinter Van 2012(0.30) Chevrolet Express Cargo Van 2007(0.31) Ford E-Series Wagon Van 2012(0.32) |
+| Nissan Juke Hatchback 2012 | Chevrolet Sonic Sedan 2012(0.28) Suzuki Kizashi Sedan 2012(0.36) Volkswagen Beetle Hatchback 2012*(0.39) Nissan Leaf Hatchback 2012(0.41) Volvo C30 Hatchback 2012*(0.46) |
+| Nissan 240SX Coupe 1998 | Eagle Talon Hatchback 1998(0.23) Plymouth Neon Coupe 1999(0.30) Ford Mustang Convertible 2007(0.35) Mercedes-Benz 300-Class Convertible 1993(0.36) Chevrolet Monte Carlo Coupe 2007(0.39) |
+| Plymouth Neon Coupe 1999 | Eagle Talon Hatchback 1998(0.25) Volkswagen Golf Hatchback 1991*(0.26) Dodge Caravan Minivan 1997(0.26) Nissan 240SX Coupe 1998(0.30) Mercedes-Benz 300-Class Convertible 1993(0.39) |
+| Porsche Panamera Sedan 2012 | BMW M5 Sedan 2010(0.26) Jaguar XK XKR 2012(0.26) Infiniti G Coupe IPL 2012(0.28) Aston Martin V8 Vantage Coupe 2012(0.34) Audi S5 Convertible 2012(0.36) |
+| Ram C/V Cargo Van Minivan 2012 | Suzuki Aerio Sedan 2007(0.49) Ford Freestar Minivan 2007(0.51) Chrysler Town and Country Minivan 2012(0.51) GMC Acadia SUV 2012(0.52) Dodge Sprinter Cargo Van 2009(0.54) |
+| Rolls-Royce Phantom Drophead Coupe Convertible 2012 | Rolls-Royce Phantom Sedan 2012(0.22) Bentley Mulsanne Sedan 2011(0.42) Bentley Continental Supersports Conv. Convertible 2012(0.42) Rolls-Royce Ghost Sedan 2012(0.42) Chrysler Crossfire Convertible 2008(0.45) |
+| Rolls-Royce Ghost Sedan 2012 | Rolls-Royce Phantom Sedan 2012(0.21) Bentley Mulsanne Sedan 2011(0.36) Bentley Continental GT Coupe 2007(0.41) Rolls-Royce Phantom Drophead Coupe Convertible 2012(0.42) Bentley Arnage Sedan 2009(0.43) |
+| Rolls-Royce Phantom Sedan 2012 | Rolls-Royce Ghost Sedan 2012(0.21) Rolls-Royce Phantom Drophead Coupe Convertible 2012(0.22) Bentley Mulsanne Sedan 2011(0.27) Bentley Arnage Sedan 2009(0.32) Chrysler 300 SRT-8 2010(0.37) |
+| Scion xD Hatchback 2012 | Chevrolet Traverse SUV 2012(0.28) Buick Enclave SUV 2012(0.35) Honda Odyssey Minivan 2012(0.35) Chevrolet Sonic Sedan 2012(0.37) Hyundai Veracruz SUV 2012(0.40) |
+| Spyker C8 Convertible 2009 | Spyker C8 Coupe 2009(0.13) Chevrolet Corvette ZR1 2012(0.38) Fisker Karma Sedan 2012(0.38) Lamborghini Reventon Coupe 2008(0.42) Ford GT Coupe 2006(0.43) |
+| Spyker C8 Coupe 2009 | Spyker C8 Convertible 2009(0.13) Fisker Karma Sedan 2012(0.36) Aston Martin V8 Vantage Convertible 2012(0.40) Tesla Model S Sedan 2012(0.40) Ford GT Coupe 2006(0.42) |
+| Suzuki Aerio Sedan 2007 | Honda Odyssey Minivan 2007(0.31) Lincoln Town Car Sedan 2011(0.33) Ford Focus Sedan 2007(0.35) Daewoo Nubira Wagon 2002(0.36) Chevrolet Malibu Sedan 2007(0.41) |
+| Suzuki Kizashi Sedan 2012 | Buick Regal GS 2012(0.24) Toyota Camry Sedan 2012*(0.26) Buick Verano Sedan 2012(0.27) Chevrolet Sonic Sedan 2012(0.31) Volkswagen Beetle Hatchback 2012*(0.34) |
+| Suzuki SX4 Hatchback 2012 | Suzuki SX4 Sedan 2012(0.30) Chevrolet Traverse SUV 2012(0.37) Dodge Journey SUV 2012(0.38) Scion xD Hatchback 2012(0.40) Ford Fiesta Sedan 2012(0.40) |
+| Suzuki SX4 Sedan 2012 | Chevrolet Traverse SUV 2012(0.25) Suzuki SX4 Hatchback 2012(0.30) Hyundai Tucson SUV 2012(0.31) Hyundai Elantra Touring Hatchback 2012(0.33) Honda Odyssey Minivan 2012(0.33) |
+| Tesla Model S Sedan 2012 | Fisker Karma Sedan 2012(0.36) Buick Regal GS 2012(0.38) Jaguar XK XKR 2012(0.39) Spyker C8 Coupe 2009(0.40) Aston Martin Virage Convertible 2012(0.44) |
+| Toyota Sequoia SUV 2012 | Toyota 4Runner SUV 2012*(0.22) Chevrolet Tahoe Hybrid SUV 2012(0.26) Land Rover LR2 SUV 2012(0.27) Volvo XC90 SUV 2007*(0.27) Mazda Tribute SUV 2011(0.28) |
+| Toyota Camry Sedan 2012* | Buick Verano Sedan 2012(0.26) Suzuki Kizashi Sedan 2012(0.26) Ford Fiesta Sedan 2012(0.30) Hyundai Sonata Hybrid Sedan 2012(0.31) Hyundai Elantra Touring Hatchback 2012(0.33) |
+| Toyota Corolla Sedan 2012* | Volkswagen Golf Hatchback 2012*(0.26) Hyundai Elantra Sedan 2007(0.29) Acura TSX Sedan 2012(0.33) Chevrolet Malibu Hybrid Sedan 2010(0.36) Hyundai Accent Sedan 2012(0.37) |
+| Toyota 4Runner SUV 2012* | Toyota Sequoia SUV 2012(0.22) Chevrolet Tahoe Hybrid SUV 2012(0.25) Volvo XC90 SUV 2007*(0.28) Jeep Grand Cherokee SUV 2012(0.28) Land Rover LR2 SUV 2012(0.29) |
+| Volkswagen Golf Hatchback 2012* | Acura TSX Sedan 2012(0.20) Toyota Corolla Sedan 2012*(0.26) Honda Accord Sedan 2012(0.29) Hyundai Santa Fe SUV 2012(0.37) Chevrolet Malibu Hybrid Sedan 2010(0.39) |
+| Volkswagen Golf Hatchback 1991* | Volvo 240 Sedan 1993*(0.17) Plymouth Neon Coupe 1999(0.26) Audi V8 Sedan 1994(0.39) Audi 100 Wagon 1994(0.41) Mercedes-Benz 300-Class Convertible 1993(0.42) |
+| Volkswagen Beetle Hatchback 2012* | Buick Regal GS 2012(0.33) Suzuki Kizashi Sedan 2012(0.34) Volvo C30 Hatchback 2012*(0.39) Nissan Juke Hatchback 2012(0.39) Chevrolet Sonic Sedan 2012(0.41) |
+| Volvo C30 Hatchback 2012* | Audi TT RS Coupe 2012(0.38) Volkswagen Beetle Hatchback 2012*(0.39) Dodge Charger Sedan 2012(0.40) Suzuki SX4 Hatchback 2012(0.44) Suzuki Kizashi Sedan 2012(0.45) |
+| Volvo 240 Sedan 1993* | Volkswagen Golf Hatchback 1991*(0.17) Audi V8 Sedan 1994(0.35) Mercedes-Benz 300-Class Convertible 1993(0.41) Jeep Patriot SUV 2012(0.45) Dodge Dakota Club Cab 2007(0.48) |
+| Volvo XC90 SUV 2007* | Jeep Grand Cherokee SUV 2012(0.24) GMC Yukon Hybrid SUV 2012(0.26) Toyota Sequoia SUV 2012(0.27) Dodge Durango SUV 2007(0.28) Toyota 4Runner SUV 2012*(0.28) |
+| smart fortwo Convertible 2012* | FIAT 500 Convertible 2012(0.34) Maybach Landaulet Convertible 2012(0.46) Nissan Leaf Hatchback 2012(0.48) Chevrolet Sonic Sedan 2012(0.51) MINI Cooper Roadster Convertible 2012(0.52) |
 
 ## ss-ft-res (residual)  [cars_lejepa]
 
+agree@1=0.209 agree@5=0.126 (chance 0.040)  dendro-purity=0.147  silhouette=-0.245  within/between=0.840
+
 
 | class | 5 nearest class centroids (cosine dist) |
 |---|---|
-| class0 | class124(0.17) class145(0.25) class123(0.28) class105(0.38) class115(0.53) |
-| class1 | class21(0.37) class140(0.37) class6(0.39) class125(0.43) class163(0.45) |
-| class2 | class163(0.31) class25(0.34) class136(0.35) class183(0.35) class34(0.37) |
-| class3 | class78(0.38) class2(0.44) class138(0.48) class42(0.50) class34(0.51) |
-| class4 | class189*(0.27) class79(0.40) class30(0.44) class13(0.48) class66(0.50) |
-| class5 | class152(0.11) class159(0.35) class54(0.36) class151(0.36) class33(0.48) |
-| class6 | class34(0.30) class139(0.34) class1(0.39) class25(0.39) class163(0.40) |
-| class7 | class8(0.21) class38(0.30) class45(0.35) class18(0.35) class44(0.35) |
-| class8 | class7(0.21) class45(0.31) class20(0.32) class37(0.33) class18(0.34) |
-| class9 | class45(0.22) class35(0.23) class104(0.24) class139(0.25) class172(0.27) |
-| class10 | class101(0.10) class102(0.12) class54(0.15) class95(0.17) class100(0.22) |
-| class11 | class172(0.23) class45(0.27) class35(0.28) class20(0.29) class143(0.29) |
-| class12 | class18(0.31) class164(0.35) class14(0.42) class21(0.49) class22(0.50) |
-| class13 | class50(0.31) class21(0.31) class30(0.38) class43(0.39) class79(0.47) |
-| class14 | class18(0.31) class156(0.32) class162(0.32) class33(0.37) class8(0.39) |
-| class15 | class16(0.13) class17(0.22) class188*(0.40) class142(0.43) class69(0.44) |
-| class16 | class15(0.13) class17(0.20) class61(0.35) class188*(0.35) class69(0.36) |
-| class17 | class16(0.20) class15(0.22) class160(0.43) class69(0.47) class122(0.49) |
-| class18 | class14(0.31) class12(0.31) class8(0.34) class156(0.35) class7(0.35) |
-| class19 | class172(0.29) class35(0.29) class140(0.31) class34(0.36) class40(0.37) |
-| class20 | class172(0.22) class11(0.29) class140(0.29) class35(0.30) class104(0.31) |
-| class21 | class13(0.31) class1(0.37) class140(0.39) class30(0.44) class26(0.45) |
-| class22 | class24(0.49) class133(0.49) class12(0.50) class100(0.51) class23(0.53) |
-| class23 | class42(0.43) class136(0.44) class138(0.48) class19(0.49) class181(0.50) |
-| class24 | class102(0.20) class10(0.22) class150(0.28) class37(0.29) class101(0.29) |
-| class25 | class34(0.17) class172(0.27) class162(0.28) class104(0.31) class163(0.31) |
-| class26 | class33(0.36) class14(0.43) class21(0.45) class150(0.50) class18(0.50) |
-| class27 | class28(0.28) class100(0.29) class10(0.31) class54(0.34) class41(0.36) |
-| class28 | class27(0.28) class103(0.30) class159(0.32) class127(0.34) class101(0.35) |
-| class29 | class34(0.28) class25(0.33) class172(0.39) class2(0.46) class162(0.49) |
-| class30 | class13(0.38) class79(0.41) class50(0.43) class21(0.44) class4(0.44) |
-| class31 | class36(0.38) class185(0.42) class188*(0.43) class51(0.46) class194*(0.47) |
-| class32 | class28(0.36) class83(0.40) class59(0.42) class135(0.45) class100(0.45) |
-| class33 | class46(0.30) class26(0.36) class37(0.37) class14(0.37) class162(0.40) |
-| class34 | class25(0.17) class163(0.26) class29(0.28) class6(0.30) class172(0.31) |
-| class35 | class172(0.20) class104(0.21) class9(0.23) class45(0.28) class11(0.28) |
-| class36 | class31(0.38) class162(0.47) class25(0.48) class32(0.52) class141(0.52) |
-| class37 | class150(0.21) class103(0.26) class102(0.26) class159(0.28) class10(0.28) |
-| class38 | class56(0.29) class7(0.30) class156(0.30) class44(0.33) class157(0.40) |
-| class39 | class67(0.25) class175(0.47) class98(0.48) class153(0.49) class176(0.51) |
-| class40 | class140(0.37) class19(0.37) class176(0.42) class34(0.48) class25(0.48) |
-| class41 | class27(0.36) class37(0.37) class58(0.39) class8(0.39) class100(0.40) |
-| class42 | class136(0.36) class167(0.41) class23(0.43) class166(0.43) class76(0.46) |
-| class43 | class50(0.39) class13(0.39) class128(0.42) class79(0.46) class161(0.47) |
-| class44 | class99(0.24) class38(0.33) class7(0.35) class56(0.37) class46(0.39) |
-| class45 | class9(0.22) class143(0.26) class11(0.27) class35(0.28) class8(0.31) |
-| class46 | class181(0.25) class191*(0.30) class33(0.30) class184(0.33) class163(0.33) |
-| class47 | class90(0.19) class94(0.24) class75(0.25) class117(0.26) class107(0.27) |
-| class48 | class125(0.40) class169(0.41) class65(0.44) class186*(0.44) class138(0.45) |
-| class49 | class57(0.31) class132(0.33) class125(0.41) class126(0.41) class177(0.42) |
-| class50 | class161(0.30) class13(0.31) class79(0.36) class43(0.39) class30(0.43) |
-| class51 | class31(0.46) class93(0.50) class136(0.52) class125(0.52) class109(0.53) |
-| class52 | class147(0.26) class64(0.27) class53(0.27) class69(0.32) class120(0.32) |
-| class53 | class69(0.13) class112(0.19) class105(0.20) class64(0.20) class85(0.23) |
-| class54 | class10(0.15) class101(0.16) class159(0.19) class102(0.20) class111(0.22) |
-| class55 | class178(0.31) class104(0.37) class11(0.37) class54(0.38) class179(0.40) |
-| class56 | class38(0.29) class157(0.31) class44(0.37) class46(0.38) class92(0.39) |
-| class57 | class126(0.27) class60(0.27) class49(0.31) class177(0.32) class77(0.33) |
-| class58 | class101(0.39) class41(0.39) class27(0.40) class100(0.40) class10(0.40) |
-| class59 | class83(0.25) class91(0.38) class96(0.40) class82(0.41) class32(0.42) |
-| class60 | class76(0.14) class126(0.18) class131(0.26) class57(0.27) class114(0.27) |
-| class61 | class185(0.19) class188*(0.22) class73(0.29) class142(0.34) class16(0.35) |
-| class62 | class139(0.34) class181(0.38) class163(0.39) class169(0.41) class191*(0.44) |
-| class63 | class70(0.07) class165(0.11) class118(0.15) class168(0.17) class74(0.32) |
-| class64 | class53(0.20) class75(0.25) class110(0.25) class69(0.26) class52(0.27) |
-| class65 | class48(0.44) class159(0.47) class96(0.48) class182(0.48) class54(0.50) |
-| class66 | class76(0.30) class60(0.38) class77(0.39) class128(0.40) class126(0.40) |
-| class67 | class39(0.25) class147(0.33) class52(0.34) class153(0.40) class194*(0.41) |
-| class68 | class115(0.11) class118(0.17) class112(0.25) class87(0.27) class73(0.28) |
-| class69 | class53(0.13) class105(0.15) class73(0.20) class110(0.21) class142(0.21) |
-| class70 | class63(0.07) class118(0.12) class165(0.16) class168(0.19) class74(0.27) |
-| class71 | class72(0.30) class81(0.34) class60(0.35) class126(0.35) class76(0.36) |
-| class72 | class126(0.26) class114(0.26) class60(0.29) class71(0.30) class81(0.30) |
-| class73 | class121(0.19) class86(0.20) class69(0.20) class90(0.23) class113(0.25) |
-| class74 | class86(0.10) class113(0.15) class146(0.23) class144(0.25) class168(0.25) |
-| class75 | class47(0.25) class64(0.25) class130(0.29) class89(0.33) class120(0.33) |
-| class76 | class60(0.14) class131(0.25) class126(0.29) class66(0.30) class71(0.36) |
-| class77 | class57(0.33) class126(0.34) class180(0.39) class66(0.39) class60(0.40) |
-| class78 | class3(0.38) class67(0.42) class19(0.46) class194*(0.47) class93(0.48) |
-| class79 | class160(0.30) class50(0.36) class4(0.40) class30(0.41) class189*(0.45) |
-| class80 | class183(0.28) class60(0.33) class57(0.36) class132(0.39) class76(0.40) |
-| class81 | class72(0.30) class71(0.34) class107(0.38) class84(0.40) class126(0.41) |
-| class82 | class107(0.36) class134(0.38) class59(0.41) class83(0.42) class91(0.47) |
-| class83 | class59(0.25) class32(0.40) class82(0.42) class91(0.42) class96(0.46) |
-| class84 | class171(0.33) class81(0.40) class77(0.41) class114(0.45) class72(0.45) |
-| class85 | class105(0.12) class69(0.22) class53(0.23) class89(0.30) class121(0.31) |
-| class86 | class74(0.10) class113(0.17) class121(0.20) class73(0.20) class112(0.26) |
-| class87 | class115(0.17) class118(0.23) class165(0.27) class68(0.27) class173(0.35) |
-| class88 | class57(0.35) class148(0.48) class93(0.48) class80(0.49) class177(0.52) |
-| class89 | class110(0.21) class69(0.22) class53(0.28) class85(0.30) class64(0.31) |
-| class90 | class47(0.19) class121(0.22) class113(0.22) class73(0.23) class112(0.26) |
-| class91 | class106(0.33) class59(0.38) class83(0.42) class47(0.43) class117(0.44) |
-| class92 | class179(0.23) class184(0.25) class178(0.35) class143(0.35) class111(0.35) |
-| class93 | class131(0.36) class132(0.40) class57(0.42) class153(0.45) class49(0.47) |
-| class94 | class47(0.24) class147(0.34) class52(0.36) class90(0.36) class64(0.36) |
-| class95 | class10(0.17) class100(0.23) class101(0.24) class129(0.25) class192*(0.26) |
-| class96 | class103(0.35) class192*(0.37) class101(0.39) class28(0.39) class59(0.40) |
-| class97 | class171(0.16) class170(0.33) class190*(0.34) class84(0.50) class193*(0.51) |
-| class98 | class109(0.46) class35(0.48) class39(0.48) class178(0.49) class153(0.51) |
-| class99 | class44(0.24) class157(0.41) class56(0.42) class38(0.43) class195*(0.43) |
-| class100 | class10(0.22) class95(0.23) class129(0.23) class27(0.29) class101(0.34) |
-| class101 | class102(0.09) class10(0.10) class54(0.16) class103(0.18) class159(0.22) |
-| class102 | class101(0.09) class10(0.12) class103(0.12) class159(0.16) class150(0.19) |
-| class103 | class102(0.12) class150(0.13) class159(0.14) class101(0.18) class37(0.26) |
-| class104 | class35(0.21) class9(0.24) class140(0.25) class172(0.27) class162(0.29) |
-| class105 | class85(0.12) class69(0.15) class53(0.20) class112(0.23) class115(0.26) |
-| class106 | class91(0.33) class96(0.47) class83(0.48) class160(0.53) class110(0.54) |
-| class107 | class47(0.27) class64(0.28) class72(0.34) class155(0.35) class82(0.36) |
-| class108 | class142(0.24) class53(0.28) class147(0.28) class69(0.29) class64(0.34) |
-| class109 | class98(0.46) class93(0.47) class51(0.53) class153(0.55) class194*(0.57) |
-| class110 | class89(0.21) class69(0.21) class121(0.22) class64(0.25) class53(0.27) |
-| class111 | class54(0.22) class101(0.23) class159(0.27) class179(0.27) class143(0.29) |
-| class112 | class53(0.19) class115(0.21) class69(0.22) class105(0.23) class68(0.25) |
-| class113 | class74(0.15) class86(0.17) class90(0.22) class73(0.25) class121(0.29) |
-| class114 | class126(0.25) class72(0.26) class60(0.27) class57(0.37) class134(0.37) |
-| class115 | class68(0.11) class118(0.12) class87(0.17) class112(0.21) class105(0.26) |
-| class116 | class138(0.38) class134(0.39) class186*(0.44) class76(0.45) class114(0.47) |
-| class117 | class73(0.26) class47(0.26) class64(0.31) class90(0.35) class53(0.35) |
-| class118 | class115(0.12) class70(0.12) class165(0.12) class63(0.15) class168(0.17) |
-| class119 | class158(0.33) class154(0.35) class86(0.35) class74(0.35) class185(0.36) |
-| class120 | class52(0.32) class75(0.33) class64(0.34) class110(0.37) class130(0.38) |
-| class121 | class73(0.19) class86(0.20) class90(0.22) class110(0.22) class69(0.24) |
-| class122 | class160(0.27) class17(0.49) class79(0.53) class106(0.54) class170(0.55) |
-| class123 | class124(0.11) class145(0.11) class0(0.28) class144(0.46) class105(0.47) |
-| class124 | class123(0.11) class145(0.12) class0(0.17) class105(0.29) class68(0.33) |
-| class125 | class48(0.40) class49(0.41) class66(0.42) class1(0.43) class183(0.44) |
-| class126 | class60(0.18) class132(0.25) class114(0.25) class72(0.26) class57(0.27) |
-| class127 | class28(0.34) class103(0.35) class101(0.40) class135(0.41) class102(0.44) |
-| class128 | class72(0.39) class126(0.39) class66(0.40) class43(0.42) class71(0.42) |
-| class129 | class10(0.22) class143(0.23) class100(0.23) class95(0.25) class192*(0.26) |
-| class130 | class75(0.29) class189*(0.36) class120(0.38) class64(0.39) class161(0.42) |
-| class131 | class76(0.25) class60(0.26) class93(0.36) class132(0.37) class126(0.38) |
-| class132 | class126(0.25) class49(0.33) class60(0.35) class57(0.36) class131(0.37) |
-| class133 | class129(0.42) class48(0.46) class34(0.46) class33(0.49) class22(0.49) |
-| class134 | class114(0.37) class82(0.38) class116(0.39) class76(0.40) class72(0.41) |
-| class135 | class103(0.35) class28(0.37) class127(0.41) class96(0.41) class150(0.43) |
-| class136 | class2(0.35) class42(0.36) class183(0.39) class139(0.41) class131(0.41) |
-| class137 | class136(0.45) class43(0.48) class172(0.49) class116(0.50) class166(0.50) |
-| class138 | class116(0.38) class134(0.44) class76(0.44) class48(0.45) class125(0.46) |
-| class139 | class9(0.25) class163(0.31) class6(0.34) class62(0.34) class149(0.35) |
-| class140 | class104(0.25) class172(0.27) class20(0.29) class35(0.30) class19(0.31) |
-| class141 | class6(0.46) class36(0.52) class188*(0.54) class31(0.54) class25(0.59) |
-| class142 | class69(0.21) class108(0.24) class105(0.30) class112(0.31) class73(0.31) |
-| class143 | class129(0.23) class45(0.26) class111(0.29) class11(0.29) class179(0.29) |
-| class144 | class146(0.09) class74(0.25) class86(0.29) class193*(0.35) class121(0.41) |
-| class145 | class123(0.11) class124(0.12) class0(0.25) class105(0.41) class144(0.44) |
-| class146 | class144(0.09) class74(0.23) class86(0.31) class193*(0.35) class148(0.37) |
-| class147 | class52(0.26) class108(0.28) class67(0.33) class94(0.34) class53(0.39) |
-| class148 | class146(0.37) class190*(0.39) class193*(0.43) class144(0.45) class88(0.48) |
-| class149 | class139(0.35) class9(0.35) class35(0.35) class175(0.36) class178(0.39) |
-| class150 | class103(0.13) class159(0.13) class102(0.19) class37(0.21) class151(0.24) |
-| class151 | class150(0.24) class179(0.25) class152(0.26) class102(0.27) class159(0.28) |
-| class152 | class5(0.11) class159(0.19) class151(0.26) class54(0.29) class150(0.33) |
-| class153 | class119(0.38) class188*(0.39) class67(0.40) class144(0.44) class147(0.45) |
-| class154 | class119(0.35) class188*(0.35) class185(0.37) class158(0.41) class153(0.46) |
-| class155 | class173(0.34) class107(0.35) class72(0.42) class189*(0.45) class187*(0.46) |
-| class156 | class38(0.30) class14(0.32) class18(0.35) class162(0.36) class174(0.37) |
-| class157 | class56(0.31) class38(0.40) class44(0.40) class99(0.41) class195*(0.44) |
-| class158 | class185(0.28) class119(0.33) class61(0.36) class47(0.39) class154(0.41) |
-| class159 | class150(0.13) class103(0.14) class102(0.16) class54(0.19) class152(0.19) |
-| class160 | class122(0.27) class79(0.30) class17(0.43) class81(0.43) class71(0.47) |
-| class161 | class50(0.30) class130(0.42) class43(0.47) class164(0.49) class13(0.49) |
-| class162 | class163(0.22) class25(0.28) class9(0.28) class104(0.29) class34(0.32) |
-| class163 | class162(0.22) class34(0.26) class181(0.26) class2(0.31) class139(0.31) |
-| class164 | class12(0.35) class161(0.49) class2(0.51) class4(0.52) class18(0.53) |
-| class165 | class63(0.11) class118(0.12) class70(0.16) class168(0.24) class115(0.27) |
-| class166 | class186*(0.29) class167(0.37) class183(0.41) class181(0.42) class169(0.43) |
-| class167 | class181(0.36) class166(0.37) class186*(0.39) class42(0.41) class183(0.45) |
-| class168 | class118(0.17) class63(0.17) class70(0.19) class165(0.24) class74(0.25) |
-| class169 | class191*(0.39) class111(0.40) class48(0.41) class62(0.41) class143(0.42) |
-| class170 | class97(0.33) class171(0.38) class114(0.45) class190*(0.46) class193*(0.52) |
-| class171 | class97(0.16) class190*(0.28) class84(0.33) class170(0.38) class193*(0.45) |
-| class172 | class35(0.20) class20(0.22) class11(0.23) class104(0.27) class9(0.27) |
-| class173 | class155(0.34) class87(0.35) class68(0.38) class115(0.40) class118(0.41) |
-| class174 | class156(0.37) class176(0.41) class7(0.46) class157(0.48) class38(0.51) |
-| class175 | class149(0.36) class35(0.39) class9(0.40) class178(0.43) class39(0.47) |
-| class176 | class174(0.41) class40(0.42) class175(0.49) class9(0.50) class35(0.50) |
-| class177 | class57(0.32) class49(0.42) class60(0.45) class132(0.49) class131(0.50) |
-| class178 | class179(0.17) class55(0.31) class184(0.34) class143(0.34) class92(0.35) |
-| class179 | class178(0.17) class184(0.21) class92(0.23) class151(0.25) class111(0.27) |
-| class180 | class126(0.37) class77(0.39) class132(0.41) class66(0.46) class155(0.50) |
-| class181 | class191*(0.22) class46(0.25) class163(0.26) class167(0.36) class139(0.37) |
-| class182 | class192*(0.29) class95(0.37) class100(0.41) class129(0.42) class186*(0.44) |
-| class183 | class80(0.28) class2(0.35) class186*(0.36) class60(0.38) class181(0.38) |
-| class184 | class179(0.21) class92(0.25) class46(0.33) class178(0.34) class143(0.37) |
-| class185 | class61(0.19) class188*(0.24) class158(0.28) class119(0.36) class154(0.37) |
-| class186* | class166(0.29) class183(0.36) class76(0.36) class167(0.39) class136(0.41) |
-| class187* | class189*(0.42) class155(0.46) class107(0.51) class134(0.55) class71(0.56) |
-| class188* | class61(0.22) class185(0.24) class16(0.35) class154(0.35) class153(0.39) |
-| class189* | class4(0.27) class130(0.36) class187*(0.42) class155(0.45) class79(0.45) |
-| class190* | class193*(0.17) class171(0.28) class97(0.34) class148(0.39) class170(0.46) |
-| class191* | class181(0.22) class46(0.30) class169(0.39) class62(0.44) class92(0.45) |
-| class192* | class129(0.26) class95(0.26) class182(0.29) class24(0.32) class101(0.32) |
-| class193* | class190*(0.17) class146(0.35) class144(0.35) class121(0.41) class113(0.41) |
-| class194* | class147(0.40) class67(0.41) class119(0.41) class158(0.44) class94(0.45) |
-| class195* | class99(0.43) class157(0.44) class7(0.56) class122(0.59) class44(0.60) |
+| AM General Hummer SUV 2000 | HUMMER H2 SUT Crew Cab 2009(0.17) Jeep Wrangler SUV 2012(0.25) HUMMER H3T Crew Cab 2010(0.28) Ford F-450 Super Duty Crew Cab 2012(0.38) Ford E-Series Wagon Van 2012(0.53) |
+| Acura RL Sedan 2012 | Audi S5 Coupe 2012(0.37) Infiniti G Coupe IPL 2012(0.37) Acura ZDX Hatchback 2012(0.39) Honda Odyssey Minivan 2012(0.43) Mercedes-Benz E-Class Sedan 2012(0.45) |
+| Acura TL Sedan 2012 | Mercedes-Benz E-Class Sedan 2012(0.31) BMW ActiveHybrid 5 Sedan 2012(0.34) Hyundai Genesis Sedan 2012(0.35) Suzuki SX4 Sedan 2012(0.35) BMW M5 Sedan 2010(0.37) |
+| Acura TL Type-S 2008 | Chrysler 300 SRT-8 2010(0.38) Acura TL Sedan 2012(0.44) Hyundai Elantra Touring Hatchback 2012(0.48) Bentley Continental GT Coupe 2007(0.50) BMW M5 Sedan 2010(0.51) |
+| Acura TSX Sedan 2012 | Volkswagen Golf Hatchback 2012*(0.27) Chrysler Crossfire Convertible 2008(0.40) BMW 6 Series Convertible 2007(0.44) Audi TTS Coupe 2012(0.48) Chevrolet Malibu Hybrid Sedan 2010(0.50) |
+| Acura Integra Type R 2001 | Lamborghini Diablo Coupe 2001(0.11) McLaren MP4-12C Coupe 2012(0.35) Chevrolet Corvette Convertible 2012(0.36) Lamborghini Gallardo LP 570-4 Superleggera 2012(0.36) BMW M3 Coupe 2012(0.48) |
+| Acura ZDX Hatchback 2012 | BMW M5 Sedan 2010(0.30) Hyundai Azera Sedan 2012(0.34) Acura RL Sedan 2012(0.39) BMW ActiveHybrid 5 Sedan 2012(0.39) Mercedes-Benz E-Class Sedan 2012(0.40) |
+| Aston Martin V8 Vantage Convertible 2012 | Aston Martin V8 Vantage Coupe 2012(0.21) Bentley Continental Supersports Conv. Convertible 2012(0.30) Bugatti Veyron 16.4 Coupe 2009(0.35) Audi TT Hatchback 2011(0.35) Bugatti Veyron 16.4 Convertible 2009(0.35) |
+| Aston Martin V8 Vantage Coupe 2012 | Aston Martin V8 Vantage Convertible 2012(0.21) Bugatti Veyron 16.4 Coupe 2009(0.31) Audi S5 Convertible 2012(0.32) BMW Z4 Convertible 2012(0.33) Audi TT Hatchback 2011(0.34) |
+| Aston Martin Virage Convertible 2012 | Bugatti Veyron 16.4 Coupe 2009(0.22) BMW M6 Convertible 2010(0.23) Fisker Karma Sedan 2012(0.24) Hyundai Azera Sedan 2012(0.25) Porsche Panamera Sedan 2012(0.27) |
+| Aston Martin Virage Coupe 2012 | Ferrari California Convertible 2012(0.10) Ferrari 458 Italia Convertible 2012(0.12) Chevrolet Corvette Convertible 2012(0.15) Dodge Charger Sedan 2012(0.17) Ferrari FF Coupe 2012(0.22) |
+| Audi RS 4 Convertible 2008 | Porsche Panamera Sedan 2012(0.23) Bugatti Veyron 16.4 Coupe 2009(0.27) BMW M6 Convertible 2010(0.28) Audi S5 Convertible 2012(0.29) Jaguar XK XKR 2012(0.29) |
+| Audi A5 Coupe 2012 | Audi TT Hatchback 2011(0.31) Mercedes-Benz S-Class Sedan 2012(0.35) Audi R8 Coupe 2012(0.42) Audi S5 Coupe 2012(0.49) Audi S4 Sedan 2012(0.50) |
+| Audi TTS Coupe 2012 | Cadillac CTS-V Sedan 2012(0.31) Audi S5 Coupe 2012(0.31) BMW 6 Series Convertible 2007(0.38) Bentley Continental Flying Spur Sedan 2007(0.39) Chrysler Crossfire Convertible 2008(0.47) |
+| Audi R8 Coupe 2012 | Audi TT Hatchback 2011(0.31) MINI Cooper Roadster Convertible 2012(0.32) Mercedes-Benz SL-Class Coupe 2009(0.32) BMW M3 Coupe 2012(0.37) Aston Martin V8 Vantage Coupe 2012(0.39) |
+| Audi V8 Sedan 1994 | Audi 100 Sedan 1994(0.13) Audi 100 Wagon 1994(0.22) Toyota 4Runner SUV 2012*(0.40) Isuzu Ascender SUV 2008(0.43) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.44) |
+| Audi 100 Sedan 1994 | Audi V8 Sedan 1994(0.13) Audi 100 Wagon 1994(0.20) Chevrolet Tahoe Hybrid SUV 2012(0.35) Toyota 4Runner SUV 2012*(0.35) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.36) |
+| Audi 100 Wagon 1994 | Audi 100 Sedan 1994(0.20) Audi V8 Sedan 1994(0.22) Mercedes-Benz 300-Class Convertible 1993(0.43) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.47) Geo Metro Convertible 1993(0.49) |
+| Audi TT Hatchback 2011 | Audi R8 Coupe 2012(0.31) Audi A5 Coupe 2012(0.31) Aston Martin V8 Vantage Coupe 2012(0.34) MINI Cooper Roadster Convertible 2012(0.35) Aston Martin V8 Vantage Convertible 2012(0.35) |
+| Audi S6 Sedan 2011 | Porsche Panamera Sedan 2012(0.29) BMW M6 Convertible 2010(0.29) Infiniti G Coupe IPL 2012(0.31) BMW M5 Sedan 2010(0.36) Bentley Mulsanne Sedan 2011(0.37) |
+| Audi S5 Convertible 2012 | Porsche Panamera Sedan 2012(0.22) Audi RS 4 Convertible 2008(0.29) Infiniti G Coupe IPL 2012(0.29) BMW M6 Convertible 2010(0.30) Fisker Karma Sedan 2012(0.31) |
+| Audi S5 Coupe 2012 | Audi TTS Coupe 2012(0.31) Acura RL Sedan 2012(0.37) Infiniti G Coupe IPL 2012(0.39) BMW 6 Series Convertible 2007(0.44) BMW 1 Series Convertible 2012(0.45) |
+| Audi S4 Sedan 2012 | Audi TT RS Coupe 2012(0.49) Hyundai Sonata Hybrid Sedan 2012(0.49) Audi A5 Coupe 2012(0.50) Ferrari FF Coupe 2012(0.51) Audi S4 Sedan 2007(0.53) |
+| Audi S4 Sedan 2007 | Bentley Continental GT Coupe 2007(0.43) Hyundai Genesis Sedan 2012(0.44) Hyundai Elantra Touring Hatchback 2012(0.48) Audi S6 Sedan 2011(0.49) Suzuki Kizashi Sedan 2012(0.50) |
+| Audi TT RS Coupe 2012 | Ferrari 458 Italia Convertible 2012(0.20) Aston Martin Virage Coupe 2012(0.22) Lamborghini Aventador Coupe 2012(0.28) BMW Z4 Convertible 2012(0.29) Ferrari California Convertible 2012(0.29) |
+| BMW ActiveHybrid 5 Sedan 2012 | BMW M5 Sedan 2010(0.17) Porsche Panamera Sedan 2012(0.27) Mercedes-Benz SL-Class Coupe 2009(0.28) Fisker Karma Sedan 2012(0.31) Mercedes-Benz E-Class Sedan 2012(0.31) |
+| BMW 1 Series Convertible 2012 | BMW M3 Coupe 2012(0.36) Audi R8 Coupe 2012(0.43) Audi S5 Coupe 2012(0.45) Lamborghini Aventador Coupe 2012(0.50) Audi TT Hatchback 2011(0.50) |
+| BMW 1 Series Coupe 2012 | BMW 3 Series Sedan 2012(0.28) Ferrari FF Coupe 2012(0.29) Aston Martin Virage Coupe 2012(0.31) Chevrolet Corvette Convertible 2012(0.34) Bentley Continental GT Coupe 2012(0.36) |
+| BMW 3 Series Sedan 2012 | BMW 1 Series Coupe 2012(0.28) Ferrari 458 Italia Coupe 2012(0.30) McLaren MP4-12C Coupe 2012(0.32) Honda Accord Coupe 2012(0.34) Ferrari California Convertible 2012(0.35) |
+| BMW 3 Series Wagon 2012 | BMW M5 Sedan 2010(0.28) BMW ActiveHybrid 5 Sedan 2012(0.33) Porsche Panamera Sedan 2012(0.39) Acura TL Sedan 2012(0.46) Mercedes-Benz SL-Class Coupe 2009(0.49) |
+| BMW 6 Series Convertible 2007 | Audi TTS Coupe 2012(0.38) Chrysler Crossfire Convertible 2008(0.41) Cadillac CTS-V Sedan 2012(0.43) Audi S5 Coupe 2012(0.44) Acura TSX Sedan 2012(0.44) |
+| BMW X5 SUV 2007 | BMW X3 SUV 2012(0.38) Toyota Sequoia SUV 2012(0.42) Toyota 4Runner SUV 2012*(0.43) Cadillac SRX SUV 2012(0.46) Volvo XC90 SUV 2007*(0.47) |
+| BMW X6 SUV 2012 | BMW 3 Series Sedan 2012(0.36) Dodge Caliber Wagon 2007(0.40) Chevrolet HHR SS 2010(0.42) Hyundai Accent Sedan 2012(0.45) Ferrari FF Coupe 2012(0.45) |
+| BMW M3 Coupe 2012 | Buick Regal GS 2012(0.30) BMW 1 Series Convertible 2012(0.36) BMW Z4 Convertible 2012(0.37) Audi R8 Coupe 2012(0.37) Mercedes-Benz SL-Class Coupe 2009(0.40) |
+| BMW M5 Sedan 2010 | BMW ActiveHybrid 5 Sedan 2012(0.17) Mercedes-Benz E-Class Sedan 2012(0.26) BMW 3 Series Wagon 2012(0.28) Acura ZDX Hatchback 2012(0.30) Porsche Panamera Sedan 2012(0.31) |
+| BMW M6 Convertible 2010 | Porsche Panamera Sedan 2012(0.20) Fisker Karma Sedan 2012(0.21) Aston Martin Virage Convertible 2012(0.23) Bugatti Veyron 16.4 Coupe 2009(0.28) Audi RS 4 Convertible 2008(0.28) |
+| BMW X3 SUV 2012 | BMW X5 SUV 2007(0.38) Mercedes-Benz SL-Class Coupe 2009(0.47) BMW ActiveHybrid 5 Sedan 2012(0.48) BMW X6 SUV 2012(0.52) Infiniti QX56 SUV 2011(0.52) |
+| BMW Z4 Convertible 2012 | Lamborghini Aventador Coupe 2012(0.21) Ferrari 458 Italia Coupe 2012(0.26) Ferrari 458 Italia Convertible 2012(0.26) McLaren MP4-12C Coupe 2012(0.28) Aston Martin Virage Coupe 2012(0.28) |
+| Bentley Continental Supersports Conv. Convertible 2012 | Chevrolet Corvette Ron Fellows Edition Z06 2007(0.29) Aston Martin V8 Vantage Convertible 2012(0.30) MINI Cooper Roadster Convertible 2012(0.30) Bugatti Veyron 16.4 Convertible 2009(0.33) Maybach Landaulet Convertible 2012(0.40) |
+| Bentley Arnage Sedan 2009 | Chevrolet TrailBlazer SS 2009(0.25) Rolls-Royce Ghost Sedan 2012(0.47) FIAT 500 Abarth 2012(0.48) Land Rover Range Rover SUV 2012(0.49) Rolls-Royce Phantom Sedan 2012(0.51) |
+| Bentley Mulsanne Sedan 2011 | Infiniti G Coupe IPL 2012(0.37) Audi S6 Sedan 2011(0.37) Rolls-Royce Phantom Sedan 2012(0.42) BMW M5 Sedan 2010(0.48) BMW ActiveHybrid 5 Sedan 2012(0.48) |
+| Bentley Continental GT Coupe 2012 | BMW 1 Series Coupe 2012(0.36) BMW Z4 Convertible 2012(0.37) Chevrolet Camaro Convertible 2012(0.39) Aston Martin V8 Vantage Coupe 2012(0.39) Ferrari FF Coupe 2012(0.40) |
+| Bentley Continental GT Coupe 2007 | Hyundai Genesis Sedan 2012(0.36) Nissan Leaf Hatchback 2012(0.41) Audi S4 Sedan 2007(0.43) Mitsubishi Lancer Sedan 2012(0.43) Chrysler Sebring Convertible 2010(0.46) |
+| Bentley Continental Flying Spur Sedan 2007 | Cadillac CTS-V Sedan 2012(0.39) Audi TTS Coupe 2012(0.39) Honda Accord Sedan 2012(0.42) Chrysler Crossfire Convertible 2008(0.46) Mercedes-Benz C-Class Sedan 2012(0.47) |
+| Bugatti Veyron 16.4 Convertible 2009 | FIAT 500 Convertible 2012(0.24) Bentley Continental Supersports Conv. Convertible 2012(0.33) Aston Martin V8 Vantage Convertible 2012(0.35) Chevrolet Corvette Ron Fellows Edition Z06 2007(0.37) Buick Regal GS 2012(0.39) |
+| Bugatti Veyron 16.4 Coupe 2009 | Aston Martin Virage Convertible 2012(0.22) Jaguar XK XKR 2012(0.26) Audi RS 4 Convertible 2008(0.27) BMW M6 Convertible 2010(0.28) Aston Martin V8 Vantage Coupe 2012(0.31) |
+| Buick Regal GS 2012 | Suzuki Kizashi Sedan 2012(0.25) Volkswagen Beetle Hatchback 2012*(0.30) BMW M3 Coupe 2012(0.30) Tesla Model S Sedan 2012(0.33) Mercedes-Benz E-Class Sedan 2012(0.33) |
+| Buick Rainier SUV 2007 | Dodge Dakota Club Cab 2007(0.19) Dodge Durango SUV 2007(0.24) Chrysler Aspen SUV 2009(0.25) GMC Terrain SUV 2012(0.26) Ford Freestar Minivan 2007(0.27) |
+| Buick Verano Sedan 2012 | Honda Odyssey Minivan 2012(0.40) Nissan Juke Hatchback 2012(0.41) Chevrolet Cobalt SS 2010(0.44) Toyota Camry Sedan 2012*(0.44) Hyundai Elantra Touring Hatchback 2012(0.45) |
+| Buick Enclave SUV 2012 | Chevrolet Traverse SUV 2012(0.31) Hyundai Veracruz SUV 2012(0.33) Honda Odyssey Minivan 2012(0.41) Honda Odyssey Minivan 2007(0.41) Scion xD Hatchback 2012(0.42) |
+| Cadillac CTS-V Sedan 2012 | Mercedes-Benz C-Class Sedan 2012(0.30) Audi TTS Coupe 2012(0.31) Chrysler Crossfire Convertible 2008(0.36) Bentley Continental Flying Spur Sedan 2007(0.39) BMW 6 Series Convertible 2007(0.43) |
+| Cadillac SRX SUV 2012 | BMW X5 SUV 2007(0.46) Dodge Durango SUV 2012(0.50) Hyundai Genesis Sedan 2012(0.52) Honda Odyssey Minivan 2012(0.52) Ford Edge SUV 2012(0.53) |
+| Cadillac Escalade EXT Crew Cab 2007 | Jeep Grand Cherokee SUV 2012(0.26) Chevrolet Avalanche Crew Cab 2012(0.27) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.27) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.32) GMC Acadia SUV 2012(0.32) |
+| Chevrolet Silverado 1500 Hybrid Crew Cab 2012 | Chevrolet Silverado 1500 Classic Extended Cab 2007(0.13) Ford F-150 Regular Cab 2012(0.19) Ford F-450 Super Duty Crew Cab 2012(0.20) Chevrolet Avalanche Crew Cab 2012(0.20) Dodge Ram Pickup 3500 Crew Cab 2010(0.23) |
+| Chevrolet Corvette Convertible 2012 | Aston Martin Virage Coupe 2012(0.15) Ferrari California Convertible 2012(0.16) McLaren MP4-12C Coupe 2012(0.19) Ferrari 458 Italia Convertible 2012(0.20) Ford GT Coupe 2006(0.22) |
+| Chevrolet Corvette ZR1 2012 | Spyker C8 Convertible 2009(0.31) Fisker Karma Sedan 2012(0.37) Audi RS 4 Convertible 2008(0.37) Chevrolet Corvette Convertible 2012(0.38) Spyker C8 Coupe 2009(0.40) |
+| Chevrolet Corvette Ron Fellows Edition Z06 2007 | Bentley Continental Supersports Conv. Convertible 2012(0.29) Maybach Landaulet Convertible 2012(0.31) Bugatti Veyron 16.4 Convertible 2009(0.37) Buick Regal GS 2012(0.38) Dodge Challenger SRT8 2011(0.39) |
+| Chevrolet Traverse SUV 2012 | Honda Odyssey Minivan 2007(0.27) Chevrolet Impala Sedan 2007(0.27) Buick Enclave SUV 2012(0.31) Scion xD Hatchback 2012(0.32) Chrysler Town and Country Minivan 2012(0.33) |
+| Chevrolet Camaro Convertible 2012 | Ferrari California Convertible 2012(0.39) Bentley Continental GT Coupe 2012(0.39) BMW 1 Series Coupe 2012(0.40) Ferrari FF Coupe 2012(0.40) Aston Martin Virage Coupe 2012(0.40) |
+| Chevrolet HHR SS 2010 | Dodge Caliber Wagon 2007(0.25) Dodge Magnum Wagon 2008(0.38) Dodge Charger SRT-8 2009(0.40) Dodge Caliber Wagon 2012(0.41) BMW X6 SUV 2012(0.42) |
+| Chevrolet Impala Sedan 2007 | Chrysler Sebring Convertible 2010(0.14) Honda Odyssey Minivan 2007(0.18) Hyundai Tucson SUV 2012(0.26) Chevrolet Traverse SUV 2012(0.27) Ford Focus Sedan 2007(0.27) |
+| Chevrolet Tahoe Hybrid SUV 2012 | Toyota Sequoia SUV 2012(0.19) Toyota 4Runner SUV 2012*(0.22) Chevrolet Silverado 1500 Extended Cab 2012(0.29) Isuzu Ascender SUV 2008(0.34) Audi 100 Sedan 1994(0.35) |
+| Chevrolet Sonic Sedan 2012 | Hyundai Azera Sedan 2012(0.34) Suzuki Kizashi Sedan 2012(0.38) Mercedes-Benz E-Class Sedan 2012(0.39) Nissan Juke Hatchback 2012(0.41) Volkswagen Beetle Hatchback 2012*(0.44) |
+| Chevrolet Express Cargo Van 2007 | Chevrolet Express Van 2007(0.07) Mercedes-Benz Sprinter Van 2012(0.11) GMC Savana Van 2012(0.15) Nissan NV Passenger Van 2012(0.17) Chevrolet Silverado 1500 Regular Cab 2012(0.32) |
+| Chevrolet Avalanche Crew Cab 2012 | Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.20) Chrysler Aspen SUV 2009(0.25) Ford Ranger SuperCab 2011(0.25) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.26) Cadillac Escalade EXT Crew Cab 2007(0.27) |
+| Chevrolet Cobalt SS 2010 | Buick Verano Sedan 2012(0.44) McLaren MP4-12C Coupe 2012(0.47) Dodge Charger SRT-8 2009(0.48) Suzuki SX4 Hatchback 2012(0.48) Chevrolet Corvette Convertible 2012(0.50) |
+| Chevrolet Malibu Hybrid Sedan 2010 | Chrysler Sebring Convertible 2010(0.30) Chevrolet Impala Sedan 2007(0.38) Chrysler Town and Country Minivan 2012(0.39) Honda Accord Sedan 2012(0.40) Honda Odyssey Minivan 2007(0.40) |
+| Chevrolet TrailBlazer SS 2009 | Bentley Arnage Sedan 2009(0.25) Jeep Grand Cherokee SUV 2012(0.33) Cadillac Escalade EXT Crew Cab 2007(0.34) Land Rover Range Rover SUV 2012(0.40) Volvo XC90 SUV 2007*(0.41) |
+| Chevrolet Silverado 2500HD Regular Cab 2012 | Ford E-Series Wagon Van 2012(0.11) GMC Savana Van 2012(0.17) Ford F-150 Regular Cab 2012(0.25) Dodge Sprinter Cargo Van 2009(0.27) Chevrolet Silverado 1500 Extended Cab 2012(0.28) |
+| Chevrolet Silverado 1500 Classic Extended Cab 2007 | Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.13) Ford F-450 Super Duty Crew Cab 2012(0.15) Chevrolet Silverado 1500 Extended Cab 2012(0.20) Ford Ranger SuperCab 2011(0.21) Isuzu Ascender SUV 2008(0.21) |
+| Chevrolet Express Van 2007 | Chevrolet Express Cargo Van 2007(0.07) GMC Savana Van 2012(0.12) Mercedes-Benz Sprinter Van 2012(0.16) Nissan NV Passenger Van 2012(0.19) Chevrolet Silverado 1500 Regular Cab 2012(0.27) |
+| Chevrolet Monte Carlo Coupe 2007 | Chevrolet Malibu Sedan 2007(0.30) Daewoo Nubira Wagon 2002(0.34) Chevrolet Impala Sedan 2007(0.35) Honda Odyssey Minivan 2007(0.35) Chrysler Sebring Convertible 2010(0.36) |
+| Chevrolet Malibu Sedan 2007 | Honda Odyssey Minivan 2007(0.26) Ford Focus Sedan 2007(0.26) Chevrolet Impala Sedan 2007(0.29) Chevrolet Monte Carlo Coupe 2007(0.30) Daewoo Nubira Wagon 2002(0.30) |
+| Chevrolet Silverado 1500 Extended Cab 2012 | GMC Canyon Extended Cab 2012(0.19) Dodge Ram Pickup 3500 Quad Cab 2009(0.20) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.20) Dodge Dakota Club Cab 2007(0.23) Ford F-150 Regular Cab 2007(0.25) |
+| Chevrolet Silverado 1500 Regular Cab 2012 | Dodge Ram Pickup 3500 Quad Cab 2009(0.10) Ford F-150 Regular Cab 2007(0.15) Jeep Liberty SUV 2012(0.23) Jeep Patriot SUV 2012(0.25) Nissan NV Passenger Van 2012(0.25) |
+| Chrysler Aspen SUV 2009 | Buick Rainier SUV 2007(0.25) Chevrolet Avalanche Crew Cab 2012(0.25) Hyundai Santa Fe SUV 2012(0.29) Dodge Dakota Crew Cab 2010(0.33) GMC Acadia SUV 2012(0.33) |
+| Chrysler Sebring Convertible 2010 | Chevrolet Impala Sedan 2007(0.14) Hyundai Tucson SUV 2012(0.25) Honda Odyssey Minivan 2007(0.29) Chevrolet Malibu Hybrid Sedan 2010(0.30) Chevrolet Monte Carlo Coupe 2007(0.36) |
+| Chrysler Town and Country Minivan 2012 | Chevrolet Traverse SUV 2012(0.33) Honda Odyssey Minivan 2007(0.34) Suzuki Aerio Sedan 2007(0.39) Chevrolet Malibu Hybrid Sedan 2010(0.39) Chevrolet Impala Sedan 2007(0.40) |
+| Chrysler 300 SRT-8 2010 | Acura TL Type-S 2008(0.38) Chevrolet TrailBlazer SS 2009(0.42) Audi S6 Sedan 2011(0.46) Volvo XC90 SUV 2007*(0.47) Dodge Durango SUV 2012(0.48) |
+| Chrysler Crossfire Convertible 2008 | Mercedes-Benz 300-Class Convertible 1993(0.30) Cadillac CTS-V Sedan 2012(0.36) Acura TSX Sedan 2012(0.40) BMW 6 Series Convertible 2007(0.41) Volkswagen Golf Hatchback 2012*(0.45) |
+| Chrysler PT Cruiser Convertible 2008 | Suzuki SX4 Sedan 2012(0.28) Chevrolet Impala Sedan 2007(0.33) Chevrolet Traverse SUV 2012(0.36) Hyundai Veracruz SUV 2012(0.39) Chrysler Sebring Convertible 2010(0.40) |
+| Daewoo Nubira Wagon 2002 | Chevrolet Malibu Sedan 2007(0.30) Chevrolet Monte Carlo Coupe 2007(0.34) Ford Freestar Minivan 2007(0.38) Dodge Caravan Minivan 1997(0.40) Honda Odyssey Minivan 2007(0.41) |
+| Dodge Caliber Wagon 2012 | Ford Freestar Minivan 2007(0.36) Hyundai Elantra Sedan 2007(0.38) Chevrolet HHR SS 2010(0.41) Dodge Caliber Wagon 2007(0.42) Dodge Magnum Wagon 2008(0.47) |
+| Dodge Caliber Wagon 2007 | Chevrolet HHR SS 2010(0.25) BMW X6 SUV 2012(0.40) Dodge Caliber Wagon 2012(0.42) Dodge Magnum Wagon 2008(0.42) Dodge Charger SRT-8 2009(0.46) |
+| Dodge Caravan Minivan 1997 | Plymouth Neon Coupe 1999(0.33) Daewoo Nubira Wagon 2002(0.40) Chrysler Town and Country Minivan 2012(0.41) Ford Focus Sedan 2007(0.45) Chevrolet Malibu Sedan 2007(0.45) |
+| Dodge Ram Pickup 3500 Crew Cab 2010 | Ford F-450 Super Duty Crew Cab 2012(0.12) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.22) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.23) Dodge Dakota Crew Cab 2010(0.30) GMC Canyon Extended Cab 2012(0.31) |
+| Dodge Ram Pickup 3500 Quad Cab 2009 | Chevrolet Silverado 1500 Regular Cab 2012(0.10) Ford F-150 Regular Cab 2007(0.17) GMC Canyon Extended Cab 2012(0.20) Chevrolet Silverado 1500 Extended Cab 2012(0.20) Ford F-150 Regular Cab 2012(0.26) |
+| Dodge Sprinter Cargo Van 2009 | Ford E-Series Wagon Van 2012(0.17) GMC Savana Van 2012(0.23) Mercedes-Benz Sprinter Van 2012(0.27) Chevrolet Silverado 2500HD Regular Cab 2012(0.27) Ram C/V Cargo Van Minivan 2012(0.35) |
+| Dodge Journey SUV 2012 | Chevrolet Traverse SUV 2012(0.35) Jeep Compass SUV 2012(0.48) Dodge Durango SUV 2012(0.48) Chrysler PT Cruiser Convertible 2008(0.49) Scion xD Hatchback 2012(0.52) |
+| Dodge Dakota Crew Cab 2010 | Ford Ranger SuperCab 2011(0.21) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.22) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.28) Dodge Ram Pickup 3500 Crew Cab 2010(0.30) Chevrolet Avalanche Crew Cab 2012(0.31) |
+| Dodge Dakota Club Cab 2007 | Buick Rainier SUV 2007(0.19) GMC Canyon Extended Cab 2012(0.22) Ford F-150 Regular Cab 2007(0.22) Chevrolet Silverado 1500 Extended Cab 2012(0.23) Ford F-150 Regular Cab 2012(0.26) |
+| Dodge Magnum Wagon 2008 | Ford Mustang Convertible 2007(0.33) Chevrolet HHR SS 2010(0.38) Dodge Caliber Wagon 2007(0.42) Buick Rainier SUV 2007(0.43) GMC Terrain SUV 2012(0.44) |
+| Dodge Challenger SRT8 2011 | Spyker C8 Coupe 2009(0.23) Tesla Model S Sedan 2012(0.25) Spyker C8 Convertible 2009(0.35) Jaguar XK XKR 2012(0.35) Ford GT Coupe 2006(0.35) |
+| Dodge Durango SUV 2012 | Hyundai Tucson SUV 2012(0.36) Hyundai Veracruz SUV 2012(0.40) Chevrolet Traverse SUV 2012(0.42) Land Rover Range Rover SUV 2012(0.45) Buick Enclave SUV 2012(0.47) |
+| Dodge Durango SUV 2007 | Buick Rainier SUV 2007(0.24) Jeep Grand Cherokee SUV 2012(0.34) Cadillac Escalade EXT Crew Cab 2007(0.36) Dodge Dakota Club Cab 2007(0.36) Chevrolet Avalanche Crew Cab 2012(0.36) |
+| Dodge Charger Sedan 2012 | Aston Martin Virage Coupe 2012(0.17) Ferrari FF Coupe 2012(0.23) Ferrari California Convertible 2012(0.24) Hyundai Veloster Hatchback 2012(0.25) Volvo C30 Hatchback 2012*(0.26) |
+| Dodge Charger SRT-8 2009 | Ferrari 458 Italia Coupe 2012(0.35) Volvo C30 Hatchback 2012*(0.37) Ferrari California Convertible 2012(0.39) BMW 3 Series Sedan 2012(0.39) Chevrolet HHR SS 2010(0.40) |
+| Eagle Talon Hatchback 1998 | Plymouth Neon Coupe 1999(0.16) Nissan 240SX Coupe 1998(0.33) Volkswagen Golf Hatchback 1991*(0.34) Dodge Caravan Minivan 1997(0.50) Volvo 240 Sedan 1993*(0.51) |
+| FIAT 500 Abarth 2012 | Ford Edge SUV 2012(0.46) BMW M6 Convertible 2010(0.48) Bentley Arnage Sedan 2009(0.48) Spyker C8 Convertible 2009(0.49) Land Rover Range Rover SUV 2012(0.51) |
+| FIAT 500 Convertible 2012 | Bugatti Veyron 16.4 Convertible 2009(0.24) Maybach Landaulet Convertible 2012(0.41) Chevrolet Corvette Ron Fellows Edition Z06 2007(0.42) Bentley Continental Supersports Conv. Convertible 2012(0.43) smart fortwo Convertible 2012*(0.43) |
+| Ferrari FF Coupe 2012 | Aston Martin Virage Coupe 2012(0.22) Dodge Charger Sedan 2012(0.23) Hyundai Veloster Hatchback 2012(0.23) BMW 1 Series Coupe 2012(0.29) Ferrari California Convertible 2012(0.34) |
+| Ferrari California Convertible 2012 | Ferrari 458 Italia Convertible 2012(0.09) Aston Martin Virage Coupe 2012(0.10) Chevrolet Corvette Convertible 2012(0.16) Ferrari 458 Italia Coupe 2012(0.18) McLaren MP4-12C Coupe 2012(0.22) |
+| Ferrari 458 Italia Convertible 2012 | Ferrari California Convertible 2012(0.09) Aston Martin Virage Coupe 2012(0.12) Ferrari 458 Italia Coupe 2012(0.12) McLaren MP4-12C Coupe 2012(0.16) Lamborghini Aventador Coupe 2012(0.19) |
+| Ferrari 458 Italia Coupe 2012 | Ferrari 458 Italia Convertible 2012(0.12) Lamborghini Aventador Coupe 2012(0.13) McLaren MP4-12C Coupe 2012(0.14) Ferrari California Convertible 2012(0.18) BMW Z4 Convertible 2012(0.26) |
+| Fisker Karma Sedan 2012 | BMW M6 Convertible 2010(0.21) Aston Martin Virage Convertible 2012(0.24) Infiniti G Coupe IPL 2012(0.25) Porsche Panamera Sedan 2012(0.27) Mercedes-Benz SL-Class Coupe 2009(0.29) |
+| Ford F-450 Super Duty Crew Cab 2012 | Dodge Ram Pickup 3500 Crew Cab 2010(0.12) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.15) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.20) Ford F-150 Regular Cab 2012(0.23) Ford E-Series Wagon Van 2012(0.26) |
+| Ford Mustang Convertible 2007 | Dodge Magnum Wagon 2008(0.33) Dodge Charger SRT-8 2009(0.47) Dodge Caliber Wagon 2007(0.48) Mercedes-Benz 300-Class Convertible 1993(0.53) Ford Ranger SuperCab 2011(0.54) |
+| Ford Freestar Minivan 2007 | Buick Rainier SUV 2007(0.27) Chevrolet Avalanche Crew Cab 2012(0.28) Chevrolet Malibu Sedan 2007(0.34) Lincoln Town Car Sedan 2011(0.35) Dodge Caliber Wagon 2012(0.36) |
+| Ford Expedition EL SUV 2009 | Isuzu Ascender SUV 2008(0.24) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.28) Jeep Grand Cherokee SUV 2012(0.28) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.29) Chevrolet Avalanche Crew Cab 2012(0.34) |
+| Ford Edge SUV 2012 | FIAT 500 Abarth 2012(0.46) Dodge Durango SUV 2012(0.47) Cadillac SRX SUV 2012(0.53) Land Rover Range Rover SUV 2012(0.55) Volvo XC90 SUV 2007*(0.57) |
+| Ford Ranger SuperCab 2011 | Dodge Dakota Crew Cab 2010(0.21) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.21) GMC Canyon Extended Cab 2012(0.22) Chevrolet Avalanche Crew Cab 2012(0.25) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.27) |
+| Ford GT Coupe 2006 | Chevrolet Corvette Convertible 2012(0.22) Ferrari California Convertible 2012(0.23) McLaren MP4-12C Coupe 2012(0.27) Spyker C8 Coupe 2009(0.27) Jaguar XK XKR 2012(0.29) |
+| Ford F-150 Regular Cab 2012 | Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.19) Ford E-Series Wagon Van 2012(0.21) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.22) Ford F-450 Super Duty Crew Cab 2012(0.23) Chevrolet Silverado 2500HD Regular Cab 2012(0.25) |
+| Ford F-150 Regular Cab 2007 | Chevrolet Silverado 1500 Regular Cab 2012(0.15) Dodge Ram Pickup 3500 Quad Cab 2009(0.17) Dodge Dakota Club Cab 2007(0.22) Chevrolet Silverado 1500 Extended Cab 2012(0.25) GMC Canyon Extended Cab 2012(0.29) |
+| Ford Focus Sedan 2007 | Honda Odyssey Minivan 2007(0.25) Chevrolet Malibu Sedan 2007(0.26) Chevrolet Impala Sedan 2007(0.27) Chevrolet Traverse SUV 2012(0.37) Hyundai Elantra Sedan 2007(0.37) |
+| Ford E-Series Wagon Van 2012 | Chevrolet Silverado 2500HD Regular Cab 2012(0.11) GMC Savana Van 2012(0.12) Dodge Sprinter Cargo Van 2009(0.17) Ford F-150 Regular Cab 2012(0.21) Ford F-450 Super Duty Crew Cab 2012(0.26) |
+| Ford Fiesta Sedan 2012 | Hyundai Elantra Touring Hatchback 2012(0.38) Hyundai Elantra Sedan 2007(0.39) Toyota Camry Sedan 2012*(0.44) Chrysler Sebring Convertible 2010(0.45) Ford Focus Sedan 2007(0.47) |
+| GMC Terrain SUV 2012 | Chevrolet Silverado 1500 Extended Cab 2012(0.26) Buick Rainier SUV 2007(0.26) Chevrolet Avalanche Crew Cab 2012(0.31) Dodge Dakota Club Cab 2007(0.35) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.35) |
+| GMC Savana Van 2012 | Ford E-Series Wagon Van 2012(0.12) Chevrolet Express Van 2007(0.12) Mercedes-Benz Sprinter Van 2012(0.12) Chevrolet Express Cargo Van 2007(0.15) Nissan NV Passenger Van 2012(0.17) |
+| GMC Yukon Hybrid SUV 2012 | Mazda Tribute SUV 2011(0.33) Land Rover LR2 SUV 2012(0.35) Dodge Ram Pickup 3500 Quad Cab 2009(0.35) Chevrolet Silverado 1500 Regular Cab 2012(0.35) Toyota Sequoia SUV 2012(0.36) |
+| GMC Acadia SUV 2012 | Cadillac Escalade EXT Crew Cab 2007(0.32) Chrysler Aspen SUV 2009(0.33) Chevrolet Avalanche Crew Cab 2012(0.34) Ford Ranger SuperCab 2011(0.37) Hyundai Santa Fe SUV 2012(0.38) |
+| GMC Canyon Extended Cab 2012 | Chevrolet Silverado 1500 Extended Cab 2012(0.19) Dodge Ram Pickup 3500 Quad Cab 2009(0.20) Dodge Dakota Club Cab 2007(0.22) Ford Ranger SuperCab 2011(0.22) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.24) |
+| Geo Metro Convertible 1993 | Mercedes-Benz 300-Class Convertible 1993(0.27) Audi 100 Wagon 1994(0.49) Chrysler Crossfire Convertible 2008(0.53) Ford Mustang Convertible 2007(0.54) Nissan 240SX Coupe 1998(0.55) |
+| HUMMER H3T Crew Cab 2010 | HUMMER H2 SUT Crew Cab 2009(0.11) Jeep Wrangler SUV 2012(0.11) AM General Hummer SUV 2000(0.28) Jeep Patriot SUV 2012(0.46) Ford F-450 Super Duty Crew Cab 2012(0.47) |
+| HUMMER H2 SUT Crew Cab 2009 | HUMMER H3T Crew Cab 2010(0.11) Jeep Wrangler SUV 2012(0.12) AM General Hummer SUV 2000(0.17) Ford F-450 Super Duty Crew Cab 2012(0.29) Chevrolet Silverado 2500HD Regular Cab 2012(0.33) |
+| Honda Odyssey Minivan 2012 | Buick Verano Sedan 2012(0.40) Buick Enclave SUV 2012(0.41) Chevrolet Malibu Hybrid Sedan 2010(0.42) Acura RL Sedan 2012(0.43) Suzuki SX4 Sedan 2012(0.44) |
+| Honda Odyssey Minivan 2007 | Chevrolet Impala Sedan 2007(0.18) Hyundai Veracruz SUV 2012(0.25) Ford Focus Sedan 2007(0.25) Chevrolet Malibu Sedan 2007(0.26) Chevrolet Traverse SUV 2012(0.27) |
+| Honda Accord Coupe 2012 | BMW 3 Series Sedan 2012(0.34) Ferrari 458 Italia Coupe 2012(0.35) Ferrari California Convertible 2012(0.40) Hyundai Accent Sedan 2012(0.41) Ferrari 458 Italia Convertible 2012(0.44) |
+| Honda Accord Sedan 2012 | Chevrolet Malibu Sedan 2007(0.39) Honda Odyssey Minivan 2007(0.39) Chevrolet Malibu Hybrid Sedan 2010(0.40) Bentley Continental Flying Spur Sedan 2007(0.42) Chevrolet Monte Carlo Coupe 2007(0.42) |
+| Hyundai Veloster Hatchback 2012 | Aston Martin Virage Coupe 2012(0.22) Jaguar XK XKR 2012(0.23) Ferrari FF Coupe 2012(0.23) Dodge Charger Sedan 2012(0.25) Volvo C30 Hatchback 2012*(0.26) |
+| Hyundai Santa Fe SUV 2012 | Chrysler Aspen SUV 2009(0.29) Volkswagen Golf Hatchback 2012*(0.36) GMC Acadia SUV 2012(0.38) Chevrolet Avalanche Crew Cab 2012(0.39) Mercedes-Benz C-Class Sedan 2012(0.42) |
+| Hyundai Tucson SUV 2012 | Chrysler Sebring Convertible 2010(0.25) Chevrolet Impala Sedan 2007(0.26) Dodge Durango SUV 2012(0.36) Hyundai Veracruz SUV 2012(0.37) Honda Odyssey Minivan 2007(0.38) |
+| Hyundai Veracruz SUV 2012 | Honda Odyssey Minivan 2007(0.25) Buick Enclave SUV 2012(0.33) Chevrolet Impala Sedan 2007(0.35) Chevrolet Traverse SUV 2012(0.36) Hyundai Tucson SUV 2012(0.37) |
+| Hyundai Sonata Hybrid Sedan 2012 | Hyundai Veloster Hatchback 2012(0.42) Buick Verano Sedan 2012(0.46) BMW M5 Sedan 2010(0.46) BMW M3 Coupe 2012(0.49) Audi S4 Sedan 2012(0.49) |
+| Hyundai Elantra Sedan 2007 | Ford Focus Sedan 2007(0.37) Dodge Caliber Wagon 2012(0.38) Ford Fiesta Sedan 2012(0.39) Chrysler Sebring Convertible 2010(0.40) Chevrolet Malibu Sedan 2007(0.41) |
+| Hyundai Accent Sedan 2012 | Ferrari 458 Italia Coupe 2012(0.35) BMW 3 Series Sedan 2012(0.37) Honda Accord Coupe 2012(0.41) Dodge Charger SRT-8 2009(0.41) Lamborghini Aventador Coupe 2012(0.43) |
+| Hyundai Genesis Sedan 2012 | Acura TL Sedan 2012(0.35) Bentley Continental GT Coupe 2007(0.36) Suzuki SX4 Sedan 2012(0.39) Hyundai Azera Sedan 2012(0.41) Hyundai Tucson SUV 2012(0.41) |
+| Hyundai Sonata Sedan 2012 | Hyundai Genesis Sedan 2012(0.45) Bentley Continental Flying Spur Sedan 2007(0.48) Porsche Panamera Sedan 2012(0.49) Ford Fiesta Sedan 2012(0.50) Mitsubishi Lancer Sedan 2012(0.50) |
+| Hyundai Elantra Touring Hatchback 2012 | Ford Fiesta Sedan 2012(0.38) Hyundai Elantra Sedan 2007(0.44) Chrysler Sebring Convertible 2010(0.44) Buick Verano Sedan 2012(0.45) Honda Odyssey Minivan 2012(0.46) |
+| Hyundai Azera Sedan 2012 | Aston Martin Virage Convertible 2012(0.25) Mercedes-Benz E-Class Sedan 2012(0.31) Acura ZDX Hatchback 2012(0.34) Chevrolet Sonic Sedan 2012(0.34) Lamborghini Reventon Coupe 2008(0.35) |
+| Infiniti G Coupe IPL 2012 | Fisker Karma Sedan 2012(0.25) Porsche Panamera Sedan 2012(0.27) Audi S5 Convertible 2012(0.29) BMW M6 Convertible 2010(0.30) Audi S6 Sedan 2011(0.31) |
+| Infiniti QX56 SUV 2011 | Acura ZDX Hatchback 2012(0.46) BMW X3 SUV 2012(0.52) Toyota 4Runner SUV 2012*(0.54) BMW X5 SUV 2007(0.54) BMW ActiveHybrid 5 Sedan 2012(0.59) |
+| Isuzu Ascender SUV 2008 | Chevrolet Silverado 1500 Classic Extended Cab 2007(0.21) Ford Expedition EL SUV 2009(0.24) Ford F-450 Super Duty Crew Cab 2012(0.30) Ford F-150 Regular Cab 2012(0.31) Chevrolet Silverado 1500 Extended Cab 2012(0.31) |
+| Jaguar XK XKR 2012 | Hyundai Veloster Hatchback 2012(0.23) Bugatti Veyron 16.4 Coupe 2009(0.26) Ford GT Coupe 2006(0.29) Audi RS 4 Convertible 2008(0.29) Spyker C8 Coupe 2009(0.29) |
+| Jeep Patriot SUV 2012 | Jeep Liberty SUV 2012(0.09) Chevrolet Silverado 1500 Regular Cab 2012(0.25) Dodge Ram Pickup 3500 Quad Cab 2009(0.29) Volvo 240 Sedan 1993*(0.35) GMC Canyon Extended Cab 2012(0.41) |
+| Jeep Wrangler SUV 2012 | HUMMER H3T Crew Cab 2010(0.11) HUMMER H2 SUT Crew Cab 2009(0.12) AM General Hummer SUV 2000(0.25) Ford F-450 Super Duty Crew Cab 2012(0.41) Jeep Patriot SUV 2012(0.44) |
+| Jeep Liberty SUV 2012 | Jeep Patriot SUV 2012(0.09) Chevrolet Silverado 1500 Regular Cab 2012(0.23) Dodge Ram Pickup 3500 Quad Cab 2009(0.31) Volvo 240 Sedan 1993*(0.35) Jeep Compass SUV 2012(0.37) |
+| Jeep Grand Cherokee SUV 2012 | Cadillac Escalade EXT Crew Cab 2007(0.26) Ford Expedition EL SUV 2009(0.28) Chevrolet TrailBlazer SS 2009(0.33) Dodge Durango SUV 2007(0.34) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.39) |
+| Jeep Compass SUV 2012 | Jeep Liberty SUV 2012(0.37) Volkswagen Golf Hatchback 1991*(0.39) Volvo 240 Sedan 1993*(0.43) Jeep Patriot SUV 2012(0.45) Dodge Journey SUV 2012(0.48) |
+| Lamborghini Reventon Coupe 2008 | Hyundai Azera Sedan 2012(0.35) Aston Martin Virage Convertible 2012(0.35) BMW M6 Convertible 2010(0.35) Rolls-Royce Ghost Sedan 2012(0.36) Spyker C8 Convertible 2009(0.39) |
+| Lamborghini Aventador Coupe 2012 | Ferrari 458 Italia Coupe 2012(0.13) McLaren MP4-12C Coupe 2012(0.13) Ferrari 458 Italia Convertible 2012(0.19) BMW Z4 Convertible 2012(0.21) Lamborghini Gallardo LP 570-4 Superleggera 2012(0.24) |
+| Lamborghini Gallardo LP 570-4 Superleggera 2012 | Lamborghini Aventador Coupe 2012(0.24) Spyker C8 Coupe 2009(0.25) Lamborghini Diablo Coupe 2001(0.26) Ferrari 458 Italia Convertible 2012(0.27) McLaren MP4-12C Coupe 2012(0.28) |
+| Lamborghini Diablo Coupe 2001 | Acura Integra Type R 2001(0.11) McLaren MP4-12C Coupe 2012(0.19) Lamborghini Gallardo LP 570-4 Superleggera 2012(0.26) Chevrolet Corvette Convertible 2012(0.29) Lamborghini Aventador Coupe 2012(0.33) |
+| Land Rover Range Rover SUV 2012 | GMC Yukon Hybrid SUV 2012(0.38) Toyota 4Runner SUV 2012*(0.39) Chevrolet TrailBlazer SS 2009(0.40) Jeep Patriot SUV 2012(0.44) Jeep Grand Cherokee SUV 2012(0.45) |
+| Land Rover LR2 SUV 2012 | GMC Yukon Hybrid SUV 2012(0.35) Toyota 4Runner SUV 2012*(0.35) Toyota Sequoia SUV 2012(0.37) Mazda Tribute SUV 2011(0.41) Land Rover Range Rover SUV 2012(0.46) |
+| Lincoln Town Car Sedan 2011 | Ram C/V Cargo Van Minivan 2012(0.34) Ford Freestar Minivan 2007(0.35) Chevrolet Malibu Sedan 2007(0.42) Volkswagen Golf Hatchback 2012*(0.45) Toyota Corolla Sedan 2012*(0.46) |
+| MINI Cooper Roadster Convertible 2012 | Bentley Continental Supersports Conv. Convertible 2012(0.30) Audi R8 Coupe 2012(0.32) Audi TT Hatchback 2011(0.35) Mercedes-Benz SL-Class Coupe 2009(0.36) Rolls-Royce Phantom Drophead Coupe Convertible 2012(0.37) |
+| Maybach Landaulet Convertible 2012 | Chevrolet Corvette Ron Fellows Edition Z06 2007(0.31) Bentley Continental Supersports Conv. Convertible 2012(0.40) Bugatti Veyron 16.4 Convertible 2009(0.40) FIAT 500 Convertible 2012(0.41) smart fortwo Convertible 2012*(0.44) |
+| Mazda Tribute SUV 2011 | Toyota Sequoia SUV 2012(0.28) GMC Yukon Hybrid SUV 2012(0.33) Chevrolet Tahoe Hybrid SUV 2012(0.36) Buick Rainier SUV 2007(0.39) Land Rover LR2 SUV 2012(0.41) |
+| McLaren MP4-12C Coupe 2012 | Lamborghini Aventador Coupe 2012(0.13) Ferrari 458 Italia Coupe 2012(0.14) Ferrari 458 Italia Convertible 2012(0.16) Chevrolet Corvette Convertible 2012(0.19) Lamborghini Diablo Coupe 2001(0.19) |
+| Mercedes-Benz 300-Class Convertible 1993 | Geo Metro Convertible 1993(0.27) Chrysler Crossfire Convertible 2008(0.30) Audi 100 Wagon 1994(0.43) Daewoo Nubira Wagon 2002(0.43) Chevrolet Monte Carlo Coupe 2007(0.47) |
+| Mercedes-Benz C-Class Sedan 2012 | Cadillac CTS-V Sedan 2012(0.30) Hyundai Santa Fe SUV 2012(0.42) Bentley Continental Flying Spur Sedan 2007(0.47) Mercedes-Benz S-Class Sedan 2012(0.49) Audi TTS Coupe 2012(0.49) |
+| Mercedes-Benz SL-Class Coupe 2009 | Mercedes-Benz E-Class Sedan 2012(0.22) BMW ActiveHybrid 5 Sedan 2012(0.28) Aston Martin Virage Convertible 2012(0.28) Fisker Karma Sedan 2012(0.29) BMW M5 Sedan 2010(0.32) |
+| Mercedes-Benz E-Class Sedan 2012 | Mercedes-Benz SL-Class Coupe 2009(0.22) BMW M5 Sedan 2010(0.26) Suzuki Kizashi Sedan 2012(0.26) Acura TL Sedan 2012(0.31) Hyundai Azera Sedan 2012(0.31) |
+| Mercedes-Benz S-Class Sedan 2012 | Audi A5 Coupe 2012(0.35) Mercedes-Benz C-Class Sedan 2012(0.49) Acura TL Sedan 2012(0.51) Acura TSX Sedan 2012(0.52) Audi TT Hatchback 2011(0.53) |
+| Mercedes-Benz Sprinter Van 2012 | Chevrolet Express Cargo Van 2007(0.11) GMC Savana Van 2012(0.12) Chevrolet Express Van 2007(0.16) Nissan NV Passenger Van 2012(0.24) Ford E-Series Wagon Van 2012(0.27) |
+| Mitsubishi Lancer Sedan 2012 | Toyota Camry Sedan 2012*(0.29) Nissan Leaf Hatchback 2012(0.37) Suzuki SX4 Sedan 2012(0.41) Suzuki Kizashi Sedan 2012(0.42) Nissan Juke Hatchback 2012(0.43) |
+| Nissan Leaf Hatchback 2012 | Suzuki Kizashi Sedan 2012(0.36) Mitsubishi Lancer Sedan 2012(0.37) Toyota Camry Sedan 2012*(0.39) Bentley Continental GT Coupe 2007(0.41) Suzuki SX4 Sedan 2012(0.45) |
+| Nissan NV Passenger Van 2012 | GMC Savana Van 2012(0.17) Chevrolet Express Cargo Van 2007(0.17) Chevrolet Express Van 2007(0.19) Mercedes-Benz Sprinter Van 2012(0.24) Chevrolet Silverado 1500 Regular Cab 2012(0.25) |
+| Nissan Juke Hatchback 2012 | Volkswagen Beetle Hatchback 2012*(0.39) Ford GT Coupe 2006(0.40) Buick Verano Sedan 2012(0.41) Chevrolet Sonic Sedan 2012(0.41) Jaguar XK XKR 2012(0.42) |
+| Nissan 240SX Coupe 1998 | Eagle Talon Hatchback 1998(0.33) Plymouth Neon Coupe 1999(0.38) Ford Focus Sedan 2007(0.45) Volkswagen Golf Hatchback 1991*(0.46) Volvo 240 Sedan 1993*(0.52) |
+| Plymouth Neon Coupe 1999 | Eagle Talon Hatchback 1998(0.16) Volkswagen Golf Hatchback 1991*(0.28) Dodge Caravan Minivan 1997(0.33) Nissan 240SX Coupe 1998(0.38) Volvo 240 Sedan 1993*(0.45) |
+| Porsche Panamera Sedan 2012 | BMW M6 Convertible 2010(0.20) Audi S5 Convertible 2012(0.22) Audi RS 4 Convertible 2008(0.23) Fisker Karma Sedan 2012(0.27) Aston Martin Virage Convertible 2012(0.27) |
+| Ram C/V Cargo Van Minivan 2012 | Lincoln Town Car Sedan 2011(0.34) Dodge Sprinter Cargo Van 2009(0.35) Chevrolet Silverado 2500HD Regular Cab 2012(0.38) Ford E-Series Wagon Van 2012(0.40) GMC Savana Van 2012(0.41) |
+| Rolls-Royce Phantom Drophead Coupe Convertible 2012 | MINI Cooper Roadster Convertible 2012(0.37) Rolls-Royce Phantom Sedan 2012(0.41) Aston Martin V8 Vantage Convertible 2012(0.46) Maybach Landaulet Convertible 2012(0.48) Bentley Continental Supersports Conv. Convertible 2012(0.51) |
+| Rolls-Royce Ghost Sedan 2012 | Lamborghini Reventon Coupe 2008(0.36) BMW M6 Convertible 2010(0.39) Aston Martin Virage Convertible 2012(0.40) Spyker C8 Convertible 2009(0.43) Bentley Arnage Sedan 2009(0.47) |
+| Rolls-Royce Phantom Sedan 2012 | Rolls-Royce Phantom Drophead Coupe Convertible 2012(0.41) Bentley Mulsanne Sedan 2011(0.42) Rolls-Royce Ghost Sedan 2012(0.49) Aston Martin Virage Convertible 2012(0.50) BMW M6 Convertible 2010(0.50) |
+| Scion xD Hatchback 2012 | Chevrolet Traverse SUV 2012(0.32) Buick Enclave SUV 2012(0.42) Chevrolet Impala Sedan 2007(0.45) Hyundai Veracruz SUV 2012(0.49) Hyundai Tucson SUV 2012(0.50) |
+| Spyker C8 Convertible 2009 | Spyker C8 Coupe 2009(0.17) Chevrolet Corvette ZR1 2012(0.31) Tesla Model S Sedan 2012(0.34) Jaguar XK XKR 2012(0.34) Dodge Challenger SRT8 2011(0.35) |
+| Spyker C8 Coupe 2009 | Spyker C8 Convertible 2009(0.17) Tesla Model S Sedan 2012(0.21) Dodge Challenger SRT8 2011(0.23) Lamborghini Gallardo LP 570-4 Superleggera 2012(0.25) Ford GT Coupe 2006(0.27) |
+| Suzuki Aerio Sedan 2007 | Honda Odyssey Minivan 2007(0.37) Chrysler Town and Country Minivan 2012(0.39) Hyundai Veracruz SUV 2012(0.41) Chevrolet Malibu Hybrid Sedan 2010(0.46) Lincoln Town Car Sedan 2011(0.50) |
+| Suzuki Kizashi Sedan 2012 | Volkswagen Beetle Hatchback 2012*(0.22) Buick Regal GS 2012(0.25) Mercedes-Benz E-Class Sedan 2012(0.26) Nissan Leaf Hatchback 2012(0.36) Hyundai Azera Sedan 2012(0.37) |
+| Suzuki SX4 Hatchback 2012 | Volvo C30 Hatchback 2012*(0.29) Dodge Charger Sedan 2012(0.37) Ferrari FF Coupe 2012(0.41) Hyundai Veloster Hatchback 2012(0.42) Toyota Camry Sedan 2012*(0.44) |
+| Suzuki SX4 Sedan 2012 | Chrysler PT Cruiser Convertible 2008(0.28) Acura TL Sedan 2012(0.35) Toyota Camry Sedan 2012*(0.36) Chevrolet Impala Sedan 2007(0.38) Suzuki Kizashi Sedan 2012(0.38) |
+| Tesla Model S Sedan 2012 | Spyker C8 Coupe 2009(0.21) Dodge Challenger SRT8 2011(0.25) Buick Regal GS 2012(0.33) Spyker C8 Convertible 2009(0.34) Jaguar XK XKR 2012(0.37) |
+| Toyota Sequoia SUV 2012 | Chevrolet Tahoe Hybrid SUV 2012(0.19) Toyota 4Runner SUV 2012*(0.24) Mazda Tribute SUV 2011(0.28) GMC Yukon Hybrid SUV 2012(0.36) Land Rover LR2 SUV 2012(0.37) |
+| Toyota Camry Sedan 2012* | Mitsubishi Lancer Sedan 2012(0.29) Suzuki SX4 Sedan 2012(0.36) Chrysler Sebring Convertible 2010(0.36) Nissan Leaf Hatchback 2012(0.39) Hyundai Genesis Sedan 2012(0.41) |
+| Toyota Corolla Sedan 2012* | Volkswagen Golf Hatchback 2012*(0.42) Lincoln Town Car Sedan 2011(0.46) Ford Freestar Minivan 2007(0.51) Hyundai Elantra Sedan 2007(0.55) Chevrolet Monte Carlo Coupe 2007(0.56) |
+| Toyota 4Runner SUV 2012* | Chevrolet Tahoe Hybrid SUV 2012(0.22) Toyota Sequoia SUV 2012(0.24) Audi 100 Sedan 1994(0.35) Land Rover LR2 SUV 2012(0.35) Land Rover Range Rover SUV 2012(0.39) |
+| Volkswagen Golf Hatchback 2012* | Acura TSX Sedan 2012(0.27) Hyundai Santa Fe SUV 2012(0.36) Toyota Corolla Sedan 2012*(0.42) Lincoln Town Car Sedan 2011(0.45) Chrysler Crossfire Convertible 2008(0.45) |
+| Volkswagen Golf Hatchback 1991* | Volvo 240 Sedan 1993*(0.17) Plymouth Neon Coupe 1999(0.28) Eagle Talon Hatchback 1998(0.34) Jeep Compass SUV 2012(0.39) Nissan 240SX Coupe 1998(0.46) |
+| Volkswagen Beetle Hatchback 2012* | Suzuki Kizashi Sedan 2012(0.22) Buick Regal GS 2012(0.30) Nissan Juke Hatchback 2012(0.39) Chevrolet Sonic Sedan 2012(0.44) Dodge Challenger SRT8 2011(0.45) |
+| Volvo C30 Hatchback 2012* | Hyundai Veloster Hatchback 2012(0.26) Dodge Charger Sedan 2012(0.26) Suzuki SX4 Hatchback 2012(0.29) Audi TT RS Coupe 2012(0.32) Ferrari California Convertible 2012(0.32) |
+| Volvo 240 Sedan 1993* | Volkswagen Golf Hatchback 1991*(0.17) Jeep Liberty SUV 2012(0.35) Jeep Patriot SUV 2012(0.35) GMC Canyon Extended Cab 2012(0.41) Ford F-150 Regular Cab 2007(0.41) |
+| Volvo XC90 SUV 2007* | Jeep Grand Cherokee SUV 2012(0.40) Chevrolet TrailBlazer SS 2009(0.41) GMC Yukon Hybrid SUV 2012(0.41) Mazda Tribute SUV 2011(0.44) Dodge Durango SUV 2007(0.45) |
+| smart fortwo Convertible 2012* | FIAT 500 Convertible 2012(0.43) Maybach Landaulet Convertible 2012(0.44) Aston Martin V8 Vantage Convertible 2012(0.56) Geo Metro Convertible 1993(0.59) Bugatti Veyron 16.4 Convertible 2009(0.60) |
 
 ## ss-ft-res (concat)  [cars_lejepa]
 
+agree@1=0.296 agree@5=0.171 (chance 0.040)  dendro-purity=0.212  silhouette=-0.238  within/between=0.786
+
 
 | class | 5 nearest class centroids (cosine dist) |
 |---|---|
-| class0 | class124(0.11) class145(0.15) class123(0.18) class105(0.46) class68(0.64) |
-| class1 | class2(0.23) class136(0.23) class4(0.25) class48(0.26) class137(0.27) |
-| class2 | class136(0.14) class137(0.19) class4(0.22) class1(0.23) class34(0.24) |
-| class3 | class34(0.31) class2(0.34) class128(0.35) class29(0.36) class138(0.37) |
-| class4 | class189*(0.13) class2(0.22) class187*(0.24) class1(0.25) class128(0.25) |
-| class5 | class152(0.16) class65(0.39) class170(0.45) class122(0.47) class54(0.49) |
-| class6 | class139(0.27) class2(0.30) class1(0.33) class48(0.34) class133(0.38) |
-| class7 | class8(0.09) class9(0.19) class14(0.23) class35(0.23) class104(0.23) |
-| class8 | class7(0.09) class9(0.17) class104(0.17) class37(0.20) class14(0.21) |
-| class9 | class104(0.11) class8(0.17) class35(0.17) class45(0.19) class7(0.19) |
-| class10 | class101(0.11) class102(0.13) class103(0.19) class37(0.20) class54(0.20) |
-| class11 | class20(0.15) class19(0.26) class35(0.32) class40(0.34) class41(0.35) |
-| class12 | class18(0.10) class22(0.12) class21(0.17) class13(0.20) class19(0.20) |
-| class13 | class21(0.13) class18(0.18) class20(0.20) class12(0.20) class30(0.25) |
-| class14 | class8(0.21) class7(0.23) class162(0.25) class35(0.25) class104(0.25) |
-| class15 | class16(0.05) class17(0.12) class160(0.22) class193*(0.25) class190*(0.27) |
-| class16 | class15(0.05) class17(0.08) class160(0.23) class190*(0.35) class193*(0.35) |
-| class17 | class16(0.08) class15(0.12) class160(0.25) class81(0.34) class190*(0.36) |
-| class18 | class12(0.10) class13(0.18) class26(0.19) class21(0.20) class41(0.22) |
-| class19 | class23(0.16) class12(0.20) class22(0.21) class11(0.26) class20(0.27) |
-| class20 | class11(0.15) class13(0.20) class35(0.20) class21(0.25) class19(0.27) |
-| class21 | class13(0.13) class12(0.17) class18(0.20) class26(0.23) class20(0.25) |
-| class22 | class12(0.12) class23(0.21) class19(0.21) class18(0.23) class21(0.26) |
-| class23 | class19(0.16) class22(0.21) class43(0.26) class12(0.28) class42(0.37) |
-| class24 | class41(0.27) class18(0.30) class37(0.31) class95(0.32) class22(0.33) |
-| class25 | class34(0.15) class172(0.24) class29(0.26) class140(0.31) class2(0.34) |
-| class26 | class18(0.19) class21(0.23) class12(0.23) class13(0.27) class22(0.27) |
-| class27 | class28(0.17) class41(0.27) class33(0.32) class24(0.37) class22(0.39) |
-| class28 | class27(0.17) class26(0.36) class41(0.38) class33(0.39) class22(0.39) |
-| class29 | class34(0.22) class25(0.26) class163(0.33) class43(0.34) class19(0.35) |
-| class30 | class79(0.25) class13(0.25) class21(0.26) class50(0.33) class35(0.34) |
-| class31 | class36(0.22) class194*(0.25) class185(0.31) class147(0.33) class141(0.34) |
-| class32 | class36(0.27) class59(0.28) class83(0.36) class27(0.39) class28(0.43) |
-| class33 | class18(0.29) class26(0.30) class46(0.32) class27(0.32) class24(0.34) |
-| class34 | class25(0.15) class29(0.22) class2(0.24) class163(0.25) class172(0.28) |
-| class35 | class9(0.17) class20(0.20) class172(0.22) class104(0.23) class7(0.23) |
-| class36 | class31(0.22) class32(0.27) class141(0.31) class109(0.42) class80(0.44) |
-| class37 | class10(0.20) class8(0.20) class7(0.24) class101(0.25) class103(0.26) |
-| class38 | class156(0.23) class7(0.33) class41(0.34) class58(0.36) class44(0.36) |
-| class39 | class176(0.22) class78(0.27) class175(0.30) class40(0.32) class67(0.36) |
-| class40 | class176(0.20) class175(0.22) class78(0.25) class174(0.29) class39(0.32) |
-| class41 | class18(0.22) class24(0.27) class27(0.27) class26(0.27) class20(0.32) |
-| class42 | class43(0.26) class35(0.36) class13(0.36) class23(0.37) class41(0.37) |
-| class43 | class50(0.24) class42(0.26) class23(0.26) class13(0.28) class19(0.29) |
-| class44 | class45(0.25) class56(0.31) class149(0.34) class179(0.36) class38(0.36) |
-| class45 | class9(0.19) class149(0.22) class143(0.22) class104(0.23) class55(0.24) |
-| class46 | class181(0.22) class33(0.32) class139(0.34) class34(0.35) class184(0.35) |
-| class47 | class75(0.15) class158(0.17) class94(0.17) class185(0.19) class52(0.19) |
-| class48 | class186*(0.14) class181(0.21) class116(0.24) class133(0.24) class2(0.26) |
-| class49 | class57(0.17) class132(0.19) class177(0.20) class125(0.25) class183(0.30) |
-| class50 | class43(0.24) class13(0.26) class161(0.27) class30(0.33) class79(0.37) |
-| class51 | class109(0.18) class125(0.24) class132(0.27) class57(0.31) class130(0.31) |
-| class52 | class147(0.14) class94(0.15) class64(0.16) class75(0.17) class117(0.19) |
-| class53 | class69(0.06) class73(0.10) class112(0.10) class121(0.12) class110(0.12) |
-| class54 | class101(0.13) class102(0.17) class111(0.18) class10(0.20) class159(0.22) |
-| class55 | class178(0.14) class179(0.16) class45(0.24) class111(0.24) class104(0.24) |
-| class56 | class151(0.29) class44(0.31) class179(0.34) class92(0.35) class38(0.39) |
-| class57 | class177(0.14) class132(0.16) class49(0.17) class77(0.21) class126(0.21) |
-| class58 | class106(0.29) class96(0.30) class20(0.31) class95(0.31) class41(0.33) |
-| class59 | class83(0.20) class91(0.24) class32(0.28) class82(0.34) class96(0.43) |
-| class60 | class76(0.13) class72(0.15) class114(0.16) class71(0.17) class126(0.21) |
-| class61 | class188*(0.16) class142(0.17) class185(0.18) class158(0.21) class108(0.22) |
-| class62 | class181(0.26) class166(0.30) class169(0.31) class139(0.31) class167(0.31) |
-| class63 | class70(0.04) class118(0.07) class168(0.18) class165(0.19) class87(0.24) |
-| class64 | class52(0.16) class108(0.19) class117(0.20) class89(0.21) class75(0.22) |
-| class65 | class5(0.39) class192*(0.45) class134(0.52) class96(0.53) class116(0.53) |
-| class66 | class128(0.20) class76(0.20) class138(0.27) class189*(0.30) class60(0.31) |
-| class67 | class194*(0.23) class52(0.23) class147(0.25) class153(0.27) class154(0.29) |
-| class68 | class73(0.13) class53(0.14) class112(0.14) class115(0.15) class105(0.18) |
-| class69 | class53(0.06) class73(0.10) class110(0.11) class121(0.13) class112(0.15) |
-| class70 | class63(0.04) class118(0.05) class168(0.20) class165(0.20) class115(0.22) |
-| class71 | class60(0.17) class72(0.18) class76(0.22) class114(0.26) class134(0.28) |
-| class72 | class114(0.15) class60(0.15) class71(0.18) class81(0.21) class126(0.22) |
-| class73 | class121(0.09) class53(0.10) class69(0.10) class86(0.10) class68(0.13) |
-| class74 | class86(0.09) class113(0.11) class121(0.16) class112(0.16) class73(0.16) |
-| class75 | class94(0.14) class47(0.15) class185(0.17) class52(0.17) class147(0.20) |
-| class76 | class60(0.13) class66(0.20) class71(0.22) class128(0.25) class72(0.29) |
-| class77 | class57(0.21) class47(0.23) class126(0.27) class185(0.30) class158(0.32) |
-| class78 | class40(0.25) class39(0.27) class175(0.27) class176(0.28) class19(0.35) |
-| class79 | class30(0.25) class13(0.30) class26(0.35) class43(0.36) class50(0.37) |
-| class80 | class93(0.32) class49(0.37) class88(0.41) class141(0.43) class177(0.44) |
-| class81 | class155(0.19) class72(0.21) class160(0.28) class60(0.29) class71(0.30) |
-| class82 | class83(0.20) class47(0.28) class120(0.29) class91(0.31) class75(0.34) |
-| class83 | class82(0.20) class59(0.20) class91(0.29) class32(0.36) class47(0.50) |
-| class84 | class107(0.20) class114(0.30) class171(0.30) class126(0.31) class81(0.42) |
-| class85 | class105(0.09) class53(0.14) class112(0.17) class69(0.17) class121(0.18) |
-| class86 | class74(0.09) class121(0.09) class73(0.10) class113(0.13) class112(0.15) |
-| class87 | class165(0.11) class118(0.19) class70(0.22) class63(0.24) class115(0.33) |
-| class88 | class93(0.21) class57(0.27) class148(0.31) class49(0.35) class109(0.35) |
-| class89 | class90(0.16) class110(0.16) class121(0.17) class69(0.20) class64(0.21) |
-| class90 | class121(0.10) class110(0.13) class73(0.13) class53(0.16) class89(0.16) |
-| class91 | class59(0.24) class83(0.29) class82(0.31) class106(0.32) class96(0.41) |
-| class92 | class111(0.30) class56(0.35) class174(0.42) class38(0.43) class11(0.43) |
-| class93 | class88(0.21) class109(0.27) class147(0.28) class194*(0.30) class80(0.32) |
-| class94 | class75(0.14) class147(0.15) class52(0.15) class119(0.16) class47(0.17) |
-| class95 | class96(0.27) class58(0.31) class24(0.32) class192*(0.37) class27(0.39) |
-| class96 | class106(0.17) class95(0.27) class58(0.30) class91(0.41) class28(0.41) |
-| class97 | class171(0.20) class170(0.24) class71(0.41) class122(0.47) class3(0.49) |
-| class98 | class11(0.59) class178(0.62) class175(0.62) class169(0.62) class39(0.62) |
-| class99 | class195*(0.27) class156(0.44) class157(0.47) class191*(0.53) class44(0.54) |
-| class100 | class10(0.25) class129(0.29) class143(0.33) class101(0.34) class159(0.38) |
-| class101 | class102(0.05) class103(0.09) class10(0.11) class54(0.13) class159(0.15) |
-| class102 | class101(0.05) class103(0.07) class159(0.10) class150(0.11) class10(0.13) |
-| class103 | class102(0.07) class101(0.09) class159(0.09) class150(0.10) class10(0.19) |
-| class104 | class9(0.11) class8(0.17) class162(0.21) class35(0.23) class45(0.23) |
-| class105 | class85(0.09) class69(0.16) class53(0.17) class68(0.18) class112(0.18) |
-| class106 | class96(0.17) class58(0.29) class91(0.32) class174(0.38) class160(0.43) |
-| class107 | class84(0.20) class173(0.29) class126(0.31) class47(0.33) class77(0.36) |
-| class108 | class142(0.15) class94(0.18) class64(0.19) class52(0.21) class61(0.22) |
-| class109 | class51(0.18) class93(0.27) class57(0.32) class49(0.32) class130(0.34) |
-| class110 | class69(0.11) class121(0.12) class53(0.12) class90(0.13) class73(0.13) |
-| class111 | class54(0.18) class179(0.21) class55(0.24) class178(0.24) class101(0.25) |
-| class112 | class53(0.10) class113(0.14) class68(0.14) class69(0.15) class86(0.15) |
-| class113 | class74(0.11) class86(0.13) class112(0.14) class121(0.17) class90(0.18) |
-| class114 | class126(0.13) class72(0.15) class60(0.16) class134(0.22) class180(0.23) |
-| class115 | class118(0.13) class68(0.15) class70(0.22) class63(0.25) class105(0.25) |
-| class116 | class134(0.16) class138(0.17) class186*(0.18) class131(0.19) class48(0.24) |
-| class117 | class52(0.19) class64(0.20) class75(0.22) class94(0.22) class147(0.22) |
-| class118 | class70(0.05) class63(0.07) class115(0.13) class168(0.16) class87(0.19) |
-| class119 | class154(0.13) class158(0.15) class94(0.16) class185(0.17) class147(0.18) |
-| class120 | class147(0.20) class75(0.22) class52(0.25) class194*(0.26) class130(0.29) |
-| class121 | class86(0.09) class73(0.09) class90(0.10) class110(0.12) class53(0.12) |
-| class122 | class160(0.24) class171(0.30) class170(0.34) class17(0.39) class16(0.44) |
-| class123 | class124(0.06) class145(0.09) class0(0.18) class146(0.32) class144(0.34) |
-| class124 | class123(0.06) class145(0.11) class0(0.11) class105(0.29) class68(0.39) |
-| class125 | class132(0.17) class183(0.18) class57(0.23) class51(0.24) class131(0.24) |
-| class126 | class114(0.13) class180(0.18) class57(0.21) class60(0.21) class72(0.22) |
-| class127 | class135(0.17) class133(0.18) class4(0.27) class137(0.27) class187*(0.34) |
-| class128 | class189*(0.17) class66(0.20) class76(0.25) class4(0.25) class138(0.27) |
-| class129 | class10(0.27) class143(0.28) class159(0.29) class100(0.29) class102(0.36) |
-| class130 | class120(0.29) class51(0.31) class109(0.34) class77(0.42) class57(0.44) |
-| class131 | class116(0.19) class132(0.19) class183(0.22) class125(0.24) class57(0.27) |
-| class132 | class57(0.16) class125(0.17) class49(0.19) class131(0.19) class177(0.20) |
-| class133 | class137(0.13) class127(0.18) class48(0.24) class2(0.26) class4(0.26) |
-| class134 | class138(0.15) class116(0.16) class187*(0.18) class114(0.22) class60(0.23) |
-| class135 | class127(0.17) class133(0.28) class187*(0.31) class4(0.33) class48(0.34) |
-| class136 | class2(0.14) class186*(0.20) class137(0.22) class1(0.23) class139(0.24) |
-| class137 | class133(0.13) class2(0.19) class136(0.22) class186*(0.26) class1(0.27) |
-| class138 | class134(0.15) class116(0.17) class186*(0.20) class183(0.21) class48(0.26) |
-| class139 | class136(0.24) class181(0.24) class2(0.25) class48(0.27) class6(0.27) |
-| class140 | class172(0.20) class104(0.26) class21(0.29) class25(0.31) class2(0.32) |
-| class141 | class36(0.31) class31(0.34) class93(0.42) class109(0.42) class80(0.43) |
-| class142 | class108(0.15) class61(0.17) class64(0.23) class69(0.23) class75(0.24) |
-| class143 | class45(0.22) class9(0.24) class184(0.26) class179(0.27) class129(0.28) |
-| class144 | class146(0.03) class123(0.34) class145(0.35) class153(0.40) class188*(0.43) |
-| class145 | class123(0.09) class124(0.11) class0(0.15) class146(0.33) class144(0.35) |
-| class146 | class144(0.03) class123(0.32) class145(0.33) class74(0.41) class124(0.42) |
-| class147 | class52(0.14) class94(0.15) class194*(0.15) class154(0.16) class119(0.18) |
-| class148 | class88(0.31) class93(0.33) class194*(0.35) class147(0.37) class154(0.38) |
-| class149 | class178(0.21) class45(0.22) class179(0.23) class44(0.34) class9(0.35) |
-| class150 | class159(0.07) class103(0.10) class102(0.11) class151(0.15) class101(0.18) |
-| class151 | class150(0.15) class159(0.19) class102(0.19) class54(0.22) class179(0.24) |
-| class152 | class5(0.16) class151(0.25) class54(0.29) class159(0.32) class111(0.35) |
-| class153 | class119(0.25) class67(0.27) class147(0.27) class188*(0.27) class194*(0.29) |
-| class154 | class185(0.12) class119(0.13) class158(0.15) class147(0.16) class194*(0.17) |
-| class155 | class81(0.19) class72(0.23) class71(0.32) class160(0.35) class180(0.35) |
-| class156 | class38(0.23) class44(0.40) class174(0.41) class99(0.44) class157(0.46) |
-| class157 | class156(0.46) class56(0.47) class99(0.47) class44(0.52) class38(0.54) |
-| class158 | class185(0.11) class119(0.15) class154(0.15) class47(0.17) class94(0.19) |
-| class159 | class150(0.07) class103(0.09) class102(0.10) class101(0.15) class151(0.19) |
-| class160 | class15(0.22) class16(0.23) class122(0.24) class17(0.25) class170(0.27) |
-| class161 | class164(0.24) class50(0.27) class43(0.33) class189*(0.44) class4(0.45) |
-| class162 | class104(0.21) class9(0.23) class14(0.25) class172(0.31) class35(0.32) |
-| class163 | class34(0.25) class136(0.30) class181(0.30) class139(0.31) class2(0.33) |
-| class164 | class161(0.24) class136(0.30) class163(0.34) class2(0.36) class12(0.36) |
-| class165 | class87(0.11) class63(0.19) class70(0.20) class118(0.22) class168(0.39) |
-| class166 | class181(0.27) class186*(0.28) class62(0.30) class183(0.37) class138(0.38) |
-| class167 | class62(0.31) class181(0.32) class131(0.36) class116(0.37) class169(0.37) |
-| class168 | class118(0.16) class63(0.18) class70(0.20) class115(0.26) class74(0.29) |
-| class169 | class62(0.31) class167(0.37) class191*(0.44) class181(0.45) class129(0.48) |
-| class170 | class171(0.18) class97(0.24) class160(0.27) class122(0.34) class15(0.35) |
-| class171 | class170(0.18) class97(0.20) class122(0.30) class84(0.30) class160(0.31) |
-| class172 | class140(0.20) class35(0.22) class25(0.24) class34(0.28) class143(0.29) |
-| class173 | class107(0.29) class77(0.42) class47(0.43) class180(0.49) class126(0.53) |
-| class174 | class176(0.10) class175(0.28) class40(0.29) class106(0.38) class39(0.39) |
-| class175 | class176(0.19) class40(0.22) class78(0.27) class174(0.28) class39(0.30) |
-| class176 | class174(0.10) class175(0.19) class40(0.20) class39(0.22) class78(0.28) |
-| class177 | class57(0.14) class132(0.20) class49(0.20) class182(0.26) class125(0.26) |
-| class178 | class179(0.07) class55(0.14) class149(0.21) class45(0.24) class111(0.24) |
-| class179 | class178(0.07) class55(0.16) class111(0.21) class101(0.23) class149(0.23) |
-| class180 | class126(0.18) class114(0.23) class60(0.27) class72(0.28) class71(0.35) |
-| class181 | class48(0.21) class46(0.22) class186*(0.22) class139(0.24) class62(0.26) |
-| class182 | class183(0.25) class177(0.26) class57(0.29) class134(0.33) class138(0.35) |
-| class183 | class125(0.18) class138(0.21) class131(0.22) class57(0.22) class132(0.23) |
-| class184 | class104(0.26) class143(0.26) class9(0.31) class133(0.33) class162(0.33) |
-| class185 | class158(0.11) class154(0.12) class75(0.17) class119(0.17) class188*(0.17) |
-| class186* | class48(0.14) class116(0.18) class138(0.20) class136(0.20) class181(0.22) |
-| class187* | class189*(0.16) class134(0.18) class4(0.24) class116(0.26) class128(0.27) |
-| class188* | class61(0.16) class185(0.17) class154(0.18) class147(0.22) class117(0.24) |
-| class189* | class4(0.13) class187*(0.16) class128(0.17) class66(0.30) class127(0.35) |
-| class190* | class193*(0.10) class15(0.27) class160(0.31) class171(0.31) class16(0.35) |
-| class191* | class192*(0.34) class46(0.35) class181(0.36) class62(0.42) class169(0.44) |
-| class192* | class191*(0.34) class95(0.37) class65(0.45) class62(0.46) class182(0.47) |
-| class193* | class190*(0.10) class15(0.25) class160(0.34) class16(0.35) class90(0.38) |
-| class194* | class147(0.15) class154(0.17) class185(0.18) class94(0.21) class75(0.21) |
-| class195* | class99(0.27) class167(0.47) class169(0.54) class62(0.58) class44(0.58) |
+| AM General Hummer SUV 2000 | HUMMER H2 SUT Crew Cab 2009(0.11) Jeep Wrangler SUV 2012(0.15) HUMMER H3T Crew Cab 2010(0.18) Ford F-450 Super Duty Crew Cab 2012(0.46) Chevrolet Silverado 2500HD Regular Cab 2012(0.64) |
+| Acura RL Sedan 2012 | Acura TL Sedan 2012(0.23) Hyundai Genesis Sedan 2012(0.23) Acura TSX Sedan 2012(0.25) Buick Verano Sedan 2012(0.26) Hyundai Sonata Sedan 2012(0.27) |
+| Acura TL Sedan 2012 | Hyundai Genesis Sedan 2012(0.14) Hyundai Sonata Sedan 2012(0.19) Acura TSX Sedan 2012(0.22) Acura RL Sedan 2012(0.23) BMW M5 Sedan 2010(0.24) |
+| Acura TL Type-S 2008 | BMW M5 Sedan 2010(0.31) Acura TL Sedan 2012(0.34) Honda Accord Sedan 2012(0.35) BMW 3 Series Wagon 2012(0.36) Hyundai Elantra Touring Hatchback 2012(0.37) |
+| Acura TSX Sedan 2012 | Volkswagen Golf Hatchback 2012*(0.13) Acura TL Sedan 2012(0.22) Toyota Corolla Sedan 2012*(0.24) Acura RL Sedan 2012(0.25) Honda Accord Sedan 2012(0.25) |
+| Acura Integra Type R 2001 | Lamborghini Diablo Coupe 2001(0.16) Chevrolet Cobalt SS 2010(0.39) Nissan 240SX Coupe 1998(0.45) Geo Metro Convertible 1993(0.47) Chevrolet Corvette Convertible 2012(0.49) |
+| Acura ZDX Hatchback 2012 | Hyundai Azera Sedan 2012(0.27) Acura TL Sedan 2012(0.30) Acura RL Sedan 2012(0.33) Buick Verano Sedan 2012(0.34) Hyundai Sonata Hybrid Sedan 2012(0.38) |
+| Aston Martin V8 Vantage Convertible 2012 | Aston Martin V8 Vantage Coupe 2012(0.09) Aston Martin Virage Convertible 2012(0.19) Audi R8 Coupe 2012(0.23) BMW M6 Convertible 2010(0.23) Fisker Karma Sedan 2012(0.23) |
+| Aston Martin V8 Vantage Coupe 2012 | Aston Martin V8 Vantage Convertible 2012(0.09) Aston Martin Virage Convertible 2012(0.17) Fisker Karma Sedan 2012(0.17) BMW Z4 Convertible 2012(0.20) Audi R8 Coupe 2012(0.21) |
+| Aston Martin Virage Convertible 2012 | Fisker Karma Sedan 2012(0.11) Aston Martin V8 Vantage Coupe 2012(0.17) BMW M6 Convertible 2010(0.17) Bugatti Veyron 16.4 Coupe 2009(0.19) Aston Martin V8 Vantage Convertible 2012(0.19) |
+| Aston Martin Virage Coupe 2012 | Ferrari California Convertible 2012(0.11) Ferrari 458 Italia Convertible 2012(0.13) Ferrari 458 Italia Coupe 2012(0.19) BMW Z4 Convertible 2012(0.20) Chevrolet Corvette Convertible 2012(0.20) |
+| Audi RS 4 Convertible 2008 | Audi S5 Convertible 2012(0.15) Audi S6 Sedan 2011(0.26) BMW M6 Convertible 2010(0.32) Bentley Mulsanne Sedan 2011(0.34) Bentley Continental GT Coupe 2012(0.35) |
+| Audi A5 Coupe 2012 | Audi TT Hatchback 2011(0.10) Audi S4 Sedan 2012(0.12) Audi S5 Coupe 2012(0.17) Audi TTS Coupe 2012(0.20) Audi S6 Sedan 2011(0.20) |
+| Audi TTS Coupe 2012 | Audi S5 Coupe 2012(0.13) Audi TT Hatchback 2011(0.18) Audi S5 Convertible 2012(0.20) Audi A5 Coupe 2012(0.20) BMW 6 Series Convertible 2007(0.25) |
+| Audi R8 Coupe 2012 | Aston Martin V8 Vantage Coupe 2012(0.21) Aston Martin V8 Vantage Convertible 2012(0.23) Mercedes-Benz SL-Class Coupe 2009(0.25) BMW M6 Convertible 2010(0.25) Fisker Karma Sedan 2012(0.25) |
+| Audi V8 Sedan 1994 | Audi 100 Sedan 1994(0.05) Audi 100 Wagon 1994(0.12) Mercedes-Benz 300-Class Convertible 1993(0.22) Volvo 240 Sedan 1993*(0.25) Volkswagen Golf Hatchback 1991*(0.27) |
+| Audi 100 Sedan 1994 | Audi V8 Sedan 1994(0.05) Audi 100 Wagon 1994(0.08) Mercedes-Benz 300-Class Convertible 1993(0.23) Volkswagen Golf Hatchback 1991*(0.35) Volvo 240 Sedan 1993*(0.35) |
+| Audi 100 Wagon 1994 | Audi 100 Sedan 1994(0.08) Audi V8 Sedan 1994(0.12) Mercedes-Benz 300-Class Convertible 1993(0.25) Daewoo Nubira Wagon 2002(0.34) Volkswagen Golf Hatchback 1991*(0.36) |
+| Audi TT Hatchback 2011 | Audi A5 Coupe 2012(0.10) Audi TTS Coupe 2012(0.18) BMW 1 Series Convertible 2012(0.19) Audi S5 Coupe 2012(0.20) Bentley Continental GT Coupe 2012(0.22) |
+| Audi S6 Sedan 2011 | Audi S4 Sedan 2007(0.16) Audi A5 Coupe 2012(0.20) Audi S4 Sedan 2012(0.21) Audi RS 4 Convertible 2008(0.26) Audi S5 Convertible 2012(0.27) |
+| Audi S5 Convertible 2012 | Audi RS 4 Convertible 2008(0.15) Audi TTS Coupe 2012(0.20) BMW M6 Convertible 2010(0.20) Audi S5 Coupe 2012(0.25) Audi S6 Sedan 2011(0.27) |
+| Audi S5 Coupe 2012 | Audi TTS Coupe 2012(0.13) Audi A5 Coupe 2012(0.17) Audi TT Hatchback 2011(0.20) BMW 1 Series Convertible 2012(0.23) Audi S5 Convertible 2012(0.25) |
+| Audi S4 Sedan 2012 | Audi A5 Coupe 2012(0.12) Audi S4 Sedan 2007(0.21) Audi S6 Sedan 2011(0.21) Audi TT Hatchback 2011(0.23) Audi S5 Coupe 2012(0.26) |
+| Audi S4 Sedan 2007 | Audi S6 Sedan 2011(0.16) Audi S4 Sedan 2012(0.21) Bentley Continental Flying Spur Sedan 2007(0.26) Audi A5 Coupe 2012(0.28) Bentley Continental GT Coupe 2007(0.37) |
+| Audi TT RS Coupe 2012 | Bentley Continental GT Coupe 2012(0.27) Audi TT Hatchback 2011(0.30) BMW Z4 Convertible 2012(0.31) Dodge Charger Sedan 2012(0.32) Audi S4 Sedan 2012(0.33) |
+| BMW ActiveHybrid 5 Sedan 2012 | BMW M5 Sedan 2010(0.15) Porsche Panamera Sedan 2012(0.24) BMW 3 Series Wagon 2012(0.26) Infiniti G Coupe IPL 2012(0.31) Acura TL Sedan 2012(0.34) |
+| BMW 1 Series Convertible 2012 | Audi TT Hatchback 2011(0.19) Audi S5 Coupe 2012(0.23) Audi A5 Coupe 2012(0.23) Audi TTS Coupe 2012(0.27) Audi S4 Sedan 2012(0.27) |
+| BMW 1 Series Coupe 2012 | BMW 3 Series Sedan 2012(0.17) Bentley Continental GT Coupe 2012(0.27) BMW M3 Coupe 2012(0.32) Audi TT RS Coupe 2012(0.37) Audi S4 Sedan 2012(0.39) |
+| BMW 3 Series Sedan 2012 | BMW 1 Series Coupe 2012(0.17) BMW 1 Series Convertible 2012(0.36) Bentley Continental GT Coupe 2012(0.38) BMW M3 Coupe 2012(0.39) Audi S4 Sedan 2012(0.39) |
+| BMW 3 Series Wagon 2012 | BMW M5 Sedan 2010(0.22) BMW ActiveHybrid 5 Sedan 2012(0.26) Mercedes-Benz E-Class Sedan 2012(0.33) Bentley Continental Flying Spur Sedan 2007(0.34) Audi S6 Sedan 2011(0.35) |
+| BMW 6 Series Convertible 2007 | Chrysler Crossfire Convertible 2008(0.25) Audi TTS Coupe 2012(0.25) Audi S5 Coupe 2012(0.26) Cadillac CTS-V Sedan 2012(0.33) BMW M6 Convertible 2010(0.34) |
+| BMW X5 SUV 2007 | BMW X3 SUV 2012(0.22) Volvo XC90 SUV 2007*(0.25) Toyota Sequoia SUV 2012(0.31) Jeep Grand Cherokee SUV 2012(0.33) Infiniti QX56 SUV 2011(0.34) |
+| BMW X6 SUV 2012 | BMW X3 SUV 2012(0.27) Chevrolet HHR SS 2010(0.28) Dodge Caliber Wagon 2007(0.36) BMW 1 Series Coupe 2012(0.39) BMW 3 Series Sedan 2012(0.43) |
+| BMW M3 Coupe 2012 | Audi TT Hatchback 2011(0.29) BMW 1 Series Convertible 2012(0.30) Buick Regal GS 2012(0.32) BMW 1 Series Coupe 2012(0.32) Audi TT RS Coupe 2012(0.34) |
+| BMW M5 Sedan 2010 | BMW ActiveHybrid 5 Sedan 2012(0.15) BMW 3 Series Wagon 2012(0.22) Acura TL Sedan 2012(0.24) Mercedes-Benz E-Class Sedan 2012(0.25) Porsche Panamera Sedan 2012(0.28) |
+| BMW M6 Convertible 2010 | Aston Martin Virage Convertible 2012(0.17) Audi S5 Convertible 2012(0.20) Porsche Panamera Sedan 2012(0.22) Fisker Karma Sedan 2012(0.23) Aston Martin V8 Vantage Convertible 2012(0.23) |
+| BMW X3 SUV 2012 | BMW X5 SUV 2007(0.22) BMW X6 SUV 2012(0.27) Infiniti QX56 SUV 2011(0.31) Ford Edge SUV 2012(0.42) Chrysler PT Cruiser Convertible 2008(0.44) |
+| BMW Z4 Convertible 2012 | Aston Martin Virage Coupe 2012(0.20) Aston Martin V8 Vantage Coupe 2012(0.20) Aston Martin V8 Vantage Convertible 2012(0.24) Ferrari California Convertible 2012(0.25) Ferrari 458 Italia Coupe 2012(0.26) |
+| Bentley Continental Supersports Conv. Convertible 2012 | MINI Cooper Roadster Convertible 2012(0.23) Aston Martin V8 Vantage Convertible 2012(0.33) Bentley Continental GT Coupe 2012(0.34) Chevrolet Camaro Convertible 2012(0.36) Bugatti Veyron 16.4 Convertible 2009(0.36) |
+| Bentley Arnage Sedan 2009 | Rolls-Royce Phantom Sedan 2012(0.22) Chrysler 300 SRT-8 2010(0.27) Rolls-Royce Ghost Sedan 2012(0.30) Bentley Mulsanne Sedan 2011(0.32) Chevrolet TrailBlazer SS 2009(0.36) |
+| Bentley Mulsanne Sedan 2011 | Rolls-Royce Phantom Sedan 2012(0.20) Rolls-Royce Ghost Sedan 2012(0.22) Chrysler 300 SRT-8 2010(0.25) Rolls-Royce Phantom Drophead Coupe Convertible 2012(0.29) Bentley Arnage Sedan 2009(0.32) |
+| Bentley Continental GT Coupe 2012 | Audi TT Hatchback 2011(0.22) Audi TT RS Coupe 2012(0.27) BMW 1 Series Coupe 2012(0.27) BMW 1 Series Convertible 2012(0.27) Audi S5 Convertible 2012(0.32) |
+| Bentley Continental GT Coupe 2007 | Bentley Continental Flying Spur Sedan 2007(0.26) BMW M6 Convertible 2010(0.36) Audi TTS Coupe 2012(0.36) Audi S4 Sedan 2007(0.37) Bentley Continental GT Coupe 2012(0.37) |
+| Bentley Continental Flying Spur Sedan 2007 | Cadillac CTS-V Sedan 2012(0.24) Bentley Continental GT Coupe 2007(0.26) Audi S4 Sedan 2007(0.26) Audi TTS Coupe 2012(0.28) Audi S6 Sedan 2011(0.29) |
+| Bugatti Veyron 16.4 Convertible 2009 | Bugatti Veyron 16.4 Coupe 2009(0.25) Chevrolet Corvette Ron Fellows Edition Z06 2007(0.31) Lamborghini Reventon Coupe 2008(0.34) Spyker C8 Coupe 2009(0.36) Bentley Continental Supersports Conv. Convertible 2012(0.36) |
+| Bugatti Veyron 16.4 Coupe 2009 | Aston Martin Virage Convertible 2012(0.19) Lamborghini Reventon Coupe 2008(0.22) Jaguar XK XKR 2012(0.22) Fisker Karma Sedan 2012(0.23) Chevrolet Corvette ZR1 2012(0.24) |
+| Buick Regal GS 2012 | Suzuki Kizashi Sedan 2012(0.22) BMW M3 Coupe 2012(0.32) Hyundai Azera Sedan 2012(0.34) BMW M5 Sedan 2010(0.35) Tesla Model S Sedan 2012(0.35) |
+| Buick Rainier SUV 2007 | Chrysler Aspen SUV 2009(0.15) Mazda Tribute SUV 2011(0.17) Dodge Durango SUV 2007(0.17) Toyota Sequoia SUV 2012(0.19) Cadillac Escalade EXT Crew Cab 2007(0.19) |
+| Buick Verano Sedan 2012 | Toyota Camry Sedan 2012*(0.14) Suzuki Kizashi Sedan 2012(0.21) Ford Fiesta Sedan 2012(0.24) Hyundai Sonata Hybrid Sedan 2012(0.24) Acura TL Sedan 2012(0.26) |
+| Buick Enclave SUV 2012 | Chevrolet Traverse SUV 2012(0.17) Hyundai Veracruz SUV 2012(0.19) Scion xD Hatchback 2012(0.20) Honda Odyssey Minivan 2012(0.25) Suzuki SX4 Sedan 2012(0.30) |
+| Cadillac CTS-V Sedan 2012 | Bentley Continental Flying Spur Sedan 2007(0.24) Audi TTS Coupe 2012(0.26) Mercedes-Benz C-Class Sedan 2012(0.27) BMW 6 Series Convertible 2007(0.33) Chrysler Crossfire Convertible 2008(0.37) |
+| Cadillac SRX SUV 2012 | Ford Edge SUV 2012(0.18) Honda Odyssey Minivan 2012(0.24) Hyundai Veracruz SUV 2012(0.27) Chevrolet Traverse SUV 2012(0.31) Hyundai Santa Fe SUV 2012(0.31) |
+| Cadillac Escalade EXT Crew Cab 2007 | Jeep Grand Cherokee SUV 2012(0.14) Dodge Durango SUV 2007(0.15) Chevrolet Avalanche Crew Cab 2012(0.16) Chrysler Aspen SUV 2009(0.17) GMC Terrain SUV 2012(0.19) |
+| Chevrolet Silverado 1500 Hybrid Crew Cab 2012 | Chevrolet Silverado 1500 Classic Extended Cab 2007(0.06) Chevrolet Silverado 1500 Extended Cab 2012(0.10) Ford F-150 Regular Cab 2012(0.10) GMC Canyon Extended Cab 2012(0.12) Ford Ranger SuperCab 2011(0.12) |
+| Chevrolet Corvette Convertible 2012 | Ferrari California Convertible 2012(0.13) Ferrari 458 Italia Convertible 2012(0.17) Ford GT Coupe 2006(0.18) Aston Martin Virage Coupe 2012(0.20) McLaren MP4-12C Coupe 2012(0.22) |
+| Chevrolet Corvette ZR1 2012 | Spyker C8 Convertible 2009(0.14) Spyker C8 Coupe 2009(0.16) Bugatti Veyron 16.4 Coupe 2009(0.24) Ford GT Coupe 2006(0.24) Fisker Karma Sedan 2012(0.24) |
+| Chevrolet Corvette Ron Fellows Edition Z06 2007 | Lamborghini Gallardo LP 570-4 Superleggera 2012(0.29) Bugatti Veyron 16.4 Convertible 2009(0.31) Spyker C8 Coupe 2009(0.34) Dodge Challenger SRT8 2011(0.35) Bentley Continental Supersports Conv. Convertible 2012(0.39) |
+| Chevrolet Traverse SUV 2012 | Scion xD Hatchback 2012(0.14) Hyundai Veracruz SUV 2012(0.16) Buick Enclave SUV 2012(0.17) Chrysler Town and Country Minivan 2012(0.21) Honda Odyssey Minivan 2007(0.21) |
+| Chevrolet Camaro Convertible 2012 | Ford Mustang Convertible 2007(0.29) Dodge Charger SRT-8 2009(0.30) Audi S5 Convertible 2012(0.31) Dodge Charger Sedan 2012(0.31) Bentley Continental GT Coupe 2012(0.33) |
+| Chevrolet HHR SS 2010 | Dodge Caliber Wagon 2007(0.20) Dodge Magnum Wagon 2008(0.24) BMW X6 SUV 2012(0.28) Dodge Caliber Wagon 2012(0.34) Dodge Charger SRT-8 2009(0.43) |
+| Chevrolet Impala Sedan 2007 | Chrysler Sebring Convertible 2010(0.13) Chevrolet Malibu Sedan 2007(0.15) Ford Focus Sedan 2007(0.16) Chevrolet Monte Carlo Coupe 2007(0.17) Honda Odyssey Minivan 2007(0.21) |
+| Chevrolet Tahoe Hybrid SUV 2012 | Toyota 4Runner SUV 2012*(0.16) Isuzu Ascender SUV 2008(0.17) Toyota Sequoia SUV 2012(0.18) Mazda Tribute SUV 2011(0.21) Ford Expedition EL SUV 2009(0.22) |
+| Chevrolet Sonic Sedan 2012 | Suzuki Kizashi Sedan 2012(0.26) Mitsubishi Lancer Sedan 2012(0.30) Nissan Juke Hatchback 2012(0.31) Hyundai Azera Sedan 2012(0.31) Nissan Leaf Hatchback 2012(0.31) |
+| Chevrolet Express Cargo Van 2007 | Chevrolet Express Van 2007(0.04) GMC Savana Van 2012(0.07) Nissan NV Passenger Van 2012(0.18) Mercedes-Benz Sprinter Van 2012(0.19) Dodge Sprinter Cargo Van 2009(0.24) |
+| Chevrolet Avalanche Crew Cab 2012 | Cadillac Escalade EXT Crew Cab 2007(0.16) Ford Expedition EL SUV 2009(0.19) GMC Terrain SUV 2012(0.20) Dodge Dakota Crew Cab 2010(0.21) Chrysler Aspen SUV 2009(0.22) |
+| Chevrolet Cobalt SS 2010 | Acura Integra Type R 2001(0.39) Volvo C30 Hatchback 2012*(0.45) Hyundai Elantra Sedan 2007(0.52) Dodge Charger SRT-8 2009(0.53) Ford Fiesta Sedan 2012(0.53) |
+| Chevrolet Malibu Hybrid Sedan 2010 | Honda Accord Sedan 2012(0.20) Chrysler Sebring Convertible 2010(0.20) Hyundai Elantra Touring Hatchback 2012(0.27) Volkswagen Golf Hatchback 2012*(0.30) Chevrolet Impala Sedan 2007(0.31) |
+| Chevrolet TrailBlazer SS 2009 | Volvo XC90 SUV 2007*(0.23) Cadillac Escalade EXT Crew Cab 2007(0.23) Jeep Grand Cherokee SUV 2012(0.25) Land Rover Range Rover SUV 2012(0.27) Land Rover LR2 SUV 2012(0.29) |
+| Chevrolet Silverado 2500HD Regular Cab 2012 | Chevrolet Silverado 1500 Extended Cab 2012(0.13) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.14) Ford F-150 Regular Cab 2012(0.14) Ford E-Series Wagon Van 2012(0.15) Ford F-450 Super Duty Crew Cab 2012(0.18) |
+| Chevrolet Silverado 1500 Classic Extended Cab 2007 | Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.06) Chevrolet Silverado 1500 Extended Cab 2012(0.10) Ford Ranger SuperCab 2011(0.11) GMC Canyon Extended Cab 2012(0.13) Ford F-150 Regular Cab 2012(0.15) |
+| Chevrolet Express Van 2007 | Chevrolet Express Cargo Van 2007(0.04) GMC Savana Van 2012(0.05) Nissan NV Passenger Van 2012(0.20) Mercedes-Benz Sprinter Van 2012(0.20) Ford E-Series Wagon Van 2012(0.22) |
+| Chevrolet Monte Carlo Coupe 2007 | Chevrolet Impala Sedan 2007(0.17) Chevrolet Malibu Sedan 2007(0.18) Chrysler Sebring Convertible 2010(0.22) Ford Focus Sedan 2007(0.26) Hyundai Elantra Sedan 2007(0.28) |
+| Chevrolet Malibu Sedan 2007 | Ford Focus Sedan 2007(0.15) Chevrolet Impala Sedan 2007(0.15) Chevrolet Monte Carlo Coupe 2007(0.18) Daewoo Nubira Wagon 2002(0.21) Honda Odyssey Minivan 2007(0.22) |
+| Chevrolet Silverado 1500 Extended Cab 2012 | GMC Canyon Extended Cab 2012(0.09) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.10) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.10) Dodge Ram Pickup 3500 Quad Cab 2009(0.10) Chevrolet Silverado 2500HD Regular Cab 2012(0.13) |
+| Chevrolet Silverado 1500 Regular Cab 2012 | Dodge Ram Pickup 3500 Quad Cab 2009(0.09) Ford F-150 Regular Cab 2007(0.11) GMC Canyon Extended Cab 2012(0.16) Ford F-150 Regular Cab 2012(0.16) Chevrolet Silverado 1500 Extended Cab 2012(0.16) |
+| Chrysler Aspen SUV 2009 | Dodge Durango SUV 2007(0.14) Buick Rainier SUV 2007(0.15) Toyota Sequoia SUV 2012(0.17) Cadillac Escalade EXT Crew Cab 2007(0.17) Jeep Grand Cherokee SUV 2012(0.20) |
+| Chrysler Sebring Convertible 2010 | Chevrolet Impala Sedan 2007(0.13) Chevrolet Malibu Hybrid Sedan 2010(0.20) Chevrolet Monte Carlo Coupe 2007(0.22) Honda Accord Sedan 2012(0.25) Chevrolet Malibu Sedan 2007(0.29) |
+| Chrysler Town and Country Minivan 2012 | Chevrolet Traverse SUV 2012(0.21) Buick Rainier SUV 2007(0.23) Honda Odyssey Minivan 2007(0.27) Toyota Sequoia SUV 2012(0.30) Mazda Tribute SUV 2011(0.32) |
+| Chrysler 300 SRT-8 2010 | Bentley Mulsanne Sedan 2011(0.25) Bentley Arnage Sedan 2009(0.27) Rolls-Royce Ghost Sedan 2012(0.27) Rolls-Royce Phantom Sedan 2012(0.28) Audi S6 Sedan 2011(0.35) |
+| Chrysler Crossfire Convertible 2008 | BMW 6 Series Convertible 2007(0.25) Audi TTS Coupe 2012(0.30) BMW 1 Series Convertible 2012(0.35) Bentley Continental Flying Spur Sedan 2007(0.36) Cadillac CTS-V Sedan 2012(0.37) |
+| Chrysler PT Cruiser Convertible 2008 | Dodge Durango SUV 2012(0.32) Buick Enclave SUV 2012(0.37) Dodge Journey SUV 2012(0.41) Infiniti QX56 SUV 2011(0.43) Scion xD Hatchback 2012(0.44) |
+| Daewoo Nubira Wagon 2002 | Lincoln Town Car Sedan 2011(0.19) Chevrolet Malibu Sedan 2007(0.21) Mercedes-Benz 300-Class Convertible 1993(0.28) Chevrolet Impala Sedan 2007(0.29) Chevrolet Monte Carlo Coupe 2007(0.30) |
+| Dodge Caliber Wagon 2012 | Dodge Caliber Wagon 2007(0.20) Buick Rainier SUV 2007(0.28) GMC Acadia SUV 2012(0.29) Dodge Magnum Wagon 2008(0.31) Chrysler Aspen SUV 2009(0.34) |
+| Dodge Caliber Wagon 2007 | Dodge Caliber Wagon 2012(0.20) Chevrolet HHR SS 2010(0.20) Dodge Magnum Wagon 2008(0.29) BMW X6 SUV 2012(0.36) Buick Rainier SUV 2007(0.50) |
+| Dodge Caravan Minivan 1997 | Ford Freestar Minivan 2007(0.20) Ford Focus Sedan 2007(0.30) Plymouth Neon Coupe 1999(0.30) Honda Odyssey Minivan 2007(0.31) Daewoo Nubira Wagon 2002(0.42) |
+| Dodge Ram Pickup 3500 Crew Cab 2010 | Ford F-450 Super Duty Crew Cab 2012(0.09) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.14) Ford F-150 Regular Cab 2012(0.17) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.17) GMC Canyon Extended Cab 2012(0.18) |
+| Dodge Ram Pickup 3500 Quad Cab 2009 | Chevrolet Silverado 1500 Regular Cab 2012(0.09) GMC Canyon Extended Cab 2012(0.09) Chevrolet Silverado 1500 Extended Cab 2012(0.10) Ford F-150 Regular Cab 2007(0.13) Ford F-150 Regular Cab 2012(0.15) |
+| Dodge Sprinter Cargo Van 2009 | Mercedes-Benz Sprinter Van 2012(0.11) GMC Savana Van 2012(0.19) Chevrolet Express Van 2007(0.22) Chevrolet Express Cargo Van 2007(0.24) Ford E-Series Wagon Van 2012(0.33) |
+| Dodge Journey SUV 2012 | Dodge Durango SUV 2012(0.21) Chevrolet Traverse SUV 2012(0.27) Jeep Compass SUV 2012(0.31) Buick Enclave SUV 2012(0.35) Ford Edge SUV 2012(0.35) |
+| Dodge Dakota Crew Cab 2010 | Dodge Dakota Club Cab 2007(0.16) Ford Ranger SuperCab 2011(0.16) GMC Canyon Extended Cab 2012(0.17) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.20) Chevrolet Avalanche Crew Cab 2012(0.21) |
+| Dodge Dakota Club Cab 2007 | GMC Canyon Extended Cab 2012(0.10) Ford Ranger SuperCab 2011(0.13) Chevrolet Silverado 1500 Extended Cab 2012(0.13) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.16) Dodge Dakota Crew Cab 2010(0.16) |
+| Dodge Magnum Wagon 2008 | Chevrolet HHR SS 2010(0.24) Dodge Caliber Wagon 2007(0.29) Dodge Caliber Wagon 2012(0.31) Ford Mustang Convertible 2007(0.32) Dodge Charger SRT-8 2009(0.41) |
+| Dodge Challenger SRT8 2011 | Ford GT Coupe 2006(0.30) Chevrolet Corvette Ron Fellows Edition Z06 2007(0.35) Rolls-Royce Phantom Drophead Coupe Convertible 2012(0.42) Bentley Continental Supersports Conv. Convertible 2012(0.43) Audi RS 4 Convertible 2008(0.43) |
+| Dodge Durango SUV 2012 | Dodge Journey SUV 2012(0.21) Ford Edge SUV 2012(0.27) Jeep Grand Cherokee SUV 2012(0.28) Volvo XC90 SUV 2007*(0.30) Chrysler PT Cruiser Convertible 2008(0.32) |
+| Dodge Durango SUV 2007 | Chrysler Aspen SUV 2009(0.14) Jeep Grand Cherokee SUV 2012(0.15) Cadillac Escalade EXT Crew Cab 2007(0.15) GMC Yukon Hybrid SUV 2012(0.16) Buick Rainier SUV 2007(0.17) |
+| Dodge Charger Sedan 2012 | Dodge Charger SRT-8 2009(0.27) Chevrolet Camaro Convertible 2012(0.31) Audi TT RS Coupe 2012(0.32) Volvo C30 Hatchback 2012*(0.37) BMW 1 Series Coupe 2012(0.39) |
+| Dodge Charger SRT-8 2009 | Ford Mustang Convertible 2007(0.17) Dodge Charger Sedan 2012(0.27) Chevrolet Camaro Convertible 2012(0.30) Dodge Magnum Wagon 2008(0.41) BMW 3 Series Sedan 2012(0.41) |
+| Eagle Talon Hatchback 1998 | Plymouth Neon Coupe 1999(0.20) Nissan 240SX Coupe 1998(0.24) Chevrolet Monte Carlo Coupe 2007(0.41) Geo Metro Convertible 1993(0.47) Acura TL Type-S 2008(0.49) |
+| FIAT 500 Abarth 2012 | Audi RS 4 Convertible 2008(0.59) Spyker C8 Convertible 2009(0.62) Rolls-Royce Ghost Sedan 2012(0.62) Nissan Juke Hatchback 2012(0.62) Bentley Arnage Sedan 2009(0.62) |
+| FIAT 500 Convertible 2012 | smart fortwo Convertible 2012*(0.27) MINI Cooper Roadster Convertible 2012(0.44) Maybach Landaulet Convertible 2012(0.47) Volkswagen Beetle Hatchback 2012*(0.53) Bugatti Veyron 16.4 Convertible 2009(0.54) |
+| Ferrari FF Coupe 2012 | Aston Martin Virage Coupe 2012(0.25) Hyundai Veloster Hatchback 2012(0.29) Jaguar XK XKR 2012(0.33) Ferrari California Convertible 2012(0.34) McLaren MP4-12C Coupe 2012(0.38) |
+| Ferrari California Convertible 2012 | Ferrari 458 Italia Convertible 2012(0.05) Ferrari 458 Italia Coupe 2012(0.09) Aston Martin Virage Coupe 2012(0.11) Chevrolet Corvette Convertible 2012(0.13) McLaren MP4-12C Coupe 2012(0.15) |
+| Ferrari 458 Italia Convertible 2012 | Ferrari California Convertible 2012(0.05) Ferrari 458 Italia Coupe 2012(0.07) McLaren MP4-12C Coupe 2012(0.10) Lamborghini Aventador Coupe 2012(0.11) Aston Martin Virage Coupe 2012(0.13) |
+| Ferrari 458 Italia Coupe 2012 | Ferrari 458 Italia Convertible 2012(0.07) Ferrari California Convertible 2012(0.09) McLaren MP4-12C Coupe 2012(0.09) Lamborghini Aventador Coupe 2012(0.10) Aston Martin Virage Coupe 2012(0.19) |
+| Fisker Karma Sedan 2012 | Aston Martin Virage Convertible 2012(0.11) Aston Martin V8 Vantage Coupe 2012(0.17) Mercedes-Benz SL-Class Coupe 2009(0.21) BMW M6 Convertible 2010(0.23) Bugatti Veyron 16.4 Coupe 2009(0.23) |
+| Ford F-450 Super Duty Crew Cab 2012 | Dodge Ram Pickup 3500 Crew Cab 2010(0.09) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.16) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.17) Chevrolet Silverado 2500HD Regular Cab 2012(0.18) Ford F-150 Regular Cab 2012(0.18) |
+| Ford Mustang Convertible 2007 | Dodge Charger SRT-8 2009(0.17) Chevrolet Camaro Convertible 2012(0.29) Dodge Magnum Wagon 2008(0.32) Rolls-Royce Phantom Drophead Coupe Convertible 2012(0.38) Mercedes-Benz 300-Class Convertible 1993(0.43) |
+| Ford Freestar Minivan 2007 | Dodge Caravan Minivan 1997(0.20) Ram C/V Cargo Van Minivan 2012(0.29) Honda Odyssey Minivan 2007(0.31) Buick Rainier SUV 2007(0.33) Chrysler Town and Country Minivan 2012(0.36) |
+| Ford Expedition EL SUV 2009 | Isuzu Ascender SUV 2008(0.15) Dodge Durango SUV 2007(0.18) Chevrolet Avalanche Crew Cab 2012(0.19) Cadillac Escalade EXT Crew Cab 2007(0.21) Chevrolet Tahoe Hybrid SUV 2012(0.22) |
+| Ford Edge SUV 2012 | Cadillac SRX SUV 2012(0.18) Dodge Durango SUV 2012(0.27) Chevrolet Traverse SUV 2012(0.32) Buick Enclave SUV 2012(0.32) Hyundai Santa Fe SUV 2012(0.34) |
+| Ford Ranger SuperCab 2011 | Chevrolet Silverado 1500 Classic Extended Cab 2007(0.11) GMC Canyon Extended Cab 2012(0.12) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.12) Dodge Dakota Club Cab 2007(0.13) Chevrolet Silverado 1500 Extended Cab 2012(0.13) |
+| Ford GT Coupe 2006 | Chevrolet Corvette Convertible 2012(0.18) Spyker C8 Coupe 2009(0.21) Chevrolet Corvette ZR1 2012(0.24) Spyker C8 Convertible 2009(0.24) Ferrari California Convertible 2012(0.25) |
+| Ford F-150 Regular Cab 2012 | Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.10) Ford F-150 Regular Cab 2007(0.14) Chevrolet Silverado 2500HD Regular Cab 2012(0.14) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.15) Dodge Ram Pickup 3500 Quad Cab 2009(0.15) |
+| Ford F-150 Regular Cab 2007 | Chevrolet Silverado 1500 Regular Cab 2012(0.11) Dodge Ram Pickup 3500 Quad Cab 2009(0.13) Ford F-150 Regular Cab 2012(0.14) GMC Canyon Extended Cab 2012(0.17) Dodge Dakota Club Cab 2007(0.18) |
+| Ford Focus Sedan 2007 | Honda Odyssey Minivan 2007(0.13) Chevrolet Malibu Sedan 2007(0.15) Chevrolet Impala Sedan 2007(0.16) Hyundai Elantra Sedan 2007(0.22) Suzuki Aerio Sedan 2007(0.23) |
+| Ford E-Series Wagon Van 2012 | GMC Savana Van 2012(0.13) Chevrolet Silverado 2500HD Regular Cab 2012(0.15) Chevrolet Express Van 2007(0.22) Chevrolet Express Cargo Van 2007(0.25) Ford F-450 Super Duty Crew Cab 2012(0.25) |
+| Ford Fiesta Sedan 2012 | Hyundai Elantra Sedan 2007(0.16) Hyundai Elantra Touring Hatchback 2012(0.17) Toyota Camry Sedan 2012*(0.18) Hyundai Tucson SUV 2012(0.19) Buick Verano Sedan 2012(0.24) |
+| GMC Terrain SUV 2012 | Cadillac Escalade EXT Crew Cab 2007(0.19) Chevrolet Avalanche Crew Cab 2012(0.20) Chrysler Aspen SUV 2009(0.22) Dodge Durango SUV 2007(0.22) Jeep Grand Cherokee SUV 2012(0.22) |
+| GMC Savana Van 2012 | Chevrolet Express Van 2007(0.05) Chevrolet Express Cargo Van 2007(0.07) Ford E-Series Wagon Van 2012(0.13) Nissan NV Passenger Van 2012(0.16) Dodge Sprinter Cargo Van 2009(0.19) |
+| GMC Yukon Hybrid SUV 2012 | Land Rover LR2 SUV 2012(0.13) Mazda Tribute SUV 2011(0.15) Dodge Durango SUV 2007(0.16) Toyota Sequoia SUV 2012(0.17) Jeep Grand Cherokee SUV 2012(0.18) |
+| GMC Acadia SUV 2012 | Jeep Grand Cherokee SUV 2012(0.20) Chrysler Aspen SUV 2009(0.22) Cadillac Escalade EXT Crew Cab 2007(0.25) Volvo XC90 SUV 2007*(0.26) Hyundai Santa Fe SUV 2012(0.29) |
+| GMC Canyon Extended Cab 2012 | Dodge Ram Pickup 3500 Quad Cab 2009(0.09) Chevrolet Silverado 1500 Extended Cab 2012(0.09) Dodge Dakota Club Cab 2007(0.10) Ford Ranger SuperCab 2011(0.12) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.12) |
+| Geo Metro Convertible 1993 | Mercedes-Benz 300-Class Convertible 1993(0.24) Plymouth Neon Coupe 1999(0.30) Nissan 240SX Coupe 1998(0.34) Audi 100 Wagon 1994(0.39) Audi 100 Sedan 1994(0.44) |
+| HUMMER H3T Crew Cab 2010 | HUMMER H2 SUT Crew Cab 2009(0.06) Jeep Wrangler SUV 2012(0.09) AM General Hummer SUV 2000(0.18) Jeep Liberty SUV 2012(0.32) Jeep Patriot SUV 2012(0.34) |
+| HUMMER H2 SUT Crew Cab 2009 | HUMMER H3T Crew Cab 2010(0.06) Jeep Wrangler SUV 2012(0.11) AM General Hummer SUV 2000(0.11) Ford F-450 Super Duty Crew Cab 2012(0.29) Chevrolet Silverado 2500HD Regular Cab 2012(0.39) |
+| Honda Odyssey Minivan 2012 | Hyundai Veracruz SUV 2012(0.17) Suzuki SX4 Sedan 2012(0.18) Chevrolet Traverse SUV 2012(0.23) Cadillac SRX SUV 2012(0.24) Hyundai Tucson SUV 2012(0.24) |
+| Honda Odyssey Minivan 2007 | Ford Focus Sedan 2007(0.13) Suzuki Aerio Sedan 2007(0.18) Chevrolet Traverse SUV 2012(0.21) Chevrolet Impala Sedan 2007(0.21) Chevrolet Malibu Sedan 2007(0.22) |
+| Honda Accord Coupe 2012 | Hyundai Accent Sedan 2012(0.17) Hyundai Sonata Hybrid Sedan 2012(0.18) Acura TSX Sedan 2012(0.27) Hyundai Sonata Sedan 2012(0.27) Toyota Corolla Sedan 2012*(0.34) |
+| Honda Accord Sedan 2012 | Volkswagen Golf Hatchback 2012*(0.17) Chevrolet Malibu Hybrid Sedan 2010(0.20) Chrysler Sebring Convertible 2010(0.25) Acura TSX Sedan 2012(0.25) Hyundai Elantra Touring Hatchback 2012(0.27) |
+| Hyundai Veloster Hatchback 2012 | Aston Martin Virage Coupe 2012(0.27) Jaguar XK XKR 2012(0.28) McLaren MP4-12C Coupe 2012(0.29) Ferrari FF Coupe 2012(0.29) Ferrari 458 Italia Convertible 2012(0.36) |
+| Hyundai Santa Fe SUV 2012 | GMC Acadia SUV 2012(0.29) Cadillac SRX SUV 2012(0.31) Ford Edge SUV 2012(0.34) Chrysler Town and Country Minivan 2012(0.42) Chevrolet Traverse SUV 2012(0.44) |
+| Hyundai Tucson SUV 2012 | Ford Fiesta Sedan 2012(0.19) Hyundai Veracruz SUV 2012(0.19) Suzuki SX4 Sedan 2012(0.22) Honda Odyssey Minivan 2012(0.24) Chevrolet Traverse SUV 2012(0.27) |
+| Hyundai Veracruz SUV 2012 | Chevrolet Traverse SUV 2012(0.16) Honda Odyssey Minivan 2012(0.17) Buick Enclave SUV 2012(0.19) Hyundai Tucson SUV 2012(0.19) Scion xD Hatchback 2012(0.20) |
+| Hyundai Sonata Hybrid Sedan 2012 | Hyundai Sonata Sedan 2012(0.13) Honda Accord Coupe 2012(0.18) Buick Verano Sedan 2012(0.24) Acura TL Sedan 2012(0.26) Acura TSX Sedan 2012(0.26) |
+| Hyundai Elantra Sedan 2007 | Hyundai Elantra Touring Hatchback 2012(0.15) Ford Fiesta Sedan 2012(0.16) Toyota Corolla Sedan 2012*(0.18) Ford Focus Sedan 2007(0.22) Chevrolet Impala Sedan 2007(0.23) |
+| Hyundai Accent Sedan 2012 | Honda Accord Coupe 2012(0.17) Hyundai Sonata Hybrid Sedan 2012(0.28) Toyota Corolla Sedan 2012*(0.31) Acura TSX Sedan 2012(0.33) Buick Verano Sedan 2012(0.34) |
+| Hyundai Genesis Sedan 2012 | Acura TL Sedan 2012(0.14) Toyota Camry Sedan 2012*(0.20) Hyundai Sonata Sedan 2012(0.22) Acura RL Sedan 2012(0.23) Hyundai Azera Sedan 2012(0.24) |
+| Hyundai Sonata Sedan 2012 | Hyundai Sonata Hybrid Sedan 2012(0.13) Acura TL Sedan 2012(0.19) Hyundai Genesis Sedan 2012(0.22) Toyota Camry Sedan 2012*(0.26) Acura RL Sedan 2012(0.27) |
+| Hyundai Elantra Touring Hatchback 2012 | Hyundai Elantra Sedan 2007(0.15) Ford Fiesta Sedan 2012(0.17) Toyota Camry Sedan 2012*(0.20) Suzuki SX4 Sedan 2012(0.21) Buick Verano Sedan 2012(0.26) |
+| Hyundai Azera Sedan 2012 | Hyundai Genesis Sedan 2012(0.24) Suzuki Kizashi Sedan 2012(0.24) Acura TL Sedan 2012(0.25) Buick Verano Sedan 2012(0.27) Acura ZDX Hatchback 2012(0.27) |
+| Infiniti G Coupe IPL 2012 | Porsche Panamera Sedan 2012(0.20) Fisker Karma Sedan 2012(0.26) Audi S5 Coupe 2012(0.29) BMW ActiveHybrid 5 Sedan 2012(0.31) Acura TL Sedan 2012(0.32) |
+| Infiniti QX56 SUV 2011 | BMW X3 SUV 2012(0.31) BMW X5 SUV 2007(0.34) Dodge Durango SUV 2012(0.42) Ford Edge SUV 2012(0.42) Chrysler PT Cruiser Convertible 2008(0.43) |
+| Isuzu Ascender SUV 2008 | Ford Expedition EL SUV 2009(0.15) Chevrolet Tahoe Hybrid SUV 2012(0.17) Chevrolet Avalanche Crew Cab 2012(0.23) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.23) Chrysler Aspen SUV 2009(0.24) |
+| Jaguar XK XKR 2012 | Bugatti Veyron 16.4 Coupe 2009(0.22) Aston Martin Virage Convertible 2012(0.24) Tesla Model S Sedan 2012(0.26) Spyker C8 Coupe 2009(0.27) Hyundai Veloster Hatchback 2012(0.28) |
+| Jeep Patriot SUV 2012 | Jeep Liberty SUV 2012(0.03) HUMMER H3T Crew Cab 2010(0.34) Jeep Wrangler SUV 2012(0.35) Land Rover Range Rover SUV 2012(0.40) Toyota 4Runner SUV 2012*(0.43) |
+| Jeep Wrangler SUV 2012 | HUMMER H3T Crew Cab 2010(0.09) HUMMER H2 SUT Crew Cab 2009(0.11) AM General Hummer SUV 2000(0.15) Jeep Liberty SUV 2012(0.33) Jeep Patriot SUV 2012(0.35) |
+| Jeep Liberty SUV 2012 | Jeep Patriot SUV 2012(0.03) HUMMER H3T Crew Cab 2010(0.32) Jeep Wrangler SUV 2012(0.33) Chevrolet Silverado 1500 Regular Cab 2012(0.41) HUMMER H2 SUT Crew Cab 2009(0.42) |
+| Jeep Grand Cherokee SUV 2012 | Cadillac Escalade EXT Crew Cab 2007(0.14) Dodge Durango SUV 2007(0.15) Volvo XC90 SUV 2007*(0.15) Land Rover LR2 SUV 2012(0.16) GMC Yukon Hybrid SUV 2012(0.18) |
+| Jeep Compass SUV 2012 | Dodge Journey SUV 2012(0.31) Dodge Durango SUV 2012(0.33) Volvo XC90 SUV 2007*(0.35) Jeep Grand Cherokee SUV 2012(0.37) Land Rover LR2 SUV 2012(0.38) |
+| Lamborghini Reventon Coupe 2008 | Spyker C8 Convertible 2009(0.21) Bugatti Veyron 16.4 Coupe 2009(0.22) Spyker C8 Coupe 2009(0.23) Bugatti Veyron 16.4 Convertible 2009(0.34) Aston Martin Virage Convertible 2012(0.35) |
+| Lamborghini Aventador Coupe 2012 | McLaren MP4-12C Coupe 2012(0.07) Ferrari 458 Italia Coupe 2012(0.10) Ferrari 458 Italia Convertible 2012(0.11) Lamborghini Gallardo LP 570-4 Superleggera 2012(0.15) Ferrari California Convertible 2012(0.18) |
+| Lamborghini Gallardo LP 570-4 Superleggera 2012 | Lamborghini Aventador Coupe 2012(0.15) McLaren MP4-12C Coupe 2012(0.19) Ferrari 458 Italia Convertible 2012(0.19) Chevrolet Corvette Convertible 2012(0.22) Spyker C8 Coupe 2009(0.24) |
+| Lamborghini Diablo Coupe 2001 | Acura Integra Type R 2001(0.16) Lamborghini Gallardo LP 570-4 Superleggera 2012(0.25) Chevrolet Corvette Convertible 2012(0.29) McLaren MP4-12C Coupe 2012(0.32) Ford GT Coupe 2006(0.35) |
+| Land Rover Range Rover SUV 2012 | GMC Yukon Hybrid SUV 2012(0.25) Chevrolet TrailBlazer SS 2009(0.27) Jeep Grand Cherokee SUV 2012(0.27) Toyota 4Runner SUV 2012*(0.27) Volvo XC90 SUV 2007*(0.29) |
+| Land Rover LR2 SUV 2012 | Toyota Sequoia SUV 2012(0.12) GMC Yukon Hybrid SUV 2012(0.13) Mazda Tribute SUV 2011(0.15) Jeep Grand Cherokee SUV 2012(0.16) Volvo XC90 SUV 2007*(0.17) |
+| Lincoln Town Car Sedan 2011 | Daewoo Nubira Wagon 2002(0.19) Chevrolet Malibu Sedan 2007(0.23) Chevrolet Monte Carlo Coupe 2007(0.32) Mercedes-Benz 300-Class Convertible 1993(0.35) Suzuki Aerio Sedan 2007(0.35) |
+| MINI Cooper Roadster Convertible 2012 | Bentley Continental Supersports Conv. Convertible 2012(0.23) Bugatti Veyron 16.4 Convertible 2009(0.40) Rolls-Royce Phantom Drophead Coupe Convertible 2012(0.41) FIAT 500 Convertible 2012(0.44) Maybach Landaulet Convertible 2012(0.46) |
+| Maybach Landaulet Convertible 2012 | MINI Cooper Roadster Convertible 2012(0.46) Chevrolet Corvette Ron Fellows Edition Z06 2007(0.47) FIAT 500 Convertible 2012(0.47) Bugatti Veyron 16.4 Convertible 2009(0.52) Bentley Continental Supersports Conv. Convertible 2012(0.54) |
+| Mazda Tribute SUV 2011 | Toyota Sequoia SUV 2012(0.11) GMC Yukon Hybrid SUV 2012(0.15) Land Rover LR2 SUV 2012(0.15) Buick Rainier SUV 2007(0.17) Dodge Durango SUV 2007(0.19) |
+| McLaren MP4-12C Coupe 2012 | Lamborghini Aventador Coupe 2012(0.07) Ferrari 458 Italia Coupe 2012(0.09) Ferrari 458 Italia Convertible 2012(0.10) Ferrari California Convertible 2012(0.15) Lamborghini Gallardo LP 570-4 Superleggera 2012(0.19) |
+| Mercedes-Benz 300-Class Convertible 1993 | Audi V8 Sedan 1994(0.22) Audi 100 Sedan 1994(0.23) Geo Metro Convertible 1993(0.24) Audi 100 Wagon 1994(0.25) Nissan 240SX Coupe 1998(0.27) |
+| Mercedes-Benz C-Class Sedan 2012 | Mercedes-Benz S-Class Sedan 2012(0.24) Cadillac CTS-V Sedan 2012(0.27) Bentley Continental Flying Spur Sedan 2007(0.33) Volkswagen Golf Hatchback 2012*(0.44) Acura TSX Sedan 2012(0.45) |
+| Mercedes-Benz SL-Class Coupe 2009 | Fisker Karma Sedan 2012(0.21) Aston Martin Virage Convertible 2012(0.23) Audi R8 Coupe 2012(0.25) Porsche Panamera Sedan 2012(0.31) BMW M6 Convertible 2010(0.32) |
+| Mercedes-Benz E-Class Sedan 2012 | BMW M5 Sedan 2010(0.25) Hyundai Genesis Sedan 2012(0.30) Suzuki Kizashi Sedan 2012(0.30) Hyundai Azera Sedan 2012(0.31) Acura TL Sedan 2012(0.33) |
+| Mercedes-Benz S-Class Sedan 2012 | Mercedes-Benz C-Class Sedan 2012(0.24) Hyundai Genesis Sedan 2012(0.30) Mercedes-Benz E-Class Sedan 2012(0.34) Acura TL Sedan 2012(0.36) Audi A5 Coupe 2012(0.36) |
+| Mercedes-Benz Sprinter Van 2012 | Dodge Sprinter Cargo Van 2009(0.11) Chevrolet Express Cargo Van 2007(0.19) Chevrolet Express Van 2007(0.20) GMC Savana Van 2012(0.22) Nissan NV Passenger Van 2012(0.39) |
+| Mitsubishi Lancer Sedan 2012 | Suzuki Kizashi Sedan 2012(0.27) Toyota Camry Sedan 2012*(0.28) Chevrolet Sonic Sedan 2012(0.30) Suzuki SX4 Sedan 2012(0.37) Hyundai Elantra Touring Hatchback 2012(0.38) |
+| Nissan Leaf Hatchback 2012 | Chevrolet Sonic Sedan 2012(0.31) Suzuki Kizashi Sedan 2012(0.32) Hyundai Tucson SUV 2012(0.36) Ford Fiesta Sedan 2012(0.37) Nissan Juke Hatchback 2012(0.37) |
+| Nissan NV Passenger Van 2012 | GMC Savana Van 2012(0.16) Chevrolet Express Cargo Van 2007(0.18) Chevrolet Express Van 2007(0.20) Ford E-Series Wagon Van 2012(0.26) Chevrolet Silverado 1500 Regular Cab 2012(0.29) |
+| Nissan Juke Hatchback 2012 | Chevrolet Sonic Sedan 2012(0.31) Nissan Leaf Hatchback 2012(0.37) Volkswagen Beetle Hatchback 2012*(0.44) Suzuki Kizashi Sedan 2012(0.45) Hyundai Veloster Hatchback 2012(0.48) |
+| Nissan 240SX Coupe 1998 | Plymouth Neon Coupe 1999(0.18) Eagle Talon Hatchback 1998(0.24) Mercedes-Benz 300-Class Convertible 1993(0.27) Geo Metro Convertible 1993(0.34) Audi V8 Sedan 1994(0.35) |
+| Plymouth Neon Coupe 1999 | Nissan 240SX Coupe 1998(0.18) Eagle Talon Hatchback 1998(0.20) Geo Metro Convertible 1993(0.30) Dodge Caravan Minivan 1997(0.30) Mercedes-Benz 300-Class Convertible 1993(0.31) |
+| Porsche Panamera Sedan 2012 | Infiniti G Coupe IPL 2012(0.20) BMW M6 Convertible 2010(0.22) BMW ActiveHybrid 5 Sedan 2012(0.24) BMW M5 Sedan 2010(0.28) Jaguar XK XKR 2012(0.29) |
+| Ram C/V Cargo Van Minivan 2012 | Ford Freestar Minivan 2007(0.29) Chrysler Town and Country Minivan 2012(0.42) Buick Rainier SUV 2007(0.43) Suzuki Aerio Sedan 2007(0.49) Honda Odyssey Minivan 2007(0.53) |
+| Rolls-Royce Phantom Drophead Coupe Convertible 2012 | Rolls-Royce Phantom Sedan 2012(0.10) Rolls-Royce Ghost Sedan 2012(0.28) Bentley Mulsanne Sedan 2011(0.29) Ford Mustang Convertible 2007(0.38) Bentley Arnage Sedan 2009(0.39) |
+| Rolls-Royce Ghost Sedan 2012 | Rolls-Royce Phantom Sedan 2012(0.19) Bentley Mulsanne Sedan 2011(0.22) Chrysler 300 SRT-8 2010(0.27) Rolls-Royce Phantom Drophead Coupe Convertible 2012(0.28) Bentley Arnage Sedan 2009(0.30) |
+| Rolls-Royce Phantom Sedan 2012 | Rolls-Royce Phantom Drophead Coupe Convertible 2012(0.10) Rolls-Royce Ghost Sedan 2012(0.19) Bentley Mulsanne Sedan 2011(0.20) Bentley Arnage Sedan 2009(0.22) Chrysler 300 SRT-8 2010(0.28) |
+| Scion xD Hatchback 2012 | Chevrolet Traverse SUV 2012(0.14) Hyundai Veracruz SUV 2012(0.20) Buick Enclave SUV 2012(0.20) Suzuki SX4 Hatchback 2012(0.26) Honda Odyssey Minivan 2012(0.26) |
+| Spyker C8 Convertible 2009 | Spyker C8 Coupe 2009(0.07) Chevrolet Corvette ZR1 2012(0.14) Lamborghini Reventon Coupe 2008(0.21) Bugatti Veyron 16.4 Coupe 2009(0.24) Ford GT Coupe 2006(0.24) |
+| Spyker C8 Coupe 2009 | Spyker C8 Convertible 2009(0.07) Chevrolet Corvette ZR1 2012(0.16) Ford GT Coupe 2006(0.21) Ferrari California Convertible 2012(0.23) Lamborghini Reventon Coupe 2008(0.23) |
+| Suzuki Aerio Sedan 2007 | Honda Odyssey Minivan 2007(0.18) Ford Focus Sedan 2007(0.23) Chevrolet Impala Sedan 2007(0.27) Chevrolet Malibu Sedan 2007(0.28) Chevrolet Monte Carlo Coupe 2007(0.35) |
+| Suzuki Kizashi Sedan 2012 | Buick Verano Sedan 2012(0.21) Buick Regal GS 2012(0.22) Toyota Camry Sedan 2012*(0.22) Hyundai Azera Sedan 2012(0.24) Chevrolet Sonic Sedan 2012(0.26) |
+| Suzuki SX4 Hatchback 2012 | Suzuki SX4 Sedan 2012(0.25) Scion xD Hatchback 2012(0.26) Chevrolet Traverse SUV 2012(0.29) Hyundai Elantra Sedan 2007(0.33) Hyundai Elantra Touring Hatchback 2012(0.35) |
+| Suzuki SX4 Sedan 2012 | Honda Odyssey Minivan 2012(0.18) Hyundai Elantra Touring Hatchback 2012(0.21) Hyundai Tucson SUV 2012(0.22) Chevrolet Traverse SUV 2012(0.22) Hyundai Veracruz SUV 2012(0.23) |
+| Tesla Model S Sedan 2012 | Fisker Karma Sedan 2012(0.26) Jaguar XK XKR 2012(0.26) Aston Martin Virage Convertible 2012(0.31) Hyundai Sonata Hybrid Sedan 2012(0.33) Mercedes-Benz SL-Class Coupe 2009(0.33) |
+| Toyota Sequoia SUV 2012 | Mazda Tribute SUV 2011(0.11) Land Rover LR2 SUV 2012(0.12) Chrysler Aspen SUV 2009(0.17) GMC Yukon Hybrid SUV 2012(0.17) Toyota 4Runner SUV 2012*(0.17) |
+| Toyota Camry Sedan 2012* | Buick Verano Sedan 2012(0.14) Ford Fiesta Sedan 2012(0.18) Hyundai Elantra Touring Hatchback 2012(0.20) Hyundai Genesis Sedan 2012(0.20) Suzuki Kizashi Sedan 2012(0.22) |
+| Toyota Corolla Sedan 2012* | Volkswagen Golf Hatchback 2012*(0.16) Hyundai Elantra Sedan 2007(0.18) Acura TSX Sedan 2012(0.24) Ford Fiesta Sedan 2012(0.26) Honda Accord Sedan 2012(0.27) |
+| Toyota 4Runner SUV 2012* | Chevrolet Tahoe Hybrid SUV 2012(0.16) Toyota Sequoia SUV 2012(0.17) Land Rover LR2 SUV 2012(0.18) Jeep Grand Cherokee SUV 2012(0.22) GMC Terrain SUV 2012(0.24) |
+| Volkswagen Golf Hatchback 2012* | Acura TSX Sedan 2012(0.13) Toyota Corolla Sedan 2012*(0.16) Honda Accord Sedan 2012(0.17) Chevrolet Malibu Hybrid Sedan 2010(0.30) Honda Accord Coupe 2012(0.35) |
+| Volkswagen Golf Hatchback 1991* | Volvo 240 Sedan 1993*(0.10) Audi V8 Sedan 1994(0.27) Mercedes-Benz 300-Class Convertible 1993(0.31) Plymouth Neon Coupe 1999(0.31) Audi 100 Sedan 1994(0.35) |
+| Volkswagen Beetle Hatchback 2012* | Volvo C30 Hatchback 2012*(0.34) Buick Regal GS 2012(0.35) Suzuki Kizashi Sedan 2012(0.36) Chevrolet Sonic Sedan 2012(0.42) Nissan Juke Hatchback 2012(0.44) |
+| Volvo C30 Hatchback 2012* | Volkswagen Beetle Hatchback 2012*(0.34) Dodge Charger Sedan 2012(0.37) Chevrolet Cobalt SS 2010(0.45) Chevrolet Sonic Sedan 2012(0.46) Suzuki SX4 Hatchback 2012(0.47) |
+| Volvo 240 Sedan 1993* | Volkswagen Golf Hatchback 1991*(0.10) Audi V8 Sedan 1994(0.25) Mercedes-Benz 300-Class Convertible 1993(0.34) Audi 100 Sedan 1994(0.35) Dodge Dakota Club Cab 2007(0.38) |
+| Volvo XC90 SUV 2007* | Jeep Grand Cherokee SUV 2012(0.15) Land Rover LR2 SUV 2012(0.17) Toyota Sequoia SUV 2012(0.18) Dodge Durango SUV 2007(0.21) Chrysler Aspen SUV 2009(0.21) |
+| smart fortwo Convertible 2012* | FIAT 500 Convertible 2012(0.27) Nissan Leaf Hatchback 2012(0.47) Nissan Juke Hatchback 2012(0.54) Chevrolet Sonic Sedan 2012(0.58) Bugatti Veyron 16.4 Convertible 2009(0.58) |
 
 ## supcon-ft-resnplm (residual)  [cars_lejepa]
 
+agree@1=0.235 agree@5=0.154 (chance 0.040)  dendro-purity=0.170  silhouette=-0.392  within/between=0.822
+
 
 | class | 5 nearest class centroids (cosine dist) |
 |---|---|
-| class0 | class124(0.05) class145(0.06) class123(0.14) class146(0.43) class105(0.50) |
-| class1 | class34(0.02) class25(0.03) class181(0.03) class22(0.03) class33(0.04) |
-| class2 | class162(0.02) class4(0.02) class6(0.02) class172(0.03) class65(0.03) |
-| class3 | class166(0.01) class43(0.03) class66(0.03) class12(0.03) class50(0.04) |
-| class4 | class187*(0.01) class186*(0.02) class2(0.02) class65(0.03) class137(0.03) |
-| class5 | class56(0.05) class167(0.06) class92(0.06) class71(0.07) class65(0.08) |
-| class6 | class2(0.02) class191*(0.02) class143(0.03) class104(0.04) class184(0.04) |
-| class7 | class9(0.01) class58(0.02) class8(0.02) class104(0.02) class37(0.02) |
-| class8 | class35(0.01) class7(0.02) class18(0.02) class9(0.02) class14(0.02) |
-| class9 | class104(0.01) class7(0.01) class8(0.02) class184(0.02) class35(0.02) |
-| class10 | class100(0.02) class101(0.03) class37(0.03) class55(0.04) class143(0.04) |
-| class11 | class20(0.02) class43(0.02) class23(0.02) class13(0.03) class78(0.03) |
-| class12 | class18(0.01) class21(0.01) class13(0.01) class33(0.01) class22(0.02) |
-| class13 | class12(0.01) class21(0.02) class18(0.02) class35(0.02) class20(0.02) |
-| class14 | class8(0.02) class172(0.02) class35(0.02) class104(0.02) class18(0.02) |
-| class15 | class17(0.04) class16(0.06) class193*(0.07) class190*(0.08) class52(0.14) |
-| class16 | class17(0.01) class15(0.06) class190*(0.11) class64(0.12) class193*(0.12) |
-| class17 | class16(0.01) class15(0.04) class190*(0.09) class193*(0.11) class52(0.12) |
-| class18 | class12(0.01) class21(0.01) class33(0.01) class8(0.02) class172(0.02) |
-| class19 | class23(0.03) class22(0.04) class40(0.04) class161(0.04) class78(0.04) |
-| class20 | class21(0.01) class11(0.02) class13(0.02) class23(0.03) class43(0.03) |
-| class21 | class12(0.01) class20(0.01) class18(0.01) class22(0.02) class13(0.02) |
-| class22 | class21(0.02) class12(0.02) class23(0.02) class34(0.03) class33(0.03) |
-| class23 | class43(0.02) class22(0.02) class50(0.02) class11(0.02) class21(0.02) |
-| class24 | class37(0.04) class18(0.04) class8(0.04) class14(0.04) class95(0.05) |
-| class25 | class34(0.01) class33(0.03) class1(0.03) class181(0.03) class22(0.03) |
-| class26 | class30(0.01) class79(0.03) class12(0.03) class43(0.03) class162(0.03) |
-| class27 | class33(0.04) class18(0.04) class32(0.05) class41(0.05) class12(0.05) |
-| class28 | class50(0.03) class22(0.03) class13(0.04) class161(0.04) class20(0.04) |
-| class29 | class163(0.04) class164(0.04) class80(0.04) class161(0.05) class166(0.05) |
-| class30 | class79(0.01) class26(0.01) class42(0.02) class162(0.02) class35(0.03) |
-| class31 | class109(0.05) class185(0.06) class148(0.08) class93(0.08) class194*(0.08) |
-| class32 | class59(0.03) class27(0.05) class28(0.05) class1(0.06) class161(0.06) |
-| class33 | class12(0.01) class18(0.01) class34(0.02) class172(0.02) class21(0.03) |
-| class34 | class25(0.01) class33(0.02) class181(0.02) class1(0.02) class12(0.02) |
-| class35 | class42(0.01) class8(0.01) class172(0.02) class9(0.02) class14(0.02) |
-| class36 | class161(0.06) class29(0.07) class82(0.07) class32(0.08) class163(0.08) |
-| class37 | class8(0.02) class7(0.02) class14(0.02) class143(0.02) class58(0.03) |
-| class38 | class35(0.04) class30(0.04) class42(0.04) class26(0.04) class162(0.04) |
-| class39 | class67(0.10) class176(0.10) class175(0.13) class89(0.14) class78(0.14) |
-| class40 | class78(0.03) class19(0.04) class23(0.05) class176(0.05) class11(0.05) |
-| class41 | class42(0.02) class35(0.02) class18(0.03) class21(0.03) class13(0.03) |
-| class42 | class35(0.01) class30(0.02) class13(0.02) class41(0.02) class8(0.03) |
-| class43 | class23(0.02) class50(0.02) class11(0.02) class13(0.02) class20(0.03) |
-| class44 | class45(0.03) class184(0.03) class143(0.04) class6(0.04) class191*(0.05) |
-| class45 | class104(0.01) class143(0.02) class184(0.02) class9(0.02) class55(0.03) |
-| class46 | class181(0.02) class48(0.03) class4(0.04) class2(0.04) class34(0.04) |
-| class47 | class75(0.05) class158(0.05) class94(0.06) class120(0.07) class142(0.07) |
-| class48 | class46(0.03) class181(0.03) class172(0.04) class137(0.04) class186*(0.04) |
-| class49 | class51(0.04) class109(0.04) class182(0.06) class125(0.07) class77(0.07) |
-| class50 | class43(0.02) class23(0.02) class13(0.03) class28(0.03) class21(0.03) |
-| class51 | class49(0.04) class109(0.04) class182(0.05) class125(0.06) class138(0.08) |
-| class52 | class119(0.05) class117(0.06) class64(0.06) class147(0.07) class194*(0.08) |
-| class53 | class121(0.04) class73(0.05) class90(0.07) class85(0.09) class86(0.11) |
-| class54 | class111(0.02) class101(0.02) class55(0.02) class179(0.02) class102(0.03) |
-| class55 | class179(0.02) class54(0.02) class58(0.02) class100(0.03) class45(0.03) |
-| class56 | class5(0.05) class44(0.06) class92(0.06) class167(0.08) class54(0.09) |
-| class57 | class132(0.02) class126(0.04) class130(0.07) class131(0.07) class120(0.09) |
-| class58 | class7(0.02) class55(0.02) class96(0.03) class37(0.03) class95(0.03) |
-| class59 | class32(0.03) class27(0.08) class28(0.09) class36(0.09) class91(0.09) |
-| class60 | class71(0.02) class72(0.03) class76(0.04) class128(0.05) class134(0.06) |
-| class61 | class185(0.05) class154(0.06) class119(0.08) class75(0.08) class158(0.10) |
-| class62 | class189*(0.05) class177(0.05) class138(0.05) class186*(0.05) class80(0.05) |
-| class63 | class70(0.01) class118(0.01) class168(0.04) class87(0.05) class165(0.06) |
-| class64 | class52(0.06) class147(0.08) class119(0.09) class94(0.10) class75(0.10) |
-| class65 | class191*(0.03) class2(0.03) class4(0.03) class6(0.04) class187*(0.04) |
-| class66 | class76(0.02) class166(0.03) class3(0.03) class187*(0.04) class26(0.04) |
-| class67 | class89(0.06) class39(0.10) class52(0.13) class148(0.14) class153(0.15) |
-| class68 | class74(0.06) class113(0.08) class112(0.09) class86(0.10) class110(0.11) |
-| class69 | class110(0.06) class113(0.06) class74(0.07) class112(0.10) class86(0.11) |
-| class70 | class118(0.00) class63(0.01) class115(0.03) class168(0.03) class87(0.04) |
-| class71 | class60(0.02) class76(0.03) class170(0.05) class65(0.05) class97(0.05) |
-| class72 | class114(0.02) class60(0.03) class71(0.06) class81(0.06) class155(0.07) |
-| class73 | class53(0.05) class90(0.08) class121(0.09) class86(0.13) class64(0.15) |
-| class74 | class86(0.03) class110(0.06) class68(0.06) class113(0.07) class69(0.07) |
-| class75 | class94(0.04) class154(0.05) class47(0.05) class185(0.06) class194*(0.07) |
-| class76 | class66(0.02) class128(0.03) class71(0.03) class164(0.04) class60(0.04) |
-| class77 | class126(0.04) class120(0.06) class130(0.07) class49(0.07) class182(0.08) |
-| class78 | class40(0.03) class175(0.03) class176(0.03) class43(0.03) class11(0.03) |
-| class79 | class30(0.01) class26(0.03) class43(0.03) class106(0.03) class42(0.04) |
-| class80 | class29(0.04) class166(0.05) class62(0.05) class66(0.05) class43(0.06) |
-| class81 | class72(0.06) class155(0.07) class160(0.07) class80(0.08) class91(0.09) |
-| class82 | class29(0.07) class164(0.07) class36(0.07) class138(0.07) class128(0.08) |
-| class83 | class161(0.08) class32(0.08) class82(0.08) class36(0.09) class59(0.10) |
-| class84 | class107(0.06) class173(0.16) class142(0.16) class108(0.18) class47(0.18) |
-| class85 | class121(0.08) class144(0.08) class53(0.09) class146(0.10) class74(0.10) |
-| class86 | class74(0.03) class121(0.06) class110(0.07) class113(0.07) class90(0.09) |
-| class87 | class165(0.00) class118(0.04) class70(0.04) class168(0.04) class63(0.05) |
-| class88 | class120(0.08) class77(0.09) class130(0.09) class49(0.10) class47(0.11) |
-| class89 | class67(0.06) class39(0.14) class53(0.14) class15(0.15) class52(0.16) |
-| class90 | class121(0.05) class53(0.07) class73(0.08) class86(0.09) class74(0.10) |
-| class91 | class170(0.04) class43(0.05) class106(0.05) class174(0.06) class80(0.06) |
-| class92 | class58(0.04) class111(0.05) class97(0.05) class55(0.06) class54(0.06) |
-| class93 | class148(0.05) class109(0.06) class194*(0.07) class31(0.08) class117(0.09) |
-| class94 | class75(0.04) class47(0.06) class147(0.06) class154(0.07) class194*(0.07) |
-| class95 | class58(0.03) class55(0.03) class96(0.04) class24(0.05) class37(0.06) |
-| class96 | class106(0.01) class58(0.03) class95(0.04) class13(0.04) class97(0.05) |
-| class97 | class106(0.04) class170(0.04) class96(0.05) class58(0.05) class71(0.05) |
-| class98 | class95(0.08) class59(0.10) class32(0.10) class11(0.11) class96(0.11) |
-| class99 | class156(0.06) class167(0.07) class62(0.07) class60(0.09) class5(0.09) |
-| class100 | class10(0.02) class55(0.03) class101(0.04) class143(0.04) class45(0.04) |
-| class101 | class103(0.01) class102(0.01) class54(0.02) class10(0.03) class179(0.03) |
-| class102 | class103(0.01) class101(0.01) class150(0.02) class159(0.03) class54(0.03) |
-| class103 | class102(0.01) class101(0.01) class150(0.02) class159(0.03) class54(0.03) |
-| class104 | class9(0.01) class143(0.01) class184(0.01) class45(0.01) class7(0.02) |
-| class105 | class85(0.13) class74(0.14) class68(0.16) class144(0.17) class146(0.18) |
-| class106 | class96(0.01) class170(0.03) class79(0.03) class30(0.04) class97(0.04) |
-| class107 | class84(0.06) class47(0.08) class108(0.12) class126(0.12) class142(0.12) |
-| class108 | class142(0.03) class158(0.08) class47(0.09) class107(0.12) class113(0.13) |
-| class109 | class49(0.04) class51(0.04) class31(0.05) class182(0.06) class93(0.06) |
-| class110 | class69(0.06) class74(0.06) class113(0.06) class86(0.07) class142(0.10) |
-| class111 | class54(0.02) class179(0.03) class178(0.03) class55(0.03) class101(0.04) |
-| class112 | class113(0.05) class168(0.07) class118(0.08) class63(0.08) class70(0.09) |
-| class113 | class112(0.05) class110(0.06) class69(0.06) class74(0.07) class86(0.07) |
-| class114 | class72(0.02) class180(0.06) class177(0.06) class60(0.06) class183(0.07) |
-| class115 | class118(0.02) class70(0.03) class168(0.04) class63(0.06) class87(0.06) |
-| class116 | class134(0.05) class131(0.06) class133(0.09) class186*(0.09) class183(0.09) |
-| class117 | class119(0.06) class52(0.06) class82(0.09) class194*(0.09) class93(0.09) |
-| class118 | class70(0.00) class63(0.01) class115(0.02) class168(0.02) class87(0.04) |
-| class119 | class52(0.05) class147(0.06) class117(0.06) class185(0.06) class154(0.06) |
-| class120 | class130(0.04) class77(0.06) class185(0.07) class47(0.07) class158(0.07) |
-| class121 | class53(0.04) class90(0.05) class86(0.06) class85(0.08) class74(0.09) |
-| class122 | class171(0.08) class72(0.12) class81(0.12) class114(0.14) class160(0.15) |
-| class123 | class124(0.04) class145(0.04) class0(0.14) class146(0.16) class105(0.21) |
-| class124 | class145(0.03) class123(0.04) class0(0.05) class146(0.28) class105(0.29) |
-| class125 | class183(0.04) class182(0.05) class51(0.06) class49(0.07) class109(0.07) |
-| class126 | class77(0.04) class57(0.04) class132(0.08) class130(0.09) class114(0.09) |
-| class127 | class137(0.03) class37(0.04) class14(0.04) class65(0.04) class48(0.05) |
-| class128 | class189*(0.02) class136(0.02) class164(0.02) class138(0.02) class187*(0.03) |
-| class129 | class100(0.04) class54(0.05) class133(0.05) class143(0.05) class103(0.05) |
-| class130 | class120(0.04) class57(0.07) class77(0.07) class182(0.07) class88(0.09) |
-| class131 | class132(0.04) class116(0.06) class57(0.07) class167(0.10) class177(0.10) |
-| class132 | class57(0.02) class131(0.04) class177(0.07) class183(0.07) class126(0.08) |
-| class133 | class137(0.03) class186*(0.04) class4(0.04) class135(0.04) class127(0.05) |
-| class134 | class187*(0.03) class138(0.03) class186*(0.03) class189*(0.03) class128(0.04) |
-| class135 | class133(0.04) class137(0.04) class4(0.05) class187*(0.05) class186*(0.05) |
-| class136 | class128(0.02) class164(0.02) class186*(0.03) class138(0.03) class189*(0.03) |
-| class137 | class133(0.03) class186*(0.03) class127(0.03) class4(0.03) class2(0.04) |
-| class138 | class189*(0.02) class128(0.02) class134(0.03) class136(0.03) class186*(0.03) |
-| class139 | class186*(0.05) class163(0.06) class48(0.06) class138(0.07) class1(0.07) |
-| class140 | class172(0.01) class18(0.02) class35(0.02) class12(0.02) class13(0.03) |
-| class141 | class31(0.09) class109(0.10) class93(0.10) class36(0.11) class117(0.13) |
-| class142 | class108(0.03) class158(0.07) class47(0.07) class110(0.10) class113(0.10) |
-| class143 | class184(0.01) class104(0.01) class45(0.02) class37(0.02) class9(0.03) |
-| class144 | class146(0.04) class85(0.08) class121(0.09) class153(0.11) class53(0.12) |
-| class145 | class124(0.03) class123(0.04) class0(0.06) class146(0.25) class144(0.37) |
-| class146 | class144(0.04) class85(0.10) class53(0.12) class153(0.13) class121(0.13) |
-| class147 | class119(0.06) class148(0.06) class94(0.06) class194*(0.07) class154(0.07) |
-| class148 | class93(0.05) class194*(0.06) class147(0.06) class31(0.08) class52(0.08) |
-| class149 | class178(0.06) class179(0.07) class150(0.07) class111(0.09) class159(0.10) |
-| class150 | class159(0.01) class103(0.02) class102(0.02) class101(0.04) class179(0.05) |
-| class151 | class152(0.03) class159(0.06) class150(0.08) class102(0.12) class149(0.13) |
-| class152 | class151(0.03) class159(0.07) class150(0.09) class111(0.09) class54(0.10) |
-| class153 | class188*(0.08) class147(0.09) class144(0.11) class121(0.12) class146(0.13) |
-| class154 | class185(0.02) class75(0.05) class61(0.06) class119(0.06) class94(0.07) |
-| class155 | class76(0.04) class60(0.06) class91(0.06) class71(0.06) class160(0.06) |
-| class156 | class26(0.05) class38(0.05) class76(0.05) class99(0.06) class66(0.06) |
-| class157 | class156(0.09) class99(0.11) class62(0.13) class164(0.14) class80(0.14) |
-| class158 | class47(0.05) class142(0.07) class120(0.07) class94(0.07) class108(0.08) |
-| class159 | class150(0.01) class102(0.03) class103(0.03) class101(0.06) class129(0.06) |
-| class160 | class170(0.03) class91(0.06) class106(0.06) class155(0.06) class81(0.07) |
-| class161 | class50(0.03) class19(0.04) class28(0.04) class23(0.05) class29(0.05) |
-| class162 | class2(0.02) class30(0.02) class172(0.03) class26(0.03) class42(0.03) |
-| class163 | class29(0.04) class1(0.04) class136(0.06) class139(0.06) class164(0.06) |
-| class164 | class128(0.02) class136(0.02) class189*(0.03) class76(0.04) class29(0.04) |
-| class165 | class87(0.00) class168(0.05) class118(0.05) class70(0.05) class63(0.06) |
-| class166 | class3(0.01) class181(0.02) class66(0.03) class34(0.03) class2(0.04) |
-| class167 | class5(0.06) class177(0.06) class99(0.07) class134(0.07) class195*(0.08) |
-| class168 | class118(0.02) class70(0.03) class63(0.04) class115(0.04) class87(0.04) |
-| class169 | class192*(0.04) class6(0.04) class191*(0.05) class129(0.06) class133(0.08) |
-| class170 | class160(0.03) class106(0.03) class97(0.04) class91(0.04) class79(0.05) |
-| class171 | class122(0.08) class81(0.09) class160(0.10) class72(0.10) class170(0.11) |
-| class172 | class140(0.01) class18(0.02) class12(0.02) class14(0.02) class35(0.02) |
-| class173 | class107(0.13) class108(0.13) class112(0.15) class84(0.16) class168(0.17) |
-| class174 | class175(0.04) class176(0.04) class79(0.04) class43(0.04) class78(0.05) |
-| class175 | class176(0.02) class78(0.03) class174(0.04) class11(0.04) class43(0.04) |
-| class176 | class175(0.02) class78(0.03) class174(0.04) class40(0.05) class11(0.06) |
-| class177 | class183(0.04) class62(0.05) class134(0.06) class167(0.06) class114(0.06) |
-| class178 | class179(0.01) class111(0.03) class55(0.03) class54(0.04) class101(0.05) |
-| class179 | class178(0.01) class55(0.02) class54(0.02) class111(0.03) class101(0.03) |
-| class180 | class114(0.06) class183(0.06) class72(0.07) class177(0.08) class128(0.09) |
-| class181 | class34(0.02) class166(0.02) class46(0.02) class172(0.03) class2(0.03) |
-| class182 | class125(0.05) class51(0.05) class49(0.06) class109(0.06) class183(0.07) |
-| class183 | class177(0.04) class125(0.04) class138(0.05) class134(0.06) class180(0.06) |
-| class184 | class143(0.01) class104(0.01) class9(0.02) class45(0.02) class7(0.03) |
-| class185 | class154(0.02) class61(0.05) class75(0.06) class119(0.06) class31(0.06) |
-| class186* | class187*(0.01) class4(0.02) class136(0.03) class134(0.03) class138(0.03) |
-| class187* | class4(0.01) class186*(0.01) class189*(0.02) class134(0.03) class128(0.03) |
-| class188* | class153(0.08) class147(0.13) class121(0.15) class119(0.15) class154(0.16) |
-| class189* | class128(0.02) class138(0.02) class187*(0.02) class164(0.03) class186*(0.03) |
-| class190* | class193*(0.05) class15(0.08) class17(0.09) class16(0.11) class64(0.15) |
-| class191* | class6(0.02) class65(0.03) class143(0.03) class2(0.04) class184(0.04) |
-| class192* | class169(0.04) class62(0.06) class191*(0.06) class186*(0.07) class139(0.07) |
-| class193* | class190*(0.05) class15(0.07) class17(0.11) class16(0.12) class64(0.16) |
-| class194* | class148(0.06) class119(0.07) class147(0.07) class94(0.07) class185(0.07) |
-| class195* | class167(0.08) class177(0.10) class5(0.13) class131(0.13) class132(0.14) |
+| AM General Hummer SUV 2000 | HUMMER H2 SUT Crew Cab 2009(0.05) Jeep Wrangler SUV 2012(0.06) HUMMER H3T Crew Cab 2010(0.14) Jeep Liberty SUV 2012(0.43) Ford F-450 Super Duty Crew Cab 2012(0.50) |
+| Acura RL Sedan 2012 | BMW M5 Sedan 2010(0.02) BMW ActiveHybrid 5 Sedan 2012(0.03) Suzuki Kizashi Sedan 2012(0.03) Audi S4 Sedan 2012(0.03) BMW M3 Coupe 2012(0.04) |
+| Acura TL Sedan 2012 | Mercedes-Benz SL-Class Coupe 2009(0.02) Acura TSX Sedan 2012(0.02) Acura ZDX Hatchback 2012(0.02) Porsche Panamera Sedan 2012(0.03) Chevrolet Cobalt SS 2010(0.03) |
+| Acura TL Type-S 2008 | Mitsubishi Lancer Sedan 2012(0.01) Bentley Continental Flying Spur Sedan 2007(0.03) Chevrolet Malibu Hybrid Sedan 2010(0.03) Audi A5 Coupe 2012(0.03) Cadillac CTS-V Sedan 2012(0.04) |
+| Acura TSX Sedan 2012 | Toyota Corolla Sedan 2012*(0.01) Toyota Camry Sedan 2012*(0.02) Acura TL Sedan 2012(0.02) Chevrolet Cobalt SS 2010(0.03) Hyundai Sonata Sedan 2012(0.03) |
+| Acura Integra Type R 2001 | Chevrolet Corvette Ron Fellows Edition Z06 2007(0.05) Nissan Leaf Hatchback 2012(0.06) Dodge Challenger SRT8 2011(0.06) Chevrolet Monte Carlo Coupe 2007(0.07) Chevrolet Cobalt SS 2010(0.08) |
+| Acura ZDX Hatchback 2012 | Acura TL Sedan 2012(0.02) Volkswagen Beetle Hatchback 2012*(0.02) Jaguar XK XKR 2012(0.03) Fisker Karma Sedan 2012(0.04) Tesla Model S Sedan 2012(0.04) |
+| Aston Martin V8 Vantage Convertible 2012 | Aston Martin Virage Convertible 2012(0.01) Chevrolet Camaro Convertible 2012(0.02) Aston Martin V8 Vantage Coupe 2012(0.02) Fisker Karma Sedan 2012(0.02) BMW Z4 Convertible 2012(0.02) |
+| Aston Martin V8 Vantage Coupe 2012 | BMW M6 Convertible 2010(0.01) Aston Martin V8 Vantage Convertible 2012(0.02) Audi TT Hatchback 2011(0.02) Aston Martin Virage Convertible 2012(0.02) Audi R8 Coupe 2012(0.02) |
+| Aston Martin Virage Convertible 2012 | Fisker Karma Sedan 2012(0.01) Aston Martin V8 Vantage Convertible 2012(0.01) Aston Martin V8 Vantage Coupe 2012(0.02) Tesla Model S Sedan 2012(0.02) BMW M6 Convertible 2010(0.02) |
+| Aston Martin Virage Coupe 2012 | Ferrari FF Coupe 2012(0.02) Ferrari California Convertible 2012(0.03) BMW Z4 Convertible 2012(0.03) Chevrolet Corvette ZR1 2012(0.04) Jaguar XK XKR 2012(0.04) |
+| Audi RS 4 Convertible 2008 | Audi S5 Convertible 2012(0.02) Bentley Continental Flying Spur Sedan 2007(0.02) Audi S4 Sedan 2007(0.02) Audi TTS Coupe 2012(0.03) Chrysler 300 SRT-8 2010(0.03) |
+| Audi A5 Coupe 2012 | Audi TT Hatchback 2011(0.01) Audi S5 Coupe 2012(0.01) Audi TTS Coupe 2012(0.01) BMW M3 Coupe 2012(0.01) Audi S4 Sedan 2012(0.02) |
+| Audi TTS Coupe 2012 | Audi A5 Coupe 2012(0.01) Audi S5 Coupe 2012(0.02) Audi TT Hatchback 2011(0.02) BMW M6 Convertible 2010(0.02) Audi S5 Convertible 2012(0.02) |
+| Audi R8 Coupe 2012 | Aston Martin V8 Vantage Coupe 2012(0.02) Porsche Panamera Sedan 2012(0.02) BMW M6 Convertible 2010(0.02) Fisker Karma Sedan 2012(0.02) Audi TT Hatchback 2011(0.02) |
+| Audi V8 Sedan 1994 | Audi 100 Wagon 1994(0.04) Audi 100 Sedan 1994(0.06) Volvo 240 Sedan 1993*(0.07) Volkswagen Golf Hatchback 1991*(0.08) Cadillac Escalade EXT Crew Cab 2007(0.14) |
+| Audi 100 Sedan 1994 | Audi 100 Wagon 1994(0.01) Audi V8 Sedan 1994(0.06) Volkswagen Golf Hatchback 1991*(0.11) Chevrolet Avalanche Crew Cab 2012(0.12) Volvo 240 Sedan 1993*(0.12) |
+| Audi 100 Wagon 1994 | Audi 100 Sedan 1994(0.01) Audi V8 Sedan 1994(0.04) Volkswagen Golf Hatchback 1991*(0.09) Volvo 240 Sedan 1993*(0.11) Cadillac Escalade EXT Crew Cab 2007(0.12) |
+| Audi TT Hatchback 2011 | Audi A5 Coupe 2012(0.01) Audi S5 Coupe 2012(0.01) BMW M3 Coupe 2012(0.01) Aston Martin V8 Vantage Coupe 2012(0.02) Porsche Panamera Sedan 2012(0.02) |
+| Audi S6 Sedan 2011 | Audi S4 Sedan 2007(0.03) Audi S4 Sedan 2012(0.04) Bentley Mulsanne Sedan 2011(0.04) Mercedes-Benz C-Class Sedan 2012(0.04) Chrysler 300 SRT-8 2010(0.04) |
+| Audi S5 Convertible 2012 | Audi S5 Coupe 2012(0.01) Audi RS 4 Convertible 2008(0.02) Audi TTS Coupe 2012(0.02) Audi S4 Sedan 2007(0.03) Bentley Continental Flying Spur Sedan 2007(0.03) |
+| Audi S5 Coupe 2012 | Audi A5 Coupe 2012(0.01) Audi S5 Convertible 2012(0.01) Audi TT Hatchback 2011(0.01) Audi S4 Sedan 2012(0.02) Audi TTS Coupe 2012(0.02) |
+| Audi S4 Sedan 2012 | Audi S5 Coupe 2012(0.02) Audi A5 Coupe 2012(0.02) Audi S4 Sedan 2007(0.02) BMW M5 Sedan 2010(0.03) BMW M3 Coupe 2012(0.03) |
+| Audi S4 Sedan 2007 | Bentley Continental Flying Spur Sedan 2007(0.02) Audi S4 Sedan 2012(0.02) Cadillac CTS-V Sedan 2012(0.02) Audi RS 4 Convertible 2008(0.02) Audi S5 Coupe 2012(0.02) |
+| Audi TT RS Coupe 2012 | BMW Z4 Convertible 2012(0.04) Audi TT Hatchback 2011(0.04) Aston Martin V8 Vantage Coupe 2012(0.04) Audi R8 Coupe 2012(0.04) Dodge Charger Sedan 2012(0.05) |
+| BMW ActiveHybrid 5 Sedan 2012 | BMW M5 Sedan 2010(0.01) BMW M3 Coupe 2012(0.03) Acura RL Sedan 2012(0.03) Suzuki Kizashi Sedan 2012(0.03) Audi S4 Sedan 2012(0.03) |
+| BMW 1 Series Convertible 2012 | BMW 6 Series Convertible 2007(0.01) Chrysler Crossfire Convertible 2008(0.03) Audi A5 Coupe 2012(0.03) Bentley Continental Flying Spur Sedan 2007(0.03) Mercedes-Benz SL-Class Coupe 2009(0.03) |
+| BMW 1 Series Coupe 2012 | BMW M3 Coupe 2012(0.04) Audi TT Hatchback 2011(0.04) BMW X6 SUV 2012(0.05) Bentley Continental GT Coupe 2012(0.05) Audi A5 Coupe 2012(0.05) |
+| BMW 3 Series Sedan 2012 | Cadillac CTS-V Sedan 2012(0.03) Audi S4 Sedan 2012(0.03) Audi TTS Coupe 2012(0.04) Mercedes-Benz C-Class Sedan 2012(0.04) Audi S5 Convertible 2012(0.04) |
+| BMW 3 Series Wagon 2012 | Mercedes-Benz E-Class Sedan 2012(0.04) Mercedes-Benz S-Class Sedan 2012(0.04) Chrysler PT Cruiser Convertible 2008(0.04) Mercedes-Benz C-Class Sedan 2012(0.05) Mitsubishi Lancer Sedan 2012(0.05) |
+| BMW 6 Series Convertible 2007 | Chrysler Crossfire Convertible 2008(0.01) BMW 1 Series Convertible 2012(0.01) Bentley Continental GT Coupe 2007(0.02) Mercedes-Benz SL-Class Coupe 2009(0.02) BMW M6 Convertible 2010(0.03) |
+| BMW X5 SUV 2007 | Ford Edge SUV 2012(0.05) Toyota Sequoia SUV 2012(0.06) Jeep Compass SUV 2012(0.08) Dodge Durango SUV 2012(0.08) Volvo XC90 SUV 2007*(0.08) |
+| BMW X6 SUV 2012 | Chevrolet HHR SS 2010(0.03) BMW 1 Series Coupe 2012(0.05) BMW 3 Series Sedan 2012(0.05) Acura RL Sedan 2012(0.06) Mercedes-Benz C-Class Sedan 2012(0.06) |
+| BMW M3 Coupe 2012 | Audi A5 Coupe 2012(0.01) Audi TT Hatchback 2011(0.01) BMW M5 Sedan 2010(0.02) Porsche Panamera Sedan 2012(0.02) Audi S5 Coupe 2012(0.03) |
+| BMW M5 Sedan 2010 | BMW ActiveHybrid 5 Sedan 2012(0.01) BMW M3 Coupe 2012(0.02) Suzuki Kizashi Sedan 2012(0.02) Acura RL Sedan 2012(0.02) Audi A5 Coupe 2012(0.02) |
+| BMW M6 Convertible 2010 | Bentley Continental GT Coupe 2007(0.01) Aston Martin V8 Vantage Coupe 2012(0.01) Porsche Panamera Sedan 2012(0.02) Aston Martin Virage Convertible 2012(0.02) Audi R8 Coupe 2012(0.02) |
+| BMW X3 SUV 2012 | Mercedes-Benz C-Class Sedan 2012(0.06) BMW 3 Series Wagon 2012(0.07) Dodge Caliber Wagon 2012(0.07) BMW X6 SUV 2012(0.08) Mercedes-Benz E-Class Sedan 2012(0.08) |
+| BMW Z4 Convertible 2012 | Aston Martin V8 Vantage Coupe 2012(0.02) Aston Martin V8 Vantage Convertible 2012(0.02) Audi R8 Coupe 2012(0.02) Jaguar XK XKR 2012(0.02) Chevrolet Camaro Convertible 2012(0.03) |
+| Bentley Continental Supersports Conv. Convertible 2012 | BMW M6 Convertible 2010(0.04) BMW 6 Series Convertible 2007(0.04) Bentley Continental GT Coupe 2007(0.04) BMW 1 Series Convertible 2012(0.04) Mercedes-Benz SL-Class Coupe 2009(0.04) |
+| Bentley Arnage Sedan 2009 | Chevrolet TrailBlazer SS 2009(0.10) Rolls-Royce Phantom Sedan 2012(0.10) Rolls-Royce Ghost Sedan 2012(0.13) Dodge Dakota Crew Cab 2010(0.14) Chrysler 300 SRT-8 2010(0.14) |
+| Bentley Mulsanne Sedan 2011 | Chrysler 300 SRT-8 2010(0.03) Audi S6 Sedan 2011(0.04) Audi S4 Sedan 2007(0.05) Rolls-Royce Phantom Sedan 2012(0.05) Audi RS 4 Convertible 2008(0.05) |
+| Bentley Continental GT Coupe 2012 | Bentley Continental GT Coupe 2007(0.02) BMW M6 Convertible 2010(0.02) Audi TT Hatchback 2011(0.03) Audi S5 Coupe 2012(0.03) Audi TTS Coupe 2012(0.03) |
+| Bentley Continental GT Coupe 2007 | BMW M6 Convertible 2010(0.01) BMW 6 Series Convertible 2007(0.02) Audi TTS Coupe 2012(0.02) Bentley Continental GT Coupe 2012(0.02) Aston Martin V8 Vantage Coupe 2012(0.03) |
+| Bentley Continental Flying Spur Sedan 2007 | Audi S4 Sedan 2007(0.02) Cadillac CTS-V Sedan 2012(0.02) Audi RS 4 Convertible 2008(0.02) Audi TTS Coupe 2012(0.02) Audi S5 Convertible 2012(0.03) |
+| Bugatti Veyron 16.4 Convertible 2009 | Bugatti Veyron 16.4 Coupe 2009(0.03) Tesla Model S Sedan 2012(0.03) Jaguar XK XKR 2012(0.04) Acura ZDX Hatchback 2012(0.04) Volkswagen Beetle Hatchback 2012*(0.05) |
+| Bugatti Veyron 16.4 Coupe 2009 | Fisker Karma Sedan 2012(0.01) Jaguar XK XKR 2012(0.02) Tesla Model S Sedan 2012(0.02) Aston Martin Virage Convertible 2012(0.02) Chevrolet Corvette ZR1 2012(0.03) |
+| Buick Regal GS 2012 | Suzuki Kizashi Sedan 2012(0.02) Buick Verano Sedan 2012(0.03) Acura TSX Sedan 2012(0.04) Acura TL Sedan 2012(0.04) BMW M5 Sedan 2010(0.04) |
+| Buick Rainier SUV 2007 | Chrysler Aspen SUV 2009(0.05) Mazda Tribute SUV 2011(0.05) Dodge Durango SUV 2007(0.06) GMC Acadia SUV 2012(0.07) Isuzu Ascender SUV 2008(0.07) |
+| Buick Verano Sedan 2012 | Buick Regal GS 2012(0.03) Suzuki Kizashi Sedan 2012(0.03) Porsche Panamera Sedan 2012(0.04) Hyundai Sonata Sedan 2012(0.04) Toyota Camry Sedan 2012*(0.04) |
+| Buick Enclave SUV 2012 | Cadillac SRX SUV 2012(0.04) Ford Edge SUV 2012(0.04) Suzuki SX4 Hatchback 2012(0.06) Honda Odyssey Minivan 2012(0.07) Chrysler Town and Country Minivan 2012(0.07) |
+| Cadillac CTS-V Sedan 2012 | Bentley Continental Flying Spur Sedan 2007(0.02) Audi S4 Sedan 2007(0.02) Audi TTS Coupe 2012(0.03) BMW 3 Series Sedan 2012(0.03) Audi S5 Coupe 2012(0.03) |
+| Cadillac SRX SUV 2012 | Buick Enclave SUV 2012(0.04) Ford Edge SUV 2012(0.04) Suzuki SX4 Hatchback 2012(0.05) Honda Odyssey Minivan 2012(0.06) Hyundai Elantra Touring Hatchback 2012(0.08) |
+| Cadillac Escalade EXT Crew Cab 2007 | GMC Yukon Hybrid SUV 2012(0.05) GMC Terrain SUV 2012(0.06) Chevrolet Avalanche Crew Cab 2012(0.06) Jeep Grand Cherokee SUV 2012(0.07) Volvo XC90 SUV 2007*(0.08) |
+| Chevrolet Silverado 1500 Hybrid Crew Cab 2012 | GMC Canyon Extended Cab 2012(0.04) Chevrolet Silverado 1500 Extended Cab 2012(0.05) Dodge Dakota Club Cab 2007(0.07) Dodge Ram Pickup 3500 Crew Cab 2010(0.09) Dodge Ram Pickup 3500 Quad Cab 2009(0.11) |
+| Chevrolet Corvette Convertible 2012 | Ford GT Coupe 2006(0.02) Ferrari California Convertible 2012(0.02) Chevrolet Corvette ZR1 2012(0.02) Spyker C8 Coupe 2009(0.02) Ferrari 458 Italia Convertible 2012(0.03) |
+| Chevrolet Corvette ZR1 2012 | Spyker C8 Coupe 2009(0.02) Chevrolet Corvette Convertible 2012(0.02) Chevrolet Camaro Convertible 2012(0.02) Ferrari FF Coupe 2012(0.03) Bugatti Veyron 16.4 Coupe 2009(0.03) |
+| Chevrolet Corvette Ron Fellows Edition Z06 2007 | Acura Integra Type R 2001(0.05) Bugatti Veyron 16.4 Convertible 2009(0.06) Dodge Challenger SRT8 2011(0.06) Nissan Leaf Hatchback 2012(0.08) Chevrolet Corvette Convertible 2012(0.09) |
+| Chevrolet Traverse SUV 2012 | Hyundai Veracruz SUV 2012(0.02) Honda Odyssey Minivan 2007(0.04) Hyundai Santa Fe SUV 2012(0.07) Hyundai Tucson SUV 2012(0.07) GMC Acadia SUV 2012(0.09) |
+| Chevrolet Camaro Convertible 2012 | Aston Martin V8 Vantage Convertible 2012(0.02) Chevrolet Corvette ZR1 2012(0.02) Dodge Charger SRT-8 2009(0.03) BMW Z4 Convertible 2012(0.03) Dodge Charger Sedan 2012(0.03) |
+| Chevrolet HHR SS 2010 | BMW X6 SUV 2012(0.03) BMW 1 Series Coupe 2012(0.08) BMW 3 Series Sedan 2012(0.09) BMW X3 SUV 2012(0.09) Dodge Magnum Wagon 2008(0.09) |
+| Chevrolet Impala Sedan 2007 | Chevrolet Monte Carlo Coupe 2007(0.02) Chevrolet Malibu Sedan 2007(0.03) Chrysler Sebring Convertible 2010(0.04) Honda Accord Sedan 2012(0.05) Hyundai Elantra Sedan 2007(0.06) |
+| Chevrolet Tahoe Hybrid SUV 2012 | Toyota Sequoia SUV 2012(0.05) Land Rover LR2 SUV 2012(0.06) GMC Yukon Hybrid SUV 2012(0.08) Chrysler Aspen SUV 2009(0.08) Mazda Tribute SUV 2011(0.10) |
+| Chevrolet Sonic Sedan 2012 | Volkswagen Golf Hatchback 2012*(0.05) Scion xD Hatchback 2012(0.05) Hyundai Elantra Touring Hatchback 2012(0.05) Toyota Camry Sedan 2012*(0.05) Chrysler PT Cruiser Convertible 2008(0.05) |
+| Chevrolet Express Cargo Van 2007 | Chevrolet Express Van 2007(0.01) GMC Savana Van 2012(0.01) Nissan NV Passenger Van 2012(0.04) Dodge Sprinter Cargo Van 2009(0.05) Mercedes-Benz Sprinter Van 2012(0.06) |
+| Chevrolet Avalanche Crew Cab 2012 | Cadillac Escalade EXT Crew Cab 2007(0.06) Jeep Grand Cherokee SUV 2012(0.08) GMC Yukon Hybrid SUV 2012(0.09) Dodge Durango SUV 2007(0.10) Chrysler Aspen SUV 2009(0.10) |
+| Chevrolet Cobalt SS 2010 | Volkswagen Beetle Hatchback 2012*(0.03) Acura TL Sedan 2012(0.03) Acura TSX Sedan 2012(0.03) Acura ZDX Hatchback 2012(0.04) Toyota Corolla Sedan 2012*(0.04) |
+| Chevrolet Malibu Hybrid Sedan 2010 | Chrysler Sebring Convertible 2010(0.02) Mitsubishi Lancer Sedan 2012(0.03) Acura TL Type-S 2008(0.03) Toyota Corolla Sedan 2012*(0.04) BMW 1 Series Convertible 2012(0.04) |
+| Chevrolet TrailBlazer SS 2009 | Dodge Dakota Crew Cab 2010(0.06) Bentley Arnage Sedan 2009(0.10) Cadillac Escalade EXT Crew Cab 2007(0.13) Jeep Compass SUV 2012(0.14) Land Rover Range Rover SUV 2012(0.15) |
+| Chevrolet Silverado 2500HD Regular Cab 2012 | Chevrolet Silverado 1500 Regular Cab 2012(0.06) Ford F-150 Regular Cab 2007(0.08) Ford F-150 Regular Cab 2012(0.09) Dodge Ram Pickup 3500 Quad Cab 2009(0.10) Ford Ranger SuperCab 2011(0.11) |
+| Chevrolet Silverado 1500 Classic Extended Cab 2007 | Ford Ranger SuperCab 2011(0.06) Ford F-150 Regular Cab 2007(0.06) Chevrolet Silverado 1500 Regular Cab 2012(0.07) Ford F-150 Regular Cab 2012(0.10) Dodge Ram Pickup 3500 Quad Cab 2009(0.11) |
+| Chevrolet Express Van 2007 | GMC Savana Van 2012(0.00) Chevrolet Express Cargo Van 2007(0.01) Ford E-Series Wagon Van 2012(0.03) Nissan NV Passenger Van 2012(0.03) Dodge Sprinter Cargo Van 2009(0.04) |
+| Chevrolet Monte Carlo Coupe 2007 | Chevrolet Impala Sedan 2007(0.02) Chrysler Sebring Convertible 2010(0.03) Nissan 240SX Coupe 1998(0.05) Chevrolet Cobalt SS 2010(0.05) Eagle Talon Hatchback 1998(0.05) |
+| Chevrolet Malibu Sedan 2007 | Ford Focus Sedan 2007(0.02) Chevrolet Impala Sedan 2007(0.03) Chevrolet Monte Carlo Coupe 2007(0.06) Daewoo Nubira Wagon 2002(0.06) Lincoln Town Car Sedan 2011(0.07) |
+| Chevrolet Silverado 1500 Extended Cab 2012 | Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.05) Dodge Dakota Club Cab 2007(0.08) GMC Canyon Extended Cab 2012(0.09) Dodge Ram Pickup 3500 Quad Cab 2009(0.13) Chevrolet Avalanche Crew Cab 2012(0.15) |
+| Chevrolet Silverado 1500 Regular Cab 2012 | Dodge Ram Pickup 3500 Quad Cab 2009(0.03) Ford Ranger SuperCab 2011(0.06) Chevrolet Silverado 2500HD Regular Cab 2012(0.06) Ford F-150 Regular Cab 2007(0.07) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.07) |
+| Chrysler Aspen SUV 2009 | Dodge Durango SUV 2007(0.04) Land Rover LR2 SUV 2012(0.05) Buick Rainier SUV 2007(0.05) Toyota Sequoia SUV 2012(0.06) Volvo XC90 SUV 2007*(0.07) |
+| Chrysler Sebring Convertible 2010 | Chevrolet Malibu Hybrid Sedan 2010(0.02) Honda Accord Sedan 2012(0.03) Chevrolet Monte Carlo Coupe 2007(0.03) Mercedes-Benz S-Class Sedan 2012(0.04) Chevrolet Impala Sedan 2007(0.04) |
+| Chrysler Town and Country Minivan 2012 | Honda Odyssey Minivan 2007(0.04) GMC Acadia SUV 2012(0.06) Hyundai Santa Fe SUV 2012(0.07) Buick Enclave SUV 2012(0.07) Suzuki SX4 Hatchback 2012(0.08) |
+| Chrysler 300 SRT-8 2010 | Bentley Mulsanne Sedan 2011(0.03) Rolls-Royce Ghost Sedan 2012(0.03) Rolls-Royce Phantom Sedan 2012(0.03) Bentley Continental Flying Spur Sedan 2007(0.03) Audi RS 4 Convertible 2008(0.03) |
+| Chrysler Crossfire Convertible 2008 | BMW 6 Series Convertible 2007(0.01) BMW 1 Series Convertible 2012(0.03) Bentley Continental Flying Spur Sedan 2007(0.03) Ford Mustang Convertible 2007(0.03) Bentley Continental GT Coupe 2007(0.04) |
+| Chrysler PT Cruiser Convertible 2008 | BMW 3 Series Wagon 2012(0.04) Mitsubishi Lancer Sedan 2012(0.05) Chevrolet Sonic Sedan 2012(0.05) Chevrolet Malibu Hybrid Sedan 2010(0.05) Bentley Continental Flying Spur Sedan 2007(0.06) |
+| Daewoo Nubira Wagon 2002 | Chevrolet Malibu Sedan 2007(0.06) Lincoln Town Car Sedan 2011(0.07) Mercedes-Benz 300-Class Convertible 1993(0.07) Chrysler PT Cruiser Convertible 2008(0.08) Dodge Magnum Wagon 2008(0.09) |
+| Dodge Caliber Wagon 2012 | BMW 3 Series Wagon 2012(0.07) Mercedes-Benz S-Class Sedan 2012(0.07) BMW X3 SUV 2012(0.07) Hyundai Elantra Touring Hatchback 2012(0.07) Honda Accord Sedan 2012(0.08) |
+| Dodge Caliber Wagon 2007 | Mercedes-Benz C-Class Sedan 2012(0.08) BMW X6 SUV 2012(0.08) Dodge Caliber Wagon 2012(0.08) BMW X3 SUV 2012(0.09) Chevrolet HHR SS 2010(0.10) |
+| Dodge Caravan Minivan 1997 | Ford Freestar Minivan 2007(0.06) Ram C/V Cargo Van Minivan 2012(0.16) Isuzu Ascender SUV 2008(0.16) Ford Expedition EL SUV 2009(0.18) Buick Rainier SUV 2007(0.18) |
+| Dodge Ram Pickup 3500 Crew Cab 2010 | GMC Canyon Extended Cab 2012(0.08) Jeep Patriot SUV 2012(0.08) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.09) Jeep Liberty SUV 2012(0.10) Chevrolet Silverado 1500 Regular Cab 2012(0.10) |
+| Dodge Ram Pickup 3500 Quad Cab 2009 | Chevrolet Silverado 1500 Regular Cab 2012(0.03) GMC Canyon Extended Cab 2012(0.06) Ford Ranger SuperCab 2011(0.07) Ford F-150 Regular Cab 2007(0.07) Dodge Dakota Club Cab 2007(0.09) |
+| Dodge Sprinter Cargo Van 2009 | Mercedes-Benz Sprinter Van 2012(0.00) GMC Savana Van 2012(0.04) Chevrolet Express Van 2007(0.04) Nissan NV Passenger Van 2012(0.04) Chevrolet Express Cargo Van 2007(0.05) |
+| Dodge Journey SUV 2012 | GMC Acadia SUV 2012(0.08) Chrysler Town and Country Minivan 2012(0.09) Hyundai Santa Fe SUV 2012(0.09) Buick Enclave SUV 2012(0.10) Buick Rainier SUV 2007(0.11) |
+| Dodge Dakota Crew Cab 2010 | Chevrolet TrailBlazer SS 2009(0.06) Bentley Arnage Sedan 2009(0.14) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.14) Audi V8 Sedan 1994(0.15) Cadillac Escalade EXT Crew Cab 2007(0.16) |
+| Dodge Dakota Club Cab 2007 | GMC Canyon Extended Cab 2012(0.05) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.07) Chevrolet Silverado 1500 Extended Cab 2012(0.08) Dodge Ram Pickup 3500 Quad Cab 2009(0.09) Chevrolet Silverado 1500 Regular Cab 2012(0.10) |
+| Dodge Magnum Wagon 2008 | Nissan 240SX Coupe 1998(0.04) Bentley Continental Flying Spur Sedan 2007(0.05) Ford Mustang Convertible 2007(0.05) Rolls-Royce Phantom Drophead Coupe Convertible 2012(0.06) Chrysler PT Cruiser Convertible 2008(0.06) |
+| Dodge Challenger SRT8 2011 | Chevrolet Camaro Convertible 2012(0.04) Ford GT Coupe 2006(0.05) Eagle Talon Hatchback 1998(0.05) Chevrolet Corvette ZR1 2012(0.06) Chevrolet Corvette Convertible 2012(0.06) |
+| Dodge Durango SUV 2012 | Jeep Compass SUV 2012(0.05) Ford Edge SUV 2012(0.06) Volvo XC90 SUV 2007*(0.07) BMW X5 SUV 2007(0.08) GMC Terrain SUV 2012(0.09) |
+| Dodge Durango SUV 2007 | Chrysler Aspen SUV 2009(0.04) Buick Rainier SUV 2007(0.06) Jeep Grand Cherokee SUV 2012(0.06) Land Rover LR2 SUV 2012(0.07) Volvo XC90 SUV 2007*(0.07) |
+| Dodge Charger Sedan 2012 | Chevrolet Camaro Convertible 2012(0.03) Chevrolet Corvette ZR1 2012(0.03) Dodge Charger SRT-8 2009(0.04) Audi TT RS Coupe 2012(0.05) BMW Z4 Convertible 2012(0.06) |
+| Dodge Charger SRT-8 2009 | Ford Mustang Convertible 2007(0.01) Chevrolet Camaro Convertible 2012(0.03) Dodge Charger Sedan 2012(0.04) Audi TTS Coupe 2012(0.04) Eagle Talon Hatchback 1998(0.05) |
+| Eagle Talon Hatchback 1998 | Ford Mustang Convertible 2007(0.04) Nissan 240SX Coupe 1998(0.04) Dodge Charger SRT-8 2009(0.05) Chevrolet Camaro Convertible 2012(0.05) Chevrolet Monte Carlo Coupe 2007(0.05) |
+| FIAT 500 Abarth 2012 | Dodge Charger Sedan 2012(0.08) Chevrolet HHR SS 2010(0.10) BMW X6 SUV 2012(0.10) Audi RS 4 Convertible 2008(0.11) Dodge Charger SRT-8 2009(0.11) |
+| FIAT 500 Convertible 2012 | MINI Cooper Roadster Convertible 2012(0.06) Nissan Leaf Hatchback 2012(0.07) Chevrolet Sonic Sedan 2012(0.07) Chevrolet Impala Sedan 2007(0.09) Acura Integra Type R 2001(0.09) |
+| Ferrari FF Coupe 2012 | Aston Martin Virage Coupe 2012(0.02) Chevrolet Corvette ZR1 2012(0.03) Ferrari California Convertible 2012(0.04) Jaguar XK XKR 2012(0.04) Bugatti Veyron 16.4 Coupe 2009(0.04) |
+| Ferrari California Convertible 2012 | Ferrari 458 Italia Coupe 2012(0.01) Ferrari 458 Italia Convertible 2012(0.01) Chevrolet Corvette Convertible 2012(0.02) Aston Martin Virage Coupe 2012(0.03) Spyker C8 Coupe 2009(0.03) |
+| Ferrari 458 Italia Convertible 2012 | Ferrari 458 Italia Coupe 2012(0.01) Ferrari California Convertible 2012(0.01) Lamborghini Aventador Coupe 2012(0.02) McLaren MP4-12C Coupe 2012(0.03) Chevrolet Corvette Convertible 2012(0.03) |
+| Ferrari 458 Italia Coupe 2012 | Ferrari 458 Italia Convertible 2012(0.01) Ferrari California Convertible 2012(0.01) Lamborghini Aventador Coupe 2012(0.02) McLaren MP4-12C Coupe 2012(0.03) Chevrolet Corvette Convertible 2012(0.03) |
+| Fisker Karma Sedan 2012 | Aston Martin Virage Convertible 2012(0.01) Jaguar XK XKR 2012(0.01) Tesla Model S Sedan 2012(0.01) Bugatti Veyron 16.4 Coupe 2009(0.01) Aston Martin V8 Vantage Convertible 2012(0.02) |
+| Ford F-450 Super Duty Crew Cab 2012 | Dodge Ram Pickup 3500 Crew Cab 2010(0.13) Chevrolet Silverado 1500 Regular Cab 2012(0.14) Chevrolet Silverado 2500HD Regular Cab 2012(0.16) Jeep Patriot SUV 2012(0.17) Jeep Liberty SUV 2012(0.18) |
+| Ford Mustang Convertible 2007 | Dodge Charger SRT-8 2009(0.01) Nissan 240SX Coupe 1998(0.03) Chrysler Crossfire Convertible 2008(0.03) BMW 6 Series Convertible 2007(0.04) Eagle Talon Hatchback 1998(0.04) |
+| Ford Freestar Minivan 2007 | Dodge Caravan Minivan 1997(0.06) Buick Rainier SUV 2007(0.08) Ford Expedition EL SUV 2009(0.12) Honda Odyssey Minivan 2007(0.12) Isuzu Ascender SUV 2008(0.12) |
+| Ford Expedition EL SUV 2009 | Isuzu Ascender SUV 2008(0.03) Mazda Tribute SUV 2011(0.08) Buick Rainier SUV 2007(0.09) Ford Freestar Minivan 2007(0.12) Ford F-150 Regular Cab 2007(0.13) |
+| Ford Edge SUV 2012 | Buick Enclave SUV 2012(0.04) Cadillac SRX SUV 2012(0.04) BMW X5 SUV 2007(0.05) Suzuki SX4 Hatchback 2012(0.06) Dodge Durango SUV 2012(0.06) |
+| Ford Ranger SuperCab 2011 | Chevrolet Silverado 1500 Classic Extended Cab 2007(0.06) Chevrolet Silverado 1500 Regular Cab 2012(0.06) Ford F-150 Regular Cab 2007(0.06) Dodge Ram Pickup 3500 Quad Cab 2009(0.07) Isuzu Ascender SUV 2008(0.10) |
+| Ford GT Coupe 2006 | Chevrolet Corvette Convertible 2012(0.02) Spyker C8 Coupe 2009(0.03) Spyker C8 Convertible 2009(0.03) Chevrolet Corvette ZR1 2012(0.03) Ferrari California Convertible 2012(0.04) |
+| Ford F-150 Regular Cab 2012 | Ford F-150 Regular Cab 2007(0.05) Nissan NV Passenger Van 2012(0.07) GMC Savana Van 2012(0.08) Chevrolet Express Cargo Van 2007(0.08) Chevrolet Express Van 2007(0.09) |
+| Ford F-150 Regular Cab 2007 | Ford F-150 Regular Cab 2012(0.05) Ford Ranger SuperCab 2011(0.06) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.06) Chevrolet Silverado 1500 Regular Cab 2012(0.07) Dodge Ram Pickup 3500 Quad Cab 2009(0.07) |
+| Ford Focus Sedan 2007 | Chevrolet Malibu Sedan 2007(0.02) Suzuki Aerio Sedan 2007(0.06) Scion xD Hatchback 2012(0.06) Chevrolet Impala Sedan 2007(0.06) Suzuki SX4 Sedan 2012(0.07) |
+| Ford E-Series Wagon Van 2012 | GMC Savana Van 2012(0.02) Chevrolet Express Van 2007(0.03) Nissan NV Passenger Van 2012(0.04) Chevrolet Express Cargo Van 2007(0.06) Dodge Sprinter Cargo Van 2009(0.06) |
+| Ford Fiesta Sedan 2012 | Hyundai Elantra Sedan 2007(0.05) Hyundai Tucson SUV 2012(0.06) Hyundai Sonata Hybrid Sedan 2012(0.09) Toyota Camry Sedan 2012*(0.09) Suzuki SX4 Sedan 2012(0.09) |
+| GMC Terrain SUV 2012 | GMC Yukon Hybrid SUV 2012(0.06) Cadillac Escalade EXT Crew Cab 2007(0.06) Dodge Caliber Wagon 2012(0.09) Volvo XC90 SUV 2007*(0.09) Dodge Durango SUV 2012(0.09) |
+| GMC Savana Van 2012 | Chevrolet Express Van 2007(0.00) Chevrolet Express Cargo Van 2007(0.01) Ford E-Series Wagon Van 2012(0.02) Nissan NV Passenger Van 2012(0.02) Dodge Sprinter Cargo Van 2009(0.04) |
+| GMC Yukon Hybrid SUV 2012 | Cadillac Escalade EXT Crew Cab 2007(0.05) Jeep Grand Cherokee SUV 2012(0.06) GMC Terrain SUV 2012(0.06) Toyota Sequoia SUV 2012(0.06) Land Rover LR2 SUV 2012(0.06) |
+| GMC Acadia SUV 2012 | Hyundai Santa Fe SUV 2012(0.04) Chrysler Town and Country Minivan 2012(0.06) Toyota Sequoia SUV 2012(0.07) Buick Rainier SUV 2007(0.07) Mazda Tribute SUV 2011(0.07) |
+| GMC Canyon Extended Cab 2012 | Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.04) Dodge Dakota Club Cab 2007(0.05) Dodge Ram Pickup 3500 Quad Cab 2009(0.06) Dodge Ram Pickup 3500 Crew Cab 2010(0.08) Chevrolet Silverado 1500 Regular Cab 2012(0.09) |
+| Geo Metro Convertible 1993 | Plymouth Neon Coupe 1999(0.08) Chevrolet Malibu Sedan 2007(0.12) Daewoo Nubira Wagon 2002(0.12) Ford Focus Sedan 2007(0.14) Mercedes-Benz 300-Class Convertible 1993(0.15) |
+| HUMMER H3T Crew Cab 2010 | HUMMER H2 SUT Crew Cab 2009(0.04) Jeep Wrangler SUV 2012(0.04) AM General Hummer SUV 2000(0.14) Jeep Liberty SUV 2012(0.16) Ford F-450 Super Duty Crew Cab 2012(0.21) |
+| HUMMER H2 SUT Crew Cab 2009 | Jeep Wrangler SUV 2012(0.03) HUMMER H3T Crew Cab 2010(0.04) AM General Hummer SUV 2000(0.05) Jeep Liberty SUV 2012(0.28) Ford F-450 Super Duty Crew Cab 2012(0.29) |
+| Honda Odyssey Minivan 2012 | Suzuki SX4 Sedan 2012(0.04) Suzuki SX4 Hatchback 2012(0.05) Cadillac SRX SUV 2012(0.06) Buick Enclave SUV 2012(0.07) Ford Edge SUV 2012(0.07) |
+| Honda Odyssey Minivan 2007 | Chrysler Town and Country Minivan 2012(0.04) Chevrolet Traverse SUV 2012(0.04) Hyundai Veracruz SUV 2012(0.08) Hyundai Santa Fe SUV 2012(0.09) Ford Focus Sedan 2007(0.09) |
+| Honda Accord Coupe 2012 | Hyundai Sonata Sedan 2012(0.03) BMW Z4 Convertible 2012(0.04) Audi R8 Coupe 2012(0.04) Chevrolet Cobalt SS 2010(0.04) Buick Verano Sedan 2012(0.05) |
+| Honda Accord Sedan 2012 | Volkswagen Golf Hatchback 2012*(0.02) Hyundai Genesis Sedan 2012(0.02) Mercedes-Benz S-Class Sedan 2012(0.02) Hyundai Elantra Touring Hatchback 2012(0.02) Toyota Corolla Sedan 2012*(0.03) |
+| Hyundai Veloster Hatchback 2012 | Ferrari FF Coupe 2012(0.04) Chevrolet Corvette Convertible 2012(0.05) Hyundai Sonata Hybrid Sedan 2012(0.05) Jaguar XK XKR 2012(0.05) Ferrari 458 Italia Coupe 2012(0.05) |
+| Hyundai Santa Fe SUV 2012 | GMC Acadia SUV 2012(0.04) Chevrolet Traverse SUV 2012(0.07) Chrysler Town and Country Minivan 2012(0.07) Suzuki SX4 Hatchback 2012(0.07) Dodge Journey SUV 2012(0.09) |
+| Hyundai Tucson SUV 2012 | Hyundai Veracruz SUV 2012(0.04) Ford Fiesta Sedan 2012(0.06) Chevrolet Traverse SUV 2012(0.07) Nissan Leaf Hatchback 2012(0.10) Scion xD Hatchback 2012(0.10) |
+| Hyundai Veracruz SUV 2012 | Chevrolet Traverse SUV 2012(0.02) Hyundai Tucson SUV 2012(0.04) Scion xD Hatchback 2012(0.07) Suzuki SX4 Sedan 2012(0.07) Honda Odyssey Minivan 2007(0.08) |
+| Hyundai Sonata Hybrid Sedan 2012 | Hyundai Sonata Sedan 2012(0.03) Toyota Camry Sedan 2012*(0.04) Acura TSX Sedan 2012(0.04) Hyundai Accent Sedan 2012(0.04) Honda Accord Coupe 2012(0.05) |
+| Hyundai Elantra Sedan 2007 | Toyota Corolla Sedan 2012*(0.03) Hyundai Elantra Touring Hatchback 2012(0.03) Toyota Camry Sedan 2012*(0.03) Volkswagen Golf Hatchback 2012*(0.03) Honda Accord Sedan 2012(0.04) |
+| Hyundai Accent Sedan 2012 | Hyundai Sonata Hybrid Sedan 2012(0.04) Hyundai Sonata Sedan 2012(0.04) Acura TSX Sedan 2012(0.05) Toyota Corolla Sedan 2012*(0.05) Toyota Camry Sedan 2012*(0.05) |
+| Hyundai Genesis Sedan 2012 | Honda Accord Sedan 2012(0.02) Mercedes-Benz S-Class Sedan 2012(0.02) Toyota Camry Sedan 2012*(0.03) Hyundai Elantra Touring Hatchback 2012(0.03) Volkswagen Golf Hatchback 2012*(0.03) |
+| Hyundai Sonata Sedan 2012 | Hyundai Sonata Hybrid Sedan 2012(0.03) Toyota Camry Sedan 2012*(0.03) Honda Accord Coupe 2012(0.03) Acura TSX Sedan 2012(0.03) Acura TL Sedan 2012(0.04) |
+| Hyundai Elantra Touring Hatchback 2012 | Volkswagen Golf Hatchback 2012*(0.02) Honda Accord Sedan 2012(0.02) Hyundai Elantra Sedan 2007(0.03) Hyundai Genesis Sedan 2012(0.03) Toyota Camry Sedan 2012*(0.03) |
+| Hyundai Azera Sedan 2012 | Toyota Camry Sedan 2012*(0.05) Mercedes-Benz E-Class Sedan 2012(0.06) Buick Verano Sedan 2012(0.06) Hyundai Elantra Touring Hatchback 2012(0.07) Acura RL Sedan 2012(0.07) |
+| Infiniti G Coupe IPL 2012 | Porsche Panamera Sedan 2012(0.01) Audi TT Hatchback 2011(0.02) BMW M6 Convertible 2010(0.02) Audi A5 Coupe 2012(0.02) Audi TTS Coupe 2012(0.03) |
+| Infiniti QX56 SUV 2011 | BMW X5 SUV 2007(0.09) Ford Edge SUV 2012(0.10) Dodge Durango SUV 2012(0.10) BMW X3 SUV 2012(0.11) GMC Terrain SUV 2012(0.13) |
+| Isuzu Ascender SUV 2008 | Ford Expedition EL SUV 2009(0.03) Mazda Tribute SUV 2011(0.07) Buick Rainier SUV 2007(0.07) Ford Ranger SuperCab 2011(0.10) Ford F-150 Regular Cab 2007(0.10) |
+| Jaguar XK XKR 2012 | Tesla Model S Sedan 2012(0.01) Fisker Karma Sedan 2012(0.01) Bugatti Veyron 16.4 Coupe 2009(0.02) BMW Z4 Convertible 2012(0.02) Aston Martin Virage Convertible 2012(0.03) |
+| Jeep Patriot SUV 2012 | Jeep Liberty SUV 2012(0.04) Dodge Ram Pickup 3500 Crew Cab 2010(0.08) GMC Canyon Extended Cab 2012(0.09) Land Rover Range Rover SUV 2012(0.11) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.12) |
+| Jeep Wrangler SUV 2012 | HUMMER H2 SUT Crew Cab 2009(0.03) HUMMER H3T Crew Cab 2010(0.04) AM General Hummer SUV 2000(0.06) Jeep Liberty SUV 2012(0.25) Jeep Patriot SUV 2012(0.37) |
+| Jeep Liberty SUV 2012 | Jeep Patriot SUV 2012(0.04) Dodge Ram Pickup 3500 Crew Cab 2010(0.10) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.12) Land Rover Range Rover SUV 2012(0.13) GMC Canyon Extended Cab 2012(0.13) |
+| Jeep Grand Cherokee SUV 2012 | GMC Yukon Hybrid SUV 2012(0.06) Jeep Compass SUV 2012(0.06) Dodge Durango SUV 2007(0.06) Volvo XC90 SUV 2007*(0.07) Land Rover LR2 SUV 2012(0.07) |
+| Jeep Compass SUV 2012 | Dodge Durango SUV 2012(0.05) Volvo XC90 SUV 2007*(0.06) Jeep Grand Cherokee SUV 2012(0.06) BMW X5 SUV 2007(0.08) Cadillac Escalade EXT Crew Cab 2007(0.08) |
+| Lamborghini Reventon Coupe 2008 | Spyker C8 Convertible 2009(0.06) Spyker C8 Coupe 2009(0.07) Lamborghini Aventador Coupe 2012(0.07) Ford GT Coupe 2006(0.09) McLaren MP4-12C Coupe 2012(0.10) |
+| Lamborghini Aventador Coupe 2012 | McLaren MP4-12C Coupe 2012(0.01) Ferrari 458 Italia Coupe 2012(0.02) Ferrari 458 Italia Convertible 2012(0.02) Ferrari California Convertible 2012(0.04) Spyker C8 Coupe 2009(0.05) |
+| Lamborghini Gallardo LP 570-4 Superleggera 2012 | Lamborghini Diablo Coupe 2001(0.03) McLaren MP4-12C Coupe 2012(0.06) Lamborghini Aventador Coupe 2012(0.08) Ferrari 458 Italia Convertible 2012(0.12) Lamborghini Reventon Coupe 2008(0.13) |
+| Lamborghini Diablo Coupe 2001 | Lamborghini Gallardo LP 570-4 Superleggera 2012(0.03) McLaren MP4-12C Coupe 2012(0.07) Lamborghini Aventador Coupe 2012(0.09) Ford GT Coupe 2006(0.09) Chevrolet Corvette Convertible 2012(0.10) |
+| Land Rover Range Rover SUV 2012 | Toyota 4Runner SUV 2012*(0.08) Jeep Grand Cherokee SUV 2012(0.09) Jeep Patriot SUV 2012(0.11) GMC Canyon Extended Cab 2012(0.12) Jeep Liberty SUV 2012(0.13) |
+| Land Rover LR2 SUV 2012 | Toyota Sequoia SUV 2012(0.02) Chrysler Aspen SUV 2009(0.05) Chevrolet Tahoe Hybrid SUV 2012(0.06) GMC Yukon Hybrid SUV 2012(0.06) Dodge Durango SUV 2007(0.07) |
+| Lincoln Town Car Sedan 2011 | Chrysler Sebring Convertible 2010(0.04) Chevrolet Impala Sedan 2007(0.06) Dodge Magnum Wagon 2008(0.06) Chevrolet Monte Carlo Coupe 2007(0.06) Mercedes-Benz 300-Class Convertible 1993(0.06) |
+| MINI Cooper Roadster Convertible 2012 | BMW 1 Series Convertible 2012(0.05) Bentley Continental Supersports Conv. Convertible 2012(0.05) Chrysler Sebring Convertible 2010(0.05) FIAT 500 Convertible 2012(0.06) Chevrolet Malibu Hybrid Sedan 2010(0.06) |
+| Maybach Landaulet Convertible 2012 | MINI Cooper Roadster Convertible 2012(0.09) FIAT 500 Convertible 2012(0.11) Chevrolet Sonic Sedan 2012(0.13) Mercedes-Benz S-Class Sedan 2012(0.14) Chrysler PT Cruiser Convertible 2008(0.14) |
+| Mazda Tribute SUV 2011 | Buick Rainier SUV 2007(0.05) Isuzu Ascender SUV 2008(0.07) GMC Acadia SUV 2012(0.07) Dodge Durango SUV 2007(0.07) Ford Expedition EL SUV 2009(0.08) |
+| McLaren MP4-12C Coupe 2012 | Lamborghini Aventador Coupe 2012(0.01) Ferrari 458 Italia Convertible 2012(0.03) Ferrari 458 Italia Coupe 2012(0.03) Ferrari California Convertible 2012(0.06) Hyundai Veloster Hatchback 2012(0.06) |
+| Mercedes-Benz 300-Class Convertible 1993 | Nissan 240SX Coupe 1998(0.03) Dodge Magnum Wagon 2008(0.06) Ford Mustang Convertible 2007(0.06) Lincoln Town Car Sedan 2011(0.06) Daewoo Nubira Wagon 2002(0.07) |
+| Mercedes-Benz C-Class Sedan 2012 | Cadillac CTS-V Sedan 2012(0.03) Audi S6 Sedan 2011(0.04) BMW 3 Series Sedan 2012(0.04) Audi S4 Sedan 2007(0.05) BMW 3 Series Wagon 2012(0.05) |
+| Mercedes-Benz SL-Class Coupe 2009 | Acura TL Sedan 2012(0.02) BMW 6 Series Convertible 2007(0.02) Porsche Panamera Sedan 2012(0.03) BMW 1 Series Convertible 2012(0.03) Bentley Continental GT Coupe 2007(0.03) |
+| Mercedes-Benz E-Class Sedan 2012 | BMW 3 Series Wagon 2012(0.04) Acura RL Sedan 2012(0.04) Hyundai Genesis Sedan 2012(0.06) Hyundai Azera Sedan 2012(0.06) Mercedes-Benz S-Class Sedan 2012(0.06) |
+| Mercedes-Benz S-Class Sedan 2012 | Honda Accord Sedan 2012(0.02) Hyundai Genesis Sedan 2012(0.02) Volkswagen Golf Hatchback 2012*(0.03) Chrysler Sebring Convertible 2010(0.04) BMW 3 Series Wagon 2012(0.04) |
+| Mercedes-Benz Sprinter Van 2012 | Dodge Sprinter Cargo Van 2009(0.00) Nissan NV Passenger Van 2012(0.05) GMC Savana Van 2012(0.05) Chevrolet Express Van 2007(0.05) Chevrolet Express Cargo Van 2007(0.06) |
+| Mitsubishi Lancer Sedan 2012 | Acura TL Type-S 2008(0.01) Suzuki Kizashi Sedan 2012(0.02) Chevrolet Malibu Hybrid Sedan 2010(0.03) BMW M5 Sedan 2010(0.03) Acura TL Sedan 2012(0.04) |
+| Nissan Leaf Hatchback 2012 | Acura Integra Type R 2001(0.06) Scion xD Hatchback 2012(0.06) FIAT 500 Convertible 2012(0.07) Hyundai Elantra Sedan 2007(0.07) smart fortwo Convertible 2012*(0.08) |
+| Nissan NV Passenger Van 2012 | GMC Savana Van 2012(0.02) Chevrolet Express Van 2007(0.03) Chevrolet Express Cargo Van 2007(0.04) Ford E-Series Wagon Van 2012(0.04) Dodge Sprinter Cargo Van 2009(0.04) |
+| Nissan Juke Hatchback 2012 | Volvo C30 Hatchback 2012*(0.04) Acura ZDX Hatchback 2012(0.04) Volkswagen Beetle Hatchback 2012*(0.05) Hyundai Veloster Hatchback 2012(0.06) Hyundai Sonata Hybrid Sedan 2012(0.08) |
+| Nissan 240SX Coupe 1998 | Mercedes-Benz 300-Class Convertible 1993(0.03) Ford Mustang Convertible 2007(0.03) Eagle Talon Hatchback 1998(0.04) Dodge Magnum Wagon 2008(0.04) Chrysler Crossfire Convertible 2008(0.05) |
+| Plymouth Neon Coupe 1999 | Geo Metro Convertible 1993(0.08) Daewoo Nubira Wagon 2002(0.09) Mercedes-Benz 300-Class Convertible 1993(0.10) Chevrolet Malibu Sedan 2007(0.10) Nissan 240SX Coupe 1998(0.11) |
+| Porsche Panamera Sedan 2012 | Infiniti G Coupe IPL 2012(0.01) Audi TT Hatchback 2011(0.02) Audi A5 Coupe 2012(0.02) Audi R8 Coupe 2012(0.02) BMW M6 Convertible 2010(0.02) |
+| Ram C/V Cargo Van Minivan 2012 | Ford Freestar Minivan 2007(0.13) Ford Expedition EL SUV 2009(0.13) Ford F-150 Regular Cab 2012(0.15) Dodge Caravan Minivan 1997(0.16) Nissan NV Passenger Van 2012(0.17) |
+| Rolls-Royce Phantom Drophead Coupe Convertible 2012 | Rolls-Royce Ghost Sedan 2012(0.04) Rolls-Royce Phantom Sedan 2012(0.04) Chrysler Crossfire Convertible 2008(0.04) Bentley Continental Flying Spur Sedan 2007(0.04) Chrysler 300 SRT-8 2010(0.05) |
+| Rolls-Royce Ghost Sedan 2012 | Rolls-Royce Phantom Sedan 2012(0.02) Chrysler 300 SRT-8 2010(0.03) Rolls-Royce Phantom Drophead Coupe Convertible 2012(0.04) Audi RS 4 Convertible 2008(0.04) Bentley Continental Flying Spur Sedan 2007(0.04) |
+| Rolls-Royce Phantom Sedan 2012 | Rolls-Royce Ghost Sedan 2012(0.02) Chrysler 300 SRT-8 2010(0.03) Rolls-Royce Phantom Drophead Coupe Convertible 2012(0.04) Bentley Mulsanne Sedan 2011(0.05) Audi RS 4 Convertible 2008(0.06) |
+| Scion xD Hatchback 2012 | Suzuki SX4 Sedan 2012(0.04) Chevrolet Sonic Sedan 2012(0.05) Hyundai Elantra Sedan 2007(0.06) Nissan Leaf Hatchback 2012(0.06) Ford Focus Sedan 2007(0.06) |
+| Spyker C8 Convertible 2009 | Spyker C8 Coupe 2009(0.01) Ford GT Coupe 2006(0.03) Chevrolet Corvette ZR1 2012(0.03) Chevrolet Corvette Convertible 2012(0.04) Ferrari California Convertible 2012(0.05) |
+| Spyker C8 Coupe 2009 | Spyker C8 Convertible 2009(0.01) Chevrolet Corvette ZR1 2012(0.02) Chevrolet Corvette Convertible 2012(0.02) Ford GT Coupe 2006(0.03) Ferrari California Convertible 2012(0.03) |
+| Suzuki Aerio Sedan 2007 | Ford Focus Sedan 2007(0.06) Suzuki SX4 Sedan 2012(0.06) Chevrolet Malibu Sedan 2007(0.07) Scion xD Hatchback 2012(0.08) Honda Accord Sedan 2012(0.09) |
+| Suzuki Kizashi Sedan 2012 | BMW M5 Sedan 2010(0.02) Mitsubishi Lancer Sedan 2012(0.02) Buick Regal GS 2012(0.02) Porsche Panamera Sedan 2012(0.03) Acura TL Sedan 2012(0.03) |
+| Suzuki SX4 Hatchback 2012 | Honda Odyssey Minivan 2012(0.05) Cadillac SRX SUV 2012(0.05) Buick Enclave SUV 2012(0.06) Ford Edge SUV 2012(0.06) Suzuki SX4 Sedan 2012(0.07) |
+| Suzuki SX4 Sedan 2012 | Scion xD Hatchback 2012(0.04) Honda Odyssey Minivan 2012(0.04) Hyundai Elantra Touring Hatchback 2012(0.05) Hyundai Elantra Sedan 2007(0.06) Suzuki Aerio Sedan 2007(0.06) |
+| Tesla Model S Sedan 2012 | Jaguar XK XKR 2012(0.01) Fisker Karma Sedan 2012(0.01) Aston Martin Virage Convertible 2012(0.02) Bugatti Veyron 16.4 Coupe 2009(0.02) Aston Martin V8 Vantage Convertible 2012(0.03) |
+| Toyota Sequoia SUV 2012 | Land Rover LR2 SUV 2012(0.02) Chevrolet Tahoe Hybrid SUV 2012(0.05) Chrysler Aspen SUV 2009(0.06) GMC Yukon Hybrid SUV 2012(0.06) BMW X5 SUV 2007(0.06) |
+| Toyota Camry Sedan 2012* | Toyota Corolla Sedan 2012*(0.01) Acura TSX Sedan 2012(0.02) Hyundai Genesis Sedan 2012(0.03) Hyundai Elantra Sedan 2007(0.03) Hyundai Elantra Touring Hatchback 2012(0.03) |
+| Toyota Corolla Sedan 2012* | Acura TSX Sedan 2012(0.01) Toyota Camry Sedan 2012*(0.01) Volkswagen Golf Hatchback 2012*(0.02) Hyundai Elantra Sedan 2007(0.03) Honda Accord Sedan 2012(0.03) |
+| Toyota 4Runner SUV 2012* | Land Rover Range Rover SUV 2012(0.08) Jeep Grand Cherokee SUV 2012(0.13) GMC Canyon Extended Cab 2012(0.15) GMC Yukon Hybrid SUV 2012(0.15) Land Rover LR2 SUV 2012(0.16) |
+| Volkswagen Golf Hatchback 2012* | Honda Accord Sedan 2012(0.02) Hyundai Elantra Touring Hatchback 2012(0.02) Toyota Corolla Sedan 2012*(0.02) Mercedes-Benz S-Class Sedan 2012(0.03) Toyota Camry Sedan 2012*(0.03) |
+| Volkswagen Golf Hatchback 1991* | Volvo 240 Sedan 1993*(0.05) Audi V8 Sedan 1994(0.08) Audi 100 Wagon 1994(0.09) Audi 100 Sedan 1994(0.11) Chevrolet Avalanche Crew Cab 2012(0.15) |
+| Volkswagen Beetle Hatchback 2012* | Acura ZDX Hatchback 2012(0.02) Chevrolet Cobalt SS 2010(0.03) Jaguar XK XKR 2012(0.03) Acura TL Sedan 2012(0.04) Tesla Model S Sedan 2012(0.04) |
+| Volvo C30 Hatchback 2012* | Nissan Juke Hatchback 2012(0.04) Chevrolet Sonic Sedan 2012(0.06) Volkswagen Beetle Hatchback 2012*(0.06) Toyota Camry Sedan 2012*(0.07) Hyundai Azera Sedan 2012(0.07) |
+| Volvo 240 Sedan 1993* | Volkswagen Golf Hatchback 1991*(0.05) Audi V8 Sedan 1994(0.07) Audi 100 Wagon 1994(0.11) Audi 100 Sedan 1994(0.12) Chevrolet Avalanche Crew Cab 2012(0.16) |
+| Volvo XC90 SUV 2007* | Jeep Compass SUV 2012(0.06) GMC Yukon Hybrid SUV 2012(0.07) Jeep Grand Cherokee SUV 2012(0.07) Dodge Durango SUV 2007(0.07) Toyota Sequoia SUV 2012(0.07) |
+| smart fortwo Convertible 2012* | Nissan Leaf Hatchback 2012(0.08) Scion xD Hatchback 2012(0.10) Acura Integra Type R 2001(0.13) Hyundai Tucson SUV 2012(0.13) Hyundai Veracruz SUV 2012(0.14) |
 
 ## supcon-ft-resnplm (concat)  [cars_lejepa]
 
+agree@1=0.418 agree@5=0.257 (chance 0.040)  dendro-purity=0.288  silhouette=-0.195  within/between=0.762
+
 
 | class | 5 nearest class centroids (cosine dist) |
 |---|---|
-| class0 | class124(0.10) class145(0.17) class123(0.24) class105(0.65) class146(0.75) |
-| class1 | class128(0.12) class4(0.16) class2(0.16) class3(0.17) class136(0.18) |
-| class2 | class4(0.12) class1(0.16) class6(0.19) class127(0.19) class3(0.20) |
-| class3 | class166(0.11) class1(0.17) class2(0.20) class128(0.24) class34(0.26) |
-| class4 | class2(0.12) class127(0.13) class189*(0.15) class187*(0.15) class186*(0.15) |
-| class5 | class170(0.21) class97(0.22) class71(0.23) class152(0.24) class171(0.28) |
-| class6 | class2(0.19) class133(0.22) class48(0.25) class137(0.26) class139(0.26) |
-| class7 | class8(0.04) class9(0.06) class35(0.09) class37(0.10) class104(0.12) |
-| class8 | class7(0.04) class9(0.07) class37(0.08) class35(0.10) class143(0.11) |
-| class9 | class7(0.06) class8(0.07) class104(0.09) class35(0.11) class143(0.16) |
-| class10 | class37(0.13) class143(0.16) class8(0.16) class101(0.19) class159(0.20) |
-| class11 | class20(0.08) class19(0.11) class23(0.15) class12(0.17) class22(0.18) |
-| class12 | class21(0.05) class18(0.05) class22(0.06) class13(0.07) class20(0.11) |
-| class13 | class18(0.04) class21(0.04) class12(0.07) class14(0.09) class22(0.11) |
-| class14 | class13(0.09) class18(0.11) class21(0.11) class24(0.14) class12(0.15) |
-| class15 | class16(0.03) class17(0.06) class190*(0.17) class193*(0.19) class160(0.23) |
-| class16 | class15(0.03) class17(0.04) class190*(0.17) class193*(0.21) class160(0.25) |
-| class17 | class16(0.04) class15(0.06) class190*(0.15) class160(0.24) class81(0.25) |
-| class18 | class13(0.04) class12(0.05) class21(0.05) class24(0.09) class22(0.10) |
-| class19 | class23(0.05) class22(0.07) class11(0.11) class12(0.11) class20(0.15) |
-| class20 | class11(0.08) class12(0.11) class18(0.11) class13(0.11) class21(0.11) |
-| class21 | class13(0.04) class12(0.05) class18(0.05) class22(0.09) class20(0.11) |
-| class22 | class12(0.06) class19(0.07) class21(0.09) class18(0.10) class13(0.11) |
-| class23 | class19(0.05) class22(0.11) class11(0.15) class12(0.16) class78(0.21) |
-| class24 | class18(0.09) class13(0.13) class14(0.14) class22(0.14) class21(0.16) |
-| class25 | class34(0.10) class29(0.17) class172(0.21) class140(0.22) class163(0.25) |
-| class26 | class27(0.12) class33(0.14) class28(0.17) class79(0.18) class30(0.19) |
-| class27 | class28(0.11) class33(0.11) class26(0.12) class34(0.21) class41(0.22) |
-| class28 | class27(0.11) class33(0.14) class29(0.14) class22(0.16) class26(0.17) |
-| class29 | class28(0.14) class34(0.15) class25(0.17) class163(0.20) class161(0.22) |
-| class30 | class35(0.12) class79(0.12) class162(0.17) class26(0.19) class7(0.22) |
-| class31 | class36(0.18) class194*(0.22) class120(0.23) class93(0.26) class82(0.27) |
-| class32 | class36(0.16) class192*(0.22) class27(0.24) class28(0.29) class59(0.33) |
-| class33 | class27(0.11) class28(0.14) class26(0.14) class34(0.15) class172(0.17) |
-| class34 | class25(0.10) class181(0.14) class29(0.15) class33(0.15) class140(0.16) |
-| class35 | class7(0.09) class8(0.10) class9(0.11) class30(0.12) class37(0.14) |
-| class36 | class32(0.16) class31(0.18) class141(0.19) class130(0.27) class80(0.28) |
-| class37 | class8(0.08) class7(0.10) class143(0.13) class10(0.13) class35(0.14) |
-| class38 | class156(0.15) class41(0.17) class44(0.20) class7(0.20) class35(0.21) |
-| class39 | class176(0.20) class40(0.20) class78(0.25) class43(0.32) class174(0.33) |
-| class40 | class43(0.12) class41(0.17) class176(0.18) class78(0.20) class39(0.20) |
-| class41 | class42(0.08) class43(0.15) class38(0.17) class40(0.17) class26(0.20) |
-| class42 | class41(0.08) class43(0.11) class35(0.17) class40(0.21) class172(0.21) |
-| class43 | class42(0.11) class40(0.12) class41(0.15) class79(0.27) class26(0.28) |
-| class44 | class45(0.12) class179(0.15) class56(0.16) class7(0.18) class38(0.20) |
-| class45 | class55(0.11) class104(0.11) class44(0.12) class7(0.14) class179(0.15) |
-| class46 | class181(0.13) class48(0.14) class140(0.20) class34(0.22) class139(0.22) |
-| class47 | class75(0.10) class94(0.11) class158(0.17) class194*(0.17) class77(0.19) |
-| class48 | class186*(0.09) class133(0.12) class181(0.12) class139(0.13) class46(0.14) |
-| class49 | class132(0.13) class57(0.19) class93(0.20) class141(0.23) class177(0.24) |
-| class50 | class21(0.20) class13(0.22) class23(0.24) class34(0.24) class12(0.25) |
-| class51 | class57(0.14) class125(0.14) class109(0.14) class132(0.22) class183(0.24) |
-| class52 | class119(0.08) class75(0.12) class94(0.12) class64(0.16) class117(0.16) |
-| class53 | class73(0.05) class68(0.08) class74(0.10) class86(0.11) class90(0.11) |
-| class54 | class55(0.10) class101(0.11) class102(0.12) class111(0.12) class150(0.17) |
-| class55 | class54(0.10) class45(0.11) class101(0.14) class179(0.14) class103(0.16) |
-| class56 | class44(0.16) class111(0.19) class55(0.20) class179(0.21) class54(0.21) |
-| class57 | class132(0.13) class51(0.14) class183(0.16) class182(0.18) class77(0.19) |
-| class58 | class92(0.12) class96(0.13) class95(0.14) class106(0.14) class54(0.20) |
-| class59 | class91(0.26) class80(0.28) class83(0.30) class32(0.33) class78(0.34) |
-| class60 | class72(0.06) class114(0.10) class71(0.10) class76(0.16) class180(0.16) |
-| class61 | class119(0.16) class142(0.17) class64(0.18) class188*(0.18) class108(0.19) |
-| class62 | class177(0.16) class192*(0.16) class181(0.19) class169(0.19) class167(0.19) |
-| class63 | class70(0.01) class118(0.04) class87(0.21) class115(0.24) class165(0.24) |
-| class64 | class52(0.16) class89(0.16) class61(0.18) class117(0.19) class142(0.20) |
-| class65 | class187*(0.23) class166(0.25) class191*(0.27) class192*(0.27) class66(0.31) |
-| class66 | class128(0.14) class138(0.15) class187*(0.18) class76(0.19) class189*(0.21) |
-| class67 | class153(0.20) class194*(0.22) class52(0.23) class119(0.26) class94(0.30) |
-| class68 | class73(0.07) class53(0.08) class74(0.10) class121(0.15) class86(0.16) |
-| class69 | class110(0.11) class53(0.13) class90(0.14) class73(0.17) class68(0.19) |
-| class70 | class63(0.01) class118(0.02) class87(0.18) class115(0.19) class165(0.22) |
-| class71 | class60(0.10) class72(0.11) class76(0.18) class97(0.20) class114(0.20) |
-| class72 | class60(0.06) class114(0.07) class71(0.11) class180(0.14) class155(0.17) |
-| class73 | class53(0.05) class68(0.07) class74(0.07) class90(0.10) class86(0.11) |
-| class74 | class73(0.07) class68(0.10) class53(0.10) class86(0.13) class113(0.14) |
-| class75 | class94(0.07) class47(0.10) class185(0.11) class52(0.12) class154(0.13) |
-| class76 | class60(0.16) class71(0.18) class66(0.19) class72(0.23) class128(0.24) |
-| class77 | class126(0.15) class47(0.19) class57(0.19) class173(0.22) class82(0.25) |
-| class78 | class176(0.15) class175(0.18) class40(0.20) class23(0.21) class91(0.23) |
-| class79 | class30(0.12) class26(0.18) class11(0.19) class35(0.20) class106(0.21) |
-| class80 | class141(0.21) class36(0.28) class59(0.28) class40(0.29) class99(0.30) |
-| class81 | class155(0.11) class180(0.16) class72(0.19) class160(0.22) class114(0.25) |
-| class82 | class83(0.07) class194*(0.17) class120(0.18) class47(0.24) class77(0.25) |
-| class83 | class82(0.07) class91(0.28) class194*(0.29) class59(0.30) class120(0.32) |
-| class84 | class107(0.14) class171(0.27) class114(0.31) class126(0.33) class122(0.38) |
-| class85 | class105(0.13) class112(0.17) class86(0.21) class53(0.23) class121(0.25) |
-| class86 | class73(0.11) class53(0.11) class74(0.13) class90(0.14) class121(0.14) |
-| class87 | class165(0.03) class70(0.18) class118(0.20) class63(0.21) class168(0.26) |
-| class88 | class109(0.17) class57(0.21) class93(0.22) class77(0.25) class147(0.26) |
-| class89 | class121(0.11) class90(0.14) class64(0.16) class53(0.16) class110(0.17) |
-| class90 | class110(0.09) class73(0.10) class53(0.11) class86(0.14) class89(0.14) |
-| class91 | class106(0.22) class78(0.23) class82(0.25) class59(0.26) class83(0.28) |
-| class92 | class58(0.12) class106(0.15) class111(0.17) class96(0.19) class54(0.26) |
-| class93 | class120(0.18) class141(0.18) class147(0.19) class148(0.19) class49(0.20) |
-| class94 | class75(0.07) class108(0.11) class47(0.11) class158(0.11) class154(0.12) |
-| class95 | class96(0.10) class58(0.14) class24(0.18) class106(0.20) class11(0.22) |
-| class96 | class106(0.06) class95(0.10) class58(0.13) class92(0.19) class11(0.23) |
-| class97 | class170(0.12) class71(0.20) class5(0.22) class171(0.22) class106(0.33) |
-| class98 | class169(0.32) class191*(0.32) class62(0.35) class192*(0.36) class43(0.41) |
-| class99 | class195*(0.23) class192*(0.24) class156(0.28) class80(0.30) class191*(0.30) |
-| class100 | class103(0.15) class101(0.17) class102(0.18) class104(0.18) class10(0.21) |
-| class101 | class102(0.03) class103(0.05) class150(0.11) class54(0.11) class55(0.14) |
-| class102 | class101(0.03) class103(0.03) class150(0.06) class159(0.09) class54(0.12) |
-| class103 | class102(0.03) class101(0.05) class150(0.06) class159(0.08) class100(0.15) |
-| class104 | class9(0.09) class45(0.11) class7(0.12) class8(0.13) class179(0.13) |
-| class105 | class85(0.13) class112(0.24) class115(0.24) class121(0.36) class86(0.37) |
-| class106 | class96(0.06) class58(0.14) class92(0.15) class95(0.20) class79(0.21) |
-| class107 | class84(0.14) class173(0.28) class126(0.28) class114(0.30) class47(0.31) |
-| class108 | class94(0.11) class142(0.13) class75(0.15) class61(0.19) class47(0.20) |
-| class109 | class51(0.14) class88(0.17) class57(0.21) class125(0.22) class130(0.23) |
-| class110 | class90(0.09) class69(0.11) class53(0.13) class86(0.15) class121(0.16) |
-| class111 | class54(0.12) class55(0.16) class92(0.17) class56(0.19) class102(0.21) |
-| class112 | class113(0.14) class85(0.17) class86(0.20) class68(0.20) class121(0.22) |
-| class113 | class112(0.14) class74(0.14) class86(0.14) class73(0.21) class121(0.22) |
-| class114 | class72(0.07) class180(0.10) class60(0.10) class126(0.14) class71(0.20) |
-| class115 | class118(0.12) class70(0.19) class168(0.20) class63(0.24) class105(0.24) |
-| class116 | class131(0.10) class186*(0.13) class134(0.17) class183(0.18) class187*(0.19) |
-| class117 | class188*(0.13) class147(0.14) class52(0.16) class119(0.18) class64(0.19) |
-| class118 | class70(0.02) class63(0.04) class115(0.12) class87(0.20) class168(0.22) |
-| class119 | class52(0.08) class94(0.14) class61(0.16) class185(0.16) class117(0.18) |
-| class120 | class147(0.12) class194*(0.15) class185(0.16) class93(0.18) class82(0.18) |
-| class121 | class89(0.11) class73(0.12) class53(0.12) class86(0.14) class68(0.15) |
-| class122 | class171(0.15) class160(0.20) class5(0.29) class190*(0.30) class17(0.30) |
-| class123 | class124(0.07) class145(0.09) class0(0.24) class146(0.35) class105(0.39) |
-| class124 | class123(0.07) class0(0.10) class145(0.10) class105(0.38) class146(0.52) |
-| class125 | class51(0.14) class183(0.14) class131(0.21) class132(0.21) class109(0.22) |
-| class126 | class114(0.14) class77(0.15) class180(0.17) class183(0.18) class57(0.20) |
-| class127 | class4(0.13) class135(0.15) class133(0.18) class186*(0.18) class2(0.19) |
-| class128 | class189*(0.10) class1(0.12) class136(0.13) class187*(0.14) class66(0.14) |
-| class129 | class133(0.21) class159(0.22) class10(0.23) class48(0.25) class143(0.25) |
-| class130 | class109(0.23) class120(0.26) class49(0.26) class36(0.27) class141(0.27) |
-| class131 | class116(0.10) class186*(0.18) class132(0.18) class183(0.20) class125(0.21) |
-| class132 | class57(0.13) class49(0.13) class131(0.18) class183(0.18) class182(0.20) |
-| class133 | class137(0.06) class135(0.10) class48(0.12) class186*(0.16) class139(0.17) |
-| class134 | class187*(0.10) class138(0.10) class116(0.17) class60(0.18) class128(0.18) |
-| class135 | class133(0.10) class48(0.14) class137(0.14) class127(0.15) class186*(0.15) |
-| class136 | class139(0.12) class128(0.13) class163(0.14) class164(0.15) class137(0.16) |
-| class137 | class133(0.06) class139(0.13) class135(0.14) class48(0.14) class136(0.16) |
-| class138 | class134(0.10) class128(0.15) class187*(0.15) class183(0.15) class66(0.15) |
-| class139 | class136(0.12) class48(0.13) class137(0.13) class133(0.17) class186*(0.18) |
-| class140 | class172(0.09) class184(0.14) class34(0.16) class21(0.18) class162(0.19) |
-| class141 | class93(0.18) class36(0.19) class80(0.21) class49(0.23) class130(0.27) |
-| class142 | class108(0.13) class61(0.17) class64(0.20) class94(0.23) class113(0.24) |
-| class143 | class8(0.11) class37(0.13) class172(0.14) class35(0.14) class184(0.15) |
-| class144 | class146(0.04) class188*(0.27) class153(0.30) class121(0.38) class86(0.39) |
-| class145 | class123(0.09) class124(0.10) class0(0.17) class146(0.36) class144(0.43) |
-| class146 | class144(0.04) class188*(0.31) class123(0.35) class145(0.36) class153(0.37) |
-| class147 | class185(0.10) class188*(0.12) class120(0.12) class148(0.13) class154(0.13) |
-| class148 | class147(0.13) class93(0.19) class154(0.22) class194*(0.23) class117(0.24) |
-| class149 | class45(0.21) class179(0.21) class150(0.23) class178(0.23) class111(0.25) |
-| class150 | class159(0.05) class103(0.06) class102(0.06) class101(0.11) class151(0.14) |
-| class151 | class150(0.14) class159(0.15) class152(0.19) class102(0.22) class103(0.25) |
-| class152 | class151(0.19) class54(0.23) class5(0.24) class111(0.28) class159(0.28) |
-| class153 | class194*(0.19) class67(0.20) class119(0.23) class188*(0.23) class154(0.23) |
-| class154 | class158(0.11) class194*(0.12) class94(0.12) class185(0.12) class75(0.13) |
-| class155 | class81(0.11) class72(0.17) class160(0.19) class71(0.21) class180(0.22) |
-| class156 | class38(0.15) class99(0.28) class26(0.30) class44(0.30) class174(0.36) |
-| class157 | class99(0.34) class174(0.35) class156(0.38) class43(0.39) class38(0.39) |
-| class158 | class154(0.11) class94(0.11) class185(0.13) class75(0.16) class47(0.17) |
-| class159 | class150(0.05) class103(0.08) class102(0.09) class101(0.15) class151(0.15) |
-| class160 | class155(0.19) class122(0.20) class170(0.20) class81(0.22) class171(0.22) |
-| class161 | class164(0.14) class163(0.15) class29(0.22) class28(0.24) class19(0.24) |
-| class162 | class35(0.16) class172(0.16) class30(0.17) class184(0.18) class140(0.19) |
-| class163 | class164(0.13) class136(0.14) class161(0.15) class34(0.18) class29(0.20) |
-| class164 | class163(0.13) class161(0.14) class136(0.15) class128(0.26) class50(0.28) |
-| class165 | class87(0.03) class70(0.22) class168(0.24) class63(0.24) class118(0.25) |
-| class166 | class3(0.11) class62(0.20) class181(0.20) class186*(0.23) class65(0.25) |
-| class167 | class169(0.18) class62(0.19) class116(0.21) class131(0.21) class186*(0.25) |
-| class168 | class115(0.20) class118(0.22) class165(0.24) class70(0.26) class87(0.26) |
-| class169 | class167(0.18) class62(0.19) class192*(0.26) class191*(0.27) class129(0.30) |
-| class170 | class97(0.12) class160(0.20) class5(0.21) class71(0.21) class171(0.21) |
-| class171 | class122(0.15) class170(0.21) class97(0.22) class160(0.22) class190*(0.24) |
-| class172 | class140(0.09) class143(0.14) class184(0.15) class35(0.15) class8(0.16) |
-| class173 | class77(0.22) class107(0.28) class126(0.33) class47(0.35) class57(0.35) |
-| class174 | class176(0.07) class175(0.12) class40(0.23) class106(0.25) class79(0.25) |
-| class175 | class176(0.07) class174(0.12) class78(0.18) class40(0.22) class106(0.32) |
-| class176 | class174(0.07) class175(0.07) class78(0.15) class40(0.18) class39(0.20) |
-| class177 | class62(0.16) class183(0.16) class182(0.17) class57(0.19) class132(0.22) |
-| class178 | class179(0.03) class55(0.16) class45(0.18) class104(0.19) class44(0.21) |
-| class179 | class178(0.03) class104(0.13) class55(0.14) class45(0.15) class44(0.15) |
-| class180 | class114(0.10) class72(0.14) class60(0.16) class81(0.16) class126(0.17) |
-| class181 | class48(0.12) class186*(0.12) class46(0.13) class34(0.14) class192*(0.16) |
-| class182 | class183(0.10) class177(0.17) class57(0.18) class132(0.20) class138(0.21) |
-| class183 | class182(0.10) class125(0.14) class138(0.15) class177(0.16) class57(0.16) |
-| class184 | class140(0.14) class104(0.14) class143(0.15) class172(0.15) class8(0.17) |
-| class185 | class147(0.10) class75(0.11) class154(0.12) class158(0.13) class94(0.13) |
-| class186* | class48(0.09) class181(0.12) class116(0.13) class187*(0.14) class128(0.15) |
-| class187* | class189*(0.09) class134(0.10) class128(0.14) class186*(0.14) class138(0.15) |
-| class188* | class147(0.12) class117(0.13) class185(0.15) class154(0.17) class61(0.18) |
-| class189* | class187*(0.09) class128(0.10) class4(0.15) class135(0.16) class138(0.17) |
-| class190* | class193*(0.09) class17(0.15) class16(0.17) class15(0.17) class171(0.24) |
-| class191* | class192*(0.18) class41(0.24) class42(0.24) class181(0.24) class33(0.25) |
-| class192* | class62(0.16) class181(0.16) class191*(0.18) class32(0.22) class99(0.24) |
-| class193* | class190*(0.09) class15(0.19) class16(0.21) class17(0.26) class160(0.31) |
-| class194* | class154(0.12) class75(0.14) class120(0.15) class185(0.15) class94(0.15) |
-| class195* | class99(0.23) class167(0.26) class62(0.33) class169(0.37) class177(0.40) |
+| AM General Hummer SUV 2000 | HUMMER H2 SUT Crew Cab 2009(0.10) Jeep Wrangler SUV 2012(0.17) HUMMER H3T Crew Cab 2010(0.24) Ford F-450 Super Duty Crew Cab 2012(0.65) Jeep Liberty SUV 2012(0.75) |
+| Acura RL Sedan 2012 | Honda Accord Sedan 2012(0.12) Acura TSX Sedan 2012(0.16) Acura TL Sedan 2012(0.16) Acura TL Type-S 2008(0.17) Hyundai Genesis Sedan 2012(0.18) |
+| Acura TL Sedan 2012 | Acura TSX Sedan 2012(0.12) Acura RL Sedan 2012(0.16) Acura ZDX Hatchback 2012(0.19) Honda Accord Coupe 2012(0.19) Acura TL Type-S 2008(0.20) |
+| Acura TL Type-S 2008 | Mitsubishi Lancer Sedan 2012(0.11) Acura RL Sedan 2012(0.17) Acura TL Sedan 2012(0.20) Honda Accord Sedan 2012(0.24) BMW M5 Sedan 2010(0.26) |
+| Acura TSX Sedan 2012 | Acura TL Sedan 2012(0.12) Honda Accord Coupe 2012(0.13) Volkswagen Golf Hatchback 2012*(0.15) Toyota Corolla Sedan 2012*(0.15) Toyota Camry Sedan 2012*(0.15) |
+| Acura Integra Type R 2001 | Nissan 240SX Coupe 1998(0.21) Eagle Talon Hatchback 1998(0.22) Chevrolet Monte Carlo Coupe 2007(0.23) Lamborghini Diablo Coupe 2001(0.24) Plymouth Neon Coupe 1999(0.28) |
+| Acura ZDX Hatchback 2012 | Acura TL Sedan 2012(0.19) Hyundai Sonata Hybrid Sedan 2012(0.22) Buick Verano Sedan 2012(0.25) Hyundai Sonata Sedan 2012(0.26) Hyundai Azera Sedan 2012(0.26) |
+| Aston Martin V8 Vantage Convertible 2012 | Aston Martin V8 Vantage Coupe 2012(0.04) Aston Martin Virage Convertible 2012(0.06) BMW M6 Convertible 2010(0.09) BMW Z4 Convertible 2012(0.10) Fisker Karma Sedan 2012(0.12) |
+| Aston Martin V8 Vantage Coupe 2012 | Aston Martin V8 Vantage Convertible 2012(0.04) Aston Martin Virage Convertible 2012(0.07) BMW Z4 Convertible 2012(0.08) BMW M6 Convertible 2010(0.10) Jaguar XK XKR 2012(0.11) |
+| Aston Martin Virage Convertible 2012 | Aston Martin V8 Vantage Convertible 2012(0.06) Aston Martin V8 Vantage Coupe 2012(0.07) Fisker Karma Sedan 2012(0.09) BMW M6 Convertible 2010(0.11) Jaguar XK XKR 2012(0.16) |
+| Aston Martin Virage Coupe 2012 | BMW Z4 Convertible 2012(0.13) Jaguar XK XKR 2012(0.16) Aston Martin V8 Vantage Coupe 2012(0.16) Ferrari California Convertible 2012(0.19) McLaren MP4-12C Coupe 2012(0.20) |
+| Audi RS 4 Convertible 2008 | Audi S5 Convertible 2012(0.08) Audi S6 Sedan 2011(0.11) Audi S4 Sedan 2007(0.15) Audi A5 Coupe 2012(0.17) Audi S4 Sedan 2012(0.18) |
+| Audi A5 Coupe 2012 | Audi S5 Coupe 2012(0.05) Audi TT Hatchback 2011(0.05) Audi S4 Sedan 2012(0.06) Audi TTS Coupe 2012(0.07) Audi S5 Convertible 2012(0.11) |
+| Audi TTS Coupe 2012 | Audi TT Hatchback 2011(0.04) Audi S5 Coupe 2012(0.04) Audi A5 Coupe 2012(0.07) Audi R8 Coupe 2012(0.09) Audi S4 Sedan 2012(0.11) |
+| Audi R8 Coupe 2012 | Audi TTS Coupe 2012(0.09) Audi TT Hatchback 2011(0.11) Audi S5 Coupe 2012(0.11) Audi TT RS Coupe 2012(0.14) Audi A5 Coupe 2012(0.15) |
+| Audi V8 Sedan 1994 | Audi 100 Sedan 1994(0.03) Audi 100 Wagon 1994(0.06) Volkswagen Golf Hatchback 1991*(0.17) Volvo 240 Sedan 1993*(0.19) Mercedes-Benz 300-Class Convertible 1993(0.23) |
+| Audi 100 Sedan 1994 | Audi V8 Sedan 1994(0.03) Audi 100 Wagon 1994(0.04) Volkswagen Golf Hatchback 1991*(0.17) Volvo 240 Sedan 1993*(0.21) Mercedes-Benz 300-Class Convertible 1993(0.25) |
+| Audi 100 Wagon 1994 | Audi 100 Sedan 1994(0.04) Audi V8 Sedan 1994(0.06) Volkswagen Golf Hatchback 1991*(0.15) Mercedes-Benz 300-Class Convertible 1993(0.24) Daewoo Nubira Wagon 2002(0.25) |
+| Audi TT Hatchback 2011 | Audi TTS Coupe 2012(0.04) Audi A5 Coupe 2012(0.05) Audi S5 Coupe 2012(0.05) Audi TT RS Coupe 2012(0.09) Audi S4 Sedan 2012(0.10) |
+| Audi S6 Sedan 2011 | Audi S4 Sedan 2007(0.05) Audi S4 Sedan 2012(0.07) Audi RS 4 Convertible 2008(0.11) Audi A5 Coupe 2012(0.11) Audi S5 Convertible 2012(0.15) |
+| Audi S5 Convertible 2012 | Audi RS 4 Convertible 2008(0.08) Audi A5 Coupe 2012(0.11) Audi TT Hatchback 2011(0.11) Audi TTS Coupe 2012(0.11) Audi S5 Coupe 2012(0.11) |
+| Audi S5 Coupe 2012 | Audi TTS Coupe 2012(0.04) Audi A5 Coupe 2012(0.05) Audi TT Hatchback 2011(0.05) Audi S4 Sedan 2012(0.09) Audi S5 Convertible 2012(0.11) |
+| Audi S4 Sedan 2012 | Audi A5 Coupe 2012(0.06) Audi S6 Sedan 2011(0.07) Audi S5 Coupe 2012(0.09) Audi TT Hatchback 2011(0.10) Audi TTS Coupe 2012(0.11) |
+| Audi S4 Sedan 2007 | Audi S6 Sedan 2011(0.05) Audi S4 Sedan 2012(0.11) Audi RS 4 Convertible 2008(0.15) Audi A5 Coupe 2012(0.16) Chrysler 300 SRT-8 2010(0.21) |
+| Audi TT RS Coupe 2012 | Audi TT Hatchback 2011(0.09) Audi TTS Coupe 2012(0.13) Audi R8 Coupe 2012(0.14) Audi S4 Sedan 2012(0.14) Audi S5 Coupe 2012(0.16) |
+| BMW ActiveHybrid 5 Sedan 2012 | BMW M5 Sedan 2010(0.10) BMW 3 Series Wagon 2012(0.17) Porsche Panamera Sedan 2012(0.21) Infiniti G Coupe IPL 2012(0.22) Mercedes-Benz E-Class Sedan 2012(0.25) |
+| BMW 1 Series Convertible 2012 | BMW 1 Series Coupe 2012(0.12) BMW M3 Coupe 2012(0.14) BMW 3 Series Sedan 2012(0.17) Chrysler Crossfire Convertible 2008(0.18) BMW 6 Series Convertible 2007(0.19) |
+| BMW 1 Series Coupe 2012 | BMW 3 Series Sedan 2012(0.11) BMW M3 Coupe 2012(0.11) BMW 1 Series Convertible 2012(0.12) BMW M5 Sedan 2010(0.21) Bentley Continental GT Coupe 2012(0.22) |
+| BMW 3 Series Sedan 2012 | BMW 1 Series Coupe 2012(0.11) BMW M3 Coupe 2012(0.14) BMW 3 Series Wagon 2012(0.14) Audi S4 Sedan 2012(0.16) BMW 1 Series Convertible 2012(0.17) |
+| BMW 3 Series Wagon 2012 | BMW 3 Series Sedan 2012(0.14) BMW M5 Sedan 2010(0.15) BMW ActiveHybrid 5 Sedan 2012(0.17) Mercedes-Benz E-Class Sedan 2012(0.20) Mercedes-Benz C-Class Sedan 2012(0.22) |
+| BMW 6 Series Convertible 2007 | BMW M6 Convertible 2010(0.12) Chrysler Crossfire Convertible 2008(0.12) Mercedes-Benz SL-Class Coupe 2009(0.17) BMW 1 Series Convertible 2012(0.19) Aston Martin V8 Vantage Convertible 2012(0.22) |
+| BMW X5 SUV 2007 | BMW X3 SUV 2012(0.18) Volvo XC90 SUV 2007*(0.22) GMC Acadia SUV 2012(0.23) Dodge Durango SUV 2012(0.26) Dodge Caliber Wagon 2012(0.27) |
+| BMW X6 SUV 2012 | BMW X3 SUV 2012(0.16) Volvo C30 Hatchback 2012*(0.22) BMW 1 Series Coupe 2012(0.24) BMW 3 Series Sedan 2012(0.29) Chevrolet HHR SS 2010(0.33) |
+| BMW M3 Coupe 2012 | BMW 1 Series Coupe 2012(0.11) BMW 3 Series Sedan 2012(0.14) BMW 1 Series Convertible 2012(0.14) BMW M5 Sedan 2010(0.15) Porsche Panamera Sedan 2012(0.17) |
+| BMW M5 Sedan 2010 | BMW ActiveHybrid 5 Sedan 2012(0.10) Suzuki Kizashi Sedan 2012(0.14) BMW 3 Series Wagon 2012(0.15) BMW M3 Coupe 2012(0.15) Infiniti G Coupe IPL 2012(0.16) |
+| BMW M6 Convertible 2010 | Aston Martin V8 Vantage Convertible 2012(0.09) Aston Martin V8 Vantage Coupe 2012(0.10) Aston Martin Virage Convertible 2012(0.11) BMW 6 Series Convertible 2007(0.12) BMW Z4 Convertible 2012(0.14) |
+| BMW X3 SUV 2012 | BMW X6 SUV 2012(0.16) BMW X5 SUV 2007(0.18) Infiniti QX56 SUV 2011(0.19) Hyundai Santa Fe SUV 2012(0.27) Chrysler PT Cruiser Convertible 2008(0.28) |
+| BMW Z4 Convertible 2012 | Aston Martin V8 Vantage Coupe 2012(0.08) Aston Martin V8 Vantage Convertible 2012(0.10) Jaguar XK XKR 2012(0.13) Aston Martin Virage Coupe 2012(0.13) BMW M6 Convertible 2010(0.14) |
+| Bentley Continental Supersports Conv. Convertible 2012 | MINI Cooper Roadster Convertible 2012(0.15) Bentley Continental GT Coupe 2012(0.17) Bugatti Veyron 16.4 Convertible 2009(0.20) Aston Martin V8 Vantage Convertible 2012(0.20) BMW M6 Convertible 2010(0.21) |
+| Bentley Arnage Sedan 2009 | Rolls-Royce Phantom Sedan 2012(0.20) Bentley Mulsanne Sedan 2011(0.20) Chrysler 300 SRT-8 2010(0.25) Bentley Continental Flying Spur Sedan 2007(0.32) Rolls-Royce Phantom Drophead Coupe Convertible 2012(0.33) |
+| Bentley Mulsanne Sedan 2011 | Bentley Continental Flying Spur Sedan 2007(0.12) Bentley Continental GT Coupe 2012(0.17) Rolls-Royce Phantom Sedan 2012(0.18) Chrysler 300 SRT-8 2010(0.20) Bentley Arnage Sedan 2009(0.20) |
+| Bentley Continental GT Coupe 2012 | Bentley Continental GT Coupe 2007(0.08) Bentley Continental Flying Spur Sedan 2007(0.15) Bentley Continental Supersports Conv. Convertible 2012(0.17) Bentley Mulsanne Sedan 2011(0.17) BMW 1 Series Convertible 2012(0.20) |
+| Bentley Continental GT Coupe 2007 | Bentley Continental GT Coupe 2012(0.08) Bentley Continental Flying Spur Sedan 2007(0.11) BMW M6 Convertible 2010(0.17) Bentley Mulsanne Sedan 2011(0.21) Porsche Panamera Sedan 2012(0.21) |
+| Bentley Continental Flying Spur Sedan 2007 | Bentley Continental GT Coupe 2007(0.11) Bentley Mulsanne Sedan 2011(0.12) Bentley Continental GT Coupe 2012(0.15) Chrysler Crossfire Convertible 2008(0.27) BMW 1 Series Convertible 2012(0.28) |
+| Bugatti Veyron 16.4 Convertible 2009 | Bugatti Veyron 16.4 Coupe 2009(0.12) Spyker C8 Coupe 2009(0.15) Chevrolet Corvette Ron Fellows Edition Z06 2007(0.16) Aston Martin V8 Vantage Convertible 2012(0.18) Bentley Continental Supersports Conv. Convertible 2012(0.20) |
+| Bugatti Veyron 16.4 Coupe 2009 | Chevrolet Corvette ZR1 2012(0.11) Fisker Karma Sedan 2012(0.11) Bugatti Veyron 16.4 Convertible 2009(0.12) Aston Martin V8 Vantage Convertible 2012(0.14) Spyker C8 Coupe 2009(0.15) |
+| Buick Regal GS 2012 | Suzuki Kizashi Sedan 2012(0.13) Buick Verano Sedan 2012(0.14) Infiniti G Coupe IPL 2012(0.20) BMW M5 Sedan 2010(0.22) Hyundai Azera Sedan 2012(0.22) |
+| Buick Rainier SUV 2007 | Chrysler Aspen SUV 2009(0.10) Dodge Durango SUV 2007(0.11) Mazda Tribute SUV 2011(0.17) Volvo XC90 SUV 2007*(0.17) Chrysler Town and Country Minivan 2012(0.19) |
+| Buick Verano Sedan 2012 | Toyota Camry Sedan 2012*(0.09) Hyundai Sonata Hybrid Sedan 2012(0.12) Suzuki Kizashi Sedan 2012(0.12) Hyundai Azera Sedan 2012(0.13) Buick Regal GS 2012(0.14) |
+| Buick Enclave SUV 2012 | Hyundai Veracruz SUV 2012(0.13) Chevrolet Traverse SUV 2012(0.19) Dodge Durango SUV 2012(0.20) Infiniti QX56 SUV 2011(0.23) Scion xD Hatchback 2012(0.24) |
+| Cadillac CTS-V Sedan 2012 | Audi S5 Coupe 2012(0.20) Audi TTS Coupe 2012(0.22) Audi S4 Sedan 2007(0.24) BMW M5 Sedan 2010(0.24) Audi A5 Coupe 2012(0.25) |
+| Cadillac SRX SUV 2012 | Chevrolet Traverse SUV 2012(0.14) Honda Odyssey Minivan 2012(0.14) Ford Edge SUV 2012(0.14) Hyundai Veracruz SUV 2012(0.22) Suzuki SX4 Sedan 2012(0.24) |
+| Cadillac Escalade EXT Crew Cab 2007 | GMC Yukon Hybrid SUV 2012(0.08) Chrysler Aspen SUV 2009(0.12) Dodge Durango SUV 2007(0.12) Chevrolet Avalanche Crew Cab 2012(0.16) GMC Terrain SUV 2012(0.16) |
+| Chevrolet Silverado 1500 Hybrid Crew Cab 2012 | Chevrolet Silverado 1500 Extended Cab 2012(0.05) Chevrolet Silverado 2500HD Regular Cab 2012(0.08) Chevrolet Silverado 1500 Regular Cab 2012(0.10) Dodge Ram Pickup 3500 Quad Cab 2009(0.11) Dodge Dakota Club Cab 2007(0.11) |
+| Chevrolet Corvette Convertible 2012 | Chevrolet Corvette ZR1 2012(0.10) Ferrari California Convertible 2012(0.11) Ferrari 458 Italia Convertible 2012(0.12) Ford GT Coupe 2006(0.12) Lamborghini Aventador Coupe 2012(0.17) |
+| Chevrolet Corvette ZR1 2012 | Chevrolet Corvette Convertible 2012(0.10) Bugatti Veyron 16.4 Coupe 2009(0.11) Ferrari California Convertible 2012(0.14) Spyker C8 Coupe 2009(0.14) Ferrari 458 Italia Coupe 2012(0.16) |
+| Chevrolet Corvette Ron Fellows Edition Z06 2007 | Bugatti Veyron 16.4 Convertible 2009(0.16) Ford GT Coupe 2006(0.19) Chevrolet Corvette ZR1 2012(0.20) Spyker C8 Coupe 2009(0.21) Chevrolet Corvette Convertible 2012(0.21) |
+| Chevrolet Traverse SUV 2012 | Hyundai Veracruz SUV 2012(0.13) Cadillac SRX SUV 2012(0.14) Suzuki SX4 Sedan 2012(0.16) Suzuki SX4 Hatchback 2012(0.18) Chrysler Town and Country Minivan 2012(0.19) |
+| Chevrolet Camaro Convertible 2012 | Dodge Challenger SRT8 2011(0.12) Dodge Charger SRT-8 2009(0.13) Dodge Charger Sedan 2012(0.14) Ford Mustang Convertible 2007(0.14) Chevrolet Corvette Convertible 2012(0.20) |
+| Chevrolet HHR SS 2010 | Dodge Magnum Wagon 2008(0.26) Chrysler PT Cruiser Convertible 2008(0.28) Dodge Caliber Wagon 2007(0.30) BMW X6 SUV 2012(0.33) Chrysler 300 SRT-8 2010(0.34) |
+| Chevrolet Impala Sedan 2007 | Chevrolet Malibu Sedan 2007(0.06) Ford Focus Sedan 2007(0.10) Chevrolet Monte Carlo Coupe 2007(0.10) Chrysler Sebring Convertible 2010(0.16) Suzuki Aerio Sedan 2007(0.16) |
+| Chevrolet Tahoe Hybrid SUV 2012 | GMC Yukon Hybrid SUV 2012(0.16) Isuzu Ascender SUV 2008(0.17) Chevrolet Avalanche Crew Cab 2012(0.18) Toyota 4Runner SUV 2012*(0.18) Ford Expedition EL SUV 2009(0.19) |
+| Chevrolet Sonic Sedan 2012 | Scion xD Hatchback 2012(0.16) Volvo C30 Hatchback 2012*(0.16) Suzuki Kizashi Sedan 2012(0.19) Nissan Juke Hatchback 2012(0.19) Nissan Leaf Hatchback 2012(0.19) |
+| Chevrolet Express Cargo Van 2007 | Chevrolet Express Van 2007(0.01) GMC Savana Van 2012(0.04) Dodge Sprinter Cargo Van 2009(0.21) Ford E-Series Wagon Van 2012(0.24) Mercedes-Benz Sprinter Van 2012(0.24) |
+| Chevrolet Avalanche Crew Cab 2012 | Cadillac Escalade EXT Crew Cab 2007(0.16) Dodge Dakota Crew Cab 2010(0.16) Chevrolet Tahoe Hybrid SUV 2012(0.18) GMC Terrain SUV 2012(0.19) Isuzu Ascender SUV 2008(0.20) |
+| Chevrolet Cobalt SS 2010 | Toyota Corolla Sedan 2012*(0.23) Mitsubishi Lancer Sedan 2012(0.25) Volkswagen Beetle Hatchback 2012*(0.27) Volvo C30 Hatchback 2012*(0.27) Chevrolet Malibu Hybrid Sedan 2010(0.31) |
+| Chevrolet Malibu Hybrid Sedan 2010 | Honda Accord Sedan 2012(0.14) Hyundai Elantra Touring Hatchback 2012(0.15) Toyota Corolla Sedan 2012*(0.18) Chrysler Sebring Convertible 2010(0.19) Volkswagen Golf Hatchback 2012*(0.21) |
+| Chevrolet TrailBlazer SS 2009 | Land Rover Range Rover SUV 2012(0.20) Volvo XC90 SUV 2007*(0.22) Cadillac Escalade EXT Crew Cab 2007(0.23) GMC Yukon Hybrid SUV 2012(0.26) Dodge Durango SUV 2007(0.30) |
+| Chevrolet Silverado 2500HD Regular Cab 2012 | Chevrolet Silverado 1500 Extended Cab 2012(0.07) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.08) Chevrolet Silverado 1500 Regular Cab 2012(0.10) GMC Canyon Extended Cab 2012(0.15) Dodge Ram Pickup 3500 Quad Cab 2009(0.16) |
+| Chevrolet Silverado 1500 Classic Extended Cab 2007 | Ford Ranger SuperCab 2011(0.11) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.13) Dodge Dakota Club Cab 2007(0.14) Chevrolet Silverado 1500 Extended Cab 2012(0.17) Chevrolet Silverado 2500HD Regular Cab 2012(0.19) |
+| Chevrolet Express Van 2007 | Chevrolet Express Cargo Van 2007(0.01) GMC Savana Van 2012(0.02) Dodge Sprinter Cargo Van 2009(0.18) Ford E-Series Wagon Van 2012(0.19) Mercedes-Benz Sprinter Van 2012(0.22) |
+| Chevrolet Monte Carlo Coupe 2007 | Chevrolet Impala Sedan 2007(0.10) Chevrolet Malibu Sedan 2007(0.11) Chrysler Sebring Convertible 2010(0.18) Eagle Talon Hatchback 1998(0.20) Ford Focus Sedan 2007(0.20) |
+| Chevrolet Malibu Sedan 2007 | Chevrolet Impala Sedan 2007(0.06) Ford Focus Sedan 2007(0.07) Chevrolet Monte Carlo Coupe 2007(0.11) Suzuki Aerio Sedan 2007(0.14) Lincoln Town Car Sedan 2011(0.17) |
+| Chevrolet Silverado 1500 Extended Cab 2012 | Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.05) Chevrolet Silverado 2500HD Regular Cab 2012(0.07) Chevrolet Silverado 1500 Regular Cab 2012(0.07) Dodge Dakota Club Cab 2007(0.10) Dodge Ram Pickup 3500 Quad Cab 2009(0.11) |
+| Chevrolet Silverado 1500 Regular Cab 2012 | Chevrolet Silverado 1500 Extended Cab 2012(0.07) Chevrolet Silverado 2500HD Regular Cab 2012(0.10) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.10) Dodge Ram Pickup 3500 Quad Cab 2009(0.13) Ford F-150 Regular Cab 2007(0.14) |
+| Chrysler Aspen SUV 2009 | Dodge Durango SUV 2007(0.07) Buick Rainier SUV 2007(0.10) Toyota Sequoia SUV 2012(0.11) Cadillac Escalade EXT Crew Cab 2007(0.12) Land Rover LR2 SUV 2012(0.13) |
+| Chrysler Sebring Convertible 2010 | Chevrolet Impala Sedan 2007(0.16) Chevrolet Monte Carlo Coupe 2007(0.18) Chevrolet Malibu Hybrid Sedan 2010(0.19) Chevrolet Malibu Sedan 2007(0.23) Honda Accord Sedan 2012(0.24) |
+| Chrysler Town and Country Minivan 2012 | Honda Odyssey Minivan 2007(0.15) Buick Rainier SUV 2007(0.19) Chevrolet Traverse SUV 2012(0.19) Ram C/V Cargo Van Minivan 2012(0.22) Dodge Caliber Wagon 2012(0.25) |
+| Chrysler 300 SRT-8 2010 | Rolls-Royce Phantom Sedan 2012(0.15) Rolls-Royce Ghost Sedan 2012(0.18) Bentley Mulsanne Sedan 2011(0.20) Audi S4 Sedan 2007(0.21) Dodge Magnum Wagon 2008(0.23) |
+| Chrysler Crossfire Convertible 2008 | BMW 6 Series Convertible 2007(0.12) BMW 1 Series Convertible 2012(0.18) Audi RS 4 Convertible 2008(0.19) BMW M6 Convertible 2010(0.20) Ford Mustang Convertible 2007(0.21) |
+| Chrysler PT Cruiser Convertible 2008 | Infiniti QX56 SUV 2011(0.21) BMW X3 SUV 2012(0.28) Chevrolet HHR SS 2010(0.28) Bentley Mulsanne Sedan 2011(0.29) FIAT 500 Convertible 2012(0.30) |
+| Daewoo Nubira Wagon 2002 | Lincoln Town Car Sedan 2011(0.11) Suzuki Aerio Sedan 2007(0.16) Chevrolet Malibu Sedan 2007(0.19) Mercedes-Benz 300-Class Convertible 1993(0.22) Ford Focus Sedan 2007(0.25) |
+| Dodge Caliber Wagon 2012 | Dodge Caliber Wagon 2007(0.07) Volvo XC90 SUV 2007*(0.17) GMC Acadia SUV 2012(0.18) Buick Rainier SUV 2007(0.24) Chrysler Town and Country Minivan 2012(0.25) |
+| Dodge Caliber Wagon 2007 | Dodge Caliber Wagon 2012(0.07) Dodge Magnum Wagon 2008(0.28) Volvo XC90 SUV 2007*(0.29) Chevrolet HHR SS 2010(0.30) GMC Acadia SUV 2012(0.32) |
+| Dodge Caravan Minivan 1997 | Ford Freestar Minivan 2007(0.14) Plymouth Neon Coupe 1999(0.27) Ford Focus Sedan 2007(0.31) Honda Odyssey Minivan 2007(0.33) Geo Metro Convertible 1993(0.38) |
+| Dodge Ram Pickup 3500 Crew Cab 2010 | Ford F-450 Super Duty Crew Cab 2012(0.13) Ford F-150 Regular Cab 2012(0.17) Dodge Ram Pickup 3500 Quad Cab 2009(0.21) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.23) GMC Canyon Extended Cab 2012(0.25) |
+| Dodge Ram Pickup 3500 Quad Cab 2009 | Chevrolet Silverado 1500 Extended Cab 2012(0.11) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.11) Chevrolet Silverado 1500 Regular Cab 2012(0.13) Dodge Dakota Club Cab 2007(0.14) GMC Canyon Extended Cab 2012(0.14) |
+| Dodge Sprinter Cargo Van 2009 | Mercedes-Benz Sprinter Van 2012(0.03) Chevrolet Express Van 2007(0.18) GMC Savana Van 2012(0.20) Chevrolet Express Cargo Van 2007(0.21) Nissan NV Passenger Van 2012(0.26) |
+| Dodge Journey SUV 2012 | Ford Edge SUV 2012(0.17) Chevrolet Traverse SUV 2012(0.21) Dodge Durango SUV 2012(0.22) Chrysler Town and Country Minivan 2012(0.25) Jeep Grand Cherokee SUV 2012(0.26) |
+| Dodge Dakota Crew Cab 2010 | GMC Canyon Extended Cab 2012(0.11) Dodge Dakota Club Cab 2007(0.14) Chevrolet Avalanche Crew Cab 2012(0.16) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.16) Ford Ranger SuperCab 2011(0.17) |
+| Dodge Dakota Club Cab 2007 | Ford Ranger SuperCab 2011(0.09) Chevrolet Silverado 1500 Extended Cab 2012(0.10) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.11) Dodge Ram Pickup 3500 Quad Cab 2009(0.14) Dodge Dakota Crew Cab 2010(0.14) |
+| Dodge Magnum Wagon 2008 | Ford Mustang Convertible 2007(0.22) Chrysler 300 SRT-8 2010(0.23) Dodge Caliber Wagon 2012(0.25) Chevrolet HHR SS 2010(0.26) Dodge Caliber Wagon 2007(0.28) |
+| Dodge Challenger SRT8 2011 | Chevrolet Camaro Convertible 2012(0.12) Ford Mustang Convertible 2007(0.15) Ford GT Coupe 2006(0.17) Dodge Charger SRT-8 2009(0.19) Chevrolet Corvette Convertible 2012(0.26) |
+| Dodge Durango SUV 2012 | GMC Acadia SUV 2012(0.18) Infiniti QX56 SUV 2011(0.18) Jeep Grand Cherokee SUV 2012(0.19) Jeep Compass SUV 2012(0.19) Buick Enclave SUV 2012(0.20) |
+| Dodge Durango SUV 2007 | Chrysler Aspen SUV 2009(0.07) Ford Expedition EL SUV 2009(0.11) Buick Rainier SUV 2007(0.11) Mazda Tribute SUV 2011(0.11) Land Rover LR2 SUV 2012(0.12) |
+| Dodge Charger Sedan 2012 | Dodge Charger SRT-8 2009(0.10) Chevrolet Camaro Convertible 2012(0.14) Audi TT RS Coupe 2012(0.18) Ford Mustang Convertible 2007(0.20) Audi RS 4 Convertible 2008(0.22) |
+| Dodge Charger SRT-8 2009 | Ford Mustang Convertible 2007(0.06) Dodge Charger Sedan 2012(0.10) Chevrolet Camaro Convertible 2012(0.13) Dodge Challenger SRT8 2011(0.19) Audi RS 4 Convertible 2008(0.23) |
+| Eagle Talon Hatchback 1998 | Nissan 240SX Coupe 1998(0.12) Chevrolet Monte Carlo Coupe 2007(0.20) Acura Integra Type R 2001(0.22) Plymouth Neon Coupe 1999(0.22) Ford Mustang Convertible 2007(0.33) |
+| FIAT 500 Abarth 2012 | Nissan Juke Hatchback 2012(0.32) Volkswagen Beetle Hatchback 2012*(0.32) Chevrolet Sonic Sedan 2012(0.35) Volvo C30 Hatchback 2012*(0.36) Bentley Continental Flying Spur Sedan 2007(0.41) |
+| FIAT 500 Convertible 2012 | smart fortwo Convertible 2012*(0.23) Volvo C30 Hatchback 2012*(0.24) MINI Cooper Roadster Convertible 2012(0.28) Chrysler PT Cruiser Convertible 2008(0.30) Volkswagen Beetle Hatchback 2012*(0.30) |
+| Ferrari FF Coupe 2012 | Ferrari 458 Italia Coupe 2012(0.15) Ferrari California Convertible 2012(0.17) Ferrari 458 Italia Convertible 2012(0.18) Fisker Karma Sedan 2012(0.18) Aston Martin Virage Coupe 2012(0.21) |
+| Ferrari California Convertible 2012 | Ferrari 458 Italia Convertible 2012(0.03) Ferrari 458 Italia Coupe 2012(0.05) Lamborghini Aventador Coupe 2012(0.11) Chevrolet Corvette Convertible 2012(0.11) Chevrolet Corvette ZR1 2012(0.14) |
+| Ferrari 458 Italia Convertible 2012 | Ferrari California Convertible 2012(0.03) Ferrari 458 Italia Coupe 2012(0.03) Lamborghini Aventador Coupe 2012(0.06) McLaren MP4-12C Coupe 2012(0.09) Chevrolet Corvette Convertible 2012(0.12) |
+| Ferrari 458 Italia Coupe 2012 | Ferrari 458 Italia Convertible 2012(0.03) Ferrari California Convertible 2012(0.05) Lamborghini Aventador Coupe 2012(0.06) McLaren MP4-12C Coupe 2012(0.08) Ferrari FF Coupe 2012(0.15) |
+| Fisker Karma Sedan 2012 | Aston Martin Virage Convertible 2012(0.09) Bugatti Veyron 16.4 Coupe 2009(0.11) Aston Martin V8 Vantage Convertible 2012(0.12) Aston Martin V8 Vantage Coupe 2012(0.13) Spyker C8 Coupe 2009(0.13) |
+| Ford F-450 Super Duty Crew Cab 2012 | Dodge Ram Pickup 3500 Crew Cab 2010(0.13) Ford F-150 Regular Cab 2012(0.24) Ford E-Series Wagon Van 2012(0.24) GMC Canyon Extended Cab 2012(0.36) Dodge Ram Pickup 3500 Quad Cab 2009(0.37) |
+| Ford Mustang Convertible 2007 | Dodge Charger SRT-8 2009(0.06) Chevrolet Camaro Convertible 2012(0.14) Dodge Challenger SRT8 2011(0.15) Dodge Charger Sedan 2012(0.20) Chrysler Crossfire Convertible 2008(0.21) |
+| Ford Freestar Minivan 2007 | Dodge Caravan Minivan 1997(0.14) Ram C/V Cargo Van Minivan 2012(0.28) Honda Odyssey Minivan 2007(0.28) Ford Focus Sedan 2007(0.30) Buick Rainier SUV 2007(0.31) |
+| Ford Expedition EL SUV 2009 | Dodge Durango SUV 2007(0.11) Isuzu Ascender SUV 2008(0.13) Chrysler Aspen SUV 2009(0.15) Chevrolet Tahoe Hybrid SUV 2012(0.19) Buick Rainier SUV 2007(0.20) |
+| Ford Edge SUV 2012 | Cadillac SRX SUV 2012(0.14) Dodge Journey SUV 2012(0.17) Chevrolet Traverse SUV 2012(0.21) Honda Odyssey Minivan 2012(0.22) Hyundai Santa Fe SUV 2012(0.23) |
+| Ford Ranger SuperCab 2011 | Dodge Dakota Club Cab 2007(0.09) Chevrolet Silverado 1500 Classic Extended Cab 2007(0.11) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.13) Dodge Ram Pickup 3500 Quad Cab 2009(0.15) GMC Canyon Extended Cab 2012(0.16) |
+| Ford GT Coupe 2006 | Chevrolet Corvette Convertible 2012(0.12) Chevrolet Corvette ZR1 2012(0.16) Dodge Challenger SRT8 2011(0.17) Chevrolet Corvette Ron Fellows Edition Z06 2007(0.19) Ferrari 458 Italia Convertible 2012(0.21) |
+| Ford F-150 Regular Cab 2012 | Ford F-150 Regular Cab 2007(0.14) Dodge Ram Pickup 3500 Crew Cab 2010(0.17) Dodge Ram Pickup 3500 Quad Cab 2009(0.20) Chevrolet Silverado 2500HD Regular Cab 2012(0.20) GMC Canyon Extended Cab 2012(0.22) |
+| Ford F-150 Regular Cab 2007 | Ford F-150 Regular Cab 2012(0.14) Chevrolet Silverado 1500 Regular Cab 2012(0.14) Dodge Ram Pickup 3500 Quad Cab 2009(0.14) Chevrolet Silverado 1500 Extended Cab 2012(0.21) GMC Canyon Extended Cab 2012(0.22) |
+| Ford Focus Sedan 2007 | Chevrolet Malibu Sedan 2007(0.07) Suzuki Aerio Sedan 2007(0.10) Chevrolet Impala Sedan 2007(0.10) Honda Odyssey Minivan 2007(0.14) Chevrolet Monte Carlo Coupe 2007(0.20) |
+| Ford E-Series Wagon Van 2012 | GMC Savana Van 2012(0.12) Chevrolet Express Van 2007(0.19) Nissan NV Passenger Van 2012(0.20) Chevrolet Express Cargo Van 2007(0.24) Ford F-450 Super Duty Crew Cab 2012(0.24) |
+| Ford Fiesta Sedan 2012 | Hyundai Tucson SUV 2012(0.10) Toyota Camry Sedan 2012*(0.13) Hyundai Elantra Sedan 2007(0.17) Suzuki SX4 Sedan 2012(0.18) Toyota Corolla Sedan 2012*(0.19) |
+| GMC Terrain SUV 2012 | Toyota 4Runner SUV 2012*(0.13) Jeep Grand Cherokee SUV 2012(0.14) Cadillac Escalade EXT Crew Cab 2007(0.16) GMC Yukon Hybrid SUV 2012(0.18) Chevrolet Avalanche Crew Cab 2012(0.19) |
+| GMC Savana Van 2012 | Chevrolet Express Van 2007(0.02) Chevrolet Express Cargo Van 2007(0.04) Ford E-Series Wagon Van 2012(0.12) Dodge Sprinter Cargo Van 2009(0.20) Nissan NV Passenger Van 2012(0.22) |
+| GMC Yukon Hybrid SUV 2012 | Cadillac Escalade EXT Crew Cab 2007(0.08) Dodge Durango SUV 2007(0.14) Chevrolet Tahoe Hybrid SUV 2012(0.16) Toyota Sequoia SUV 2012(0.16) GMC Terrain SUV 2012(0.18) |
+| GMC Acadia SUV 2012 | Jeep Grand Cherokee SUV 2012(0.12) Volvo XC90 SUV 2007*(0.15) Toyota Sequoia SUV 2012(0.16) Dodge Durango SUV 2012(0.18) Dodge Caliber Wagon 2012(0.18) |
+| GMC Canyon Extended Cab 2012 | Dodge Dakota Crew Cab 2010(0.11) Chevrolet Silverado 1500 Extended Cab 2012(0.12) Chevrolet Silverado 1500 Hybrid Crew Cab 2012(0.12) Dodge Ram Pickup 3500 Quad Cab 2009(0.14) Chevrolet Silverado 2500HD Regular Cab 2012(0.15) |
+| Geo Metro Convertible 1993 | Plymouth Neon Coupe 1999(0.15) Mercedes-Benz 300-Class Convertible 1993(0.20) Acura Integra Type R 2001(0.29) Volkswagen Golf Hatchback 1991*(0.30) Audi 100 Wagon 1994(0.30) |
+| HUMMER H3T Crew Cab 2010 | HUMMER H2 SUT Crew Cab 2009(0.07) Jeep Wrangler SUV 2012(0.09) AM General Hummer SUV 2000(0.24) Jeep Liberty SUV 2012(0.35) Ford F-450 Super Duty Crew Cab 2012(0.39) |
+| HUMMER H2 SUT Crew Cab 2009 | HUMMER H3T Crew Cab 2010(0.07) AM General Hummer SUV 2000(0.10) Jeep Wrangler SUV 2012(0.10) Ford F-450 Super Duty Crew Cab 2012(0.38) Jeep Liberty SUV 2012(0.52) |
+| Honda Odyssey Minivan 2012 | Cadillac SRX SUV 2012(0.14) Suzuki SX4 Sedan 2012(0.14) Hyundai Tucson SUV 2012(0.21) Hyundai Veracruz SUV 2012(0.21) Ford Edge SUV 2012(0.22) |
+| Honda Odyssey Minivan 2007 | Ford Focus Sedan 2007(0.14) Chrysler Town and Country Minivan 2012(0.15) Suzuki Aerio Sedan 2007(0.17) Suzuki SX4 Sedan 2012(0.18) Chevrolet Traverse SUV 2012(0.20) |
+| Honda Accord Coupe 2012 | Acura TSX Sedan 2012(0.13) Hyundai Accent Sedan 2012(0.15) Hyundai Sonata Hybrid Sedan 2012(0.18) Toyota Camry Sedan 2012*(0.18) Acura TL Sedan 2012(0.19) |
+| Honda Accord Sedan 2012 | Volkswagen Golf Hatchback 2012*(0.10) Acura RL Sedan 2012(0.12) Hyundai Genesis Sedan 2012(0.13) Toyota Corolla Sedan 2012*(0.14) Chevrolet Malibu Hybrid Sedan 2010(0.14) |
+| Hyundai Veloster Hatchback 2012 | Hyundai Sonata Hybrid Sedan 2012(0.21) McLaren MP4-12C Coupe 2012(0.22) Aston Martin Virage Coupe 2012(0.23) Buick Verano Sedan 2012(0.25) Jaguar XK XKR 2012(0.25) |
+| Hyundai Santa Fe SUV 2012 | Ford Edge SUV 2012(0.23) GMC Acadia SUV 2012(0.26) Buick Enclave SUV 2012(0.26) BMW X3 SUV 2012(0.27) Infiniti QX56 SUV 2011(0.27) |
+| Hyundai Tucson SUV 2012 | Ford Fiesta Sedan 2012(0.10) Toyota Camry Sedan 2012*(0.18) Hyundai Veracruz SUV 2012(0.18) Suzuki SX4 Sedan 2012(0.20) Honda Odyssey Minivan 2012(0.21) |
+| Hyundai Veracruz SUV 2012 | Chevrolet Traverse SUV 2012(0.13) Buick Enclave SUV 2012(0.13) Hyundai Tucson SUV 2012(0.18) Suzuki SX4 Sedan 2012(0.18) Suzuki SX4 Hatchback 2012(0.20) |
+| Hyundai Sonata Hybrid Sedan 2012 | Hyundai Sonata Sedan 2012(0.06) Hyundai Accent Sedan 2012(0.10) Buick Verano Sedan 2012(0.12) Toyota Camry Sedan 2012*(0.16) Hyundai Azera Sedan 2012(0.17) |
+| Hyundai Elantra Sedan 2007 | Toyota Corolla Sedan 2012*(0.10) Hyundai Elantra Touring Hatchback 2012(0.10) Ford Fiesta Sedan 2012(0.17) Chevrolet Impala Sedan 2007(0.18) Honda Accord Sedan 2012(0.18) |
+| Hyundai Accent Sedan 2012 | Hyundai Sonata Hybrid Sedan 2012(0.10) Buick Verano Sedan 2012(0.14) Hyundai Sonata Sedan 2012(0.14) Honda Accord Coupe 2012(0.15) Toyota Camry Sedan 2012*(0.15) |
+| Hyundai Genesis Sedan 2012 | Hyundai Azera Sedan 2012(0.12) Honda Accord Sedan 2012(0.13) Mercedes-Benz E-Class Sedan 2012(0.14) Mercedes-Benz S-Class Sedan 2012(0.15) Hyundai Sonata Sedan 2012(0.16) |
+| Hyundai Sonata Sedan 2012 | Hyundai Sonata Hybrid Sedan 2012(0.06) Hyundai Azera Sedan 2012(0.13) Hyundai Accent Sedan 2012(0.14) Buick Verano Sedan 2012(0.14) Hyundai Genesis Sedan 2012(0.16) |
+| Hyundai Elantra Touring Hatchback 2012 | Hyundai Elantra Sedan 2007(0.10) Honda Accord Sedan 2012(0.15) Toyota Corolla Sedan 2012*(0.15) Suzuki SX4 Sedan 2012(0.15) Chevrolet Malibu Hybrid Sedan 2010(0.15) |
+| Hyundai Azera Sedan 2012 | Hyundai Genesis Sedan 2012(0.12) Buick Verano Sedan 2012(0.13) Hyundai Sonata Sedan 2012(0.13) Hyundai Sonata Hybrid Sedan 2012(0.17) Toyota Camry Sedan 2012*(0.18) |
+| Infiniti G Coupe IPL 2012 | Porsche Panamera Sedan 2012(0.09) Tesla Model S Sedan 2012(0.14) BMW M5 Sedan 2010(0.16) Audi S5 Coupe 2012(0.18) Mercedes-Benz SL-Class Coupe 2009(0.19) |
+| Infiniti QX56 SUV 2011 | Dodge Durango SUV 2012(0.18) BMW X3 SUV 2012(0.19) Chrysler PT Cruiser Convertible 2008(0.21) Buick Enclave SUV 2012(0.23) Hyundai Santa Fe SUV 2012(0.27) |
+| Isuzu Ascender SUV 2008 | Ford Expedition EL SUV 2009(0.13) Chevrolet Tahoe Hybrid SUV 2012(0.17) Chevrolet Avalanche Crew Cab 2012(0.20) Dodge Durango SUV 2007(0.23) Ford F-150 Regular Cab 2007(0.24) |
+| Jaguar XK XKR 2012 | Aston Martin V8 Vantage Coupe 2012(0.11) BMW Z4 Convertible 2012(0.13) Porsche Panamera Sedan 2012(0.14) BMW M6 Convertible 2010(0.14) Tesla Model S Sedan 2012(0.15) |
+| Jeep Patriot SUV 2012 | Jeep Liberty SUV 2012(0.04) Toyota 4Runner SUV 2012*(0.27) Land Rover Range Rover SUV 2012(0.30) GMC Canyon Extended Cab 2012(0.38) Dodge Ram Pickup 3500 Quad Cab 2009(0.39) |
+| Jeep Wrangler SUV 2012 | HUMMER H3T Crew Cab 2010(0.09) HUMMER H2 SUT Crew Cab 2009(0.10) AM General Hummer SUV 2000(0.17) Jeep Liberty SUV 2012(0.36) Jeep Patriot SUV 2012(0.43) |
+| Jeep Liberty SUV 2012 | Jeep Patriot SUV 2012(0.04) Toyota 4Runner SUV 2012*(0.31) HUMMER H3T Crew Cab 2010(0.35) Jeep Wrangler SUV 2012(0.36) Land Rover Range Rover SUV 2012(0.37) |
+| Jeep Grand Cherokee SUV 2012 | Toyota Sequoia SUV 2012(0.10) Toyota 4Runner SUV 2012*(0.12) GMC Acadia SUV 2012(0.12) Jeep Compass SUV 2012(0.13) Land Rover LR2 SUV 2012(0.13) |
+| Jeep Compass SUV 2012 | Jeep Grand Cherokee SUV 2012(0.13) Dodge Durango SUV 2012(0.19) Land Rover LR2 SUV 2012(0.22) Volvo XC90 SUV 2007*(0.23) GMC Terrain SUV 2012(0.24) |
+| Lamborghini Reventon Coupe 2008 | Bugatti Veyron 16.4 Coupe 2009(0.21) Spyker C8 Coupe 2009(0.21) Lamborghini Aventador Coupe 2012(0.23) Spyker C8 Convertible 2009(0.23) Ford GT Coupe 2006(0.25) |
+| Lamborghini Aventador Coupe 2012 | McLaren MP4-12C Coupe 2012(0.05) Ferrari 458 Italia Coupe 2012(0.06) Ferrari 458 Italia Convertible 2012(0.06) Ferrari California Convertible 2012(0.11) Lamborghini Gallardo LP 570-4 Superleggera 2012(0.14) |
+| Lamborghini Gallardo LP 570-4 Superleggera 2012 | Lamborghini Aventador Coupe 2012(0.14) McLaren MP4-12C Coupe 2012(0.15) Lamborghini Diablo Coupe 2001(0.19) Ferrari 458 Italia Convertible 2012(0.22) Ferrari 458 Italia Coupe 2012(0.25) |
+| Lamborghini Diablo Coupe 2001 | Lamborghini Gallardo LP 570-4 Superleggera 2012(0.19) Chevrolet Corvette Convertible 2012(0.23) Acura Integra Type R 2001(0.24) Ford GT Coupe 2006(0.28) McLaren MP4-12C Coupe 2012(0.28) |
+| Land Rover Range Rover SUV 2012 | Volvo XC90 SUV 2007*(0.19) Chevrolet TrailBlazer SS 2009(0.20) GMC Yukon Hybrid SUV 2012(0.23) Toyota 4Runner SUV 2012*(0.23) Land Rover LR2 SUV 2012(0.23) |
+| Land Rover LR2 SUV 2012 | Mazda Tribute SUV 2011(0.11) Volvo XC90 SUV 2007*(0.12) Dodge Durango SUV 2007(0.12) Toyota Sequoia SUV 2012(0.12) Chrysler Aspen SUV 2009(0.13) |
+| Lincoln Town Car Sedan 2011 | Daewoo Nubira Wagon 2002(0.11) Chevrolet Malibu Sedan 2007(0.17) Mercedes-Benz 300-Class Convertible 1993(0.19) Chevrolet Monte Carlo Coupe 2007(0.21) Suzuki Aerio Sedan 2007(0.22) |
+| MINI Cooper Roadster Convertible 2012 | Bentley Continental Supersports Conv. Convertible 2012(0.15) FIAT 500 Convertible 2012(0.28) BMW 1 Series Convertible 2012(0.30) Bugatti Veyron 16.4 Convertible 2009(0.30) Rolls-Royce Phantom Drophead Coupe Convertible 2012(0.36) |
+| Maybach Landaulet Convertible 2012 | FIAT 500 Convertible 2012(0.34) Rolls-Royce Phantom Drophead Coupe Convertible 2012(0.35) MINI Cooper Roadster Convertible 2012(0.38) Bentley Continental Flying Spur Sedan 2007(0.39) Bentley Continental Supersports Conv. Convertible 2012(0.39) |
+| Mazda Tribute SUV 2011 | Land Rover LR2 SUV 2012(0.11) Dodge Durango SUV 2007(0.11) Toyota Sequoia SUV 2012(0.13) Chrysler Aspen SUV 2009(0.16) Buick Rainier SUV 2007(0.17) |
+| McLaren MP4-12C Coupe 2012 | Lamborghini Aventador Coupe 2012(0.05) Ferrari 458 Italia Coupe 2012(0.08) Ferrari 458 Italia Convertible 2012(0.09) Ferrari California Convertible 2012(0.15) Lamborghini Gallardo LP 570-4 Superleggera 2012(0.15) |
+| Mercedes-Benz 300-Class Convertible 1993 | Lincoln Town Car Sedan 2011(0.19) Geo Metro Convertible 1993(0.20) Nissan 240SX Coupe 1998(0.20) Daewoo Nubira Wagon 2002(0.22) Plymouth Neon Coupe 1999(0.22) |
+| Mercedes-Benz C-Class Sedan 2012 | Mercedes-Benz S-Class Sedan 2012(0.14) Mercedes-Benz E-Class Sedan 2012(0.15) BMW 3 Series Wagon 2012(0.22) BMW 3 Series Sedan 2012(0.24) Audi S6 Sedan 2011(0.24) |
+| Mercedes-Benz SL-Class Coupe 2009 | BMW M6 Convertible 2010(0.16) Porsche Panamera Sedan 2012(0.16) BMW 6 Series Convertible 2007(0.17) Tesla Model S Sedan 2012(0.18) Infiniti G Coupe IPL 2012(0.19) |
+| Mercedes-Benz E-Class Sedan 2012 | Mercedes-Benz S-Class Sedan 2012(0.13) Hyundai Genesis Sedan 2012(0.14) Mercedes-Benz C-Class Sedan 2012(0.15) BMW M5 Sedan 2010(0.18) BMW 3 Series Wagon 2012(0.20) |
+| Mercedes-Benz S-Class Sedan 2012 | Mercedes-Benz E-Class Sedan 2012(0.13) Mercedes-Benz C-Class Sedan 2012(0.14) Hyundai Genesis Sedan 2012(0.15) Honda Accord Sedan 2012(0.26) Cadillac CTS-V Sedan 2012(0.28) |
+| Mercedes-Benz Sprinter Van 2012 | Dodge Sprinter Cargo Van 2009(0.03) Chevrolet Express Van 2007(0.22) Nissan NV Passenger Van 2012(0.24) Chevrolet Express Cargo Van 2007(0.24) GMC Savana Van 2012(0.25) |
+| Mitsubishi Lancer Sedan 2012 | Acura TL Type-S 2008(0.11) Chevrolet Sonic Sedan 2012(0.20) Suzuki Kizashi Sedan 2012(0.20) Toyota Camry Sedan 2012*(0.23) Chevrolet Cobalt SS 2010(0.25) |
+| Nissan Leaf Hatchback 2012 | Nissan Juke Hatchback 2012(0.18) Chevrolet Sonic Sedan 2012(0.19) Ford Fiesta Sedan 2012(0.21) Hyundai Tucson SUV 2012(0.21) Toyota Camry Sedan 2012*(0.25) |
+| Nissan NV Passenger Van 2012 | Ford E-Series Wagon Van 2012(0.20) GMC Savana Van 2012(0.22) Mercedes-Benz Sprinter Van 2012(0.24) Chevrolet Express Van 2007(0.26) Dodge Sprinter Cargo Van 2009(0.26) |
+| Nissan Juke Hatchback 2012 | Nissan Leaf Hatchback 2012(0.18) Chevrolet Sonic Sedan 2012(0.19) Volvo C30 Hatchback 2012*(0.26) Volkswagen Beetle Hatchback 2012*(0.27) Hyundai Veloster Hatchback 2012(0.30) |
+| Nissan 240SX Coupe 1998 | Eagle Talon Hatchback 1998(0.12) Mercedes-Benz 300-Class Convertible 1993(0.20) Acura Integra Type R 2001(0.21) Chevrolet Monte Carlo Coupe 2007(0.21) Plymouth Neon Coupe 1999(0.21) |
+| Plymouth Neon Coupe 1999 | Geo Metro Convertible 1993(0.15) Nissan 240SX Coupe 1998(0.21) Eagle Talon Hatchback 1998(0.22) Mercedes-Benz 300-Class Convertible 1993(0.22) Volkswagen Golf Hatchback 1991*(0.24) |
+| Porsche Panamera Sedan 2012 | Infiniti G Coupe IPL 2012(0.09) Jaguar XK XKR 2012(0.14) Tesla Model S Sedan 2012(0.15) BMW M6 Convertible 2010(0.15) Aston Martin V8 Vantage Coupe 2012(0.16) |
+| Ram C/V Cargo Van Minivan 2012 | Chrysler Town and Country Minivan 2012(0.22) Ford Freestar Minivan 2007(0.28) Honda Odyssey Minivan 2007(0.33) Buick Rainier SUV 2007(0.35) Chevrolet Traverse SUV 2012(0.35) |
+| Rolls-Royce Phantom Drophead Coupe Convertible 2012 | Rolls-Royce Phantom Sedan 2012(0.07) Rolls-Royce Ghost Sedan 2012(0.12) Bentley Mulsanne Sedan 2011(0.23) Ford Mustang Convertible 2007(0.25) Chrysler Crossfire Convertible 2008(0.25) |
+| Rolls-Royce Ghost Sedan 2012 | Rolls-Royce Phantom Sedan 2012(0.07) Rolls-Royce Phantom Drophead Coupe Convertible 2012(0.12) Chrysler 300 SRT-8 2010(0.18) Bentley Mulsanne Sedan 2011(0.22) Ford Mustang Convertible 2007(0.32) |
+| Rolls-Royce Phantom Sedan 2012 | Rolls-Royce Phantom Drophead Coupe Convertible 2012(0.07) Rolls-Royce Ghost Sedan 2012(0.07) Chrysler 300 SRT-8 2010(0.15) Bentley Mulsanne Sedan 2011(0.18) Bentley Arnage Sedan 2009(0.20) |
+| Scion xD Hatchback 2012 | Chevrolet Sonic Sedan 2012(0.16) Suzuki SX4 Sedan 2012(0.16) Suzuki SX4 Hatchback 2012(0.17) Chevrolet Traverse SUV 2012(0.19) Hyundai Veracruz SUV 2012(0.22) |
+| Spyker C8 Convertible 2009 | Spyker C8 Coupe 2009(0.03) Chevrolet Corvette ZR1 2012(0.16) Bugatti Veyron 16.4 Coupe 2009(0.18) Fisker Karma Sedan 2012(0.19) Bugatti Veyron 16.4 Convertible 2009(0.21) |
+| Spyker C8 Coupe 2009 | Spyker C8 Convertible 2009(0.03) Fisker Karma Sedan 2012(0.13) Chevrolet Corvette ZR1 2012(0.14) Bugatti Veyron 16.4 Coupe 2009(0.15) Bugatti Veyron 16.4 Convertible 2009(0.15) |
+| Suzuki Aerio Sedan 2007 | Ford Focus Sedan 2007(0.10) Chevrolet Malibu Sedan 2007(0.14) Chevrolet Impala Sedan 2007(0.16) Daewoo Nubira Wagon 2002(0.16) Honda Odyssey Minivan 2007(0.17) |
+| Suzuki Kizashi Sedan 2012 | Buick Verano Sedan 2012(0.12) Toyota Camry Sedan 2012*(0.12) Buick Regal GS 2012(0.13) BMW M5 Sedan 2010(0.14) Volvo C30 Hatchback 2012*(0.16) |
+| Suzuki SX4 Hatchback 2012 | Suzuki SX4 Sedan 2012(0.10) Scion xD Hatchback 2012(0.17) Chevrolet Traverse SUV 2012(0.18) Hyundai Veracruz SUV 2012(0.20) Hyundai Elantra Touring Hatchback 2012(0.21) |
+| Suzuki SX4 Sedan 2012 | Suzuki SX4 Hatchback 2012(0.10) Honda Odyssey Minivan 2012(0.14) Hyundai Elantra Touring Hatchback 2012(0.15) Scion xD Hatchback 2012(0.16) Chevrolet Traverse SUV 2012(0.16) |
+| Tesla Model S Sedan 2012 | Infiniti G Coupe IPL 2012(0.14) Fisker Karma Sedan 2012(0.14) Jaguar XK XKR 2012(0.15) Porsche Panamera Sedan 2012(0.15) Aston Martin V8 Vantage Coupe 2012(0.17) |
+| Toyota Sequoia SUV 2012 | Jeep Grand Cherokee SUV 2012(0.10) Chrysler Aspen SUV 2009(0.11) Land Rover LR2 SUV 2012(0.12) Mazda Tribute SUV 2011(0.13) Dodge Durango SUV 2007(0.13) |
+| Toyota Camry Sedan 2012* | Buick Verano Sedan 2012(0.09) Suzuki Kizashi Sedan 2012(0.12) Ford Fiesta Sedan 2012(0.13) Toyota Corolla Sedan 2012*(0.14) Honda Accord Sedan 2012(0.15) |
+| Toyota Corolla Sedan 2012* | Volkswagen Golf Hatchback 2012*(0.09) Hyundai Elantra Sedan 2007(0.10) Honda Accord Sedan 2012(0.14) Toyota Camry Sedan 2012*(0.14) Hyundai Elantra Touring Hatchback 2012(0.15) |
+| Toyota 4Runner SUV 2012* | Jeep Grand Cherokee SUV 2012(0.12) GMC Terrain SUV 2012(0.13) Toyota Sequoia SUV 2012(0.15) Land Rover LR2 SUV 2012(0.17) Chevrolet Tahoe Hybrid SUV 2012(0.18) |
+| Volkswagen Golf Hatchback 2012* | Toyota Corolla Sedan 2012*(0.09) Honda Accord Sedan 2012(0.10) Acura TSX Sedan 2012(0.15) Hyundai Accent Sedan 2012(0.16) Hyundai Elantra Touring Hatchback 2012(0.17) |
+| Volkswagen Golf Hatchback 1991* | Volvo 240 Sedan 1993*(0.09) Audi 100 Wagon 1994(0.15) Audi 100 Sedan 1994(0.17) Audi V8 Sedan 1994(0.17) Plymouth Neon Coupe 1999(0.24) |
+| Volkswagen Beetle Hatchback 2012* | Volvo C30 Hatchback 2012*(0.18) Bentley Continental GT Coupe 2012(0.24) Bentley Continental GT Coupe 2007(0.24) Suzuki Kizashi Sedan 2012(0.24) BMW M3 Coupe 2012(0.25) |
+| Volvo C30 Hatchback 2012* | Chevrolet Sonic Sedan 2012(0.16) Suzuki Kizashi Sedan 2012(0.16) Volkswagen Beetle Hatchback 2012*(0.18) BMW X6 SUV 2012(0.22) FIAT 500 Convertible 2012(0.24) |
+| Volvo 240 Sedan 1993* | Volkswagen Golf Hatchback 1991*(0.09) Audi V8 Sedan 1994(0.19) Audi 100 Sedan 1994(0.21) Audi 100 Wagon 1994(0.26) Mercedes-Benz 300-Class Convertible 1993(0.31) |
+| Volvo XC90 SUV 2007* | Land Rover LR2 SUV 2012(0.12) Chrysler Aspen SUV 2009(0.14) GMC Acadia SUV 2012(0.15) Toyota Sequoia SUV 2012(0.15) Dodge Durango SUV 2007(0.15) |
+| smart fortwo Convertible 2012* | FIAT 500 Convertible 2012(0.23) Nissan Leaf Hatchback 2012(0.26) Chevrolet Sonic Sedan 2012(0.33) Nissan Juke Hatchback 2012(0.37) Scion xD Hatchback 2012(0.40) |

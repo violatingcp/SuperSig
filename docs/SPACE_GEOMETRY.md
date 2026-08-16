@@ -1,0 +1,107 @@
+# Space geometry: interpretability (exp 76) & inter-space similarity (exp 77)
+
+Two post-hoc batteries over the campaign's cached spaces.  Exp 76 asks
+"what does each space think is near what" (class-centroid geometry);
+exp 77 asks "how similar are the spaces to each other" (the
+arXiv:2503.21073 LLM-geometry program on paired image embeddings).
+Artifacts: `logs/exp76/interp_*.md` (nearest-class tables + metrics),
+`logs/exp77/results_*.npz`, `plots/exp76_*`, `plots/exp77_*`.
+
+## Exp 76 — centroid interpretability
+
+Per space: top-5 nearest class-centroid tables (cosine), superclass-
+ordered distance heatmap, average-linkage dendrogram; where a superclass
+partition exists (cifar100 coarse labels, aircraft manufacturer, cars
+make, galaxy10 morphology): NN superclass agreement@1/@5 vs chance,
+dendrogram purity, centroid silhouette, within/between distance ratio.
+
+Transfer-grid highlights:
+
+- **Semantics track supervision, not the probe.**  galaxy10/dino:
+  supcon-ft recovers the 4-group morphology partition perfectly
+  (dendro purity 1.000, agree@1 0.9); label-free nplm-bil-ft has
+  essentially no semantic structure (purity 0.49, silhouette -0.08)
+  despite its calibration strengths.  The probe-vs-calibration
+  dissociation is also a semantic-structure dissociation.
+- **Holdout classes land in the right neighborhoods unsupervised.**
+  galaxy10: the never-labeled holdout `edge-on bulge` sits 0.06 from
+  `edge-on no bulge` (its true sibling), next-nearest `cigar smooth`
+  (what an edge-on disk looks like).  The open-world novelty settles
+  where it semantically belongs.
+- **Residual concats inherit the parent's semantics** (galaxy10
+  resnplm-cat purity 1.000 = parent) while adding the calibration half:
+  concatenation costs nothing semantically.
+- **Cars organizes by body style as much as by make** (frozen DINO
+  make-agree@1 0.40 vs chance 0.04; errors like Audi convertible ->
+  BMW convertible).  Fine-grained "mistakes" are visually coherent.
+
+## Exp 77 — similarity between spaces
+
+Metrics on aligned image samples (n=4000/cell): linear CKA, mutual
+kNN@10, LLE-weight transfer, orthogonal Procrustes, ridge-map R^2
+(directional), calibration transfer (eucl AUC through a train-fit ridge
+map), TwoNN intrinsic dimension, Levina-Bickel LID novelty.
+
+### 1. Supervision erases the pretraining base; self-supervision keeps it
+
+Cross-base CKA of the same arm fine-tuned from different bases
+(dino/lejepa/visreg pairs):
+
+| dataset | supcon-ft (3 pairs) | simclr-ft (dino-visreg) |
+|---|---|---|
+| aircraft | 0.68 / 0.70 / 0.85 | (no simclr arm) |
+| cars | 0.79 / 0.75 / 0.85 | 0.46 |
+| dtd | 0.68 / 0.69 / 0.75 | 0.56 |
+| flowers | 0.68 / 0.64 / 0.70 | 0.62 |
+| galaxy10 | 0.51 / 0.72 / 0.74 | 0.58 |
+
+supcon-ft across two *different bases* is as similar as two *different
+supervised losses* on the same base (~0.74) -- the label signal pulls
+every pretraining toward one shared supervised geometry.  This is the
+geometric mechanism behind the base-invariant regime rules of exp 70.
+lejepa<->visreg are consistently the closest pair; dino is the outlier
+base.  On dtd, simclr-ft's *local* structure (mutual-kNN 0.28) agrees
+across bases better than supcon-ft's (0.16): SimCLR's texture
+neighborhoods are the transferable part, matching its dtd probe crown.
+
+### 2. Residual children: rotation on coarse regimes, new content on fine
+
+Parent vs res-nplm child (dino/visreg cells): galaxy10 ridge-R^2
+0.97-0.98 (the child is nearly a linear re-map -- calibration is
+re-weighting, not new information), cars/aircraft R^2 0.91-0.95 with
+mutual-kNN only ~0.2 (locally reorganized, ~5-10% genuinely new
+variance).  The concat gains track the unexplained fraction: biggest
+where the child is least redundant.  lejepa-based children diverge far
+more (CKA 0.24-0.66) than dino/visreg ones -- lejepa parents leave the
+most room for residual reorganization.
+
+### 3. nplm-bilinear is a geometric outlier everywhere
+
+CKA ~0.2-0.36 and mutual-kNN ~0.03-0.06 against every other arm, LLE
+ratio >1 (its local weights are invalid elsewhere) -- yet often highly
+*decodable from* softmax spaces (asymmetric R^2, e.g. cars supcon-ft ->
+nplm-sup-ft R^2 0.97 at CKA 0.36): the NPLM spaces are reorganizations
+of information the softmax spaces contain, not new information.
+
+### 4. Loss fingerprints in intrinsic dimension
+
+TwoNN ID orders arms the same way in every cell: nplm-sup-ft most
+compressed (ID ~2-3), SSL/sigreg arms mid (5-7), supcon/ss and frozen
+highest (9-13).  The SIGReg Gaussian target and the NPLM collapse are
+directly visible as dimension.
+
+### 5. LID as a novelty score: weak in general, STRONG on flowers
+
+Levina-Bickel LID (k=20, seen-class train refs) AUC by cell: aircraft/
+galaxy10 ~0.56-0.66 (weak), cars up to 0.73, dtd 0.79-0.81, **flowers
+0.95-0.96 in every base and most spaces** (best 0.957,
+supcon-ft-resnplm-cat/visreg) -- far above the flowers eucl numbers and
+in record territory for an unsupervised score.  LID is scale-free
+(distance-ratio structure, not distance), so it detects what min-dist
+misses when novel classes sit near some centroid.  Holdout LID > seen
+LID in nearly every space (novelty lives in locally higher-dimensional
+neighborhoods).  Worth promoting into the standard battery; the flowers
+result deserves a dedicated verification (exp 78 candidate).
+
+*(CIFAR cells for both experiments pending; this doc will gain the
+cifar100 otter/beaver section when the queued runs land.)*

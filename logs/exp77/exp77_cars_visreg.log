@@ -1,0 +1,113 @@
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+exp77 [cars_visreg] 13 spaces: ['frozen', 'simclr-ft', 'sigreg-ssl-ft', 'nplm-bil-ft', 'supcon-ft', 'ss-ft', 'nplm-sup-ft', 'supcon-ft-res', 'supcon-ft-res-cat', 'ss-ft-res', 'ss-ft-res-cat', 'supcon-ft-resnplm', 'supcon-ft-resnplm-cat']
+
+  space                      TwoNN-ID LID seen LID hold  LID-AUC
+  frozen                        10.63    15.22    16.63    0.562
+  simclr-ft                      5.57     6.50     6.77    0.518
+  sigreg-ssl-ft                  4.76     5.60     5.88    0.542
+  nplm-bil-ft                    8.50     8.81     9.44    0.557
+  supcon-ft                      8.84    12.11    14.75    0.683
+  ss-ft                         11.48    12.53    14.40    0.638
+  nplm-sup-ft                    3.37     3.47     3.70    0.548
+  supcon-ft-res                  5.77     8.46    10.20    0.659
+  supcon-ft-res-cat              7.83    11.80    14.54    0.687
+  ss-ft-res                      6.10     7.34     8.35    0.592
+  ss-ft-res-cat                 10.10    11.19    12.61    0.591
+  supcon-ft-resnplm              6.44     8.03    10.13    0.711
+  supcon-ft-resnplm-cat          7.98    11.99    15.44    0.732
+  pairwise row done: frozen
+  pairwise row done: simclr-ft
+  pairwise row done: sigreg-ssl-ft
+  pairwise row done: nplm-bil-ft
+  pairwise row done: supcon-ft
+  pairwise row done: ss-ft
+  pairwise row done: nplm-sup-ft
+  pairwise row done: supcon-ft-res
+  pairwise row done: supcon-ft-res-cat
+  pairwise row done: ss-ft-res
+  pairwise row done: ss-ft-res-cat
+  pairwise row done: supcon-ft-resnplm
+  pairwise row done: supcon-ft-resnplm-cat
+
+===== EXP77 SUMMARY [cars_visreg] (n=4000, k=10) =====
+  A vs B                                       cka     knn  lleA>B    proc   r2A>B  calA>B
+  frozen vs simclr-ft                        0.385   0.207   0.909     nan   0.703   0.479
+  frozen vs sigreg-ssl-ft                    0.564   0.194   0.903     nan   0.819   0.487
+  frozen vs nplm-bil-ft                      0.678   0.267   0.862     nan   0.939   0.521
+  frozen vs supcon-ft                        0.287   0.073   0.933     nan   0.855   0.614
+  frozen vs ss-ft                            0.300   0.105   0.934     nan   0.729   0.550
+  frozen vs nplm-sup-ft                      0.324   0.014   0.850     nan   0.968   0.515
+  frozen vs supcon-ft-res                    0.306   0.081   0.914     nan   0.817   0.547
+  frozen vs supcon-ft-res-cat                0.306   0.083   0.928     nan   0.844   0.607
+  frozen vs ss-ft-res                        0.439   0.180   0.916     nan   0.677   0.487
+  frozen vs ss-ft-res-cat                    0.429   0.184   0.928     nan   0.706   0.534
+  frozen vs supcon-ft-resnplm                0.209   0.028   0.938     nan   0.798   0.586
+  frozen vs supcon-ft-resnplm-cat            0.261   0.060   0.935     nan   0.835   0.614
+  simclr-ft vs sigreg-ssl-ft                 0.640   0.386   0.824   0.426   0.901   0.498
+  simclr-ft vs nplm-bil-ft                   0.375   0.170   1.048   0.773   0.726   0.466
+  simclr-ft vs supcon-ft                     0.182   0.053   1.179   0.832   0.381   0.543
+  simclr-ft vs ss-ft                         0.231   0.074   1.174   0.785   0.369   0.503
+  simclr-ft vs nplm-sup-ft                   0.113   0.011   0.996   0.976   0.739   0.514
+  simclr-ft vs supcon-ft-res                 0.179   0.066   1.142   0.820   0.469   0.517
+  simclr-ft vs supcon-ft-res-cat             0.188   0.062   1.169     nan   0.408   0.541
+  simclr-ft vs ss-ft-res                     0.544   0.220   1.005   0.518   0.663   0.472
+  simclr-ft vs ss-ft-res-cat                 0.426   0.167   1.131     nan   0.498   0.482
+  simclr-ft vs supcon-ft-resnplm             0.104   0.019   1.188   0.936   0.323   0.570
+  simclr-ft vs supcon-ft-resnplm-cat         0.153   0.043   1.183     nan   0.361   0.561
+  sigreg-ssl-ft vs nplm-bil-ft               0.535   0.161   1.067   0.610   0.729   0.468
+  sigreg-ssl-ft vs supcon-ft                 0.217   0.048   1.223   0.799   0.370   0.518
+  sigreg-ssl-ft vs ss-ft                     0.259   0.067   1.218   0.780   0.357   0.493
+  sigreg-ssl-ft vs nplm-sup-ft               0.152   0.010   1.023   0.957   0.746   0.491
+  sigreg-ssl-ft vs supcon-ft-res             0.219   0.063   1.186   0.770   0.454   0.513
+  sigreg-ssl-ft vs supcon-ft-res-cat         0.227   0.057   1.213     nan   0.396   0.516
+  sigreg-ssl-ft vs ss-ft-res                 0.613   0.204   1.034   0.504   0.640   0.471
+  sigreg-ssl-ft vs ss-ft-res-cat             0.479   0.151   1.170     nan   0.481   0.480
+  sigreg-ssl-ft vs supcon-ft-resnplm         0.118   0.018   1.235   0.924   0.309   0.548
+  sigreg-ssl-ft vs supcon-ft-resnplm-cat     0.179   0.039   1.228     nan   0.349   0.534
+  nplm-bil-ft vs supcon-ft                   0.266   0.053   1.118   0.770   0.351   0.553
+  nplm-bil-ft vs ss-ft                       0.294   0.081   1.115   0.792   0.294   0.526
+  nplm-bil-ft vs nplm-sup-ft                 0.232   0.012   0.998   0.915   0.799   0.493
+  nplm-bil-ft vs supcon-ft-res               0.250   0.062   1.103   0.784   0.389   0.525
+  nplm-bil-ft vs supcon-ft-res-cat           0.271   0.061   1.114     nan   0.363   0.544
+  nplm-bil-ft vs ss-ft-res                   0.428   0.150   1.081   0.744   0.330   0.498
+  nplm-bil-ft vs ss-ft-res-cat               0.420   0.145   1.104     nan   0.310   0.517
+  nplm-bil-ft vs supcon-ft-resnplm           0.169   0.019   1.120   0.898   0.305   0.545
+  nplm-bil-ft vs supcon-ft-resnplm-cat       0.231   0.043   1.119     nan   0.335   0.554
+  supcon-ft vs ss-ft                         0.751   0.205   0.968   0.454   0.659   0.645
+  supcon-ft vs nplm-sup-ft                   0.360   0.043   0.943   0.854   0.968   0.533
+  supcon-ft vs supcon-ft-res                 0.833   0.236   0.903   0.319   0.856   0.627
+  supcon-ft vs supcon-ft-res-cat             0.978   0.664   0.855     nan   0.956   0.713
+  supcon-ft vs ss-ft-res                     0.237   0.059   0.953   0.802   0.443   0.493
+  supcon-ft vs ss-ft-res-cat                 0.675   0.156   0.961     nan   0.564   0.605
+  supcon-ft vs supcon-ft-resnplm             0.881   0.227   0.958   0.284   0.907   0.664
+  supcon-ft vs supcon-ft-resnplm-cat         0.977   0.670   0.863     nan   0.967   0.723
+  ss-ft vs nplm-sup-ft                       0.331   0.036   0.974   0.902   0.941   0.497
+  ss-ft vs supcon-ft-res                     0.700   0.177   0.961   0.516   0.777   0.578
+  ss-ft vs supcon-ft-res-cat                 0.763   0.224   0.970     nan   0.757   0.618
+  ss-ft vs ss-ft-res                         0.314   0.091   0.947   0.711   0.507   0.493
+  ss-ft vs ss-ft-res-cat                     0.898   0.326   0.911     nan   0.785   0.536
+  ss-ft vs supcon-ft-resnplm                 0.703   0.103   1.005   0.568   0.789   0.583
+  ss-ft vs supcon-ft-resnplm-cat             0.753   0.188   0.981     nan   0.763   0.619
+  nplm-sup-ft vs supcon-ft-res               0.486   0.044   1.019   0.766   0.494   0.483
+  nplm-sup-ft vs supcon-ft-res-cat           0.422   0.045   1.034     nan   0.398   0.504
+  nplm-sup-ft vs ss-ft-res                   0.168   0.011   1.098   0.964   0.087   0.473
+  nplm-sup-ft vs ss-ft-res-cat               0.327   0.027   1.081     nan   0.169   0.465
+  nplm-sup-ft vs supcon-ft-resnplm           0.466   0.041   0.980   0.748   0.510   0.498
+  nplm-sup-ft vs supcon-ft-resnplm-cat       0.419   0.046   1.025     nan   0.410   0.508
+  supcon-ft-res vs supcon-ft-res-cat         0.929   0.347   0.959     nan   0.850   0.600
+  supcon-ft-res vs ss-ft-res                 0.249   0.073   1.014   0.787   0.466   0.468
+  supcon-ft-res vs ss-ft-res-cat             0.642   0.174   1.034     nan   0.540   0.516
+  supcon-ft-res vs supcon-ft-resnplm         0.908   0.140   0.973   0.266   0.885   0.637
+  supcon-ft-res vs supcon-ft-resnplm-cat     0.892   0.234   0.991     nan   0.819   0.628
+  supcon-ft-res-cat vs ss-ft-res             0.251   0.069   0.935     nan   0.584   0.468
+  supcon-ft-res-cat vs ss-ft-res-cat         0.690   0.182   0.945   0.515   0.665   0.552
+  supcon-ft-res-cat vs supcon-ft-resnplm     0.927   0.222   0.924     nan   0.936   0.674
+  supcon-ft-res-cat vs supcon-ft-resnplm-cat   0.985   0.582   0.855   0.059   0.977   0.727
+  ss-ft-res vs ss-ft-res-cat                 0.700   0.287   1.066     nan   0.684   0.444
+  ss-ft-res vs supcon-ft-resnplm             0.158   0.022   1.156   0.919   0.382   0.544
+  ss-ft-res vs supcon-ft-resnplm-cat         0.209   0.048   1.155     nan   0.404   0.516
+  ss-ft-res-cat vs supcon-ft-resnplm         0.602   0.064   0.946     nan   0.809   0.591
+  ss-ft-res-cat vs supcon-ft-resnplm-cat     0.663   0.133   0.941   0.566   0.798   0.613
+  supcon-ft-resnplm vs supcon-ft-resnplm-cat   0.961   0.322   0.989     nan   0.873   0.726
+Done.
