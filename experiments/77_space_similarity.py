@@ -210,7 +210,9 @@ def lid_scores(Xref, Xq, k=20):
     D = np.sqrt(sqdist(Xq, Xref))
     P = np.sort(D, axis=1)[:, :k]
     rk = np.maximum(P[:, -1:], 1e-12)
-    return -1.0 / np.mean(np.log(np.maximum(P[:, :-1], 1e-12) / rk), axis=1)
+    m = np.mean(np.log(np.maximum(P[:, :-1], 1e-12) / rk), axis=1)
+    # collapsed spaces produce exact distance ties (m -> 0-): cap the LID
+    return -1.0 / np.minimum(m, -1e-3)
 
 
 # ------------------------------------------------------------------ main
