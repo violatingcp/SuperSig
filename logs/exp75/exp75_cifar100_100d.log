@@ -115,3 +115,98 @@ Using cache found in /home/pharris/.cache/torch/hub/chenyaofo_pytorch-cifar-mode
   [s2-res-nplm] epoch 1/20  loss=3053210214.1347
   [s2-res-nplm] epoch 5/20  loss=1647475280.2001
   [s2-res-nplm] epoch 10/20  loss=1595749685.8031
+  [s2-res-nplm] epoch 15/20  loss=1327576823.2953
+  [s2-res-nplm] epoch 20/20  loss=1472571251.3782
+Using cache found in /home/pharris/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+  [seed 2] res-nplm concat probe=0.9600
+
+########## seed 3 ##########
+  CIFAR two-view embedding-train images (no {4}): 49500
+  [supcon] epoch 1/20  loss=4.2165
+  [supcon] epoch 2/20  loss=3.9750
+  [supcon] epoch 3/20  loss=3.9009
+  [supcon] epoch 4/20  loss=3.8535
+  [supcon] epoch 5/20  loss=3.8140
+  [supcon] epoch 6/20  loss=3.7734
+  [supcon] epoch 7/20  loss=3.7408
+  [supcon] epoch 8/20  loss=3.7303
+  [supcon] epoch 9/20  loss=3.7042
+  [supcon] epoch 10/20  loss=3.6809
+  [supcon] epoch 11/20  loss=3.6610
+  [supcon] epoch 12/20  loss=3.6535
+  [supcon] epoch 13/20  loss=3.6363
+  [supcon] epoch 14/20  loss=3.6213
+  [supcon] epoch 15/20  loss=3.6058
+  [supcon] epoch 16/20  loss=3.5983
+  [supcon] epoch 17/20  loss=3.5870
+  [supcon] epoch 18/20  loss=3.5872
+  [supcon] epoch 19/20  loss=3.5659
+  [supcon] epoch 20/20  loss=3.5534
+  [seed 3] parent probe=0.9380
+  CIFAR two-view embedding-train images (no {4}): 49500
+  [s3-res] epoch 1/20  loss=4.8322
+  [s3-res] epoch 5/20  loss=4.5731
+  [s3-res] epoch 10/20  loss=4.5363
+  [s3-res] epoch 15/20  loss=4.5222
+  [s3-res] epoch 20/20  loss=4.5116
+  [seed 3] res concat probe=0.9471
+  CIFAR two-view embedding-train images (no {4}): 49500
+  [s3-res-nplm] epoch 1/20  loss=3840380988.0207
+  [s3-res-nplm] epoch 5/20  loss=2376750111.3368
+  [s3-res-nplm] epoch 10/20  loss=2245213250.6528
+  [s3-res-nplm] epoch 15/20  loss=1807016893.9689
+  [s3-res-nplm] epoch 20/20  loss=1629172155.1503
+Using cache found in /home/pharris/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+  [seed 3] res-nplm concat probe=0.9441
+
+########## seed 4 ##########
+  CIFAR two-view embedding-train images (no {4}): 49500
+  [supcon] epoch 1/20  loss=4.2113
+  [supcon] epoch 2/20  loss=3.9746
+  [supcon] epoch 3/20  loss=3.9025
+  [supcon] epoch 4/20  loss=3.8455
+  [supcon] epoch 5/20  loss=3.8055
+  [supcon] epoch 6/20  loss=3.7746
+  [supcon] epoch 7/20  loss=3.7509
+  [supcon] epoch 8/20  loss=3.7264
+  [supcon] epoch 9/20  loss=3.7001
+  [supcon] epoch 10/20  loss=3.6792
+  [supcon] epoch 11/20  loss=3.6716
+  [supcon] epoch 12/20  loss=3.6495
+  [supcon] epoch 13/20  loss=3.6348
+  [supcon] epoch 14/20  loss=3.6205
+  [supcon] epoch 15/20  loss=3.6105
+  [supcon] epoch 16/20  loss=3.5968
+  [supcon] epoch 17/20  loss=3.5872
+  [supcon] epoch 18/20  loss=3.5727
+  [supcon] epoch 19/20  loss=3.5643
+  [supcon] epoch 20/20  loss=3.5500
+  [seed 4] parent probe=0.9533
+  CIFAR two-view embedding-train images (no {4}): 49500
+  [s4-res] epoch 1/20  loss=4.8180
+  [s4-res] epoch 5/20  loss=4.5695
+  [s4-res] epoch 10/20  loss=4.5380
+  [s4-res] epoch 15/20  loss=4.5213
+  [s4-res] epoch 20/20  loss=4.5144
+  [seed 4] res concat probe=0.9530
+  CIFAR two-view embedding-train images (no {4}): 49500
+  [s4-res-nplm] epoch 1/20  loss=4979514869.7202
+  [s4-res-nplm] epoch 5/20  loss=3018041410.0725
+  [s4-res-nplm] epoch 10/20  loss=2645266659.3161
+  [s4-res-nplm] epoch 15/20  loss=2500632928.1658
+  [s4-res-nplm] epoch 20/20  loss=2281275769.0363
+  [seed 4] res-nplm concat probe=0.9580
+
+===== EXP75 SUMMARY [cifar100_100d] (5 seeds) =====
+  space                          probe             acc            eucl           mahaT
+  parent               0.9467+-0.0098   0.5738+-0.0049   0.3849+-0.0328   0.3736+-0.0214
+  res concat           0.9523+-0.0077   0.5344+-0.0041   0.6074+-0.0199   0.4940+-0.0126
+  res-nplm concat      0.9552+-0.0064   0.5764+-0.0035   0.3391+-0.0346   0.3065+-0.0138
+  paired delta res concat       probe: +0.0056+-0.0038  (4/5 seeds positive)
+  paired delta res-nplm concat  probe: +0.0086+-0.0059  (5/5 seeds positive)
+  per-seed probes:
+    parent            0.9567 0.9320 0.9533 0.9380 0.9533
+    res concat        0.9590 0.9406 0.9615 0.9471 0.9530
+    res-nplm concat   0.9617 0.9523 0.9600 0.9441 0.9580
+saved /home/pharris/sigreg/SuperSig/plots/exp75_probe_cifar100_100d.png
+Done.

@@ -480,6 +480,33 @@ Probe records stay pre-discovery (c100 0.9594) / exp-59 post (c10
 0.984); discovery-on-residuals is a calibration repair, not a probe
 booster, at low purity.
 
+Exp 75 (`75_multiseed_residual.py` + seed-aware exps 70/71, 2026-08-16):
+multi-seed validation of the residual concats (exp-61 protocol).  Fully
+paired per seed: parent + res + res-nplm children, 3-probe-seed battery.
+
+| cell | space | probe (mean+-sd) | paired delta | wins |
+|---|---|---|---|---|
+| c10 32d, 5 seeds | parent | 0.9395+-0.0020 | -- | -- |
+| | res concat | 0.9552+-0.0023 | +0.0157+-0.0004 | 5/5 |
+| | res-nplm concat | 0.9451+-0.0023 | +0.0057+-0.0014 | 5/5 |
+| c100 100d, 5 seeds | parent | 0.9467+-0.0098 | -- | -- |
+| | res concat | 0.9523+-0.0077 | +0.0056+-0.0038 | 4/5 |
+| | res-nplm concat | 0.9552+-0.0064 | +0.0086+-0.0059 | 5/5 |
+| cars/visreg, 3 seeds | supcon-ft parent | 0.686+-0.016 | -- | -- |
+| | res-nplm concat | 0.833+-0.017 | +0.148+-0.004 | 3/3 |
+
+Verdicts: (1) the residual effect is REAL everywhere -- 17/18 paired
+comparisons positive; the transfer-scale effect (+0.148, sd 0.004 across
+seeds!) is 20x the CIFAR-scale one.  (2) C100 objective ranking FLIPS
+under seed averaging: res-nplm concat (0.9552, 5/5) beats plain res
+(0.9523, 4/5) -- the exp-73 "plain res wins CIFAR" verdict now applies
+only to c10; c100 rejoins the many-class fine-grained regime rule
+(res-nplm).  (3) Records were fair draws, not flukes: c100 0.9594 ->
+honest 0.955+-0.006 (best seeds 0.9617/0.9615); c10 res concat mean
+0.9552 exceeds the old 0.9536; cars 0.855 -> honest 0.833+-0.017.
+Geometry split persists: plain-res concat keeps the calibration crown on
+c100 (eucl 0.607 vs res-nplm 0.339).  Results logs/exp75/*.npz.
+
 ## NPLM program verdicts
 
 - Probe-vs-calibration dissociation everywhere: softmax(SupCon) spaces are

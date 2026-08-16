@@ -1,0 +1,40 @@
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+exp70 [cars_visreg_ft70] end-to-end ft suite, arms=['supcon-ft'], ft_epochs=20, emb=100, holdouts 186-195 EXCLUDED from ft
+  ft corpus: 7712/8144 train images (holdout classes removed)
+
+===== [supcon-ft] (supervised) =====
+  [supcon-ft] epoch 1/20  main=0.9789  aux=0.0000
+  [supcon-ft] epoch 5/20  main=0.7263  aux=0.0000
+  [supcon-ft] epoch 10/20  main=0.6369  aux=0.0000
+  [supcon-ft] epoch 15/20  main=0.5366  aux=0.0000
+  [supcon-ft] epoch 20/20  main=0.5389  aux=0.0000
+  extracted ft70_supcon-ft train: (8144, 768)
+  extracted ft70_supcon-ft test: (8041, 768)
+  [supcon-ft     ] probe=0.6693+-0.0068 acc=0.5412 supAUC=0.9894 eucl=0.6878 mahaT=0.6145 mahaPC=0.7089
+
+===== PRE table =====
+  arm                        probe     acc  supAUC    eucl   mahaT  mahaPC
+  supcon-ft          0.6693+-0.0068  0.5412  0.9894  0.6878  0.6145  0.7089
+
+===== gaussianity (seen classes, test set) =====
+  metric                         supcon-ft
+  eig min (class cov)               -0.000
+  eig max (class cov)               37.012
+  eig cond worst            37011893256192.0
+  class RMS min                      0.870
+  class RMS mean                     1.054
+  class RMS max                      1.184
+  max |corr| (worst class)           0.920
+  SW ratio mean                       1.07
+  SW ratio worst                      1.53
+  |skew| mean                        0.297
+  |ex-kurt| mean                     0.575
+  centroid dist min                   3.04
+  centroid dist mean                 17.01
+  separation (min d/RMS)              2.88
+
+===== EXP70 SUMMARY [cars_visreg_ft70] =====
+  [supcon-ft     ] probe=0.6693+-0.0068 acc=0.5412 eucl=0.6878 mahaT=0.6145
+saved /home/pharris/sigreg/SuperSig/plots/exp70_probe_cars_visreg_ft70.png
+Done.

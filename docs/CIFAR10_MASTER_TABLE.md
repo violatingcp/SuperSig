@@ -11,6 +11,12 @@
 > geometry/powers improve strongly (res-nplm concat eucl 0.712->0.794,
 > mahaT ->0.622; Maha power 0.80@f=.02, all stats 1.0@f=.1).  The
 > full-dim concats trade exp-59's probe peak for far better calibration.
+>
+> Exp-75 (5 paired seeds, 2026-08-16): res concat 0.9552+-0.0023,
+> paired +0.0157+-0.0004 over parent, 5/5 seeds -- the residual effect
+> is real and remarkably seed-stable; multi-seed mean EXCEEDS the old
+> single-seed 0.9536.  res-nplm concat +0.0057+-0.0014 (5/5) with the
+> better geometry.  Plain res confirmed the C10 objective.
  — exps 33/34i/36 vs 50/53/55/58
 
 All spaces 32-D total (concat arms 16+16), holdout 4 (deer), seed 0.

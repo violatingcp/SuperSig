@@ -137,6 +137,16 @@ the best-calibrated supervised C100 space (eucl 0.650, per-event 0.08)
 plain res (not res-nplm) the better objective here (many-class,
 low-res images: same side of the split as DTD/galaxy10).
 
+EXP-75 MULTI-SEED UPDATE (5 paired seeds, 2026-08-16): the residual
+effect survives (res concat +0.0056+-0.0038, 4/5 seeds; res-nplm concat
++0.0086+-0.0059, 5/5), but the objective ranking FLIPS under averaging:
+res-nplm concat 0.9552+-0.0064 > res concat 0.9523+-0.0077 -- C100
+rejoins the many-class regime rule (res-nplm), and the exp-73 plain-res
+verdict now applies only to C10.  Honest record citation: 0.955+-0.006,
+single-seed tails to 0.9617; the archived 0.9594 was a fair draw.
+Plain-res concat keeps the calibration crown (eucl 0.607+-0.020 vs
+res-nplm 0.339+-0.035).  logs/exp75/results_cifar100_100d.npz.
+
 ## Discovery on the exp-73 concats (exp 74; image-space loop, two-net
 concat backbone; probe / eucl / mahaT pre -> post, purity r1)
 

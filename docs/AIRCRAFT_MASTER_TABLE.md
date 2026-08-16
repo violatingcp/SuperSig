@@ -411,6 +411,13 @@ Final dataset probe records: cars 0.855 (exp 71), flowers 0.906
 (exp 72), dtd 0.862 (exp 72), galaxy10 0.975 (exp 71) -- every record
 now belongs to a residual pipeline.
 
+Exp-75 multi-seed check on the cars/visreg flagship (seeds 0/1/2,
+supcon-ft -> res-nplm concat): parents 0.707/0.669/0.680, concats
+0.855/0.812/0.833 -- paired delta +0.148+-0.004, 3/3 seeds.  The
++0.15 transfer residual effect is essentially deterministic across
+seeds; honest record citation 0.833+-0.017 (0.855 = high fair draw).
+Seed ckpts use the _s{seed} suffix (exps 70/71 --seed).
+
 ## Aircraft NPLM residual/concat (exp 60, DINO, 16+16)
 
 | arm | probe | acc | eucl | mahaT | perevt | MMD@.1 |
