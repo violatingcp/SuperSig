@@ -77,7 +77,7 @@ def main():
                                                  holdouts)
             aucs.append(a)
         return dict(probe=float(np.mean(aucs)), acc=r["acc"],
-                    eucl=r["eucl"], mahaT=r["maha_tied"])
+                    eucl=r["eucl"], mahaT=r["maha_tied"], lid=r["lid"])
 
     R = {sp: [] for sp in SPACES}
     for s in range(args.n_seeds):
@@ -119,10 +119,10 @@ def main():
 
     print(f"\n===== EXP75 SUMMARY [{tag}] ({args.n_seeds} seeds) =====")
     print(f"  {'space':<18}{'probe':>18}{'acc':>16}{'eucl':>16}"
-          f"{'mahaT':>16}")
+          f"{'mahaT':>16}{'lid':>16}")
     for sp in SPACES:
         row = ""
-        for f in ("probe", "acc", "eucl", "mahaT"):
+        for f in ("probe", "acc", "eucl", "mahaT", "lid"):
             v = np.array([r[f] for r in R[sp]])
             row += f"{v.mean():>9.4f}+-{v.std():.4f}"
         print(f"  {sp:<18}{row}")
@@ -160,7 +160,7 @@ def main():
              **{f"{sp.replace(' ', '_')}__{f}":
                 np.array([r[f] for r in R[sp]])
                 for sp in SPACES for f in ("probe", "acc", "eucl",
-                                           "mahaT")})
+                                           "mahaT", "lid")})
     print("Done.")
 
 

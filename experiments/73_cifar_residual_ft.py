@@ -137,10 +137,11 @@ def main():
         pe = exp30.power_at_alpha(s_[bg], s_[sg], args.alpha)
         out = dict(probe=float(np.mean(aucs)), probe_sd=float(np.std(aucs)),
                    acc=r["acc"], eucl=r["eucl"], mahaT=r["maha_tied"],
-                   perevt=pe)
+                   lid=r["lid"], perevt=pe)
         print(f"  [{name:<28}] probe={out['probe']:.4f}+-{out['probe_sd']:.4f}"
               f" acc={out['acc']:.4f} eucl={out['eucl']:.4f} "
-              f"mahaT={out['mahaT']:.4f} perevt={pe:.3f}")
+              f"mahaT={out['mahaT']:.4f} lid={out['lid']:.4f} "
+              f"perevt={pe:.3f}")
         return out
 
     results, parent_cache = {}, {}
@@ -186,11 +187,11 @@ def main():
 
     print(f"\n===== EXP73 SUMMARY [{tag}] =====")
     print(f"  {'space':<32}{'probe':>16}{'acc':>8}{'eucl':>8}{'mahaT':>8}"
-          f"{'perevt':>8}")
+          f"{'lid':>8}{'perevt':>8}")
     for k, r in results.items():
         print(f"  {k:<32}{r['probe']:>9.4f}+-{r['probe_sd']:.4f}"
               f"{r['acc']:>8.4f}{r['eucl']:>8.4f}{r['mahaT']:>8.4f}"
-              f"{r['perevt']:>8.3f}")
+              f"{r['lid']:>8.4f}{r['perevt']:>8.3f}")
 
     labels = list(results)
     plt.figure(figsize=(1.0 * len(labels) + 3, 5.5))
@@ -215,7 +216,7 @@ def main():
              **{f"{k.replace(' ', '_').replace('>', '')}__{f}":
                 np.array(results[k][f]) for k in results
                 for f in ("probe", "probe_sd", "acc", "eucl", "mahaT",
-                          "perevt")})
+                          "lid", "perevt")})
     print("Done.")
 
 

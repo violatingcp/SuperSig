@@ -58,6 +58,25 @@ CIFAR_NAMES = ["airplane", "automobile", "bird", "cat", "deer",
                "dog", "frog", "horse", "ship", "truck"]
 
 
+def lid_novelty(tr_embs, tr_lab, te_embs, seen, k=20, max_ref=4000,
+                seed=0):
+    """Levina-Bickel local intrinsic dimension of test points vs
+    seen-class train references (exp-77/78; on flowers the unsupervised
+    LID AUC 0.95 beats the supervised probe record).  Higher = more
+    novel.  Exact-tie collapse capped at -1e-3 (exp-78)."""
+    ref = np.asarray(tr_embs, np.float64)[np.isin(tr_lab, seen)]
+    if len(ref) > max_ref:
+        ref = ref[np.random.default_rng(seed).choice(len(ref), max_ref,
+                                                     replace=False)]
+    q = torch.as_tensor(np.asarray(te_embs, np.float64), device=DEVICE)
+    r = torch.as_tensor(ref, device=DEVICE)
+    D = torch.cdist(q, r).cpu().numpy()
+    P = np.sort(D, axis=1)[:, :k]
+    rk = np.maximum(P[:, -1:], 1e-12)
+    m = np.mean(np.log(np.maximum(P[:, :-1], 1e-12) / rk), axis=1)
+    return -1.0 / np.minimum(m, -1e-3)
+
+
 def evaluate_space(tr_embs, tr_lab, te_embs, te_lab, anchors, seen, holdouts):
     """Performance + novelty metrics for one evaluation space.
 
@@ -81,10 +100,13 @@ def evaluate_space(tr_embs, tr_lab, te_embs, te_lab, anchors, seen, holdouts):
     tied, perclass, eigs = mahalanobis_novelty(tr_embs, tr_lab, te_embs, seen)
     maha_tied = float(roc_auc_score(is_unseen, tied))
     maha_pc = float(roc_auc_score(is_unseen, perclass))
+    lid_scores = lid_novelty(tr_embs, tr_lab, te_embs, seen)
+    lid_auc = float(roc_auc_score(is_unseen, lid_scores))
     return dict(acc=acc, sup_auc=sup_auc, eucl=eucl_auc,
-                maha_tied=maha_tied, maha_pc=maha_pc, eigs=eigs,
+                maha_tied=maha_tied, maha_pc=maha_pc, lid=lid_auc,
+                eigs=eigs,
                 scores={"eucl": eucl_scores, "maha_pc": perclass,
-                        "is_unseen": is_unseen})
+                        "lid": lid_scores, "is_unseen": is_unseen})
 
 
 def linear_probe_novelty(tr, tr_lab, te, te_lab, holdouts, epochs=10, lr=1e-2):

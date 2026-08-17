@@ -266,11 +266,12 @@ def main():
         g = gaussianity_summary(te, te_lab, seen, seed=args.seed)
         print(f"  [{arm:<14}] probe={pm:.4f}+-{psd:.4f} acc={r['acc']:.4f} "
               f"supAUC={r['sup_auc']:.4f} eucl={r['eucl']:.4f} "
-              f"mahaT={r['maha_tied']:.4f} mahaPC={r['maha_pc']:.4f}")
+              f"mahaT={r['maha_tied']:.4f} mahaPC={r['maha_pc']:.4f} "
+              f"lid={r['lid']:.4f}")
         results[arm] = dict(probe=pm, probe_sd=psd, acc=r["acc"],
                             sup_auc=r["sup_auc"], eucl=r["eucl"],
                             mahaT=r["maha_tied"], mahaPC=r["maha_pc"],
-                            gauss=g)
+                            lid=r["lid"], gauss=g)
 
     print("\n===== PRE table =====")
     print(f"  {'arm':<16}{'probe':>16}{'acc':>8}{'supAUC':>8}{'eucl':>8}"

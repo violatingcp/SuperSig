@@ -80,7 +80,8 @@ Checkpoint conventions: `{ds}_ft_{base}_{arm}.pt` (closed-set, exps 43/49/62),
 | metric | function | notes |
 |---|---|---|
 | probe (holdout novelty AUC) | `29_residual_finetune.py::linear_probe_novelty` | 3 seeds `torch.manual_seed(1000+s)`, report mean +- sd |
-| acc / supAUC / eucl / mahaT / mahaPC | `29_residual_finetune.py::evaluate_space(tr, tr_lab, te, te_lab, anchors, seen, holdouts)` | anchors = seen-class centroids (`28_concat_residual.py::class_centroids` — returns a CUDA tensor; `fill_means` pads to full n_classes) |
+| acc / supAUC / eucl / mahaT / mahaPC / lid | `29_residual_finetune.py::evaluate_space(tr, tr_lab, te, te_lab, anchors, seen, holdouts)` | anchors = seen-class centroids (`28_concat_residual.py::class_centroids` — returns a CUDA tensor; `fill_means` pads to full n_classes) |
+| LID novelty (standalone) | `29_residual_finetune.py::lid_novelty(tr, tr_lab, te, seen, k=20)` | Levina-Bickel local intrinsic dim vs seen-train refs (max 4000, seeded); higher = novel; exact-tie cap -1e-3; exp-78: flowers 0.95 beats the supervised probe, cars/aircraft weak — regime-specific |
 | gaussianity | `supersig/metrics.py::gaussianity_summary` (+ `sliced_gaussianity`, `classwise_gaussianity`); table via `28::print_gauss_table` | seen classes, test set |
 | per-event power | `30_power_curves.py::power_at_alpha(bg_scores, sig_scores, alpha)` | score = min distance to anchors (pre) or d_seen - d_disc (post-discovery) |
 | SparKer battery | `31_sparker_power.py::run_test_battery(bg, sg, R, fractions, n_d, n_null, n_sig, alpha, seed, sparker_kw)` | ALWAYS annealed sigma (omit sigma0) across heterogeneous geometries — exp-57 lesson |
