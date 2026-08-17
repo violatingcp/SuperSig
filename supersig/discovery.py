@@ -92,11 +92,27 @@ def merge_anchors(disc, members_assign, merge_dist):
     return merged
 
 
+def lid_pool_scores(z, is_seen_lab, k=20, max_ref=4000, seed=0):
+    """Levina-Bickel LID of every train point vs the seen-labeled points
+    (exp-78/79 pool scorer).  Neighbor ranks 1..k for ALL queries -- rank
+    0 is skipped because seen-labeled queries are themselves reference
+    points (self at distance 0).  Higher = more novel."""
+    ref = z[torch.as_tensor(is_seen_lab, device=z.device)]
+    if len(ref) > max_ref:
+        g = torch.Generator().manual_seed(seed)
+        keep = torch.randperm(len(ref), generator=g)[:max_ref]
+        ref = ref[keep.to(z.device)]
+    P = torch.cdist(z, ref).topk(k + 1, largest=False).values[:, 1:]
+    rk = P[:, -1:].clamp_min(1e-12)
+    m = (P[:, :-1].clamp_min(1e-12) / rk).log().mean(1)
+    return -1.0 / m.clamp_max(-1e-3)
+
+
 def run_discovery(backbone, means, *, base_ds, train_eval_loader, test_loader,
                   seen, holdouts, dataset_name, rep_weight, sigreg_weight,
                   n_slices, rounds=2, ft_epochs=5, tau_quantile=0.95,
                   kmax=None, merge_dist=3.0, exempt_repulsion=True,
-                  names=None, seed=0):
+                  names=None, seed=0, pool_score="dist"):
     """
     Iterated anchor discovery.  `means` holds the trained class anchors
     (n_classes rows); returns (extended_means, history) where history is one
@@ -111,11 +127,14 @@ def run_discovery(backbone, means, *, base_ds, train_eval_loader, test_loader,
         z = torch.as_tensor(tr_embs, device=DEVICE)
         anchor_mat = torch.cat([cur_means[seen], cur_means[n_classes:]]) \
             if cur_means.size(0) > n_classes else cur_means[seen]
-        dmin = torch.cdist(z, anchor_mat).min(1).values
         is_seen_lab = np.isin(tr_lab, seen)
-        tau = torch.quantile(dmin[torch.as_tensor(is_seen_lab, device=DEVICE)],
+        if pool_score == "lid":
+            s = lid_pool_scores(z, is_seen_lab, seed=seed + r)
+        else:
+            s = torch.cdist(z, anchor_mat).min(1).values
+        tau = torch.quantile(s[torch.as_tensor(is_seen_lab, device=DEVICE)],
                              tau_quantile)
-        pool = (dmin > tau).cpu().numpy()
+        pool = (s > tau).cpu().numpy()
         purity = (~is_seen_lab[pool]).mean() if pool.any() else float("nan")
         km = kmax or max(4, len(holdouts) + 2)
         khat, centers, _ = bic_select(z[torch.as_tensor(pool, device=DEVICE)],

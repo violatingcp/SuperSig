@@ -570,3 +570,13 @@ result verified.  Holdout-rotation on the frozen trunk (10 random
 plateau.  HEADLINE: unsupervised LID 0.951-0.955 > supervised flowers
 probe record 0.906 -- first unsupervised-beats-probe result of the
 campaign.  Follow-up: add LID(k=20) to the standard battery.
+
+Exp 79 (`79_lid_pool_discovery.py` + `discovery.lid_pool_scores`,
+2026-08-17): LID as discovery pool scorer, A/B vs distance on the three
+exp-72 flowers winners.  LID triples round-2 pool purity (dist collapses
+0.18-0.33 as the ft inflates the space; scale-free LID holds 0.60-0.68)
+-- strictly better pooling -- but post probes are unchanged (+0.000 /
+-0.029 / +0.007; the 0.906 record ties).  Sharpened purity-gate lesson:
+above the gate, purity is not the binding constraint; discovery-ft
+dynamics are.  run_discovery gained pool_score={"dist","lid"} (default
+unchanged).

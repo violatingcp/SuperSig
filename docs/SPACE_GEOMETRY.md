@@ -140,8 +140,33 @@ All controls pass; the effect is real and is NOT rebranded distance:
 Reading: holdout flowers sit ON the flower manifold (small distances,
 mediocre eucl/kNNd) but with a distinct local dimensional signature --
 exactly the failure mode of distance scores that a scale-free ratio
-statistic catches.  Follow-up: promote LID(k=20) into the standard
-battery alongside eucl/mahaT.
+statistic catches.  LID(k=20) is now in the standard battery
+(`29::lid_novelty`, `evaluate_space` key `lid`).
+
+## Exp 79 — LID as the discovery pool scorer (79_lid_pool_discovery.py)
+
+A/B on the three exp-72 flowers winner cells, identical recipe/seed:
+`run_discovery(pool_score="dist")` (min-anchor-distance, the campaign
+default) vs `pool_score="lid"` (`discovery.lid_pool_scores`, ranks 1..k
+to skip self-matches).
+
+| cell | scorer | purity r1 | r2 | probe post |
+|---|---|---|---|---|
+| flowers/dino | dist / lid | 0.609 / 0.678 | 0.240 / **0.679** | 0.9061 / 0.9062 |
+| flowers/lejepa | dist / lid | 0.439 / 0.576 | 0.328 / **0.598** | 0.8127 / 0.7840 |
+| flowers/visreg | dist / lid | 0.643 / 0.684 | 0.179 / **0.677** | 0.8664 / 0.8736 |
+
+- **LID fixes the round-2 purity collapse**: the discovery ft inflates
+  the space, so the distance threshold decays (r2 purity 0.18-0.33);
+  scale-free LID re-scores the deformed space cleanly and holds
+  0.60-0.68 (~3x).  As a pool mechanism it strictly dominates.
+- **The battery doesn't care**: probe deltas +0.000 / -0.029 / +0.007;
+  the 0.906 record is tied, not beaten.  Above the purity gate, purity
+  is not the binding constraint -- the discovery-ft dynamics are.
+- Corollary: LID pooling's value would be in the low-purity cells
+  (aircraft 0.32-0.53, probe-negative), but exp-78 shows LID separation
+  is weak exactly there.  Pool scoring is solved-and-non-binding on
+  flowers; the aircraft failure needs a different lever.
 
 ## Exp 76 on CIFAR-100 (100-D; beaver = open-world holdout)
 
