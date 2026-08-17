@@ -560,3 +560,13 @@ Results logs/exp76/interp_*.md, logs/exp77/results_*.npz.
   second on geometry and best SparKer/MMD at f=0.1.
 - 64-D C100 rerun (exps 50/53) in progress; results land in
   results_nplm_cifar100_64d.npz / results_classwise_cifar100_64d.npz.
+
+Exp 78 (`78_lid_verification.py`, 2026-08-17): the flowers LID-novelty
+result verified.  Holdout-rotation on the frozen trunk (10 random
+10-class holdouts): flowers LID 0.879+-0.018 vs kNN-dist 0.692 (cars
+0.545 -- dataset property, not artifact); LID beats kNN-dist by
++0.08-0.12 and eucl by +0.03-0.06 on all flowers cells (Spearman
+0.55-0.92); bootstrap CIs +-0.006, worst holdout class 0.86, k=20-50
+plateau.  HEADLINE: unsupervised LID 0.951-0.955 > supervised flowers
+probe record 0.906 -- first unsupervised-beats-probe result of the
+campaign.  Follow-up: add LID(k=20) to the standard battery.

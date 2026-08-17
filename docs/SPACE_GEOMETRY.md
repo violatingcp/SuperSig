@@ -112,6 +112,37 @@ LID in nearly every space (novelty lives in locally higher-dimensional
 neighborhoods).  Worth promoting into the standard battery; the flowers
 result deserves a dedicated verification (exp 78 candidate).
 
+## Exp 78 — the flowers LID result verified (78_lid_verification.py)
+
+All controls pass; the effect is real and is NOT rebranded distance:
+
+- **Holdout rotation** (frozen trunk, 10 random 10-class holdouts):
+  flowers LID 0.879+-0.018 (min 0.844) vs kNN-dist 0.692+-0.047 --
+  every random holdout scores high; classes 92-101 are not special.
+  Cars under the identical protocol: 0.545+-0.040 (the contrast is a
+  dataset property, not a protocol artifact).
+- **Distance controls**: LID beats the classic kNN-distance baseline by
+  +0.08-0.12 (e.g. flowers/dino supcon-ft 0.951 vs 0.835) and eucl by
+  +0.03-0.06 everywhere on flowers; Spearman(LID, kNN-dist) 0.55-0.92
+  -- correlated but carrying real independent signal.  On cars the
+  ordering flips (kNNd/eucl >= LID on visreg ft spaces): LID's edge is
+  regime-specific, not universal.
+- **Robustness**: bootstrap 95% CIs +-0.006; per-holdout-class AUC
+  min 0.86-0.92 on flowers ft spaces (no single-class driver);
+  k-sensitivity plateaus at k=20-50 (k=5 degrades to ~0.78 -- the
+  ratio estimator needs enough neighbors).
+- **HEADLINE**: flowers LID 0.951-0.955 (unsupervised, seen-class refs
+  only, no novelty labels) EXCEEDS the supervised flowers probe record
+  0.906 (exp 72).  The rank ensemble with eucl adds nothing (LID
+  subsumes it).  New flowers novelty record, and the first time an
+  unsupervised score beats the trained probe anywhere in the campaign.
+
+Reading: holdout flowers sit ON the flower manifold (small distances,
+mediocre eucl/kNNd) but with a distinct local dimensional signature --
+exactly the failure mode of distance scores that a scale-free ratio
+statistic catches.  Follow-up: promote LID(k=20) into the standard
+battery alongside eucl/mahaT.
+
 ## Exp 76 on CIFAR-100 (100-D; beaver = open-world holdout)
 
 The founding question ("are otters near beavers?") answered in the
