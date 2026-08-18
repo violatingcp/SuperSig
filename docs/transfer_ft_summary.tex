@@ -17,7 +17,7 @@
 
 \title{Open-World Novelty on Transfer Datasets:\\
 End-to-End Fine-Tuning, Discovery, and Residual Training\\
-{\large SuperSig experiments 70--74 (with context from 49/51/62/69)}}
+{\large SuperSig experiments 70--79 (with context from 49/51/62/69)}}
 \author{P.~Harris (experiments run with Claude)}
 \date{August 2026}
 
@@ -213,11 +213,71 @@ $f$ swept) for post-discovery power.
 seen test images (3 seeds); \emph{acc}: seen-class nearest-centroid
 accuracy; \emph{supAUC}: seen-class supervised separability;
 \emph{eucl}/\emph{mahaT}: novelty AUC of min Euclidean/tied-covariance
-Mahalanobis distance to seen centroids; \emph{perevt}: per-event
-detection power at $\alpha{=}0.05$ from the distance score;
+Mahalanobis distance to seen centroids; \emph{lid}: novelty AUC of the
+local-intrinsic-dimension score of Sec.~\ref{sec:lid}; \emph{perevt}:
+per-event detection power at $\alpha{=}0.05$ from the distance score;
 SparKer/Maha/MMD: dataset-level two-sample test power at injected
 fraction $f$ (toy size $n_d{=}1000$--$2000$; SparKer uses an annealed
 median-heuristic kernel scale).
+
+\subsection{Local intrinsic dimension as a novelty score (exps 77--79)}
+\label{sec:lid}
+
+\paragraph{Definition.}
+For a test point $x$, let $r_1 \le \dots \le r_k$ be its distances to
+the $k$ nearest \emph{seen-class train} embeddings ($k{=}20$; reference
+set subsampled to 4000).  The Levina--Bickel maximum-likelihood
+estimator of the local intrinsic dimension is
+\begin{equation}
+\widehat{\mathrm{LID}}(x) \;=\;
+\Bigl(-\tfrac{1}{k-1}\textstyle\sum_{j=1}^{k-1}
+\log \tfrac{r_j}{r_k}\Bigr)^{-1},
+\label{eq:lid}
+\end{equation}
+the inversion of the fact that in a locally $d$-dimensional cloud the
+neighbor distances scale as $r_j \approx r_k\,(j/k)^{1/d}$.  The novelty
+score is $\widehat{\mathrm{LID}}(x)$ itself: higher $=$ more novel.
+
+\paragraph{Interpretation.}
+Eq.~\eqref{eq:lid} sees only distance \emph{ratios}, so it is invariant
+to any local rescaling of the space --- it measures the \emph{shape} of
+the neighborhood, not its size.  Low dimension leaves neighbors spread
+across scales (a same-class twin far closer than the 20th neighbor);
+high dimension concentrates all $k$ neighbors onto a thin shell of
+nearly equal distances.  A seen-class test point sits \emph{inside} its
+own class's compact sheet (low LID); a novel-class point has no
+structure of its own in the reference set, so its neighborhood is an
+unstructured mixture of class fringes at similar distances (high LID).
+Where a distance score asks ``how far am I from the seen data?'', LID
+asks ``does the seen data around me look organized, or am I a stranger
+standing between structures?''  The estimator needs enough ratios to
+average ($k{=}5$ degrades markedly); exact distance ties in collapsed
+spaces are capped; per-point values are noisy and only population
+separation (AUC) should be interpreted.
+
+\paragraph{Results (exp 78).}
+On flowers the unsupervised LID score reaches AUC
+$0.951$--$0.955$ in \emph{every} base, exceeding the supervised probe
+record (0.906, exp~72) --- the first unsupervised-beats-probe result of
+the campaign.  It survives all controls: rotating the holdout on the
+frozen trunk (10 random 10-class draws: LID $0.879\pm0.018$ vs
+kNN-distance $0.692$; cars under the identical protocol $0.545$),
+bootstrap CIs ($\pm0.006$), per-holdout-class minima ($0.86$--$0.92$),
+and a $k{=}20$--$50$ plateau.  The edge is regime-specific: novel
+flowers sit \emph{on} the flower manifold (near in distance, wrong in
+structure), exactly the failure mode of distance scores; on cars and
+aircraft, where novelty is off-manifold and distance already separates,
+LID adds nothing.
+
+\paragraph{As discovery pool scorer (exp 79).}
+Replacing the min-anchor-distance pool threshold with LID in the
+discovery loop (\texttt{pool\_score="lid"}) triples round-2 pool purity
+on the flowers winners ($0.60$--$0.68$ vs $0.18$--$0.33$): the
+discovery fine-tune inflates the space, which silently invalidates the
+distance threshold but leaves the scale-free LID untouched.  The
+post-discovery probes are nevertheless unchanged ($+0.000$/$-0.029$/
+$+0.007$; the 0.906 record ties): above the purity gate, purity is not
+the binding constraint --- the discovery fine-tuning dynamics are.
 
 \section{Results}
 
