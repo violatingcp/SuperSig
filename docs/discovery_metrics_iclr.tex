@@ -1,0 +1,870 @@
+% ---------------------------------------------------------------------------
+%  Metrics for Scientific Discovery
+%  ICLR-style submission format.  Self-contained: the preamble below emulates
+%  the iclr20XX_conference.sty layout (10pt Times, 5.5in text block, numbered
+%  sections, small caps abstract head) so the file compiles with a stock
+%  pdflatex install.  To use the official style, delete the "ICLR-EMULATION"
+%  block and replace it with
+%      \usepackage{iclr2026_conference,times}
+% ---------------------------------------------------------------------------
+\documentclass{article}
+
+% ------------------------- ICLR-EMULATION (begin) -------------------------
+\usepackage[letterpaper,textwidth=5.5in,textheight=9in,top=1in,left=1.5in]{geometry}
+\usepackage{times}
+% times.sty remaps \ttfamily to Courier (pcr), whose metrics are absent from
+% basic TeX installs; keep Computer Modern Typewriter instead.
+\renewcommand{\ttdefault}{cmtt}
+\renewcommand{\baselinestretch}{1.0}
+% ICLR-like sectioning without titlesec (kept portable to basic TeX installs)
+\makeatletter
+\renewcommand\section{\@startsection{section}{1}{\z@}%
+  {-2.0ex \@plus -0.5ex \@minus -0.2ex}{1.2ex \@plus 0.2ex}%
+  {\large\bf\raggedright}}
+\renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
+  {-1.6ex \@plus -0.4ex \@minus -0.2ex}{0.9ex \@plus 0.2ex}%
+  {\normalsize\bf\raggedright}}
+\renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
+  {1.2ex \@plus 0.4ex \@minus 0.2ex}{-1em}{\normalsize\bf}}
+\makeatother
+% -------------------------- ICLR-EMULATION (end) --------------------------
+
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage[colorlinks=true,linkcolor=black,citecolor=black,urlcolor=blue]{hyperref}
+\usepackage{caption}
+\captionsetup{font=small,labelfont=bf}
+
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathcal{N}}
+\newcommand{\z}{\mathbf{z}}
+\newcommand{\x}{\mathbf{x}}
+\newcommand{\mmu}{\boldsymbol{\mu}}
+\newcommand{\best}[1]{\textbf{#1}}
+\newcommand{\lid}{\mathrm{LID}}
+\newcommand{\auc}{\mathrm{AUC}}
+
+\title{Metrics for Scientific Discovery:\\
+Auditing Embedding Spaces for Novelty, Calibration,\\
+and Interpretability}
+
+\author{
+P.~C.~Harris\\
+Laboratory for Nuclear Science\\
+Massachusetts Institute of Technology\\
+Cambridge, MA 02139, USA\\
+\texttt{pcharris@mit.edu}
+}
+
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Self-supervised objectives with explicit distributional priors --- LeJEPA and
+its sketched-isotropic-Gaussian regularizer (SIGReg) being the canonical
+example --- promise embedding spaces whose \emph{geometry}, not merely whose
+linear separability, carries information. This promise matters most in
+scientific settings, where the object of interest is by construction
+\emph{unlabeled}: a new particle, a new galaxy morphology, a new material
+phase. Yet the field evaluates such spaces almost exclusively with linear
+probes, which measure exactly the one property a discovery pipeline cannot
+rely on. We argue that a space intended for discovery must be audited in four
+distinct currencies --- \emph{detection}, \emph{calibration},
+\emph{discoverability}, and \emph{interpretability} --- and we supply a
+concrete, reproducible battery for each. Using a campaign of 79 controlled
+experiments spanning CIFAR-10/100 and a $4\times3\times6$ grid of transfer
+datasets (Stanford Cars, Flowers-102, DTD, Galaxy10~DECals) $\times$
+pretraining bases (DINO, LeJEPA, VISReg) $\times$ contrastive/regularized
+objectives, we establish four results. (i) Detection and calibration are
+\emph{empirically dissociated}: softmax-contrastive spaces win the probe and
+score exactly $0.000$ per-event detection power, while density-ratio-calibrated
+spaces invert the ordering; no CIFAR-100 space in our sweep exceeds probe
+$0.94$ with tied-Mahalanobis $\auc>0.42$. (ii) The dissociation is
+\emph{repairable by construction rather than by loss design}: residual
+fine-tuning, which trains a second head on $\z-\mmu_y$ and concatenates, beats
+the alternative (iterated anchor discovery) in $12/12$ dataset$\times$base
+cells and yields the first spaces that hold a record probe and calibrated
+distances simultaneously. (iii) \emph{Scale-free} statistics see novelty that
+distance-based scores cannot: local intrinsic dimension (LID) reaches
+$\auc=0.951$--$0.955$ on Flowers-102 using \emph{no novelty labels}, exceeding
+the best supervised probe ($0.906$) --- the only unsupervised score to beat a
+trained probe anywhere in the campaign. (iv) Interpretability is a
+\emph{measurable, dissociable} property: superclass agreement and dendrogram
+purity track supervision, not probe quality, and a never-labeled held-out class
+reliably lands among its true semantic siblings. We distill the results into a
+reporting protocol and a set of regime rules --- which objective, which
+statistic, which repair --- for practitioners building embedding spaces meant
+to find things nobody has labeled.
+\end{abstract}
+
+% ==========================================================================
+\section{Introduction}
+% ==========================================================================
+
+Representation learning is evaluated, overwhelmingly, by how well a linear
+classifier reads a representation out. This is a defensible proxy when the
+downstream task is classification into known categories. It is the wrong proxy
+when the downstream task is \emph{discovery}.
+
+A discovery pipeline in the physical sciences --- searching for a resonance in
+collider data, an anomalous transient in a survey, an unfamiliar defect in a
+microscopy campaign --- asks a different question of an embedding. It asks:
+\emph{given a reference population, is this event unlike anything I have seen,
+and by how much?} Answering requires the space to support an absolute notion of
+distance, so that a threshold set on simulated background transfers to data. It
+requires the tail of the distance distribution to be enriched in genuine
+novelty, so that clustering the tail recovers new categories rather than
+mislabeled old ones. And --- because a discovery must eventually be
+\emph{explained} --- it requires the geometry to be semantically legible, so a
+domain expert can say what the new cluster sits next to and why.
+
+None of these are linear separability. All of them are measurable.
+
+\paragraph{The LeJEPA opening}
+The recent line of work that regularizes embeddings toward an explicit
+distributional target --- most directly LeJEPA and its sketched isotropic
+Gaussian regularizer (SIGReg), which penalizes the sliced 1-D Wasserstein-2
+distance between the embedding and $\N(0,I)$ --- changes what is available to
+measure. Once a marginal is \emph{specified} rather than emergent, distances
+have units: a Mahalanobis radius means something, a density ratio can be
+calibrated, and a likelihood-based anomaly score becomes well posed. Our
+starting hypothesis is that this is the correct substrate for discovery, and
+that its evaluation should exploit the structure it provides instead of
+discarding it in favor of a probe.
+
+That hypothesis turns out to be half right, in an informative way. A Gaussian
+marginal is necessary for calibrated geometry but not sufficient for
+detection, and the two properties trade off sharply enough that we treat them
+as separate axes throughout.
+
+\paragraph{Contributions}
+\begin{itemize}\itemsep2pt
+\item \textbf{A four-currency evaluation battery} (\S\ref{sec:battery}) for
+embedding spaces intended for discovery: detection, calibration,
+discoverability, interpretability --- with concrete estimators, standard
+protocols, blind spots, and known failure modes for each.
+\item \textbf{Systematic evidence that the currencies dissociate}
+(\S\ref{sec:dissoc}), across 79 experiments, two image regimes, four transfer
+datasets, three pretraining bases, and ten training objectives. The
+dissociation is not noise and is not a tuning artifact: it is reproduced under
+paired seeds and inverts predictably with the number of seen classes.
+\item \textbf{Two repairs, benchmarked head to head} (\S\ref{sec:repair}):
+iterated anchor \emph{discovery} and \emph{residual fine-tuning}. Residual
+fine-tuning wins $12/12$ cells and produces the campaign's records; discovery
+is shown to be \emph{substrate-dependent} (probe-negative on frozen trunks,
+probe-positive in $50/72$ cells on fine-tuned trunks) and \emph{purity-gated}.
+\item \textbf{Local intrinsic dimension as a first-class novelty statistic}
+(\S\ref{sec:lid}), including a full control study: holdout rotation, distance
+baselines, bootstrap intervals, per-class decomposition, and $k$-sensitivity.
+It sets a new unsupervised record on Flowers-102 and, importantly, we
+characterize where it \emph{fails}.
+\item \textbf{Interpretability as a metric, not a figure}
+(\S\ref{sec:interp}): superclass agreement@$k$, dendrogram purity, centroid
+silhouette, and cross-space similarity (CKA, mutual-$k$NN, Procrustes, ridge
+$R^2$, TwoNN intrinsic dimension), applied to every space in the campaign.
+\end{itemize}
+
+% ==========================================================================
+\section{Setup}
+% ==========================================================================
+
+\paragraph{Open-world protocol}
+In every experiment a set of classes is held out \emph{entirely}: their images
+and their labels are removed from the training corpus, so at evaluation time
+they are genuinely novel. Unless noted, the held-out set is the final ten
+classes of the dataset (Galaxy10: the final one; CIFAR: class 4). Embeddings
+are then frozen and scored. This is stricter than the common
+``train-on-everything, test-novelty-by-relabeling'' protocol, and we flag the
+one legacy table (\S\ref{sec:regimes}, aircraft trunk reuse) where an earlier
+run violated it.
+
+\begin{table}[t]\centering\small
+\begin{tabular}{lrrrl}
+\toprule
+dataset & classes & held out & seen train pool & character \\
+\midrule
+CIFAR-10 & 10 & \{4\} & 45\,000 & coarse, many samples/class \\
+CIFAR-100 & 100 & \{4\} & 49\,500 & many-class, low resolution \\
+Stanford Cars & 196 & 186--195 & 7\,712 & fine-grained (car models) \\
+Flowers-102 & 102 & 92--101 & 1\,840 & fine-grained, few-shot ($\sim$18/class) \\
+DTD & 47 & 37--46 & 2\,960 & texture \\
+Galaxy10 DECals & 10 & \{9\} & 1\,585 & coarse morphology, 10\%/90\% split \\
+FGVC-Aircraft & 100 & 90--99 & $\sim$6\,600 & fine-grained (variants) \\
+\bottomrule
+\end{tabular}
+\caption{Datasets and open-world splits. Transfer bases are DINO, LeJEPA and
+VISReg ViT-B/16 trunks (768-D CLS features); CIFAR uses a ResNet-20 trunk
+(CIFAR-pretrained, or randomly initialized for the from-scratch lineages).}
+\label{tab:datasets}
+\end{table}
+
+\paragraph{Objectives}
+All objectives are instances of one design cube, which lets us attribute
+effects to axes rather than to named methods. An objective is specified by
+four coordinates:
+\[
+\text{(positives)} \times \text{(critic)} \times \text{(estimator)} \times
+\text{(marginal)} .
+\]
+\emph{Positives} are instance (augmentation) pairs or supervised (same-label)
+pairs. The \emph{critic} $g$ is cosine $\langle\hat\z,\hat\z'\rangle/\tau$,
+bilinear $\langle\z,\z'\rangle/\tau$, or distance
+$-\tfrac12\|\z-\z'\|^2/\tau$. The \emph{estimator} is either the standard
+row-normalized softmax (recovering NT-Xent/SupCon) or the un-normalized
+maximum-likelihood form
+\begin{equation}
+\mathcal{L}_{\mathrm{NPLM}} \;=\; \E_{\mathrm{ref}}\!\left[e^{g}-1\right]
+\;-\; \E_{\mathrm{pos}}\!\left[g\right],
+\label{eq:nplm}
+\end{equation}
+whose minimizer is the \emph{absolute} log density ratio
+$g^\star=\log\frac{p(\x,\x')}{p(\x)p(\x')}$ with the calibration constraint
+$\E_{\mathrm{ref}}[e^{g^\star}]=1$. The \emph{marginal} is none, global SIGReg,
+or classwise SIGReg. The distinction in the estimator axis is the crux of this
+paper: softmax self-normalizes per row and therefore recovers pointwise mutual
+information only up to an unknown per-row constant, destroying absolute scale;
+Eq.~\ref{eq:nplm} does not. We verify the calibration empirically against
+analytic PMI on a controlled toy ($r>0.9$).
+
+\begin{table}[t]\centering\small
+\begin{tabular}{llllll}
+\toprule
+arm & positives & critic & estimator & marginal & labels \\
+\midrule
+\texttt{simclr}          & instance    & cosine   & softmax & ---       & no \\
+\texttt{lejepa}          & \multicolumn{3}{l}{MSE invariance $+\lambda\cdot$SIGReg} & global & no \\
+\texttt{ss} (\texttt{simclr\_sigreg}) & instance & cosine & softmax & global & no \\
+\texttt{supcon}          & supervised  & cosine   & softmax & ---       & yes \\
+\texttt{supcon\_sigreg}  & supervised  & cosine   & softmax & global    & yes \\
+\texttt{nplm\_bilinear}  & instance    & bilinear & NPLM    & global    & no \\
+\texttt{nplm\_distance}  & instance    & distance & NPLM    & global    & no \\
+\texttt{nplm\_sup\_dist} & supervised  & distance & NPLM    & global    & yes \\
+\texttt{nplm\_*\_cw}     & (either)    & (either) & NPLM    & classwise & varies \\
+\texttt{sup} (recipe)    & \multicolumn{3}{l}{prototype CE to anchors $+$ repulsion} & classwise & yes \\
+\bottomrule
+\end{tabular}
+\caption{The objectives as coordinates in the design cube. \texttt{lejepa} and
+the \texttt{sup} recipe are not contrastive and are listed by their components.
+Standard training: 20 epochs, Adam $10^{-3}$, batch 256 two-view (balanced
+24/class for classwise arms), $\lambda=1$.}
+\label{tab:arms}
+\end{table}
+
+\paragraph{Two knobs, one inert}
+Two hyperparameters govern the NPLM arms, and they are not symmetric. At
+initialization the interaction term of Eq.~\ref{eq:nplm} is $\sim\!10^{10}$
+while $\lambda\cdot\mathrm{SIGReg}$ is $\sim\!10^{-2}$: \emph{$\lambda$ is
+inert for the first $\sim$2 epochs} and only shapes the endgame. By contrast
+$\tau$ is a sharp optimum ($\tau=1$ for bilinear on CIFAR-100; $\tau\in
+\{0.5,2\}$ each cost $0.06$--$0.10$ probe AUC). We therefore scan $\tau$ and
+report $\lambda$ ablations only where the marginal type changes.
+
+% ==========================================================================
+\section{A four-currency battery for discovery}
+\label{sec:battery}
+% ==========================================================================
+
+We propose that any embedding space advertised for discovery be reported in
+four currencies. The first two are per-space properties; the third is a
+property of a \emph{pipeline}; the fourth is a property of the space's relation
+to human categories.
+
+\subsection{Currency I --- Detection}
+\emph{Can novelty be read out at all?} Estimator: the AUC of a linear
+holdout-vs-rest probe trained on frozen embeddings, reported as mean$\pm$sd
+over 3 seeds. This is the standard metric and we retain it, with two caveats
+that recur throughout: single-seed spread is $\approx0.017$, so \textbf{gaps
+below $0.02$ require 3--5 seeds}; and the probe is blind to radial and
+non-linear novelty structure, which is precisely the structure the other
+currencies measure.
+
+We also report nearest-centroid top-1 accuracy over seen classes (\texttt{acc})
+and the macro one-vs-rest AUC of the prototype posterior (\texttt{supAUC}) as
+closed-set sanity checks --- a space can win the novelty probe while being
+useless at its nominal task, and we have observed exactly that
+(\texttt{nplm-bil-ft} on Flowers: probe $0.808$ post-discovery, \texttt{acc}
+$0.531$).
+
+\subsection{Currency II --- Calibration}
+\emph{Do distances have absolute meaning?} A discovery threshold is set on a
+reference population and applied to data; if the score's scale drifts, the
+threshold is worthless even when the space is geometrically fine. We estimate
+calibration at two levels.
+
+\emph{Per-space:} novelty AUC of the minimum distance to a seen-class centroid
+(\texttt{eucl}), and of tied and per-class Mahalanobis distances
+(\texttt{mahaT}, \texttt{mahaPC}; shrinkage $0.1$). Plus a Gaussianity summary
+--- eigenvalue conditioning, class RMS, maximum off-diagonal correlation,
+sliced-Wasserstein ratio, skew and kurtosis --- which audits whether the SIGReg
+target was actually reached rather than merely optimized.
+
+\emph{Per-event:} the fraction of injected signal events exceeding the
+$\alpha=0.05$ null quantile of the reference score distribution. This is the
+metric that most sharply separates the objective families, and it is the one
+closest to how a physics search actually operates. \textbf{SupCon-family spaces
+score $0.000$ here}, on every dataset, at every signal fraction: a
+self-normalized objective simply does not produce a transferable threshold.
+
+\emph{Dataset-level:} three two-sample batteries --- SparKer (semi-parametric
+kernel discrepancy, $M{=}16$ kernels), Mahalanobis, and MMD --- run as toy
+experiments ($N_D$ events per toy, signal fraction $f$ injected from the
+holdout pool, power $=$ fraction of 50 signal toys above the $\alpha=0.05$
+quantile of 200 null toys). Two lessons are protocol-critical. First,
+\textbf{kernel statistics must use an annealed median-heuristic bandwidth}: a
+fixed $\sigma{=}1$ is calibrated only for the unit-class-width supervised
+recipe, and a discovery fine-tune that rescales a compact trunk by $\sim4\times$
+sends fixed-$\sigma$ SparKer to zero power at every fraction \emph{while the
+space is fine} (annealed: $1.00$). We regard this as a general warning about
+kernel two-sample tests across heterogeneous geometries. Second, statistic and
+geometry must be matched: parametric statistics need calibrated spaces, and
+Mahalanobis is simply dead on CIFAR-100 at every dimension and every space
+(inter-class similarity), where MMD remains the dimension-robust choice.
+
+\subsection{Currency III --- Discoverability}
+\emph{Does the tail contain the new thing?} A discovery loop pools events past
+a high quantile ($0.95$) of the seen-distance distribution, selects a cluster
+count by BIC, merges nearby anchors, and fine-tunes the space on seen labels
+plus the resulting pseudo-labels. The diagnostic that matters is \textbf{pool
+purity}: the fraction of the pooled tail that is genuinely novel. Everything
+else about the pipeline is downstream of it.
+
+Purity varies over two orders of magnitude across our datasets --- $0.795$ on
+DTD, $0.33$--$0.66$ on Flowers, $0.34$ on CIFAR-10, $0.03$--$0.14$ on Cars,
+$0.003$--$0.013$ on CIFAR-100 --- and the variation is \emph{structural}, not a
+tuning failure. On CIFAR-100, 500 holdout images sit inside a $\sim$2500-event
+tail: the loop is rate-blocked before it begins. On Cars, purity caps at
+$0.14$ for a deeper reason we consider one of the campaign's cleanest negative
+results: \textbf{a novel car model looks like existing car models}. Pooling
+requires novelty that is geometrically \emph{outlying}, and fine-grained
+novelty is not, calibrated space or no. We recommend reporting purity
+alongside any claimed discovery gain, because a gain at low purity is
+mechanistically something else (\S\ref{sec:repair}).
+
+\subsection{Currency IV --- Interpretability}
+\emph{Is the geometry legible?} Where a superclass partition exists (CIFAR-100
+coarse labels, aircraft manufacturer, car make, galaxy morphology) we compute:
+nearest-class-centroid superclass agreement@1 and @5 against chance,
+average-linkage dendrogram purity, centroid silhouette, and the
+within/between distance ratio. Where it does not, we report top-5
+nearest-centroid tables, which are directly auditable by a domain expert.
+
+We additionally characterize how spaces relate to \emph{each other}, on aligned
+samples ($n{=}4000$/cell): linear CKA, mutual $k$NN@10, LLE-weight transfer,
+orthogonal Procrustes, directional ridge-map $R^2$, calibration transfer
+through a fitted ridge map, and TwoNN intrinsic dimension. This turns
+``these two objectives learn different things'' from an assertion into a
+measurement, and it is how we establish that the NPLM spaces are
+\emph{reorganizations} of information the softmax spaces already contain rather
+than new information (\S\ref{sec:interp}).
+
+% ==========================================================================
+\section{The central dissociation}
+\label{sec:dissoc}
+% ==========================================================================
+
+The single most robust finding across the campaign is that Currency~I and
+Currency~II are \emph{anti-correlated across spaces}. Softmax-contrastive
+objectives maximize linearly readable structure and carry no absolute distance
+information; density-ratio-calibrated objectives are ready-to-use metric spaces
+at a probe cost.
+
+\begin{table}[t]\centering\small
+\begin{tabular}{lccccc}
+\toprule
+space (CIFAR-10, 32-D, holdout 4) & probe & acc & \texttt{eucl} & \texttt{mahaT} & per-event \\
+\midrule
+\texttt{supcon}                     & \best{0.942} & 0.861 & 0.689 & 0.644 & 0.000 \\
+\texttt{supcon\_sigreg}             & 0.882 & 0.844 & 0.637 & 0.577 & 0.000 \\
+\texttt{sup} (supervised SIGReg)    & 0.923 & 0.884 & 0.778 & 0.645 & --- \\
+\texttt{nplm\_sup\_dist}            & 0.783 & 0.871 & 0.726 & \best{0.723} & \best{0.20} \\
+\texttt{nplm\_bilinear} (no labels) & 0.853 & 0.546 & 0.510 & 0.494 & --- \\
+\texttt{simclr}                     & 0.867 & 0.729 & 0.236 & 0.229 & 0.000 \\
+\texttt{lejepa}                     & 0.864 & 0.695 & 0.408 & 0.371 & --- \\
+\bottomrule
+\end{tabular}
+\caption{The dissociation in one table. The probe ordering and the
+calibration ordering are close to reversed. Note \texttt{simclr}'s
+\texttt{eucl} of $0.236$ --- \emph{below} chance-adjusted expectations for a
+space with a probe of $0.867$: the information is there and is not in the
+distances.}
+\label{tab:dissoc}
+\end{table}
+
+On CIFAR-100 the effect is sharp enough to state as a constraint:
+\textbf{no space in the sweep exceeds probe $0.94$ with $\texttt{mahaT}>0.42$},
+across 30+ standalone spaces at 32/64/100-D, hub-initialized and from-scratch.
+The probe ceiling ($\approx0.95$) is owned by supervised softmax and prototype
+recipes; the \texttt{mahaT} ceiling ($\approx0.47$--$0.49$) is owned by NPLM
+arms. The frontier between them is populated only by \emph{concatenations}
+(\S\ref{sec:repair}).
+
+\paragraph{This is not a seed artifact}
+The one place we initially believed the dissociation was breakable ---
+\texttt{nplm\_bilinear} reaching probe $0.935$ on CIFAR-100, apparent parity
+with \texttt{supcon} --- dissolved under paired multi-seed testing: over 5
+paired seeds \texttt{supcon} gives $0.940\pm0.004$ against
+\texttt{nplm\_bilinear}'s $0.855\pm0.042$, paired difference $-0.085$
+($t=-4.7$). The single-seed $0.935$ was a tail draw from a heavy-tailed seed
+distribution. The $10\times$ larger seed variance of the label-free NPLM arm is
+itself an unexplained and, we think, interesting phenomenon.
+
+\paragraph{The dissociation recurs at every level}
+It is not a property of the loss family alone. It reappears (i) in the
+fine-tuning objective: prototype/repulsion fine-tuning wins the probe
+($0.97$ vs $0.81$--$0.84$) while NPLM$+$SIGReg fine-tuning wins \emph{every}
+power statistic (per-event $0.57$ vs $0.30$--$0.48$; SparKer $1.00/0.92$;
+Mahalanobis $0.90$; MMD $0.74$) and holds round-2 pool purity ($0.22$--$0.30$
+vs $0.03$--$0.11$); (ii) in the residual construction (\S\ref{sec:repair}),
+where NPLM residuals preserve calibration and plain residuals buy probe with
+it; and (iii) in semantic structure (\S\ref{sec:interp}), where the
+calibration-strong label-free arms are also the semantically emptiest. The
+practical rule is uncomfortable but clear: \textbf{choose by consumer}. Linear
+readout $\to$ prototype/softmax. Detection with a transferable threshold $\to$
+NPLM.
+
+\subsection{Regime rules: which corner wins where}
+\label{sec:regimes}
+
+The winning objective is determined by regime, and --- importantly for
+practitioners --- is \emph{base-invariant}: the same arm wins on DINO, LeJEPA
+and VISReg trunks. The governing variable is the number of seen classes
+relative to the embedding dimension, modulated by samples/class.
+
+\begin{table}[t]\centering\small
+\begin{tabular}{llll}
+\toprule
+regime & example & probe champion & calibration champion \\
+\midrule
+few classes, coarse       & CIFAR-10, Galaxy10 & \texttt{supcon} & \texttt{nplm\_sup\_dist} \\
+many classes, fine-grained & Cars, Flowers, Aircraft & \texttt{ss}/\texttt{supcon\_sigreg} & \texttt{ss} \\
+texture                    & DTD & \texttt{simclr} & \texttt{ss} \\
+many classes, low-res      & CIFAR-100 & \texttt{supcon} & \texttt{nplm\_bilinear} \\
+\bottomrule
+\end{tabular}
+\caption{Regime rules, replicated on all three pretraining bases. Note the
+inversions: the SIGReg marginal \emph{helps} on fine-grained low-data transfer
+and \emph{hurts} on CIFAR; label-free instance discrimination wins outright on
+texture, where labels add nothing to the probe.}
+\label{tab:regimes}
+\end{table}
+
+Three sub-rules are worth isolating.
+
+\emph{Anchor realizability gates the classwise marginal.} Classwise SIGReg is
+strictly better than global SIGReg \emph{iff} the class anchors are reachable,
+i.e.\ $\dim \geq n_{\text{classes}}$. With 100 anchors in 32-D or 64-D,
+centroids stall $\approx3.5$ away from their targets and the classwise
+marginal becomes actively harmful for label-free arms. This is a geometric
+precondition, checkable before training, and we recommend reporting the
+centroid-to-anchor distance as a routine diagnostic.
+
+\emph{High dimension is not free for calibrated objectives.} Moving CIFAR-100
+from 32-D to 64-D causes the bilinear NPLM arms to \emph{regress on both
+currencies} ($0.935\to0.858$; $0.925\to0.825$), while softmax and supervised
+distance arms gain mildly. On Cars at 100-D the same signature appears from the
+other side: \texttt{nplm\_sup\_dist} gains the most probe ($+0.096$) but loses
+its per-event calibration lead ($0.106\to0.03$). At high class counts the extra
+dimensions are spent on probe-readable directions, not calibrated ones.
+
+\emph{Fine-tuning inverts the base ranking.} On frozen features DINO dominates
+every currency. After end-to-end fine-tuning the ordering largely dissolves ---
+VISReg holds several pre-discovery records (DTD \texttt{simclr-ft} $0.854$,
+Cars \texttt{ss-ft} $0.741$). Cross-space CKA supplies the mechanism
+(\S\ref{sec:interp}): supervision pulls every base toward one shared geometry.
+
+\emph{Cross-entropy is not the ceiling.} On every substrate tested, a
+\texttt{supcon\_sigreg} head beats a supervised CE head on every column,
+including --- on a LeJEPA fine-tuned trunk --- beating CE's own trained-classifier
+top-1 with mere nearest-centroid accuracy ($0.638$ vs $0.625$).
+
+% ==========================================================================
+\section{Repairing the dissociation}
+\label{sec:repair}
+% ==========================================================================
+
+Given that no single standalone loss in the design cube achieves both
+currencies, we benchmark two \emph{constructions} that might.
+
+\subsection{Discovery is substrate-dependent and purity-gated}
+
+The iterated discovery loop (\S\ref{sec:battery}, Currency~III) behaves in a
+way that is initially confusing and ultimately simple. On frozen trunks it is
+probe-\emph{negative} on Cars for every arm ($-0.02$ to $-0.09$). On
+end-to-end fine-tuned trunks it is probe-\emph{positive} for all six arms
+($+0.03$ to $+0.11$) --- \emph{with pool purity still below $0.14$ in both
+cases}. Across the full grid it is positive in $50/72$ cells, and the
+\texttt{supcon-ft}$+$discovery pipeline is positive in $12/12$
+dataset$\times$base cells, the only universally safe full pipeline we found.
+
+Since purity did not change, the gain cannot be coming from pure pools. The
+mechanism is that impure-pool prototype fine-tuning acts as \emph{beneficial
+refinement} when the substrate is already aligned to the task, and as
+\emph{erosion} when it is not. This reframes discovery: on low-purity data it
+is not finding new classes, it is a regularizer, and it should be reported as
+such. Consistently, the largest single gain in the program is a
+\emph{rescue} --- \texttt{nplm-sup-ft} on DTD, $0.586\to0.781$, replicated at
+$+0.14$ to $+0.20$ on all three bases --- recovering what a weak head missed
+rather than discovering anything.
+
+Where purity \emph{is} high, discovery does what it advertises: CIFAR-10
+(purity $0.34$) yields the best full pipeline on record, and Flowers
+(purity $0.33$--$0.66$) yields $+0.106$ to $+0.145$. But purity is
+\textbf{necessary and not sufficient}: aircraft pools at moderate purity
+($0.32$--$0.53$) and discovery still costs probe ($-0.012$ to $-0.037$) while
+buying geometry and per-event power. And Flowers/VISReg shows purity $0.65+$
+can leave a strong arm flat --- there was nothing left to learn.
+
+One pathology deserves flagging for anyone deploying such a loop:
+\texttt{ss-ft} discovery on the LeJEPA base collapses the probe
+$0.792\to0.613$, the worst outcome on record, by splitting round 1 into six
+anchors at purity $0.605$ that fragment the \emph{strongest} classes rather
+than the novelty. High purity does not protect against a bad partition.
+
+\subsection{Residual fine-tuning wins, and breaks the dissociation}
+
+The alternative construction: freeze the parent's seen-class centroids, train a
+second head end-to-end on the residual $\mathbf{r}=\z-\mmu_y$, and evaluate the
+concatenation $[\z;\mathbf{r}]$. The parent half keeps what supervision
+learned; the residual half is free to encode the within-class variation that
+supervision discarded --- which is where fine-grained novelty lives.
+
+\begin{table}[t]\centering\small
+\begin{tabular}{llccc}
+\toprule
+dataset & best construction & probe (per-event) & parent & prior champion \\
+\midrule
+Aircraft/VISReg & \texttt{supcon}$\to$res-nplm cat & \best{0.863} (0.363) & 0.809 & 0.812$^\dagger$ \\
+Cars/VISReg     & \texttt{supcon}$\to$res-nplm cat & \best{0.855} (0.263) & 0.707 & 0.759 \\
+Flowers/DINO    & \texttt{supcon}$\to$res-nplm cat & \best{0.885} (0.334) & 0.708 & 0.814 \\
+DTD/VISReg      & \texttt{supcon}$\to$res cat      & 0.847 (0.077) & 0.750 & 0.854$^\ddagger$ \\
+Galaxy10/LeJEPA & \texttt{supcon}$\to$res cat      & \best{0.975} (0.001) & 0.919 & 0.946 \\
+CIFAR-100       & \texttt{supcon}$\to$res-nplm cat & 0.955$\pm$0.006 & 0.944 & 0.9546 \\
+CIFAR-10        & \texttt{supcon}$\to$res cat      & 0.9552$\pm$0.0023 & 0.9404 & 0.954 \\
+\bottomrule
+\end{tabular}
+\caption{Best residual construction per dataset (best base shown). Residual
+fine-tuning beats the discovery pipeline in $12/12$ transfer cells.
+$^\dagger$aircraft prior champion carries a holdout-contamination caveat; the
+row here uses strict open-world parents. $^\ddagger$the one exp-70 record
+residuals do not beat (\texttt{simclr-ft} pre-discovery on texture).}
+\label{tab:residual}
+\end{table}
+
+Three things make this more than a leaderboard entry.
+
+\emph{The winning residual objective splits by the same axis as the probe
+world.} NPLM residual concatenation wins on fine-grained data (Cars 3/3,
+Flowers 2/3); plain softmax residual concatenation wins on texture and coarse
+data (DTD 3/3, Galaxy10 3/3). The estimator split from \S\ref{sec:dissoc}
+reappears \emph{inside} the residual construction, which we read as evidence
+that it is a property of what the objectives encode rather than of how they are
+deployed.
+
+\emph{NPLM residual concatenations keep calibration while raising the probe.}
+Cars/VISReg at probe $0.855$ with per-event $0.263$ and the best \texttt{eucl}
+and \texttt{mahaT} on Cars to date is \textbf{the first space in the campaign to
+hold both currencies at once}. Plain residual concatenations, by contrast,
+often buy their probe \emph{with} calibration --- Galaxy10/LeJEPA reaches probe
+$0.975$ at per-event $0.001$, which is a warning label, not a win.
+
+\emph{The effect is essentially deterministic.} Multi-seed checks give
+Cars/VISReg paired $\Delta=+0.148\pm0.004$ (3/3 seeds) and CIFAR-10 paired
+$\Delta=+0.0157\pm0.0004$ (5/5 seeds). We cite records with uncertainties
+throughout ($0.833\pm0.017$ on Cars; $0.955\pm0.006$ on CIFAR-100) because
+several single-seed peaks in the campaign were fair-but-high draws, and one
+objective ranking (plain-res vs res-nplm on CIFAR-100) \emph{flipped} under
+averaging.
+
+\emph{Stacking is purity-gated.} Running discovery on top of the residual
+winners stacks only where the residual space already separates the novelty:
+Flowers $+0.021$ (new record $0.906$) and DTD/VISReg $+0.015$ (new record
+$0.862$, finally beating \texttt{simclr-ft}), flat or slightly negative
+elsewhere. On fine-grained data the discovery fine-tune erodes exactly the
+residual concatenation's probe directions.
+
+% ==========================================================================
+\section{Scale-free statistics see what distances miss}
+\label{sec:lid}
+% ==========================================================================
+
+Every calibration statistic in \S\ref{sec:battery} is a distance. Distances
+fail in a specific and predictable way: when novel classes sit \emph{on} the
+data manifold, near some seen centroid, minimum-distance scores are blind by
+construction. This is the fine-grained regime --- exactly the regime where
+pooling fails (\S\ref{sec:repair}).
+
+We therefore add a \emph{scale-free} statistic: the Levina--Bickel estimator of
+local intrinsic dimension,
+\begin{equation}
+\lid_k(\x) \;=\; -\left[\frac{1}{k-1}\sum_{j=1}^{k-1}
+\log\frac{r_j(\x)}{r_k(\x)}\right]^{-1},
+\end{equation}
+computed against seen-class training references ($k=20$, max 4000 refs). It
+depends only on \emph{ratios} of neighbor distances, so it is invariant to the
+scale deformations that break both fixed-$\sigma$ kernels and distance
+thresholds. Higher $\lid$ indicates novelty: holdout $\lid$ exceeds seen $\lid$
+in nearly every space we measured --- novelty lives in locally
+higher-dimensional neighborhoods.
+
+\paragraph{Result}
+On Flowers-102, $\lid$ reaches $\auc=0.951$--$0.955$ using \emph{no novelty
+labels at all}, exceeding the best supervised probe on that dataset ($0.906$).
+This is the only unsupervised score to beat a trained probe anywhere in the
+campaign, and it is a new Flowers novelty record.
+
+\paragraph{Controls}
+We treat a result of this shape with suspicion and ran the corresponding
+controls. \emph{Holdout rotation}: over 10 random 10-class holdouts on a frozen
+trunk, Flowers $\lid$ gives $0.879\pm0.018$ (min $0.844$) versus a
+$k$NN-distance baseline at $0.692\pm0.047$ --- classes 92--101 are not special.
+\emph{Distance baselines}: $\lid$ beats $k$NN-distance by $+0.08$--$0.12$ and
+\texttt{eucl} by $+0.03$--$0.06$ everywhere on Flowers, with
+Spearman$(\lid,k\text{NN-}d)=0.55$--$0.92$ --- correlated, but carrying
+independent signal. \emph{Robustness}: bootstrap 95\% CIs $\pm0.006$;
+per-holdout-class AUC minimum $0.86$--$0.92$ (no single-class driver);
+$k$-sensitivity plateaus at $k\in[20,50]$ and degrades to $\approx0.78$ at
+$k=5$ (the ratio estimator needs neighbors). A rank ensemble with \texttt{eucl}
+adds nothing --- $\lid$ subsumes it.
+
+\paragraph{And where it fails}
+The same protocol on Cars gives $0.545\pm0.040$, and on VISReg fine-tuned Cars
+spaces the ordering flips: $k$NN-distance and \texttt{eucl} beat $\lid$.
+Aircraft and Galaxy10 sit at $0.56$--$0.66$. \textbf{$\lid$'s advantage is
+regime-specific, and the regime is a dataset property, not a protocol
+artifact} --- the identical rotation protocol produces $0.88$ on Flowers and
+$0.55$ on Cars. The reading: Flowers holdouts sit on the flower manifold with
+small distances and mediocre distance-based scores, but a distinct local
+dimensional signature; Cars holdouts do not have one.
+
+\paragraph{$\lid$ as a pool scorer}
+Because $\lid$ is scale-free it should also fix the failure mode where a
+discovery fine-tune inflates the space and the distance-based pool threshold
+decays. It does: substituting $\lid$ for min-anchor-distance as the pool
+scorer holds round-2 purity at $0.60$--$0.68$ where the distance scorer
+collapses to $0.18$--$0.33$, a $\sim3\times$ improvement, and \emph{strictly
+dominates} as a pooling mechanism. But the downstream battery does not move
+(probe deltas $+0.000$, $-0.029$, $+0.007$). Above the purity gate, purity is
+not the binding constraint --- the fine-tune dynamics are. This is a clean
+example of why a battery, rather than a single number, is necessary: a
+mechanism can be strictly better and operationally irrelevant at the same time,
+and only a multi-currency report shows both facts.
+
+% ==========================================================================
+\section{Interpretability, measured}
+\label{sec:interp}
+% ==========================================================================
+
+A discovery that cannot be explained is not yet a discovery. We treat semantic
+legibility as a measurable property and find it dissociates from the other
+currencies as sharply as they dissociate from each other.
+
+\paragraph{The founding question}
+Are otters near beavers? On a CIFAR-100 supervised parent space with
+\texttt{beaver} held out entirely --- never labeled, never in the corpus --- the
+nearest-centroid table reads
+\texttt{otter}$\to$\texttt{seal}(0.02), \texttt{beaver}$^*$(0.08),
+\texttt{bear}(0.11) and
+\texttt{beaver}$^*\to$\texttt{otter}(0.08), \texttt{shrew}(0.09),
+\texttt{seal}(0.10), \texttt{porcupine}(0.13).
+The never-labeled holdout lands mutually top-2 with otter purely from
+fine-tuning on the other 99 classes. The same holds on Galaxy10: the
+never-labeled \texttt{edge-on bulge} sits $0.06$ from \texttt{edge-on no
+bulge}, its true sibling, with \texttt{cigar smooth} next --- which is what an
+edge-on disk looks like. Open-world novelty settles where it semantically
+belongs, and this is the property that makes a discovered cluster explainable.
+
+\begin{table}[t]\centering\small
+\begin{tabular}{lcccc}
+\toprule
+space (CIFAR-100, 100-D) & agree@1 & agree@5 & dendro purity & silhouette \\
+\midrule
+\texttt{supcon} (parent)              & \best{0.700} & \best{0.468} & 0.591 & 0.197 \\
+\texttt{supcon\_sigreg}               & 0.690 & 0.460 & \best{0.603} & \best{0.199} \\
+\texttt{supcon}$\to$res-nplm (concat) & 0.670 & 0.452 & 0.564 & 0.188 \\
+\texttt{supcon}$\to$res (concat)      & 0.640 & 0.406 & 0.514 & 0.162 \\
+\texttt{simclr}                       & 0.570 & 0.366 & 0.457 & 0.118 \\
+\texttt{nplm\_bilinear}               & 0.530 & 0.334 & 0.417 & 0.059 \\
+\texttt{supcon}$\to$res (residual half) & 0.490 & 0.288 & 0.365 & 0.029 \\
+\texttt{lejepa}                       & 0.450 & 0.342 & 0.427 & 0.046 \\
+\bottomrule
+\end{tabular}
+\caption{Semantic structure against the CIFAR-100 coarse-label partition
+(chance agree@1 $=0.040$). Semantics track \emph{supervision}, not probe
+quality and not calibration quality.}
+\label{tab:interp}
+\end{table}
+
+\paragraph{Semantics track supervision, not the probe}
+The extreme case is Galaxy10 on DINO: \texttt{supcon-ft} recovers the
+four-group morphology partition \emph{perfectly} (dendrogram purity $1.000$,
+agree@1 $0.9$), while the label-free \texttt{nplm-bil-ft} --- despite its
+calibration strengths --- has essentially no semantic structure (purity $0.49$,
+silhouette $-0.08$). The probe-versus-calibration dissociation is
+\emph{also} a semantic-structure dissociation, and this is the strongest
+argument in the paper for reporting Currency~IV separately: a practitioner
+selecting on calibration alone can land on a space in which no discovered
+cluster can be described.
+
+\paragraph{Concatenation is semantically free}
+Residual concatenations inherit the parent's semantics exactly (Galaxy10
+res-nplm concat purity $1.000$, equal to parent) while adding the calibration
+half. On CIFAR-100 the record residual concatenation \emph{tightens} the
+semantic ring around the held-out beaver ($0.06$--$0.10$) at near-parent
+purity. Meanwhile the residual half \emph{alone} scrambles semantics by design
+(beaver $\to$ mushroom/crab/lobster, purity $0.365$) --- semantics ride in the
+parent half, and the concatenation restores them while keeping the probe gain.
+This is a strong practical argument for concatenation over replacement.
+
+\paragraph{What ``fine-grained mistakes'' actually are}
+On Cars, the space organizes by body style as much as by make (make-agree@1
+$0.40$ against chance $0.04$), with errors like Audi convertible $\to$ BMW
+convertible. These are not failures; they are visually coherent groupings that
+a make-based partition scores as wrong. We note this because superclass
+agreement metrics can penalize exactly the structure a scientist would want.
+
+\subsection{How spaces relate to each other}
+
+Cross-space measurements supply mechanisms for several claims above.
+
+\emph{Supervision erases the pretraining base; self-supervision preserves it.}
+The same supervised arm fine-tuned from two \emph{different} bases reaches
+CKA $\approx0.74$ on average --- as similar as two \emph{different supervised
+losses} on the same base. The label signal pulls every pretraining toward one
+shared supervised geometry, which is precisely why the regime rules of
+\S\ref{sec:regimes} are base-invariant. Label-free \texttt{simclr-ft} is far
+less base-invariant (CKA $0.46$--$0.62$). Consistently, on DTD --- where
+\texttt{simclr} wins the probe --- \texttt{simclr-ft}'s \emph{local} structure
+transfers across bases better than the supervised arms' (mutual-$k$NN $0.28$ vs
+$0.16$): its texture neighborhoods are the transferable part.
+
+\emph{NPLM spaces are reorganizations, not new information.} The NPLM arms are
+geometric outliers everywhere (CKA $0.2$--$0.36$, mutual-$k$NN $0.03$--$0.06$
+against every other arm, LLE weight-transfer ratio $>1$) --- yet they are
+highly \emph{decodable from} softmax spaces (asymmetric ridge $R^2$ up to
+$0.97$ at CKA $0.36$). Calibration is a re-encoding of information the
+supervised space already contains. This explains why concatenation works so
+well and why a single loss struggles: the two currencies are different
+\emph{codes} for overlapping content.
+
+\emph{Residual children are mostly linear re-maps --- and drift is capacity,
+not help.} Parent-vs-child ridge $R^2$ is $0.97$--$0.98$ on coarse data
+(the child is nearly a linear re-map; calibration is re-weighting) and
+$0.91$--$0.95$ with mutual-$k$NN $\approx0.2$ on fine-grained data (locally
+reorganized, $5$--$10\%$ genuinely new variance). Within the transfer grid the
+concatenation gains track the unexplained fraction. But CIFAR refutes the naive
+version of this rule: there children drift \emph{much} further ($R^2$ down to
+$0.32$) while producing the campaign's \emph{smallest} probe gains
+($+0.006$--$0.016$ vs Cars' $+0.148$). Unexplained variance is necessary and not
+sufficient --- what pays is whether the new variance encodes the holdout.
+
+\emph{Loss families have intrinsic-dimension fingerprints.} TwoNN intrinsic
+dimension orders the arms identically in every cell: NPLM supervised most
+compressed (ID $\approx2$--$3$), SIGReg/SSL arms mid ($5$--$7$), softmax and
+frozen highest ($9$--$13$). The Gaussian target and the density-ratio collapse
+are directly visible as dimension, which makes ID a cheap objective-provenance
+diagnostic.
+
+% ==========================================================================
+\section{A reporting protocol}
+% ==========================================================================
+
+We distill the campaign into a protocol we would want applied to any embedding
+space advertised for scientific discovery.
+
+\begin{enumerate}\itemsep2pt
+\item \textbf{Report all four currencies.} Probe-only or geometry-only
+conclusions are, in our experience, wrong roughly as often as they are right,
+because the currencies are anti-correlated by construction.
+\item \textbf{State the number of seen classes, the embedding dimension, and
+the centroid-to-anchor distance.} These determine which corner of the design
+cube is even available (classwise marginals require
+$\dim \geq n_{\text{classes}}$).
+\item \textbf{Never claim a probe gap below $0.02$ from one seed.} Single-seed
+spread is $\approx0.017$. Two rankings in this campaign flipped under
+averaging.
+\item \textbf{Use annealed median-heuristic bandwidths} for any kernel
+two-sample statistic compared across spaces with different scales. A fixed
+bandwidth reports zero power on a space that is fine.
+\item \textbf{Report pool purity next to any discovery gain.} A gain at purity
+$<0.15$ is refinement, not discovery, and behaves differently (it depends on
+substrate alignment, not on the pool).
+\item \textbf{Include at least one scale-free statistic.} Distance scores are
+structurally blind to on-manifold novelty; $\lid$ costs nothing and, in one
+regime, beat every supervised alternative we had.
+\item \textbf{Audit semantics explicitly.} Superclass agreement, dendrogram
+purity, and a nearest-centroid table a domain expert can read. Calibration
+does not imply legibility --- we have a space with strong calibration and
+silhouette $-0.08$.
+\end{enumerate}
+
+\paragraph{And a default recipe}
+For a practitioner who wants one starting point: fine-tune end-to-end with
+\texttt{supcon} (adding a global SIGReg marginal if the data are fine-grained
+and low-shot), then train a residual head on $\z-\mmu_y$ with an NPLM
+objective on fine-grained data or a softmax objective on coarse/texture data,
+and evaluate the concatenation. Add a discovery pass only if measured pool
+purity exceeds $\approx0.3$. Score with the four-currency battery, including
+$\lid$.
+
+% ==========================================================================
+\section{Limitations}
+% ==========================================================================
+
+Our evidence is entirely in the image domain; the regime rules are stated in
+terms of class counts and samples per class and we expect them to transfer, but
+we have not tested them on the scientific modalities (event-level collider
+data, spectra, time series) that motivate the work. The ``discovery'' setting
+is simulated by holding out known classes, which is a proxy: real novelty is
+not a withheld member of a curated taxonomy, and the Cars result --- where
+novel classes are not geometrically outlying --- suggests the proxy's
+difficulty varies more than the datasets' nominal difficulty does. Several
+conclusions rest on 3--5 seeds, which resolves $0.02$-scale effects but not
+smaller ones. Our discovery loop is one specific algorithm (quantile pool, BIC
+$k$-selection, anchor merge, prototype fine-tune) and the purity-gating
+conclusion may be specific to it. Finally, the interpretability metrics require
+a superclass partition, which is available in our datasets and frequently is
+not in the settings we care about; the nearest-centroid tables remain
+available but require expert reading rather than a number.
+
+% ==========================================================================
+\section{Conclusion}
+% ==========================================================================
+
+Embedding spaces built for scientific discovery need to be evaluated as
+instruments, not as classifiers. When we do so --- across 79 controlled
+experiments, seven datasets, three pretraining bases and ten objectives --- the
+picture is consistent: linear readability and calibrated geometry are
+anti-correlated properties that no single loss in our design space achieves
+together; the repair is architectural (residual decomposition and
+concatenation) rather than a better loss; scale-free statistics reach novelty
+that distance-based scores cannot see, in a regime one can identify in advance;
+and semantic legibility is a third, separately measurable axis that tracks
+supervision alone. The distributional-prior program that LeJEPA and SIGReg
+opened up is, we think, the right foundation --- specifying the marginal is
+what makes any of these quantities well posed. What it needs alongside it is a
+metrology: a standard battery, honest uncertainties, and the discipline to
+report the currency a space \emph{lacks}.
+
+\subsubsection*{Reproducibility statement}
+
+All experiments are scripted (\texttt{experiments/NN\_*.py}, each with a
+mandatory \texttt{--quick} smoke mode) over a shared library
+(\texttt{supersig/}: losses, training loops, metrics, discovery). Result arrays
+are archived as \texttt{logs/expNN/*.npz} with fixed key conventions, condensed
+into per-dataset master tables under \texttt{docs/}. Seeds are fixed and
+identical across paired cells; the probe uses seeds $1000{+}s$. Known
+reproduction jitter from cuDNN nondeterminism is $\approx\pm0.003$ in AUC and is
+stated wherever single-seed records are cited.
+
+\subsubsection*{Acknowledgments}
+
+The experimental campaign was executed with substantial assistance from Claude
+(Anthropic) acting as an autonomous research agent over the
+\texttt{supersig} codebase.
+
+\end{document}
