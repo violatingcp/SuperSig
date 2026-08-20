@@ -867,4 +867,346 @@ The experimental campaign was executed with substantial assistance from Claude
 (Anthropic) acting as an autonomous research agent over the
 \texttt{supersig} codebase.
 
+\appendix
+
+% ==========================================================================
+\section{Gradient descent under NPLM versus InfoNCE, and the log-likelihood
+readout}
+\label{app:grad}
+% ==========================================================================
+
+The dissociation of \S\ref{sec:dissoc} is stated empirically in the main text.
+This appendix derives it. We compare the two estimators of the same population
+object --- the pointwise mutual information --- at the level of their
+\emph{gradients}, and show that essentially every qualitative difference
+reported in the campaign (the vanishing per-event power of softmax spaces, the
+inertness of $\lambda$, the heavy-tailed seed variance of the bilinear NPLM
+arm, the base-robustness of the distance NPLM arm, and the intrinsic-dimension
+fingerprints) follows from a single structural fact: \textbf{InfoNCE is flat
+along the direction that carries the absolute normalization, and NPLM is
+strictly convex along it.}
+
+We flag scope honestly. The derivations in
+\S\ref{app:rowsum}--\S\ref{app:forces} are analytical and new to this paper;
+the links drawn to campaign measurements in \S\ref{app:predictions} are
+\emph{post-hoc consistency checks} against data already collected, not
+preregistered tests. We indicate in each case what a decisive experiment would
+be.
+
+\subsection{Two estimators, one target}
+
+Fix a batch $\{(x_i,x_i^+)\}_{i=1}^N$ and write $g_{ij}=g_\theta(x_i,x_j^+)$,
+with the diagonal as positive pairs and the off-diagonal as the shuffled
+product-of-marginals reference. The two objectives are
+\begin{align}
+\widehat{\mathcal{L}}_{\mathrm{NCE}}
+&= -\frac1N\sum_i \Big[\,g_{ii} - \log\!\sum_j e^{g_{ij}}\Big],
+\label{eq:app-nce}\\
+\widehat{\mathcal{L}}_{\mathrm{NPLM}}
+&= \frac{1}{N(N-1)}\sum_{i\neq j}\big(e^{g_{ij}}-1\big)
+- \frac1N\sum_i g_{ii}.
+\label{eq:app-nplm}
+\end{align}
+They share the batch geometry exactly; only the functional differs. Both are
+consistent estimators of $\mathrm{PMI}$ --- but of different \emph{gauge
+classes} of it, as the gradients make immediate.
+
+\subsection{The row-sum identity: a flat direction versus a convex one}
+\label{app:rowsum}
+
+Differentiating \eqref{eq:app-nce} with respect to the critic entries gives
+\begin{equation}
+\frac{\partial \widehat{\mathcal{L}}_{\mathrm{NCE}}}{\partial g_{ij}}
+= \frac1N\big(\sigma_{ij} - \delta_{ij}\big),
+\qquad
+\sigma_{ij} = \frac{e^{g_{ij}}}{\sum_k e^{g_{ik}}},
+\label{eq:app-gnce}
+\end{equation}
+while \eqref{eq:app-nplm} gives
+\begin{equation}
+\frac{\partial \widehat{\mathcal{L}}_{\mathrm{NPLM}}}{\partial g_{ij}}
+=
+\begin{cases}
+\dfrac{e^{g_{ij}}}{N(N-1)}, & i\neq j\ \ (\text{reference}),\\[6pt]
+-\dfrac1N, & i=j\ \ (\text{positive}).
+\end{cases}
+\label{eq:app-gnplm}
+\end{equation}
+Three differences are visible at once.
+
+\paragraph{(i) InfoNCE gradients are row-stochastic; NPLM's are not}
+From \eqref{eq:app-gnce}, $\sum_j \partial\widehat{\mathcal{L}}_{\mathrm{NCE}}
+/\partial g_{ij} = 0$ for \emph{every} anchor $i$, because $\sigma_{i\cdot}$ is
+a probability vector. The InfoNCE gradient is therefore purely
+\emph{relative}: it can reallocate mass among the entries of a row but can
+never change a row's total. Formally, consider shifting the critic by an
+arbitrary per-anchor function, $g_{ij}\mapsto g_{ij}+c_i$. Then
+$\sigma_{ij}$ is unchanged and
+\begin{equation}
+\widehat{\mathcal{L}}_{\mathrm{NCE}}[g+c] = \widehat{\mathcal{L}}_{\mathrm{NCE}}[g]
+\quad\text{exactly, for all } c .
+\end{equation}
+The per-anchor shift is an exact \emph{flat direction} of the loss --- zero
+gradient, zero curvature. This is the entire content of ``InfoNCE recovers PMI
+up to a per-row constant'': the constant is not merely unidentified, it is
+\emph{invisible to gradient descent}, so no amount of training, data, or
+capacity can recover it.
+
+For NPLM the same shift gives, with $\bar{c}$ a uniform shift for clarity,
+\begin{equation}
+\widehat{\mathcal{L}}_{\mathrm{NPLM}}[g+\bar c]
+= e^{\bar c}\,\widehat{\E}_{\mathrm{ref}}\big[e^{g}\big] - 1
+- \widehat{\E}_{\mathrm{pos}}[g] - \bar c,
+\end{equation}
+so that
+\begin{equation}
+\frac{d\widehat{\mathcal{L}}_{\mathrm{NPLM}}}{d\bar c}
+= e^{\bar c}\,\widehat{\E}_{\mathrm{ref}}\big[e^{g}\big] - 1,
+\qquad
+\frac{d^2\widehat{\mathcal{L}}_{\mathrm{NPLM}}}{d\bar c^{\,2}}
+= e^{\bar c}\,\widehat{\E}_{\mathrm{ref}}\big[e^{g}\big] \;>\; 0 .
+\label{eq:app-convex}
+\end{equation}
+The direction InfoNCE cannot see is \emph{strictly convex} for NPLM, with a
+unique minimum at $\bar c^\star = -\log\widehat{\E}_{\mathrm{ref}}[e^{g}]$,
+i.e.\ exactly at the calibration condition
+$\widehat{\E}_{\mathrm{ref}}[e^{g^\star}]=1$. Equivalently: summing
+\eqref{eq:app-gnplm} over all pairs,
+\begin{equation}
+\sum_{i,j}\frac{\partial\widehat{\mathcal{L}}_{\mathrm{NPLM}}}{\partial g_{ij}}
+= \widehat{\E}_{\mathrm{ref}}\big[e^{g}\big] - 1
+= \text{(calibration residual)} .
+\label{eq:app-residual}
+\end{equation}
+\textbf{The total gradient of the NPLM loss \emph{is} the miscalibration.}
+Gradient descent on \eqref{eq:app-nplm} performs calibration as an inseparable
+part of fitting, and \eqref{eq:app-residual} doubles as a free training
+diagnostic: a run whose summed critic gradient has not approached zero has not
+calibrated, whatever its loss value.
+
+This is the precise sense in which per-event detection power is
+\emph{structurally} unavailable to a softmax objective. A per-event threshold
+is a statement about the absolute value of the score; \eqref{eq:app-gnce} says
+that value is a gauge choice on which the objective exerts no force. The
+observed $0.000$ per-event power of every SupCon-family space in the campaign
+is not a tuning failure or a weak baseline --- it is this identity.
+
+\paragraph{(ii) Why max-subtraction destroys calibration}
+The standard numerical guard for softmax losses, $g_{ij}\mapsto
+g_{ij}-\max_k g_{ik}$, is a per-anchor shift. By (i) it is exactly free for
+InfoNCE and exactly \emph{fatal} for NPLM: it moves the minimizer from
+$g^\star$ to $g^\star + c$, the one quantity the loss was chosen to pin. The
+correct guard clamps the exponent, $e^{\min(g,\,g_{\max})}$, which by
+\eqref{eq:app-gnplm} sets the gradient of pathological reference pairs to a
+constant instead of shifting the optimum, leaving $g^\star$ untouched wherever
+$g<g_{\max}$. The campaign uses $g_{\max}=30$ and verifies the resulting critic
+against analytic PMI at correlation $>0.9$ with mean offset $\approx0$;
+max-subtraction drives the offset to hundreds.
+
+\paragraph{(iii) Bounded versus exponential gradients}
+From \eqref{eq:app-gnce}, $|\partial\widehat{\mathcal{L}}_{\mathrm{NCE}}/
+\partial g_{ij}|\le 1/N$ \emph{unconditionally}. InfoNCE cannot produce a large
+critic gradient no matter how badly scaled the embedding is. From
+\eqref{eq:app-gnplm}, the NPLM reference gradient is $e^{g_{ij}}/N(N-1)$, which
+is unbounded above. This single asymmetry accounts for the optimization
+folklore around NPLM, and we can quantify it.
+
+\subsection{Gradient variance and the two critics}
+\label{app:variance}
+
+Suppose the critic values on reference pairs are approximately Gaussian,
+$g \sim \N(\mu,s^2)$. Then the relative variance of the reference gradient is
+\begin{equation}
+\frac{\mathrm{Var}\big[e^{g}\big]}{\big(\E[e^{g}]\big)^2}
+= e^{s^{2}} - 1 ,
+\label{eq:app-var}
+\end{equation}
+which grows \emph{exponentially} in the spread of the critic, while the
+corresponding quantity for \eqref{eq:app-gnce} is $O(1)$ because $\sigma_{ij}
+\in[0,1]$. A modest critic spread of $s=3$ already gives a relative gradient
+standard deviation of $\approx90$. NPLM training is therefore not merely
+``sometimes unstable'': its gradient noise is controlled by a quantity, $s$,
+that is itself a free consequence of the parametrization.
+
+This makes the \emph{critic} axis of the design cube, which in the main text is
+one knob among four, the decisive one for optimization. Compare the two critics
+used in the campaign:
+\begin{align}
+\text{distance:}\quad & g = -\tfrac12\|z-z'\|^2/\tau \;\le\; 0
+&&\Longrightarrow&& e^{g}\le 1 \quad\text{(bounded by construction)},\\
+\text{bilinear:}\quad & g = \langle z,z'\rangle/\tau \;\in\;\R
+&&\Longrightarrow&& e^{g}\ \text{unbounded}.
+\end{align}
+The distance critic makes the exponential gradient \emph{automatically bounded}
+--- the pathology of \eqref{eq:app-var} cannot occur, and the clamp never
+activates in the normal range. The bilinear critic has no such protection: a
+single well-aligned reference pair can dominate the batch gradient.
+
+\begin{table}[t]\centering\small
+\begin{tabular}{lll}
+\toprule
+& InfoNCE / SimCLR & NPLM \\
+\midrule
+positive-pair gradient & $\tfrac1N(\sigma_{ii}-1)$, saturating & $-\tfrac1N$, constant \\
+reference-pair gradient & $\tfrac1N\sigma_{ij}\in[0,\tfrac1N]$ & $e^{g_{ij}}/N(N-1)$, unbounded \\
+row sum of gradients & $0$ (exactly) & calibration residual, Eq.~\eqref{eq:app-residual} \\
+per-anchor shift $g\to g+c$ & flat direction & strictly convex, Eq.~\eqref{eq:app-convex} \\
+recovered object & $\mathrm{PMI}+c(x)$ & $\mathrm{PMI}$, absolute \\
+repulsion range & long (rank/softmax) & short (Gaussian kernel) \\
+relative gradient variance & $O(1)$ & $e^{s^2}-1$ \\
+stabilizer & max-subtraction (free) & exponent clamp (max-sub.\ is fatal) \\
+\bottomrule
+\end{tabular}
+\caption{Gradient properties of the two estimators of the same population
+target. Every entry follows from \eqref{eq:app-gnce}--\eqref{eq:app-gnplm}.}
+\label{tab:app-grad}
+\end{table}
+
+\subsection{The force law on the embedding}
+\label{app:forces}
+
+Push the gradients through to the embedding itself. Under the distance critic
+(the form the critic collapses to once SIGReg is active), $\partial g_{ij}/
+\partial z_i = -(z_i - z_j^+)$, and
+\begin{equation}
+\nabla_{z_i}\widehat{\mathcal{L}}_{\mathrm{NPLM}}
+= \underbrace{\frac1N\big(z_i - z_i^{+}\big)}_{\text{spring to positive}}
+\;-\;
+\underbrace{\frac{1}{N(N-1)}\sum_{j\neq i}
+e^{-\frac12\|z_i-z_j^{+}\|^{2}}\big(z_i - z_j^{+}\big)}_{\text{repulsion}} .
+\label{eq:app-force}
+\end{equation}
+Two features of \eqref{eq:app-force} are worth stating plainly.
+
+\emph{The repulsion is the gradient of a kernel density estimate.} The weight
+$e^{-\frac12\|z_i-z_j\|^2}$ is an unnormalized isotropic Gaussian kernel, so
+the second term is precisely $\nabla_{z_i}\hat q(z_i)$ for
+$\hat q$ a Gaussian KDE of the reference population. NPLM gradient descent is
+therefore: \emph{pull toward your positive with a linear spring, and descend the
+estimated reference density}. The unit-width Gaussian supplies an intrinsic
+\textbf{length scale}, and that length scale is what makes distances absolute.
+A point far from all references feels essentially \emph{no} repulsion --- the
+force vanishes as $e^{-d^2/2}$ --- so the space does not expend capacity
+separating what is already separated.
+
+\emph{InfoNCE has no length scale.} The corresponding repulsion weight is
+$\sigma_{ij}$, which is normalized \emph{within a row}: even if every negative
+is far away, the row still sums to one and the repulsion is redistributed
+rather than extinguished. Contrastive repulsion is thus long-range and
+rank-based, and its fixed point is uniformity on the sphere rather than any
+particular scale. This is the geometric statement behind the main text's
+observation that \texttt{simclr} attains probe $0.867$ with \texttt{eucl}
+$0.236$: the objective arranges \emph{angles} correctly and never had an
+opinion about radii.
+
+\emph{The positive term does not saturate.} In \eqref{eq:app-gnce} the positive
+gradient is $\tfrac1N(\sigma_{ii}-1)$, which $\to 0$ as the positive is
+separated: InfoNCE anneals itself. In \eqref{eq:app-gnplm} it is the constant
+$-\tfrac1N$. NPLM pulls positives together with undiminished force forever, and
+equilibrium is reached \emph{only} when the exponential repulsion balances it
+--- that is, at the calibration condition, not at a separation criterion.
+
+\subsection{What this predicts, and what the campaign measured}
+\label{app:predictions}
+
+The derivation yields five predictions. All five have a counterpart in the
+campaign data. We stress again that these are consistency checks on existing
+measurements, not independent confirmations.
+
+\begin{enumerate}\itemsep3pt
+\item \emph{Softmax spaces have exactly zero transferable per-event power,
+regardless of probe quality.} Predicted by the flat direction in (i).
+Measured: per-event $0.000$ for every SupCon-family space on every dataset and
+every signal fraction, including spaces at probe $0.94$.
+
+\item \emph{$\lambda$ is inert early; $\tau$ is not.} At initialization with a
+bilinear critic on raw (unnormalized) embeddings, $g$ has spread of order tens,
+so by \eqref{eq:app-gnplm} the interaction gradient is of order $e^{g}$ ---
+numerically $\sim\!10^{10}$ against $\sim\!10^{-2}$ for
+$\lambda\cdot\mathrm{SIGReg}$. The marginal term cannot compete until the
+exponent has contracted, which takes $\approx2$ epochs; $\lambda$ then shapes
+only the endgame. By contrast $\tau$ rescales the exponent itself and hence
+enters the gradient multiplicatively at all times. Measured: $\lambda$
+ablations are flat, $\tau=1$ is a sharp optimum on CIFAR-100 with $\tau\in
+\{0.5,2\}$ each costing $0.06$--$0.10$ probe.
+
+\item \emph{The bilinear NPLM arm should be the high-variance one; the distance
+NPLM arm should be the stable one.} Predicted by \S\ref{app:variance}:
+$e^{g}\le1$ automatically for the distance critic, unbounded for bilinear.
+Measured, and to our mind the appendix's most striking correspondence:
+\texttt{nplm\_bilinear} on CIFAR-100 gives $0.855\pm0.042$ over paired seeds,
+a spread $10\times$ that of \texttt{supcon} ($0.940\pm0.004$), with a heavy
+right tail that produced a single-seed $0.935$ we initially mistook for parity;
+whereas \texttt{nplm\_sup\_dist} is \emph{the most base-robust arm in the
+campaign}, probe $0.72$--$0.73$ across all three pretraining trunks (spread
+$0.009$, versus \texttt{supcon}'s $0.076$). The unexplained seed variance
+flagged in \S\ref{sec:dissoc} is, on this account, the exponential gradient
+variance of \eqref{eq:app-var} --- and the prediction is that it is a property
+of the \emph{critic}, not of the estimator. A decisive test is cheap and we have
+not run it: hold the estimator at NPLM, sweep the critic between distance and
+bilinear at matched $\tau$, and compare seed variance directly.
+
+\item \emph{NPLM spaces should be compressed relative to softmax spaces.}
+Predicted by the short-range force law: distant pairs exert no force, and the
+non-saturating positive pull is balanced only at the calibration scale.
+Measured: TwoNN intrinsic dimension orders the arms identically in every cell of
+the grid --- supervised NPLM $\approx2$--$3$, SIGReg/SSL $5$--$7$, softmax and
+frozen $9$--$13$.
+
+\item \emph{NPLM should reorganize rather than add information.} The Bregman
+identity for \eqref{eq:app-nplm} states that the constrained minimizer is the
+projection of $\mathrm{PMI}$ onto the critic family in the divergence generated
+by $\phi(t)=e^{t}$; a different projection of the same target is still a
+function of that target. Measured: NPLM spaces are geometric outliers against
+every other arm (CKA $0.2$--$0.36$, mutual-$k$NN $0.03$--$0.06$) yet are highly
+\emph{decodable from} softmax spaces (ridge $R^2$ up to $0.97$ at CKA $0.36$).
+\end{enumerate}
+
+\subsection{Why the log-likelihood readout needs both terms}
+
+Finally, the gradient view sharpens why neither objective alone delivers an
+interpretable likelihood surface, which is the motivation for the hybrid used
+throughout the campaign.
+
+NPLM fixes the interaction and its absolute scale, but the critic family
+$g = \langle z,z'\rangle + b(x) + b(x')$ retains a gauge,
+\begin{equation}
+z \mapsto Rz + a, \qquad
+b(x) \mapsto b(x) - \langle a, z\rangle - \tfrac12\|a\|^2 + \beta ,
+\end{equation}
+under which $g$, and hence the loss and \emph{every gradient}, is exactly
+invariant. So NPLM alone determines what the pair interaction is but not how it
+is split between the embedding and the bias --- the map into ``log-likelihood
+space'' is undetermined by descent. SIGReg removes precisely this residual
+freedom: pinning $p(z)=\N(0,I)$ kills the shift $a$ (leaving only an irrelevant
+rotation $R$) and identifies the bias as the marginal log-density,
+$b_\theta(x)\to-\tfrac12\|z\|^2+\text{const}$. Substituting back collapses the
+critic to the pure distance form and yields the three quadratic identities
+\begin{equation}
+\log p(x) = -\tfrac12\|z\|^2 + c_0,
+\qquad
+\log\frac{p(x,x')}{p(x)p(x')} = \langle z,z'\rangle,
+\qquad
+\log p(x,x') = -\tfrac12\|z-z'\|^2 + c_1 .
+\end{equation}
+The division of labour is exact and is a statement about descent directions:
+\textbf{NPLM supplies curvature along the normalization direction that InfoNCE
+leaves flat; SIGReg supplies curvature along the gauge directions that NPLM
+leaves flat.} Each term is the other's null space.
+
+Two caveats bound the claim, and both are visible in the main text's results.
+The identities hold exactly only when $\mathrm{PMI}$ lies in the
+bilinear-plus-separable family; otherwise the Bregman projection returns the
+nearest such surface, and the residual is real --- it is one reading of why
+concatenating a softmax half with an NPLM half outperforms either alone
+(\S\ref{sec:repair}), since the two halves are different projections of
+overlapping content. And the readout degrades under collapse: at small
+embedding dimension and small $\tau$ the supervised optimum is a simplex
+equiangular tight frame in which all class centres are equidistant and the
+likelihood information is destroyed. The campaign's realizability condition
+($\dim \ge n_{\text{classes}}$ for classwise anchors, \S\ref{sec:regimes}) is
+the practical form of that caveat, and the observed regression of the bilinear
+NPLM arms at 64-D on CIFAR-100 --- losing \emph{both} currencies --- is the
+kind of failure it predicts.
+
 \end{document}
