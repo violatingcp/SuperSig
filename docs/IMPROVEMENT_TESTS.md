@@ -1,7 +1,9 @@
-# Proposed tests to improve performance — exps 80+
+# Proposed tests to improve performance — exps 81+
 
 Companion to [QUESTIONS.md](QUESTIONS.md) (whose "open items as of exp 58" list
-this supersedes).  Every entry follows the standard protocol in
+this supersedes).  NOTE: originally numbered 80+; renumbered 81-91 because
+exp 80 was claimed by the SparKer coverage battery
+(`80_sparker_all_spaces.py`) on 2026-08-20.  Every entry follows the standard protocol in
 [METRICS.md](METRICS.md): `experiments/NN_<topic>.py` with `--quick`, npz to
 `logs/expNN/`, paired seeds across cells, full metric row (probe AND geometry),
 append to `logs/SUMMARY_TABLES.md`.
@@ -23,7 +25,7 @@ is a **high-variance** method, and variance is recoverable performance.  The
 gradient analysis in `discovery_metrics_iclr.tex` App. A predicts where the
 variance comes from and hands us two interventions.
 
-### Exp 80 — Is the seed variance a property of the CRITIC, not the estimator?
+### Exp 81 — Is the seed variance a property of the CRITIC, not the estimator?
 
 **Motivation.**  App. A: the NPLM reference gradient is `e^g/N(N-1)`, so for
 approximately-Gaussian critic values with spread `s` the relative gradient
@@ -54,7 +56,7 @@ an explanation of this data).
 **Payoff if confirmed.** A one-line rule: *never use the bilinear critic under
 NPLM*, and the label-free calibrated arm becomes usable.
 
-### Exp 81 — Calibration residual as a free seed-selection and early-stop signal
+### Exp 82 — Calibration residual as a free seed-selection and early-stop signal
 
 **Motivation.**  App. A eq. (10): the total NPLM critic gradient is exactly
 `E_ref[e^g] - 1`, the calibration residual.  This is computable at zero extra
@@ -75,12 +77,12 @@ seeding averages away — a genuine performance gain with zero label cost.
 (→ calibration is achieved by all runs and the variance lives elsewhere,
 probably in the SIGReg/interaction balance; still a useful negative).
 
-**Cost.** ~5 runs, or free if folded into exp 80.
+**Cost.** ~5 runs, or free if folded into exp 81.
 **Payoff.** An unsupervised model-selection criterion for the whole NPLM
 family — and, if it works, it should be added to the standard battery as a
 reported column.
 
-### Exp 82 — Variance-reduced NPLM: bound the exponent instead of clamping it
+### Exp 83 — Variance-reduced NPLM: bound the exponent instead of clamping it
 
 **Motivation.**  The current guard is a hard clamp at `g_max = 30`, chosen to
 preserve calibration (max-subtraction would destroy it — App. A §A.2).  A hard
@@ -94,7 +96,7 @@ weighting**: track a running estimate of `E_ref[e^g]` and rescale, which is a
 
 **Protocol.**  C100 32-D, 5 paired seeds, four arms: current bilinear+clamp;
 bilinear+running-normalizer; distance+bias; distance+bias+running-normalizer.
-Report probe mean±sd, calibration residual (exp 81), and the per-event power —
+Report probe mean±sd, calibration residual (exp 82), and the per-event power —
 the last is essential, since the whole point is to keep calibration.
 
 **Prediction.**  (a) and (b) both cut sd by ≥2× at equal-or-better mean probe;
@@ -112,7 +114,7 @@ power on every cell.
 
 ## Tier 2 — attacking the standing records and the one reliable failure
 
-### Exp 83 — Two-stage recipe under the strict open-world protocol
+### Exp 84 — Two-stage recipe under the strict open-world protocol
 
 **Motivation.**  `AIRCRAFT_MASTER_TABLE.md` reading #8 flags a two-stage recipe
 (NPLM-sup trunk ft → supcon_sigreg head) with the campaign's best aircraft
@@ -137,7 +139,7 @@ having; right now the table carries a caveat instead of a number.
 
 **Cost.** 3 trunk fts + 24 head runs. Moderate.
 
-### Exp 84 — Iterated residuals (does the residual trick stack with itself?)
+### Exp 85 — Iterated residuals (does the residual trick stack with itself?)
 
 **Motivation.**  Residual fine-tuning is the campaign's largest and most
 seed-stable effect (12/12 cells, cars +0.148±0.004 over 3 seeds, every dataset
@@ -161,7 +163,7 @@ would be a significant reinterpretation of the paper's §5 and is worth knowing.
 
 **Cost.** ~6 e2e ft runs + controls. Moderate.
 
-### Exp 85 — Fix aircraft discovery by freezing the probe directions
+### Exp 86 — Fix aircraft discovery by freezing the probe directions
 
 **Motivation.**  `SPACE_GEOMETRY.md` states the aircraft failure explicitly:
 purity is fine (0.32–0.53) yet discovery still costs probe (−0.012 to −0.037)
@@ -187,7 +189,7 @@ cleanest test of the paper's "choose by consumer" claim.
 
 **Cost.** ~6 discovery runs. Cheap — the parents already exist.
 
-### Exp 86 — LID on the residual half
+### Exp 87 — LID on the residual half
 
 **Motivation.**  Two of the campaign's strongest results have never been
 combined.  LID is a *local dimensionality* statistic and hits 0.951–0.955 on
@@ -214,7 +216,7 @@ half is lower-SNR).  Cheap enough to be worth the risk.
 
 ## Tier 3 — regime rules and protocol debt
 
-### Exp 87 — Classwise SIGReg where the anchors are actually realizable
+### Exp 88 — Classwise SIGReg where the anchors are actually realizable
 
 **Motivation.**  `QUESTIONS.md` Q4: classwise SIGReg is strictly better iff
 anchors are realizable (`dim ≥ n_classes`), and harmful otherwise — 100 anchors
@@ -246,7 +248,7 @@ than the original hypothesis.
 **Cost.** ~15 runs.  **The most likely source of a new C100 calibration
 record**, and it repairs a diagnostic gap in the existing table either way.
 
-### Exp 88 — CIFAR-100 discovery rate unblocking
+### Exp 89 — CIFAR-100 discovery rate unblocking
 
 **Motivation.**  Long-standing open item.  C100 discovery is rate-blocked, not
 quality-blocked: 500 holdout images inside a ~2500-event tail gives purity
@@ -268,7 +270,7 @@ gate is not the mechanism on C100 and something dataset-specific is blocking.
 
 **Cost.** ~9 discovery runs. Cheap.
 
-### Exp 89 — A predictor for *which* novelty score to use
+### Exp 90 — A predictor for *which* novelty score to use
 
 **Motivation.**  The paper's LID section currently ends on an unsatisfying
 note: LID is superb on flowers (0.95), useless on cars (0.545), and we can only
@@ -293,7 +295,7 @@ that honestly; the regime rule stays empirical.
 **Cost.** Evaluation only.  Cheap, and the highest-value *paper* contribution
 here — it converts a caveat into a method.
 
-### Exp 90 — Multi-seed the uncited records
+### Exp 91 — Multi-seed the uncited records
 
 **Motivation.**  Protocol debt.  Exp 75 multi-seeded cars/visreg and CIFAR and
 found one objective ranking **flipped** under averaging (C100 plain-res vs
@@ -332,12 +334,12 @@ verdict in `AIRCRAFT_MASTER_TABLE.md` needs rewriting.
 
 ## Suggested order
 
-1. **Exp 86** (LID on residual half) — evaluation only, hours.
-2. **Exp 80 + 81** (critic variance + calibration residual) — one script, cheapest
+1. **Exp 87** (LID on residual half) — evaluation only, hours.
+2. **Exp 81 + 82** (critic variance + calibration residual) — one script, cheapest
    training test, biggest mechanistic payoff.
-3. **Exp 85** (frozen-parent aircraft discovery) — parents exist, cheap, tests
+3. **Exp 86** (frozen-parent aircraft discovery) — parents exist, cheap, tests
    the paper's central claim.
-4. **Exp 87** (realizable classwise C100) — most likely new record.
-5. **Exp 82** (variance-reduced NPLM), **89** (score predictor).
-6. **Exp 83, 84** (two-stage, iterated residuals) — moderate cost, record-chasing.
-7. **Exp 88, 90** (gate calibration, multi-seed) — protocol debt, before writeup.
+4. **Exp 88** (realizable classwise C100) — most likely new record.
+5. **Exp 83** (variance-reduced NPLM), **90** (score predictor).
+6. **Exp 84, 85** (two-stage, iterated residuals) — moderate cost, record-chasing.
+7. **Exp 89, 91** (gate calibration, multi-seed) — protocol debt, before writeup.

@@ -580,3 +580,17 @@ exp-72 flowers winners.  LID triples round-2 pool purity (dist collapses
 above the gate, purity is not the binding constraint; discovery-ft
 dynamics are.  run_discovery gained pool_score={"dist","lid"} (default
 unchanged).
+
+Exp 87 (`87_lid_residual_half.py`, 2026-08-20; IMPROVEMENT_TESTS #87):
+LID by half on the flowers/cars champions.  FALSIFIER FIRED on flowers:
+the residual-half LID is uniformly WORSE than the parent half (dino
+0.923 vs 0.951, lejepa 0.825 vs 0.893, visreg 0.733 vs 0.954); concat
+~= parent everywhere.  The flowers LID signal lives in the PARENT
+(class-structure) half -- novelty is a class-level dimensional anomaly,
+not a within-class one, refining the exp-78 mechanism story.  On cars
+the prediction half-holds: residual-half LID beats parent on dino
+(0.677 vs 0.629) and visreg (0.752 vs 0.682 -- best cars LID on
+record) but not lejepa (0.559 vs 0.648), and eucl 0.747 still matches
+it: no regime flip, cars stays a distance-score dataset.  Pseudo-
+rotation control (conservative; classes were labeled during ft) ranks
+the halves identically.  Evaluation-only, no training.
