@@ -17,6 +17,7 @@ All computed from frozen embeddings; anchors = seen-class centroids
 | supAUC | evaluate_space | macro OvR AUC of proto posterior | — |
 | eucl | evaluate_space | novelty AUC of min anchor distance (raw) | needs calibrated distances |
 | mahaT / mahaPC | evaluate_space | novelty AUC, tied / per-class Mahalanobis | per-class cov needs samples (shrink 0.1) |
+| lid | evaluate_space (`exp29.lid_novelty`, Levina-Bickel k=20, seen-train refs) | novelty AUC of local intrinsic dimension; scale-free (distance ratios only), immune to ft space inflation | regime-specific: strong for on-manifold novelty (flowers 0.95, exp 78), weak off-manifold (cars/aircraft); needs k >= 20; exact-tie collapse capped at -1e-3 |
 | gaussianity | `metrics.gaussianity_summary` + `exp28.print_gauss_table` | eig cond, class RMS, max corr, SW ratio, skew/kurt, separation | — |
 | cent->anchor | exp53 | mean distance of class centroids to their target anchors | classwise-marginal realizability check |
 
@@ -66,9 +67,9 @@ House style = `logs/SUMMARY_TABLES.md`.  For a new study add:
 ```markdown
 ## <dataset> (exp NN; <base model>, <dim>, holdout <h>, <epochs> ep)
 
-| space | probe pre/post | acc | eucl | mahaT | perevt | SpK@.02 | Maha@.02 | MMD@.02 |
-|-------|----------------|-----|------|-------|--------|---------|----------|---------|
-| ...   | 0.xxxx/0.xxxx  | ... | ...  | ...   | 0.xxx  | pre/post| pre/post | pre/post|
+| space | probe pre/post | acc | eucl | mahaT | lid | perevt | SpK@.02 | Maha@.02 | MMD@.02 |
+|-------|----------------|-----|------|-------|-----|--------|---------|----------|---------|
+| ...   | 0.xxxx/0.xxxx  | ... | ...  | ...   | ... | 0.xxx  | pre/post| pre/post | pre/post|
 
 <3-6 bullet verdicts: who wins probe, who wins geometry/per-event, what
 changed vs the previous table, caveats (seeds, sigma, clamping).>

@@ -164,11 +164,11 @@ def main():
                                                      holdouts)
                 aucs.append(a)
             return (float(np.mean(aucs)), float(np.std(aucs)), r["eucl"],
-                    r["maha_tied"])
+                    r["maha_tied"], r["lid"])
 
         tr0, _ = collect_embeddings(bb0, tr_loader)
         te0, _ = collect_embeddings(bb0, te_loader)
-        pr0, sd0, eu0, ma0 = space_scores(tr0, te0)
+        pr0, sd0, eu0, ma0, li0 = space_scores(tr0, te0)
         m = np.isin(tr_lab, seen)
         means0 = exp28.fill_means(
             exp28.class_centroids(tr0[m], tr_lab[m], seen), seen,
@@ -184,15 +184,16 @@ def main():
             names=None, seed=args.seed)
         trp, _ = collect_embeddings(bb, tr_loader)
         tep, _ = collect_embeddings(bb, te_loader)
-        pr1, sd1, eu1, ma1 = space_scores(trp, tep)
+        pr1, sd1, eu1, ma1, li1 = space_scores(trp, tep)
         print(f"  [{key}] {space}: probe {pr0:.4f}+-{sd0:.4f} -> "
               f"{pr1:.4f}+-{sd1:.4f}  eucl {eu0:.4f} -> {eu1:.4f}  "
-              f"mahaT {ma0:.4f} -> {ma1:.4f}")
+              f"mahaT {ma0:.4f} -> {ma1:.4f}  lid {li0:.4f} -> {li1:.4f}")
         for h in hist:
             print(f"          round {h['round']}: purity={h['purity']:.3f} "
                   f"anchors={h['n_anchors']}  margin={h['margin']:.4f}")
         out = dict(space=space, probe_pre=pr0, probe_post=pr1,
                    eucl_pre=eu0, eucl_post=eu1, maha_pre=ma0, maha_post=ma1,
+                   lid_pre=li0, lid_post=li1,
                    purity=[h["purity"] for h in hist])
         del bb
         torch.cuda.empty_cache()
@@ -292,7 +293,8 @@ def main():
              cells=np.array(keys),
              **{f"{k}_{f}": np.array(all_out[k][f]) for k in keys
                 for f in ("probe_pre", "probe_post", "eucl_pre", "eucl_post",
-                          "maha_pre", "maha_post", "purity")},
+                          "maha_pre", "maha_post", "lid_pre", "lid_post",
+                          "purity")},
              **{f"{k}_post_{s}": np.array(all_out[k]["post_power"][s])
                 for k in keys for s in STATS
                 if "post_power" in all_out[k]})

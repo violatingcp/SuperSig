@@ -93,14 +93,25 @@ open question of its own (what stabilizes the good seeds?).
 8. Aircraft (exp-51 harness) if the claim should generalize.
 9. Append to SUMMARY_TABLES.md, follow docs/METRICS.md artifact naming,
    commit code+logs+npz+plots, update these docs if a verdict changed.
+10. If the change touched `supersig/` or the shared battery helpers
+    (exps 28/29/30), run the unit tests first:
+    `/home/pharris/venv/bin/python -m pytest tests/ -q` (~3 s).
 
-## Open items (as of exp 58)
+## Open items (as of exp 79)
 
 - exp-58 follow-up: a two-stage ft (NPLM-ft then a probe head, or
   proto-ft with an NPLM calibration term) to get 0.97 probe AND 0.57
   per-event in one space.
-- 3-5 seed run of nplm_bilinear vs supcon on C100 (the 0.007 question).
 - C100 discovery rate fixes: tau_quantile 0.995, multi-class holdouts.
 - Annealed-sigma rerun of historical k1 SparKer rows where geometries
   differ from the supervised scale (exp-33 contrastive arms).
-- Aircraft discovery protocol (never run).
+- Aircraft low-purity discovery cells (0.32-0.53, probe-negative in
+  exp 72): the LID pool scorer does NOT rescue them (exp 79 — LID
+  separation is weak off-manifold); a different lever is needed.
+- nplm_bilinear's 10x seed variance (exp 61): what stabilizes the good
+  seeds?
+
+Done since exp 58: the C100 multi-seed question (exp 61 settled it for
+SupCon, -0.085 paired); aircraft discovery (exp 72, purity-gated);
+residual-concat multi-seed validation (exp 75, 17/18 paired positive);
+LID promoted into the standard battery after verification (exps 77-79).

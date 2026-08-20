@@ -94,6 +94,14 @@ dtd) or 2000 (cars/galaxy10); n_null 200 pre / 100 post, 50 signal toys;
 holdouts = last 10 classes (galaxy10: last 1; CIFAR: class 4 / holdout
 sets per recipes).
 
+Unit tests: `tests/` (pytest, synthetic data, ~3 s, no downloads) covers
+`supersig/` (losses incl. every HybridContrastiveLoss corner, metrics,
+discovery incl. a one-round `run_discovery` smoke, the balanced sampler)
+plus the exp-28/29/30 battery helpers (`class_centroids`/`fill_means`,
+`evaluate_space`, `lid_novelty` incl. scale-invariance and tie caps,
+`linear_probe_novelty`, `power_at_alpha`).  Run after touching canonical
+code: `/home/pharris/venv/bin/python -m pytest tests/ -q`.
+
 ## 6. Experiment index (which script runs which test)
 
 | exp | script | suite |
@@ -113,6 +121,14 @@ sets per recipes).
 | 69 | `69_cars_discovery.py` | frozen-trunk cars discovery (probe-negative) |
 | 70 | `70_cars_ft_suite.py` | THE e2e ft grid: 6 arms x {cars,flowers,dtd,galaxy10} x {dino,lejepa,visreg}, battery pre+post discovery |
 | 71 | `71_residual_ft_grid.py` | residual ft on exp-70 parents, 12 cells (beats discovery 12/12) |
+| 72 | `72_residual_discovery.py` | discovery on the exp-71/`WINNERS` residual cells (+ aircraft; purity-gated, probe-negative there) |
+| 73 | `73_cifar_residual_ft.py` | CIFAR-10/100 residual ft: supcon parent -> res / res-nplm children + concats |
+| 74 | `74_cifar_residual_discovery.py` | discovery on the exp-73 CIFAR concat spaces |
+| 75 | `75_multiseed_residual.py` | paired multi-seed validation of the residual concats (c10/c100 x5, cars x3) |
+| 76 | `76_interpretability.py` | class-centroid interpretability: nearest-class tables, superclass heatmaps/dendrograms, agreement/purity/silhouette |
+| 77 | `77_space_similarity.py` | inter-space similarity battery: CKA, mutual-kNN, LLE, Procrustes, ridge-R2, TwoNN-ID, LID (`--cross-base`) |
+| 78 | `78_lid_verification.py` | LID novelty verification: holdout rotation, distance controls, bootstrap, k-sensitivity |
+| 79 | `79_lid_pool_discovery.py` | `run_discovery(pool_score="lid")` A/B vs the distance pool scorer (flowers) |
 
 Result archives: `logs/exp{NN}/*.npz`; condensed tables
 `logs/SUMMARY_TABLES.md`; master tables `docs/CIFAR10_MASTER_TABLE.md`,

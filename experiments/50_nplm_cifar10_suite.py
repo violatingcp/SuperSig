@@ -185,22 +185,23 @@ def main():
         g = gaussianity_summary(te, te_lab, seen, seed=args.seed)
         print(f"  [{name:<14}] probe={pm:.4f}+-{psd:.4f} acc={r['acc']:.4f} "
               f"supAUC={r['sup_auc']:.4f} eucl={r['eucl']:.4f} "
-              f"mahaT={r['maha_tied']:.4f} mahaPC={r['maha_pc']:.4f}")
+              f"mahaT={r['maha_tied']:.4f} mahaPC={r['maha_pc']:.4f} "
+              f"lid={r['lid']:.4f}")
         results[name] = dict(probe=pm, probe_sd=psd, acc=r["acc"],
                              sup_auc=r["sup_auc"], eucl=r["eucl"],
                              mahaT=r["maha_tied"], mahaPC=r["maha_pc"],
-                             gauss=g)
+                             lid=r["lid"], gauss=g)
         del net
         torch.cuda.empty_cache()
 
     print("\n===== performance / novelty table =====")
     print(f"  {'arm':<16}{'probe':>16}{'acc':>8}{'supAUC':>8}{'eucl':>8}"
-          f"{'mahaT':>8}{'mahaPC':>8}")
+          f"{'mahaT':>8}{'mahaPC':>8}{'lid':>8}")
     for name in args.arms:
         r = results[name]
         print(f"  {name:<16}{r['probe']:>9.4f}+-{r['probe_sd']:.4f}"
               f"{r['acc']:>8.4f}{r['sup_auc']:>8.4f}{r['eucl']:>8.4f}"
-              f"{r['mahaT']:>8.4f}{r['mahaPC']:>8.4f}")
+              f"{r['mahaT']:>8.4f}{r['mahaPC']:>8.4f}{r['lid']:>8.4f}")
 
     print("\n===== gaussianity (seen classes, test set) =====")
     exp28.print_gauss_table({n: results[n]["gauss"] for n in args.arms})
@@ -293,7 +294,7 @@ def main():
              fractions=np.array(fractions), arms=np.array(args.arms),
              **{f"{k}_{n}": np.array(results[n][k]) for n in args.arms
                 for k in ("probe", "probe_sd", "acc", "sup_auc", "eucl",
-                          "mahaT", "mahaPC")},
+                          "mahaT", "mahaPC", "lid")},
              **{f"{s}_{n}_pre": np.array(pre_power[s][n]) for s in STATS
                 for n in args.arms if n in pre_power[s]})
 
