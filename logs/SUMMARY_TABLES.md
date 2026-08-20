@@ -594,3 +594,17 @@ record) but not lejepa (0.559 vs 0.648), and eucl 0.747 still matches
 it: no regime flip, cars stays a distance-score dataset.  Pseudo-
 rotation control (conservative; classes were labeled during ft) ranks
 the halves identically.  Evaluation-only, no training.
+
+Exp 90 (`90_score_predictor.py`, 2026-08-20; IMPROVEMENT_TESTS #90):
+unsupervised predictor for WHICH novelty score (LID vs eucl) -- the
+FALSIFIER FIRED.  Across 17 champion cells, none of the three label-free
+tail diagnostics (pool dist-ratio, TwoNN ID gap, LID gap) tracks the
+measured LID-eucl AUC gap: Spearman +0.07 / +0.09 / -0.16, best
+sign-accuracy 12/17 vs an 11/17 always-say-LID base rate.  The
+LID-vs-distance regime rule stays empirical; the "on-manifold is
+measurable without labels" mechanism story does not survive contact with
+these candidates.  Side-findings on the champion concats: LID wins the
+gap in 12/17 cells, incl. cifar100 resnplm-cat +0.382 (LID 0.738 vs eucl
+0.356 -- LID is the only usable novelty score in that space) and
+galaxy10/lejepa +0.273; aircraft stays firmly a distance regime
+(-0.11 to -0.20).  Evaluation-only, no training.
