@@ -94,13 +94,18 @@ dtd) or 2000 (cars/galaxy10); n_null 200 pre / 100 post, 50 signal toys;
 holdouts = last 10 classes (galaxy10: last 1; CIFAR: class 4 / holdout
 sets per recipes).
 
-Unit tests: `tests/` (pytest, synthetic data, ~3 s, no downloads) covers
+Unit tests: `tests/` (pytest, synthetic data, ~5 s, no downloads) covers
 `supersig/` (losses incl. every HybridContrastiveLoss corner, metrics,
-discovery incl. a one-round `run_discovery` smoke, the balanced sampler)
-plus the exp-28/29/30 battery helpers (`class_centroids`/`fill_means`,
+discovery incl. a one-round `run_discovery` smoke, the balanced sampler),
+the exp-28/29/30 battery helpers (`class_centroids`/`fill_means`,
 `evaluate_space`, `lid_novelty` incl. scale-invariance and tie caps,
-`linear_probe_novelty`, `power_at_alpha`).  Run after touching canonical
-code: `/home/pharris/venv/bin/python -m pytest tests/ -q`.
+`linear_probe_novelty`, `power_at_alpha`), the exp-76/77 geometry metrics
+against exact ground truths (CKA/Procrustes under rotation, ridge-R2 on
+linear maps, TwoNN on known dimensions, dendrogram purity on perfect
+hierarchies), and the power machinery (`sparker.py` + exp-31/32 toy
+batteries: high power on a moderate bump, ~alpha under the null).  Run
+after touching canonical code:
+`/home/pharris/venv/bin/python -m pytest tests/ -q`.
 
 ## 6. Experiment index (which script runs which test)
 
