@@ -123,11 +123,11 @@ def test_nplm_clamp_prevents_overflow():
 
 
 @pytest.mark.parametrize("positives,critic,estimator,marginal",
-                         itertools.product(
+                         list(itertools.product(
                              ["instance", "supervised"],
                              ["cosine", "bilinear", "distance"],
                              ["softmax", "nplm"],
-                             ["none", "sigreg", "classwise_sigreg"]))
+                             ["none", "sigreg", "classwise_sigreg"])))
 def test_hybrid_cube_every_corner_finite_and_differentiable(
         positives, critic, estimator, marginal):
     n, dim, n_cls = 32, 8, 2
