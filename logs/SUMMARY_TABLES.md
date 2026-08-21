@@ -1107,3 +1107,28 @@ contamination.  Seen-only nplm-sup-ft trunks (exp-70 protocol) + exp-51
   strictly better on aircraft.
 - The caveat can be struck from AIRCRAFT_MASTER_TABLE; cite the strict
   numbers above.
+
+Exp 85 (`85_iterated_residuals.py`, 2026-08-21; IMPROVEMENT_TESTS #85):
+iterated residuals -- SPLIT VERDICT along the campaign's regime line,
+and TWO NEW RECORDS.  3 paired seeds, width-matched control (both
+concats 300-D):
+
+  cell           2way            3way [p;r1;r2]     wide [p;rW200]
+  cars/visreg    0.833+-0.017    0.881+-0.008       0.884+-0.003
+  flowers/dino   0.833+-0.040    0.910+-0.012       0.859+-0.004
+
+- CARS: the falsifier fires -- the width-matched single residual
+  matches/beats the 3-way (+0.051 vs +0.048).  There the residual gain
+  is a CAPACITY effect.  Either construction sets a new cars record:
+  0.884+-0.003 (was 0.855 single-seed / 0.833+-0.017 honest).
+- FLOWERS: the prediction holds emphatically -- 3-way +0.077 vs wide
+  +0.026, and the effect is LARGEST on the weakest parent seed (+0.123
+  on s1): the second residual is also a seed-variance stabilizer
+  (2way sd 0.040 -> 3way 0.012).  New flowers record 0.910+-0.012,
+  beating the discovery-assisted 0.887+-0.019 WITHOUT discovery.
+- The decomposition-vs-capacity split follows the SAME on-manifold vs
+  off-manifold line as exps 78/92/101: on-manifold novelty (flowers)
+  rewards a second decomposition step; off-manifold (cars) just wants
+  residual capacity.
+- Detection trade: the wide control keeps/raises per-event (0.35-0.41
+  on flowers) while the 3-way trades a little of it for probe.

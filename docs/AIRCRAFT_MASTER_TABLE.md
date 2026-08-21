@@ -546,3 +546,11 @@ nplm-sup-ft trunks): supcon_sigreg heads 0.787/0.796/0.805
 mahaT 0.814.  Within 0.007-0.016 of the contaminated numbers; strictly
 between the exp-70 parents and the exp-71 residual champions.  Cite
 these; the residual concat remains the aircraft record construction.
+
+**Exp-85 update (2026-08-21)**: iterated/wider residuals set two new
+records -- cars/visreg 0.884+-0.003 (width-matched wide residual; the
+gain there is capacity, not decomposition) and flowers/dino 0.910+-0.012
+(3-way [p;r1;r2] concat, discovery-free, beats the discovery-assisted
+0.887+-0.019; the second residual also stabilizes seed variance
+0.040->0.012).  Decomposition-vs-capacity splits along the on/off-
+manifold regime line.
