@@ -667,3 +667,27 @@ distance critics (e^g <= 1 caps E_ref[e^g] at 1 without a bias term --
 motivates exp-83's distance+bias form) and far from 0 for every bilinear
 seed; per-seed variation does not track probe.  The seed variance lives
 in the SIGReg/interaction balance, not in calibration failure.
+
+Exp 86 (`86_frozen_parent_discovery.py`, 2026-08-20; IMPROVEMENT_TESTS
+#86): the aircraft discovery failure is FIXED -- by freezing MORE than
+predicted.  Three variants per champion cell, exact exp-72 recipe/seed:
+
+  cell    unfrozen dP/perevt  frz-parent dP/perevt  frz-BOTH dP/perevt/pur-r2
+  dino    -0.037 / 0.330      -0.013 / 0.330        0.000 / 0.306 / 0.211
+  lejepa  -0.016 / 0.297      -0.020 / 0.213        0.000 / 0.267 / 0.346
+  visreg  -0.012 / 0.526      -0.013 / 0.498        0.000 / 0.523 / 0.176
+
+- The stated prediction (freeze-parent holds probe, keeps gains) only
+  holds on dino; on lejepa/visreg freeze-parent matches unfrozen's cost.
+- The SHARPER verdict: freeze-both -- discover anchors in a completely
+  frozen space -- keeps 90-99% of the per-event gain (0.523 vs 0.526 on
+  the record cell) at exactly zero probe/geometry cost, and is the only
+  variant whose round-2 pool purity does not collapse (0.176-0.346 vs
+  0.023-0.065; the frozen space cannot inflate, so the distance
+  threshold stays valid -- the exp-79 mechanism solved from the other
+  side).  On fine-grained data the discovery ft update was almost pure
+  cost: the per-event gain lives in the ANCHORS, not the space update.
+- Operational rule: on fine-grained cells run discovery with the space
+  frozen (anchors only).  Discovery is then strictly non-negative: the
+  aircraft record 0.8634 is retained WITH per-event 0.523.  "Choose by
+  consumer" collapses to one recipe there.
