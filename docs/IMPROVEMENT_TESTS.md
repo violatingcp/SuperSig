@@ -35,11 +35,16 @@ a machine with the deps; verify with
 | 86 | fix aircraft discovery by freezing | **CONFIRMED, sharper** — freeze *everything*: 90–99% of per-event gain at zero probe cost |
 | 87 | LID on the residual half | **FALSIFIED** on flowers — the signal is class-level, in the parent half |
 | 90 | unsupervised predictor of the LID-vs-distance regime | **FALSIFIED** — 3 diagnostics, best 12/17 vs an 11/17 base rate |
+| 92 | SparKer centres as the discovery clustering | **PARTIALLY CONFIRMED** — cars purity +33% rel (0.161→0.214) but still below the gate; unpredicted win: round-2 purity immune to collapse |
+| 92b | 92+86 combined (density-ratio pool, frozen space) | **DOMINATES** — wins all six round measurements, zero probe cost; exposes *anchor absorption* as a second failure mode |
+| 93 | NP score as pool scorer | **FALSIFIED as stated** — lid > np on flowers by 0.03–0.06 (finite-sample, the named falsifier); np *best* below the gate (cars r1 0.214) |
+| 94 | null validity under novelty-seeking ft | **FALSIFIER FIRED = good outcome** — FPR at or below nominal everywhere; nulls valid, split-disjointness not needed, exp 95 cleared |
+| 96 | does the pairwise critic warm-start the test? | **FALSIFIED, strong form** — warm start neutral-to-harmful (0.800→0.560 at 50 steps); class structure is where novelty *isn't* |
 | 99 | SparKer discovery reach `f95` | **done** — and mostly *unresolvable* on the current fraction grid (see exp 100) |
-| 88, 91 | classwise-realizable C100; multi-seed records | scripts written, **not run** |
-| 83–85, 89, 92–98 | — | **not started** |
+| 88, 91 | classwise-realizable C100; multi-seed records | in flight |
+| 83–85, 89, 95, 97, 98, 100–103 | — | **not started** |
 
-Three of six predictions were falsified.  That is the intended hit rate: the
+Six of eleven predictions were falsified.  That is the intended hit rate: the
 entries below are written to be wrong in a specific way, and two of them
 (82, 87) taught us more by failing than they would have by passing.  Where a
 result changed the motivation for a pending test, the entry has been rewritten
@@ -391,6 +396,8 @@ These are more speculative than Tiers 1–3 and are labelled where so.
 
 ### Exp 92 — SparKer centres as the discovery clustering
 
+> **DONE 2026-08-20 — PARTIALLY CONFIRMED, plus an unpredicted win.**  Cars round-1 purity rises 0.161 -> 0.214 (+33% rel) exactly as the density-ratio mechanism predicts, but stays below the ~0.3 gate: an improvement, not the rescue.  The headline nobody predicted: SparKer pooling makes round-2 purity immune to collapse in every cell (0.21-0.62 vs 0.06-0.24) AND proposes the anchors.  Cost: purer pools feed more ft pressure, so the aircraft probe cost worsens -- which motivated 92b (frozen space), where the combination dominates outright.
+
 **Motivation.**  The campaign's cleanest negative result is that Cars pools at
 purity ≤0.14 because novel car models are *not geometrically outlying* — they
 sit among the seen classes, so a distance quantile cannot reach them.  But
@@ -423,6 +430,8 @@ and more useful negative than the one we currently report.
 
 ### Exp 93 — The NP score as the pool scorer (dist vs LID vs f)
 
+> **DONE 2026-08-21 — FALSIFIED as stated, but np owns the regime that matters.**  On flowers (LID's regime) lid beats np by 0.03-0.06 in all three cells: the NP lemma is asymptotic and loses to a closed-form ratio statistic at these pool sizes -- precisely the falsifier this entry named.  Below the gate (cars) np is the BEST r1 scorer (0.214 vs dist 0.161, lid 0.133).  Rule: lid on-manifold, np below the gate, either one in a frozen space.
+
 **Motivation.**  Exp 79 already showed the pool scorer matters and that
 scale-free LID strictly dominates distance.  The NP lemma says the learned `f`
 should dominate *both*: it is the optimal statistic for exactly this decision.
@@ -444,6 +453,8 @@ not survive at these pool sizes.  Worth knowing either way.
 **Cost.**  ~8 discovery runs.
 
 ### Exp 94 — Null validity when the encoder has seen the test data
+
+> **DONE 2026-08-20 — FALSIFIER FIRED, and that is the good outcome.**  Realized FPR at nominal 0.05 is at or below nominal in every regime (cars/dino 0.040 frozen, 0.040 after full ft; flowers 0.000 throughout).  The discovery ft cannot manufacture false positives at these sample sizes, so the campaign's nulls are VALID and split-disjointness is not required.  Exp 95 is formally cleared -- though its directly adversarial objective should rerun this check on its own encoder.
 
 **Motivation.**  A validity guard, and the prerequisite for citing anything in
 this tier.  Every power number in the campaign calibrates its null on
@@ -501,6 +512,8 @@ not rescued by tuning.
 92–94 have reported.
 
 ### Exp 96 — Does the pairwise critic warm-start the event-level test?
+
+> **DONE 2026-08-21 — FALSIFIED in the strong form.**  Warm-starting SparKer's centres at the trained class centroids is neutral-to-HARMFUL (C10, f=0.02, 50-step budget: nplm_sup_dist 0.800 cold vs 0.560 warm); full-budget trajectories indistinguishable.  Mechanism: class centroids sit where the density ratio is ~1, so warm centres must migrate AWAY, while data-sample init sometimes seeds a centre on a novel event.  As this entry required, the paper's section-5 claim has been weakened in print: the two scales share the functional form and loss, NOT transferable learned content.
 
 **Motivation.**  A direct empirical test of the paper's central claim.  If the
 NPLM critic learned during representation training and the SparKer `f` learned
