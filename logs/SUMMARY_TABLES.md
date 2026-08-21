@@ -986,3 +986,31 @@ the dataset ordering is now citable:
   split in the program.
 - The visreg base owns transfer reach (best cell on all four transfer
   datasets); CIFAR concats dominate overall (0.029/0.038).
+
+Exp 104 (`104_interpretability_panel.py`, 2026-08-21; Part C of
+METRICS.md): the interpretability panel across every space -- is
+distance to a labelled anchor a delta log-likelihood?  Selftest
+validates all synthetic cases.  Reliable cells = CIFAR (450+/class);
+the transfer cells are shrinkage-dominated (cond ~1e6-1e13 at 10-40
+samples/class in 100-D) and should be read qualitatively only.
+
+  c10:  supcon r_llr=.68 ece=.033 rms=.45 sep=7.7 | res r_llr=.81
+        slope=4.3 rms=.79 sep=0.8 | resnplm rms=.13 | res-cat
+        r_llr=.82 ece=.048 sep=5.5 | resnplm-cat r_llr=.67 ece=.035
+        sep=10.6
+  c100: everything r_llr .27-.64; supcon r_llr=.27 ece=.16; res child
+        best r_llr=.64 but ece=.51
+
+- NO space reaches slope~1: class-conditional widths are 0.13-0.79
+  (all narrower than the unit target), so raw squared distances
+  OVERSTATE delta-logL by 4-37x.  The SIGReg unit-width target is not
+  actually achieved class-conditionally anywhere.
+- The plain-res child on c10 is the most FAITHFUL space (slope 4.3,
+  rms 0.79, r_llr 0.81) and the least discriminative (sep 0.85) -- the
+  "perfectly faithful and useless" corner the panel was designed to
+  expose.  The concats are the deployable compromise: c10 res-cat
+  r_llr 0.82 + ece 0.048 + sep 5.5.
+- Distance-as-LLR degrades with class count: c100 r_llr <= 0.64 and
+  supcon c100 r_llr = 0.27 -- the proto-posterior reading is weakest
+  exactly where mahaT is weakest.  Interpretability and class count
+  trade off.
