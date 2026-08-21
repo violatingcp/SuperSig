@@ -797,3 +797,19 @@ archive incl. exp-80.  Headlines:
   CIFAR.
 - 60% of series never cross 0.95 in-grid; the ">" rows quantify how far
   the weak spaces are from usable reach.
+
+Exp 96 (`96_warmstart_sparker.py` + sparker mu_init, 2026-08-21;
+IMPROVEMENT_TESTS #96): does the pairwise critic warm-start the
+event-level test?  FALSIFIER FIRED, in the strong form: warm-starting
+SparKer's centres at the trained seen-class centroids is neutral-to-
+HARMFUL.  C10 32-D seed-exact spaces, f=0.02, 50-step budget power
+(cold/warm): nplm_sup_dist 0.800/0.560, nplm_distance 0.120/0.080,
+supcon 1.000/1.000 (saturated contrast).  Full-budget t_NP
+trajectories are statistically indistinguishable.  Mechanism: the
+class centroids sit exactly where the corpus/reference density ratio
+is ~1, so warm centres must first migrate AWAY from their init, while
+data-sample init occasionally seeds centres on novel events.  The
+paper's SS5 unification claim needs its caveat stated plainly: the two
+scales share the functional form and the loss, NOT transferable
+learned content -- the representation's class structure is where
+novelty ISN'T.
