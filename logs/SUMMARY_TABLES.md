@@ -940,3 +940,25 @@ the falsifier; the mechanism is now measured.  AUC by component
   the side where LID works.
 - Bonus practical finding: frac-mixed is a parameter-free, ratio-free
   novelty score at 0.94 on flowers -- worth a battery slot next sweep.
+
+Exp 89 (`89_c100_rate_grid.py`, 2026-08-21; IMPROVEMENT_TESTS #89): the
+C100 purity gate CANNOT be calibrated this way -- a sharpened falsifier.
+Grid holdout size {1,5,10} x tau_quantile {.95,.99,.995} on fresh exp-73
+resnplm concats (100-D, seed 0); purity r1/r2 and probe pre->post:
+
+  size  q=.95        q=.99        q=.995       probe delta
+  h1    .000/.004    .000/.002    .000/.004    ~0
+  h5    .015/.094    .002/.059    .000/.105    -0.031
+  h10   .036/.120    .002/.085    .000/.121    -0.034..-0.038
+
+- Purity scales with holdout fraction but SATURATES far below the
+  0.15-0.3 gate (max 0.121 at h10 = 10% novel corpus).
+- Stricter quantiles HURT round-1 purity (h10: 0.036 -> 0.002): the
+  extreme distance tail on C100 is owned by background outliers, not
+  novelty.  C100 novelty is not geometrically outlying -- the same
+  mechanism exp-92 identified on cars.
+- Probes move DOWN wherever pools form (impure pseudo-labels poison the
+  ft), so the gate's bindingness cannot even be tested by this grid.
+- Conclusion: C100 discovery is not rate-blocked but GEOMETRY-blocked;
+  the distance pool is the wrong instrument.  The exp-92 density-ratio
+  pool (+ frozen space per 92b) is the remaining lever.
