@@ -1,4 +1,4 @@
-# Proposed tests to improve performance — exps 81–103
+# Proposed tests to improve performance — exps 81–104
 
 Companion to [QUESTIONS.md](QUESTIONS.md) (whose "open items as of exp 58" list
 this supersedes).  Every entry follows the standard protocol in
@@ -697,6 +697,44 @@ regime is not simply characterizable.
 
 ---
 
+### Exp 104 — The interpretability panel across every space
+
+**Motivation.**  The program's stated ideal is that distance to a labelled
+anchor *is* a delta log-likelihood in a hypothesis test — interpretable and
+discriminating at once — and we have never measured it.  Parts A and B report
+ten metrics that each capture a shadow of this; none states it directly, which
+is why alignment has been hard to gauge.  `104_interpretability_panel.py`
+collapses it to six numbers with ideal value 1 (0 for ECE): `r_ll`, `slope`,
+`r_llr`, `ece`, `sw` (component Gaussianity), `rms` (component width vs
+sigma=1), plus `sep` for discrimination.  Definitions and the validation table
+are in METRICS.md Part C and the paper §7.
+
+**Status.**  Written and **validated on synthetic spaces** (`--selftest`: ideal
+returns 0.99/1.01/0.00/0.98/1.00; width 2x drives slope to 0.267 = 1/sigma^2;
+t_3 tails drive sw to 13.7 with slope ~1).  **Not yet run on campaign spaces** —
+it needs the cached feature banks.
+
+**Protocol.**  Run over every space in the exp-76/77 loaders: all 6 arms x 3
+bases x 4 datasets, the exp-71 residual constructions, and the CIFAR cells.
+Report the panel next to probe and per-event power in SUMMARY_TABLES.
+
+**Prediction.**  SIGReg/NPLM arms sit near rms=1 with slope near 1; SupCon-family
+spaces show slope far from 1 with `r_ll` still high — faithful ordering,
+meaningless units, i.e. the probe/calibration dissociation expressed in
+log-likelihood terms.  `sw` should track the TwoNN intrinsic-dimension
+fingerprint of exp 77.
+
+**Falsifier.**  SupCon spaces score slope ~1 too → distance is already a
+log-likelihood without the marginal constraint, and SIGReg's contribution is
+not what we claim.  Alternatively every space scores sw >> 1 → the labelled
+components are nowhere near Gaussian and the whole Eq.-(dll) framing is
+aspirational rather than achieved.
+
+**Cost.**  Evaluation-only, no training.  **This is the measurement the paper
+most needs.**
+
+---
+
 ## Deliberately not proposed
 
 - **More bases / more datasets.**  The regime rules already replicate on three
@@ -723,32 +761,29 @@ geometric one, so Q4's realizability rule needs restating in those terms.
 
 Remaining, in the order we would run them:
 
-1. **Exp 100** (dense fraction scan) — evaluation-only, no training, and it
-   unblocks the sensitivity question that motivated the reach analysis.
-   Currently 102 of 106 reach numbers are bounds rather than measurements.
-2. **Exp 83** (distance$+$bias) — promoted from a variance fix to a
-   **correctness** fix: a bare distance critic provably cannot calibrate, and
-   that undercuts the justification for the arms carrying our best detection
-   numbers.  The most important pending training run.
-3. **Exp 101** (does frozen-space discovery generalize?) — if exp 86 holds
-   beyond aircraft it becomes the default recipe rather than a fine-grained
-   fix, and the paper's framing changes again.
-4. **Exp 102** (residual child as standalone detector) — evaluation-only,
+1. **Exp 104** (interpretability panel) — evaluation-only, and it measures the
+   property the program is built around but has never quantified: whether
+   distance to a labelled anchor is a delta log-likelihood.
+2. **Exp 100** (dense fraction scan) — evaluation-only; 102 of 106 reach
+   numbers are currently bounds rather than measurements.
+3. **Exp 102** (residual child as standalone detector) — evaluation-only,
    follows directly from exp 80's surprise.
-5. **Exp 92** (SparKer centres as the clustering) — still the only proposal
-   with a mechanism that predicts a fix for the cars pooling failure.
-6. **Exp 94** (null validity) — cheap insurance and a hard prerequisite for
-   exp 95.  Run before, not after.
-7. **Exp 93, 96** (NP pool scorer; critic warm-start) — both cheap; 96 is the
-   most direct evidence for the paper's §5 unification, and a null result
-   there should weaken that framing in print.
-8. **Exp 103** (LID neighbourhood decomposition) — evaluation-only; the third
+4. **Exp 103** (LID neighbourhood decomposition) — evaluation-only; third
    attempt at the LID mechanism, and worth capping if it also fails.
-9. **Exp 84, 85** (two-stage, iterated residuals) — moderate cost,
+5. **Exp 83** (distance$+$bias) — promoted from a variance fix to a
+   **correctness** fix: a bare distance critic provably cannot calibrate,
+   which undercuts the justification for the arms carrying our best detection
+   numbers.  The most important pending training run.
+6. **Exp 101** (does frozen-space discovery generalize beyond aircraft?) — if
+   exp 86 and 92b hold elsewhere they become the default recipe rather than a
+   fine-grained fix, and the paper's framing changes again.
+7. **Exp 84, 85** (two-stage, iterated residuals) — moderate cost,
    record-chasing.
-10. **Exp 97, 98** (SparKer systematics; SparKer-ft) — after 92–94 report.
-11. **Exp 95** (SparKer as a training loss) — the big swing; gated on 94.
-12. **Exp 89** (C100 discovery-rate unblocking) — protocol debt.
+8. **Exp 97, 98** (SparKer M/sigma systematics; SparKer-ft as the discovery
+   ft objective) — 97 is already scripted.
+9. **Exp 95** (SparKer as a training loss) — the big swing; formally cleared
+   by exp 94, but should rerun the null check on its own trained encoder.
+10. **Exp 89** (C100 discovery-rate unblocking) — protocol debt.
 
 Standing item, not an experiment: `tests/test_calibration.py` has never been
 executed.  It encodes the identities several of the above depend on.

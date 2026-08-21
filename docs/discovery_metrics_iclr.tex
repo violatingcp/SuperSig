@@ -1224,6 +1224,100 @@ convertible. These are not failures; they are visually coherent groupings that
 a make-based partition scores as wrong. We note this because superclass
 agreement metrics can penalize exactly the structure a scientist would want.
 
+\subsection{Is distance a log-likelihood? A six-number panel}
+\label{sec:panel}
+
+The interpretability results above are qualitative: nearest-centroid tables a
+domain expert can read, and superclass agreement against a partition. They do
+not answer the question the program is actually built around, which is sharper
+and fully quantitative:
+
+\begin{quote}
+\emph{Is the distance from a point to a labelled anchor a $\Delta$ log-likelihood
+in a hypothesis test?}
+\end{quote}
+
+This is the ideal situation for a discovery instrument. If it holds, a distance
+is not a heuristic score but a statement about relative likelihood --- readable
+by a domain expert, and simultaneously the correct quantity for a
+Neyman--Pearson test. It is also exactly what the SIGReg marginal is supposed to
+deliver, because if class $c$ is $\N(\mmu_c, I)$ then
+$\log p(z\mid c) = -\tfrac12\|z-\mmu_c\|^2 + \text{const}$ with the \emph{same}
+constant for every class, so for two hypotheses
+\begin{equation}
+\Delta \log L \;=\; -\tfrac12\Big(\|z-\mmu_c\|^2 - \|z-\mmu_{c'}\|^2\Big),
+\label{eq:dll}
+\end{equation}
+i.e.\ the squared-distance difference \emph{is} twice the log-likelihood ratio,
+with no free scale. Departure from Eq.~\eqref{eq:dll} is measurable, and we
+propose six numbers that measure it.
+
+\begin{table}[t]\centering\small
+\begin{tabular}{llll}
+\toprule
+metric & ideal & measures & fails when \\
+\midrule
+$r_{\mathrm{LL}}$ & 1 & corr(proxy $-\tfrac12 d^2$, true $\log\N(z;\mmu_c,\Sigma_c)$) & shape is wrong \\
+slope & 1 & OLS slope of true on proxy; empirically $\approx 1/\sigma^2$ & width $\neq 1$ \\
+$r_{\mathrm{LLR}}$ & 1 & same, for pairwise differences (constants cancel) & test geometry is wrong \\
+ECE & 0 & calibration of $\mathrm{softmax}_c(-\tfrac12 d^2)$ as a posterior & distance is not believable \\
+SW & 1 & sliced-Wasserstein Gaussianity of labelled components & components non-Gaussian \\
+RMS & 1 & per-dimension component width, i.e.\ the fitted $\sigma$ & width $\neq 1$ \\
+\bottomrule
+\end{tabular}
+\caption{The interpretability panel. Reference density is a per-class Gaussian
+with shrunk full covariance. Report class separation
+$\mathrm{sep}=d_{\min}/\overline{\mathrm{RMS}}$ alongside: a space can be
+perfectly faithful and completely undiscriminating, so interpretability and
+discrimination are separate axes.}
+\label{tab:panel}
+\end{table}
+
+\begin{table}[t]\centering\small
+\begin{tabular}{lcccccc}
+\toprule
+synthetic space & $r_{\mathrm{LL}}$ & slope & $r_{\mathrm{LLR}}$ & ECE & SW & RMS \\
+\midrule
+ideal $\N(\mmu,I)$      & 0.988 & \best{1.012} & 0.988 & \best{0.000} & \best{0.98} & \best{1.00} \\
+width $2\times$         & 0.986 & 0.267 & 0.982 & 0.041 & 0.97 & 2.00 \\
+width $0.5\times$       & 0.989 & 4.282 & 0.990 & 0.000 & 1.02 & 0.50 \\
+anisotropic $4\times$   & 0.634 & 0.399 & 0.780 & 0.073 & 1.01 & 1.41 \\
+heavy tails $t_3$       & 0.951 & 1.146 & 0.899 & 0.008 & 13.71 & 0.98 \\
+\bottomrule
+\end{tabular}
+\caption{Panel validation on synthetic spaces with known departures. The ideal
+space returns the ideal values; \textbf{slope} recovers $1/\sigma^2$ exactly
+($0.267$ at width $2\times$, $4.28$ at $0.5\times$); anisotropy is the one
+departure that degrades $r_{\mathrm{LL}}$ rather than the scale; and heavy tails
+drive SW to $13.7$ while leaving slope near $1$ --- confirming that shape and
+scale are independent failure modes, and that neither number substitutes for the
+other.}
+\label{tab:panel-val}
+\end{table}
+
+Two design points are worth drawing out. First, $r_{\mathrm{LL}}$ alone is
+\emph{not} sufficient and would have been misleading on its own: a space at
+twice the correct width still scores $r_{\mathrm{LL}}=0.986$ while its slope is
+$0.267$, meaning a unit of $\tfrac12 d^2$ buys a quarter of a unit of
+log-likelihood. Correlation says the ordering is right; slope says whether the
+\emph{units} are. A discovery threshold set on Eq.~\eqref{eq:dll} depends on the
+latter. Second, SW and slope move independently --- heavy-tailed components can
+have exactly the right width --- so the Gaussianity of the labelled components
+and the calibration of their width are genuinely separate questions, and the
+panel reports both.
+
+\paragraph{Status}
+We have defined and validated the panel but \textbf{have not yet run it across
+the campaign's spaces}, which requires the cached feature banks. It is therefore
+absent from the result tables, and we flag it as the most useful missing
+measurement in this paper rather than reporting a subset. The prediction implied
+by everything above is specific and checkable: SIGReg-regularized and NPLM arms
+should sit near $\mathrm{RMS}=1$ with slope near $1$; SupCon-family spaces,
+whose scale is a gauge choice (App.~\ref{app:grad}), should show slope far from
+$1$ with $r_{\mathrm{LL}}$ still high --- faithful ordering, meaningless units,
+which is precisely the probe/calibration dissociation of \S\ref{sec:dissoc}
+expressed in log-likelihood terms.
+
 \subsection{How spaces relate to each other}
 
 Cross-space measurements supply mechanisms for several claims above.
