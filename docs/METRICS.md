@@ -51,6 +51,41 @@ train images); aircraft `0.003,...,0.1`.
   CIFAR-100 at every dim/space (class similarity); MMD is the
   dimension-robust statistic.
 
+## Part C — the interpretability panel (`104_interpretability_panel.py`)
+
+Six numbers answering one question: **is distance to a labelled anchor a
+delta log-likelihood?**  That is the property the whole program is built
+around — it is what makes a distance *interpretable* (a statement about
+relative likelihood) and what licenses the clustering and Neyman-Pearson
+machinery downstream.  Every entry has ideal value 1 (or 0 for `ece`), so a
+space can be read at a glance instead of triangulating Parts A and B.
+
+If class c is `N(mu_c, I)` then `log p(z|c) = -1/2 ||z-mu_c||^2 + const` with
+the same const for every c, so for two hypotheses the squared-distance
+difference IS `2 * delta log L`, with no free scale.  The panel measures
+departure from that identity.
+
+| metric | ideal | what it measures | blind spot |
+|---|---|---|---|
+| `r_ll` | 1 | Pearson r between the proxy `-1/2||z-mu_c||^2` and the true class-conditional `log N(z; mu_c, Sigma_c)`, over all (point, class) pairs | insensitive to scale — see `slope` |
+| `slope` | 1 | OLS slope of true log-density on the proxy.  Empirically `slope ~ 1/sigma^2`, so it is the width expressed in log-likelihood units | conflates width with anisotropy |
+| `r_llr` | 1 | same correlation for pairwise *differences* (proxy LLR vs true LLR); per-class constants cancel, isolating the hypothesis-test quantity | — |
+| `ece` | 0 | calibration error of `softmax_c(-1/2 d^2)` read as a class posterior; the operational cost of believing the distance | balanced-class assumption |
+| `sw` | 1 | mean calibrated sliced-Wasserstein Gaussianity of the labelled components (`metrics.gaussianity_summary`) | CLT-Gaussianizing shapes |
+| `rms` | 1 | mean per-dimension RMS of the labelled components = **the fitted sigma; how close the component width is to 1** | — |
+
+Report `sep` (closest centroid pair / mean `rms`, i.e. class separation in
+sigma) alongside: a space can be perfectly faithful and useless.
+Interpretability and discrimination are separate axes and the panel is only
+meaningful with both.
+
+Reference density = per-class Gaussian with shrunk full covariance
+(`shrink=0.1`, the campaign Mahalanobis default).  Validated on synthetic
+spaces (`--selftest`): the ideal `N(mu, I)` returns
+r 0.99 / slope 1.01 / ece 0.00 / sw 0.98 / rms 1.00; width 2x drives
+slope -> 0.27 and rms -> 2.00; heavy (t_3) tails drive sw -> 13.7 while slope
+stays ~1, confirming `sw` and `slope` are independent axes.
+
 ## Discovery metrics (`discovery.run_discovery` history)
 
 Per round: `pool` (events past the 0.95 seen-distance quantile), `purity`

@@ -1,4 +1,4 @@
-# Proposed tests to improve performance — exps 81–98
+# Proposed tests to improve performance — exps 81–104
 
 Companion to [QUESTIONS.md](QUESTIONS.md) (whose "open items as of exp 58" list
 this supersedes).  Every entry follows the standard protocol in
@@ -19,8 +19,40 @@ SparKer coverage audit for the exp-71/73 residual and concat spaces).
 pins the NPLM calibration property and the gauge identities of App. A
 (softmax exactly invariant to a per-anchor shift, NPLM strictly convex along
 it with its minimum at `E_ref[e^g] = 1`, and max-subtraction breaking that
-while clamping preserves it).  Exp 82 below assumes those identities hold and
-turns the calibration residual into a training-time diagnostic.
+while clamping preserves it).  Executed 2026-08-21 on the campaign machine:
+full suite green (103 passed incl. test_calibration).
+
+---
+
+## Status board (2026-08-21)
+
+| exp | what it asked | outcome |
+|---|---|---|
+| 80 | SparKer coverage for the uncovered spaces | **done** — 106 spaces / 17 cells; residual *child* out-detects its parent |
+| 81 | is NPLM seed variance a property of the critic? | **CONFIRMED** — 3.1× by critic vs 1.6× by positives; `dist-sup` stable at ±0.0125 |
+| 82 | calibration residual as a label-free seed selector | **FALSIFIED** — Spearman +0.30/−0.10; best-of-5 *underperforms* the mean |
+| 86 | fix aircraft discovery by freezing | **CONFIRMED, sharper** — freeze *everything*: 90–99% of per-event gain at zero probe cost |
+| 87 | LID on the residual half | **FALSIFIED** on flowers — the signal is class-level, in the parent half |
+| 90 | unsupervised predictor of the LID-vs-distance regime | **FALSIFIED** — 3 diagnostics, best 12/17 vs an 11/17 base rate |
+| 92 | SparKer centres as the discovery clustering | **PARTIALLY CONFIRMED** — cars purity +33% rel (0.161→0.214) but still below the gate; unpredicted win: round-2 purity immune to collapse |
+| 92b | 92+86 combined (density-ratio pool, frozen space) | **DOMINATES** — wins all six round measurements, zero probe cost; exposes *anchor absorption* as a second failure mode |
+| 93 | NP score as pool scorer | **FALSIFIED as stated** — lid > np on flowers by 0.03–0.06 (finite-sample, the named falsifier); np *best* below the gate (cars r1 0.214) |
+| 94 | null validity under novelty-seeking ft | **FALSIFIER FIRED = good outcome** — FPR at or below nominal everywhere; nulls valid, split-disjointness not needed, exp 95 cleared |
+| 96 | does the pairwise critic warm-start the test? | **FALSIFIED, strong form** — warm start neutral-to-harmful (0.800→0.560 at 50 steps); class structure is where novelty *isn't* |
+| 99 | SparKer discovery reach `f95` | **done** — and mostly *unresolvable* on the current fraction grid (see exp 100) |
+| 88 | classwise-realizable C100 | **BOTH CLAUSES FALSIFIED** — cent->anchor stall (~3.5) dim-independent at 100/128/200-D (optimization equilibrium, Q4 restated); unpredicted: supcon_sigreg control posts mahaT 0.545–0.558 at 100–128-D with probe 0.90–0.91, above the old ceiling |
+| 91 | multi-seed the records | **done** — all citable, no ordering flips: aircraft 0.866±0.002, flowers 0.887±0.019, dtd 0.867±0.004 (seed-2 new best), galaxy10 0.971±0.004 |
+| 97 | M / sigma-schedule systematics | **split** — sigma_ratio flat (annealed schedule robust); M INVERTS the prediction: high-ID wants FEWER kernels (supcon M=4 0.60 vs M=64 0.24) |
+| 98 | SparKer-ft as the discovery ft objective | **FAILS beyond its falsifier** — worse than proto AND nplm on every column incl. its own statistic (post SparKer 0.06–0.12 vs 1.00); statistic-chasing destroys separation; with 96, contraindicates exp 95 as specified |
+| 89, 83 | gate grid; variance-reduced NPLM | in flight (89 running, 83 queued) |
+| 84, 85 | two-stage strict; iterated residuals | queued (85 quick smoke: 3-way +0.031, width control NEGATIVE) |
+| 95, 100–104 | — | **not started** (95 contraindicated by 96+98 in the alternating form) |
+
+Six of eleven predictions were falsified.  That is the intended hit rate: the
+entries below are written to be wrong in a specific way, and two of them
+(82, 87) taught us more by failing than they would have by passing.  Where a
+result changed the motivation for a pending test, the entry has been rewritten
+rather than left standing.
 
 ---
 
@@ -34,6 +66,8 @@ gradient analysis in `discovery_metrics_iclr.tex` App. A predicts where the
 variance comes from and hands us two interventions.
 
 ### Exp 81 — Is the seed variance a property of the CRITIC, not the estimator?
+
+> **DONE 2026-08-20 — CONFIRMED.**  sd splits 3.1x by critic (bil 0.055, dist 0.018) vs 1.6x by positives; `dist-sup` is the stable corner (0.8366±0.0125).  One refinement: the proposed proxy `s = sd(g)` ANTI-correlates with probe sd (-0.80); the `e^g` spread is the real predictor (+0.80).  Log `sd(e^g)`, not `sd(g)`.
 
 **Motivation.**  App. A: the NPLM reference gradient is `e^g/N(N-1)`, so for
 approximately-Gaussian critic values with spread `s` the relative gradient
@@ -66,6 +100,8 @@ NPLM*, and the label-free calibrated arm becomes usable.
 
 ### Exp 82 — Calibration residual as a free seed-selection and early-stop signal
 
+> **DONE 2026-08-20 — FALSIFIED.**  Spearman(|resid|, probe) +0.30/-0.10 against a predicted < -0.6, and best-of-5-by-residual *underperforms* the random mean (0.839 vs 0.891).  The falsifier branch fired as guessed: the variance lives in the SIGReg/interaction balance.  Structural cause feeds exp 83.
+
 **Motivation.**  App. A eq. (10): the total NPLM critic gradient is exactly
 `E_ref[e^g] - 1`, the calibration residual.  This is computable at zero extra
 cost during training and **requires no labels and no validation set**.  If bad
@@ -92,24 +128,38 @@ reported column.
 
 ### Exp 83 — Variance-reduced NPLM: bound the exponent instead of clamping it
 
-**Motivation.**  The current guard is a hard clamp at `g_max = 30`, chosen to
-preserve calibration (max-subtraction would destroy it — App. A §A.2).  A hard
-clamp zeroes the gradient of exactly the pairs that carry the most signal about
-miscalibration.  Two alternatives preserve the minimizer while bounding `s`:
-(a) **use the distance parametrization** `g = -½||z-z'||² + b(x) + b(x')` with
-learned bias, which is bounded above by `b(x)+b(x')` and is the form the critic
-collapses to anyway once SIGReg is active; (b) **self-normalized importance
-weighting**: track a running estimate of `E_ref[e^g]` and rescale, which is a
-*known constant shift* and therefore correctable rather than gauge-destroying.
+**PROMOTED to the top of the queue by the exp-82 result.**  What began as a
+variance fix is now a correctness fix, and it is the single most important
+pending experiment in this document.
 
-**Protocol.**  C100 32-D, 5 paired seeds, four arms: current bilinear+clamp;
-bilinear+running-normalizer; distance+bias; distance+bias+running-normalizer.
-Report probe mean±sd, calibration residual (exp 82), and the per-event power —
-the last is essential, since the whole point is to keep calibration.
+**Motivation.**  Exp 82 exposed a structural defect, not just a failed
+heuristic.  For the distance critic as implemented, `g = -½||z-z'||²/τ ≤ 0`,
+so `e^g ≤ 1`, so `E_ref[e^g] ≤ 1` **always**: the calibration condition
+`E_ref[e^g] = 1` is *unreachable*, and the residual is structurally negative
+for every seed.  **A bare distance critic cannot calibrate at all.**  Since
+calibration is the entire justification for preferring NPLM over a softmax
+estimator, this undercuts the paper's central claim for exactly the arms
+(`nplm_sup_dist`, `nplm_distance`) that carry its best per-event and
+kernel-test numbers — their strength is currently evidence of good *scaling*,
+not of achieved calibration.
 
-**Prediction.**  (a) and (b) both cut sd by ≥2× at equal-or-better mean probe;
-per-event power is preserved (this is what separates a real fix from
-accidentally reinventing a softmax).
+The fix is the bias term the theory always specified and the implementation
+omits: `g = -½||z-z'||² + b(x) + b(x')`, which restores the positive range.
+A second, independent candidate: (b) **self-normalized importance weighting**,
+tracking a running estimate of `E_ref[e^g]` and rescaling — a *known constant
+shift*, therefore correctable rather than gauge-destroying, unlike
+max-subtraction.
+
+**Protocol.**  C100 32-D, 5 paired seeds, five arms: current bilinear+clamp;
+current distance (control, expected residual < 0 always); distance+bias;
+distance+bias+running-normalizer; bilinear+running-normalizer.  Report probe
+mean±sd, **the calibration residual `E_ref[e^g] - 1` and whether it reaches
+0**, per-event power, and `sd(e^g)` (the corrected variance diagnostic — exp 81
+showed `sd(g)` anti-correlates).
+
+**Prediction.**  Distance+bias reaches residual ≈ 0 where bare distance cannot,
+and its per-event power *improves* because thresholds become genuinely
+transferable.  Variance drops ≥2× at equal-or-better mean probe.
 
 **Falsifier.**  Variance drops but per-event power drops with it → the
 normalizer has silently removed the absolute scale, i.e. we have re-derived
@@ -173,6 +223,8 @@ would be a significant reinterpretation of the paper's §5 and is worth knowing.
 
 ### Exp 86 — Fix aircraft discovery by freezing the probe directions
 
+> **DONE 2026-08-20 — CONFIRMED, and sharper than proposed.**  Freezing the parent half only works on DINO; freezing EVERYTHING keeps 90-99% of the per-event gain at exactly zero probe cost, with round-2 purity no longer collapsing (0.176-0.346 vs 0.023-0.065).  Aircraft record 0.8634 retained WITH per-event 0.523.  Generalization beyond aircraft is exp 101.
+
 **Motivation.**  `SPACE_GEOMETRY.md` states the aircraft failure explicitly:
 purity is fine (0.32–0.53) yet discovery still costs probe (−0.012 to −0.037)
 while buying geometry — and exp 79 showed LID pooling cannot help because LID
@@ -198,6 +250,8 @@ cleanest test of the paper's "choose by consumer" claim.
 **Cost.** ~6 discovery runs. Cheap — the parents already exist.
 
 ### Exp 87 — LID on the residual half
+
+> **DONE 2026-08-20 — FALSIFIED on flowers.**  Residual-half LID is uniformly worse than the parent half (0.923/0.825/0.733 vs 0.951/0.893/0.954): the signal is a CLASS-level dimensional anomaly, not within-class.  Half-holds on cars (visreg 0.752, best cars LID on record) but eucl 0.747 matches it, so no regime flip.  Mechanism follow-up is exp 103.
 
 **Motivation.**  Two of the campaign's strongest results have never been
 combined.  LID is a *local dimensionality* statistic and hits 0.951–0.955 on
@@ -280,6 +334,8 @@ gate is not the mechanism on C100 and something dataset-specific is blocking.
 
 ### Exp 90 — A predictor for *which* novelty score to use
 
+> **DONE 2026-08-20 — FALSIFIED.**  None of the three label-free tail diagnostics tracks the LID-eucl gap (Spearman +0.07/+0.09/-0.16; best sign-accuracy 12/17 vs an 11/17 always-say-LID base rate).  The regime rule stays empirical.  Side-finding: LID wins 12/17 champion cells, and on cifar100 res-nplm-cat it is the only usable score (0.738 vs eucl 0.356).
+
 **Motivation.**  The paper's LID section currently ends on an unsatisfying
 note: LID is superb on flowers (0.95), useless on cars (0.545), and we can only
 say the regime is "a dataset property."  For a practitioner that is not
@@ -344,6 +400,8 @@ These are more speculative than Tiers 1–3 and are labelled where so.
 
 ### Exp 92 — SparKer centres as the discovery clustering
 
+> **DONE 2026-08-20 — PARTIALLY CONFIRMED, plus an unpredicted win.**  Cars round-1 purity rises 0.161 -> 0.214 (+33% rel) exactly as the density-ratio mechanism predicts, but stays below the ~0.3 gate: an improvement, not the rescue.  The headline nobody predicted: SparKer pooling makes round-2 purity immune to collapse in every cell (0.21-0.62 vs 0.06-0.24) AND proposes the anchors.  Cost: purer pools feed more ft pressure, so the aircraft probe cost worsens -- which motivated 92b (frozen space), where the combination dominates outright.
+
 **Motivation.**  The campaign's cleanest negative result is that Cars pools at
 purity ≤0.14 because novel car models are *not geometrically outlying* — they
 sit among the seen classes, so a distance quantile cannot reach them.  But
@@ -376,6 +434,8 @@ and more useful negative than the one we currently report.
 
 ### Exp 93 — The NP score as the pool scorer (dist vs LID vs f)
 
+> **DONE 2026-08-21 — FALSIFIED as stated, but np owns the regime that matters.**  On flowers (LID's regime) lid beats np by 0.03-0.06 in all three cells: the NP lemma is asymptotic and loses to a closed-form ratio statistic at these pool sizes -- precisely the falsifier this entry named.  Below the gate (cars) np is the BEST r1 scorer (0.214 vs dist 0.161, lid 0.133).  Rule: lid on-manifold, np below the gate, either one in a frozen space.
+
 **Motivation.**  Exp 79 already showed the pool scorer matters and that
 scale-free LID strictly dominates distance.  The NP lemma says the learned `f`
 should dominate *both*: it is the optimal statistic for exactly this decision.
@@ -397,6 +457,8 @@ not survive at these pool sizes.  Worth knowing either way.
 **Cost.**  ~8 discovery runs.
 
 ### Exp 94 — Null validity when the encoder has seen the test data
+
+> **DONE 2026-08-20 — FALSIFIER FIRED, and that is the good outcome.**  Realized FPR at nominal 0.05 is at or below nominal in every regime (cars/dino 0.040 frozen, 0.040 after full ft; flowers 0.000 throughout).  The discovery ft cannot manufacture false positives at these sample sizes, so the campaign's nulls are VALID and split-disjointness is not required.  Exp 95 is formally cleared -- though its directly adversarial objective should rerun this check on its own encoder.
 
 **Motivation.**  A validity guard, and the prerequisite for citing anything in
 this tier.  Every power number in the campaign calibrates its null on
@@ -454,6 +516,8 @@ not rescued by tuning.
 92–94 have reported.
 
 ### Exp 96 — Does the pairwise critic warm-start the event-level test?
+
+> **DONE 2026-08-21 — FALSIFIED in the strong form.**  Warm-starting SparKer's centres at the trained class centroids is neutral-to-HARMFUL (C10, f=0.02, 50-step budget: nplm_sup_dist 0.800 cold vs 0.560 warm); full-budget trajectories indistinguishable.  Mechanism: class centroids sit where the density ratio is ~1, so warm centres must migrate AWAY, while data-sample init sometimes seeds a centre on a novel event.  As this entry required, the paper's section-5 claim has been weakened in print: the two scales share the functional form and loss, NOT transferable learned content.
 
 **Motivation.**  A direct empirical test of the paper's central claim.  If the
 NPLM critic learned during representation training and the SparKer `f` learned
@@ -522,6 +586,159 @@ specifically.
 
 ---
 
+## Tier 5 — implied by the 80/81/86/87/90/99 results (exps 100+)
+
+Four tests that did not exist before the last batch reported.  The first two
+are the highest-value runs in the whole document.
+
+### Exp 100 — Dense fraction scan: turn `f95` from a bound into a measurement
+
+**Motivation.**  Exp 99 inverted every archived power curve into a discovery
+reach `f95` (the injected fraction at which SparKer power crosses 0.95) and
+found that **the fraction grid, not the spaces, is the limiting factor**.  The
+transfer grid is {0.003, 0.01, 0.02, 0.05, 0.1}; power typically climbs from
+~0.1 to ~1.0 across the single interval [0.05, 0.1], so of 106 spaces only
+**four** have a cleanly bracketed crossing.  Every other number in the reach
+table is a bound, not a measurement.  This is the binding constraint on the
+question we most care about — sensitivity at small signal fractions.
+
+**Protocol.**  Dense scan `f ∈ {0.02, 0.03, 0.04, 0.05, 0.06, 0.08, 0.10}` on
+the champion space of each of the 17 cells, existing 50 toys, annealed sigma,
+cached embeddings.  **No retraining.**  Report `f95` with Clopper-Pearson
+bands.  Optionally add `f ∈ {0.005, 0.01, 0.015}` on CIFAR-10, the only cell
+whose current grid already brackets its crossing (`f95 = 0.019`).
+
+**Prediction.**  Every currently-starred cell resolves to a crossing bracketed
+within ≤0.02, and the dataset ordering by reach becomes citable.  Flowers stays
+`>0.1` on all bases.
+
+**Falsifier.**  Curves turn out non-monotone or shallow enough in [0.02, 0.10]
+that even a dense grid cannot bracket 0.95 → the reach statistic is the wrong
+summary for these spaces and power-at-fixed-`f` should be retained instead.
+
+**Cost.**  Battery only, ~17 cells × 7 fractions.  Cheap, no training.
+**Do this first.**
+
+### Exp 101 — Does frozen-space discovery generalize beyond aircraft?
+
+**Motivation.**  Exp 86 is the sharpest operational result the campaign has:
+discovering anchors in a *completely frozen* space keeps 90–99% of the
+per-event gain at exactly zero probe cost, keeps round-2 purity from
+collapsing, and makes the discovery step strictly non-negative — so the
+aircraft record 0.8634 is retained *with* per-event 0.523.  It was tested on
+**aircraft only, three cells**.  If it generalizes it is not an aircraft fix,
+it is the default recipe, and the paper's "choose by consumer" framing weakens
+much further than currently stated.
+
+**Protocol.**  Freeze-both discovery on the exp-71/72 champions of all
+remaining cells — cars, flowers, dtd, galaxy10 × 3 bases — plus the CIFAR-10/100
+concats of exps 73/74.  Compare against the archived unfrozen numbers on
+probe, mahaT, per-event and round-2 purity.  Same recipe and seeds.
+
+**Prediction.**  Probe cost goes to ~0 everywhere; per-event retention is
+high on fine-grained cells (cars, flowers) and *lower* on coarse ones
+(galaxy10, CIFAR-10), where the space update plausibly does real work because
+the novelty is genuinely outlying and the anchors alone cannot capture it.
+
+**Falsifier.**  Frozen discovery also zeroes the per-event *gain* on some
+cells → the anchors-vs-update split is aircraft-specific, and exp 86 is a
+regime result rather than a recipe.
+
+**Cost.**  ~15 discovery runs, no retraining of parents.  **Highest-value
+training-adjacent test.**
+
+### Exp 102 — Is the residual child a standalone detector?
+
+**Motivation.**  Exp 80's surprise: the res-nplm residual *child* out-detects
+its own parent (aircraft/visreg 0.82@0.05 vs 0.44; cars/visreg 0.96@0.05).
+Every deployment in the campaign uses the child only inside a concatenation,
+where the parent supplies the probe.  If the child alone is the better
+detector, a detection-only pipeline could drop the parent entirely — halving
+the embedding and removing the supervised half.
+
+**Protocol.**  Full battery on the residual halves alone across the 12 cells:
+probe, eucl, mahaT, per-event, SparKer `f95` (exp 100 grid), plus the exp-76
+semantic metrics — the last matter because exp 76 showed the residual half
+*scrambles* class semantics (purity 0.365), so a detector built on it may be
+undiagnosable even when it fires.
+
+**Prediction.**  Child-alone matches or beats the concat on dataset-level
+power at a large probe cost, and is semantically illegible.  The useful
+deliverable is the explicit trade curve, not a winner.
+
+**Falsifier.**  Child-alone power is an artifact of concatenation scaling
+(i.e. it does not survive being scored on its own) → the exp-80 reading is
+wrong and the concat is doing the work.
+
+**Cost.**  Evaluation-only on cached banks.  Cheap.
+
+### Exp 103 — Where does the LID class-level signal actually live?
+
+**Motivation.**  Exp 87 falsified the within-class story: flowers LID lives in
+the *parent* (class-structure) half, so novelty there is a **class-level**
+dimensional anomaly.  We now have a mechanism claim with no direct test, and
+exp 90 showed we cannot yet predict the regime from tail diagnostics.  A
+sharper probe of the mechanism is the remaining route to making the LID regime
+rule predictive rather than descriptive.
+
+**Protocol.**  Decompose LID by neighbourhood composition on flowers vs cars:
+for each holdout point, split its `k=20` neighbours into same-seen-class vs
+mixed-class sets and recompute the Levina-Bickel estimate on each.  If the
+signal is class-level, holdout LID should be driven by *mixed-class*
+neighbourhoods (the point sits between seen classes) and the effect should
+vanish on cars.
+
+**Prediction.**  Flowers: mixed-neighbourhood LID carries the discrimination,
+same-class LID does not.  Cars: neither does, consistent with its `0.545`.
+
+**Falsifier.**  Both components discriminate equally → "class-level" is not
+the right description and the mechanism remains open.  Report it as such;
+we have now had two failed mechanism stories here (within-class, and the exp-90
+tail diagnostics) and a third failure should be taken as evidence that LID's
+regime is not simply characterizable.
+
+**Cost.**  Evaluation-only.  Cheap.
+
+---
+
+### Exp 104 — The interpretability panel across every space
+
+**Motivation.**  The program's stated ideal is that distance to a labelled
+anchor *is* a delta log-likelihood in a hypothesis test — interpretable and
+discriminating at once — and we have never measured it.  Parts A and B report
+ten metrics that each capture a shadow of this; none states it directly, which
+is why alignment has been hard to gauge.  `104_interpretability_panel.py`
+collapses it to six numbers with ideal value 1 (0 for ECE): `r_ll`, `slope`,
+`r_llr`, `ece`, `sw` (component Gaussianity), `rms` (component width vs
+sigma=1), plus `sep` for discrimination.  Definitions and the validation table
+are in METRICS.md Part C and the paper §7.
+
+**Status.**  Written and **validated on synthetic spaces** (`--selftest`: ideal
+returns 0.99/1.01/0.00/0.98/1.00; width 2x drives slope to 0.267 = 1/sigma^2;
+t_3 tails drive sw to 13.7 with slope ~1).  **Not yet run on campaign spaces** —
+it needs the cached feature banks.
+
+**Protocol.**  Run over every space in the exp-76/77 loaders: all 6 arms x 3
+bases x 4 datasets, the exp-71 residual constructions, and the CIFAR cells.
+Report the panel next to probe and per-event power in SUMMARY_TABLES.
+
+**Prediction.**  SIGReg/NPLM arms sit near rms=1 with slope near 1; SupCon-family
+spaces show slope far from 1 with `r_ll` still high — faithful ordering,
+meaningless units, i.e. the probe/calibration dissociation expressed in
+log-likelihood terms.  `sw` should track the TwoNN intrinsic-dimension
+fingerprint of exp 77.
+
+**Falsifier.**  SupCon spaces score slope ~1 too → distance is already a
+log-likelihood without the marginal constraint, and SIGReg's contribution is
+not what we claim.  Alternatively every space scores sw >> 1 → the labelled
+components are nowhere near Gaussian and the whole Eq.-(dll) framing is
+aspirational rather than achieved.
+
+**Cost.**  Evaluation-only, no training.  **This is the measurement the paper
+most needs.**
+
+---
+
 ## Deliberately not proposed
 
 - **More bases / more datasets.**  The regime rules already replicate on three
@@ -539,40 +756,31 @@ specifically.
 
 ## Suggested order
 
-1. **Exp 87** (LID on residual half) — DONE 2026-08-20, falsifier fired
-   (flowers LID lives in the parent half).
-2. **Exp 81 + 82** (critic variance + calibration residual) — DONE
-   2026-08-20: 81 confirmed (sd splits 3.1x by critic; e^g spread is the
-   predictor), 82 falsified (residual does not select seeds).
-3. **Exp 92** (SparKer centres as the clustering) — DONE 2026-08-20:
-   partial confirm (cars r1 0.161->0.214, gate not cleared); unpredicted
-   headline: round-2 purity immune to collapse in every cell.  The 92+86
-   combination (sparker-frozen) DOMINATES: purity + zero space cost —
-   the new fine-grained discovery recipe.
-4. **Exp 94** (null validity) — DONE 2026-08-20: falsifier fired (the
-   good outcome) — FPR at/below nominal in every regime; nulls valid,
-   exp 95 formally cleared.
-5. **Exp 86** (frozen-parent aircraft discovery) — DONE 2026-08-20: fixed,
-   and more — freeze BOTH halves, discover anchors only (90-99% of the
-   per-event gain at zero probe cost, purity no longer collapses).
-6. **Exp 88** (realizable classwise C100) — DONE 2026-08-21: both clauses
-   falsified — cent->anchor stall (~3.5) is dim-independent (optimization
-   equilibrium, Q4 restated); softmax control breaks the C100 calibration
-   ceiling (mahaT 0.545-0.558 at 100-128-D with probe 0.90-0.91).
-7. **Exp 93, 96** — DONE 2026-08-21: 93 np>=lid falsified on flowers
-   (lid wins its regime) but np best on cars (rule: lid on-manifold, np
-   below the gate, frozen space per 92b); 96 warm-start falsified in the
-   strong form (harmful — anchors sit where novelty isn't).
-8. **Exp 83** (variance-reduced NPLM), **Exp 90** (score predictor — DONE
-   2026-08-20, falsifier fired: regime rule stays empirical).
-9. **Exp 84, 85** (two-stage, iterated residuals) — moderate cost, record-chasing.
-10. **Exp 97, 98** — DONE 2026-08-21: 97 sigma schedule robust, M inverts
-    the prediction (high-ID wants FEWER kernels); 98 SparKer-ft FAILS
-    beyond its falsifier (statistic-chasing destroys separation).
-11. **Exp 95** (SparKer as a training loss) — cleared by 94 but
-    CONTRAINDICATED by 96+98 in the alternating form; redesign with a
-    class-structure-preserving term before any attempt.
-12. **Exp 89** (gate calibration) — remaining protocol debt.  **Exp 91**
-    — DONE 2026-08-21: all records citable with uncertainties, no
-    ordering flips (aircraft 0.866+-0.002, flowers 0.887+-0.019, dtd
-    0.867+-0.004, galaxy10 0.971+-0.004, cars 0.833+-0.017).
+**Done** (see the status board above): 80, 81, 82, 86, 87, 88, 90, 91, 92,
+92b, 93, 94, 96, 97, 98, 99.
+**In flight** (2026-08-21): 89 (gate grid, running) -> 83 (variance-reduced
+NPLM) -> 84 (two-stage strict) -> 85 (iterated residuals), chained on the
+GPU.
+
+Remaining, in the order we would run them:
+
+1. **Exp 104** (interpretability panel) — evaluation-only, and it measures the
+   property the program is built around but has never quantified: whether
+   distance to a labelled anchor is a delta log-likelihood.  Script shipped.
+2. **Exp 100** (dense fraction scan) — evaluation-only; 102 of 106 reach
+   numbers are currently bounds rather than measurements.
+3. **Exp 102** (residual child as standalone detector) — evaluation-only,
+   follows directly from exp 80's surprise.
+4. **Exp 103** (LID neighbourhood decomposition) — evaluation-only; third
+   attempt at the LID mechanism, and worth capping if it also fails.
+5. **Exp 101** (does frozen-space discovery generalize beyond aircraft?) — if
+   exp 86 and 92b hold elsewhere they become the default recipe rather than a
+   fine-grained fix, and the paper's framing changes again.
+6. **Exp 95** (SparKer as a training loss) — formally cleared by exp 94, but
+   CONTRAINDICATED by 96 (warm-start harmful) and 98 (SparKer-ft destroys
+   the separation it optimizes); needs a class-structure-preserving redesign
+   before any attempt.
+
+Standing item resolved 2026-08-21: `tests/test_calibration.py` HAS been
+executed on this machine — full suite green (103 passed) both at merge time
+and after; the identities it pins are verified.
