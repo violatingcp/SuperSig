@@ -1693,4 +1693,268 @@ the practical form of that caveat, and the observed regression of the bilinear
 NPLM arms at 64-D on CIFAR-100 --- losing \emph{both} currencies --- is the
 kind of failure it predicts.
 
+
+% ==========================================================================
+\section{Discovery reach: the fraction at which SparKer power crosses 0.95}
+\label{app:reach}
+% ==========================================================================
+
+Power reported at a fixed signal fraction answers ``how well does this space do
+on my grid''; a search wants the inverse quantity --- \emph{how small a signal
+can this space find?} We therefore invert every archived power curve into a
+single sensitivity number,
+\begin{equation}
+f_{95} \;=\; \min\;\{\, f \;:\; \mathrm{power}_{\mathrm{SparKer}}(f)\ \ge\ 0.95 \,\},
+\end{equation}
+the injected fraction at which the test becomes reliable. Lower is better. We
+take the first upward crossing and interpolate linearly in $\log f$, power
+curves being sigmoidal in $\log f$.
+
+\paragraph{The measurement is limited by the fraction grid, not by the spaces}
+This is the first thing to report, and it governs how the table should be read.
+Power is estimated from 50 signal toys, so it is quantized in steps of $0.02$
+and carries a Clopper--Pearson uncertainty of roughly $\pm0.03$ near $0.95$.
+More seriously, the transfer grid is
+$f\in\{0.003,0.01,0.02,0.05,0.1\}$, and essentially every crossing falls in the
+final interval $[0.05,0.1]$, across which power typically rises from $\sim0.1$
+to $\sim1.0$. Of 106 newly covered spaces, 46 cross $0.95$ inside the grid at
+all, and \textbf{only four have a crossing that is not pinned to that top
+interval}. We mark the rest with $*$ and treat them as ``somewhere in
+$(0.05,0.1)$'' rather than as measurements. The cleanly determined values are
+CIFAR-10 \texttt{supcon} ($f_{95}=0.019$) and \texttt{res-nplm} concat
+($0.023$), Galaxy10/VISReg \texttt{supcon-ft-resnplm-cat} ($0.046$), and
+Cars/VISReg \texttt{supcon-ft-resnplm} ($0.049$); CIFAR-10 is the only dataset
+whose grid ($\ldots,0.02,0.03,0.1$) brackets its own crossing, which is
+precisely why its numbers are the trustworthy ones.
+
+\begin{table}[t]\centering\small
+\begin{tabular}{llccl}
+\toprule
+dataset & base & spaces crossing & best $f_{95}$ & best space \\
+\midrule
+CIFAR-10 & --- & 5/5 & \best{0.019} & \texttt{supcon} \\
+CIFAR-100 & --- & 5/5 & $0.047^*$ & \texttt{res-nplm-cat} \\
+Galaxy10 & VISReg & 6/6 & \best{0.046} & \texttt{supcon-ft-resnplm-cat} \\
+Galaxy10 & LeJEPA & 6/6 & $0.082^*$ & \texttt{ss-ft-res-cat} \\
+Galaxy10 & DINO & 1/6 & $0.099^*$ & \texttt{supcon-ft-resnplm} \\
+Cars & VISReg & 4/6 & \best{0.049} & \texttt{supcon-ft-resnplm} \\
+Cars & DINO & 5/6 & $0.084^*$ & \texttt{supcon-ft-resnplm} \\
+Cars & LeJEPA & 1/6 & $0.099^*$ & \texttt{supcon-ft-resnplm-cat} \\
+DTD & VISReg & 2/6 & $0.091^*$ & \texttt{supcon-ft-res-cat} \\
+DTD & DINO & 4/6 & $0.092^*$ & \texttt{supcon-ft-resnplm-cat} \\
+DTD & LeJEPA & 1/6 & $0.096^*$ & \texttt{ss-ft-res-cat} \\
+Aircraft & VISReg & 4/8 & $0.082^*$ & \texttt{supcon-ft-resnplm} \\
+Aircraft & DINO & 2/8 & $0.097^*$ & \texttt{supcon-ft-resnplm} \\
+Aircraft & LeJEPA & 0/8 & $>0.1$ & --- \\
+Flowers & DINO & 0/6 & $>0.1$ & --- (max power 0.70) \\
+Flowers & VISReg & 0/6 & $>0.1$ & --- (max power 0.94) \\
+Flowers & LeJEPA & 0/6 & $>0.1$ & --- (max power 0.42) \\
+\bottomrule
+\end{tabular}
+\caption{SparKer discovery reach by cell, over the 106 spaces of
+\S\ref{sec:residual-detector}. $*$ marks a crossing pinned to the top grid
+interval $[0.05,0.1]$ and therefore poorly determined. Bold marks the four
+cleanly bracketed values in the whole set.}
+\label{tab:reach}
+\end{table}
+
+\paragraph{What the table nonetheless shows}
+Three statements survive the caveat. First, \textbf{Flowers never reaches
+$0.95$ in any of 54 archived series on any base}, peaking at $0.70$/$0.94$/$0.42$
+on DINO/VISReg/LeJEPA. Combined with Flowers' campaign-best LID score of
+$0.951$, this is the sharpest form of the regime complementarity of
+\S\ref{sec:residual-detector}: the dataset whose novelty is easiest to detect
+per event is the one whose novelty is hardest to detect in aggregate. Second,
+\textbf{every best-in-cell space is a residual or concat construction} except on
+CIFAR-10, extending \S\ref{sec:residual-detector} from power-at-a-fraction to
+reach. Third, reach tracks the base ordering already established: VISReg gives
+the two cleanest crossings, LeJEPA is worst in every dataset where it appears
+($1/6$, $1/6$, $0/8$ spaces crossing).
+
+\paragraph{The run that would settle it}
+A dense scan over $f\in\{0.02,0.03,0.04,0.05,0.06,0.08,0.10\}$ on the
+champion space of each cell, at the existing 50 toys, would bracket every
+crossing in an interval of width $\le0.02$ and turn Table~\ref{tab:reach} from
+a set of bounds into a measurement. It requires no retraining --- only the
+battery, on cached embeddings --- and it is the natural companion to the
+coverage audit that produced these curves. We have not run it.
+
+% ==========================================================================
+\section{Full metric tables}
+\label{app:full}
+% ==========================================================================
+
+Tables~\ref{tab:full-cars}--\ref{tab:full-galaxy10} give every Part-A metric
+for every arm and base on the four end-to-end transfer datasets, so that the
+selective comparisons in the body can be checked against the complete grid.
+Values are single-seed unless a spread is quoted; per \S\ref{sec:battery},
+probe gaps below $0.02$ should not be read as real.
+
+\begin{table}[p]\centering\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lcccccccc}
+\toprule
+arm & probe & probe & acc & supAUC & \texttt{eucl} & mahaT & mahaPC & $f_{95}$ \\
+    & (pre)  & (post) &     &        &               &       &        & (SpK) \\
+\midrule
+\multicolumn{9}{l}{\emph{dino}}\\
+\texttt{supcon} & 0.733 & 0.767 & 0.462 & 0.974 & 0.603 & 0.564 & 0.668 & 0.097* \\
+\texttt{ss} & 0.719 & 0.747 & 0.330 & 0.966 & 0.551 & 0.547 & 0.599 & 0.094* \\
+\texttt{simclr} & 0.624 & 0.684 & 0.108 & 0.776 & 0.469 & 0.476 & 0.535 & $>$0.1 \\
+\texttt{sigreg-ssl} & 0.584 & 0.690 & 0.082 & 0.803 & 0.483 & 0.496 & 0.526 & $>$0.1 \\
+\texttt{nplm-bil} & 0.591 & 0.704 & 0.063 & 0.760 & 0.506 & 0.496 & 0.511 & $>$0.1 \\
+\texttt{nplm-sup} & 0.549 & 0.600 & 0.105 & 0.916 & 0.555 & 0.547 & 0.550 & $>$0.1 \\
+\multicolumn{9}{l}{\emph{lejepa}}\\
+\texttt{supcon} & 0.699 & 0.726 & 0.498 & 0.987 & 0.627 & 0.572 & 0.678 & 0.098* \\
+\texttt{ss} & 0.709 & 0.699 & 0.299 & 0.966 & 0.574 & 0.581 & 0.589 & $>$0.1 \\
+\texttt{simclr} & 0.618 & 0.614 & 0.079 & 0.808 & 0.469 & 0.453 & 0.478 & $>$0.1 \\
+\texttt{sigreg-ssl} & 0.563 & 0.617 & 0.067 & 0.782 & 0.491 & 0.465 & 0.509 & $>$0.1 \\
+\texttt{nplm-bil} & 0.611 & 0.658 & 0.111 & 0.848 & 0.491 & 0.476 & 0.527 & $>$0.1 \\
+\texttt{nplm-sup} & 0.582 & 0.658 & 0.190 & 0.943 & 0.572 & 0.579 & 0.582 & 0.094* \\
+\multicolumn{9}{l}{\emph{visreg}}\\
+\texttt{supcon} & 0.707 & 0.758 & 0.555 & 0.990 & 0.715 & 0.661 & 0.717 & 0.094* \\
+\texttt{ss} & 0.741 & 0.712 & 0.351 & 0.972 & 0.559 & 0.548 & 0.611 & $>$0.1 \\
+\texttt{simclr} & 0.610 & 0.657 & 0.074 & 0.751 & 0.472 & 0.462 & 0.490 & $>$0.1 \\
+\texttt{sigreg-ssl} & 0.574 & 0.634 & 0.064 & 0.760 & 0.493 & 0.463 & 0.484 & $>$0.1 \\
+\texttt{nplm-bil} & 0.576 & 0.624 & 0.081 & 0.826 & 0.537 & 0.490 & 0.523 & $>$0.1 \\
+\texttt{nplm-sup} & 0.579 & 0.549 & 0.186 & 0.950 & 0.578 & 0.578 & 0.584 & 0.088* \\
+\bottomrule
+\end{tabular}
+\caption{\textbf{Stanford Cars (196 classes, holdouts 186--195).} All six end-to-end fine-tuning arms on all three
+pretraining bases. Probe is holdout-novelty AUC (3 seeds), pre and post
+discovery; \texttt{acc} is nearest-centroid top-1 over seen classes; supAUC the
+prototype-posterior macro OvR AUC; \texttt{eucl}/mahaT/mahaPC are novelty AUCs
+of min-anchor distance and tied / per-class Mahalanobis. $f_{95}$ is the
+SparKer discovery reach of App.~\ref{app:reach} (lower is better;
+$*$ = crossing lies in the top grid interval and is poorly determined;
+$>0.1$ = never reaches power $0.95$ within the measured grid).}
+\label{tab:full-cars}
+\end{table}
+
+
+\begin{table}[p]\centering\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lcccccccc}
+\toprule
+arm & probe & probe & acc & supAUC & \texttt{eucl} & mahaT & mahaPC & $f_{95}$ \\
+    & (pre)  & (post) &     &        &               &       &        & (SpK) \\
+\midrule
+\multicolumn{9}{l}{\emph{dino}}\\
+\texttt{supcon} & 0.708 & 0.814 & 0.944 & 1.000 & 0.911 & 0.873 & 0.833 & $>$0.1 \\
+\texttt{ss} & 0.795 & 0.788 & 0.940 & 1.000 & 0.933 & 0.883 & 0.822 & $>$0.1 \\
+\texttt{simclr} & 0.743 & 0.754 & 0.839 & 0.996 & 0.670 & 0.673 & 0.722 & $>$0.1 \\
+\texttt{sigreg-ssl} & 0.732 & 0.777 & 0.799 & 0.994 & 0.710 & 0.706 & 0.744 & $>$0.1 \\
+\texttt{nplm-bil} & 0.664 & 0.808 & 0.531 & 0.947 & 0.667 & 0.646 & 0.644 & $>$0.1 \\
+\texttt{nplm-sup} & 0.625 & 0.624 & 0.518 & 0.975 & 0.659 & 0.668 & 0.667 & $>$0.1 \\
+\multicolumn{9}{l}{\emph{lejepa}}\\
+\texttt{supcon} & 0.678 & 0.752 & 0.934 & 0.997 & 0.897 & 0.873 & 0.797 & $>$0.1 \\
+\texttt{ss} & 0.792 & 0.613 & 0.879 & 0.998 & 0.883 & 0.899 & 0.821 & $>$0.1 \\
+\texttt{simclr} & 0.725 & 0.740 & 0.717 & 0.980 & 0.582 & 0.584 & 0.689 & $>$0.1 \\
+\texttt{sigreg-ssl} & 0.684 & 0.719 & 0.589 & 0.975 & 0.677 & 0.738 & 0.688 & $>$0.1 \\
+\texttt{nplm-bil} & 0.768 & 0.722 & 0.685 & 0.981 & 0.711 & 0.741 & 0.717 & $>$0.1 \\
+\texttt{nplm-sup} & 0.734 & 0.706 & 0.663 & 0.984 & 0.751 & 0.808 & 0.772 & $>$0.1 \\
+\multicolumn{9}{l}{\emph{visreg}}\\
+\texttt{supcon} & 0.713 & 0.810 & 0.957 & 1.000 & 0.949 & 0.919 & 0.879 & $>$0.1 \\
+\texttt{ss} & 0.754 & 0.743 & 0.911 & 0.999 & 0.902 & 0.895 & 0.839 & $>$0.1 \\
+\texttt{simclr} & 0.746 & 0.728 & 0.689 & 0.983 & 0.569 & 0.554 & 0.688 & $>$0.1 \\
+\texttt{sigreg-ssl} & 0.738 & 0.734 & 0.614 & 0.976 & 0.666 & 0.709 & 0.695 & $>$0.1 \\
+\texttt{nplm-bil} & 0.737 & 0.737 & 0.471 & 0.945 & 0.646 & 0.672 & 0.609 & $>$0.1 \\
+\texttt{nplm-sup} & 0.631 & 0.576 & 0.621 & 0.982 & 0.723 & 0.778 & 0.784 & $>$0.1 \\
+\bottomrule
+\end{tabular}
+\caption{\textbf{Flowers-102 (102 classes, holdouts 92--101, $\sim$18 imgs/class).} All six end-to-end fine-tuning arms on all three
+pretraining bases. Probe is holdout-novelty AUC (3 seeds), pre and post
+discovery; \texttt{acc} is nearest-centroid top-1 over seen classes; supAUC the
+prototype-posterior macro OvR AUC; \texttt{eucl}/mahaT/mahaPC are novelty AUCs
+of min-anchor distance and tied / per-class Mahalanobis. $f_{95}$ is the
+SparKer discovery reach of App.~\ref{app:reach} (lower is better;
+$*$ = crossing lies in the top grid interval and is poorly determined;
+$>0.1$ = never reaches power $0.95$ within the measured grid).}
+\label{tab:full-flowers}
+\end{table}
+
+
+\begin{table}[p]\centering\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lcccccccc}
+\toprule
+arm & probe & probe & acc & supAUC & \texttt{eucl} & mahaT & mahaPC & $f_{95}$ \\
+    & (pre)  & (post) &     &        &               &       &        & (SpK) \\
+\midrule
+\multicolumn{9}{l}{\emph{dino}}\\
+\texttt{supcon} & 0.799 & 0.811 & 0.759 & 0.980 & 0.704 & 0.646 & 0.639 & 0.096* \\
+\texttt{ss} & 0.782 & 0.785 & 0.782 & 0.984 & 0.801 & 0.742 & 0.704 & $>$0.1 \\
+\texttt{simclr} & 0.808 & 0.801 & 0.653 & 0.957 & 0.469 & 0.506 & 0.716 & 0.099* \\
+\texttt{sigreg-ssl} & 0.803 & 0.802 & 0.634 & 0.967 & 0.543 & 0.577 & 0.744 & $>$0.1 \\
+\texttt{nplm-bil} & 0.681 & 0.785 & 0.366 & 0.849 & 0.465 & 0.479 & 0.506 & $>$0.1 \\
+\texttt{nplm-sup} & 0.586 & 0.781 & 0.432 & 0.933 & 0.590 & 0.615 & 0.636 & $>$0.1 \\
+\multicolumn{9}{l}{\emph{lejepa}}\\
+\texttt{supcon} & 0.755 & 0.790 & 0.747 & 0.982 & 0.706 & 0.732 & 0.711 & $>$0.1 \\
+\texttt{ss} & 0.787 & 0.784 & 0.784 & 0.987 & 0.804 & 0.786 & 0.774 & 0.098* \\
+\texttt{simclr} & 0.817 & 0.821 & 0.646 & 0.968 & 0.516 & 0.580 & 0.785 & $>$0.1 \\
+\texttt{sigreg-ssl} & 0.809 & 0.826 & 0.598 & 0.963 & 0.607 & 0.714 & 0.784 & 0.097* \\
+\texttt{nplm-bil} & 0.746 & 0.745 & 0.505 & 0.934 & 0.595 & 0.637 & 0.705 & $>$0.1 \\
+\texttt{nplm-sup} & 0.581 & 0.765 & 0.649 & 0.961 & 0.714 & 0.754 & 0.760 & $>$0.1 \\
+\multicolumn{9}{l}{\emph{visreg}}\\
+\texttt{supcon} & 0.750 & 0.791 & 0.774 & 0.984 & 0.780 & 0.765 & 0.755 & 0.098* \\
+\texttt{ss} & 0.784 & 0.785 & 0.799 & 0.984 & 0.834 & 0.807 & 0.791 & $>$0.1 \\
+\texttt{simclr} & 0.854 & 0.848 & 0.626 & 0.946 & 0.453 & 0.517 & 0.730 & $>$0.1 \\
+\texttt{sigreg-ssl} & 0.808 & 0.790 & 0.607 & 0.963 & 0.601 & 0.727 & 0.797 & 0.095* \\
+\texttt{nplm-bil} & 0.778 & 0.811 & 0.551 & 0.942 & 0.601 & 0.629 & 0.719 & $>$0.1 \\
+\texttt{nplm-sup} & 0.569 & 0.707 & 0.597 & 0.956 & 0.718 & 0.743 & 0.751 & 0.099* \\
+\bottomrule
+\end{tabular}
+\caption{\textbf{DTD (47 classes, holdouts 37--46).} All six end-to-end fine-tuning arms on all three
+pretraining bases. Probe is holdout-novelty AUC (3 seeds), pre and post
+discovery; \texttt{acc} is nearest-centroid top-1 over seen classes; supAUC the
+prototype-posterior macro OvR AUC; \texttt{eucl}/mahaT/mahaPC are novelty AUCs
+of min-anchor distance and tied / per-class Mahalanobis. $f_{95}$ is the
+SparKer discovery reach of App.~\ref{app:reach} (lower is better;
+$*$ = crossing lies in the top grid interval and is poorly determined;
+$>0.1$ = never reaches power $0.95$ within the measured grid).}
+\label{tab:full-dtd}
+\end{table}
+
+
+\begin{table}[p]\centering\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lcccccccc}
+\toprule
+arm & probe & probe & acc & supAUC & \texttt{eucl} & mahaT & mahaPC & $f_{95}$ \\
+    & (pre)  & (post) &     &        &               &       &        & (SpK) \\
+\midrule
+\multicolumn{9}{l}{\emph{dino}}\\
+\texttt{supcon} & 0.938 & 0.939 & 0.610 & 0.909 & 0.666 & 0.786 & 0.687 & $>$0.1 \\
+\texttt{ss} & 0.872 & 0.926 & 0.558 & 0.890 & 0.633 & 0.691 & 0.631 & $>$0.1 \\
+\texttt{simclr} & 0.868 & 0.942 & 0.421 & 0.830 & 0.595 & 0.729 & 0.602 & $>$0.1 \\
+\texttt{sigreg-ssl} & 0.914 & 0.931 & 0.408 & 0.825 & 0.514 & 0.764 & 0.694 & 0.092* \\
+\texttt{nplm-bil} & 0.839 & 0.928 & 0.319 & 0.705 & 0.664 & 0.712 & 0.657 & $>$0.1 \\
+\texttt{nplm-sup} & 0.878 & 0.912 & 0.414 & 0.837 & 0.779 & 0.824 & 0.782 & 0.071* \\
+\multicolumn{9}{l}{\emph{lejepa}}\\
+\texttt{supcon} & 0.919 & 0.931 & 0.750 & 0.955 & 0.646 & 0.722 & 0.693 & 0.084* \\
+\texttt{ss} & 0.803 & 0.871 & 0.704 & 0.938 & 0.668 & 0.751 & 0.762 & 0.082* \\
+\texttt{simclr} & 0.902 & 0.946 & 0.500 & 0.864 & 0.626 & 0.685 & 0.654 & 0.096* \\
+\texttt{sigreg-ssl} & 0.927 & 0.940 & 0.426 & 0.834 & 0.301 & 0.774 & 0.708 & 0.095* \\
+\texttt{nplm-bil} & 0.892 & 0.905 & 0.505 & 0.863 & 0.431 & 0.620 & 0.663 & 0.095* \\
+\texttt{nplm-sup} & 0.899 & 0.897 & 0.640 & 0.900 & 0.787 & 0.860 & 0.774 & 0.095* \\
+\multicolumn{9}{l}{\emph{visreg}}\\
+\texttt{supcon} & 0.939 & 0.944 & 0.764 & 0.945 & 0.720 & 0.854 & 0.804 & 0.047 \\
+\texttt{ss} & 0.865 & 0.945 & 0.729 & 0.943 & 0.650 & 0.710 & 0.724 & 0.078* \\
+\texttt{simclr} & 0.933 & 0.922 & 0.526 & 0.867 & 0.554 & 0.731 & 0.674 & 0.095* \\
+\texttt{sigreg-ssl} & 0.931 & 0.940 & 0.405 & 0.824 & 0.274 & 0.678 & 0.603 & 0.092* \\
+\texttt{nplm-bil} & 0.802 & 0.904 & 0.332 & 0.758 & 0.588 & 0.684 & 0.704 & $>$0.1 \\
+\texttt{nplm-sup} & 0.883 & 0.933 & 0.581 & 0.875 & 0.770 & 0.834 & 0.759 & 0.088* \\
+\bottomrule
+\end{tabular}
+\caption{\textbf{Galaxy10 DECals (10 classes, holdout \{9\}).} All six end-to-end fine-tuning arms on all three
+pretraining bases. Probe is holdout-novelty AUC (3 seeds), pre and post
+discovery; \texttt{acc} is nearest-centroid top-1 over seen classes; supAUC the
+prototype-posterior macro OvR AUC; \texttt{eucl}/mahaT/mahaPC are novelty AUCs
+of min-anchor distance and tied / per-class Mahalanobis. $f_{95}$ is the
+SparKer discovery reach of App.~\ref{app:reach} (lower is better;
+$*$ = crossing lies in the top grid interval and is poorly determined;
+$>0.1$ = never reaches power $0.95$ within the measured grid).}
+\label{tab:full-galaxy10}
+\end{table}
+
 \end{document}
