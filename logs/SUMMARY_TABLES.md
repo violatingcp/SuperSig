@@ -1085,3 +1085,25 @@ fired too.  C100 32-D, 5 paired seeds (refs = exp-81 archived):
   clamp's "miscalibration" is where its probe performance LIVES.
 - bil+clamp stands as the best label-free NPLM arm; the exp-81 rule
   (accept the variance or use dist-sup) is the final word on this line.
+
+Exp 84 (`84_two_stage_strict.sh`, 2026-08-21; IMPROVEMENT_TESTS #84):
+the two-stage recipe under the strict open-world protocol -- PREDICTION
+CONFIRMED: the gains shrink slightly but SURVIVE; reading #8 was not
+contamination.  Seen-only nplm-sup-ft trunks (exp-70 protocol) + exp-51
+8-arm head suites; best rows per base:
+
+  base    two-stage supcon_sigreg      caveated #8      exp-71 champ
+  dino    0.787 / mahaT 0.746          --               0.816
+  lejepa  0.796 / eucl .817 / mahaT .802   0.812/0.638/0.800   0.848
+  visreg  0.805 / mahaT 0.773; nplm_sup_dist mahaT 0.814   (mahaT 0.812)  0.866
+
+- The strict numbers land within 0.007-0.016 of the caveated ones
+  (lejepa mahaT and visreg nplm_sup_dist mahaT fully survive at
+  0.80-0.81): holdout exclusion barely moves the two-stage result, so
+  reading #8 graduates from caveat to citable.
+- As predicted, two-stage lands BETWEEN the exp-70 parents and the
+  exp-71 residual champions on every base (0.787-0.805 vs champions
+  0.816-0.866): a real recipe, but the residual construction remains
+  strictly better on aircraft.
+- The caveat can be struck from AIRCRAFT_MASTER_TABLE; cite the strict
+  numbers above.
