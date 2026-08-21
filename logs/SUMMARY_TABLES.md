@@ -1039,3 +1039,26 @@ visreg/dino fine-grained cells -- and cheaper than predicted:
 - Deployment rule: on fine-grained visreg/dino cells a detection
   pipeline can drop the parent (half the embedding, better reach,
   ~0.02 probe cost); elsewhere keep the concat.
+
+Exp 101 (`101_frozen_generality.py`, 2026-08-21; IMPROVEMENT_TESTS
+#101): frozen-space discovery generality -- PREDICTION CONFIRMED IN
+FULL, including its coarse-cell clause.  Freeze-both discovery (zero
+probe cost by construction) across the remaining 14 cells; per-event
+from discovered anchors:
+
+  fine-grained: cars/visreg 0.373, flowers/visreg 0.803, flowers/dino
+    0.737, flowers/lejepa 0.472, cars/dino 0.228, dtd/lejepa 0.307 --
+    strong retention; flowers frozen per-event is the best flowers
+    dataset-level detection on record.
+  coarse: galaxy10/dino 0.015, galaxy10/lejepa 0.023, cifar10 0.096
+    (vs 0.73-0.75 unfrozen!), cifar100 0.030 -- the space update does
+    real work where novelty is genuinely outlying; galaxy10/visreg is
+    the coarse exception (0.348, its unfrozen 0.32-0.45 retained).
+
+- The exp-86 recipe is now REGIME-SCOPED, not universal: freeze the
+  space on fine-grained/on-manifold cells (all the probe-record cells
+  keep their records WITH detection), fine-tune on coarse/outlying
+  cells (CIFAR, galaxy10) where discovery ft earns its probe cost.
+- "Choose by consumer" survives but flips axis: the choice is now by
+  NOVELTY GEOMETRY (on-manifold -> frozen anchors; outlying -> ft),
+  not by readout.
