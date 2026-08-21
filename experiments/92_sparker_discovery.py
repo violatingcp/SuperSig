@@ -166,6 +166,14 @@ def sparker_discovery(backbone, means, *, base_ds, train_eval_loader,
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--cells", default=",".join(CELLS))
+    ap.add_argument("--variants", nargs="+",
+                    default=["distance", "sparker"],
+                    choices=["distance", "sparker", "distance-frozen",
+                             "sparker-frozen"],
+                    help="-frozen = freeze the whole backbone (exp-86 "
+                         "freeze-both): only the anchors train")
+    ap.add_argument("--tag", default="",
+                    help="suffix for the results npz (avoid clobbering)")
     ap.add_argument("--quick", action="store_true")
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--emb-dim", type=int, default=100)
@@ -226,15 +234,18 @@ def main():
         print(f"  pre: probe={pre['probe']:.4f} eucl={pre['eucl']:.4f} "
               f"mahaT={pre['mahaT']:.4f}", flush=True)
 
-        for variant in ("distance", "sparker"):
+        for variant in args.variants:
             bb = copy.deepcopy(bb0)
+            if variant.endswith("-frozen"):
+                for p in bb.parameters():
+                    p.requires_grad_(False)
             kw = dict(base_ds=base_feats, train_eval_loader=tr_loader,
                       test_loader=te_loader, seen=seen, holdouts=holdouts,
                       rep_weight=cfg["rep_weight"],
                       sigreg_weight=cfg["sigreg_weight"],
                       n_slices=cfg["n_slices"], rounds=args.rounds,
                       ft_epochs=ft_ep, seed=args.seed)
-            if variant == "distance":
+            if variant.startswith("distance"):
                 _, hist = run_discovery(bb, means0.clone(),
                                         dataset_name=ds, names=None, **kw)
             else:
@@ -249,7 +260,7 @@ def main():
                 purity=[h["purity"] for h in hist],
                 pool=[h["pool"] for h in hist],
                 margin=[h.get("margin", float("nan")) for h in hist])
-            print(f"  [{variant:<9}] purity " +
+            print(f"  [{variant:<15}] purity " +
                   " ".join(f"r{h['round']}={h['purity']:.3f}"
                            f"(n={h['pool']})" for h in hist) +
                   f"  probe {pre['probe']:.4f}->{post['probe']:.4f}"
@@ -270,7 +281,7 @@ def main():
               f"{r['post']['probe']:>11.4f}{r['post']['mahaT']:>11.4f}")
 
     os.makedirs(os.path.join("logs", "exp92"), exist_ok=True)
-    np.savez(os.path.join("logs", "exp92", "results.npz"),
+    np.savez(os.path.join("logs", "exp92", f"results{args.tag}.npz"),
              summary=np.array([repr(results)], dtype=object))
     print("EXP92 DONE.")
 
