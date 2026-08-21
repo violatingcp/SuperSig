@@ -76,11 +76,20 @@ probes, which measure exactly the one property a discovery pipeline cannot
 rely on. We argue that a space intended for discovery must be audited in four
 distinct currencies --- \emph{detection}, \emph{calibration},
 \emph{discoverability}, and \emph{interpretability} --- and we supply a
-concrete, reproducible battery for each. Using a campaign of 79 controlled
-experiments spanning CIFAR-10/100 and a $4\times3\times6$ grid of transfer
-datasets (Stanford Cars, Flowers-102, DTD, Galaxy10~DECals) $\times$
-pretraining bases (DINO, LeJEPA, VISReg) $\times$ contrastive/regularized
-objectives, we establish four results. (i) Detection and calibration are
+concrete, reproducible battery for each. Our central result concerns the
+discovery of genuinely new classes: under a specified Gaussian marginal, such
+a pipeline is not three independent design choices but \textbf{one likelihood
+model at three scales}. The Neyman--Pearson density-ratio functional that
+shapes the embedding reappears verbatim as the SparKer detection statistic,
+and the enforced marginal is precisely what makes Euclidean $k$-means and a
+unit-variance BIC correctly specified for proposing the new classes --- so
+representation, clustering, and hypothesis test read one quadratic surface. We
+characterize when this pipeline finds real classes (a \emph{purity gate}) and
+show that below that gate it is a regularizer wearing a discovery costume.
+Using a campaign of 79 controlled experiments spanning CIFAR-10/100 and a
+$4\times3\times6$ grid of transfer datasets (Stanford Cars, Flowers-102, DTD,
+Galaxy10~DECals) $\times$ pretraining bases (DINO, LeJEPA, VISReg) $\times$
+contrastive/regularized objectives, we establish four further results. (i) Detection and calibration are
 \emph{empirically dissociated}: softmax-contrastive spaces win the probe and
 score exactly $0.000$ per-event detection power, while density-ratio-calibrated
 spaces invert the ordering; no CIFAR-100 space in our sweep exceeds probe
@@ -153,11 +162,20 @@ protocols, blind spots, and known failure modes for each.
 datasets, three pretraining bases, and ten training objectives. The
 dissociation is not noise and is not a tuning artifact: it is reproduced under
 paired seeds and inverts predictably with the number of seen classes.
+\item \textbf{A unified account of new-class discovery} (\S\ref{sec:discovery}),
+which we regard as the central contribution. The Neyman--Pearson functional
+minimized during representation learning is, verbatim, the SparKer detection
+statistic evaluated at event rather than pair level; and the SIGReg marginal
+that licenses the first is what makes the clustering step --- Euclidean
+$k$-means with a unit-variance BIC --- correctly specified rather than merely
+convenient. We give the \emph{purity gate} that determines when the pipeline
+finds real classes, show that below it the loop is a regularizer rather than a
+discovery method (established by a reversal in which the outcome flips sign
+while purity does not change), and document a bandwidth pathology in kernel
+two-sample testing that we expect to affect comparisons beyond this work.
 \item \textbf{Two repairs, benchmarked head to head} (\S\ref{sec:repair}):
 iterated anchor \emph{discovery} and \emph{residual fine-tuning}. Residual
-fine-tuning wins $12/12$ cells and produces the campaign's records; discovery
-is shown to be \emph{substrate-dependent} (probe-negative on frozen trunks,
-probe-positive in $50/72$ cells on fine-tuned trunks) and \emph{purity-gated}.
+fine-tuning wins $12/12$ cells and produces the campaign's records.
 \item \textbf{Local intrinsic dimension as a first-class novelty statistic}
 (\S\ref{sec:lid}), including a full control study: holdout rotation, distance
 baselines, bootstrap intervals, per-class decomposition, and $k$-sensitivity.
@@ -483,47 +501,313 @@ including --- on a LeJEPA fine-tuned trunk --- beating CE's own trained-classifi
 top-1 with mere nearest-centroid accuracy ($0.638$ vs $0.625$).
 
 % ==========================================================================
+\section{Discovering new classes: one likelihood model, three scales}
+\label{sec:discovery}
+% ==========================================================================
+
+We now come to what we regard as the central result of this work. The
+preceding sections evaluated embedding spaces; this one uses them, and the
+finding is that the pieces of an open-world discovery pipeline --- the
+representation objective, the clustering that proposes new classes, and the
+statistical test that certifies them --- are not three independent design
+choices. Under a specified Gaussian marginal they collapse into
+\textbf{one likelihood model instantiated at three scales}, and the places
+where the pipeline fails are exactly the places where that identification
+breaks.
+
+\subsection{The same Neyman--Pearson functional, twice}
+\label{sec:np-twice}
+
+The representation objective of \S\ref{sec:battery}, written over pairs, is
+\begin{equation}
+\mathcal{L}_{\mathrm{NPLM}}[g]
+= \E_{p(x)p(x')}\!\big[e^{g}-1\big] - \E_{p(x,x')}\big[g\big]
+\qquad\text{(Eq.~\ref{eq:nplm}, repeated).}
+\label{eq:nplm-again}
+\end{equation}
+The dataset-level detection statistic we use, SparKer
+(Grosso et al., \texttt{arXiv:2511.03095}), trains a kernel model $f$ on a
+data sample $D$ against an anomaly-free reference $R$ by minimizing
+\begin{equation}
+\mathcal{L}_{\mathrm{NP}}[f]
+= \sum_{x\in R} w\big(e^{f(x)}-1\big) - \sum_{x\in D} f(x),
+\qquad w = N_D/N_R ,
+\label{eq:sparker}
+\end{equation}
+and reports $t_{\mathrm{NP}} = -2\,\mathcal{L}_{\mathrm{NP}}$, an asymptotic
+log-likelihood-ratio (Wilks) statistic.
+
+These are the same functional. Eq.~\eqref{eq:sparker} is
+Eq.~\eqref{eq:nplm} with pairs replaced by events and the product-of-marginals
+reference replaced by a control sample. The consequence is not cosmetic:
+\textbf{the objective that shapes the embedding is the objective that later
+tests it}, so the quantity being estimated during representation learning and
+the quantity being thresholded at detection time are the same calibrated log
+density ratio. The $e^{f}-1$ term plays an identical role in both --- it pins
+$\E_{\mathrm{ref}}[e^{f}]=1$ and thereby fixes the additive constant --- which
+is why a softmax-trained space, whose scale is a gauge choice
+(App.~\ref{app:grad}), has nothing for a Neyman--Pearson test to threshold and
+scores $0.000$ per-event power.
+
+\subsection{Why clustering is correctly specified in a calibrated latent}
+\label{sec:cluster-spec}
+
+The third scale is the clustering step, and the same marginal constraint makes
+it well posed. Our discovery loop selects the number of new classes by BIC
+under \emph{unit-variance} isotropic Gaussians, i.e.\ with per-component log
+likelihood $-\tfrac12\|z-\mu_k\|^2 + \text{const}$ and penalty $k\,d\log n$.
+That model is ordinarily a crude approximation. Under SIGReg it is not: once
+$p(z)=\N(0,I)$ is enforced, Euclidean distance \emph{is} Mahalanobis distance,
+so $k$-means is the correct estimator for this likelihood and the BIC is
+evaluated under the same density the representation was trained to have. The
+clustering, the detection statistic, and the loss are all reading the same
+quadratic surface (\S\ref{app:grad}, final subsection).
+
+This is the constructive payoff of the LeJEPA program that motivated the work.
+Specifying the marginal is not only a regularizer that improves numbers; it is
+what licenses the downstream inference machinery to be applied without
+misspecification.
+
+\paragraph{Where the specification is only partial, and what it costs}
+Two honest caveats. SIGReg constrains the \emph{aggregate} marginal, not the
+per-class conditionals, so ``Euclidean $=$ Mahalanobis'' holds globally but not
+necessarily within a discovered cluster; the classwise marginal repairs this
+exactly when anchors are realizable (\S\ref{sec:regimes}), which is a
+checkable precondition and frequently fails. And the unit-variance BIC has a
+documented pathology at calibrated scale: for a cluster of unit width the
+$k\,d\log n$ penalty is smaller than the sum-of-squares gain from splitting,
+so BIC saturates at $k_{\max}$ and \emph{fragments} a single true class. We do
+not regard this as a bug to be tuned away --- it is the correct behaviour of
+that likelihood --- and the loop absorbs it downstream with a weighted
+union-find merge of anchors closer than a threshold, plus a repulsion
+exemption between discovered anchors. Fragmentation is nonetheless the
+mechanism behind the worst outcome we record
+(\texttt{ss-ft}/LeJEPA on Flowers, \S\ref{sec:purity-gate}).
+
+\subsection{The pipeline}
+
+Concretely, one discovery round is: (i) embed the unlabeled corpus and score
+every point by its distance to the nearest seen-class anchor; (ii) \emph{pool}
+the points past the $0.95$ quantile of the seen-population score; (iii) choose
+$k$ by BIC and cluster the pool; (iv) merge anchors closer than
+\texttt{merge\_dist}; (v) assign pseudo-labels and fine-tune the space on seen
+labels plus pseudo-labels with a prototype/repulsion objective, co-learning the
+new anchors. Two rounds of five epochs is the settled configuration. The
+diagnostics recorded per round are the pool size, the \textbf{purity} (fraction
+of the pool that is genuinely novel), $\hat k$, the anchor count, the margin
+AUC of $d_{\mathrm{seen}}-d_{\mathrm{disc}}$, and the per-holdout anchor AUC.
+
+\subsection{SparKer: what it measures and how it must be run}
+\label{sec:sparker}
+
+SparKer models the log density ratio as a sparse self-organizing kernel
+mixture, $f(x) = a^{\!\top}[\,p_{[k]}(x)\cdot k(x)\,]$ with Gaussian kernels
+$k_i(x)=\exp(-\|x-\mu_i\|^2/2\sigma^2)$ and a gating
+$p_i = k_i/\sum_j k_j$; both the $M$ kernel centres $\mu_i$ (initialized from
+the data sample) and the weights $a$ are trained on Eq.~\eqref{eq:sparker}. We
+use $M=16$ centres and 300 steps. The bandwidth is \emph{annealed} linearly
+from $\sigma_0$ to $\sigma_0/10$, with $t_{\mathrm{NP}}$ recorded at three
+checkpoints, so a single run probes several resolutions; per-$\sigma$ $p$-values
+are calibrated on anomaly-free toys and aggregated as
+$-\tfrac12\min_\sigma\log p_\sigma - \tfrac12\,\overline{\log p_\sigma}$, with
+detection declared above the $(1-\alpha)$ quantile of the aggregate's own null.
+Power is reported with Clopper--Pearson intervals over 50 signal toys against
+200 (pre) or 100 (post) null toys at $\alpha=0.05$.
+
+\paragraph{The bandwidth rule, and why it generalizes beyond us}
+The single most costly protocol error in the campaign was running SparKer at a
+fixed $\sigma=1$. That value is calibrated for the unit class width of the
+supervised recipe and \emph{only} for it. A discovery fine-tune rescales a
+compact NPLM trunk by roughly $4\times$; at fixed $\sigma$ the test then
+reports zero power at every signal fraction \emph{while the space is
+perfectly fine} --- the annealed schedule scores $1.00$ on the same
+embeddings. We therefore default to the annealed median-heuristic schedule for
+any comparison across spaces whose geometry may differ, and we flag the
+affected historical rows rather than silently restating them. The general
+statement is that a kernel two-sample test carries an implicit length scale,
+and comparing such tests across representations \emph{silently compares length
+scales unless the bandwidth is set adaptively}. We suspect this affects
+published comparisons beyond this work.
+
+\subsection{SparKer results}
+\label{sec:sparker-results}
+
+\begin{table}[t]\centering\small
+\begin{tabular}{lccc@{\hskip 1.2em}lc}
+\toprule
+\multicolumn{4}{c}{\textbf{Aircraft}, frozen heads, SpK@$f{=}0.1$}
+& \multicolumn{2}{c}{\textbf{Cars}, e2e ft, SpK@$f{=}0.1$}\\
+\cmidrule(r{1.0em}){1-4}\cmidrule{5-6}
+arm & DINO & LeJEPA & VISReg & arm & DINO \\
+\midrule
+\texttt{nplm\_sup\_dist} & \best{0.64} & 0.28 & 0.68 & \texttt{ss-ft}      & \best{1.00} \\
+\texttt{supcon}          & 0.42 & \best{0.64} & \best{0.90} & \texttt{supcon-ft}  & 0.98 \\
+\texttt{supcon\_sigreg}  & 0.38 & 0.52 & 0.36 & \texttt{nplm-sup-ft}& 0.94 \\
+\texttt{simclr\_sigreg}  & 0.18 & 0.12 & 0.10 & \texttt{simclr-ft}  & 0.30 \\
+\texttt{nplm\_bilinear}  & 0.16 & 0.18 & 0.08 & \texttt{nplm-bil-ft}& 0.12 \\
+\texttt{lejepa}          & 0.16 & 0.04 & 0.06 & \texttt{sigreg-ssl-ft}& 0.12 \\
+\texttt{nplm\_distance}  & 0.14 & 0.12 & 0.10 & & \\
+\texttt{simclr}          & 0.06 & 0.44 & 0.22 & & \\
+\bottomrule
+\end{tabular}
+\caption{SparKer detection power at $\alpha=0.05$. Aircraft columns use a
+fixed $\sigma=1$; all spaces there share the compact frozen-head scale, so
+comparison \emph{within} the table is fair but not against other tables ---
+the bandwidth caveat above, applied to our own numbers. Cars columns use the
+annealed schedule.}
+\label{tab:sparker}
+\end{table}
+
+Table~\ref{tab:sparker} gives the picture. \textbf{SparKer power is
+supervised-dominated}: on Cars the three label-bearing arms reach
+$0.94$--$1.00$ while every label-free arm sits at $0.12$--$0.30$, an
+eight-fold separation far larger than the corresponding probe gap
+($0.73$ vs $0.59$--$0.62$). Kernel detection is the currency in which
+supervision matters most, which is the mirror image of DTD, where labels add
+nothing to the probe.
+
+Two finer points. First, the champion is base-dependent for SparKer
+(\texttt{nplm\_sup\_dist} on DINO, \texttt{supcon} on LeJEPA and VISReg) even
+though it is \emph{not} base-dependent for MMD, where \texttt{nplm\_sup\_dist}
+leads on all three ($0.86/0.72/0.78$). The two kernel statistics disagree about
+which space is best while agreeing that supervision wins --- statistic--geometry
+matching operating at a finer grain than we can currently explain, and a caution
+against reporting a single kernel test. Second, on CIFAR-10 SparKer is the
+statistic that most clearly rewards the discovery step under the corrected
+bandwidth: the supervised-NPLM classwise space moves $0.42\to0.66$ under an
+NPLM fine-tune, while the prototype fine-tune that wins the probe moves it
+$0.42\to0.26$ --- the probe/power dissociation of \S\ref{sec:dissoc}, visible in
+the kernel test.
+
+\paragraph{An acknowledged coverage gap}
+These are the cells for which archived SparKer batteries exist. The
+residual-fine-tuned and concatenated spaces of \S\ref{sec:repair} --- which hold
+every dataset record in this paper --- \textbf{have no SparKer numbers at all}:
+the aircraft cells of the end-to-end grid were run with power disabled, and the
+residual grid never ran power batteries. We have written the audit that closes
+this (one battery per uncovered cell, loadable from cached embeddings with no
+retraining) but have not yet run it. Until then the record spaces are
+characterized by probe, geometry and per-event power only, and any claim that
+they are also the best \emph{kernel-test} spaces would be unsupported. We
+flag this rather than quietly reporting the subset that happens to exist.
+
+\paragraph{Statistic--geometry matching}
+No single dataset-level statistic dominates. Parametric statistics (per-event
+thresholds, Mahalanobis) require the calibrated spaces of
+\S\ref{sec:dissoc}; kernel statistics (SparKer, MMD) require scale-matched
+bandwidths. Mahalanobis is simply dead on CIFAR-100 at every dimension and
+every space, where MMD remains dimension-robust. The practical rule is to
+report a battery and match the statistic to the geometry, not to pick a
+favourite.
+
+\subsection{The purity gate: when discovery finds classes, and when it does not}
+\label{sec:purity-gate}
+
+Pool purity is the make-or-break diagnostic, and it varies by two orders of
+magnitude across our datasets for \emph{structural} reasons.
+
+\begin{table}[t]\centering\small
+\begin{tabular}{llll}
+\toprule
+dataset & round-1 purity & why & discovery outcome \\
+\midrule
+DTD & 0.795 (\texttt{ss-ft}) & textures separate cleanly & rescues weak arms ($+0.19$) \\
+Flowers & 0.33--0.66 & coarse-separable holdouts & $+0.106$ to $+0.145$ \\
+CIFAR-10 & 0.34 & calibrated tail is the novelty & best full pipeline on record \\
+Galaxy10 & 0.46 (\texttt{nplm-sup-ft}) & coarse morphology & positive 6/6 arms \\
+Aircraft & 0.32--0.53 & moderate & \textbf{still probe-negative} \\
+Cars & 0.03--0.14 & novel models look like seen models & probe-flat to negative \\
+CIFAR-100 & 0.003--0.013 & 500 holdouts in a 2500-event tail & rate-blocked \\
+\bottomrule
+\end{tabular}
+\caption{Purity is necessary and not sufficient. The Cars and CIFAR-100 rows
+fail for different reasons --- geometry and rate respectively --- and the
+Aircraft row fails at adequate purity, which is what forces the refined
+statement below.}
+\label{tab:purity}
+\end{table}
+
+Three conclusions, in increasing order of how much they cost us to learn.
+
+\emph{(1) Pooling requires novelty that is geometrically outlying.} On Cars,
+purity caps at $0.14$ because a novel car model looks like existing car
+models: the novelty sits \emph{among} the seen classes rather than in the
+distance tail, and no amount of calibration moves it there. This is the
+cleanest negative result in the campaign and it bounds the applicability of
+every tail-pooling discovery method, ours included.
+
+\emph{(2) Above the gate, purity stops being the binding constraint.}
+Substituting the scale-free LID score (\S\ref{sec:lid}) for min-anchor
+distance as the pool scorer triples round-2 purity --- the distance threshold
+decays as the fine-tune inflates the space, collapsing to $0.18$--$0.33$, while
+LID holds $0.60$--$0.68$ --- and \emph{strictly dominates} as a pooling
+mechanism. The downstream battery does not move ($+0.000$, $-0.029$,
+$+0.007$). A mechanism can be strictly better and operationally irrelevant at
+the same time; only a multi-currency report reveals both facts.
+
+\emph{(3) At low purity, ``discovery'' is not discovery.} The sharpest
+evidence is a reversal. On frozen trunks the loop is probe-negative on Cars for
+every arm; on end-to-end fine-tuned trunks it is probe-positive for all six
+arms ($+0.03$ to $+0.11$) --- \emph{with purity below $0.14$ in both cases}.
+Since purity did not change, the gain cannot come from pure pools. The
+impure-pool prototype fine-tune acts as beneficial refinement when the
+substrate is aligned to the task and as erosion when it is not. Reported
+honestly, the low-purity regime is a regularizer wearing a discovery costume,
+and the largest ``gain'' in the program is a rescue of a weak head
+(\texttt{nplm-sup-ft} on DTD, $0.586\to0.781$, replicated on all three bases),
+not the discovery of anything.
+
+Finally, Aircraft refutes the tempting converse. It pools at adequate purity
+($0.32$--$0.53$) and discovery \emph{still} costs probe ($-0.012$ to $-0.037$)
+while buying geometry and per-event power (VISReg: per-event $0.30$--$0.50$
+across all fractions, mahaT $+0.017$). Purity is necessary, not sufficient;
+what fails there is the fine-tune dynamics, not the pool. The corresponding
+prediction --- that freezing the parent half during the discovery fine-tune
+should make the step non-negative for the first time on fine-grained data ---
+is the one we would test next.
+
+\subsection{What this means for a discovery pipeline}
+
+Assembling the above: the strongest full pipelines in the campaign are the ones
+where all three scales are consistent. On CIFAR-10, an NPLM-calibrated space
+with a supervised distance critic plus prototype discovery reaches post-hoc
+probe $0.96$--$0.98$ with per-event power $0.73$--$0.75$ against $0.59$ for the
+supervised baseline --- the calibrated tail is exactly what pooling needs, the
+clustering is correctly specified in that tail, and the same NP functional
+certifies the result. Where any one of the three breaks --- rate on CIFAR-100,
+tail geometry on Cars, fine-tune dynamics on Aircraft --- the pipeline degrades
+in a way the corresponding diagnostic predicts in advance. That predictability,
+rather than any single AUC, is what we would want carried forward.
+
+% ==========================================================================
 \section{Repairing the dissociation}
 \label{sec:repair}
 % ==========================================================================
 
-Given that no single standalone loss in the design cube achieves both
-currencies, we benchmark two \emph{constructions} that might.
+Discovery is one of two constructions that might resolve the dissociation of
+\S\ref{sec:dissoc}. Having characterized it above, we benchmark it head to
+head against the alternative.
 
-\subsection{Discovery is substrate-dependent and purity-gated}
+\subsection{Discovery as a repair: substrate-dependent and purity-gated}
 
-The iterated discovery loop (\S\ref{sec:battery}, Currency~III) behaves in a
-way that is initially confusing and ultimately simple. On frozen trunks it is
-probe-\emph{negative} on Cars for every arm ($-0.02$ to $-0.09$). On
-end-to-end fine-tuned trunks it is probe-\emph{positive} for all six arms
-($+0.03$ to $+0.11$) --- \emph{with pool purity still below $0.14$ in both
-cases}. Across the full grid it is positive in $50/72$ cells, and the
+Summarizing \S\ref{sec:purity-gate} in the terms of this comparison: across the
+full grid the discovery loop is probe-positive in $50/72$ cells, and the
 \texttt{supcon-ft}$+$discovery pipeline is positive in $12/12$
-dataset$\times$base cells, the only universally safe full pipeline we found.
+dataset$\times$base cells --- the only universally safe full pipeline we found.
+Its gains are largest where the pre-discovery space is weakest
+($+0.05$ to $+0.15$ on the unsupervised arms) and where purity is high, and it
+is flat or negative on fine-grained data regardless of purity.
 
-Since purity did not change, the gain cannot be coming from pure pools. The
-mechanism is that impure-pool prototype fine-tuning acts as \emph{beneficial
-refinement} when the substrate is already aligned to the task, and as
-\emph{erosion} when it is not. This reframes discovery: on low-purity data it
-is not finding new classes, it is a regularizer, and it should be reported as
-such. Consistently, the largest single gain in the program is a
-\emph{rescue} --- \texttt{nplm-sup-ft} on DTD, $0.586\to0.781$, replicated at
-$+0.14$ to $+0.20$ on all three bases --- recovering what a weak head missed
-rather than discovering anything.
-
-Where purity \emph{is} high, discovery does what it advertises: CIFAR-10
-(purity $0.34$) yields the best full pipeline on record, and Flowers
-(purity $0.33$--$0.66$) yields $+0.106$ to $+0.145$. But purity is
-\textbf{necessary and not sufficient}: aircraft pools at moderate purity
-($0.32$--$0.53$) and discovery still costs probe ($-0.012$ to $-0.037$) while
-buying geometry and per-event power. And Flowers/VISReg shows purity $0.65+$
-can leave a strong arm flat --- there was nothing left to learn.
-
-One pathology deserves flagging for anyone deploying such a loop:
-\texttt{ss-ft} discovery on the LeJEPA base collapses the probe
-$0.792\to0.613$, the worst outcome on record, by splitting round 1 into six
-anchors at purity $0.605$ that fragment the \emph{strongest} classes rather
-than the novelty. High purity does not protect against a bad partition.
+Two failure modes bound its use as a repair. Flowers/VISReg shows that purity
+$0.65+$ can still leave a strong arm flat --- there was nothing left to learn.
+And high purity does not protect against a bad \emph{partition}: \texttt{ss-ft}
+discovery on the LeJEPA base collapses the probe $0.792\to0.613$, the worst
+outcome on record, by splitting round 1 into six anchors at purity $0.605$ that
+fragment the strongest classes rather than the novelty --- the BIC
+fragmentation of \S\ref{sec:cluster-spec} reaching the probe before
+\texttt{merge\_anchors} can absorb it. Treat \texttt{ss-ft}$+$discovery as
+unstable and prefer \texttt{supcon-ft} parents when a discovery step is in the
+pipeline.
 
 \subsection{Residual fine-tuning wins, and breaks the dissociation}
 
@@ -824,7 +1108,11 @@ not a withheld member of a curated taxonomy, and the Cars result --- where
 novel classes are not geometrically outlying --- suggests the proxy's
 difficulty varies more than the datasets' nominal difficulty does. Several
 conclusions rest on 3--5 seeds, which resolves $0.02$-scale effects but not
-smaller ones. Our discovery loop is one specific algorithm (quantile pool, BIC
+smaller ones. Our SparKer coverage is incomplete in exactly the place it
+matters most: the residual and concatenated spaces that hold every record here
+have no kernel-test numbers (\S\ref{sec:sparker-results}), so the claim that
+one construction serves both currencies rests on per-event power rather than on
+the full detection battery. Our discovery loop is one specific algorithm (quantile pool, BIC
 $k$-selection, anchor merge, prototype fine-tune) and the purity-gating
 conclusion may be specific to it. Finally, the interpretability metrics require
 a superclass partition, which is available in our datasets and frequently is
@@ -838,7 +1126,16 @@ available but require expert reading rather than a number.
 Embedding spaces built for scientific discovery need to be evaluated as
 instruments, not as classifiers. When we do so --- across 79 controlled
 experiments, seven datasets, three pretraining bases and ten objectives --- the
-picture is consistent: linear readability and calibrated geometry are
+picture is consistent. The part we would most want carried forward is the
+unification of \S\ref{sec:discovery}: a pipeline that discovers new classes
+need not bolt a clustering heuristic and an anomaly test onto a representation
+trained for something else. Fix the marginal, and the density-ratio objective
+that shapes the space is the statistic that certifies a discovery, while the
+clustering that proposes candidates is correctly specified under the same
+density. When the pipeline then fails, it fails for a reason the
+diagnostics name in advance --- rate on CIFAR-100, tail geometry on Cars,
+fine-tune dynamics on Aircraft --- which we value more than any single AUC.
+Alongside that: linear readability and calibrated geometry are
 anti-correlated properties that no single loss in our design space achieves
 together; the repair is architectural (residual decomposition and
 concatenation) rather than a better loss; scale-free statistics reach novelty
