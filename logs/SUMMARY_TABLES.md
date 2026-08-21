@@ -634,3 +634,36 @@ banks.  Full grids logs/exp80/results_*.npz.  Verdicts:
   resnplm-cat is the only construction close (0.34/0.92); plain
   res-cat and bare children are weak below f=0.1.  c100 all spaces flat
   to 0.02 (<=0.30) then saturate at 0.05 -- the injection clamp regime.
+
+Exp 81 (`81_critic_variance.py`, 2026-08-20; IMPROVEMENT_TESTS #81):
+critic-variance 2x2 CONFIRMED with a refinement.  C100 32-D, 5 paired
+seeds, NPLM + global SIGReg, tau=1:
+
+  arm        probe mean+-sd    s_fin   s_exp(e^g spread)
+  dist-inst  0.7434+-0.0235    7.33    0.11
+  dist-sup   0.8366+-0.0125    1.73    0.27
+  bil-inst   0.8914+-0.0320    1.32    11.8
+  bil-sup    0.8651+-0.0785    0.88    34.9
+
+- sd splits by CRITIC 3.1x (dist 0.018, bil 0.055) vs 1.6x by positives
+  -- the variance is a property of the bilinear critic, as App. A
+  predicts.  One-line rule confirmed: never use the bilinear critic
+  under NPLM when seed stability matters; dist-sup is the stable corner
+  (+-0.0125).
+- REFINEMENT: the raw critic spread s = sd(g) ANTI-correlates with the
+  probe sd (-0.80) -- the loose proxy fails.  The e^g spread (the exact
+  App.-A gradient-variance quantity) correlates +0.80 and separates the
+  arms by two orders of magnitude (0.1-0.3 vs 12-35).  The theory holds
+  only in its exponential form.
+- Side numbers: bil-inst drew a strong mean this seed set (0.891+-0.032
+  vs exp-61's 0.855+-0.042); geometry columns unchanged in ordering.
+
+Exp 82 (same run; IMPROVEMENT_TESTS #82): calibration residual as a
+label-free seed selector -- FALSIFIED operationally.  Spearman(|resid|,
+probe): bil-inst +0.30, bil-sup -0.10 (prediction was < -0.6);
+best-of-5-by-residual UNDERPERFORMS the random-seed mean on bil-inst
+(0.839 vs 0.891, max 0.933).  The residual is structurally negative for
+distance critics (e^g <= 1 caps E_ref[e^g] at 1 without a bias term --
+motivates exp-83's distance+bias form) and far from 0 for every bilinear
+seed; per-seed variation does not track probe.  The seed variance lives
+in the SIGReg/interaction balance, not in calibration failure.
