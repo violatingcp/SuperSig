@@ -629,6 +629,68 @@ and comparing such tests across representations \emph{silently compares length
 scales unless the bandwidth is set adaptively}. We suspect this affects
 published comparisons beyond this work.
 
+\subsection{SparKer results}
+\label{sec:sparker-results}
+
+\begin{table}[t]\centering\small
+\begin{tabular}{lccc@{\hskip 1.2em}lc}
+\toprule
+\multicolumn{4}{c}{\textbf{Aircraft}, frozen heads, SpK@$f{=}0.1$}
+& \multicolumn{2}{c}{\textbf{Cars}, e2e ft, SpK@$f{=}0.1$}\\
+\cmidrule(r{1.0em}){1-4}\cmidrule{5-6}
+arm & DINO & LeJEPA & VISReg & arm & DINO \\
+\midrule
+\texttt{nplm\_sup\_dist} & \best{0.64} & 0.28 & 0.68 & \texttt{ss-ft}      & \best{1.00} \\
+\texttt{supcon}          & 0.42 & \best{0.64} & \best{0.90} & \texttt{supcon-ft}  & 0.98 \\
+\texttt{supcon\_sigreg}  & 0.38 & 0.52 & 0.36 & \texttt{nplm-sup-ft}& 0.94 \\
+\texttt{simclr\_sigreg}  & 0.18 & 0.12 & 0.10 & \texttt{simclr-ft}  & 0.30 \\
+\texttt{nplm\_bilinear}  & 0.16 & 0.18 & 0.08 & \texttt{nplm-bil-ft}& 0.12 \\
+\texttt{lejepa}          & 0.16 & 0.04 & 0.06 & \texttt{sigreg-ssl-ft}& 0.12 \\
+\texttt{nplm\_distance}  & 0.14 & 0.12 & 0.10 & & \\
+\texttt{simclr}          & 0.06 & 0.44 & 0.22 & & \\
+\bottomrule
+\end{tabular}
+\caption{SparKer detection power at $\alpha=0.05$. Aircraft columns use a
+fixed $\sigma=1$; all spaces there share the compact frozen-head scale, so
+comparison \emph{within} the table is fair but not against other tables ---
+the bandwidth caveat above, applied to our own numbers. Cars columns use the
+annealed schedule.}
+\label{tab:sparker}
+\end{table}
+
+Table~\ref{tab:sparker} gives the picture. \textbf{SparKer power is
+supervised-dominated}: on Cars the three label-bearing arms reach
+$0.94$--$1.00$ while every label-free arm sits at $0.12$--$0.30$, an
+eight-fold separation far larger than the corresponding probe gap
+($0.73$ vs $0.59$--$0.62$). Kernel detection is the currency in which
+supervision matters most, which is the mirror image of DTD, where labels add
+nothing to the probe.
+
+Two finer points. First, the champion is base-dependent for SparKer
+(\texttt{nplm\_sup\_dist} on DINO, \texttt{supcon} on LeJEPA and VISReg) even
+though it is \emph{not} base-dependent for MMD, where \texttt{nplm\_sup\_dist}
+leads on all three ($0.86/0.72/0.78$). The two kernel statistics disagree about
+which space is best while agreeing that supervision wins --- statistic--geometry
+matching operating at a finer grain than we can currently explain, and a caution
+against reporting a single kernel test. Second, on CIFAR-10 SparKer is the
+statistic that most clearly rewards the discovery step under the corrected
+bandwidth: the supervised-NPLM classwise space moves $0.42\to0.66$ under an
+NPLM fine-tune, while the prototype fine-tune that wins the probe moves it
+$0.42\to0.26$ --- the probe/power dissociation of \S\ref{sec:dissoc}, visible in
+the kernel test.
+
+\paragraph{An acknowledged coverage gap}
+These are the cells for which archived SparKer batteries exist. The
+residual-fine-tuned and concatenated spaces of \S\ref{sec:repair} --- which hold
+every dataset record in this paper --- \textbf{have no SparKer numbers at all}:
+the aircraft cells of the end-to-end grid were run with power disabled, and the
+residual grid never ran power batteries. We have written the audit that closes
+this (one battery per uncovered cell, loadable from cached embeddings with no
+retraining) but have not yet run it. Until then the record spaces are
+characterized by probe, geometry and per-event power only, and any claim that
+they are also the best \emph{kernel-test} spaces would be unsupported. We
+flag this rather than quietly reporting the subset that happens to exist.
+
 \paragraph{Statistic--geometry matching}
 No single dataset-level statistic dominates. Parametric statistics (per-event
 thresholds, Mahalanobis) require the calibrated spaces of
@@ -1046,7 +1108,11 @@ not a withheld member of a curated taxonomy, and the Cars result --- where
 novel classes are not geometrically outlying --- suggests the proxy's
 difficulty varies more than the datasets' nominal difficulty does. Several
 conclusions rest on 3--5 seeds, which resolves $0.02$-scale effects but not
-smaller ones. Our discovery loop is one specific algorithm (quantile pool, BIC
+smaller ones. Our SparKer coverage is incomplete in exactly the place it
+matters most: the residual and concatenated spaces that hold every record here
+have no kernel-test numbers (\S\ref{sec:sparker-results}), so the claim that
+one construction serves both currencies rests on per-event power rather than on
+the full detection battery. Our discovery loop is one specific algorithm (quantile pool, BIC
 $k$-selection, anchor merge, prototype fine-tune) and the purity-gating
 conclusion may be specific to it. Finally, the interpretability metrics require
 a superclass partition, which is available in our datasets and frequently is
