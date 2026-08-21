@@ -962,3 +962,27 @@ resnplm concats (100-D, seed 0); purity r1/r2 and probe pre->post:
 - Conclusion: C100 discovery is not rate-blocked but GEOMETRY-blocked;
   the distance pool is the wrong instrument.  The exp-92 density-ratio
   pool (+ frozen space per 92b) is the remaining lever.
+
+Exp 100 (`100_dense_reach.py`, 2026-08-21; IMPROVEMENT_TESTS #100):
+dense f95 reach on the 17 champion spaces -- PARTIALLY CONFIRMED, and
+the dataset ordering is now citable:
+
+  citable reach (CP band):  cifar100 0.029 [.029,.035] < cifar10 0.038
+  [.037,.039] < cars/visreg 0.063 [.059,.076] < galaxy10/visreg 0.067 <
+  galaxy10/lejepa 0.071 < aircraft/visreg 0.072 [.068,.078] < dtd/visreg
+  0.079 ~ cars/dino 0.079
+  top-bracketed (*): dtd/dino 0.087, cars/lejepa 0.099
+  never (> 0.1): all three flowers cells (max power 0.14-0.76),
+  aircraft/dino+lejepa, dtd/lejepa, galaxy10/dino
+
+- 8/17 cleanly bracketed vs the exp-99 baseline of 4/106 -- the dense
+  grid converts half the champion table from bounds to measurements.
+  The prediction ("every starred cell resolves within <=0.02") holds
+  only partially: 7 cells genuinely need f > 0.1, so their reach IS the
+  bound, not a grid artifact.
+- Flowers confirmed >0.1 on all bases with SHALLOW curves (0.14-0.76 at
+  f=0.1): per-event-detectable novelty (LID 0.95) that dataset-level
+  kernel tests barely see -- the strongest score-vs-statistic regime
+  split in the program.
+- The visreg base owns transfer reach (best cell on all four transfer
+  datasets); CIFAR concats dominate overall (0.029/0.038).
