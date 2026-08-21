@@ -544,22 +544,35 @@ specifically.
 2. **Exp 81 + 82** (critic variance + calibration residual) — DONE
    2026-08-20: 81 confirmed (sd splits 3.1x by critic; e^g spread is the
    predictor), 82 falsified (residual does not select seeds).
-3. **Exp 92** (SparKer centres as the clustering) — the only proposal with a
-   mechanism that predicts a fix for the cars failure; cheap, parents exist.
-4. **Exp 94** (null validity) — cheap insurance, and a hard prerequisite for
-   exp 95.  Run before, not after.
+3. **Exp 92** (SparKer centres as the clustering) — DONE 2026-08-20:
+   partial confirm (cars r1 0.161->0.214, gate not cleared); unpredicted
+   headline: round-2 purity immune to collapse in every cell.  The 92+86
+   combination (sparker-frozen) DOMINATES: purity + zero space cost —
+   the new fine-grained discovery recipe.
+4. **Exp 94** (null validity) — DONE 2026-08-20: falsifier fired (the
+   good outcome) — FPR at/below nominal in every regime; nulls valid,
+   exp 95 formally cleared.
 5. **Exp 86** (frozen-parent aircraft discovery) — DONE 2026-08-20: fixed,
    and more — freeze BOTH halves, discover anchors only (90-99% of the
    per-event gain at zero probe cost, purity no longer collapses).
-6. **Exp 88** (realizable classwise C100) — RUNNING 2026-08-20 (early:
-   cent->anchor stalls at 3.46 even at 100-D — the optimization-block
-   falsifier branch).
-7. **Exp 93, 96** (NP pool scorer, critic warm-start) — both cheap; 96 is the
-   most direct evidence for the paper's §5 unification.
+6. **Exp 88** (realizable classwise C100) — DONE 2026-08-21: both clauses
+   falsified — cent->anchor stall (~3.5) is dim-independent (optimization
+   equilibrium, Q4 restated); softmax control breaks the C100 calibration
+   ceiling (mahaT 0.545-0.558 at 100-128-D with probe 0.90-0.91).
+7. **Exp 93, 96** — DONE 2026-08-21: 93 np>=lid falsified on flowers
+   (lid wins its regime) but np best on cars (rule: lid on-manifold, np
+   below the gate, frozen space per 92b); 96 warm-start falsified in the
+   strong form (harmful — anchors sit where novelty isn't).
 8. **Exp 83** (variance-reduced NPLM), **Exp 90** (score predictor — DONE
    2026-08-20, falsifier fired: regime rule stays empirical).
 9. **Exp 84, 85** (two-stage, iterated residuals) — moderate cost, record-chasing.
-10. **Exp 97, 98** (SparKer systematics, SparKer-ft) — after 92–94 report.
-11. **Exp 95** (SparKer as a training loss) — the big swing; gated on 94.
-12. **Exp 89, 91** (gate calibration, multi-seed) — 91 RUNNING 2026-08-20
-    (seeds 1-2 of the four record cells).
+10. **Exp 97, 98** — DONE 2026-08-21: 97 sigma schedule robust, M inverts
+    the prediction (high-ID wants FEWER kernels); 98 SparKer-ft FAILS
+    beyond its falsifier (statistic-chasing destroys separation).
+11. **Exp 95** (SparKer as a training loss) — cleared by 94 but
+    CONTRAINDICATED by 96+98 in the alternating form; redesign with a
+    class-structure-preserving term before any attempt.
+12. **Exp 89** (gate calibration) — remaining protocol debt.  **Exp 91**
+    — DONE 2026-08-21: all records citable with uncertainties, no
+    ordering flips (aircraft 0.866+-0.002, flowers 0.887+-0.019, dtd
+    0.867+-0.004, galaxy10 0.971+-0.004, cars 0.833+-0.017).
