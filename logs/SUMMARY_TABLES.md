@@ -691,3 +691,125 @@ predicted.  Three variants per champion cell, exact exp-72 recipe/seed:
   frozen (anchors only).  Discovery is then strictly non-negative: the
   aircraft record 0.8634 is retained WITH per-event 0.523.  "Choose by
   consumer" collapses to one recipe there.
+
+Exp 92 (`92_sparker_discovery.py`, 2026-08-20; IMPROVEMENT_TESTS #92):
+SparKer density-ratio centres replace the discovery clustering (quantile
+pool -> BIC k-means -> merge), A/B vs run_discovery at identical
+recipe/seed:
+
+  cell             variant   pur r1   pur r2   probe post   mahaT post
+  cars/dino        dist/spk  0.161/0.214  0.059/0.212  0.8205/0.8291  0.5430/0.5423
+  aircraft/visreg  dist/spk  0.525/0.591  0.065/0.620  0.8511/0.8397  0.7823/0.7472
+  flowers/dino     dist/spk  0.609/0.618  0.240/0.610  0.9061/0.9015  0.8525/0.8386
+
+- PARTIALLY CONFIRMED.  Cars purity rises (r1 0.161 -> 0.214, +33%
+  rel.) as the mechanism predicts -- density ratio sees what distance
+  misses -- but stays below the ~0.3 gate: a real improvement, not the
+  full rescue.
+- The UNPREDICTED headline: SparKer pooling makes round-2 purity
+  immune to the space-inflation collapse in every cell (0.21-0.62 vs
+  0.06-0.24) -- like LID (exp 79) but via density ratio, and it also
+  proposes the anchors.  Round-2 pool sizes stay full (790 vs 321 on
+  aircraft).
+- Cost: the bigger, purer pools feed MORE discovery-ft pressure -- the
+  aircraft probe cost worsens (-0.024 vs -0.012).  The obvious
+  combination is exp-92 pooling + exp-86 frozen space (purity without
+  the ft erosion); left as the 92+86 follow-up.
+- Flowers probe 0.9015 vs the 0.9061 record tie: parity within seed
+  noise, as predicted for the works-cell.
+
+Exp 94 (`94_null_validity.py`, 2026-08-20; IMPROVEMENT_TESTS #94): null
+validity under novelty-seeking fine-tunes -- FALSIFIER FIRED, and that
+is the good outcome.  Realized FPR at nominal alpha=0.05 (null from
+TEST-set background untouched by any ft; FPR on the corpus the
+discovery ft optimized; Clopper-Pearson 68%):
+
+  cell          frozen           ft-full          ft-split
+  flowers/dino  0.000 [0,.018]   0.000 [0,.018]   0.000 [0,.018]
+  cars/dino     0.040 [.021,.07] 0.040 [.021,.07] 0.060 [.037,.094]
+
+The discovery ft cannot manufacture false positives at campaign sample
+sizes: FPR is at or below nominal in every regime.  Flowers is
+conservative at baseline (even the frozen champion was supcon-ft'd on
+the train corpus, compressing its background); cars is the calibrated
+witness (0.040 frozen) and stays nominal after ft-full.  Verdict: the
+current protocol's nulls are VALID, split-disjointness is not required
+at these sizes, and exp 95 (SparKer as a training loss) is formally
+cleared -- with the caveat that exp-95's stronger, directly-adversarial
+objective should still rerun this check on its own trained encoder.
+
+Exp 92b (`92_sparker_discovery.py --variants *-frozen`, 2026-08-20): the
+92+86 combination -- SparKer density-ratio pooling in a fully frozen
+space -- DOMINATES.  Space bit-identical in every run (probe/mahaT
+pre=post by construction); purity and anchor margin:
+
+  cell             dist-frozen r1/r2   spk-frozen r1/r2   spk margin r1/r2
+  cars/dino        0.161 / 0.068       0.214 / 0.215      0.782 / 0.757
+  aircraft/visreg  0.525 / 0.176       0.591 / 0.608      0.893 / 0.895
+  flowers/dino     0.609 / 0.414       0.618 / 0.620      0.962 / 0.962
+
+- sparker-frozen beats distance-frozen on purity in all six round
+  measurements and ties-or-beats the UNFROZEN sparker purity while
+  eliminating the probe cost entirely (aircraft record 0.8634 intact).
+- Mechanism sharpened: on cars the frozen-space distance r2 still
+  collapses (0.068) -- so the round-2 failure there is ANCHOR
+  ABSORPTION (novel points captured below the distance threshold by the
+  discovered anchors), not space inflation; the density-ratio pool is
+  indifferent to the anchors and immune to both failure modes.
+- New default discovery recipe for fine-grained cells: freeze the
+  space, pool AND propose anchors by SparKer density ratio, train
+  anchors only.  Margin also improves on cars (0.78 vs 0.66).
+
+Exp 93 (`93_np_pool_scorer.py` + `discovery.np_pool_scores`, 2026-08-21;
+IMPROVEMENT_TESTS #93): dist vs LID vs NP-f pool scorer in the standard
+loop -- the "np >= lid everywhere" prediction is FALSIFIED, but np owns
+the regime that matters:
+
+  cell            dist r1/r2     lid r1/r2      np r1/r2
+  flowers/dino    0.609/0.240    0.678/0.679    0.618/0.620
+  flowers/lejepa  0.439/0.328    0.576/0.598    0.528/0.492
+  flowers/visreg  0.643/0.179    0.684/0.677    0.652/0.632
+  cars/dino       0.161/0.059    0.133/0.166    0.214/0.152
+
+- On flowers (LID's regime) lid > np in all three cells by 0.03-0.06:
+  the NP lemma's asymptotic optimality loses to the closed-form ratio
+  statistic at these pool sizes -- exactly the doc's stated falsifier.
+- On cars (below the gate, LID's weak regime) np is the BEST r1 scorer
+  (0.214 vs 0.161/0.133).  Its r2 slips under the ft'd space (0.152);
+  the exp-92b frozen variant holds 0.215 -- pool with np, freeze the
+  space.
+- Probes unmoved everywhere (above-gate lesson of exp 79 stands).
+- Operational rule: lid for on-manifold cells, np below the gate --
+  and per exp-92b, run either in a FROZEN space.
+
+Exp 99 (`99_discovery_reach.py`, 2026-08-21; from the paper branch):
+f95 discovery reach -- every archived SparKer power curve inverted into
+the signal fraction at which power crosses 0.95 (log-f interpolation,
+honest flags for top-bracket/non-monotone/never).  575 series, 231
+(40%) cross inside the measured grid; refreshed over the full current
+archive incl. exp-80.  Headlines:
+- Best reach anywhere: f95 = 0.019 -- a five-way tie among the c10
+  post-discovery/hybrid spaces (exp 33/36/58/59) AND the plain exp-80
+  c10 supcon pre space; resnplm-cat pre reaches 0.023.
+- Best transfer reach: galaxy10/visreg resnplm-cat 0.046 and
+  cars/visreg resnplm CHILD 0.049 -- the exp-80 finding again: the
+  calibrated residual construction owns dataset-level sensitivity off
+  CIFAR.
+- 60% of series never cross 0.95 in-grid; the ">" rows quantify how far
+  the weak spaces are from usable reach.
+
+Exp 96 (`96_warmstart_sparker.py` + sparker mu_init, 2026-08-21;
+IMPROVEMENT_TESTS #96): does the pairwise critic warm-start the
+event-level test?  FALSIFIER FIRED, in the strong form: warm-starting
+SparKer's centres at the trained seen-class centroids is neutral-to-
+HARMFUL.  C10 32-D seed-exact spaces, f=0.02, 50-step budget power
+(cold/warm): nplm_sup_dist 0.800/0.560, nplm_distance 0.120/0.080,
+supcon 1.000/1.000 (saturated contrast).  Full-budget t_NP
+trajectories are statistically indistinguishable.  Mechanism: the
+class centroids sit exactly where the corpus/reference density ratio
+is ~1, so warm centres must first migrate AWAY from their init, while
+data-sample init occasionally seeds centres on novel events.  The
+paper's SS5 unification claim needs its caveat stated plainly: the two
+scales share the functional form and the loss, NOT transferable
+learned content -- the representation's class structure is where
+novelty ISN'T.
