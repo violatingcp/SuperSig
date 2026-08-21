@@ -97,7 +97,7 @@ def main():
     n_hold = 1 if DS == "galaxy10" else 10
     holdouts = set(range(N_CLS - n_hold, N_CLS))
     seen = [c for c in range(N_CLS) if c not in holdouts]
-    tag = f"{DS}_{BASE}_ft71"
+    tag = f"{DS}_{BASE}_ft71{exp70.seed_sfx(args)}"
     print(f"exp71 [{tag}] residual ft on exp-70 parents, runs={RUNS}, "
           f"epochs={args.ft_epochs}")
 

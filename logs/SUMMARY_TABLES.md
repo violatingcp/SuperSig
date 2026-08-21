@@ -580,3 +580,114 @@ exp-72 flowers winners.  LID triples round-2 pool purity (dist collapses
 above the gate, purity is not the binding constraint; discovery-ft
 dynamics are.  run_discovery gained pool_score={"dist","lid"} (default
 unchanged).
+
+Exp 87 (`87_lid_residual_half.py`, 2026-08-20; IMPROVEMENT_TESTS #87):
+LID by half on the flowers/cars champions.  FALSIFIER FIRED on flowers:
+the residual-half LID is uniformly WORSE than the parent half (dino
+0.923 vs 0.951, lejepa 0.825 vs 0.893, visreg 0.733 vs 0.954); concat
+~= parent everywhere.  The flowers LID signal lives in the PARENT
+(class-structure) half -- novelty is a class-level dimensional anomaly,
+not a within-class one, refining the exp-78 mechanism story.  On cars
+the prediction half-holds: residual-half LID beats parent on dino
+(0.677 vs 0.629) and visreg (0.752 vs 0.682 -- best cars LID on
+record) but not lejepa (0.559 vs 0.648), and eucl 0.747 still matches
+it: no regime flip, cars stays a distance-score dataset.  Pseudo-
+rotation control (conservative; classes were labeled during ft) ranks
+the halves identically.  Evaluation-only, no training.
+
+Exp 90 (`90_score_predictor.py`, 2026-08-20; IMPROVEMENT_TESTS #90):
+unsupervised predictor for WHICH novelty score (LID vs eucl) -- the
+FALSIFIER FIRED.  Across 17 champion cells, none of the three label-free
+tail diagnostics (pool dist-ratio, TwoNN ID gap, LID gap) tracks the
+measured LID-eucl AUC gap: Spearman +0.07 / +0.09 / -0.16, best
+sign-accuracy 12/17 vs an 11/17 always-say-LID base rate.  The
+LID-vs-distance regime rule stays empirical; the "on-manifold is
+measurable without labels" mechanism story does not survive contact with
+these candidates.  Side-findings on the champion concats: LID wins the
+gap in 12/17 cells, incl. cifar100 resnplm-cat +0.382 (LID 0.738 vs eucl
+0.356 -- LID is the only usable novelty score in that space) and
+galaxy10/lejepa +0.273; aircraft stays firmly a distance regime
+(-0.11 to -0.20).  Evaluation-only, no training.
+
+Exp 80 (`80_sparker_all_spaces.py`, 2026-08-20): SparKer pre-discovery
+coverage closed -- 106 spaces that never had power batteries (aircraft
+e2e cells were --skip-power; exps 71/73 never ran them), exp-70 protocol
+exactly (annealed sigma, M=16, n_null=200, 50 toys), all from cached
+banks.  Full grids logs/exp80/results_*.npz.  Verdicts:
+
+- The res-nplm RESIDUAL CHILD is the best dataset-level detector in the
+  fine-grained visreg/dino cells, beating its own supcon parent:
+  aircraft/visreg 0.82@f=0.05 (parent 0.44), cars/visreg 0.96@0.05
+  (child alone), cars/dino 0.80@0.05.  The calibrated residual half
+  carries real SparKer power that the probe/eucl columns never showed.
+- Concats preserve or improve the parent's power (aircraft/visreg
+  res-cat 1.00@0.1, galaxy10/visreg resnplm-cat 1.00@0.05, 0.46@0.02)
+  -- concatenation costs nothing at the dataset level either.
+- Base rule: lejepa residual children are systematically weak (cars/
+  lejepa res + resnplm 0.12-0.14@0.1 vs visreg 1.00) -- matches the
+  exp-77 finding that lejepa parents leave the most residual drift.
+- Flowers is SparKer-weak in every residual space (best 0.94@0.1,
+  most <=0.4@0.1): the on-manifold novelty that LID detects per-event
+  is nearly invisible to dataset-level kernel tests.  Score-regime and
+  statistic-regime coincide.
+- CIFAR: c10 supcon parent keeps the best curve (0.50@0.01, 0.98@0.02);
+  resnplm-cat is the only construction close (0.34/0.92); plain
+  res-cat and bare children are weak below f=0.1.  c100 all spaces flat
+  to 0.02 (<=0.30) then saturate at 0.05 -- the injection clamp regime.
+
+Exp 81 (`81_critic_variance.py`, 2026-08-20; IMPROVEMENT_TESTS #81):
+critic-variance 2x2 CONFIRMED with a refinement.  C100 32-D, 5 paired
+seeds, NPLM + global SIGReg, tau=1:
+
+  arm        probe mean+-sd    s_fin   s_exp(e^g spread)
+  dist-inst  0.7434+-0.0235    7.33    0.11
+  dist-sup   0.8366+-0.0125    1.73    0.27
+  bil-inst   0.8914+-0.0320    1.32    11.8
+  bil-sup    0.8651+-0.0785    0.88    34.9
+
+- sd splits by CRITIC 3.1x (dist 0.018, bil 0.055) vs 1.6x by positives
+  -- the variance is a property of the bilinear critic, as App. A
+  predicts.  One-line rule confirmed: never use the bilinear critic
+  under NPLM when seed stability matters; dist-sup is the stable corner
+  (+-0.0125).
+- REFINEMENT: the raw critic spread s = sd(g) ANTI-correlates with the
+  probe sd (-0.80) -- the loose proxy fails.  The e^g spread (the exact
+  App.-A gradient-variance quantity) correlates +0.80 and separates the
+  arms by two orders of magnitude (0.1-0.3 vs 12-35).  The theory holds
+  only in its exponential form.
+- Side numbers: bil-inst drew a strong mean this seed set (0.891+-0.032
+  vs exp-61's 0.855+-0.042); geometry columns unchanged in ordering.
+
+Exp 82 (same run; IMPROVEMENT_TESTS #82): calibration residual as a
+label-free seed selector -- FALSIFIED operationally.  Spearman(|resid|,
+probe): bil-inst +0.30, bil-sup -0.10 (prediction was < -0.6);
+best-of-5-by-residual UNDERPERFORMS the random-seed mean on bil-inst
+(0.839 vs 0.891, max 0.933).  The residual is structurally negative for
+distance critics (e^g <= 1 caps E_ref[e^g] at 1 without a bias term --
+motivates exp-83's distance+bias form) and far from 0 for every bilinear
+seed; per-seed variation does not track probe.  The seed variance lives
+in the SIGReg/interaction balance, not in calibration failure.
+
+Exp 86 (`86_frozen_parent_discovery.py`, 2026-08-20; IMPROVEMENT_TESTS
+#86): the aircraft discovery failure is FIXED -- by freezing MORE than
+predicted.  Three variants per champion cell, exact exp-72 recipe/seed:
+
+  cell    unfrozen dP/perevt  frz-parent dP/perevt  frz-BOTH dP/perevt/pur-r2
+  dino    -0.037 / 0.330      -0.013 / 0.330        0.000 / 0.306 / 0.211
+  lejepa  -0.016 / 0.297      -0.020 / 0.213        0.000 / 0.267 / 0.346
+  visreg  -0.012 / 0.526      -0.013 / 0.498        0.000 / 0.523 / 0.176
+
+- The stated prediction (freeze-parent holds probe, keeps gains) only
+  holds on dino; on lejepa/visreg freeze-parent matches unfrozen's cost.
+- The SHARPER verdict: freeze-both -- discover anchors in a completely
+  frozen space -- keeps 90-99% of the per-event gain (0.523 vs 0.526 on
+  the record cell) at exactly zero probe/geometry cost, and is the only
+  variant whose round-2 pool purity does not collapse (0.176-0.346 vs
+  0.023-0.065; the frozen space cannot inflate, so the distance
+  threshold stays valid -- the exp-79 mechanism solved from the other
+  side).  On fine-grained data the discovery ft update was almost pure
+  cost: the per-event gain lives in the ANCHORS, not the space update.
+- Operational rule: on fine-grained cells run discovery with the space
+  frozen (anchors only).  Discovery is then strictly non-negative: the
+  aircraft record 0.8634 is retained WITH per-event 0.523.  "Choose by
+  consumer" collapses to one recipe there.

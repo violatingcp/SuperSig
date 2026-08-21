@@ -539,20 +539,27 @@ specifically.
 
 ## Suggested order
 
-1. **Exp 87** (LID on residual half) — evaluation only, hours.
-2. **Exp 81 + 82** (critic variance + calibration residual) — one script, cheapest
-   training test, biggest mechanistic payoff.
+1. **Exp 87** (LID on residual half) — DONE 2026-08-20, falsifier fired
+   (flowers LID lives in the parent half).
+2. **Exp 81 + 82** (critic variance + calibration residual) — DONE
+   2026-08-20: 81 confirmed (sd splits 3.1x by critic; e^g spread is the
+   predictor), 82 falsified (residual does not select seeds).
 3. **Exp 92** (SparKer centres as the clustering) — the only proposal with a
    mechanism that predicts a fix for the cars failure; cheap, parents exist.
 4. **Exp 94** (null validity) — cheap insurance, and a hard prerequisite for
    exp 95.  Run before, not after.
-5. **Exp 86** (frozen-parent aircraft discovery) — parents exist, cheap, tests
-   the paper's central claim.
-6. **Exp 88** (realizable classwise C100) — most likely new record.
+5. **Exp 86** (frozen-parent aircraft discovery) — DONE 2026-08-20: fixed,
+   and more — freeze BOTH halves, discover anchors only (90-99% of the
+   per-event gain at zero probe cost, purity no longer collapses).
+6. **Exp 88** (realizable classwise C100) — RUNNING 2026-08-20 (early:
+   cent->anchor stalls at 3.46 even at 100-D — the optimization-block
+   falsifier branch).
 7. **Exp 93, 96** (NP pool scorer, critic warm-start) — both cheap; 96 is the
    most direct evidence for the paper's §5 unification.
-8. **Exp 83** (variance-reduced NPLM), **Exp 90** (score predictor).
+8. **Exp 83** (variance-reduced NPLM), **Exp 90** (score predictor — DONE
+   2026-08-20, falsifier fired: regime rule stays empirical).
 9. **Exp 84, 85** (two-stage, iterated residuals) — moderate cost, record-chasing.
 10. **Exp 97, 98** (SparKer systematics, SparKer-ft) — after 92–94 report.
 11. **Exp 95** (SparKer as a training loss) — the big swing; gated on 94.
-12. **Exp 89, 91** (gate calibration, multi-seed) — protocol debt, before writeup.
+12. **Exp 89, 91** (gate calibration, multi-seed) — 91 RUNNING 2026-08-20
+    (seeds 1-2 of the four record cells).

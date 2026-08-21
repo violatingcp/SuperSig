@@ -521,3 +521,12 @@ at pure classification in this regime.
    DESTROY it: 50.2/43.3) but cannot build up the weak trunks (30.8-32.9
    vs frozen 34.3/37.9).  NPLM heads are never linear-probe spaces
    (2.5-16.3%), consistent with the whole program.
+
+**Exp-86 update (2026-08-20)**: the discovery probe-vs-geometry trade on
+aircraft is severable.  Discovering anchors in the FROZEN champion space
+(no fine-tune at all) keeps 90-99% of the per-event power (visreg 0.523
+vs 0.526 unfrozen) at zero probe cost -- the 0.8634 record is retained
+WITH discovery -- and round-2 pool purity stops collapsing (0.176-0.346
+vs 0.023-0.065).  The discovery ft update, not discovery itself, was the
+cost.  Fine-grained recipe: freeze the space, discover anchors only
+(`86_frozen_parent_discovery.py`).
