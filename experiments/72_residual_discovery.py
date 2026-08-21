@@ -77,17 +77,20 @@ class ConcatHeads(nn.Module):
 
 
 def load_cell(ds, base, parent, obj, args):
-    """Returns (backbone, Xtr, ytr, Xte, yte) for the winner space."""
+    """Returns (backbone, Xtr, ytr, Xte, yte) for the winner space.
+    args.ckpt_sfx (e.g. "_s1") selects seed-suffixed exp-70/71 ckpts."""
     exp70.DS, exp70.BASE = ds, base
+    sfx = getattr(args, "ckpt_sfx", "")
     par = exp43.FineTuneModel(base, args.emb_dim)
     par.load_state_dict(torch.load(
-        os.path.join(CKPT_DIR, f"{ds}_ft_{base}_{parent}_seen.pt"),
+        os.path.join(CKPT_DIR, f"{ds}_ft_{base}_{parent}_seen{sfx}.pt"),
         map_location=DEVICE))
     child = exp43.FineTuneModel(base, args.emb_dim)
     child.load_state_dict(torch.load(
-        os.path.join(CKPT_DIR, f"{ds}_ft_{base}_{parent}_{obj}_seen.pt"),
+        os.path.join(CKPT_DIR, f"{ds}_ft_{base}_{parent}_{obj}_seen{sfx}.pt"),
         map_location=DEVICE))
-    bank_args = argparse.Namespace(quick=False, refresh=args.refresh)
+    bank_args = argparse.Namespace(quick=False, refresh=args.refresh,
+                                   seed=int(sfx[2:]) if sfx else 0)
     pb = exp70.trunk_banks(par, parent, bank_args)
     cb = exp70.trunk_banks(child, f"{parent}_{obj}", bank_args)
     (pXtr, ytr), (pXte, yte) = pb["train"], pb["test"]
@@ -119,6 +122,8 @@ def main():
     ap.add_argument("--steps", type=int, default=300)
     ap.add_argument("--refresh", action="store_true")
     ap.add_argument("--skip-power", action="store_true")
+    ap.add_argument("--ckpt-sfx", default="",
+                    help="seed suffix of the exp-70/71 ckpts, e.g. _s1")
     args = ap.parse_args()
     cells = ([tuple(c.split(":")) for c in args.cells.split(",")]
              if args.cells else list(WINNERS))
@@ -288,7 +293,8 @@ def main():
     print("saved", out)
 
     os.makedirs(os.path.join("logs", "exp72"), exist_ok=True)
-    ftag = ("_" + "_".join(k for k in keys)) if args.cells else ""
+    ftag = (("_" + "_".join(k for k in keys)) if args.cells else "") \
+        + args.ckpt_sfx
     np.savez(os.path.join("logs", "exp72", f"residual_discovery{ftag}.npz"),
              cells=np.array(keys),
              **{f"{k}_{f}": np.array(all_out[k][f]) for k in keys
