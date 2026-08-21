@@ -759,3 +759,25 @@ pre=post by construction); purity and anchor margin:
 - New default discovery recipe for fine-grained cells: freeze the
   space, pool AND propose anchors by SparKer density ratio, train
   anchors only.  Margin also improves on cars (0.78 vs 0.66).
+
+Exp 93 (`93_np_pool_scorer.py` + `discovery.np_pool_scores`, 2026-08-21;
+IMPROVEMENT_TESTS #93): dist vs LID vs NP-f pool scorer in the standard
+loop -- the "np >= lid everywhere" prediction is FALSIFIED, but np owns
+the regime that matters:
+
+  cell            dist r1/r2     lid r1/r2      np r1/r2
+  flowers/dino    0.609/0.240    0.678/0.679    0.618/0.620
+  flowers/lejepa  0.439/0.328    0.576/0.598    0.528/0.492
+  flowers/visreg  0.643/0.179    0.684/0.677    0.652/0.632
+  cars/dino       0.161/0.059    0.133/0.166    0.214/0.152
+
+- On flowers (LID's regime) lid > np in all three cells by 0.03-0.06:
+  the NP lemma's asymptotic optimality loses to the closed-form ratio
+  statistic at these pool sizes -- exactly the doc's stated falsifier.
+- On cars (below the gate, LID's weak regime) np is the BEST r1 scorer
+  (0.214 vs 0.161/0.133).  Its r2 slips under the ft'd space (0.152);
+  the exp-92b frozen variant holds 0.215 -- pool with np, freeze the
+  space.
+- Probes unmoved everywhere (above-gate lesson of exp 79 stands).
+- Operational rule: lid for on-manifold cells, np below the gate --
+  and per exp-92b, run either in a FROZEN space.
