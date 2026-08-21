@@ -145,7 +145,9 @@ def test_nplm_shift_gradient_equals_calibration_residual():
     """App. A: dL/dc at c=0 is exactly E_ref[e^g] - 1, the calibration residual.
 
     This is the identity that makes the summed critic gradient a free training
-    diagnostic (proposed exp 82), so it is worth pinning.
+    diagnostic, so it is worth pinning.  (Exp 82 falsified the stronger use of
+    it as a label-free SEED SELECTOR -- per-seed calibration does not track
+    per-seed probe -- but the identity itself is what this test asserts.)
     """
     g, pos, self_mask = _pair_setup(seed=2)
     c = torch.zeros((), dtype=DT, device=DEVICE, requires_grad=True)
