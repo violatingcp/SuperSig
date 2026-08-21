@@ -1,4 +1,4 @@
-# Proposed tests to improve performance — exps 81+
+# Proposed tests to improve performance — exps 81–98
 
 Companion to [QUESTIONS.md](QUESTIONS.md) (whose "open items as of exp 58" list
 this supersedes).  Every entry follows the standard protocol in
@@ -325,6 +325,203 @@ verdict in `AIRCRAFT_MASTER_TABLE.md` needs rewriting.
 
 ---
 
+## Tier 4 — SparKer as a loss, not just a test
+
+The paper's §5 establishes that SparKer's NP loss
+`sum_R w(e^f - 1) - sum_D f` **is** the NPLM contrastive objective with pairs
+replaced by events.  The campaign has only ever used it on the right-hand side
+of that identity: as a post-hoc statistic on frozen embeddings.  Everything
+below follows from taking the left-hand side seriously.
+
+Two structural facts drive the tier.  (i) SparKer's `M=16` kernel centres
+`mu_i` are **trainable and initialized from the data sample** — SparKer is
+already doing a clustering, but placing centres by *density ratio* rather than
+by distance.  (ii) By the Neyman–Pearson lemma the learned `f` is the *most
+powerful* novelty score available at any threshold, which makes it the
+principled choice for the one job we currently do with a distance quantile.
+
+These are more speculative than Tiers 1–3 and are labelled where so.
+
+### Exp 92 — SparKer centres as the discovery clustering
+
+**Motivation.**  The campaign's cleanest negative result is that Cars pools at
+purity ≤0.14 because novel car models are *not geometrically outlying* — they
+sit among the seen classes, so a distance quantile cannot reach them.  But
+"not outlying in distance" does not imply "not outlying in density ratio":
+a region can have p_data/p_ref ≫ 1 while sitting at perfectly ordinary
+distance from the nearest centroid.  SparKer's gated kernels place `mu_i`
+exactly where that ratio is large.  This is the first proposal in the document
+with a mechanism that *predicts a fix for the Cars failure* rather than
+working around it.
+
+**Protocol.**  Replace steps (ii)–(iv) of the discovery loop (quantile pool →
+BIC k-means → merge) with: fit SparKer on (unlabeled corpus vs seen-train
+reference), take the `M` trained centres, keep those whose local density ratio
+`f` exceeds a threshold, merge as usual.  A/B against the distance loop on the
+three cells that span the purity range: cars/dino (0.14, fails), aircraft/visreg
+(0.525, purity-adequate but probe-negative), flowers/dino (0.61, works).
+Primary readout is **round-1 purity**, not probe.
+
+**Prediction.**  Purity rises most on cars — the cell where distance pooling is
+mechanistically wrong and density ratio is not.  On flowers, where distance
+pooling already works, expect parity.
+
+**Falsifier.**  Cars purity stays ≤0.15 → fine-grained novelty is invisible to
+the density ratio too, not merely to distance, and the "novelty is not
+outlying" verdict generalizes from geometry to likelihood.  That is a stronger
+and more useful negative than the one we currently report.
+
+**Cost.**  SparKer fits are cheap (300 steps, M=16) and the parents exist;
+~9 discovery runs.  **Highest-value test in this tier.**
+
+### Exp 93 — The NP score as the pool scorer (dist vs LID vs f)
+
+**Motivation.**  Exp 79 already showed the pool scorer matters and that
+scale-free LID strictly dominates distance.  The NP lemma says the learned `f`
+should dominate *both*: it is the optimal statistic for exactly this decision.
+This is the natural third arm of a comparison that is currently two-armed.
+
+**Protocol.**  Three-way A/B (`pool_score` ∈ {dist, lid, np}) on the exp-79
+flowers cells plus one cars cell, identical recipe and seed.  Report round-1
+and round-2 purity and the post battery.
+
+**Prediction.**  `np` ≥ `lid` > `dist` on purity in every cell.  Following exp
+79, expect the *probe* to be unmoved on flowers (above the gate purity is not
+binding) — the interesting cell is cars, below the gate.
+
+**Falsifier.**  `np` underperforms `lid`.  The likely reason would be
+estimation variance: `f` is fitted from finite samples whereas LID is a
+closed-form ratio statistic, so the NP lemma's optimality is asymptotic and may
+not survive at these pool sizes.  Worth knowing either way.
+
+**Cost.**  ~8 discovery runs.
+
+### Exp 94 — Null validity when the encoder has seen the test data
+
+**Motivation.**  A validity guard, and the prerequisite for citing anything in
+this tier.  Every power number in the campaign calibrates its null on
+anomaly-free toys **using an encoder trained on that same corpus**.  For the
+frozen-trunk batteries that is defensible.  The moment the embedding is trained
+with a novelty-seeking objective (exps 92, 95) it is not: the encoder can
+manufacture separation on pure-background data, the null distribution shifts,
+and the test becomes anticonservative.  This is the standard data-snooping
+failure and it would silently invalidate results rather than announce itself.
+
+**Protocol.**  Measure the realized false-positive rate at nominal α=0.05 on
+**pure-background** toys (no injected signal) under three regimes: frozen
+encoder (the current protocol); encoder fine-tuned on the full corpus; encoder
+fine-tuned on a disjoint split from the one the test uses.  Report FPR with
+Clopper–Pearson intervals.
+
+**Prediction.**  Regime 1 ≈ 0.05 (the current numbers are safe); regime 2
+> 0.05, possibly badly; regime 3 ≈ 0.05, establishing split-disjointness as
+the required protocol for any trained-embedding test.
+
+**Falsifier.**  Regime 2 also gives 0.05 → the encoder cannot manufacture
+separation at these sample sizes and the concern is theoretical.  Cheap
+insurance either way; **run this before exp 95, not after.**
+
+**Cost.**  Toy-level only, no training beyond one extra ft.  Cheap.
+
+### Exp 95 — SparKer as a differentiable training objective  *(speculative)*
+
+**Motivation.**  The big swing.  If `t_NP` is the quantity we ultimately care
+about, optimize it directly: make `z` trainable inside the SparKer fit and
+maximize the detection statistic end to end, instead of training a proxy
+objective and hoping the statistic follows.  The unification of §5 says this is
+not a new loss, only a new *scale* at which to apply the existing one.
+
+**Protocol.**  Alternating optimization: inner loop fits `(mu, a)` on the NP
+loss with `z` fixed; outer loop takes gradient steps on the encoder to increase
+`t_NP` between the unlabeled pool and the seen reference.  Anneal σ as usual.
+Compare against the exp-71 residual champion and the proto/repulse discovery ft
+on cars/visreg and galaxy10/dino.  **Requires exp 94 to have established a
+valid null**; report power against a null recalibrated with the *trained*
+encoder, never the frozen one.
+
+**Prediction.**  Genuine per-event and SparKer power gains, with a probe cost
+— it is a pure-detection objective and by the dissociation should behave like
+the NPLM-ft arm of exp 58 (best on every power statistic, worst on probe).
+
+**Falsifier — and the one to watch.**  `t_NP` rises while the *recalibrated*
+power does not.  That is the signature of the encoder overfitting the test
+statistic: the model separates the particular data sample rather than the
+population, inflating the statistic on both signal and null toys alike.  If
+that happens the approach is dead in this form and should be reported as such,
+not rescued by tuning.
+
+**Cost.**  Highest in the document; needs a new trainer.  Do not start it until
+92–94 have reported.
+
+### Exp 96 — Does the pairwise critic warm-start the event-level test?
+
+**Motivation.**  A direct empirical test of the paper's central claim.  If the
+NPLM critic learned during representation training and the SparKer `f` learned
+at test time really are the same object at two scales, then the former should
+contain what the latter re-learns from scratch.
+
+**Protocol.**  Initialize SparKer's centres `mu` at the trained NPLM class
+anchors (and `a` from the critic scale) versus the default data-sample init.
+Compare `t_NP` trajectories at matched steps and power at fixed budget, on the
+CIFAR-10 NPLM cells where both objects exist.
+
+**Prediction.**  Warm start converges in materially fewer steps at equal or
+better power — the cheapest available evidence for the §5 unification, and a
+free speedup if it holds.
+
+**Falsifier.**  No convergence difference → the two scales share a functional
+form but not learned content, which would weaken the paper's framing and should
+be said plainly in §5.
+
+**Cost.**  Cheap; evaluation plus a modified init.
+
+### Exp 97 — M and the bandwidth schedule versus intrinsic dimension
+
+**Motivation.**  Protocol debt for the new loss.  `M=16` kernels and a fixed
+σ0→σ0/10 anneal have never been scanned, yet exp 77 measured intrinsic
+dimensions spanning 2–13 across the arms, and a kernel model's resolution
+requirement scales with dimension.  The exp-57 lesson (fixed σ goes blind on a
+rescaled space) says the *schedule* matters; it does not say the current
+schedule is right.
+
+**Protocol.**  Scan `M ∈ {4, 16, 64}` × `sigma_ratio ∈ {3, 10, 30}` on three
+cells chosen to span TwoNN ID (nplm-sup-ft ≈2–3, sigreg ≈5–7, supcon ≈9–13).
+Report power at fixed fraction, and the σ-checkpoint at which the statistic
+peaks.
+
+**Prediction.**  The required σ range widens with intrinsic dimension, and
+`M=16` under-resolves when several novel classes are present — the SparKer
+analogue of the BIC fragmentation discussed in §5.2.
+
+**Falsifier.**  Power is flat in both knobs → the annealed schedule is
+genuinely robust and the current default needs no caveat, which is worth being
+able to state.
+
+**Cost.**  ~27 battery runs on cached embeddings, no training.
+
+### Exp 98 — SparKer-ft as the discovery fine-tune objective
+
+**Motivation.**  Exp 58 established the ft-objective split: proto/repulse wins
+the probe, NPLM+sigreg wins every power statistic.  SparKer-ft is the missing
+third corner, and unlike the other two it optimizes the *event-level*
+statistic that the battery actually reports.
+
+**Protocol.**  Third arm alongside proto and NPLM-ft on the CIFAR-10 discovery
+cells, same rounds and epochs.  Full battery, and pool purity by round.
+
+**Prediction.**  Power comparable to or better than NPLM-ft, probe worse than
+proto — and, the interesting part, better **round-2 purity retention**, since
+an event-level objective has no reason to inflate the space the way the
+prototype fine-tune does (the inflation that broke distance pooling in exp 79).
+
+**Falsifier.**  Round-2 purity degrades like proto's → the inflation is a
+property of any discovery fine-tune, not of the prototype objective
+specifically.
+
+**Cost.**  Moderate; reuses the exp-58 harness.
+
+---
+
 ## Deliberately not proposed
 
 - **More bases / more datasets.**  The regime rules already replicate on three
@@ -345,9 +542,17 @@ verdict in `AIRCRAFT_MASTER_TABLE.md` needs rewriting.
 1. **Exp 87** (LID on residual half) — evaluation only, hours.
 2. **Exp 81 + 82** (critic variance + calibration residual) — one script, cheapest
    training test, biggest mechanistic payoff.
-3. **Exp 86** (frozen-parent aircraft discovery) — parents exist, cheap, tests
+3. **Exp 92** (SparKer centres as the clustering) — the only proposal with a
+   mechanism that predicts a fix for the cars failure; cheap, parents exist.
+4. **Exp 94** (null validity) — cheap insurance, and a hard prerequisite for
+   exp 95.  Run before, not after.
+5. **Exp 86** (frozen-parent aircraft discovery) — parents exist, cheap, tests
    the paper's central claim.
-4. **Exp 88** (realizable classwise C100) — most likely new record.
-5. **Exp 83** (variance-reduced NPLM), **Exp 90** (score predictor).
-6. **Exp 84, 85** (two-stage, iterated residuals) — moderate cost, record-chasing.
-7. **Exp 89, 91** (gate calibration, multi-seed) — protocol debt, before writeup.
+6. **Exp 88** (realizable classwise C100) — most likely new record.
+7. **Exp 93, 96** (NP pool scorer, critic warm-start) — both cheap; 96 is the
+   most direct evidence for the paper's §5 unification.
+8. **Exp 83** (variance-reduced NPLM), **Exp 90** (score predictor).
+9. **Exp 84, 85** (two-stage, iterated residuals) — moderate cost, record-chasing.
+10. **Exp 97, 98** (SparKer systematics, SparKer-ft) — after 92–94 report.
+11. **Exp 95** (SparKer as a training loss) — the big swing; gated on 94.
+12. **Exp 89, 91** (gate calibration, multi-seed) — protocol debt, before writeup.
