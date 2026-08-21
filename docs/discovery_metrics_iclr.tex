@@ -445,6 +445,13 @@ practical rule is uncomfortable but clear: \textbf{choose by consumer}. Linear
 readout $\to$ prototype/softmax. Detection with a transferable threshold $\to$
 NPLM.
 
+We qualify this in \S\ref{sec:frozen}, where it turns out that a substantial
+part of what we are calling a dissociation is a property of the fine-tuning
+\emph{update} rather than of the space: on fine-grained data, omitting the
+update recovers both currencies at once. The dissociation between
+\emph{standalone objectives}, which is what Table~\ref{tab:dissoc} measures,
+stands.
+
 \subsection{Regime rules: which corner wins where}
 \label{sec:regimes}
 
@@ -679,17 +686,50 @@ NPLM fine-tune, while the prototype fine-tune that wins the probe moves it
 $0.42\to0.26$ --- the probe/power dissociation of \S\ref{sec:dissoc}, visible in
 the kernel test.
 
-\paragraph{An acknowledged coverage gap}
-These are the cells for which archived SparKer batteries exist. The
-residual-fine-tuned and concatenated spaces of \S\ref{sec:repair} --- which hold
-every dataset record in this paper --- \textbf{have no SparKer numbers at all}:
-the aircraft cells of the end-to-end grid were run with power disabled, and the
-residual grid never ran power batteries. We have written the audit that closes
-this (one battery per uncovered cell, loadable from cached embeddings with no
-retraining) but have not yet run it. Until then the record spaces are
-characterized by probe, geometry and per-event power only, and any claim that
-they are also the best \emph{kernel-test} spaces would be unsupported. We
-flag this rather than quietly reporting the subset that happens to exist.
+\subsection{The residual child is a detector, not just a probe booster}
+\label{sec:residual-detector}
+
+An earlier draft of this paper reported the two tables above and noted that the
+residual and concatenated spaces of \S\ref{sec:repair} --- which hold every
+dataset record here --- had \emph{no} SparKer numbers, because the aircraft
+end-to-end cells were run with power disabled and the residual grid never ran
+batteries. We have since closed that gap: 106 previously uncovered spaces
+across 17 cells, scored under the exp-70 protocol from cached embeddings. The
+result changed our reading of the residual construction.
+
+\textbf{The res-nplm residual \emph{child} is the best dataset-level detector in
+the fine-grained cells, and it beats its own parent}: aircraft/VISReg
+$0.82$ at $f{=}0.05$ against the parent's $0.44$; cars/VISReg $0.96$ and
+cars/DINO $0.80$ at $f{=}0.05$ for the child alone. This is a currency in which
+we had not previously measured it. \S\ref{sec:repair} presents the residual half
+as the component that \emph{retains} calibration while the parent supplies the
+probe; the correct statement is stronger --- the calibrated residual half
+carries substantial detection power of its own, which the probe and \texttt{eucl}
+columns never revealed.
+
+Concatenation again costs nothing: aircraft/VISReg res-cat reaches $1.00$ at
+$f{=}0.1$ and galaxy10/VISReg res-nplm-cat $1.00$ at $f{=}0.05$. Taken with
+\S\ref{sec:interp}, concatenation is now free in three currencies --- probe,
+semantics, and dataset-level power. The base rule of \S\ref{sec:regimes}
+reappears here too: LeJEPA-parented residual children are systematically weak
+(cars/LeJEPA $0.12$--$0.14$ at $f{=}0.1$ against VISReg's $1.00$), consistent
+with LeJEPA parents leaving the most room for residual drift.
+
+\paragraph{Score regime and statistic regime coincide}
+The most interesting entry is a negative one. \textbf{Flowers is SparKer-weak in
+every residual space} (best $0.94$ at $f{=}0.1$, most $\le0.4$) --- the same
+Flowers whose LID novelty score is the strongest unsupervised result in the
+campaign (\S\ref{sec:lid}, $0.951$--$0.955$). The on-manifold novelty that a
+scale-free per-event statistic detects almost perfectly is nearly invisible to a
+dataset-level kernel test. This is not a contradiction but a structural fact
+worth stating as a rule: \emph{per-event scale-free detection and dataset-level
+kernel detection see different things, and the regimes are close to
+complementary}. A practitioner who selects a space on one of them has not
+selected it on the other. On CIFAR the ordering reverts to the parents (CIFAR-10
+\texttt{supcon} $0.50$ at $f{=}0.01$ and $0.98$ at $f{=}0.02$, with res-nplm-cat
+the only construction close at $0.34/0.92$), and CIFAR-100 is flat below
+$f{=}0.05$ for every space --- the injection-clamp regime of
+\S\ref{sec:purity-gate}, not a property of the geometry.
 
 \paragraph{Statistic--geometry matching}
 No single dataset-level statistic dominates. Parametric statistics (per-event
@@ -761,10 +801,60 @@ Finally, Aircraft refutes the tempting converse. It pools at adequate purity
 ($0.32$--$0.53$) and discovery \emph{still} costs probe ($-0.012$ to $-0.037$)
 while buying geometry and per-event power (VISReg: per-event $0.30$--$0.50$
 across all fractions, mahaT $+0.017$). Purity is necessary, not sufficient;
-what fails there is the fine-tune dynamics, not the pool. The corresponding
-prediction --- that freezing the parent half during the discovery fine-tune
-should make the step non-negative for the first time on fine-grained data ---
-is the one we would test next.
+what fails there is the fine-tune dynamics, not the pool.
+
+\subsection{The update is the cost: frozen-space discovery}
+\label{sec:frozen}
+
+That diagnosis makes a prediction, and testing it produced the sharpest
+operational result in the paper. If the fine-tune \emph{update} is what erodes
+the probe, then the erosion should disappear when the space is not updated ---
+and the question becomes how much of the discovery gain survives.
+
+\begin{table}[t]\centering\small
+\begin{tabular}{lcccccc}
+\toprule
+& \multicolumn{2}{c}{unfrozen} & \multicolumn{2}{c}{parent frozen}
+& \multicolumn{2}{c}{\textbf{fully frozen}}\\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
+aircraft cell & $\Delta$probe & per-evt & $\Delta$probe & per-evt
+& $\Delta$probe & per-evt \\
+\midrule
+DINO   & $-0.037$ & 0.330 & $-0.013$ & 0.330 & $\mathbf{0.000}$ & 0.306 \\
+LeJEPA & $-0.016$ & 0.297 & $-0.020$ & 0.213 & $\mathbf{0.000}$ & 0.267 \\
+VISReg & $-0.012$ & 0.526 & $-0.013$ & 0.498 & $\mathbf{0.000}$ & \best{0.523} \\
+\bottomrule
+\end{tabular}
+\caption{Discovering anchors in a \emph{completely frozen} space keeps
+$90$--$99\%$ of the per-event gain at exactly zero probe cost. Freezing only
+the parent half --- our initial hypothesis --- works on DINO and fails on the
+other two bases.}
+\label{tab:frozen}
+\end{table}
+
+Table~\ref{tab:frozen} gives the answer, and it is more extreme than we
+predicted. Freezing only the parent half of the concatenation, which was our
+stated hypothesis, helps on DINO and matches the unfrozen cost on LeJEPA and
+VISReg. Freezing \emph{everything} --- running the pool--cluster--merge loop and
+adding anchors without a single gradient step on the encoder --- retains
+$90$--$99\%$ of the per-event power ($0.523$ against $0.526$ on the record cell)
+at exactly zero probe and geometry cost. \textbf{On fine-grained data the
+per-event gain lives in the anchors, not in the space update}, and the update was
+almost pure cost.
+
+Two consequences. First, round-2 pool purity stops collapsing under freezing
+($0.176$--$0.346$ versus $0.023$--$0.065$ unfrozen): a frozen space cannot
+inflate, so the distance threshold that decays in \S\ref{sec:purity-gate}
+remains valid. This is the LID-pooling mechanism of \S\ref{sec:lid} solved from
+the opposite side --- rather than making the scorer scale-free, remove the
+rescaling. Second, and more consequentially for this paper's framing:
+\textbf{on fine-grained cells the probe/calibration dissociation is severable}.
+The aircraft record probe $0.8634$ is now retained \emph{with} per-event
+$0.523$. The ``choose by consumer'' rule of \S\ref{sec:dissoc} is a statement
+about \emph{update dynamics}, not an inherent property of embedding spaces, and
+where the update can be omitted the choice does not arise. We state the rule as
+the operational recipe: on fine-grained data, run discovery with the space
+frozen and discover anchors only.
 
 \subsection{What this means for a discovery pipeline}
 
@@ -925,6 +1015,41 @@ $0.55$ on Cars. The reading: Flowers holdouts sit on the flower manifold with
 small distances and mediocre distance-based scores, but a distinct local
 dimensional signature; Cars holdouts do not have one.
 
+\paragraph{The signature is class-level, not within-class}
+We initially read ``distinct local dimensional signature'' as within-class
+structure, and predicted that LID computed on the \emph{residual} half of a
+concatenation --- where within-class variation lives by construction --- would
+be stronger than on the parent half. It is not. On Flowers the residual half is
+uniformly \emph{worse} ($0.923$ vs $0.951$ on DINO, $0.825$ vs $0.893$ on
+LeJEPA, $0.733$ vs $0.954$ on VISReg), with the concatenation tracking the
+parent. The Flowers LID signal lives in the parent, class-structure half:
+\textbf{the novelty is a class-level dimensional anomaly, not a within-class
+one}. On Cars the prediction half-holds --- residual-half LID beats parent on
+DINO ($0.677$ vs $0.629$) and VISReg ($0.752$ vs $0.682$, the best Cars LID on
+record) but not LeJEPA --- and \texttt{eucl} at $0.747$ still matches it, so
+there is no regime flip: Cars remains a distance-score dataset.
+
+\paragraph{We could not predict the regime in advance}
+The obvious next step is to turn ``which regime am I in'' into a measurement,
+since the mechanism above --- holdouts on- versus off-manifold --- looks
+label-free. We tried three candidate diagnostics across 17 champion cells (pool
+distance-ratio, TwoNN intrinsic-dimension gap between tail and seen population,
+and an LID gap) and \textbf{none of them tracks the measured LID$-$\texttt{eucl}
+AUC gap}: Spearman $+0.07$, $+0.09$, $-0.16$, with a best sign-accuracy of
+$12/17$ against an $11/17$ base rate for always predicting LID. The
+LID-versus-distance regime rule therefore remains \emph{empirical}: we can state
+which datasets fall on which side and give a mechanism, but we cannot currently
+tell a practitioner which side they are on without novelty labels. We report
+this because the negative result is more useful than the method we hoped to
+deliver.
+
+That same sweep did strengthen LID's standing where it works. LID wins the gap
+in $12/17$ champion cells, and on the CIFAR-100 res-nplm concatenation the
+margin is decisive --- LID $0.738$ against \texttt{eucl} $0.356$, a $+0.382$ gap
+that makes \textbf{LID the only usable novelty score in that space} --- with
+galaxy10/LeJEPA at $+0.273$. Aircraft sits firmly on the other side
+($-0.11$ to $-0.20$).
+
 \paragraph{$\lid$ as a pool scorer}
 Because $\lid$ is scale-free it should also fix the failure mode where a
 discovery fine-tune inflates the space and the distance-based pool threshold
@@ -1077,9 +1202,18 @@ bandwidth reports zero power on a space that is fine.
 \item \textbf{Report pool purity next to any discovery gain.} A gain at purity
 $<0.15$ is refinement, not discovery, and behaves differently (it depends on
 substrate alignment, not on the pool).
-\item \textbf{Include at least one scale-free statistic.} Distance scores are
-structurally blind to on-manifold novelty; $\lid$ costs nothing and, in one
-regime, beat every supervised alternative we had.
+\item \textbf{Include at least one scale-free statistic, and do not assume it
+agrees with your dataset-level test.} Distance scores are structurally blind to
+on-manifold novelty; $\lid$ costs nothing and, in one regime, beat every
+supervised alternative we had. But the per-event and kernel-test regimes are
+close to complementary (\S\ref{sec:residual-detector}): Flowers is the
+campaign's best LID dataset and among its worst SparKer datasets. Report both;
+neither substitutes for the other. We cannot currently tell you in advance
+which regime you are in (\S\ref{sec:lid}).
+\item \textbf{Before fine-tuning as part of discovery, check whether you need
+to.} On fine-grained data the discovery gain lives in the anchors and the
+update is close to pure cost (\S\ref{sec:frozen}); freezing the space makes the
+step strictly non-negative and keeps the pool threshold valid into round two.
 \item \textbf{Audit semantics explicitly.} Superclass agreement, dendrogram
 purity, and a nearest-centroid table a domain expert can read. Calibration
 does not imply legibility --- we have a space with strong calibration and
@@ -1108,11 +1242,14 @@ not a withheld member of a curated taxonomy, and the Cars result --- where
 novel classes are not geometrically outlying --- suggests the proxy's
 difficulty varies more than the datasets' nominal difficulty does. Several
 conclusions rest on 3--5 seeds, which resolves $0.02$-scale effects but not
-smaller ones. Our SparKer coverage is incomplete in exactly the place it
-matters most: the residual and concatenated spaces that hold every record here
-have no kernel-test numbers (\S\ref{sec:sparker-results}), so the claim that
-one construction serves both currencies rests on per-event power rather than on
-the full detection battery. Our discovery loop is one specific algorithm (quantile pool, BIC
+smaller ones. Two claims in the paper rest on parametrizations we did
+not fully test: the calibration identity does not hold for the bias-free
+distance critic our implementation uses (App.~\ref{app:grad}), so the
+distance-NPLM arms' detection strength is evidence of good scaling rather than
+of achieved calibration, and adding the bias term is untested. And we cannot
+predict the LID-versus-distance regime without labels
+(\S\ref{sec:lid}) --- three candidate diagnostics failed --- so that rule is a
+description of our datasets, not a tool. Our discovery loop is one specific algorithm (quantile pool, BIC
 $k$-selection, anchor merge, prototype fine-tune) and the purity-gating
 conclusion may be specific to it. Finally, the interpretability metrics require
 a superclass partition, which is available in our datasets and frequently is
@@ -1277,9 +1414,23 @@ $\widehat{\E}_{\mathrm{ref}}[e^{g^\star}]=1$. Equivalently: summing
 \end{equation}
 \textbf{The total gradient of the NPLM loss \emph{is} the miscalibration.}
 Gradient descent on \eqref{eq:app-nplm} performs calibration as an inseparable
-part of fitting, and \eqref{eq:app-residual} doubles as a free training
-diagnostic: a run whose summed critic gradient has not approached zero has not
-calibrated, whatever its loss value.
+part of fitting, and \eqref{eq:app-residual} is computable at zero cost during
+training.
+
+We flag one negative result about how far that observation goes. It is
+tempting to use the residual as a \emph{label-free model-selection} criterion
+--- prefer the seed whose terminal residual is closest to zero --- and we
+proposed exactly that. It does not work: over five paired seeds the rank
+correlation between $|$residual$|$ and probe is $+0.30$ and $-0.10$ on the two
+bilinear arms, and selecting the best-of-five by residual \emph{underperforms}
+the random-seed mean ($0.839$ against $0.891$). Part of the reason is
+structural --- for distance critics the residual cannot reach zero at all, see
+below --- but even for bilinear critics, where it can, per-seed variation in
+calibration does not track per-seed variation in probe quality. The seed
+variance appears to live in the balance between the interaction and marginal
+terms rather than in calibration failure. Eq.~\eqref{eq:app-residual} remains a
+valid \emph{diagnostic} of whether a run calibrated; it is not a predictor of
+how good the resulting space is.
 
 This is the precise sense in which per-event detection power is
 \emph{structurally} unavailable to a softmax objective. A per-event threshold
@@ -1338,6 +1489,28 @@ The distance critic makes the exponential gradient \emph{automatically bounded}
 --- the pathology of \eqref{eq:app-var} cannot occur, and the clamp never
 activates in the normal range. The bilinear critic has no such protection: a
 single well-aligned reference pair can dominate the batch gradient.
+
+\paragraph{The same bound makes a bare distance critic uncalibratable}
+The boundedness is not free, and we initially missed what it costs. If
+$g\le 0$ everywhere then $e^{g}\le 1$, hence
+\begin{equation}
+\E_{\mathrm{ref}}\big[e^{g}\big] \;\le\; 1
+\qquad\text{with equality only in the degenerate case } g\equiv 0 ,
+\end{equation}
+so the calibration residual of Eq.~\eqref{eq:app-residual} is
+\emph{structurally negative} and the condition $\E_{\mathrm{ref}}[e^{g^\star}]=1$
+is \textbf{unreachable}. A bare distance critic cannot calibrate, however well
+it is optimized. The resolution is the bias term of the full parametrization,
+$g = -\tfrac12\|z-z'\|^2 + b(x) + b(x')$, which restores the positive range;
+the implementation used throughout this campaign omits it. We therefore
+qualify the claim made in \S\ref{sec:np-twice}: the $e^{g}-1$ term pins the
+absolute normalization \emph{for the unconstrained functional and for critic
+families that can represent positive values} --- the bilinear critic, or
+distance-plus-bias --- but not for the bias-free distance critic as
+implemented. The distance-NPLM arms' strong per-event and kernel-test power
+(\S\ref{sec:sparker-results}) is therefore evidence that their geometry is
+well-scaled, not that they achieve the calibration identity. Adding the bias
+and re-testing is the obvious experiment and we have not run it.
 
 \begin{table}[t]\centering\small
 \begin{tabular}{lll}
@@ -1439,9 +1612,23 @@ campaign}, probe $0.72$--$0.73$ across all three pretraining trunks (spread
 $0.009$, versus \texttt{supcon}'s $0.076$). The unexplained seed variance
 flagged in \S\ref{sec:dissoc} is, on this account, the exponential gradient
 variance of \eqref{eq:app-var} --- and the prediction is that it is a property
-of the \emph{critic}, not of the estimator. A decisive test is cheap and we have
-not run it: hold the estimator at NPLM, sweep the critic between distance and
-bilinear at matched $\tau$, and compare seed variance directly.
+of the \emph{critic}, not of the estimator.
+
+\emph{We have since run the decisive test} --- estimator held at NPLM, critic
+swept against positives at matched $\tau$, five paired seeds --- and it
+confirms the attribution while correcting our proposed diagnostic. Probe
+standard deviation splits $3.1\times$ by critic (bilinear $0.055$, distance
+$0.018$) against only $1.6\times$ by positives, and \texttt{dist-sup} is the
+stable corner at $0.8366\pm0.0125$. But the quantity we suggested logging,
+the raw critic spread $s=\mathrm{sd}(g)$, \emph{anti}-correlates with the probe
+spread ($-0.80$), while the spread of $e^{g}$ correlates $+0.80$ and separates
+the arms by two orders of magnitude ($0.1$--$0.3$ for distance critics,
+$12$--$35$ for bilinear). The reason is the one-sidedness noted above:
+Eq.~\eqref{eq:app-var} assumed $g$ approximately Gaussian, and a distance
+critic is bounded above, so it can carry a large $\mathrm{sd}(g)$ over
+strongly negative values while $e^{g}$ stays squashed near zero. \textbf{The
+theory holds in its exponential form only}; practitioners should monitor
+$\mathrm{sd}(e^{g})$, not $\mathrm{sd}(g)$.
 
 \item \emph{NPLM spaces should be compressed relative to softmax spaces.}
 Predicted by the short-range force law: distant pairs exert no force, and the
