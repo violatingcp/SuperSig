@@ -737,3 +737,25 @@ current protocol's nulls are VALID, split-disjointness is not required
 at these sizes, and exp 95 (SparKer as a training loss) is formally
 cleared -- with the caveat that exp-95's stronger, directly-adversarial
 objective should still rerun this check on its own trained encoder.
+
+Exp 92b (`92_sparker_discovery.py --variants *-frozen`, 2026-08-20): the
+92+86 combination -- SparKer density-ratio pooling in a fully frozen
+space -- DOMINATES.  Space bit-identical in every run (probe/mahaT
+pre=post by construction); purity and anchor margin:
+
+  cell             dist-frozen r1/r2   spk-frozen r1/r2   spk margin r1/r2
+  cars/dino        0.161 / 0.068       0.214 / 0.215      0.782 / 0.757
+  aircraft/visreg  0.525 / 0.176       0.591 / 0.608      0.893 / 0.895
+  flowers/dino     0.609 / 0.414       0.618 / 0.620      0.962 / 0.962
+
+- sparker-frozen beats distance-frozen on purity in all six round
+  measurements and ties-or-beats the UNFROZEN sparker purity while
+  eliminating the probe cost entirely (aircraft record 0.8634 intact).
+- Mechanism sharpened: on cars the frozen-space distance r2 still
+  collapses (0.068) -- so the round-2 failure there is ANCHOR
+  ABSORPTION (novel points captured below the distance threshold by the
+  discovered anchors), not space inflation; the density-ratio pool is
+  indifferent to the anchors and immune to both failure modes.
+- New default discovery recipe for fine-grained cells: freeze the
+  space, pool AND propose anchors by SparKer density ratio, train
+  anchors only.  Margin also improves on cars (0.78 vs 0.66).
