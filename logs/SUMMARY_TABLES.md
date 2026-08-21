@@ -863,3 +863,24 @@ falsified, and the control stole the show.  27 runs, dims 100/128/200 x
   ~0.47-0.49 C100 calibration ceiling -- while holding probe 0.90-0.91.
   The best single-loss C100 both-currencies space on record comes from
   the CONTROL arm at high dim.
+
+Exp 91 (`91_multiseed_records.sh` via seed-aware exps 70/71/72,
+2026-08-20/21; IMPROVEMENT_TESTS #91): the four uncited records
+multi-seeded (seeds 0=archived, 1, 2; paired protocol of exp-75/cars).
+Citable records with uncertainties:
+
+  cell                      construction              seeds            mean+-sd
+  aircraft/visreg  supcon-ft->res-nplm concat  .8634/.8692/.8651  0.866+-0.002
+  flowers/dino     resnplm-cat + discovery     .9061/.8936/.8598  0.887+-0.019
+  dtd/visreg       res-cat + discovery         .8621/.8682/.8709  0.867+-0.004
+  galaxy10/lejepa  supcon-ft->res concat       .9750/.9648/.9725  0.971+-0.004
+  cars/visreg      (exp 75, 3 seeds)                              0.833+-0.017
+
+- MILDER than the prediction (down 0.01-0.03): aircraft and dtd records
+  were the LOW draws of their triples (seed 2 sets a new dtd best,
+  0.8709), galaxy10 within 0.004.  Only flowers shifts down (-0.019,
+  and its PRE-discovery concat spread is the campaign's widest:
+  0.787-0.885 -- the discovery step compensates weak parents, +0.106 on
+  the weakest seed vs +0.021 on the strongest).
+- No ordering flipped.  All five records are now citable with
+  uncertainties; master tables updated.
