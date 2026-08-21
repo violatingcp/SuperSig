@@ -914,3 +914,29 @@ the stated falsifier.  Three fts fresh-paired on both exp-58 arms
   class-structure-preserving term before any attempt.
 - The proto/nplm split reproduces exp 58 exactly (probe vs power/purity
   dissociation) under the lighter battery -- the harness is sound.
+
+Exp 103 (`103_lid_neighbourhood.py`, 2026-08-21; IMPROVEMENT_TESTS
+#103): LID neighbourhood decomposition -- NEITHER the prediction nor
+the falsifier; the mechanism is now measured.  AUC by component
+(k=20 split at the modal reference class; parent/concat averaged):
+
+  cell      full     same-class  mixed    frac-mixed(composition)
+  flowers   0.87-0.96  0.85-0.95  0.52-0.62  0.83-0.94
+  cars      0.60-0.72  0.60-0.73  0.54-0.65  0.59-0.70
+
+- The prediction said the MIXED component carries the signal; observed:
+  the SAME-CLASS component carries nearly all of it (flowers same
+  0.94-0.95 vs full 0.95) while mixed sits at chance -- AND the bare
+  neighbourhood composition (fraction of non-modal neighbours) is
+  almost as good as LID itself (0.83-0.94).
+- Mechanism, finally measured: a novel flower looks like a member of
+  ONE seen class by distance, but (a) its radial ratio profile within
+  that class's neighbours is wrong (off the class's local sheet), and
+  (b) its neighbourhood is more mixed than a true member's.  The
+  between-class distances carry nothing.  "Class-level anomaly" means
+  anomalous AGAINST the modal class's local geometry.
+- Cars: no component separates (all 0.54-0.73) -- consistent with
+  0.545-0.75 full-LID; the regime rule stands, now with a mechanism on
+  the side where LID works.
+- Bonus practical finding: frac-mixed is a parameter-free, ratio-free
+  novelty score at 0.94 on flowers -- worth a battery slot next sweep.
