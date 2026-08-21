@@ -19,9 +19,8 @@ SparKer coverage audit for the exp-71/73 residual and concat spaces).
 pins the NPLM calibration property and the gauge identities of App. A
 (softmax exactly invariant to a per-anchor shift, NPLM strictly convex along
 it with its minimum at `E_ref[e^g] = 1`, and max-subtraction breaking that
-while clamping preserves it).  **Not yet executed** — it has never been run on
-a machine with the deps; verify with
-`python -m pytest tests/test_calibration.py -q` before trusting it.
+while clamping preserves it).  Executed 2026-08-21 on the campaign machine:
+full suite green (103 passed incl. test_calibration).
 
 ---
 
@@ -40,14 +39,14 @@ a machine with the deps; verify with
 | 93 | NP score as pool scorer | **FALSIFIED as stated** — lid > np on flowers by 0.03–0.06 (finite-sample, the named falsifier); np *best* below the gate (cars r1 0.214) |
 | 94 | null validity under novelty-seeking ft | **FALSIFIER FIRED = good outcome** — FPR at or below nominal everywhere; nulls valid, split-disjointness not needed, exp 95 cleared |
 | 96 | does the pairwise critic warm-start the test? | **FALSIFIED, strong form** — warm start neutral-to-harmful (0.800→0.560 at 50 steps); class structure is where novelty *isn't* |
-| 88 | classwise SIGReg where anchors are realizable | **BOTH CLAUSES FALSIFIED** — cent→anchor stalls at 3.46–3.51 at *every* dim; the control (supcon\_sigreg) broke the C100 mahaT ceiling instead (0.545–0.558) |
-| 91 | multi-seed the uncited records | **done** — all five citable; shift milder than predicted and not all downward; no ordering flips |
-| 97 | SparKer M × σ-schedule vs intrinsic dim | **HALF-CONFIRMED, HALF-INVERTED** — σ-ratio flat (anneal is robust); M must be matched *inversely* to ID |
-| 98 | SparKer-ft as the discovery ft objective | **FAILS beyond its falsifier** — worse on every column *including* the statistic it optimizes; contraindicates exp 95 |
 | 99 | SparKer discovery reach `f95` | **done** — and mostly *unresolvable* on the current fraction grid (see exp 100) |
-
-| 83–85, 89, 100–104 | — | scripted or specified, **not run** |
-| 95 | SparKer as a training loss | **CONTRAINDICATED** by exp 98 — do not run as specified |
+| 88 | classwise-realizable C100 | **BOTH CLAUSES FALSIFIED** — cent->anchor stall (~3.5) dim-independent at 100/128/200-D (optimization equilibrium, Q4 restated); unpredicted: supcon_sigreg control posts mahaT 0.545–0.558 at 100–128-D with probe 0.90–0.91, above the old ceiling |
+| 91 | multi-seed the records | **done** — all citable, no ordering flips: aircraft 0.866±0.002, flowers 0.887±0.019, dtd 0.867±0.004 (seed-2 new best), galaxy10 0.971±0.004 |
+| 97 | M / sigma-schedule systematics | **split** — sigma_ratio flat (annealed schedule robust); M INVERTS the prediction: high-ID wants FEWER kernels (supcon M=4 0.60 vs M=64 0.24) |
+| 98 | SparKer-ft as the discovery ft objective | **FAILS beyond its falsifier** — worse than proto AND nplm on every column incl. its own statistic (post SparKer 0.06–0.12 vs 1.00); statistic-chasing destroys separation; with 96, contraindicates exp 95 as specified |
+| 89, 83 | gate grid; variance-reduced NPLM | in flight (89 running, 83 queued) |
+| 84, 85 | two-stage strict; iterated residuals | queued (85 quick smoke: 3-way +0.031, width control NEGATIVE) |
+| 95, 100–104 | — | **not started** (95 contraindicated by 96+98 in the alternating form) |
 
 Nine of fifteen predictions were falsified.  That is the intended hit rate: the
 entries below are written to be wrong in a specific way, and two of them
@@ -767,34 +766,42 @@ most needs.**
 
 ## Suggested order
 
-**Done** (see the status board above): 80, 81, 82, 86, 87, 90, 99.
-**In flight** (2026-08-20): 88 — early sign is that `cent->anchor` stalls at
-3.46 even at 100-D, which is the *falsifier* branch, and the more interesting
-one: the anchors are unreachable for an **optimization** reason, not a
-geometric one, so Q4's realizability rule needs restating in those terms.
-91 — seeds 1–2 of the four record cells.
+**Done** (see the status board above): 80, 81, 82, 86, 87, 88, 90, 91, 92,
+92b, 93, 94, 96, 97, 98, 99.
+**In flight** (2026-08-21): 89 (gate grid, running) -> 83 (variance-reduced
+NPLM) -> 84 (two-stage strict) -> 85 (iterated residuals), chained on the
+GPU.
 
 Remaining, in the order we would run them:
 
 1. **Exp 104** (interpretability panel) — evaluation-only, and it measures the
    property the program is built around but has never quantified: whether
-   distance to a labelled anchor is a delta log-likelihood.
+   distance to a labelled anchor is a delta log-likelihood.  Script shipped.
 2. **Exp 100** (dense fraction scan) — evaluation-only; 102 of 106 reach
    numbers are currently bounds rather than measurements.
 3. **Exp 102** (residual child as standalone detector) — evaluation-only,
    follows directly from exp 80's surprise.
 4. **Exp 103** (LID neighbourhood decomposition) — evaluation-only; third
    attempt at the LID mechanism, and worth capping if it also fails.
-5. **Exp 83** (distance$+$bias) — promoted from a variance fix to a
-   **correctness** fix: a bare distance critic provably cannot calibrate,
-   which undercuts the justification for the arms carrying our best detection
-   numbers.  The most important pending training run.
+5. **Exp 83** (distance$+$bias) — already queued, and worth prioritising within
+   the queue: exp 82 turned it from a variance fix into a **correctness** fix,
+   since a bare distance critic provably cannot satisfy `E_ref[e^g] = 1` and
+   that undercuts the justification for the arms carrying our best detection
+   numbers.  The most important pending *training* run.
 6. **Exp 101** (does frozen-space discovery generalize beyond aircraft?) — if
    exp 86 and 92b hold elsewhere they become the default recipe rather than a
    fine-grained fix, and the paper's framing changes again.
 7. **Exp 84, 85** (two-stage, iterated residuals) — moderate cost,
-   record-chasing.
+   record-chasing.  (85 quick smoke already shows the width control
+   NEGATIVE, i.e. the 3-way gain is decomposition rather than capacity —
+   the falsifier that entry named does *not* fire.)
 8. **Exp 89** (C100 discovery-rate unblocking) — protocol debt.
 
-Standing item, not an experiment: `tests/test_calibration.py` has never been
-executed.  It encodes the identities several of the above depend on.
+Not to be run as specified: **Exp 95** (SparKer as a training loss).  Formally
+cleared by exp 94, but contraindicated by 96 (warm start harmful) and 98
+(SparKer-ft destroys the separation it optimizes); it needs a
+class-structure-preserving redesign before any attempt.
+
+Standing item resolved 2026-08-21: `tests/test_calibration.py` HAS been
+executed on this machine — full suite green (103 passed) both at merge time
+and after; the identities it pins are verified.

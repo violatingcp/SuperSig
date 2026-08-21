@@ -1,0 +1,628 @@
+########## EXP91 SEED 1 ##########
+----- exp91 aircraft:visreg seed 1 -----
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+exp70 [aircraft_visreg_ft70_s1] end-to-end ft suite, arms=['supcon-ft'], ft_epochs=20, emb=100, holdouts 90-99 EXCLUDED from ft
+  ft corpus: 6000/6667 train images (holdout classes removed)
+
+===== [supcon-ft] (supervised) =====
+  [supcon-ft] epoch 1/20  main=1.6796  aux=0.0000
+  [supcon-ft] epoch 5/20  main=1.0971  aux=0.0000
+  [supcon-ft] epoch 10/20  main=0.9995  aux=0.0000
+  [supcon-ft] epoch 15/20  main=0.8538  aux=0.0000
+  [supcon-ft] epoch 20/20  main=0.8198  aux=0.0000
+  extracted ft70_supcon-ft train: (6667, 768)
+  extracted ft70_supcon-ft test: (3333, 768)
+  [supcon-ft     ] probe=0.8106+-0.0115 acc=0.5870 supAUC=0.9867 eucl=0.7847 mahaT=0.7704 mahaPC=0.8300 lid=0.5857
+
+===== PRE table =====
+  arm                        probe     acc  supAUC    eucl   mahaT  mahaPC
+  supcon-ft          0.8106+-0.0115  0.5870  0.9867  0.7847  0.7704  0.8300
+
+===== gaussianity (seen classes, test set) =====
+  metric                         supcon-ft
+  eig min (class cov)               -0.000
+  eig max (class cov)               21.172
+  eig cond worst            21172083228672.0
+  class RMS min                      0.467
+  class RMS mean                     0.677
+  class RMS max                      0.789
+  max |corr| (worst class)           0.943
+  SW ratio mean                       1.11
+  SW ratio worst                      2.40
+  |skew| mean                        0.342
+  |ex-kurt| mean                     0.646
+  centroid dist min                   1.49
+  centroid dist mean                 13.07
+  separation (min d/RMS)              2.20
+
+===== EXP70 SUMMARY [aircraft_visreg_ft70_s1] =====
+  [supcon-ft     ] probe=0.8106+-0.0115 acc=0.5870 eucl=0.7847 mahaT=0.7704
+saved /home/pharris/sigreg/SuperSig/plots/exp70_probe_aircraft_visreg_ft70_s1.png
+Done.
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+exp71 [aircraft_visreg_ft71_s1] residual ft on exp-70 parents, runs=[('supcon-ft', 'res-nplm')], epochs=20
+
+===== [aircraft_visreg_ft71_s1] supcon-ft->res-nplm =====
+  [supcon-ft (parent)          ] probe=0.8106+-0.0115 acc=0.5870 eucl=0.7847 mahaT=0.7704 lid=0.5857 perevt=0.336
+  [supcon-ft-res-nplm] epoch 1/20  main=54260921134.5241  aux=0.2184
+  [supcon-ft-res-nplm] epoch 5/20  main=37923471234.8015  aux=0.2672
+  [supcon-ft-res-nplm] epoch 10/20  main=15014730476.4833  aux=0.2927
+  [supcon-ft-res-nplm] epoch 15/20  main=5560993812.0608  aux=0.3071
+  [supcon-ft-res-nplm] epoch 20/20  main=2427042407.7339  aux=0.3096
+  extracted ft70_supcon-ft_resnplm train: (6667, 768)
+  extracted ft70_supcon-ft_resnplm test: (3333, 768)
+  [supcon-ft->res-nplm (residual)] probe=0.8443+-0.0101 acc=0.5633 eucl=0.8401 mahaT=0.8102 lid=0.5781 perevt=0.462
+  [supcon-ft->res-nplm (concat)] probe=0.8692+-0.0086 acc=0.6030 eucl=0.8331 mahaT=0.8252 lid=0.5675 perevt=0.447
+
+===== EXP71 SUMMARY [aircraft_visreg_ft71_s1] =====
+  space                                    probe     acc    eucl   mahaT     lid  perevt
+  supcon-ft (parent)               0.8106+-0.0115  0.5870  0.7847  0.7704  0.5857   0.336
+  supcon-ft->res-nplm (residual)   0.8443+-0.0101  0.5633  0.8401  0.8102  0.5781   0.462
+  supcon-ft->res-nplm (concat)     0.8692+-0.0086  0.6030  0.8331  0.8252  0.5675   0.447
+saved /home/pharris/sigreg/SuperSig/plots/exp71_probe_aircraft_visreg_ft71_s1.png
+Done.
+----- exp91 flowers:dino seed 1 -----
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+exp70 [flowers_dino_ft70_s1] end-to-end ft suite, arms=['supcon-ft'], ft_epochs=20, emb=100, holdouts 92-101 EXCLUDED from ft
+  ft corpus: 1840/2040 train images (holdout classes removed)
+
+===== [supcon-ft] (supervised) =====
+  [supcon-ft] epoch 1/20  main=0.9607  aux=0.0000
+  [supcon-ft] epoch 5/20  main=0.5860  aux=0.0000
+  [supcon-ft] epoch 10/20  main=0.4876  aux=0.0000
+  [supcon-ft] epoch 15/20  main=0.4315  aux=0.0000
+  [supcon-ft] epoch 20/20  main=0.4469  aux=0.0000
+  extracted ft70_supcon-ft train: (2040, 768)
+  extracted ft70_supcon-ft test: (6149, 768)
+  [supcon-ft     ] probe=0.6674+-0.0147 acc=0.9388 supAUC=0.9998 eucl=0.9058 mahaT=0.8531 mahaPC=0.8435 lid=0.9540
+
+===== PRE table =====
+  arm                        probe     acc  supAUC    eucl   mahaT  mahaPC
+  supcon-ft          0.6674+-0.0147  0.9388  0.9998  0.9058  0.8531  0.8435
+
+===== gaussianity (seen classes, test set) =====
+  metric                         supcon-ft
+  eig min (class cov)               -0.000
+  eig max (class cov)               23.779
+  eig cond worst            23778585214976.0
+  class RMS min                      0.205
+  class RMS mean                     0.447
+  class RMS max                      0.650
+  max |corr| (worst class)           0.936
+  SW ratio mean                       1.30
+  SW ratio worst                      2.43
+  |skew| mean                        0.339
+  |ex-kurt| mean                     0.600
+  centroid dist min                   5.15
+  centroid dist mean                 13.55
+  separation (min d/RMS)             11.52
+
+===== EXP70 SUMMARY [flowers_dino_ft70_s1] =====
+  [supcon-ft     ] probe=0.6674+-0.0147 acc=0.9388 eucl=0.9058 mahaT=0.8531
+saved /home/pharris/sigreg/SuperSig/plots/exp70_probe_flowers_dino_ft70_s1.png
+Done.
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+exp71 [flowers_dino_ft71_s1] residual ft on exp-70 parents, runs=[('supcon-ft', 'res-nplm')], epochs=20
+
+===== [flowers_dino_ft71_s1] supcon-ft->res-nplm =====
+  [supcon-ft (parent)          ] probe=0.6674+-0.0147 acc=0.9388 eucl=0.9058 mahaT=0.8531 lid=0.9540 perevt=0.388
+  [supcon-ft-res-nplm] epoch 1/20  main=12567605027.9981  aux=0.3305
+  [supcon-ft-res-nplm] epoch 5/20  main=49436459900.6491  aux=0.2277
+  [supcon-ft-res-nplm] epoch 10/20  main=11893793885.1985  aux=0.2562
+  [supcon-ft-res-nplm] epoch 15/20  main=3373100202.7706  aux=0.2713
+  [supcon-ft-res-nplm] epoch 20/20  main=2073180906.2850  aux=0.2744
+  extracted ft70_supcon-ft_resnplm train: (2040, 768)
+  extracted ft70_supcon-ft_resnplm test: (6149, 768)
+  [supcon-ft->res-nplm (residual)] probe=0.7560+-0.0223 acc=0.9059 eucl=0.8422 mahaT=0.7840 lid=0.9428 perevt=0.251
+  [supcon-ft->res-nplm (concat)] probe=0.7874+-0.0047 acc=0.9350 eucl=0.8947 mahaT=0.8297 lid=0.9553 perevt=0.373
+
+===== EXP71 SUMMARY [flowers_dino_ft71_s1] =====
+  space                                    probe     acc    eucl   mahaT     lid  perevt
+  supcon-ft (parent)               0.6674+-0.0147  0.9388  0.9058  0.8531  0.9540   0.388
+  supcon-ft->res-nplm (residual)   0.7560+-0.0223  0.9059  0.8422  0.7840  0.9428   0.251
+  supcon-ft->res-nplm (concat)     0.7874+-0.0047  0.9350  0.8947  0.8297  0.9553   0.373
+saved /home/pharris/sigreg/SuperSig/plots/exp71_probe_flowers_dino_ft71_s1.png
+Done.
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+
+######## [flowers_dino] discovery on supcon-ft->resnplm concat ########
+  [sigreg+proto] epoch 1/5  sigreg=0.4508  proto=1.8269  min_dist=1.77  mean_dist=19.76
+  [sigreg+proto] epoch 2/5  sigreg=0.4903  proto=1.5205  min_dist=1.81  mean_dist=19.76
+  [sigreg+proto] epoch 3/5  sigreg=0.4739  proto=1.2746  min_dist=1.85  mean_dist=19.76
+  [sigreg+proto] epoch 4/5  sigreg=0.4783  proto=0.6386  min_dist=1.90  mean_dist=19.77
+  [sigreg+proto] epoch 5/5  sigreg=0.5079  proto=0.8197  min_dist=1.94  mean_dist=19.77
+  round 1: pool=260 purity=0.646 k-hat=11 anchors=11  margin=0.9460  mean-anchor=0.9004  
+  [sigreg+proto] epoch 1/5  sigreg=0.5055  proto=3.3086  min_dist=2.01  mean_dist=20.04
+  [sigreg+proto] epoch 2/5  sigreg=0.5955  proto=2.3854  min_dist=2.05  mean_dist=20.05
+  [sigreg+proto] epoch 3/5  sigreg=0.5702  proto=3.0171  min_dist=2.09  mean_dist=20.05
+  [sigreg+proto] epoch 4/5  sigreg=0.5698  proto=2.3863  min_dist=2.13  mean_dist=20.05
+  [sigreg+proto] epoch 5/5  sigreg=0.5683  proto=2.6548  min_dist=2.17  mean_dist=20.06
+  round 2: pool=136 purity=0.324 k-hat=7 anchors=18  margin=0.9606  mean-anchor=0.9200  
+  [flowers_dino] supcon-ft->resnplm concat: probe 0.7874+-0.0047 -> 0.8936+-0.0040  eucl 0.8947 -> 0.9356  mahaT 0.8297 -> 0.8817  lid 0.9553 -> 0.9603
+          round 1: purity=0.646 anchors=11  margin=0.9460
+          round 2: purity=0.324 anchors=18  margin=0.9606
+
+===== EXP72 SUMMARY (discovery on exp-71 winners) =====
+  cell              space                          probe pre->post   mahaT pre->post purity r1
+  flowers_dino      supcon-ft->resnplm concat    0.7874->0.8936   0.8297->0.8817     0.646
+saved /home/pharris/sigreg/SuperSig/plots/exp72_residual_discovery.png
+Done.
+----- exp91 dtd:visreg seed 1 -----
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+exp70 [dtd_visreg_ft70_s1] end-to-end ft suite, arms=['supcon-ft'], ft_epochs=20, emb=100, holdouts 37-46 EXCLUDED from ft
+  ft corpus: 2960/3760 train images (holdout classes removed)
+
+===== [supcon-ft] (supervised) =====
+  [supcon-ft] epoch 1/20  main=1.8743  aux=0.0000
+  [supcon-ft] epoch 5/20  main=1.1942  aux=0.0000
+  [supcon-ft] epoch 10/20  main=0.9941  aux=0.0000
+  [supcon-ft] epoch 15/20  main=0.8449  aux=0.0000
+  [supcon-ft] epoch 20/20  main=0.8191  aux=0.0000
+  extracted ft70_supcon-ft train: (3760, 768)
+  extracted ft70_supcon-ft test: (1880, 768)
+  [supcon-ft     ] probe=0.7977+-0.0027 acc=0.7730 supAUC=0.9818 eucl=0.7747 mahaT=0.7658 mahaPC=0.7710 lid=0.7002
+
+===== PRE table =====
+  arm                        probe     acc  supAUC    eucl   mahaT  mahaPC
+  supcon-ft          0.7977+-0.0027  0.7730  0.9818  0.7747  0.7658  0.7710
+
+===== gaussianity (seen classes, test set) =====
+  metric                         supcon-ft
+  eig min (class cov)               -0.000
+  eig max (class cov)               25.455
+  eig cond worst            25454983512064.0
+  class RMS min                      0.243
+  class RMS mean                     0.397
+  class RMS max                      0.534
+  max |corr| (worst class)           0.994
+  SW ratio mean                       2.45
+  SW ratio worst                     11.40
+  |skew| mean                        0.625
+  |ex-kurt| mean                     1.155
+  centroid dist min                   3.28
+  centroid dist mean                  9.77
+  separation (min d/RMS)              8.25
+
+===== EXP70 SUMMARY [dtd_visreg_ft70_s1] =====
+  [supcon-ft     ] probe=0.7977+-0.0027 acc=0.7730 eucl=0.7747 mahaT=0.7658
+saved /home/pharris/sigreg/SuperSig/plots/exp70_probe_dtd_visreg_ft70_s1.png
+Done.
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+exp71 [dtd_visreg_ft71_s1] residual ft on exp-70 parents, runs=[('supcon-ft', 'res')], epochs=20
+
+===== [dtd_visreg_ft71_s1] supcon-ft->res =====
+  [supcon-ft (parent)          ] probe=0.7977+-0.0027 acc=0.7730 eucl=0.7747 mahaT=0.7658 lid=0.7002 perevt=0.190
+  [supcon-ft-res] epoch 1/20  main=2.5262  aux=0.8800
+  [supcon-ft-res] epoch 5/20  main=2.3751  aux=0.4812
+  [supcon-ft-res] epoch 10/20  main=2.3517  aux=0.4554
+  [supcon-ft-res] epoch 15/20  main=2.3404  aux=0.4299
+  [supcon-ft-res] epoch 20/20  main=2.3353  aux=0.4214
+  extracted ft70_supcon-ft_res train: (3760, 768)
+  extracted ft70_supcon-ft_res test: (1880, 768)
+  [supcon-ft->res (residual)   ] probe=0.7956+-0.0005 acc=0.6365 eucl=0.4642 mahaT=0.4657 lid=0.7418 perevt=0.010
+  [supcon-ft->res (concat)     ] probe=0.8610+-0.0012 acc=0.7581 eucl=0.6759 mahaT=0.7332 lid=0.7747 perevt=0.055
+
+===== EXP71 SUMMARY [dtd_visreg_ft71_s1] =====
+  space                                    probe     acc    eucl   mahaT     lid  perevt
+  supcon-ft (parent)               0.7977+-0.0027  0.7730  0.7747  0.7658  0.7002   0.190
+  supcon-ft->res (residual)        0.7956+-0.0005  0.6365  0.4642  0.4657  0.7418   0.010
+  supcon-ft->res (concat)          0.8610+-0.0012  0.7581  0.6759  0.7332  0.7747   0.055
+saved /home/pharris/sigreg/SuperSig/plots/exp71_probe_dtd_visreg_ft71_s1.png
+Done.
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+
+######## [dtd_visreg] discovery on supcon-ft->res concat ########
+  [sigreg+proto] epoch 1/5  sigreg=0.3437  proto=2.9890  min_dist=4.38  mean_dist=13.94
+  [sigreg+proto] epoch 2/5  sigreg=0.3712  proto=2.6171  min_dist=4.44  mean_dist=13.97
+  [sigreg+proto] epoch 3/5  sigreg=0.3869  proto=1.4802  min_dist=4.51  mean_dist=14.01
+  [sigreg+proto] epoch 4/5  sigreg=0.4084  proto=1.2703  min_dist=4.57  mean_dist=14.04
+  [sigreg+proto] epoch 5/5  sigreg=0.4301  proto=0.9013  min_dist=4.63  mean_dist=14.08
+  round 1: pool=175 purity=0.154 k-hat=7 anchors=7  margin=0.8070  mean-anchor=0.7666  
+  [sigreg+proto] epoch 1/5  sigreg=0.4479  proto=2.2753  min_dist=4.70  mean_dist=14.87
+  [sigreg+proto] epoch 2/5  sigreg=0.4523  proto=1.6981  min_dist=4.77  mean_dist=14.91
+  [sigreg+proto] epoch 3/5  sigreg=0.4340  proto=1.8937  min_dist=4.84  mean_dist=14.94
+  [sigreg+proto] epoch 4/5  sigreg=0.4252  proto=1.4277  min_dist=4.92  mean_dist=14.97
+  [sigreg+proto] epoch 5/5  sigreg=0.4579  proto=1.3738  min_dist=4.99  mean_dist=15.01
+  round 2: pool=160 purity=0.075 k-hat=10 anchors=17  margin=0.8051  mean-anchor=0.7995  
+  [dtd_visreg] supcon-ft->res concat: probe 0.8610+-0.0012 -> 0.8682+-0.0007  eucl 0.6759 -> 0.6990  mahaT 0.7332 -> 0.7556  lid 0.7747 -> 0.8209
+          round 1: purity=0.154 anchors=7  margin=0.8070
+          round 2: purity=0.075 anchors=17  margin=0.8051
+
+===== EXP72 SUMMARY (discovery on exp-71 winners) =====
+  cell              space                          probe pre->post   mahaT pre->post purity r1
+  dtd_visreg        supcon-ft->res concat        0.8610->0.8682   0.7332->0.7556     0.154
+saved /home/pharris/sigreg/SuperSig/plots/exp72_residual_discovery.png
+Done.
+----- exp91 galaxy10:lejepa seed 1 -----
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+exp70 [galaxy10_lejepa_ft70_s1] end-to-end ft suite, arms=['supcon-ft'], ft_epochs=20, emb=100, holdouts 9-9 EXCLUDED from ft
+  ft corpus: 1585/1772 train images (holdout classes removed)
+
+===== [supcon-ft] (supervised) =====
+Fetching 37 files:   0%|          | 0/37 [00:00<?, ?it/s]Fetching 37 files: 100%|██████████| 37/37 [00:00<00:00, 173978.98it/s]
+  [supcon-ft] epoch 1/20  main=3.6683  aux=0.0000
+  [supcon-ft] epoch 5/20  main=3.2230  aux=0.0000
+  [supcon-ft] epoch 10/20  main=2.8983  aux=0.0000
+  [supcon-ft] epoch 15/20  main=2.6671  aux=0.0000
+  [supcon-ft] epoch 20/20  main=2.6212  aux=0.0000
+  extracted ft70_supcon-ft train: (1772, 768)
+  extracted ft70_supcon-ft test: (15964, 768)
+  [supcon-ft     ] probe=0.9019+-0.0031 acc=0.7540 supAUC=0.9558 eucl=0.6890 mahaT=0.7301 mahaPC=0.7370 lid=0.4300
+
+===== PRE table =====
+  arm                        probe     acc  supAUC    eucl   mahaT  mahaPC
+  supcon-ft          0.9019+-0.0031  0.7540  0.9558  0.6890  0.7301  0.7370
+
+===== gaussianity (seen classes, test set) =====
+  metric                         supcon-ft
+  eig min (class cov)                0.000
+  eig max (class cov)                2.477
+  eig cond worst                  775924.2
+  class RMS min                      0.143
+  class RMS mean                     0.166
+  class RMS max                      0.206
+  max |corr| (worst class)           0.977
+  SW ratio mean                      31.71
+  SW ratio worst                     60.50
+  |skew| mean                        0.612
+  |ex-kurt| mean                     1.438
+  centroid dist min                   1.08
+  centroid dist mean                  3.60
+  separation (min d/RMS)              6.47
+
+===== EXP70 SUMMARY [galaxy10_lejepa_ft70_s1] =====
+  [supcon-ft     ] probe=0.9019+-0.0031 acc=0.7540 eucl=0.6890 mahaT=0.7301
+saved /home/pharris/sigreg/SuperSig/plots/exp70_probe_galaxy10_lejepa_ft70_s1.png
+Done.
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+exp71 [galaxy10_lejepa_ft71_s1] residual ft on exp-70 parents, runs=[('supcon-ft', 'res')], epochs=20
+
+===== [galaxy10_lejepa_ft71_s1] supcon-ft->res =====
+Fetching 37 files:   0%|          | 0/37 [00:00<?, ?it/s]Fetching 37 files: 100%|██████████| 37/37 [00:00<00:00, 61098.13it/s]
+  [supcon-ft (parent)          ] probe=0.9019+-0.0031 acc=0.7540 eucl=0.6890 mahaT=0.7301 lid=0.4300 perevt=0.111
+  [supcon-ft-res] epoch 1/20  main=2.9141  aux=1.5538
+  [supcon-ft-res] epoch 5/20  main=2.6162  aux=0.7077
+  [supcon-ft-res] epoch 10/20  main=2.5213  aux=0.5974
+  [supcon-ft-res] epoch 15/20  main=2.4895  aux=0.5478
+  [supcon-ft-res] epoch 20/20  main=2.4848  aux=0.5242
+  extracted ft70_supcon-ft_res train: (1772, 768)
+  extracted ft70_supcon-ft_res test: (15964, 768)
+  [supcon-ft->res (residual)   ] probe=0.9535+-0.0018 acc=0.5787 eucl=0.3367 mahaT=0.5592 lid=0.5352 perevt=0.015
+  [supcon-ft->res (concat)     ] probe=0.9648+-0.0007 acc=0.6359 eucl=0.3868 mahaT=0.6873 lid=0.5823 perevt=0.016
+
+===== EXP71 SUMMARY [galaxy10_lejepa_ft71_s1] =====
+  space                                    probe     acc    eucl   mahaT     lid  perevt
+  supcon-ft (parent)               0.9019+-0.0031  0.7540  0.6890  0.7301  0.4300   0.111
+  supcon-ft->res (residual)        0.9535+-0.0018  0.5787  0.3367  0.5592  0.5352   0.015
+  supcon-ft->res (concat)          0.9648+-0.0007  0.6359  0.3868  0.6873  0.5823   0.016
+saved /home/pharris/sigreg/SuperSig/plots/exp71_probe_galaxy10_lejepa_ft71_s1.png
+Done.
+########## EXP91 SEED 2 ##########
+----- exp91 aircraft:visreg seed 2 -----
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+exp70 [aircraft_visreg_ft70_s2] end-to-end ft suite, arms=['supcon-ft'], ft_epochs=20, emb=100, holdouts 90-99 EXCLUDED from ft
+  ft corpus: 6000/6667 train images (holdout classes removed)
+
+===== [supcon-ft] (supervised) =====
+  [supcon-ft] epoch 1/20  main=1.7420  aux=0.0000
+  [supcon-ft] epoch 5/20  main=1.1142  aux=0.0000
+  [supcon-ft] epoch 10/20  main=0.9584  aux=0.0000
+  [supcon-ft] epoch 15/20  main=0.9037  aux=0.0000
+  [supcon-ft] epoch 20/20  main=0.8387  aux=0.0000
+  extracted ft70_supcon-ft train: (6667, 768)
+  extracted ft70_supcon-ft test: (3333, 768)
+  [supcon-ft     ] probe=0.7971+-0.0089 acc=0.5830 supAUC=0.9866 eucl=0.7635 mahaT=0.7533 mahaPC=0.7956 lid=0.6036
+
+===== PRE table =====
+  arm                        probe     acc  supAUC    eucl   mahaT  mahaPC
+  supcon-ft          0.7971+-0.0089  0.5830  0.9866  0.7635  0.7533  0.7956
+
+===== gaussianity (seen classes, test set) =====
+  metric                         supcon-ft
+  eig min (class cov)               -0.000
+  eig max (class cov)               18.412
+  eig cond worst            18411857903616.0
+  class RMS min                      0.504
+  class RMS mean                     0.617
+  class RMS max                      0.697
+  max |corr| (worst class)           0.941
+  SW ratio mean                       1.13
+  SW ratio worst                      2.31
+  |skew| mean                        0.342
+  |ex-kurt| mean                     0.648
+  centroid dist min                   1.22
+  centroid dist mean                 11.97
+  separation (min d/RMS)              1.98
+
+===== EXP70 SUMMARY [aircraft_visreg_ft70_s2] =====
+  [supcon-ft     ] probe=0.7971+-0.0089 acc=0.5830 eucl=0.7635 mahaT=0.7533
+saved /home/pharris/sigreg/SuperSig/plots/exp70_probe_aircraft_visreg_ft70_s2.png
+Done.
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+exp71 [aircraft_visreg_ft71_s2] residual ft on exp-70 parents, runs=[('supcon-ft', 'res-nplm')], epochs=20
+
+===== [aircraft_visreg_ft71_s2] supcon-ft->res-nplm =====
+  [supcon-ft (parent)          ] probe=0.7971+-0.0089 acc=0.5830 eucl=0.7635 mahaT=0.7533 lid=0.6036 perevt=0.351
+  [supcon-ft-res-nplm] epoch 1/20  main=34967304224.5595  aux=0.2471
+  [supcon-ft-res-nplm] epoch 5/20  main=19692238513.1385  aux=0.2976
+  [supcon-ft-res-nplm] epoch 10/20  main=7717807619.1670  aux=0.3165
+  [supcon-ft-res-nplm] epoch 15/20  main=2819851424.5336  aux=0.3284
+  [supcon-ft-res-nplm] epoch 20/20  main=1935890790.5311  aux=0.3365
+  extracted ft70_supcon-ft_resnplm train: (6667, 768)
+  extracted ft70_supcon-ft_resnplm test: (3333, 768)
+  [supcon-ft->res-nplm (residual)] probe=0.8559+-0.0062 acc=0.5387 eucl=0.8136 mahaT=0.7529 lid=0.5568 perevt=0.393
+  [supcon-ft->res-nplm (concat)] probe=0.8651+-0.0074 acc=0.5893 eucl=0.8040 mahaT=0.7755 lid=0.5949 perevt=0.396
+
+===== EXP71 SUMMARY [aircraft_visreg_ft71_s2] =====
+  space                                    probe     acc    eucl   mahaT     lid  perevt
+  supcon-ft (parent)               0.7971+-0.0089  0.5830  0.7635  0.7533  0.6036   0.351
+  supcon-ft->res-nplm (residual)   0.8559+-0.0062  0.5387  0.8136  0.7529  0.5568   0.393
+  supcon-ft->res-nplm (concat)     0.8651+-0.0074  0.5893  0.8040  0.7755  0.5949   0.396
+saved /home/pharris/sigreg/SuperSig/plots/exp71_probe_aircraft_visreg_ft71_s2.png
+Done.
+----- exp91 flowers:dino seed 2 -----
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+exp70 [flowers_dino_ft70_s2] end-to-end ft suite, arms=['supcon-ft'], ft_epochs=20, emb=100, holdouts 92-101 EXCLUDED from ft
+  ft corpus: 1840/2040 train images (holdout classes removed)
+
+===== [supcon-ft] (supervised) =====
+  [supcon-ft] epoch 1/20  main=0.8081  aux=0.0000
+  [supcon-ft] epoch 5/20  main=0.6029  aux=0.0000
+  [supcon-ft] epoch 10/20  main=0.4669  aux=0.0000
+  [supcon-ft] epoch 15/20  main=0.4032  aux=0.0000
+  [supcon-ft] epoch 20/20  main=0.3905  aux=0.0000
+  extracted ft70_supcon-ft train: (2040, 768)
+  extracted ft70_supcon-ft test: (6149, 768)
+  [supcon-ft     ] probe=0.7430+-0.0081 acc=0.9366 supAUC=0.9997 eucl=0.8974 mahaT=0.8468 mahaPC=0.8495 lid=0.9545
+
+===== PRE table =====
+  arm                        probe     acc  supAUC    eucl   mahaT  mahaPC
+  supcon-ft          0.7430+-0.0081  0.9366  0.9997  0.8974  0.8468  0.8495
+
+===== gaussianity (seen classes, test set) =====
+  metric                         supcon-ft
+  eig min (class cov)               -0.000
+  eig max (class cov)               30.012
+  eig cond worst            30012453421056.0
+  class RMS min                      0.221
+  class RMS mean                     0.423
+  class RMS max                      0.691
+  max |corr| (worst class)           0.965
+  SW ratio mean                       1.30
+  SW ratio worst                      2.25
+  |skew| mean                        0.343
+  |ex-kurt| mean                     0.603
+  centroid dist min                   5.06
+  centroid dist mean                 13.15
+  separation (min d/RMS)             11.95
+
+===== EXP70 SUMMARY [flowers_dino_ft70_s2] =====
+  [supcon-ft     ] probe=0.7430+-0.0081 acc=0.9366 eucl=0.8974 mahaT=0.8468
+saved /home/pharris/sigreg/SuperSig/plots/exp70_probe_flowers_dino_ft70_s2.png
+Done.
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+exp71 [flowers_dino_ft71_s2] residual ft on exp-70 parents, runs=[('supcon-ft', 'res-nplm')], epochs=20
+
+===== [flowers_dino_ft71_s2] supcon-ft->res-nplm =====
+  [supcon-ft (parent)          ] probe=0.7430+-0.0081 acc=0.9366 eucl=0.8974 mahaT=0.8468 lid=0.9545 perevt=0.379
+  [supcon-ft-res-nplm] epoch 1/20  main=4942871157.7107  aux=0.3571
+  [supcon-ft-res-nplm] epoch 5/20  main=34285292935.8037  aux=0.2500
+  [supcon-ft-res-nplm] epoch 10/20  main=12642001050.3451  aux=0.2576
+  [supcon-ft-res-nplm] epoch 15/20  main=5811200720.2606  aux=0.2853
+  [supcon-ft-res-nplm] epoch 20/20  main=1228645884.8248  aux=0.2889
+  extracted ft70_supcon-ft_resnplm train: (2040, 768)
+  extracted ft70_supcon-ft_resnplm test: (6149, 768)
+  [supcon-ft->res-nplm (residual)] probe=0.7685+-0.0013 acc=0.8933 eucl=0.8141 mahaT=0.7446 lid=0.9289 perevt=0.273
+  [supcon-ft->res-nplm (concat)] probe=0.8278+-0.0033 acc=0.9300 eucl=0.8858 mahaT=0.8294 lid=0.9541 perevt=0.351
+
+===== EXP71 SUMMARY [flowers_dino_ft71_s2] =====
+  space                                    probe     acc    eucl   mahaT     lid  perevt
+  supcon-ft (parent)               0.7430+-0.0081  0.9366  0.8974  0.8468  0.9545   0.379
+  supcon-ft->res-nplm (residual)   0.7685+-0.0013  0.8933  0.8141  0.7446  0.9289   0.273
+  supcon-ft->res-nplm (concat)     0.8278+-0.0033  0.9300  0.8858  0.8294  0.9541   0.351
+saved /home/pharris/sigreg/SuperSig/plots/exp71_probe_flowers_dino_ft71_s2.png
+Done.
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+
+######## [flowers_dino] discovery on supcon-ft->resnplm concat ########
+  [sigreg+proto] epoch 1/5  sigreg=0.4671  proto=1.0894  min_dist=1.42  mean_dist=19.43
+  [sigreg+proto] epoch 2/5  sigreg=0.5066  proto=4.9836  min_dist=1.46  mean_dist=19.44
+  [sigreg+proto] epoch 3/5  sigreg=0.5282  proto=1.1769  min_dist=1.49  mean_dist=19.45
+  [sigreg+proto] epoch 4/5  sigreg=0.5515  proto=1.2150  min_dist=1.53  mean_dist=19.46
+  [sigreg+proto] epoch 5/5  sigreg=0.5487  proto=1.6089  min_dist=1.58  mean_dist=19.48
+  round 1: pool=230 purity=0.600 k-hat=11 anchors=11  margin=0.9200  mean-anchor=0.8659  
+  [sigreg+proto] epoch 1/5  sigreg=0.5288  proto=3.5300  min_dist=1.64  mean_dist=20.10
+  [sigreg+proto] epoch 2/5  sigreg=0.5628  proto=2.3478  min_dist=1.70  mean_dist=20.11
+  [sigreg+proto] epoch 3/5  sigreg=0.5730  proto=3.2422  min_dist=1.75  mean_dist=20.12
+  [sigreg+proto] epoch 4/5  sigreg=0.5872  proto=2.8796  min_dist=1.81  mean_dist=20.13
+  [sigreg+proto] epoch 5/5  sigreg=0.6014  proto=1.2966  min_dist=1.86  mean_dist=20.15
+  round 2: pool=111 purity=0.171 k-hat=12 anchors=23  margin=0.9363  mean-anchor=0.8828  
+  [flowers_dino] supcon-ft->resnplm concat: probe 0.8278+-0.0033 -> 0.8598+-0.0028  eucl 0.8858 -> 0.8752  mahaT 0.8294 -> 0.8327  lid 0.9541 -> 0.9579
+          round 1: purity=0.600 anchors=11  margin=0.9200
+          round 2: purity=0.171 anchors=23  margin=0.9363
+
+===== EXP72 SUMMARY (discovery on exp-71 winners) =====
+  cell              space                          probe pre->post   mahaT pre->post purity r1
+  flowers_dino      supcon-ft->resnplm concat    0.8278->0.8598   0.8294->0.8327     0.600
+saved /home/pharris/sigreg/SuperSig/plots/exp72_residual_discovery_s2.png
+Done.
+----- exp91 dtd:visreg seed 2 -----
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+exp70 [dtd_visreg_ft70_s2] end-to-end ft suite, arms=['supcon-ft'], ft_epochs=20, emb=100, holdouts 37-46 EXCLUDED from ft
+  ft corpus: 2960/3760 train images (holdout classes removed)
+
+===== [supcon-ft] (supervised) =====
+  [supcon-ft] epoch 1/20  main=1.8267  aux=0.0000
+  [supcon-ft] epoch 5/20  main=1.2276  aux=0.0000
+  [supcon-ft] epoch 10/20  main=0.9599  aux=0.0000
+  [supcon-ft] epoch 15/20  main=0.8603  aux=0.0000
+  [supcon-ft] epoch 20/20  main=0.8256  aux=0.0000
+  extracted ft70_supcon-ft train: (3760, 768)
+  extracted ft70_supcon-ft test: (1880, 768)
+  [supcon-ft     ] probe=0.8135+-0.0039 acc=0.7669 supAUC=0.9827 eucl=0.7818 mahaT=0.7651 mahaPC=0.7533 lid=0.6902
+
+===== PRE table =====
+  arm                        probe     acc  supAUC    eucl   mahaT  mahaPC
+  supcon-ft          0.8135+-0.0039  0.7669  0.9827  0.7818  0.7651  0.7533
+
+===== gaussianity (seen classes, test set) =====
+  metric                         supcon-ft
+  eig min (class cov)               -0.000
+  eig max (class cov)               27.148
+  eig cond worst            27148087721984.0
+  class RMS min                      0.211
+  class RMS mean                     0.398
+  class RMS max                      0.599
+  max |corr| (worst class)           0.996
+  SW ratio mean                       2.34
+  SW ratio worst                     10.60
+  |skew| mean                        0.603
+  |ex-kurt| mean                     1.120
+  centroid dist min                   2.86
+  centroid dist mean                  9.69
+  separation (min d/RMS)              7.17
+
+===== EXP70 SUMMARY [dtd_visreg_ft70_s2] =====
+  [supcon-ft     ] probe=0.8135+-0.0039 acc=0.7669 eucl=0.7818 mahaT=0.7651
+saved /home/pharris/sigreg/SuperSig/plots/exp70_probe_dtd_visreg_ft70_s2.png
+Done.
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+exp71 [dtd_visreg_ft71_s2] residual ft on exp-70 parents, runs=[('supcon-ft', 'res')], epochs=20
+
+===== [dtd_visreg_ft71_s2] supcon-ft->res =====
+  [supcon-ft (parent)          ] probe=0.8135+-0.0039 acc=0.7669 eucl=0.7818 mahaT=0.7651 lid=0.6902 perevt=0.133
+  [supcon-ft-res] epoch 1/20  main=2.5485  aux=0.8136
+  [supcon-ft-res] epoch 5/20  main=2.3889  aux=0.4995
+  [supcon-ft-res] epoch 10/20  main=2.3524  aux=0.4472
+  [supcon-ft-res] epoch 15/20  main=2.3399  aux=0.4280
+  [supcon-ft-res] epoch 20/20  main=2.3347  aux=0.4182
+  extracted ft70_supcon-ft_res train: (3760, 768)
+  extracted ft70_supcon-ft_res test: (1880, 768)
+  [supcon-ft->res (residual)   ] probe=0.8158+-0.0005 acc=0.6804 eucl=0.5604 mahaT=0.5737 lid=0.7494 perevt=0.033
+  [supcon-ft->res (concat)     ] probe=0.8668+-0.0019 acc=0.7561 eucl=0.7188 mahaT=0.7442 lid=0.7881 perevt=0.087
+
+===== EXP71 SUMMARY [dtd_visreg_ft71_s2] =====
+  space                                    probe     acc    eucl   mahaT     lid  perevt
+  supcon-ft (parent)               0.8135+-0.0039  0.7669  0.7818  0.7651  0.6902   0.133
+  supcon-ft->res (residual)        0.8158+-0.0005  0.6804  0.5604  0.5737  0.7494   0.033
+  supcon-ft->res (concat)          0.8668+-0.0019  0.7561  0.7188  0.7442  0.7881   0.087
+saved /home/pharris/sigreg/SuperSig/plots/exp71_probe_dtd_visreg_ft71_s2.png
+Done.
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+
+######## [dtd_visreg] discovery on supcon-ft->res concat ########
+  [sigreg+proto] epoch 1/5  sigreg=0.3492  proto=2.6512  min_dist=2.91  mean_dist=14.54
+  [sigreg+proto] epoch 2/5  sigreg=0.3911  proto=1.9804  min_dist=2.98  mean_dist=14.57
+  [sigreg+proto] epoch 3/5  sigreg=0.4128  proto=1.5735  min_dist=3.07  mean_dist=14.60
+  [sigreg+proto] epoch 4/5  sigreg=0.4158  proto=1.0420  min_dist=3.15  mean_dist=14.63
+  [sigreg+proto] epoch 5/5  sigreg=0.4301  proto=0.8772  min_dist=3.23  mean_dist=14.66
+  round 1: pool=187 purity=0.209 k-hat=10 anchors=10  margin=0.8201  mean-anchor=0.8301  
+  [sigreg+proto] epoch 1/5  sigreg=0.4389  proto=2.5087  min_dist=3.30  mean_dist=15.39
+  [sigreg+proto] epoch 2/5  sigreg=0.4569  proto=3.3113  min_dist=3.36  mean_dist=15.42
+  [sigreg+proto] epoch 3/5  sigreg=0.4745  proto=1.7012  min_dist=3.43  mean_dist=15.45
+  [sigreg+proto] epoch 4/5  sigreg=0.4321  proto=1.7529  min_dist=3.51  mean_dist=15.47
+  [sigreg+proto] epoch 5/5  sigreg=0.4517  proto=1.3270  min_dist=3.59  mean_dist=15.50
+  round 2: pool=167 purity=0.114 k-hat=9 anchors=19  margin=0.8182  mean-anchor=0.8780  
+  [dtd_visreg] supcon-ft->res concat: probe 0.8668+-0.0019 -> 0.8709+-0.0008  eucl 0.7188 -> 0.7359  mahaT 0.7442 -> 0.7676  lid 0.7881 -> 0.8038
+          round 1: purity=0.209 anchors=10  margin=0.8201
+          round 2: purity=0.114 anchors=19  margin=0.8182
+
+===== EXP72 SUMMARY (discovery on exp-71 winners) =====
+  cell              space                          probe pre->post   mahaT pre->post purity r1
+  dtd_visreg        supcon-ft->res concat        0.8668->0.8709   0.7442->0.7676     0.209
+saved /home/pharris/sigreg/SuperSig/plots/exp72_residual_discovery_s2.png
+Done.
+----- exp91 galaxy10:lejepa seed 2 -----
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+exp70 [galaxy10_lejepa_ft70_s2] end-to-end ft suite, arms=['supcon-ft'], ft_epochs=20, emb=100, holdouts 9-9 EXCLUDED from ft
+  ft corpus: 1585/1772 train images (holdout classes removed)
+
+===== [supcon-ft] (supervised) =====
+Fetching 37 files:   0%|          | 0/37 [00:00<?, ?it/s]Fetching 37 files: 100%|██████████| 37/37 [00:00<00:00, 67239.71it/s]
+  [supcon-ft] epoch 1/20  main=3.7002  aux=0.0000
+  [supcon-ft] epoch 5/20  main=3.1691  aux=0.0000
+  [supcon-ft] epoch 10/20  main=2.8917  aux=0.0000
+  [supcon-ft] epoch 15/20  main=2.6890  aux=0.0000
+  [supcon-ft] epoch 20/20  main=2.5766  aux=0.0000
+  extracted ft70_supcon-ft train: (1772, 768)
+  extracted ft70_supcon-ft test: (15964, 768)
+  [supcon-ft     ] probe=0.9086+-0.0020 acc=0.7460 supAUC=0.9532 eucl=0.7348 mahaT=0.7719 mahaPC=0.7240 lid=0.3726
+
+===== PRE table =====
+  arm                        probe     acc  supAUC    eucl   mahaT  mahaPC
+  supcon-ft          0.9086+-0.0020  0.7460  0.9532  0.7348  0.7719  0.7240
+
+===== gaussianity (seen classes, test set) =====
+  metric                         supcon-ft
+  eig min (class cov)                0.000
+  eig max (class cov)                2.225
+  eig cond worst                 1323878.0
+  class RMS min                      0.143
+  class RMS mean                     0.163
+  class RMS max                      0.197
+  max |corr| (worst class)           0.986
+  SW ratio mean                      35.72
+  SW ratio worst                     80.53
+  |skew| mean                        0.635
+  |ex-kurt| mean                     1.613
+  centroid dist min                   0.99
+  centroid dist mean                  3.49
+  separation (min d/RMS)              6.11
+
+===== EXP70 SUMMARY [galaxy10_lejepa_ft70_s2] =====
+  [supcon-ft     ] probe=0.9086+-0.0020 acc=0.7460 eucl=0.7348 mahaT=0.7719
+saved /home/pharris/sigreg/SuperSig/plots/exp70_probe_galaxy10_lejepa_ft70_s2.png
+Done.
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+exp71 [galaxy10_lejepa_ft71_s2] residual ft on exp-70 parents, runs=[('supcon-ft', 'res')], epochs=20
+
+===== [galaxy10_lejepa_ft71_s2] supcon-ft->res =====
+Fetching 37 files:   0%|          | 0/37 [00:00<?, ?it/s]Fetching 37 files: 100%|██████████| 37/37 [00:00<00:00, 230936.38it/s]
+  [supcon-ft (parent)          ] probe=0.9086+-0.0020 acc=0.7460 eucl=0.7348 mahaT=0.7719 lid=0.3726 perevt=0.157
+  [supcon-ft-res] epoch 1/20  main=2.9593  aux=1.5019
+  [supcon-ft-res] epoch 5/20  main=2.6093  aux=0.7020
+  [supcon-ft-res] epoch 10/20  main=2.5404  aux=0.6194
+  [supcon-ft-res] epoch 15/20  main=2.5066  aux=0.5520
+  [supcon-ft-res] epoch 20/20  main=2.4813  aux=0.4963
+  extracted ft70_supcon-ft_res train: (1772, 768)
+  extracted ft70_supcon-ft_res test: (15964, 768)
+  [supcon-ft->res (residual)   ] probe=0.9575+-0.0010 acc=0.6181 eucl=0.4159 mahaT=0.4762 lid=0.4780 perevt=0.019
+  [supcon-ft->res (concat)     ] probe=0.9725+-0.0005 acc=0.6588 eucl=0.4411 mahaT=0.6720 lid=0.5289 perevt=0.021
+
+===== EXP71 SUMMARY [galaxy10_lejepa_ft71_s2] =====
+  space                                    probe     acc    eucl   mahaT     lid  perevt
+  supcon-ft (parent)               0.9086+-0.0020  0.7460  0.7348  0.7719  0.3726   0.157
+  supcon-ft->res (residual)        0.9575+-0.0010  0.6181  0.4159  0.4762  0.4780   0.019
+  supcon-ft->res (concat)          0.9725+-0.0005  0.6588  0.4411  0.6720  0.5289   0.021
+saved /home/pharris/sigreg/SuperSig/plots/exp71_probe_galaxy10_lejepa_ft71_s2.png
+Done.
+EXP91 DONE.
+EXP91 CHAIN DONE

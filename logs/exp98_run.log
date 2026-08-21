@@ -1,0 +1,178 @@
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+exp98 [cifar10] SparKer-ft vs proto vs nplm discovery, arms=['nplm_sup_dist', 'nplm_dist_sup_cw']
+
+===== training: nplm_sup_dist =====
+Using cache found in /home/pharris/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+  CIFAR two-view embedding-train images (no {4}): 45000
+  [nplm/distance] epoch 1/20  interaction=-0.4532  marginal=0.5763
+  [nplm/distance] epoch 2/20  interaction=-0.5044  marginal=0.5519
+  [nplm/distance] epoch 3/20  interaction=-0.5220  marginal=0.5391
+  [nplm/distance] epoch 4/20  interaction=-0.5323  marginal=0.5338
+  [nplm/distance] epoch 5/20  interaction=-0.5354  marginal=0.5276
+  [nplm/distance] epoch 6/20  interaction=-0.5462  marginal=0.5217
+  [nplm/distance] epoch 7/20  interaction=-0.5566  marginal=0.5127
+  [nplm/distance] epoch 8/20  interaction=-0.5579  marginal=0.5080
+  [nplm/distance] epoch 9/20  interaction=-0.5604  marginal=0.5064
+  [nplm/distance] epoch 10/20  interaction=-0.5662  marginal=0.5028
+  [nplm/distance] epoch 11/20  interaction=-0.5757  marginal=0.4958
+  [nplm/distance] epoch 12/20  interaction=-0.5737  marginal=0.4950
+  [nplm/distance] epoch 13/20  interaction=-0.5800  marginal=0.4930
+  [nplm/distance] epoch 14/20  interaction=-0.5830  marginal=0.4858
+  [nplm/distance] epoch 15/20  interaction=-0.5848  marginal=0.4865
+  [nplm/distance] epoch 16/20  interaction=-0.5816  marginal=0.4824
+  [nplm/distance] epoch 17/20  interaction=-0.5912  marginal=0.4848
+  [nplm/distance] epoch 18/20  interaction=-0.5893  marginal=0.4806
+  [nplm/distance] epoch 19/20  interaction=-0.5966  marginal=0.4777
+  [nplm/distance] epoch 20/20  interaction=-0.5974  marginal=0.4710
+
+----- nplm_sup_dist ft=proto -----
+    merged 4 -> 1 anchors
+  [sigreg+proto] epoch 1/5  sigreg=0.2412  proto=1.9954  min_dist=1.22  mean_dist=3.71
+  [sigreg+proto] epoch 2/5  sigreg=0.1752  proto=1.1267  min_dist=1.63  mean_dist=4.41
+  [sigreg+proto] epoch 3/5  sigreg=0.1594  proto=0.8445  min_dist=1.95  mean_dist=5.01
+  [sigreg+proto] epoch 4/5  sigreg=0.1504  proto=0.7416  min_dist=2.22  mean_dist=5.54
+  [sigreg+proto] epoch 5/5  sigreg=0.1427  proto=0.6869  min_dist=2.45  mean_dist=6.03
+  round 1: pool=3380 purity=0.334 k-hat=4 anchors=1  margin=0.9377  mean-anchor=0.8374  4=0.837
+  [sigreg+proto] epoch 1/5  sigreg=0.1473  proto=1.2164  min_dist=3.52  mean_dist=7.45
+  [sigreg+proto] epoch 2/5  sigreg=0.1455  proto=1.0855  min_dist=4.35  mean_dist=8.26
+  [sigreg+proto] epoch 3/5  sigreg=0.1488  proto=1.0926  min_dist=5.05  mean_dist=8.95
+  [sigreg+proto] epoch 4/5  sigreg=0.1508  proto=1.0887  min_dist=5.67  mean_dist=9.57
+  [sigreg+proto] epoch 5/5  sigreg=0.1527  proto=1.1706  min_dist=6.22  mean_dist=10.13
+  round 2: pool=2477 purity=0.092 k-hat=4 anchors=5  margin=0.9054  mean-anchor=0.9143  4=0.914
+    nplm_sup_dist:proto f=0.01: power=0.760 [0.685,0.823] (38/50)
+    nplm_sup_dist:proto f=0.02: power=1.000 [0.964,1.000] (50/50)
+    nplm_sup_dist:proto f=0.03: power=1.000 [0.964,1.000] (50/50)
+  [nplm_sup_dist:proto] probe 0.7750->0.9510  mahaT=0.7972  perevt=0.616  spk=0.76/1.00/1.00  purity=0.334/0.092
+
+----- nplm_sup_dist ft=nplm -----
+    merged 4 -> 1 anchors
+  [nplm-ft/distance] epoch 1/5  interaction=-0.5782  marginal=0.4888
+  [nplm-ft/distance] epoch 2/5  interaction=-0.6054  marginal=0.4670
+  [nplm-ft/distance] epoch 3/5  interaction=-0.6164  marginal=0.4592
+  [nplm-ft/distance] epoch 4/5  interaction=-0.6247  marginal=0.4506
+  [nplm-ft/distance] epoch 5/5  interaction=-0.6303  marginal=0.4436
+  round 1: pool=3380 purity=0.334 k-hat=4 anchors=1  margin=0.9450  mean-anchor=0.9431
+    merged 5 -> 1 anchors
+  [nplm-ft/distance] epoch 1/5  interaction=-0.6122  marginal=0.4840
+  [nplm-ft/distance] epoch 2/5  interaction=-0.6244  marginal=0.4783
+  [nplm-ft/distance] epoch 3/5  interaction=-0.6369  marginal=0.4744
+  [nplm-ft/distance] epoch 4/5  interaction=-0.6417  marginal=0.4705
+  [nplm-ft/distance] epoch 5/5  interaction=-0.6429  marginal=0.4693
+  round 2: pool=2876 purity=0.218 k-hat=4 anchors=1  margin=0.9601  mean-anchor=0.9623
+    nplm_sup_dist:nplm f=0.01: power=0.820 [0.749,0.876] (41/50)
+    nplm_sup_dist:nplm f=0.02: power=1.000 [0.964,1.000] (50/50)
+    nplm_sup_dist:nplm f=0.03: power=1.000 [0.964,1.000] (50/50)
+  [nplm_sup_dist:nplm] probe 0.7750->0.8396  mahaT=0.9393  perevt=0.832  spk=0.82/1.00/1.00  purity=0.334/0.218
+
+----- nplm_sup_dist ft=sparker -----
+    merged 4 -> 1 anchors
+  [sparker-ft] epoch 1/5  np=+0.000414  marginal=0.1309
+  [sparker-ft] epoch 2/5  np=+0.004681  marginal=0.1046
+  [sparker-ft] epoch 3/5  np=+0.002844  marginal=0.0889
+  [sparker-ft] epoch 4/5  np=+0.001991  marginal=0.0840
+  [sparker-ft] epoch 5/5  np=+0.002527  marginal=0.0920
+  round 1: pool=3380 purity=0.334 k-hat=4 anchors=1  margin=0.6370  mean-anchor=0.5372
+  [sparker-ft] epoch 1/5  np=+0.001626  marginal=0.0847
+  [sparker-ft] epoch 2/5  np=+0.002218  marginal=0.0849
+  [sparker-ft] epoch 3/5  np=+0.001941  marginal=0.0755
+  [sparker-ft] epoch 4/5  np=+0.001953  marginal=0.0881
+  [sparker-ft] epoch 5/5  np=+0.003626  marginal=0.1082
+  round 2: pool=2602 purity=0.135 k-hat=4 anchors=5  margin=0.5770  mean-anchor=0.5635
+    nplm_sup_dist:sparker f=0.01: power=0.020 [0.003,0.064] (1/50)
+    nplm_sup_dist:sparker f=0.02: power=0.060 [0.028,0.115] (3/50)
+    nplm_sup_dist:sparker f=0.03: power=0.020 [0.003,0.064] (1/50)
+  [nplm_sup_dist:sparker] probe 0.7750->0.7033  mahaT=0.4934  perevt=0.107  spk=0.02/0.06/0.02  purity=0.334/0.135
+
+===== training: nplm_dist_sup_cw =====
+Using cache found in /home/pharris/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+  cifar10 balanced two-view loader (no {4}): 45000 images, 208 batches of 9x24
+  [nplm/distance/cw] epoch 1/20  interaction=-0.4746  classwise=0.9948
+  [nplm/distance/cw] epoch 2/20  interaction=-0.5438  classwise=0.9692
+  [nplm/distance/cw] epoch 3/20  interaction=-0.5607  classwise=0.9719
+  [nplm/distance/cw] epoch 4/20  interaction=-0.5771  classwise=0.9711
+  [nplm/distance/cw] epoch 5/20  interaction=-0.5928  classwise=0.9711
+  [nplm/distance/cw] epoch 6/20  interaction=-0.5975  classwise=0.9714
+  [nplm/distance/cw] epoch 7/20  interaction=-0.6041  classwise=0.9709
+  [nplm/distance/cw] epoch 8/20  interaction=-0.6084  classwise=0.9708
+  [nplm/distance/cw] epoch 9/20  interaction=-0.6170  classwise=0.9693
+  [nplm/distance/cw] epoch 10/20  interaction=-0.6243  classwise=0.9694
+  [nplm/distance/cw] epoch 11/20  interaction=-0.6353  classwise=0.9690
+  [nplm/distance/cw] epoch 12/20  interaction=-0.6318  classwise=0.9689
+  [nplm/distance/cw] epoch 13/20  interaction=-0.6390  classwise=0.9693
+  [nplm/distance/cw] epoch 14/20  interaction=-0.6455  classwise=0.9683
+  [nplm/distance/cw] epoch 15/20  interaction=-0.6441  classwise=0.9683
+  [nplm/distance/cw] epoch 16/20  interaction=-0.6505  classwise=0.9681
+  [nplm/distance/cw] epoch 17/20  interaction=-0.6547  classwise=0.9681
+  [nplm/distance/cw] epoch 18/20  interaction=-0.6557  classwise=0.9674
+  [nplm/distance/cw] epoch 19/20  interaction=-0.6590  classwise=0.9666
+  [nplm/distance/cw] epoch 20/20  interaction=-0.6624  classwise=0.9673
+
+----- nplm_dist_sup_cw ft=proto -----
+    merged 4 -> 1 anchors
+  [sigreg+proto] epoch 1/5  sigreg=0.2116  proto=1.8170  min_dist=2.13  mean_dist=3.62
+  [sigreg+proto] epoch 2/5  sigreg=0.1571  proto=0.9368  min_dist=2.94  mean_dist=4.52
+  [sigreg+proto] epoch 3/5  sigreg=0.1448  proto=0.7021  min_dist=3.55  mean_dist=5.27
+  [sigreg+proto] epoch 4/5  sigreg=0.1373  proto=0.6150  min_dist=4.06  mean_dist=5.92
+  [sigreg+proto] epoch 5/5  sigreg=0.1346  proto=0.5592  min_dist=4.51  mean_dist=6.49
+  round 1: pool=3908 purity=0.424 k-hat=4 anchors=1  margin=0.9606  mean-anchor=0.8868  4=0.887
+  [sigreg+proto] epoch 1/5  sigreg=0.1432  proto=1.1684  min_dist=4.43  mean_dist=7.25
+  [sigreg+proto] epoch 2/5  sigreg=0.1423  proto=0.9878  min_dist=5.15  mean_dist=8.07
+  [sigreg+proto] epoch 3/5  sigreg=0.1469  proto=1.0280  min_dist=5.79  mean_dist=8.79
+  [sigreg+proto] epoch 4/5  sigreg=0.1483  proto=1.0308  min_dist=6.18  mean_dist=9.42
+  [sigreg+proto] epoch 5/5  sigreg=0.1511  proto=1.1091  min_dist=6.49  mean_dist=9.99
+  round 2: pool=2433 purity=0.075 k-hat=4 anchors=5  margin=0.9401  mean-anchor=0.9643  4=0.964
+    nplm_dist_sup_cw:proto f=0.01: power=0.980 [0.936,0.997] (49/50)
+    nplm_dist_sup_cw:proto f=0.02: power=1.000 [0.964,1.000] (50/50)
+    nplm_dist_sup_cw:proto f=0.03: power=1.000 [0.964,1.000] (50/50)
+  [nplm_dist_sup_cw:proto] probe 0.8816->0.9788  mahaT=0.8032  perevt=0.746  spk=0.98/1.00/1.00  purity=0.424/0.075
+
+----- nplm_dist_sup_cw ft=nplm -----
+    merged 4 -> 1 anchors
+  [nplm-ft/distance] epoch 1/5  interaction=-0.6234  marginal=0.4806
+  [nplm-ft/distance] epoch 2/5  interaction=-0.6405  marginal=0.4602
+  [nplm-ft/distance] epoch 3/5  interaction=-0.6514  marginal=0.4483
+  [nplm-ft/distance] epoch 4/5  interaction=-0.6529  marginal=0.4459
+  [nplm-ft/distance] epoch 5/5  interaction=-0.6607  marginal=0.4370
+  round 1: pool=3908 purity=0.424 k-hat=4 anchors=1  margin=0.9550  mean-anchor=0.9491
+    merged 5 -> 1 anchors
+  [nplm-ft/distance] epoch 1/5  interaction=-0.6414  marginal=0.4681
+  [nplm-ft/distance] epoch 2/5  interaction=-0.6543  marginal=0.4615
+  [nplm-ft/distance] epoch 3/5  interaction=-0.6564  marginal=0.4639
+  [nplm-ft/distance] epoch 4/5  interaction=-0.6645  marginal=0.4554
+  [nplm-ft/distance] epoch 5/5  interaction=-0.6663  marginal=0.4540
+  round 2: pool=2993 purity=0.248 k-hat=4 anchors=1  margin=0.9565  mean-anchor=0.9598
+    nplm_dist_sup_cw:nplm f=0.01: power=1.000 [0.964,1.000] (50/50)
+    nplm_dist_sup_cw:nplm f=0.02: power=1.000 [0.964,1.000] (50/50)
+    nplm_dist_sup_cw:nplm f=0.03: power=1.000 [0.964,1.000] (50/50)
+  [nplm_dist_sup_cw:nplm] probe 0.8816->0.9017  mahaT=0.9234  perevt=0.779  spk=1.00/1.00/1.00  purity=0.424/0.248
+
+----- nplm_dist_sup_cw ft=sparker -----
+    merged 4 -> 1 anchors
+  [sparker-ft] epoch 1/5  np=+0.000046  marginal=0.0973
+  [sparker-ft] epoch 2/5  np=+0.000500  marginal=0.0590
+  [sparker-ft] epoch 3/5  np=+0.001004  marginal=0.0647
+  [sparker-ft] epoch 4/5  np=+0.000346  marginal=0.0560
+  [sparker-ft] epoch 5/5  np=+0.000259  marginal=0.0526
+  round 1: pool=3908 purity=0.424 k-hat=4 anchors=1  margin=0.6262  mean-anchor=0.5388
+  [sparker-ft] epoch 1/5  np=+0.000434  marginal=0.0496
+  [sparker-ft] epoch 2/5  np=+0.000075  marginal=0.0470
+  [sparker-ft] epoch 3/5  np=+0.000347  marginal=0.0489
+  [sparker-ft] epoch 4/5  np=-0.000179  marginal=0.0453
+  [sparker-ft] epoch 5/5  np=+0.013217  marginal=0.1210
+  round 2: pool=2507 purity=0.103 k-hat=4 anchors=5  margin=0.5870  mean-anchor=0.5143
+    nplm_dist_sup_cw:sparker f=0.01: power=0.100 [0.058,0.162] (5/50)
+    nplm_dist_sup_cw:sparker f=0.02: power=0.120 [0.074,0.184] (6/50)
+    nplm_dist_sup_cw:sparker f=0.03: power=0.060 [0.028,0.115] (3/50)
+  [nplm_dist_sup_cw:sparker] probe 0.8816->0.6909  mahaT=0.5071  perevt=0.098  spk=0.10/0.12/0.06  purity=0.424/0.103
+
+===== EXP98 SUMMARY (fracs 0.01,0.02,0.03) =====
+  arm:ft                     probe post   mahaT  perevt  spk@.02   pur r1/r2
+  nplm_sup_dist:proto            0.9510   0.797   0.616     1.00 0.334/0.092
+  nplm_sup_dist:nplm             0.8396   0.939   0.832     1.00 0.334/0.218
+  nplm_sup_dist:sparker          0.7033   0.493   0.107     0.06 0.334/0.135
+  nplm_dist_sup_cw:proto         0.9788   0.803   0.746     1.00 0.424/0.075
+  nplm_dist_sup_cw:nplm          0.9017   0.923   0.779     1.00 0.424/0.248
+  nplm_dist_sup_cw:sparker       0.6909   0.507   0.098     0.12 0.424/0.103
+EXP98 DONE.
+EXP98 CHAIN DONE

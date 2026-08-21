@@ -38,9 +38,13 @@ class Gaussians + radially displaced novelty), and operationally
 (per-event power 0.20 with no anchors/discovery vs 0.000 for SupCon).
 
 ## Q4. Which Gaussian marginal: none / global / classwise?
-Global SIGReg = default.  Classwise is strictly better IFF anchors are
-realizable (dim >= n_classes, C10); it is harmful for label-free arms
-when anchors are unreachable (C100 at 32-D AND 64-D — cent->anchor ~3.5).
+Global SIGReg = default.  Classwise is strictly better on C10 (dim >=
+n_classes).  RESTATED by exp 88: on C100 the cent->anchor stall (~3.5)
+is an OPTIMIZATION equilibrium, not a realizability limit — it persists
+unchanged at 100/128/200-D across seeds, and cw mahaT declines with dim
+(0.47 -> 0.33).  dim >= n_classes is neither the enabler nor the fix.
+Meanwhile supcon_sigreg at 100-128-D posts mahaT 0.55 + probe 0.91 (3
+seeds) — above the old C100 calibration ceiling from the softmax corner.
 lam is inert early (exp 52); tau is the knob that matters.
 
 ## Q5. Does discovery (cluster + update the space) help, and when?

@@ -530,3 +530,11 @@ WITH discovery -- and round-2 pool purity stops collapsing (0.176-0.346
 vs 0.023-0.065).  The discovery ft update, not discovery itself, was the
 cost.  Fine-grained recipe: freeze the space, discover anchors only
 (`86_frozen_parent_discovery.py`).
+
+**Exp-91 multi-seed (2026-08-21)**: record cells over 3 paired seeds --
+aircraft/visreg concat 0.866+-0.002 (archived 0.8634 was the LOW draw),
+flowers/dino + disc 0.887+-0.019 (0.9061 a high draw; widest pre-concat
+seed spread 0.787-0.885, discovery compensates weak parents), dtd/visreg
++ disc 0.867+-0.004 (seed-2 best 0.8709), galaxy10/lejepa 0.971+-0.004,
+cars/visreg 0.833+-0.017 (exp 75).  No ordering flips; cite with these
+uncertainties.

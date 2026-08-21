@@ -813,3 +813,104 @@ paper's SS5 unification claim needs its caveat stated plainly: the two
 scales share the functional form and the loss, NOT transferable
 learned content -- the representation's class structure is where
 novelty ISN'T.
+
+Exp 97 (`97_sparker_systematics.py`, 2026-08-21; IMPROVEMENT_TESTS #97):
+M x sigma-schedule scan vs intrinsic dimension, cars/dino arms spanning
+TwoNN ID 3/6/12, power@f=0.05 (100 nulls, 25 toys):
+
+  arm (ID)         M4              M16             M64      (ratio 3/10/30)
+  nplm-sup-ft (3)  .24/.28/.24     .32/.36/.32     .36/.32/.36
+  sigreg-ssl (6)   .04/.04/.00     .16/.16/.12     .00/.00/.00
+  supcon-ft (12)   .60/.52/.52     .44/.44/.40     .24/.20/.20
+
+- sigma_ratio is FLAT everywhere (within toy noise): the annealed
+  schedule is genuinely robust in the ratio knob -- the exp-57 lesson
+  was about sigma0 matching and the anneal covers it.  That half of the
+  falsifier fires, and it is worth stating.
+- M is NOT flat, and the direction INVERTS the prediction: the high-ID
+  supcon space wants FEWER kernels (M=4: 0.60 vs M=64: 0.24 -- more
+  kernels overfit the null in high dimension, raising the threshold),
+  while the low-ID nplm-sup space mildly prefers more (0.24 -> 0.36).
+  The default M=16 leaves up to 0.16 power on the table on high-ID
+  spaces.  Practical rule: match M INVERSELY to intrinsic dimension
+  (high-ID -> M=4; low-ID -> M=16-64).
+- sigreg-ssl-ft is killed outright by M=64 (0.00 at every ratio).
+
+Exp 88 (`88_classwise_realizable.py`, 2026-08-20/21; IMPROVEMENT_TESTS
+#88): realizable classwise C100 -- BOTH clauses of the prediction
+falsified, and the control stole the show.  27 runs, dims 100/128/200 x
+{cw, global, softmax} x 3 paired seeds:
+
+  arm      dim  probe mean+-sd   mahaT  cent->anchor
+  cw       100  0.8447+-0.0067   0.468   3.46
+  cw       128  0.8456+-0.0183   0.422   3.47
+  cw       200  0.8676+-0.0084   0.326   3.51
+  global   100-200               0.37-0.39   --
+  softmax  100  0.9125+-0.0135   0.545   --
+  softmax  128  0.9044+-0.0097   0.558   --
+  softmax  200  0.9063+-0.0035   0.506   --
+
+- cent->anchor NEVER collapses: 3.46-3.52 at every dim, identical to
+  the 32-D stall, across all 9 cw runs.  The anchors are unreachable
+  for an OPTIMIZATION reason (the loss equilibrium parks centroids
+  ~3.5 from their targets regardless of geometric feasibility) -- the
+  "more interesting" falsifier branch.  Q4's realizability rule needs
+  restating: dim >= n_classes is neither the enabler nor the fix.
+- cw mahaT does not break the ceiling; it DECLINES with dim (0.468 ->
+  0.326).  The archived 100-D row (0.463) was a fair draw, not a door.
+- UNPREDICTED HEADLINE: the softmax control (supcon_sigreg) at
+  100-128-D posts mahaT 0.545-0.558 (3 seeds, +-0.03) -- ABOVE the
+  ~0.47-0.49 C100 calibration ceiling -- while holding probe 0.90-0.91.
+  The best single-loss C100 both-currencies space on record comes from
+  the CONTROL arm at high dim.
+
+Exp 91 (`91_multiseed_records.sh` via seed-aware exps 70/71/72,
+2026-08-20/21; IMPROVEMENT_TESTS #91): the four uncited records
+multi-seeded (seeds 0=archived, 1, 2; paired protocol of exp-75/cars).
+Citable records with uncertainties:
+
+  cell                      construction              seeds            mean+-sd
+  aircraft/visreg  supcon-ft->res-nplm concat  .8634/.8692/.8651  0.866+-0.002
+  flowers/dino     resnplm-cat + discovery     .9061/.8936/.8598  0.887+-0.019
+  dtd/visreg       res-cat + discovery         .8621/.8682/.8709  0.867+-0.004
+  galaxy10/lejepa  supcon-ft->res concat       .9750/.9648/.9725  0.971+-0.004
+  cars/visreg      (exp 75, 3 seeds)                              0.833+-0.017
+
+- MILDER than the prediction (down 0.01-0.03): aircraft and dtd records
+  were the LOW draws of their triples (seed 2 sets a new dtd best,
+  0.8709), galaxy10 within 0.004.  Only flowers shifts down (-0.019,
+  and its PRE-discovery concat spread is the campaign's widest:
+  0.787-0.885 -- the discovery step compensates weak parents, +0.106 on
+  the weakest seed vs +0.021 on the strongest).
+- No ordering flipped.  All five records are now citable with
+  uncertainties; master tables updated.
+
+Exp 98 (`98_sparker_ft_discovery.py`, 2026-08-21; IMPROVEMENT_TESTS
+#98): SparKer-ft as the discovery fine-tune objective -- FAILS, beyond
+the stated falsifier.  Three fts fresh-paired on both exp-58 arms
+(c10 32-D, identical loop/battery; spk = post power @ f=.01/.02/.03):
+
+  arm:ft                    probe post  mahaT  perevt  spk@.02  pur r1/r2
+  nplm_sup_dist:proto         0.9510    0.797   0.616    1.00   .334/.092
+  nplm_sup_dist:nplm          0.8396    0.939   0.832    1.00   .334/.218
+  nplm_sup_dist:sparker       0.7033    0.493   0.107    0.06   .334/.135
+  nplm_dist_sup_cw:proto      0.9788    0.803   0.746    1.00   .424/.075
+  nplm_dist_sup_cw:nplm       0.9017    0.923   0.779    1.00   .424/.248
+  nplm_dist_sup_cw:sparker    0.6909    0.507   0.098    0.12   .424/.103
+
+- SparKer-ft is worse than BOTH alternatives on every column INCLUDING
+  the event-level statistic it optimizes (post SparKer power ~0.1 vs
+  1.00).  The alternating scheme is statistic-chasing: pseudo-novel
+  points climb the current f surface, class structure smears (only the
+  global SIGReg guard remains), and the refitted kernel then finds less
+  real separation.  Round-2 purity is mid (0.10-0.14) -- the stated
+  falsifier question is moot next to the overall failure.
+- Together with exp 96 (warm-start harmful) this bounds the SS5
+  unification empirically: the NP loss transfers as a FORM across
+  scales, but optimizing representations THROUGH the fitted kernel
+  destroys the separation it measures.  Exp 95 (the same idea at full
+  training scale) is hereby contraindicated in this alternating form --
+  recommend not running it as specified, or redesigning with a
+  class-structure-preserving term before any attempt.
+- The proto/nplm split reproduces exp 58 exactly (probe vs power/purity
+  dissociation) under the lighter battery -- the harness is sound.
