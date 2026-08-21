@@ -108,6 +108,41 @@ def lid_pool_scores(z, is_seen_lab, k=20, max_ref=4000, seed=0):
     return -1.0 / m.clamp_max(-1e-3)
 
 
+def np_pool_scores(z, is_seen_lab, M=16, steps=300, sigma_ratio=10.0,
+                   lr=0.05, max_ref=4000, seed=0):
+    """Neyman-Pearson pool scores (exp-92/93): fit the SparKer NP critic f
+    on (full train corpus z vs seen-labeled reference) and score every
+    point by its estimated log density ratio.  Higher = more novel."""
+    from .sparker import median_pairwise
+    ref = z[torch.as_tensor(is_seen_lab, device=z.device)]
+    if len(ref) > max_ref:
+        g = torch.Generator().manual_seed(seed)
+        ref = ref[torch.randperm(len(ref), generator=g)[:max_ref]
+                  .to(z.device)]
+    torch.manual_seed(seed)
+    w = len(z) / len(ref)
+    sigma0 = median_pairwise(z, seed=seed)
+    sigmaT = sigma0 / sigma_ratio
+    g = torch.Generator().manual_seed(seed)
+    mu = z[torch.randperm(len(z), generator=g)[:M].to(z.device)] \
+        .clone().requires_grad_(True)
+    a = torch.zeros(M, device=z.device, requires_grad=True)
+    opt = torch.optim.Adam([mu, a], lr=lr)
+
+    def f(X, sigma):
+        k = torch.exp(-0.5 * torch.cdist(X, mu).pow(2) / sigma ** 2)
+        p = k / (k.sum(dim=1, keepdim=True) + 1e-12)
+        return ((p * k) @ a).clamp(-20.0, 20.0)
+
+    sigma = sigma0
+    for t in range(1, steps + 1):
+        sigma = sigma0 + (sigmaT - sigma0) * t / steps
+        loss = w * (torch.exp(f(ref, sigma)) - 1).sum() - f(z, sigma).sum()
+        opt.zero_grad(); loss.backward(); opt.step()
+    with torch.no_grad():
+        return f(z, sigma).detach()
+
+
 def run_discovery(backbone, means, *, base_ds, train_eval_loader, test_loader,
                   seen, holdouts, dataset_name, rep_weight, sigreg_weight,
                   n_slices, rounds=2, ft_epochs=5, tau_quantile=0.95,
@@ -130,6 +165,8 @@ def run_discovery(backbone, means, *, base_ds, train_eval_loader, test_loader,
         is_seen_lab = np.isin(tr_lab, seen)
         if pool_score == "lid":
             s = lid_pool_scores(z, is_seen_lab, seed=seed + r)
+        elif pool_score == "np":
+            s = np_pool_scores(z, is_seen_lab, seed=seed + r)
         else:
             s = torch.cdist(z, anchor_mat).min(1).values
         tau = torch.quantile(s[torch.as_tensor(is_seen_lab, device=DEVICE)],

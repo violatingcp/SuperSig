@@ -33,12 +33,14 @@ def median_pairwise(X, n=1024, seed=0):
 
 
 def np_test_stats(D, R, M=16, steps=300, sigma0=None, sigma_ratio=10.0,
-                  n_checkpoints=3, lr=0.05, seed=0):
+                  n_checkpoints=3, lr=0.05, seed=0, mu_init=None):
     """
     Train the kernel ensemble on the NP loss for one data-vs-reference pair.
 
     D: (N_D, dim) data sample (may contain anomalies), torch tensor on DEVICE.
     R: (N_R, dim) anomaly-free reference, torch tensor on DEVICE.
+    mu_init: optional (M', dim) tensor overriding the data-sample centre
+    init (exp-96 warm start from trained anchors); M is then ignored.
     Returns the list of t_NP values at `n_checkpoints` sigma checkpoints.
     """
     torch.manual_seed(seed)
@@ -46,9 +48,14 @@ def np_test_stats(D, R, M=16, steps=300, sigma0=None, sigma_ratio=10.0,
     if sigma0 is None:
         sigma0 = median_pairwise(D, seed=seed)
     sigmaT = sigma0 / sigma_ratio
-    g = torch.Generator().manual_seed(seed)
-    mu = D[torch.randperm(len(D), generator=g)[:M].to(D.device)] \
-        .clone().requires_grad_(True)
+    if mu_init is not None:
+        mu = mu_init.detach().clone().to(D.device).float() \
+            .requires_grad_(True)
+        M = mu.size(0)
+    else:
+        g = torch.Generator().manual_seed(seed)
+        mu = D[torch.randperm(len(D), generator=g)[:M].to(D.device)] \
+            .clone().requires_grad_(True)
     a = torch.zeros(M, device=D.device, requires_grad=True)
     opt = torch.optim.Adam([mu, a], lr=lr)
 
