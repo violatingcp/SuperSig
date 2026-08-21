@@ -717,3 +717,23 @@ recipe/seed:
   the ft erosion); left as the 92+86 follow-up.
 - Flowers probe 0.9015 vs the 0.9061 record tie: parity within seed
   noise, as predicted for the works-cell.
+
+Exp 94 (`94_null_validity.py`, 2026-08-20; IMPROVEMENT_TESTS #94): null
+validity under novelty-seeking fine-tunes -- FALSIFIER FIRED, and that
+is the good outcome.  Realized FPR at nominal alpha=0.05 (null from
+TEST-set background untouched by any ft; FPR on the corpus the
+discovery ft optimized; Clopper-Pearson 68%):
+
+  cell          frozen           ft-full          ft-split
+  flowers/dino  0.000 [0,.018]   0.000 [0,.018]   0.000 [0,.018]
+  cars/dino     0.040 [.021,.07] 0.040 [.021,.07] 0.060 [.037,.094]
+
+The discovery ft cannot manufacture false positives at campaign sample
+sizes: FPR is at or below nominal in every regime.  Flowers is
+conservative at baseline (even the frozen champion was supcon-ft'd on
+the train corpus, compressing its background); cars is the calibrated
+witness (0.040 frozen) and stays nominal after ft-full.  Verdict: the
+current protocol's nulls are VALID, split-disjointness is not required
+at these sizes, and exp 95 (SparKer as a training loss) is formally
+cleared -- with the caveat that exp-95's stronger, directly-adversarial
+objective should still rerun this check on its own trained encoder.
