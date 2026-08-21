@@ -813,3 +813,25 @@ paper's SS5 unification claim needs its caveat stated plainly: the two
 scales share the functional form and the loss, NOT transferable
 learned content -- the representation's class structure is where
 novelty ISN'T.
+
+Exp 97 (`97_sparker_systematics.py`, 2026-08-21; IMPROVEMENT_TESTS #97):
+M x sigma-schedule scan vs intrinsic dimension, cars/dino arms spanning
+TwoNN ID 3/6/12, power@f=0.05 (100 nulls, 25 toys):
+
+  arm (ID)         M4              M16             M64      (ratio 3/10/30)
+  nplm-sup-ft (3)  .24/.28/.24     .32/.36/.32     .36/.32/.36
+  sigreg-ssl (6)   .04/.04/.00     .16/.16/.12     .00/.00/.00
+  supcon-ft (12)   .60/.52/.52     .44/.44/.40     .24/.20/.20
+
+- sigma_ratio is FLAT everywhere (within toy noise): the annealed
+  schedule is genuinely robust in the ratio knob -- the exp-57 lesson
+  was about sigma0 matching and the anneal covers it.  That half of the
+  falsifier fires, and it is worth stating.
+- M is NOT flat, and the direction INVERTS the prediction: the high-ID
+  supcon space wants FEWER kernels (M=4: 0.60 vs M=64: 0.24 -- more
+  kernels overfit the null in high dimension, raising the threshold),
+  while the low-ID nplm-sup space mildly prefers more (0.24 -> 0.36).
+  The default M=16 leaves up to 0.16 power on the table on high-ID
+  spaces.  Practical rule: match M INVERSELY to intrinsic dimension
+  (high-ID -> M=4; low-ID -> M=16-64).
+- sigreg-ssl-ft is killed outright by M=64 (0.00 at every ratio).
