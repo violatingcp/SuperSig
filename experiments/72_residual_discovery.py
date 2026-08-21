@@ -288,7 +288,7 @@ def main():
     plt.legend()
     plt.grid(alpha=0.25, axis="y")
     plt.tight_layout()
-    out = plot_path("exp72_residual_discovery.png")
+    out = plot_path(f"exp72_residual_discovery{args.ckpt_sfx}.png")
     plt.savefig(out, dpi=150); plt.close()
     print("saved", out)
 
