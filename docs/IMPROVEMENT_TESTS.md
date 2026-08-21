@@ -40,11 +40,16 @@ a machine with the deps; verify with
 | 93 | NP score as pool scorer | **FALSIFIED as stated** — lid > np on flowers by 0.03–0.06 (finite-sample, the named falsifier); np *best* below the gate (cars r1 0.214) |
 | 94 | null validity under novelty-seeking ft | **FALSIFIER FIRED = good outcome** — FPR at or below nominal everywhere; nulls valid, split-disjointness not needed, exp 95 cleared |
 | 96 | does the pairwise critic warm-start the test? | **FALSIFIED, strong form** — warm start neutral-to-harmful (0.800→0.560 at 50 steps); class structure is where novelty *isn't* |
+| 88 | classwise SIGReg where anchors are realizable | **BOTH CLAUSES FALSIFIED** — cent→anchor stalls at 3.46–3.51 at *every* dim; the control (supcon\_sigreg) broke the C100 mahaT ceiling instead (0.545–0.558) |
+| 91 | multi-seed the uncited records | **done** — all five citable; shift milder than predicted and not all downward; no ordering flips |
+| 97 | SparKer M × σ-schedule vs intrinsic dim | **HALF-CONFIRMED, HALF-INVERTED** — σ-ratio flat (anneal is robust); M must be matched *inversely* to ID |
+| 98 | SparKer-ft as the discovery ft objective | **FAILS beyond its falsifier** — worse on every column *including* the statistic it optimizes; contraindicates exp 95 |
 | 99 | SparKer discovery reach `f95` | **done** — and mostly *unresolvable* on the current fraction grid (see exp 100) |
-| 88, 91 | classwise-realizable C100; multi-seed records | in flight |
-| 83–85, 89, 95, 97, 98, 100–103 | — | **not started** |
 
-Six of eleven predictions were falsified.  That is the intended hit rate: the
+| 83–85, 89, 100–104 | — | scripted or specified, **not run** |
+| 95 | SparKer as a training loss | **CONTRAINDICATED** by exp 98 — do not run as specified |
+
+Nine of fifteen predictions were falsified.  That is the intended hit rate: the
 entries below are written to be wrong in a specific way, and two of them
 (82, 87) taught us more by failing than they would have by passing.  Where a
 result changed the motivation for a pending test, the entry has been rewritten
@@ -276,6 +281,8 @@ half is lower-SNR).  Cheap enough to be worth the risk.
 
 ### Exp 88 — Classwise SIGReg where the anchors are actually realizable
 
+> **DONE 2026-08-21 — BOTH CLAUSES FALSIFIED, and the control stole the show.**  cent->anchor NEVER collapses: 3.46/3.47/3.51 at 100/128/200-D, identical to the 32-D stall, across all nine runs.  The anchors are unreachable for an OPTIMIZATION reason (the equilibrium parks centroids ~3.5 out regardless of feasibility) -- the falsifier branch this entry called 'more interesting'.  Classwise mahaT DECLINES with dim (0.468 -> 0.326), so the archived 100-D 0.463 was a fair draw, not a door.  UNPREDICTED: the softmax control (supcon_sigreg) posts mahaT 0.545-0.558 at 100-128-D while holding probe 0.90-0.91 -- ABOVE the 0.47-0.49 C100 ceiling.  Q4 restated in the paper: dimension is neither the enabler nor the fix.
+
 **Motivation.**  `QUESTIONS.md` Q4: classwise SIGReg is strictly better iff
 anchors are realizable (`dim ≥ n_classes`), and harmful otherwise — 100 anchors
 in 32-D or 64-D stall at cent→anchor ≈3.5.  The boundary case *has* been run
@@ -356,6 +363,8 @@ that honestly; the regime rule stays empirical.
 here — it converts a caveat into a method.
 
 ### Exp 91 — Multi-seed the uncited records
+
+> **DONE 2026-08-21 — done, and milder than predicted.**  aircraft 0.866+-0.002, galaxy10 0.971+-0.004, dtd 0.867+-0.004, flowers 0.887+-0.019, cars 0.833+-0.017.  The archived aircraft and dtd numbers were the LOW draws (seed 2 sets a new dtd best); only flowers falls materially, and its pre-discovery spread 0.787-0.885 is the campaign's widest -- discovery compensates weak parents (+0.106 on the weakest seed vs +0.021 on the strongest), so part of its apparent benefit is variance reduction.  NO ordering flipped; all records now citable.
 
 **Motivation.**  Protocol debt.  Exp 75 multi-seeded cars/visreg and CIFAR and
 found one objective ranking **flipped** under averaging (C100 plain-res vs
@@ -483,6 +492,8 @@ insurance either way; **run this before exp 95, not after.**
 
 ### Exp 95 — SparKer as a differentiable training objective  *(speculative)*
 
+> **CONTRAINDICATED 2026-08-21 by exp 98.**  The alternating scheme was tested at discovery-ft scale and failed on every column including the statistic it optimizes.  Do not run as specified; a redesign would need an explicit class-structure-preserving term.
+
 **Motivation.**  The big swing.  If `t_NP` is the quantity we ultimately care
 about, optimize it directly: make `z` trainable inside the SparKer fit and
 maximize the detection statistic end to end, instead of training a proxy
@@ -537,6 +548,8 @@ be said plainly in §5.
 
 ### Exp 97 — M and the bandwidth schedule versus intrinsic dimension
 
+> **DONE 2026-08-21 — half confirmed, half INVERTED.**  sigma_ratio is flat within toy noise everywhere: the anneal is genuinely robust and the exp-57 lesson was about sigma0 matching.  M is not flat and moves OPPOSITE to the prediction -- high-ID supcon (ID~12) wants FEWER kernels (0.60 at M=4 vs 0.24 at M=64; more kernels overfit the null in high dimension), low-ID nplm-sup (ID~3) mildly prefers more.  Default M=16 leaves up to 0.16 power on the table.  Rule: match M INVERSELY to intrinsic dimension.
+
 **Motivation.**  Protocol debt for the new loss.  `M=16` kernels and a fixed
 σ0→σ0/10 anneal have never been scanned, yet exp 77 measured intrinsic
 dimensions spanning 2–13 across the arms, and a kernel model's resolution
@@ -560,6 +573,8 @@ able to state.
 **Cost.**  ~27 battery runs on cached embeddings, no training.
 
 ### Exp 98 — SparKer-ft as the discovery fine-tune objective
+
+> **DONE 2026-08-21 — FAILS, beyond the stated falsifier.**  SparKer-ft is worse than both proto and NPLM ft on EVERY column including the event-level statistic it optimizes (post SparKer power ~0.1 vs 1.00).  Statistic-chasing: pseudo-novel points climb the current f surface, class structure smears, and the refitted kernel finds less real separation.  With exp 96 this bounds the paper's section-5 claim in both directions -- the NP loss transfers as a FORM, but neither its parameters nor its optimization transfer.
 
 **Motivation.**  Exp 58 established the ft-objective split: proto/repulse wins
 the probe, NPLM+sigreg wins every power statistic.  SparKer-ft is the missing
@@ -779,11 +794,7 @@ Remaining, in the order we would run them:
    fine-grained fix, and the paper's framing changes again.
 7. **Exp 84, 85** (two-stage, iterated residuals) — moderate cost,
    record-chasing.
-8. **Exp 97, 98** (SparKer M/sigma systematics; SparKer-ft as the discovery
-   ft objective) — 97 is already scripted.
-9. **Exp 95** (SparKer as a training loss) — the big swing; formally cleared
-   by exp 94, but should rerun the null check on its own trained encoder.
-10. **Exp 89** (C100 discovery-rate unblocking) — protocol debt.
+8. **Exp 89** (C100 discovery-rate unblocking) — protocol debt.
 
 Standing item, not an experiment: `tests/test_calibration.py` has never been
 executed.  It encodes the identities several of the above depend on.
