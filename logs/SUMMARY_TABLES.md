@@ -1062,3 +1062,26 @@ from discovered anchors:
 - "Choose by consumer" survives but flips axis: the choice is now by
   NOVELTY GEOMETRY (on-manifold -> frozen anchors; outlying -> ft),
   not by readout.
+
+Exp 83 (`83_variance_reduced_nplm.py`, 2026-08-21; IMPROVEMENT_TESTS
+#83): variance-reduced NPLM -- FALSIFIED, and the watched falsifier
+fired too.  C100 32-D, 5 paired seeds (refs = exp-81 archived):
+
+  arm             probe mean+-sd    perevt  |resid|
+  bil+clamp(ref)  0.8914+-0.0320    0.042   1.77
+  bil-norm        0.7808+-0.0401    0.024   0.11
+  dist-bias       0.7761+-0.0249    0.006   0.12
+  dist-bias-norm  0.8187+-0.0175    0.008   0.03
+
+- No variant cuts sd >=2x at equal-or-better mean: bil-norm RAISES sd
+  and drops the mean -0.11; dist-bias-norm halves sd (0.018) but costs
+  -0.072 mean and kills per-event (0.008 vs 0.042) -- the watched
+  falsifier (variance drops WITH the absolute scale).
+- The deeper negative, paired with exp 82: the fixes genuinely ACHIEVE
+  calibration (dist-bias-norm |E_ref[e^g]-1| = 0.03 vs the clamp arm's
+  1.77) and it buys NOTHING -- neither probe, nor variance, nor
+  per-event.  Calibration-in-the-residual-sense is neither the variance
+  problem (exp 82) nor the performance lever (exp 83).  The bilinear
+  clamp's "miscalibration" is where its probe performance LIVES.
+- bil+clamp stands as the best label-free NPLM arm; the exp-81 rule
+  (accept the variance or use dist-sup) is the final word on this line.
