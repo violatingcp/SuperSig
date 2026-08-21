@@ -884,3 +884,33 @@ Citable records with uncertainties:
   the weakest seed vs +0.021 on the strongest).
 - No ordering flipped.  All five records are now citable with
   uncertainties; master tables updated.
+
+Exp 98 (`98_sparker_ft_discovery.py`, 2026-08-21; IMPROVEMENT_TESTS
+#98): SparKer-ft as the discovery fine-tune objective -- FAILS, beyond
+the stated falsifier.  Three fts fresh-paired on both exp-58 arms
+(c10 32-D, identical loop/battery; spk = post power @ f=.01/.02/.03):
+
+  arm:ft                    probe post  mahaT  perevt  spk@.02  pur r1/r2
+  nplm_sup_dist:proto         0.9510    0.797   0.616    1.00   .334/.092
+  nplm_sup_dist:nplm          0.8396    0.939   0.832    1.00   .334/.218
+  nplm_sup_dist:sparker       0.7033    0.493   0.107    0.06   .334/.135
+  nplm_dist_sup_cw:proto      0.9788    0.803   0.746    1.00   .424/.075
+  nplm_dist_sup_cw:nplm       0.9017    0.923   0.779    1.00   .424/.248
+  nplm_dist_sup_cw:sparker    0.6909    0.507   0.098    0.12   .424/.103
+
+- SparKer-ft is worse than BOTH alternatives on every column INCLUDING
+  the event-level statistic it optimizes (post SparKer power ~0.1 vs
+  1.00).  The alternating scheme is statistic-chasing: pseudo-novel
+  points climb the current f surface, class structure smears (only the
+  global SIGReg guard remains), and the refitted kernel then finds less
+  real separation.  Round-2 purity is mid (0.10-0.14) -- the stated
+  falsifier question is moot next to the overall failure.
+- Together with exp 96 (warm-start harmful) this bounds the SS5
+  unification empirically: the NP loss transfers as a FORM across
+  scales, but optimizing representations THROUGH the fitted kernel
+  destroys the separation it measures.  Exp 95 (the same idea at full
+  training scale) is hereby contraindicated in this alternating form --
+  recommend not running it as specified, or redesigning with a
+  class-structure-preserving term before any attempt.
+- The proto/nplm split reproduces exp 58 exactly (probe vs power/purity
+  dissociation) under the lighter battery -- the harness is sound.
