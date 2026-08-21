@@ -608,3 +608,29 @@ gap in 12/17 cells, incl. cifar100 resnplm-cat +0.382 (LID 0.738 vs eucl
 0.356 -- LID is the only usable novelty score in that space) and
 galaxy10/lejepa +0.273; aircraft stays firmly a distance regime
 (-0.11 to -0.20).  Evaluation-only, no training.
+
+Exp 80 (`80_sparker_all_spaces.py`, 2026-08-20): SparKer pre-discovery
+coverage closed -- 106 spaces that never had power batteries (aircraft
+e2e cells were --skip-power; exps 71/73 never ran them), exp-70 protocol
+exactly (annealed sigma, M=16, n_null=200, 50 toys), all from cached
+banks.  Full grids logs/exp80/results_*.npz.  Verdicts:
+
+- The res-nplm RESIDUAL CHILD is the best dataset-level detector in the
+  fine-grained visreg/dino cells, beating its own supcon parent:
+  aircraft/visreg 0.82@f=0.05 (parent 0.44), cars/visreg 0.96@0.05
+  (child alone), cars/dino 0.80@0.05.  The calibrated residual half
+  carries real SparKer power that the probe/eucl columns never showed.
+- Concats preserve or improve the parent's power (aircraft/visreg
+  res-cat 1.00@0.1, galaxy10/visreg resnplm-cat 1.00@0.05, 0.46@0.02)
+  -- concatenation costs nothing at the dataset level either.
+- Base rule: lejepa residual children are systematically weak (cars/
+  lejepa res + resnplm 0.12-0.14@0.1 vs visreg 1.00) -- matches the
+  exp-77 finding that lejepa parents leave the most residual drift.
+- Flowers is SparKer-weak in every residual space (best 0.94@0.1,
+  most <=0.4@0.1): the on-manifold novelty that LID detects per-event
+  is nearly invisible to dataset-level kernel tests.  Score-regime and
+  statistic-regime coincide.
+- CIFAR: c10 supcon parent keeps the best curve (0.50@0.01, 0.98@0.02);
+  resnplm-cat is the only construction close (0.34/0.92); plain
+  res-cat and bare children are weak below f=0.1.  c100 all spaces flat
+  to 0.02 (<=0.30) then saturate at 0.05 -- the injection clamp regime.
