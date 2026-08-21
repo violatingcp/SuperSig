@@ -1014,3 +1014,28 @@ samples/class in 100-D) and should be read qualitatively only.
   supcon c100 r_llr = 0.27 -- the proto-posterior reading is weakest
   exactly where mahaT is weakest.  Interpretability and class count
   trade off.
+
+Exp 102 (`102_child_standalone.py`, 2026-08-21; IMPROVEMENT_TESTS
+#102): is the residual child a standalone detector?  YES on the
+visreg/dino fine-grained cells -- and cheaper than predicted:
+
+  cell             probe(child/concat)  f95(child/concat)  perevt  agree1
+  aircraft:visreg  0.858 / 0.863        0.063 / 0.072      0.411   0.53
+  cars:visreg      0.836 / 0.855        0.049 / 0.063      0.256   0.44
+  cars:dino        0.787 / 0.821        0.063 / 0.079      0.143   0.43
+  aircraft:dino    0.811 / 0.816        0.085*/ >0.1       0.267   0.48
+  dtd (all)        0.80-0.82            >0.1 / 0.079-0.087   --      --
+  lejepa children  weak everywhere (cars:lejepa probe 0.63, f95 >0.1)
+
+- On the visreg/dino fine-grained cells the child ALONE beats the
+  concat's reach (cars:visreg f95 0.049 = best transfer reach measured
+  anywhere) at a probe cost of only 0.005-0.034 -- NOT the "large probe
+  cost" predicted -- and its semantics are legible (agree@1 0.43-0.53
+  vs ~0.04 chance), NOT scrambled: the exp-76 scrambling result was
+  about PLAIN-res residuals; the res-nplm children keep class structure.
+- The falsifier fires on dtd: children standalone never cross 0.95
+  while their concats bracket ~0.08 -- there the concat does the work.
+  Same on flowers/galaxy10-dino (no standalone reach).
+- Deployment rule: on fine-grained visreg/dino cells a detection
+  pipeline can drop the parent (half the embedding, better reach,
+  ~0.02 probe cost); elsewhere keep the concat.
