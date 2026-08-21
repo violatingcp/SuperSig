@@ -691,3 +691,29 @@ predicted.  Three variants per champion cell, exact exp-72 recipe/seed:
   frozen (anchors only).  Discovery is then strictly non-negative: the
   aircraft record 0.8634 is retained WITH per-event 0.523.  "Choose by
   consumer" collapses to one recipe there.
+
+Exp 92 (`92_sparker_discovery.py`, 2026-08-20; IMPROVEMENT_TESTS #92):
+SparKer density-ratio centres replace the discovery clustering (quantile
+pool -> BIC k-means -> merge), A/B vs run_discovery at identical
+recipe/seed:
+
+  cell             variant   pur r1   pur r2   probe post   mahaT post
+  cars/dino        dist/spk  0.161/0.214  0.059/0.212  0.8205/0.8291  0.5430/0.5423
+  aircraft/visreg  dist/spk  0.525/0.591  0.065/0.620  0.8511/0.8397  0.7823/0.7472
+  flowers/dino     dist/spk  0.609/0.618  0.240/0.610  0.9061/0.9015  0.8525/0.8386
+
+- PARTIALLY CONFIRMED.  Cars purity rises (r1 0.161 -> 0.214, +33%
+  rel.) as the mechanism predicts -- density ratio sees what distance
+  misses -- but stays below the ~0.3 gate: a real improvement, not the
+  full rescue.
+- The UNPREDICTED headline: SparKer pooling makes round-2 purity
+  immune to the space-inflation collapse in every cell (0.21-0.62 vs
+  0.06-0.24) -- like LID (exp 79) but via density ratio, and it also
+  proposes the anchors.  Round-2 pool sizes stay full (790 vs 321 on
+  aircraft).
+- Cost: the bigger, purer pools feed MORE discovery-ft pressure -- the
+  aircraft probe cost worsens (-0.024 vs -0.012).  The obvious
+  combination is exp-92 pooling + exp-86 frozen space (purity without
+  the ft erosion); left as the 92+86 follow-up.
+- Flowers probe 0.9015 vs the 0.9061 record tie: parity within seed
+  noise, as predicted for the works-cell.
