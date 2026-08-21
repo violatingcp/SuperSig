@@ -781,3 +781,19 @@ the regime that matters:
 - Probes unmoved everywhere (above-gate lesson of exp 79 stands).
 - Operational rule: lid for on-manifold cells, np below the gate --
   and per exp-92b, run either in a FROZEN space.
+
+Exp 99 (`99_discovery_reach.py`, 2026-08-21; from the paper branch):
+f95 discovery reach -- every archived SparKer power curve inverted into
+the signal fraction at which power crosses 0.95 (log-f interpolation,
+honest flags for top-bracket/non-monotone/never).  575 series, 231
+(40%) cross inside the measured grid; refreshed over the full current
+archive incl. exp-80.  Headlines:
+- Best reach anywhere: f95 = 0.019 -- a five-way tie among the c10
+  post-discovery/hybrid spaces (exp 33/36/58/59) AND the plain exp-80
+  c10 supcon pre space; resnplm-cat pre reaches 0.023.
+- Best transfer reach: galaxy10/visreg resnplm-cat 0.046 and
+  cars/visreg resnplm CHILD 0.049 -- the exp-80 finding again: the
+  calibrated residual construction owns dataset-level sensitivity off
+  CIFAR.
+- 60% of series never cross 0.95 in-grid; the ">" rows quantify how far
+  the weak spaces are from usable reach.
