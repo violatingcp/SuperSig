@@ -835,3 +835,31 @@ TwoNN ID 3/6/12, power@f=0.05 (100 nulls, 25 toys):
   spaces.  Practical rule: match M INVERSELY to intrinsic dimension
   (high-ID -> M=4; low-ID -> M=16-64).
 - sigreg-ssl-ft is killed outright by M=64 (0.00 at every ratio).
+
+Exp 88 (`88_classwise_realizable.py`, 2026-08-20/21; IMPROVEMENT_TESTS
+#88): realizable classwise C100 -- BOTH clauses of the prediction
+falsified, and the control stole the show.  27 runs, dims 100/128/200 x
+{cw, global, softmax} x 3 paired seeds:
+
+  arm      dim  probe mean+-sd   mahaT  cent->anchor
+  cw       100  0.8447+-0.0067   0.468   3.46
+  cw       128  0.8456+-0.0183   0.422   3.47
+  cw       200  0.8676+-0.0084   0.326   3.51
+  global   100-200               0.37-0.39   --
+  softmax  100  0.9125+-0.0135   0.545   --
+  softmax  128  0.9044+-0.0097   0.558   --
+  softmax  200  0.9063+-0.0035   0.506   --
+
+- cent->anchor NEVER collapses: 3.46-3.52 at every dim, identical to
+  the 32-D stall, across all 9 cw runs.  The anchors are unreachable
+  for an OPTIMIZATION reason (the loss equilibrium parks centroids
+  ~3.5 from their targets regardless of geometric feasibility) -- the
+  "more interesting" falsifier branch.  Q4's realizability rule needs
+  restating: dim >= n_classes is neither the enabler nor the fix.
+- cw mahaT does not break the ceiling; it DECLINES with dim (0.468 ->
+  0.326).  The archived 100-D row (0.463) was a fair draw, not a door.
+- UNPREDICTED HEADLINE: the softmax control (supcon_sigreg) at
+  100-128-D posts mahaT 0.545-0.558 (3 seeds, +-0.03) -- ABOVE the
+  ~0.47-0.49 C100 calibration ceiling -- while holding probe 0.90-0.91.
+  The best single-loss C100 both-currencies space on record comes from
+  the CONTROL arm at high dim.
