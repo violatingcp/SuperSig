@@ -1215,3 +1215,26 @@ but LID is NOT demoted.  17 cells (champion concats + CIFAR records):
   information is doing real work exactly where the on-manifold story
   lives.  Battery: ADD comp, KEEP lid; ens-lid remains the default
   ensemble.
+
+Exp 108 (`108_regime_predictor2.py`, 2026-08-23; IMPROVEMENT_TESTS
+#108): on-manifold predictor, second attempt -- PREDICTION MET by the
+mechanism feature.  17 cells, response = LID-eucl AUC gap, label-free
+features from the exp-103 mechanism:
+
+  feature    Spearman   best sign acc      (base rate 11/17;
+  comp_gap   -0.16      11/17               exp-90 generic best 12/17)
+  rr_disp    +0.37      15/17   <-- meets the pre-registered >=15/17
+  ratio      -0.14      12/17
+
+- The winning feature is exactly the mechanism quantity: the
+  dispersion of the within-modal-class mean log radial ratio (what LID
+  inverts).  The composition gap alone -- despite being exp-103's
+  loudest AUC -- carries NO regime signal (base rate), consistent with
+  exp 107: composition detects, radial ratios REGIME-select.
+- Caveats stated up front: best-threshold accuracy is in-sample on the
+  same 17 points as exp 90, and Spearman 0.37 says the relation is
+  threshold-like, not monotone.  Fit for the paper as "the regime is
+  label-free identifiable"; NOT fit as a plug-in predictor without an
+  18th cell.
+- The pre-committed stopping rule does not trigger; the line closes
+  SUCCESSFULLY and no third attempt is licensed or needed.
