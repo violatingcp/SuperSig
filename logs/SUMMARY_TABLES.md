@@ -1238,3 +1238,32 @@ features from the exp-103 mechanism:
   18th cell.
 - The pre-committed stopping rule does not trigger; the line closes
   SUCCESSFULLY and no third attempt is licensed or needed.
+
+Exp 111 (`111_child_deployment.py`, 2026-08-23; IMPROVEMENT_TESTS
+#111): child-only deployment -- PREDICTION HOLDS; the split is
+deployable.  Three qualifying cells (exp-102 clean-reach + legible):
+
+  cell             perevt ch/cat   f95 ch/cat     top1-overlap par/ch
+  cars:visreg      0.256 / 0.263   0.049 / 0.063  0.734 / 0.615
+  aircraft:visreg  0.411 / 0.363   0.063 / 0.072  0.818 / 0.737
+  cars:dino        0.143 / 0.148   0.063 / 0.079  0.852 / 0.689
+
+- Detection: child-only matches the concat within 0.005-0.007 on the
+  cars cells and STRICTLY BEATS it on aircraft:visreg (+0.048
+  per-event), with better f95 reach on all three -- at HALF the
+  embedding width (100 vs 200-D per event; the parent is only
+  embedded for the ~5% flagged).
+- Explanation (the falsifier readout): parent-only top-5 explanations
+  overlap the concat's at 0.73-0.85 top-1 / 0.73-0.81 Jaccard, and the
+  parent is ALWAYS closer to the concat than the child is (0.62-0.74)
+  -- removing the parent from the SCORED space does not change what
+  the analyst is told.  Falsifier does not fire.
+- Protocol limit found: absolute superclass agreement is nearly
+  unmeasurable under alphabetical holdouts (n_scorable 0-15 of 61-137
+  flagged; cars holdouts 186-195 remove entire makes from the seen
+  set).  The exp-102 agree1~0.44 numbers measure seen-centroid
+  neighbour structure, not novel-event explanations.  A rotated
+  holdout draw is the fix if absolute agreement is ever needed.
+- Deployment recipe (citable): embed the res-nplm child for every
+  event, flag at the 0.95 background quantile, embed the parent only
+  for flagged events and explain by its nearest seen centroids.
