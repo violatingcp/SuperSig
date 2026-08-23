@@ -1,0 +1,3249 @@
+----- exp84 stage1 aircraft:dino nplm-sup-ft (seen-only) -----
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+exp70 [aircraft_dino_ft70] end-to-end ft suite, arms=['nplm-sup-ft'], ft_epochs=20, emb=100, holdouts 90-99 EXCLUDED from ft
+  ft corpus: 6000/6667 train images (holdout classes removed)
+
+===== [nplm-sup-ft] (supervised) =====
+  [nplm-sup-ft] epoch 1/20  main=-0.1916  aux=0.7798
+  [nplm-sup-ft] epoch 5/20  main=-0.4054  aux=0.7335
+  [nplm-sup-ft] epoch 10/20  main=-0.4313  aux=0.7167
+  [nplm-sup-ft] epoch 15/20  main=-0.4647  aux=0.7145
+  [nplm-sup-ft] epoch 20/20  main=-0.4751  aux=0.7107
+  extracted ft70_nplm-sup-ft train: (6667, 768)
+  extracted ft70_nplm-sup-ft test: (3333, 768)
+  [nplm-sup-ft   ] probe=0.7378+-0.0053 acc=0.1403 supAUC=0.9096 eucl=0.5752 mahaT=0.5657 mahaPC=0.5605 lid=0.4677
+
+===== PRE table =====
+  arm                        probe     acc  supAUC    eucl   mahaT  mahaPC
+  nplm-sup-ft        0.7378+-0.0053  0.1403  0.9096  0.5752  0.5657  0.5605
+
+===== gaussianity (seen classes, test set) =====
+  metric                       nplm-sup-ft
+  eig min (class cov)               -0.000
+  eig max (class cov)                0.821
+  eig cond worst            820792852480.0
+  class RMS min                      0.048
+  class RMS mean                     0.068
+  class RMS max                      0.095
+  max |corr| (worst class)           1.000
+  SW ratio mean                       2.20
+  SW ratio worst                     11.41
+  |skew| mean                        0.687
+  |ex-kurt| mean                     1.123
+  centroid dist min                   0.02
+  centroid dist mean                  2.15
+  separation (min d/RMS)              0.33
+
+===== EXP70 SUMMARY [aircraft_dino_ft70] =====
+  [nplm-sup-ft   ] probe=0.7378+-0.0053 acc=0.1403 eucl=0.5752 mahaT=0.5657
+saved /home/pharris/sigreg/SuperSig/plots/exp70_probe_aircraft_dino_ft70.png
+Done.
+----- exp84 stage2 aircraft:dino 8-arm head suite -----
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+exp51 [aircraft_dino_nplm-sup-ft_seen] NPLM suite, dim=32, epochs=120, holdouts=[90, 91, 92, 93, 94, 95, 96, 97, 98, 99], lam=1.0, arms=['simclr', 'lejepa', 'simclr_sigreg', 'supcon', 'supcon_sigreg', 'nplm_bilinear', 'nplm_distance', 'nplm_sup_dist']
+  loading ft trunk /home/pharris/sigreg/SuperSig/checkpoints/aircraft_ft_dino_nplm-sup-ft_seen.pt
+  extracted aircraft_dino_vitb16_nplm-sup-ft_seen train: (6667, 768)
+  extracted aircraft_dino_vitb16_nplm-sup-ft_seen test: (3333, 768)
+  aircraft_dino_vitb16_nplm-sup-ft_seen aug replica 1/8
+  aircraft_dino_vitb16_nplm-sup-ft_seen aug replica 2/8
+  aircraft_dino_vitb16_nplm-sup-ft_seen aug replica 3/8
+  aircraft_dino_vitb16_nplm-sup-ft_seen aug replica 4/8
+  aircraft_dino_vitb16_nplm-sup-ft_seen aug replica 5/8
+  aircraft_dino_vitb16_nplm-sup-ft_seen aug replica 6/8
+  aircraft_dino_vitb16_nplm-sup-ft_seen aug replica 7/8
+  aircraft_dino_vitb16_nplm-sup-ft_seen aug replica 8/8
+  train pool 6667 (seen bank 6000), test pool 3333 (333 holdout)
+
+----- simclr (augmentations only) -----
+  [simclr] epoch 1/120  loss=5.9562
+  [simclr] epoch 2/120  loss=5.5562
+  [simclr] epoch 3/120  loss=5.4178
+  [simclr] epoch 4/120  loss=5.3603
+  [simclr] epoch 5/120  loss=5.3222
+  [simclr] epoch 6/120  loss=5.2963
+  [simclr] epoch 7/120  loss=5.2770
+  [simclr] epoch 8/120  loss=5.2663
+  [simclr] epoch 9/120  loss=5.2614
+  [simclr] epoch 10/120  loss=5.2547
+  [simclr] epoch 11/120  loss=5.2379
+  [simclr] epoch 12/120  loss=5.2309
+  [simclr] epoch 13/120  loss=5.2256
+  [simclr] epoch 14/120  loss=5.2181
+  [simclr] epoch 15/120  loss=5.2175
+  [simclr] epoch 16/120  loss=5.2104
+  [simclr] epoch 17/120  loss=5.2086
+  [simclr] epoch 18/120  loss=5.2018
+  [simclr] epoch 19/120  loss=5.2005
+  [simclr] epoch 20/120  loss=5.1962
+  [simclr] epoch 21/120  loss=5.1920
+  [simclr] epoch 22/120  loss=5.1913
+  [simclr] epoch 23/120  loss=5.1886
+  [simclr] epoch 24/120  loss=5.1856
+  [simclr] epoch 25/120  loss=5.1834
+  [simclr] epoch 26/120  loss=5.1820
+  [simclr] epoch 27/120  loss=5.1744
+  [simclr] epoch 28/120  loss=5.1742
+  [simclr] epoch 29/120  loss=5.1682
+  [simclr] epoch 30/120  loss=5.1650
+  [simclr] epoch 31/120  loss=5.1661
+  [simclr] epoch 32/120  loss=5.1617
+  [simclr] epoch 33/120  loss=5.1606
+  [simclr] epoch 34/120  loss=5.1556
+  [simclr] epoch 35/120  loss=5.1591
+  [simclr] epoch 36/120  loss=5.1556
+  [simclr] epoch 37/120  loss=5.1528
+  [simclr] epoch 38/120  loss=5.1505
+  [simclr] epoch 39/120  loss=5.1497
+  [simclr] epoch 40/120  loss=5.1499
+  [simclr] epoch 41/120  loss=5.1484
+  [simclr] epoch 42/120  loss=5.1466
+  [simclr] epoch 43/120  loss=5.1443
+  [simclr] epoch 44/120  loss=5.1430
+  [simclr] epoch 45/120  loss=5.1425
+  [simclr] epoch 46/120  loss=5.1406
+  [simclr] epoch 47/120  loss=5.1381
+  [simclr] epoch 48/120  loss=5.1385
+  [simclr] epoch 49/120  loss=5.1337
+  [simclr] epoch 50/120  loss=5.1342
+  [simclr] epoch 51/120  loss=5.1323
+  [simclr] epoch 52/120  loss=5.1319
+  [simclr] epoch 53/120  loss=5.1318
+  [simclr] epoch 54/120  loss=5.1305
+  [simclr] epoch 55/120  loss=5.1293
+  [simclr] epoch 56/120  loss=5.1232
+  [simclr] epoch 57/120  loss=5.1280
+  [simclr] epoch 58/120  loss=5.1252
+  [simclr] epoch 59/120  loss=5.1239
+  [simclr] epoch 60/120  loss=5.1253
+  [simclr] epoch 61/120  loss=5.1243
+  [simclr] epoch 62/120  loss=5.1228
+  [simclr] epoch 63/120  loss=5.1182
+  [simclr] epoch 64/120  loss=5.1158
+  [simclr] epoch 65/120  loss=5.1180
+  [simclr] epoch 66/120  loss=5.1155
+  [simclr] epoch 67/120  loss=5.1129
+  [simclr] epoch 68/120  loss=5.1147
+  [simclr] epoch 69/120  loss=5.1123
+  [simclr] epoch 70/120  loss=5.1132
+  [simclr] epoch 71/120  loss=5.1142
+  [simclr] epoch 72/120  loss=5.1141
+  [simclr] epoch 73/120  loss=5.1105
+  [simclr] epoch 74/120  loss=5.1080
+  [simclr] epoch 75/120  loss=5.1090
+  [simclr] epoch 76/120  loss=5.1097
+  [simclr] epoch 77/120  loss=5.1088
+  [simclr] epoch 78/120  loss=5.1071
+  [simclr] epoch 79/120  loss=5.1060
+  [simclr] epoch 80/120  loss=5.1067
+  [simclr] epoch 81/120  loss=5.1092
+  [simclr] epoch 82/120  loss=5.1062
+  [simclr] epoch 83/120  loss=5.1057
+  [simclr] epoch 84/120  loss=5.1044
+  [simclr] epoch 85/120  loss=5.1034
+  [simclr] epoch 86/120  loss=5.1059
+  [simclr] epoch 87/120  loss=5.1026
+  [simclr] epoch 88/120  loss=5.1006
+  [simclr] epoch 89/120  loss=5.0986
+  [simclr] epoch 90/120  loss=5.1008
+  [simclr] epoch 91/120  loss=5.0973
+  [simclr] epoch 92/120  loss=5.0975
+  [simclr] epoch 93/120  loss=5.0952
+  [simclr] epoch 94/120  loss=5.0959
+  [simclr] epoch 95/120  loss=5.0964
+  [simclr] epoch 96/120  loss=5.0960
+  [simclr] epoch 97/120  loss=5.0932
+  [simclr] epoch 98/120  loss=5.0953
+  [simclr] epoch 99/120  loss=5.0945
+  [simclr] epoch 100/120  loss=5.0949
+  [simclr] epoch 101/120  loss=5.0943
+  [simclr] epoch 102/120  loss=5.0928
+  [simclr] epoch 103/120  loss=5.0921
+  [simclr] epoch 104/120  loss=5.0920
+  [simclr] epoch 105/120  loss=5.0903
+  [simclr] epoch 106/120  loss=5.0889
+  [simclr] epoch 107/120  loss=5.0872
+  [simclr] epoch 108/120  loss=5.0888
+  [simclr] epoch 109/120  loss=5.0878
+  [simclr] epoch 110/120  loss=5.0862
+  [simclr] epoch 111/120  loss=5.0876
+  [simclr] epoch 112/120  loss=5.0862
+  [simclr] epoch 113/120  loss=5.0870
+  [simclr] epoch 114/120  loss=5.0881
+  [simclr] epoch 115/120  loss=5.0876
+  [simclr] epoch 116/120  loss=5.0865
+  [simclr] epoch 117/120  loss=5.0839
+  [simclr] epoch 118/120  loss=5.0848
+  [simclr] epoch 119/120  loss=5.0846
+  [simclr] epoch 120/120  loss=5.0845
+  [simclr        ] probe=0.6682+-0.0231 acc=0.1543 supAUC=0.8176 eucl=0.5777 mahaT=0.5411 mahaPC=0.5234 lid=0.5213
+
+----- lejepa (augmentations only) -----
+  [sigreg-ssl] epoch 1/120  inv=0.0441  sigreg=0.5143
+  [sigreg-ssl] epoch 2/120  inv=0.0478  sigreg=0.2735
+  [sigreg-ssl] epoch 3/120  inv=0.0672  sigreg=0.1988
+  [sigreg-ssl] epoch 4/120  inv=0.0698  sigreg=0.1550
+  [sigreg-ssl] epoch 5/120  inv=0.0736  sigreg=0.1265
+  [sigreg-ssl] epoch 6/120  inv=0.0728  sigreg=0.1138
+  [sigreg-ssl] epoch 7/120  inv=0.0761  sigreg=0.1043
+  [sigreg-ssl] epoch 8/120  inv=0.0691  sigreg=0.1063
+  [sigreg-ssl] epoch 9/120  inv=0.0665  sigreg=0.0995
+  [sigreg-ssl] epoch 10/120  inv=0.0659  sigreg=0.0917
+  [sigreg-ssl] epoch 11/120  inv=0.0627  sigreg=0.1066
+  [sigreg-ssl] epoch 12/120  inv=0.0631  sigreg=0.0948
+  [sigreg-ssl] epoch 13/120  inv=0.0618  sigreg=0.0904
+  [sigreg-ssl] epoch 14/120  inv=0.0620  sigreg=0.0919
+  [sigreg-ssl] epoch 15/120  inv=0.0587  sigreg=0.0873
+  [sigreg-ssl] epoch 16/120  inv=0.0605  sigreg=0.0842
+  [sigreg-ssl] epoch 17/120  inv=0.0600  sigreg=0.0851
+  [sigreg-ssl] epoch 18/120  inv=0.0596  sigreg=0.0786
+  [sigreg-ssl] epoch 19/120  inv=0.0587  sigreg=0.0767
+  [sigreg-ssl] epoch 20/120  inv=0.0574  sigreg=0.0749
+  [sigreg-ssl] epoch 21/120  inv=0.0578  sigreg=0.0723
+  [sigreg-ssl] epoch 22/120  inv=0.0568  sigreg=0.0729
+  [sigreg-ssl] epoch 23/120  inv=0.0576  sigreg=0.0697
+  [sigreg-ssl] epoch 24/120  inv=0.0552  sigreg=0.0670
+  [sigreg-ssl] epoch 25/120  inv=0.0570  sigreg=0.0673
+  [sigreg-ssl] epoch 26/120  inv=0.0535  sigreg=0.0645
+  [sigreg-ssl] epoch 27/120  inv=0.0562  sigreg=0.0649
+  [sigreg-ssl] epoch 28/120  inv=0.0525  sigreg=0.0672
+  [sigreg-ssl] epoch 29/120  inv=0.0524  sigreg=0.0682
+  [sigreg-ssl] epoch 30/120  inv=0.0532  sigreg=0.0654
+  [sigreg-ssl] epoch 31/120  inv=0.0526  sigreg=0.0620
+  [sigreg-ssl] epoch 32/120  inv=0.0512  sigreg=0.0607
+  [sigreg-ssl] epoch 33/120  inv=0.0522  sigreg=0.0604
+  [sigreg-ssl] epoch 34/120  inv=0.0500  sigreg=0.0632
+  [sigreg-ssl] epoch 35/120  inv=0.0511  sigreg=0.0643
+  [sigreg-ssl] epoch 36/120  inv=0.0492  sigreg=0.0646
+  [sigreg-ssl] epoch 37/120  inv=0.0511  sigreg=0.0646
+  [sigreg-ssl] epoch 38/120  inv=0.0493  sigreg=0.0590
+  [sigreg-ssl] epoch 39/120  inv=0.0514  sigreg=0.0599
+  [sigreg-ssl] epoch 40/120  inv=0.0490  sigreg=0.0581
+  [sigreg-ssl] epoch 41/120  inv=0.0475  sigreg=0.0594
+  [sigreg-ssl] epoch 42/120  inv=0.0488  sigreg=0.0585
+  [sigreg-ssl] epoch 43/120  inv=0.0473  sigreg=0.0596
+  [sigreg-ssl] epoch 44/120  inv=0.0488  sigreg=0.0588
+  [sigreg-ssl] epoch 45/120  inv=0.0481  sigreg=0.0587
+  [sigreg-ssl] epoch 46/120  inv=0.0482  sigreg=0.0598
+  [sigreg-ssl] epoch 47/120  inv=0.0485  sigreg=0.0561
+  [sigreg-ssl] epoch 48/120  inv=0.0495  sigreg=0.0543
+  [sigreg-ssl] epoch 49/120  inv=0.0473  sigreg=0.0528
+  [sigreg-ssl] epoch 50/120  inv=0.0468  sigreg=0.0573
+  [sigreg-ssl] epoch 51/120  inv=0.0474  sigreg=0.0586
+  [sigreg-ssl] epoch 52/120  inv=0.0467  sigreg=0.0567
+  [sigreg-ssl] epoch 53/120  inv=0.0468  sigreg=0.0552
+  [sigreg-ssl] epoch 54/120  inv=0.0470  sigreg=0.0554
+  [sigreg-ssl] epoch 55/120  inv=0.0465  sigreg=0.0576
+  [sigreg-ssl] epoch 56/120  inv=0.0472  sigreg=0.0521
+  [sigreg-ssl] epoch 57/120  inv=0.0464  sigreg=0.0536
+  [sigreg-ssl] epoch 58/120  inv=0.0454  sigreg=0.0537
+  [sigreg-ssl] epoch 59/120  inv=0.0460  sigreg=0.0485
+  [sigreg-ssl] epoch 60/120  inv=0.0454  sigreg=0.0506
+  [sigreg-ssl] epoch 61/120  inv=0.0470  sigreg=0.0510
+  [sigreg-ssl] epoch 62/120  inv=0.0450  sigreg=0.0515
+  [sigreg-ssl] epoch 63/120  inv=0.0462  sigreg=0.0489
+  [sigreg-ssl] epoch 64/120  inv=0.0453  sigreg=0.0513
+  [sigreg-ssl] epoch 65/120  inv=0.0455  sigreg=0.0515
+  [sigreg-ssl] epoch 66/120  inv=0.0455  sigreg=0.0495
+  [sigreg-ssl] epoch 67/120  inv=0.0448  sigreg=0.0492
+  [sigreg-ssl] epoch 68/120  inv=0.0450  sigreg=0.0493
+  [sigreg-ssl] epoch 69/120  inv=0.0457  sigreg=0.0477
+  [sigreg-ssl] epoch 70/120  inv=0.0443  sigreg=0.0477
+  [sigreg-ssl] epoch 71/120  inv=0.0448  sigreg=0.0497
+  [sigreg-ssl] epoch 72/120  inv=0.0438  sigreg=0.0510
+  [sigreg-ssl] epoch 73/120  inv=0.0444  sigreg=0.0497
+  [sigreg-ssl] epoch 74/120  inv=0.0443  sigreg=0.0517
+  [sigreg-ssl] epoch 75/120  inv=0.0442  sigreg=0.0483
+  [sigreg-ssl] epoch 76/120  inv=0.0427  sigreg=0.0463
+  [sigreg-ssl] epoch 77/120  inv=0.0421  sigreg=0.0460
+  [sigreg-ssl] epoch 78/120  inv=0.0427  sigreg=0.0487
+  [sigreg-ssl] epoch 79/120  inv=0.0423  sigreg=0.0490
+  [sigreg-ssl] epoch 80/120  inv=0.0425  sigreg=0.0481
+  [sigreg-ssl] epoch 81/120  inv=0.0426  sigreg=0.0493
+  [sigreg-ssl] epoch 82/120  inv=0.0434  sigreg=0.0485
+  [sigreg-ssl] epoch 83/120  inv=0.0432  sigreg=0.0419
+  [sigreg-ssl] epoch 84/120  inv=0.0425  sigreg=0.0448
+  [sigreg-ssl] epoch 85/120  inv=0.0431  sigreg=0.0463
+  [sigreg-ssl] epoch 86/120  inv=0.0424  sigreg=0.0469
+  [sigreg-ssl] epoch 87/120  inv=0.0418  sigreg=0.0467
+  [sigreg-ssl] epoch 88/120  inv=0.0422  sigreg=0.0486
+  [sigreg-ssl] epoch 89/120  inv=0.0422  sigreg=0.0487
+  [sigreg-ssl] epoch 90/120  inv=0.0426  sigreg=0.0441
+  [sigreg-ssl] epoch 91/120  inv=0.0418  sigreg=0.0454
+  [sigreg-ssl] epoch 92/120  inv=0.0424  sigreg=0.0447
+  [sigreg-ssl] epoch 93/120  inv=0.0415  sigreg=0.0464
+  [sigreg-ssl] epoch 94/120  inv=0.0413  sigreg=0.0438
+  [sigreg-ssl] epoch 95/120  inv=0.0416  sigreg=0.0469
+  [sigreg-ssl] epoch 96/120  inv=0.0413  sigreg=0.0472
+  [sigreg-ssl] epoch 97/120  inv=0.0422  sigreg=0.0472
+  [sigreg-ssl] epoch 98/120  inv=0.0412  sigreg=0.0457
+  [sigreg-ssl] epoch 99/120  inv=0.0405  sigreg=0.0457
+  [sigreg-ssl] epoch 100/120  inv=0.0413  sigreg=0.0440
+  [sigreg-ssl] epoch 101/120  inv=0.0413  sigreg=0.0453
+  [sigreg-ssl] epoch 102/120  inv=0.0400  sigreg=0.0454
+  [sigreg-ssl] epoch 103/120  inv=0.0404  sigreg=0.0436
+  [sigreg-ssl] epoch 104/120  inv=0.0412  sigreg=0.0428
+  [sigreg-ssl] epoch 105/120  inv=0.0427  sigreg=0.0461
+  [sigreg-ssl] epoch 106/120  inv=0.0405  sigreg=0.0482
+  [sigreg-ssl] epoch 107/120  inv=0.0404  sigreg=0.0455
+  [sigreg-ssl] epoch 108/120  inv=0.0416  sigreg=0.0454
+  [sigreg-ssl] epoch 109/120  inv=0.0403  sigreg=0.0451
+  [sigreg-ssl] epoch 110/120  inv=0.0399  sigreg=0.0452
+  [sigreg-ssl] epoch 111/120  inv=0.0404  sigreg=0.0433
+  [sigreg-ssl] epoch 112/120  inv=0.0402  sigreg=0.0442
+  [sigreg-ssl] epoch 113/120  inv=0.0409  sigreg=0.0427
+  [sigreg-ssl] epoch 114/120  inv=0.0391  sigreg=0.0413
+  [sigreg-ssl] epoch 115/120  inv=0.0414  sigreg=0.0428
+  [sigreg-ssl] epoch 116/120  inv=0.0401  sigreg=0.0429
+  [sigreg-ssl] epoch 117/120  inv=0.0397  sigreg=0.0434
+  [sigreg-ssl] epoch 118/120  inv=0.0403  sigreg=0.0415
+  [sigreg-ssl] epoch 119/120  inv=0.0413  sigreg=0.0418
+  [sigreg-ssl] epoch 120/120  inv=0.0400  sigreg=0.0417
+  [lejepa        ] probe=0.7001+-0.0039 acc=0.1187 supAUC=0.7861 eucl=0.4870 mahaT=0.5594 mahaPC=0.5726 lid=0.4890
+
+----- simclr_sigreg (augmentations only) -----
+  [softmax/cosine] epoch 1/120  interaction=6.0107  marginal=0.4183
+  [softmax/cosine] epoch 2/120  interaction=5.5867  marginal=0.1756
+  [softmax/cosine] epoch 3/120  interaction=5.4665  marginal=0.0998
+  [softmax/cosine] epoch 4/120  interaction=5.4138  marginal=0.0830
+  [softmax/cosine] epoch 5/120  interaction=5.3766  marginal=0.0701
+  [softmax/cosine] epoch 6/120  interaction=5.3515  marginal=0.0625
+  [softmax/cosine] epoch 7/120  interaction=5.3414  marginal=0.0604
+  [softmax/cosine] epoch 8/120  interaction=5.3283  marginal=0.0597
+  [softmax/cosine] epoch 9/120  interaction=5.3148  marginal=0.0585
+  [softmax/cosine] epoch 10/120  interaction=5.3016  marginal=0.0544
+  [softmax/cosine] epoch 11/120  interaction=5.2871  marginal=0.0510
+  [softmax/cosine] epoch 12/120  interaction=5.2735  marginal=0.0475
+  [softmax/cosine] epoch 13/120  interaction=5.2599  marginal=0.0395
+  [softmax/cosine] epoch 14/120  interaction=5.2497  marginal=0.0361
+  [softmax/cosine] epoch 15/120  interaction=5.2464  marginal=0.0383
+  [softmax/cosine] epoch 16/120  interaction=5.2427  marginal=0.0390
+  [softmax/cosine] epoch 17/120  interaction=5.2374  marginal=0.0345
+  [softmax/cosine] epoch 18/120  interaction=5.2310  marginal=0.0345
+  [softmax/cosine] epoch 19/120  interaction=5.2274  marginal=0.0335
+  [softmax/cosine] epoch 20/120  interaction=5.2243  marginal=0.0356
+  [softmax/cosine] epoch 21/120  interaction=5.2205  marginal=0.0324
+  [softmax/cosine] epoch 22/120  interaction=5.2153  marginal=0.0313
+  [softmax/cosine] epoch 23/120  interaction=5.2127  marginal=0.0320
+  [softmax/cosine] epoch 24/120  interaction=5.2073  marginal=0.0289
+  [softmax/cosine] epoch 25/120  interaction=5.2063  marginal=0.0307
+  [softmax/cosine] epoch 26/120  interaction=5.2063  marginal=0.0320
+  [softmax/cosine] epoch 27/120  interaction=5.1953  marginal=0.0267
+  [softmax/cosine] epoch 28/120  interaction=5.1916  marginal=0.0248
+  [softmax/cosine] epoch 29/120  interaction=5.1893  marginal=0.0258
+  [softmax/cosine] epoch 30/120  interaction=5.1916  marginal=0.0279
+  [softmax/cosine] epoch 31/120  interaction=5.1879  marginal=0.0291
+  [softmax/cosine] epoch 32/120  interaction=5.1858  marginal=0.0261
+  [softmax/cosine] epoch 33/120  interaction=5.1868  marginal=0.0277
+  [softmax/cosine] epoch 34/120  interaction=5.1885  marginal=0.0282
+  [softmax/cosine] epoch 35/120  interaction=5.1798  marginal=0.0277
+  [softmax/cosine] epoch 36/120  interaction=5.1772  marginal=0.0253
+  [softmax/cosine] epoch 37/120  interaction=5.1771  marginal=0.0244
+  [softmax/cosine] epoch 38/120  interaction=5.1747  marginal=0.0247
+  [softmax/cosine] epoch 39/120  interaction=5.1780  marginal=0.0256
+  [softmax/cosine] epoch 40/120  interaction=5.1757  marginal=0.0254
+  [softmax/cosine] epoch 41/120  interaction=5.1735  marginal=0.0263
+  [softmax/cosine] epoch 42/120  interaction=5.1674  marginal=0.0237
+  [softmax/cosine] epoch 43/120  interaction=5.1662  marginal=0.0240
+  [softmax/cosine] epoch 44/120  interaction=5.1705  marginal=0.0263
+  [softmax/cosine] epoch 45/120  interaction=5.1705  marginal=0.0243
+  [softmax/cosine] epoch 46/120  interaction=5.1698  marginal=0.0268
+  [softmax/cosine] epoch 47/120  interaction=5.1679  marginal=0.0261
+  [softmax/cosine] epoch 48/120  interaction=5.1651  marginal=0.0255
+  [softmax/cosine] epoch 49/120  interaction=5.1653  marginal=0.0245
+  [softmax/cosine] epoch 50/120  interaction=5.1587  marginal=0.0236
+  [softmax/cosine] epoch 51/120  interaction=5.1565  marginal=0.0214
+  [softmax/cosine] epoch 52/120  interaction=5.1569  marginal=0.0220
+  [softmax/cosine] epoch 53/120  interaction=5.1601  marginal=0.0251
+  [softmax/cosine] epoch 54/120  interaction=5.1569  marginal=0.0227
+  [softmax/cosine] epoch 55/120  interaction=5.1543  marginal=0.0225
+  [softmax/cosine] epoch 56/120  interaction=5.1540  marginal=0.0232
+  [softmax/cosine] epoch 57/120  interaction=5.1575  marginal=0.0248
+  [softmax/cosine] epoch 58/120  interaction=5.1535  marginal=0.0225
+  [softmax/cosine] epoch 59/120  interaction=5.1494  marginal=0.0208
+  [softmax/cosine] epoch 60/120  interaction=5.1480  marginal=0.0201
+  [softmax/cosine] epoch 61/120  interaction=5.1485  marginal=0.0207
+  [softmax/cosine] epoch 62/120  interaction=5.1500  marginal=0.0215
+  [softmax/cosine] epoch 63/120  interaction=5.1510  marginal=0.0220
+  [softmax/cosine] epoch 64/120  interaction=5.1468  marginal=0.0217
+  [softmax/cosine] epoch 65/120  interaction=5.1439  marginal=0.0221
+  [softmax/cosine] epoch 66/120  interaction=5.1472  marginal=0.0221
+  [softmax/cosine] epoch 67/120  interaction=5.1434  marginal=0.0222
+  [softmax/cosine] epoch 68/120  interaction=5.1449  marginal=0.0221
+  [softmax/cosine] epoch 69/120  interaction=5.1450  marginal=0.0212
+  [softmax/cosine] epoch 70/120  interaction=5.1397  marginal=0.0189
+  [softmax/cosine] epoch 71/120  interaction=5.1379  marginal=0.0200
+  [softmax/cosine] epoch 72/120  interaction=5.1390  marginal=0.0200
+  [softmax/cosine] epoch 73/120  interaction=5.1397  marginal=0.0210
+  [softmax/cosine] epoch 74/120  interaction=5.1360  marginal=0.0193
+  [softmax/cosine] epoch 75/120  interaction=5.1369  marginal=0.0194
+  [softmax/cosine] epoch 76/120  interaction=5.1369  marginal=0.0193
+  [softmax/cosine] epoch 77/120  interaction=5.1356  marginal=0.0201
+  [softmax/cosine] epoch 78/120  interaction=5.1354  marginal=0.0191
+  [softmax/cosine] epoch 79/120  interaction=5.1393  marginal=0.0219
+  [softmax/cosine] epoch 80/120  interaction=5.1390  marginal=0.0213
+  [softmax/cosine] epoch 81/120  interaction=5.1379  marginal=0.0220
+  [softmax/cosine] epoch 82/120  interaction=5.1374  marginal=0.0217
+  [softmax/cosine] epoch 83/120  interaction=5.1331  marginal=0.0199
+  [softmax/cosine] epoch 84/120  interaction=5.1291  marginal=0.0183
+  [softmax/cosine] epoch 85/120  interaction=5.1332  marginal=0.0186
+  [softmax/cosine] epoch 86/120  interaction=5.1340  marginal=0.0211
+  [softmax/cosine] epoch 87/120  interaction=5.1299  marginal=0.0195
+  [softmax/cosine] epoch 88/120  interaction=5.1292  marginal=0.0190
+  [softmax/cosine] epoch 89/120  interaction=5.1279  marginal=0.0181
+  [softmax/cosine] epoch 90/120  interaction=5.1309  marginal=0.0184
+  [softmax/cosine] epoch 91/120  interaction=5.1294  marginal=0.0209
+  [softmax/cosine] epoch 92/120  interaction=5.1255  marginal=0.0180
+  [softmax/cosine] epoch 93/120  interaction=5.1269  marginal=0.0198
+  [softmax/cosine] epoch 94/120  interaction=5.1268  marginal=0.0183
+  [softmax/cosine] epoch 95/120  interaction=5.1236  marginal=0.0182
+  [softmax/cosine] epoch 96/120  interaction=5.1255  marginal=0.0191
+  [softmax/cosine] epoch 97/120  interaction=5.1253  marginal=0.0187
+  [softmax/cosine] epoch 98/120  interaction=5.1257  marginal=0.0192
+  [softmax/cosine] epoch 99/120  interaction=5.1208  marginal=0.0171
+  [softmax/cosine] epoch 100/120  interaction=5.1201  marginal=0.0172
+  [softmax/cosine] epoch 101/120  interaction=5.1226  marginal=0.0181
+  [softmax/cosine] epoch 102/120  interaction=5.1237  marginal=0.0188
+  [softmax/cosine] epoch 103/120  interaction=5.1194  marginal=0.0180
+  [softmax/cosine] epoch 104/120  interaction=5.1202  marginal=0.0178
+  [softmax/cosine] epoch 105/120  interaction=5.1208  marginal=0.0176
+  [softmax/cosine] epoch 106/120  interaction=5.1178  marginal=0.0169
+  [softmax/cosine] epoch 107/120  interaction=5.1165  marginal=0.0149
+  [softmax/cosine] epoch 108/120  interaction=5.1142  marginal=0.0156
+  [softmax/cosine] epoch 109/120  interaction=5.1187  marginal=0.0182
+  [softmax/cosine] epoch 110/120  interaction=5.1162  marginal=0.0176
+  [softmax/cosine] epoch 111/120  interaction=5.1171  marginal=0.0184
+  [softmax/cosine] epoch 112/120  interaction=5.1155  marginal=0.0165
+  [softmax/cosine] epoch 113/120  interaction=5.1154  marginal=0.0170
+  [softmax/cosine] epoch 114/120  interaction=5.1156  marginal=0.0188
+  [softmax/cosine] epoch 115/120  interaction=5.1141  marginal=0.0160
+  [softmax/cosine] epoch 116/120  interaction=5.1099  marginal=0.0151
+  [softmax/cosine] epoch 117/120  interaction=5.1136  marginal=0.0168
+  [softmax/cosine] epoch 118/120  interaction=5.1128  marginal=0.0162
+  [softmax/cosine] epoch 119/120  interaction=5.1135  marginal=0.0162
+  [softmax/cosine] epoch 120/120  interaction=5.1121  marginal=0.0159
+  [simclr_sigreg ] probe=0.7177+-0.0004 acc=0.1593 supAUC=0.8501 eucl=0.4140 mahaT=0.4822 mahaPC=0.5587 lid=0.5143
+
+----- supcon (labels) -----
+  [supcon] epoch 1/120  loss=6.3054
+  [supcon] epoch 2/120  loss=5.7650
+  [supcon] epoch 3/120  loss=5.4892
+  [supcon] epoch 4/120  loss=5.3026
+  [supcon] epoch 5/120  loss=5.1806
+  [supcon] epoch 6/120  loss=5.0828
+  [supcon] epoch 7/120  loss=4.9986
+  [supcon] epoch 8/120  loss=4.9329
+  [supcon] epoch 9/120  loss=4.8644
+  [supcon] epoch 10/120  loss=4.8069
+  [supcon] epoch 11/120  loss=4.7607
+  [supcon] epoch 12/120  loss=4.7042
+  [supcon] epoch 13/120  loss=4.6647
+  [supcon] epoch 14/120  loss=4.6272
+  [supcon] epoch 15/120  loss=4.5717
+  [supcon] epoch 16/120  loss=4.5266
+  [supcon] epoch 17/120  loss=4.4799
+  [supcon] epoch 18/120  loss=4.4623
+  [supcon] epoch 19/120  loss=4.4108
+  [supcon] epoch 20/120  loss=4.3794
+  [supcon] epoch 21/120  loss=4.3305
+  [supcon] epoch 22/120  loss=4.3090
+  [supcon] epoch 23/120  loss=4.2734
+  [supcon] epoch 24/120  loss=4.2354
+  [supcon] epoch 25/120  loss=4.2282
+  [supcon] epoch 26/120  loss=4.1908
+  [supcon] epoch 27/120  loss=4.1722
+  [supcon] epoch 28/120  loss=4.1496
+  [supcon] epoch 29/120  loss=4.1147
+  [supcon] epoch 30/120  loss=4.0808
+  [supcon] epoch 31/120  loss=4.0506
+  [supcon] epoch 32/120  loss=4.0336
+  [supcon] epoch 33/120  loss=3.9988
+  [supcon] epoch 34/120  loss=3.9923
+  [supcon] epoch 35/120  loss=3.9694
+  [supcon] epoch 36/120  loss=3.9623
+  [supcon] epoch 37/120  loss=3.9290
+  [supcon] epoch 38/120  loss=3.9125
+  [supcon] epoch 39/120  loss=3.8935
+  [supcon] epoch 40/120  loss=3.8679
+  [supcon] epoch 41/120  loss=3.8594
+  [supcon] epoch 42/120  loss=3.8376
+  [supcon] epoch 43/120  loss=3.8271
+  [supcon] epoch 44/120  loss=3.7966
+  [supcon] epoch 45/120  loss=3.8046
+  [supcon] epoch 46/120  loss=3.7836
+  [supcon] epoch 47/120  loss=3.7740
+  [supcon] epoch 48/120  loss=3.7375
+  [supcon] epoch 49/120  loss=3.7567
+  [supcon] epoch 50/120  loss=3.7206
+  [supcon] epoch 51/120  loss=3.7152
+  [supcon] epoch 52/120  loss=3.6914
+  [supcon] epoch 53/120  loss=3.6881
+  [supcon] epoch 54/120  loss=3.6482
+  [supcon] epoch 55/120  loss=3.6588
+  [supcon] epoch 56/120  loss=3.6373
+  [supcon] epoch 57/120  loss=3.6241
+  [supcon] epoch 58/120  loss=3.6144
+  [supcon] epoch 59/120  loss=3.6300
+  [supcon] epoch 60/120  loss=3.6192
+  [supcon] epoch 61/120  loss=3.6011
+  [supcon] epoch 62/120  loss=3.5848
+  [supcon] epoch 63/120  loss=3.5760
+  [supcon] epoch 64/120  loss=3.5603
+  [supcon] epoch 65/120  loss=3.5412
+  [supcon] epoch 66/120  loss=3.5288
+  [supcon] epoch 67/120  loss=3.5313
+  [supcon] epoch 68/120  loss=3.5098
+  [supcon] epoch 69/120  loss=3.4994
+  [supcon] epoch 70/120  loss=3.4781
+  [supcon] epoch 71/120  loss=3.4790
+  [supcon] epoch 72/120  loss=3.4519
+  [supcon] epoch 73/120  loss=3.4494
+  [supcon] epoch 74/120  loss=3.4254
+  [supcon] epoch 75/120  loss=3.4499
+  [supcon] epoch 76/120  loss=3.4149
+  [supcon] epoch 77/120  loss=3.4093
+  [supcon] epoch 78/120  loss=3.4209
+  [supcon] epoch 79/120  loss=3.4163
+  [supcon] epoch 80/120  loss=3.3709
+  [supcon] epoch 81/120  loss=3.3802
+  [supcon] epoch 82/120  loss=3.3831
+  [supcon] epoch 83/120  loss=3.3810
+  [supcon] epoch 84/120  loss=3.3521
+  [supcon] epoch 85/120  loss=3.3590
+  [supcon] epoch 86/120  loss=3.3740
+  [supcon] epoch 87/120  loss=3.3599
+  [supcon] epoch 88/120  loss=3.3586
+  [supcon] epoch 89/120  loss=3.3277
+  [supcon] epoch 90/120  loss=3.3122
+  [supcon] epoch 91/120  loss=3.3203
+  [supcon] epoch 92/120  loss=3.3210
+  [supcon] epoch 93/120  loss=3.3009
+  [supcon] epoch 94/120  loss=3.3040
+  [supcon] epoch 95/120  loss=3.2930
+  [supcon] epoch 96/120  loss=3.2902
+  [supcon] epoch 97/120  loss=3.2730
+  [supcon] epoch 98/120  loss=3.2744
+  [supcon] epoch 99/120  loss=3.2618
+  [supcon] epoch 100/120  loss=3.2540
+  [supcon] epoch 101/120  loss=3.2590
+  [supcon] epoch 102/120  loss=3.2382
+  [supcon] epoch 103/120  loss=3.2353
+  [supcon] epoch 104/120  loss=3.2262
+  [supcon] epoch 105/120  loss=3.2168
+  [supcon] epoch 106/120  loss=3.2042
+  [supcon] epoch 107/120  loss=3.1920
+  [supcon] epoch 108/120  loss=3.2010
+  [supcon] epoch 109/120  loss=3.1907
+  [supcon] epoch 110/120  loss=3.1966
+  [supcon] epoch 111/120  loss=3.2028
+  [supcon] epoch 112/120  loss=3.1882
+  [supcon] epoch 113/120  loss=3.1761
+  [supcon] epoch 114/120  loss=3.1616
+  [supcon] epoch 115/120  loss=3.1707
+  [supcon] epoch 116/120  loss=3.1723
+  [supcon] epoch 117/120  loss=3.1705
+  [supcon] epoch 118/120  loss=3.1651
+  [supcon] epoch 119/120  loss=3.1539
+  [supcon] epoch 120/120  loss=3.1539
+  [supcon        ] probe=0.7375+-0.0038 acc=0.5643 supAUC=0.9676 eucl=0.7241 mahaT=0.7119 mahaPC=0.4894 lid=0.6428
+
+----- supcon_sigreg (labels) -----
+  [softmax/cosine] epoch 1/120  interaction=6.4326  marginal=0.5952
+  [softmax/cosine] epoch 2/120  interaction=5.9435  marginal=0.3918
+  [softmax/cosine] epoch 3/120  interaction=5.7219  marginal=0.3252
+  [softmax/cosine] epoch 4/120  interaction=5.5386  marginal=0.2795
+  [softmax/cosine] epoch 5/120  interaction=5.4051  marginal=0.2500
+  [softmax/cosine] epoch 6/120  interaction=5.2766  marginal=0.2227
+  [softmax/cosine] epoch 7/120  interaction=5.2053  marginal=0.1981
+  [softmax/cosine] epoch 8/120  interaction=5.1326  marginal=0.1736
+  [softmax/cosine] epoch 9/120  interaction=5.0667  marginal=0.1652
+  [softmax/cosine] epoch 10/120  interaction=4.9970  marginal=0.1578
+  [softmax/cosine] epoch 11/120  interaction=4.9357  marginal=0.1495
+  [softmax/cosine] epoch 12/120  interaction=4.8797  marginal=0.1350
+  [softmax/cosine] epoch 13/120  interaction=4.8400  marginal=0.1378
+  [softmax/cosine] epoch 14/120  interaction=4.7779  marginal=0.1244
+  [softmax/cosine] epoch 15/120  interaction=4.7268  marginal=0.1189
+  [softmax/cosine] epoch 16/120  interaction=4.6734  marginal=0.1176
+  [softmax/cosine] epoch 17/120  interaction=4.6328  marginal=0.1070
+  [softmax/cosine] epoch 18/120  interaction=4.5938  marginal=0.1045
+  [softmax/cosine] epoch 19/120  interaction=4.5569  marginal=0.1091
+  [softmax/cosine] epoch 20/120  interaction=4.5362  marginal=0.1066
+  [softmax/cosine] epoch 21/120  interaction=4.5126  marginal=0.1036
+  [softmax/cosine] epoch 22/120  interaction=4.4562  marginal=0.1053
+  [softmax/cosine] epoch 23/120  interaction=4.4400  marginal=0.0972
+  [softmax/cosine] epoch 24/120  interaction=4.3919  marginal=0.0970
+  [softmax/cosine] epoch 25/120  interaction=4.3703  marginal=0.0946
+  [softmax/cosine] epoch 26/120  interaction=4.3227  marginal=0.0895
+  [softmax/cosine] epoch 27/120  interaction=4.3178  marginal=0.0919
+  [softmax/cosine] epoch 28/120  interaction=4.2928  marginal=0.0950
+  [softmax/cosine] epoch 29/120  interaction=4.2596  marginal=0.0970
+  [softmax/cosine] epoch 30/120  interaction=4.2529  marginal=0.0898
+  [softmax/cosine] epoch 31/120  interaction=4.2243  marginal=0.0853
+  [softmax/cosine] epoch 32/120  interaction=4.1970  marginal=0.0837
+  [softmax/cosine] epoch 33/120  interaction=4.1537  marginal=0.0767
+  [softmax/cosine] epoch 34/120  interaction=4.1366  marginal=0.0758
+  [softmax/cosine] epoch 35/120  interaction=4.1306  marginal=0.0839
+  [softmax/cosine] epoch 36/120  interaction=4.1157  marginal=0.0819
+  [softmax/cosine] epoch 37/120  interaction=4.0840  marginal=0.0791
+  [softmax/cosine] epoch 38/120  interaction=4.0465  marginal=0.0775
+  [softmax/cosine] epoch 39/120  interaction=4.0384  marginal=0.0764
+  [softmax/cosine] epoch 40/120  interaction=4.0198  marginal=0.0748
+  [softmax/cosine] epoch 41/120  interaction=4.0108  marginal=0.0741
+  [softmax/cosine] epoch 42/120  interaction=3.9738  marginal=0.0752
+  [softmax/cosine] epoch 43/120  interaction=3.9806  marginal=0.0742
+  [softmax/cosine] epoch 44/120  interaction=3.9292  marginal=0.0715
+  [softmax/cosine] epoch 45/120  interaction=3.9186  marginal=0.0721
+  [softmax/cosine] epoch 46/120  interaction=3.9127  marginal=0.0655
+  [softmax/cosine] epoch 47/120  interaction=3.9087  marginal=0.0669
+  [softmax/cosine] epoch 48/120  interaction=3.8800  marginal=0.0696
+  [softmax/cosine] epoch 49/120  interaction=3.8621  marginal=0.0661
+  [softmax/cosine] epoch 50/120  interaction=3.8443  marginal=0.0662
+  [softmax/cosine] epoch 51/120  interaction=3.8353  marginal=0.0662
+  [softmax/cosine] epoch 52/120  interaction=3.8251  marginal=0.0675
+  [softmax/cosine] epoch 53/120  interaction=3.8152  marginal=0.0646
+  [softmax/cosine] epoch 54/120  interaction=3.7920  marginal=0.0652
+  [softmax/cosine] epoch 55/120  interaction=3.7689  marginal=0.0629
+  [softmax/cosine] epoch 56/120  interaction=3.7633  marginal=0.0654
+  [softmax/cosine] epoch 57/120  interaction=3.7488  marginal=0.0673
+  [softmax/cosine] epoch 58/120  interaction=3.7373  marginal=0.0642
+  [softmax/cosine] epoch 59/120  interaction=3.7191  marginal=0.0636
+  [softmax/cosine] epoch 60/120  interaction=3.7107  marginal=0.0626
+  [softmax/cosine] epoch 61/120  interaction=3.7236  marginal=0.0633
+  [softmax/cosine] epoch 62/120  interaction=3.6988  marginal=0.0589
+  [softmax/cosine] epoch 63/120  interaction=3.6800  marginal=0.0601
+  [softmax/cosine] epoch 64/120  interaction=3.6812  marginal=0.0586
+  [softmax/cosine] epoch 65/120  interaction=3.6608  marginal=0.0574
+  [softmax/cosine] epoch 66/120  interaction=3.6365  marginal=0.0600
+  [softmax/cosine] epoch 67/120  interaction=3.6392  marginal=0.0555
+  [softmax/cosine] epoch 68/120  interaction=3.6216  marginal=0.0582
+  [softmax/cosine] epoch 69/120  interaction=3.6142  marginal=0.0574
+  [softmax/cosine] epoch 70/120  interaction=3.6186  marginal=0.0558
+  [softmax/cosine] epoch 71/120  interaction=3.5891  marginal=0.0567
+  [softmax/cosine] epoch 72/120  interaction=3.5935  marginal=0.0548
+  [softmax/cosine] epoch 73/120  interaction=3.5888  marginal=0.0542
+  [softmax/cosine] epoch 74/120  interaction=3.5677  marginal=0.0565
+  [softmax/cosine] epoch 75/120  interaction=3.5495  marginal=0.0537
+  [softmax/cosine] epoch 76/120  interaction=3.5365  marginal=0.0546
+  [softmax/cosine] epoch 77/120  interaction=3.5277  marginal=0.0533
+  [softmax/cosine] epoch 78/120  interaction=3.5260  marginal=0.0535
+  [softmax/cosine] epoch 79/120  interaction=3.5153  marginal=0.0548
+  [softmax/cosine] epoch 80/120  interaction=3.5145  marginal=0.0530
+  [softmax/cosine] epoch 81/120  interaction=3.5112  marginal=0.0543
+  [softmax/cosine] epoch 82/120  interaction=3.4981  marginal=0.0569
+  [softmax/cosine] epoch 83/120  interaction=3.4993  marginal=0.0531
+  [softmax/cosine] epoch 84/120  interaction=3.4907  marginal=0.0553
+  [softmax/cosine] epoch 85/120  interaction=3.4826  marginal=0.0530
+  [softmax/cosine] epoch 86/120  interaction=3.4738  marginal=0.0555
+  [softmax/cosine] epoch 87/120  interaction=3.4616  marginal=0.0515
+  [softmax/cosine] epoch 88/120  interaction=3.4562  marginal=0.0531
+  [softmax/cosine] epoch 89/120  interaction=3.4416  marginal=0.0496
+  [softmax/cosine] epoch 90/120  interaction=3.4222  marginal=0.0516
+  [softmax/cosine] epoch 91/120  interaction=3.4201  marginal=0.0519
+  [softmax/cosine] epoch 92/120  interaction=3.4198  marginal=0.0522
+  [softmax/cosine] epoch 93/120  interaction=3.4105  marginal=0.0530
+  [softmax/cosine] epoch 94/120  interaction=3.4124  marginal=0.0522
+  [softmax/cosine] epoch 95/120  interaction=3.3945  marginal=0.0504
+  [softmax/cosine] epoch 96/120  interaction=3.3837  marginal=0.0480
+  [softmax/cosine] epoch 97/120  interaction=3.3782  marginal=0.0510
+  [softmax/cosine] epoch 98/120  interaction=3.3816  marginal=0.0506
+  [softmax/cosine] epoch 99/120  interaction=3.3849  marginal=0.0481
+  [softmax/cosine] epoch 100/120  interaction=3.3606  marginal=0.0474
+  [softmax/cosine] epoch 101/120  interaction=3.3714  marginal=0.0493
+  [softmax/cosine] epoch 102/120  interaction=3.3622  marginal=0.0475
+  [softmax/cosine] epoch 103/120  interaction=3.3497  marginal=0.0473
+  [softmax/cosine] epoch 104/120  interaction=3.3392  marginal=0.0495
+  [softmax/cosine] epoch 105/120  interaction=3.3399  marginal=0.0500
+  [softmax/cosine] epoch 106/120  interaction=3.3349  marginal=0.0510
+  [softmax/cosine] epoch 107/120  interaction=3.3220  marginal=0.0494
+  [softmax/cosine] epoch 108/120  interaction=3.3238  marginal=0.0480
+  [softmax/cosine] epoch 109/120  interaction=3.3190  marginal=0.0478
+  [softmax/cosine] epoch 110/120  interaction=3.3056  marginal=0.0474
+  [softmax/cosine] epoch 111/120  interaction=3.3064  marginal=0.0462
+  [softmax/cosine] epoch 112/120  interaction=3.3023  marginal=0.0457
+  [softmax/cosine] epoch 113/120  interaction=3.2842  marginal=0.0520
+  [softmax/cosine] epoch 114/120  interaction=3.2734  marginal=0.0463
+  [softmax/cosine] epoch 115/120  interaction=3.2892  marginal=0.0469
+  [softmax/cosine] epoch 116/120  interaction=3.2684  marginal=0.0451
+  [softmax/cosine] epoch 117/120  interaction=3.2697  marginal=0.0471
+  [softmax/cosine] epoch 118/120  interaction=3.2694  marginal=0.0458
+  [softmax/cosine] epoch 119/120  interaction=3.2612  marginal=0.0491
+  [softmax/cosine] epoch 120/120  interaction=3.2528  marginal=0.0458
+  [supcon_sigreg ] probe=0.7865+-0.0047 acc=0.5887 supAUC=0.9795 eucl=0.7534 mahaT=0.7462 mahaPC=0.6685 lid=0.7031
+
+----- nplm_bilinear (augmentations only) -----
+  [nplm/bilinear] epoch 1/120  interaction=57837255662.9641  marginal=0.9149
+  [nplm/bilinear] epoch 2/120  interaction=1375534.0107  marginal=1.0055
+  [nplm/bilinear] epoch 3/120  interaction=45956.9431  marginal=0.9056
+  [nplm/bilinear] epoch 4/120  interaction=4628.8459  marginal=0.8898
+  [nplm/bilinear] epoch 5/120  interaction=1583.0076  marginal=0.8457
+  [nplm/bilinear] epoch 6/120  interaction=995.0428  marginal=0.8435
+  [nplm/bilinear] epoch 7/120  interaction=767.6907  marginal=0.8261
+  [nplm/bilinear] epoch 8/120  interaction=642.7595  marginal=0.8476
+  [nplm/bilinear] epoch 9/120  interaction=560.1717  marginal=0.8431
+  [nplm/bilinear] epoch 10/120  interaction=496.2403  marginal=0.8253
+  [nplm/bilinear] epoch 11/120  interaction=448.3618  marginal=0.8230
+  [nplm/bilinear] epoch 12/120  interaction=409.7969  marginal=0.8374
+  [nplm/bilinear] epoch 13/120  interaction=375.7969  marginal=0.8208
+  [nplm/bilinear] epoch 14/120  interaction=348.1210  marginal=0.8209
+  [nplm/bilinear] epoch 15/120  interaction=322.2372  marginal=0.8240
+  [nplm/bilinear] epoch 16/120  interaction=303.2868  marginal=0.8284
+  [nplm/bilinear] epoch 17/120  interaction=283.1343  marginal=0.8132
+  [nplm/bilinear] epoch 18/120  interaction=264.3427  marginal=0.8217
+  [nplm/bilinear] epoch 19/120  interaction=252.3128  marginal=0.8239
+  [nplm/bilinear] epoch 20/120  interaction=237.5223  marginal=0.8107
+  [nplm/bilinear] epoch 21/120  interaction=224.0461  marginal=0.8134
+  [nplm/bilinear] epoch 22/120  interaction=215.8856  marginal=0.8248
+  [nplm/bilinear] epoch 23/120  interaction=205.8497  marginal=0.8233
+  [nplm/bilinear] epoch 24/120  interaction=195.1721  marginal=0.8169
+  [nplm/bilinear] epoch 25/120  interaction=184.9119  marginal=0.8059
+  [nplm/bilinear] epoch 26/120  interaction=176.5487  marginal=0.8073
+  [nplm/bilinear] epoch 27/120  interaction=168.8710  marginal=0.7989
+  [nplm/bilinear] epoch 28/120  interaction=162.1660  marginal=0.8091
+  [nplm/bilinear] epoch 29/120  interaction=155.4700  marginal=0.7999
+  [nplm/bilinear] epoch 30/120  interaction=151.0430  marginal=0.7949
+  [nplm/bilinear] epoch 31/120  interaction=147.6699  marginal=0.8004
+  [nplm/bilinear] epoch 32/120  interaction=141.8093  marginal=0.7984
+  [nplm/bilinear] epoch 33/120  interaction=134.5240  marginal=0.7965
+  [nplm/bilinear] epoch 34/120  interaction=130.8099  marginal=0.8087
+  [nplm/bilinear] epoch 35/120  interaction=125.2015  marginal=0.7976
+  [nplm/bilinear] epoch 36/120  interaction=123.4178  marginal=0.7981
+  [nplm/bilinear] epoch 37/120  interaction=118.6076  marginal=0.7853
+  [nplm/bilinear] epoch 38/120  interaction=114.6714  marginal=0.8033
+  [nplm/bilinear] epoch 39/120  interaction=111.1893  marginal=0.7938
+  [nplm/bilinear] epoch 40/120  interaction=107.4435  marginal=0.7864
+  [nplm/bilinear] epoch 41/120  interaction=72.4920  marginal=0.7799
+  [nplm/bilinear] epoch 42/120  interaction=5.1985  marginal=0.7039
+  [nplm/bilinear] epoch 43/120  interaction=-0.2813  marginal=0.6697
+  [nplm/bilinear] epoch 44/120  interaction=-0.5251  marginal=0.6694
+  [nplm/bilinear] epoch 45/120  interaction=-0.6288  marginal=0.6662
+  [nplm/bilinear] epoch 46/120  interaction=-0.6892  marginal=0.6636
+  [nplm/bilinear] epoch 47/120  interaction=-0.7313  marginal=0.6664
+  [nplm/bilinear] epoch 48/120  interaction=-0.7555  marginal=0.6642
+  [nplm/bilinear] epoch 49/120  interaction=-0.7905  marginal=0.6537
+  [nplm/bilinear] epoch 50/120  interaction=-0.7977  marginal=0.6563
+  [nplm/bilinear] epoch 51/120  interaction=-0.8181  marginal=0.6549
+  [nplm/bilinear] epoch 52/120  interaction=-0.8271  marginal=0.6498
+  [nplm/bilinear] epoch 53/120  interaction=-0.8421  marginal=0.6510
+  [nplm/bilinear] epoch 54/120  interaction=-0.8509  marginal=0.6525
+  [nplm/bilinear] epoch 55/120  interaction=-0.8627  marginal=0.6479
+  [nplm/bilinear] epoch 56/120  interaction=-0.8727  marginal=0.6532
+  [nplm/bilinear] epoch 57/120  interaction=-0.8739  marginal=0.6455
+  [nplm/bilinear] epoch 58/120  interaction=-0.8839  marginal=0.6409
+  [nplm/bilinear] epoch 59/120  interaction=-0.8955  marginal=0.6413
+  [nplm/bilinear] epoch 60/120  interaction=-0.8958  marginal=0.6373
+  [nplm/bilinear] epoch 61/120  interaction=-0.9067  marginal=0.6359
+  [nplm/bilinear] epoch 62/120  interaction=-0.9133  marginal=0.6400
+  [nplm/bilinear] epoch 63/120  interaction=-0.9136  marginal=0.6416
+  [nplm/bilinear] epoch 64/120  interaction=-0.9206  marginal=0.6368
+  [nplm/bilinear] epoch 65/120  interaction=-0.9243  marginal=0.6338
+  [nplm/bilinear] epoch 66/120  interaction=-0.9252  marginal=0.6293
+  [nplm/bilinear] epoch 67/120  interaction=-0.9317  marginal=0.6392
+  [nplm/bilinear] epoch 68/120  interaction=-0.9328  marginal=0.6349
+  [nplm/bilinear] epoch 69/120  interaction=-0.9396  marginal=0.6332
+  [nplm/bilinear] epoch 70/120  interaction=-0.9440  marginal=0.6336
+  [nplm/bilinear] epoch 71/120  interaction=-0.9502  marginal=0.6321
+  [nplm/bilinear] epoch 72/120  interaction=-0.9480  marginal=0.6336
+  [nplm/bilinear] epoch 73/120  interaction=-0.9512  marginal=0.6288
+  [nplm/bilinear] epoch 74/120  interaction=-0.9538  marginal=0.6279
+  [nplm/bilinear] epoch 75/120  interaction=-0.9522  marginal=0.6339
+  [nplm/bilinear] epoch 76/120  interaction=-0.9615  marginal=0.6313
+  [nplm/bilinear] epoch 77/120  interaction=-0.9625  marginal=0.6309
+  [nplm/bilinear] epoch 78/120  interaction=-0.9726  marginal=0.6291
+  [nplm/bilinear] epoch 79/120  interaction=-0.9720  marginal=0.6276
+  [nplm/bilinear] epoch 80/120  interaction=-0.9694  marginal=0.6280
+  [nplm/bilinear] epoch 81/120  interaction=-0.9734  marginal=0.6322
+  [nplm/bilinear] epoch 82/120  interaction=-0.9811  marginal=0.6282
+  [nplm/bilinear] epoch 83/120  interaction=-0.9824  marginal=0.6305
+  [nplm/bilinear] epoch 84/120  interaction=-0.9889  marginal=0.6313
+  [nplm/bilinear] epoch 85/120  interaction=-0.9847  marginal=0.6312
+  [nplm/bilinear] epoch 86/120  interaction=-0.9871  marginal=0.6301
+  [nplm/bilinear] epoch 87/120  interaction=-0.9935  marginal=0.6307
+  [nplm/bilinear] epoch 88/120  interaction=-0.9894  marginal=0.6238
+  [nplm/bilinear] epoch 89/120  interaction=-1.0002  marginal=0.6242
+  [nplm/bilinear] epoch 90/120  interaction=-0.9938  marginal=0.6220
+  [nplm/bilinear] epoch 91/120  interaction=-1.0047  marginal=0.6301
+  [nplm/bilinear] epoch 92/120  interaction=-0.9983  marginal=0.6243
+  [nplm/bilinear] epoch 93/120  interaction=-0.9941  marginal=0.6268
+  [nplm/bilinear] epoch 94/120  interaction=-1.0089  marginal=0.6159
+  [nplm/bilinear] epoch 95/120  interaction=-1.0029  marginal=0.6233
+  [nplm/bilinear] epoch 96/120  interaction=-1.0070  marginal=0.6226
+  [nplm/bilinear] epoch 97/120  interaction=-1.0111  marginal=0.6220
+  [nplm/bilinear] epoch 98/120  interaction=-1.0050  marginal=0.6265
+  [nplm/bilinear] epoch 99/120  interaction=-1.0042  marginal=0.6240
+  [nplm/bilinear] epoch 100/120  interaction=-1.0104  marginal=0.6223
+  [nplm/bilinear] epoch 101/120  interaction=-1.0148  marginal=0.6307
+  [nplm/bilinear] epoch 102/120  interaction=-1.0158  marginal=0.6231
+  [nplm/bilinear] epoch 103/120  interaction=-1.0173  marginal=0.6202
+  [nplm/bilinear] epoch 104/120  interaction=-1.0163  marginal=0.6177
+  [nplm/bilinear] epoch 105/120  interaction=-1.0188  marginal=0.6264
+  [nplm/bilinear] epoch 106/120  interaction=-1.0184  marginal=0.6261
+  [nplm/bilinear] epoch 107/120  interaction=-1.0149  marginal=0.6220
+  [nplm/bilinear] epoch 108/120  interaction=-1.0184  marginal=0.6211
+  [nplm/bilinear] epoch 109/120  interaction=-1.0197  marginal=0.6228
+  [nplm/bilinear] epoch 110/120  interaction=-1.0194  marginal=0.6201
+  [nplm/bilinear] epoch 111/120  interaction=-1.0190  marginal=0.6250
+  [nplm/bilinear] epoch 112/120  interaction=-1.0262  marginal=0.6244
+  [nplm/bilinear] epoch 113/120  interaction=-1.0197  marginal=0.6181
+  [nplm/bilinear] epoch 114/120  interaction=-1.0256  marginal=0.6168
+  [nplm/bilinear] epoch 115/120  interaction=-1.0268  marginal=0.6239
+  [nplm/bilinear] epoch 116/120  interaction=-1.0276  marginal=0.6218
+  [nplm/bilinear] epoch 117/120  interaction=-1.0268  marginal=0.6197
+  [nplm/bilinear] epoch 118/120  interaction=-1.0277  marginal=0.6207
+  [nplm/bilinear] epoch 119/120  interaction=-1.0280  marginal=0.6170
+  [nplm/bilinear] epoch 120/120  interaction=-1.0309  marginal=0.6130
+  [nplm_bilinear ] probe=0.6392+-0.0021 acc=0.1057 supAUC=0.7474 eucl=0.5410 mahaT=0.6077 mahaPC=0.6200 lid=0.5376
+
+----- nplm_distance (augmentations only) -----
+  [nplm/distance] epoch 1/120  interaction=-0.4805  marginal=0.5303
+  [nplm/distance] epoch 2/120  interaction=-0.6252  marginal=0.3503
+  [nplm/distance] epoch 3/120  interaction=-0.6677  marginal=0.3139
+  [nplm/distance] epoch 4/120  interaction=-0.7005  marginal=0.2875
+  [nplm/distance] epoch 5/120  interaction=-0.7111  marginal=0.2778
+  [nplm/distance] epoch 6/120  interaction=-0.7270  marginal=0.2525
+  [nplm/distance] epoch 7/120  interaction=-0.7341  marginal=0.2554
+  [nplm/distance] epoch 8/120  interaction=-0.7343  marginal=0.2388
+  [nplm/distance] epoch 9/120  interaction=-0.7477  marginal=0.2616
+  [nplm/distance] epoch 10/120  interaction=-0.7520  marginal=0.2436
+  [nplm/distance] epoch 11/120  interaction=-0.7554  marginal=0.2356
+  [nplm/distance] epoch 12/120  interaction=-0.7657  marginal=0.2309
+  [nplm/distance] epoch 13/120  interaction=-0.7614  marginal=0.2246
+  [nplm/distance] epoch 14/120  interaction=-0.7596  marginal=0.2246
+  [nplm/distance] epoch 15/120  interaction=-0.7702  marginal=0.2238
+  [nplm/distance] epoch 16/120  interaction=-0.7737  marginal=0.2283
+  [nplm/distance] epoch 17/120  interaction=-0.7738  marginal=0.2246
+  [nplm/distance] epoch 18/120  interaction=-0.7723  marginal=0.2064
+  [nplm/distance] epoch 19/120  interaction=-0.7773  marginal=0.2262
+  [nplm/distance] epoch 20/120  interaction=-0.7761  marginal=0.2120
+  [nplm/distance] epoch 21/120  interaction=-0.7806  marginal=0.2143
+  [nplm/distance] epoch 22/120  interaction=-0.7833  marginal=0.1986
+  [nplm/distance] epoch 23/120  interaction=-0.7837  marginal=0.2061
+  [nplm/distance] epoch 24/120  interaction=-0.7904  marginal=0.2019
+  [nplm/distance] epoch 25/120  interaction=-0.7834  marginal=0.2077
+  [nplm/distance] epoch 26/120  interaction=-0.7873  marginal=0.2063
+  [nplm/distance] epoch 27/120  interaction=-0.7902  marginal=0.1970
+  [nplm/distance] epoch 28/120  interaction=-0.7888  marginal=0.2077
+  [nplm/distance] epoch 29/120  interaction=-0.7869  marginal=0.1943
+  [nplm/distance] epoch 30/120  interaction=-0.7930  marginal=0.1930
+  [nplm/distance] epoch 31/120  interaction=-0.7961  marginal=0.2012
+  [nplm/distance] epoch 32/120  interaction=-0.7951  marginal=0.1975
+  [nplm/distance] epoch 33/120  interaction=-0.7969  marginal=0.1991
+  [nplm/distance] epoch 34/120  interaction=-0.7960  marginal=0.1949
+  [nplm/distance] epoch 35/120  interaction=-0.7970  marginal=0.1950
+  [nplm/distance] epoch 36/120  interaction=-0.8005  marginal=0.1898
+  [nplm/distance] epoch 37/120  interaction=-0.7973  marginal=0.1879
+  [nplm/distance] epoch 38/120  interaction=-0.8026  marginal=0.1890
+  [nplm/distance] epoch 39/120  interaction=-0.8047  marginal=0.1806
+  [nplm/distance] epoch 40/120  interaction=-0.8004  marginal=0.1842
+  [nplm/distance] epoch 41/120  interaction=-0.8047  marginal=0.1820
+  [nplm/distance] epoch 42/120  interaction=-0.8024  marginal=0.1835
+  [nplm/distance] epoch 43/120  interaction=-0.8019  marginal=0.1854
+  [nplm/distance] epoch 44/120  interaction=-0.8033  marginal=0.1784
+  [nplm/distance] epoch 45/120  interaction=-0.8037  marginal=0.1865
+  [nplm/distance] epoch 46/120  interaction=-0.8078  marginal=0.1856
+  [nplm/distance] epoch 47/120  interaction=-0.8053  marginal=0.1782
+  [nplm/distance] epoch 48/120  interaction=-0.8106  marginal=0.1910
+  [nplm/distance] epoch 49/120  interaction=-0.8057  marginal=0.1795
+  [nplm/distance] epoch 50/120  interaction=-0.8072  marginal=0.1820
+  [nplm/distance] epoch 51/120  interaction=-0.8081  marginal=0.1735
+  [nplm/distance] epoch 52/120  interaction=-0.8099  marginal=0.1828
+  [nplm/distance] epoch 53/120  interaction=-0.8182  marginal=0.1812
+  [nplm/distance] epoch 54/120  interaction=-0.8078  marginal=0.1711
+  [nplm/distance] epoch 55/120  interaction=-0.8062  marginal=0.1702
+  [nplm/distance] epoch 56/120  interaction=-0.8110  marginal=0.1770
+  [nplm/distance] epoch 57/120  interaction=-0.8072  marginal=0.1782
+  [nplm/distance] epoch 58/120  interaction=-0.8133  marginal=0.1711
+  [nplm/distance] epoch 59/120  interaction=-0.8153  marginal=0.1794
+  [nplm/distance] epoch 60/120  interaction=-0.8135  marginal=0.1691
+  [nplm/distance] epoch 61/120  interaction=-0.8138  marginal=0.1695
+  [nplm/distance] epoch 62/120  interaction=-0.8121  marginal=0.1711
+  [nplm/distance] epoch 63/120  interaction=-0.8151  marginal=0.1726
+  [nplm/distance] epoch 64/120  interaction=-0.8122  marginal=0.1642
+  [nplm/distance] epoch 65/120  interaction=-0.8115  marginal=0.1724
+  [nplm/distance] epoch 66/120  interaction=-0.8136  marginal=0.1757
+  [nplm/distance] epoch 67/120  interaction=-0.8145  marginal=0.1764
+  [nplm/distance] epoch 68/120  interaction=-0.8160  marginal=0.1703
+  [nplm/distance] epoch 69/120  interaction=-0.8164  marginal=0.1748
+  [nplm/distance] epoch 70/120  interaction=-0.8174  marginal=0.1730
+  [nplm/distance] epoch 71/120  interaction=-0.8150  marginal=0.1744
+  [nplm/distance] epoch 72/120  interaction=-0.8151  marginal=0.1723
+  [nplm/distance] epoch 73/120  interaction=-0.8158  marginal=0.1673
+  [nplm/distance] epoch 74/120  interaction=-0.8234  marginal=0.1599
+  [nplm/distance] epoch 75/120  interaction=-0.8180  marginal=0.1697
+  [nplm/distance] epoch 76/120  interaction=-0.8167  marginal=0.1577
+  [nplm/distance] epoch 77/120  interaction=-0.8196  marginal=0.1763
+  [nplm/distance] epoch 78/120  interaction=-0.8158  marginal=0.1636
+  [nplm/distance] epoch 79/120  interaction=-0.8184  marginal=0.1619
+  [nplm/distance] epoch 80/120  interaction=-0.8216  marginal=0.1714
+  [nplm/distance] epoch 81/120  interaction=-0.8205  marginal=0.1751
+  [nplm/distance] epoch 82/120  interaction=-0.8192  marginal=0.1684
+  [nplm/distance] epoch 83/120  interaction=-0.8162  marginal=0.1711
+  [nplm/distance] epoch 84/120  interaction=-0.8190  marginal=0.1573
+  [nplm/distance] epoch 85/120  interaction=-0.8204  marginal=0.1576
+  [nplm/distance] epoch 86/120  interaction=-0.8266  marginal=0.1681
+  [nplm/distance] epoch 87/120  interaction=-0.8202  marginal=0.1645
+  [nplm/distance] epoch 88/120  interaction=-0.8205  marginal=0.1625
+  [nplm/distance] epoch 89/120  interaction=-0.8174  marginal=0.1603
+  [nplm/distance] epoch 90/120  interaction=-0.8240  marginal=0.1720
+  [nplm/distance] epoch 91/120  interaction=-0.8226  marginal=0.1545
+  [nplm/distance] epoch 92/120  interaction=-0.8198  marginal=0.1626
+  [nplm/distance] epoch 93/120  interaction=-0.8261  marginal=0.1584
+  [nplm/distance] epoch 94/120  interaction=-0.8206  marginal=0.1695
+  [nplm/distance] epoch 95/120  interaction=-0.8205  marginal=0.1596
+  [nplm/distance] epoch 96/120  interaction=-0.8210  marginal=0.1664
+  [nplm/distance] epoch 97/120  interaction=-0.8251  marginal=0.1674
+  [nplm/distance] epoch 98/120  interaction=-0.8236  marginal=0.1607
+  [nplm/distance] epoch 99/120  interaction=-0.8269  marginal=0.1577
+  [nplm/distance] epoch 100/120  interaction=-0.8237  marginal=0.1632
+  [nplm/distance] epoch 101/120  interaction=-0.8264  marginal=0.1571
+  [nplm/distance] epoch 102/120  interaction=-0.8278  marginal=0.1602
+  [nplm/distance] epoch 103/120  interaction=-0.8233  marginal=0.1554
+  [nplm/distance] epoch 104/120  interaction=-0.8255  marginal=0.1556
+  [nplm/distance] epoch 105/120  interaction=-0.8255  marginal=0.1605
+  [nplm/distance] epoch 106/120  interaction=-0.8226  marginal=0.1617
+  [nplm/distance] epoch 107/120  interaction=-0.8236  marginal=0.1535
+  [nplm/distance] epoch 108/120  interaction=-0.8190  marginal=0.1620
+  [nplm/distance] epoch 109/120  interaction=-0.8324  marginal=0.1593
+  [nplm/distance] epoch 110/120  interaction=-0.8246  marginal=0.1585
+  [nplm/distance] epoch 111/120  interaction=-0.8260  marginal=0.1492
+  [nplm/distance] epoch 112/120  interaction=-0.8269  marginal=0.1579
+  [nplm/distance] epoch 113/120  interaction=-0.8277  marginal=0.1648
+  [nplm/distance] epoch 114/120  interaction=-0.8273  marginal=0.1579
+  [nplm/distance] epoch 115/120  interaction=-0.8195  marginal=0.1539
+  [nplm/distance] epoch 116/120  interaction=-0.8249  marginal=0.1558
+  [nplm/distance] epoch 117/120  interaction=-0.8258  marginal=0.1588
+  [nplm/distance] epoch 118/120  interaction=-0.8324  marginal=0.1558
+  [nplm/distance] epoch 119/120  interaction=-0.8228  marginal=0.1546
+  [nplm/distance] epoch 120/120  interaction=-0.8239  marginal=0.1589
+  [nplm_distance ] probe=0.7136+-0.0059 acc=0.0793 supAUC=0.7249 eucl=0.4570 mahaT=0.5370 mahaPC=0.5216 lid=0.4807
+
+----- nplm_sup_dist (labels) -----
+  [nplm/distance] epoch 1/120  interaction=0.3065  marginal=0.7716
+  [nplm/distance] epoch 2/120  interaction=-0.0932  marginal=0.7527
+  [nplm/distance] epoch 3/120  interaction=-0.1845  marginal=0.6792
+  [nplm/distance] epoch 4/120  interaction=-0.2521  marginal=0.6415
+  [nplm/distance] epoch 5/120  interaction=-0.2815  marginal=0.6445
+  [nplm/distance] epoch 6/120  interaction=-0.3085  marginal=0.6306
+  [nplm/distance] epoch 7/120  interaction=-0.3222  marginal=0.5996
+  [nplm/distance] epoch 8/120  interaction=-0.3315  marginal=0.5898
+  [nplm/distance] epoch 9/120  interaction=-0.3467  marginal=0.6043
+  [nplm/distance] epoch 10/120  interaction=-0.3564  marginal=0.6097
+  [nplm/distance] epoch 11/120  interaction=-0.3598  marginal=0.5749
+  [nplm/distance] epoch 12/120  interaction=-0.3686  marginal=0.5662
+  [nplm/distance] epoch 13/120  interaction=-0.3670  marginal=0.5652
+  [nplm/distance] epoch 14/120  interaction=-0.3814  marginal=0.5803
+  [nplm/distance] epoch 15/120  interaction=-0.3833  marginal=0.5625
+  [nplm/distance] epoch 16/120  interaction=-0.3909  marginal=0.5610
+  [nplm/distance] epoch 17/120  interaction=-0.3867  marginal=0.5433
+  [nplm/distance] epoch 18/120  interaction=-0.3872  marginal=0.5593
+  [nplm/distance] epoch 19/120  interaction=-0.3980  marginal=0.5447
+  [nplm/distance] epoch 20/120  interaction=-0.3972  marginal=0.5442
+  [nplm/distance] epoch 21/120  interaction=-0.3971  marginal=0.5357
+  [nplm/distance] epoch 22/120  interaction=-0.4064  marginal=0.5373
+  [nplm/distance] epoch 23/120  interaction=-0.4140  marginal=0.5496
+  [nplm/distance] epoch 24/120  interaction=-0.4064  marginal=0.5425
+  [nplm/distance] epoch 25/120  interaction=-0.4149  marginal=0.5364
+  [nplm/distance] epoch 26/120  interaction=-0.4205  marginal=0.5330
+  [nplm/distance] epoch 27/120  interaction=-0.4088  marginal=0.5209
+  [nplm/distance] epoch 28/120  interaction=-0.4121  marginal=0.5330
+  [nplm/distance] epoch 29/120  interaction=-0.4186  marginal=0.5401
+  [nplm/distance] epoch 30/120  interaction=-0.4197  marginal=0.5219
+  [nplm/distance] epoch 31/120  interaction=-0.4117  marginal=0.5215
+  [nplm/distance] epoch 32/120  interaction=-0.4269  marginal=0.5273
+  [nplm/distance] epoch 33/120  interaction=-0.4219  marginal=0.5117
+  [nplm/distance] epoch 34/120  interaction=-0.4219  marginal=0.5227
+  [nplm/distance] epoch 35/120  interaction=-0.4293  marginal=0.5141
+  [nplm/distance] epoch 36/120  interaction=-0.4294  marginal=0.5044
+  [nplm/distance] epoch 37/120  interaction=-0.4348  marginal=0.5156
+  [nplm/distance] epoch 38/120  interaction=-0.4361  marginal=0.5184
+  [nplm/distance] epoch 39/120  interaction=-0.4341  marginal=0.4985
+  [nplm/distance] epoch 40/120  interaction=-0.4451  marginal=0.5115
+  [nplm/distance] epoch 41/120  interaction=-0.4483  marginal=0.5204
+  [nplm/distance] epoch 42/120  interaction=-0.4407  marginal=0.5087
+  [nplm/distance] epoch 43/120  interaction=-0.4369  marginal=0.4978
+  [nplm/distance] epoch 44/120  interaction=-0.4531  marginal=0.5233
+  [nplm/distance] epoch 45/120  interaction=-0.4406  marginal=0.5111
+  [nplm/distance] epoch 46/120  interaction=-0.4480  marginal=0.5111
+  [nplm/distance] epoch 47/120  interaction=-0.4538  marginal=0.5149
+  [nplm/distance] epoch 48/120  interaction=-0.4469  marginal=0.5122
+  [nplm/distance] epoch 49/120  interaction=-0.4504  marginal=0.5001
+  [nplm/distance] epoch 50/120  interaction=-0.4522  marginal=0.4906
+  [nplm/distance] epoch 51/120  interaction=-0.4543  marginal=0.4944
+  [nplm/distance] epoch 52/120  interaction=-0.4548  marginal=0.4931
+  [nplm/distance] epoch 53/120  interaction=-0.4522  marginal=0.4909
+  [nplm/distance] epoch 54/120  interaction=-0.4506  marginal=0.4886
+  [nplm/distance] epoch 55/120  interaction=-0.4568  marginal=0.4948
+  [nplm/distance] epoch 56/120  interaction=-0.4587  marginal=0.4926
+  [nplm/distance] epoch 57/120  interaction=-0.4613  marginal=0.5007
+  [nplm/distance] epoch 58/120  interaction=-0.4593  marginal=0.4972
+  [nplm/distance] epoch 59/120  interaction=-0.4623  marginal=0.4913
+  [nplm/distance] epoch 60/120  interaction=-0.4550  marginal=0.4949
+  [nplm/distance] epoch 61/120  interaction=-0.4496  marginal=0.4975
+  [nplm/distance] epoch 62/120  interaction=-0.4684  marginal=0.4998
+  [nplm/distance] epoch 63/120  interaction=-0.4631  marginal=0.4700
+  [nplm/distance] epoch 64/120  interaction=-0.4711  marginal=0.4903
+  [nplm/distance] epoch 65/120  interaction=-0.4716  marginal=0.4913
+  [nplm/distance] epoch 66/120  interaction=-0.4688  marginal=0.4881
+  [nplm/distance] epoch 67/120  interaction=-0.4756  marginal=0.4704
+  [nplm/distance] epoch 68/120  interaction=-0.4773  marginal=0.4759
+  [nplm/distance] epoch 69/120  interaction=-0.4736  marginal=0.4694
+  [nplm/distance] epoch 70/120  interaction=-0.4803  marginal=0.4718
+  [nplm/distance] epoch 71/120  interaction=-0.4771  marginal=0.4734
+  [nplm/distance] epoch 72/120  interaction=-0.4814  marginal=0.4677
+  [nplm/distance] epoch 73/120  interaction=-0.4657  marginal=0.4604
+  [nplm/distance] epoch 74/120  interaction=-0.4600  marginal=0.4920
+  [nplm/distance] epoch 75/120  interaction=-0.4679  marginal=0.4673
+  [nplm/distance] epoch 76/120  interaction=-0.4833  marginal=0.4647
+  [nplm/distance] epoch 77/120  interaction=-0.4777  marginal=0.4612
+  [nplm/distance] epoch 78/120  interaction=-0.4843  marginal=0.4773
+  [nplm/distance] epoch 79/120  interaction=-0.4815  marginal=0.4527
+  [nplm/distance] epoch 80/120  interaction=-0.4903  marginal=0.4792
+  [nplm/distance] epoch 81/120  interaction=-0.4868  marginal=0.4746
+  [nplm/distance] epoch 82/120  interaction=-0.4879  marginal=0.4670
+  [nplm/distance] epoch 83/120  interaction=-0.4867  marginal=0.4710
+  [nplm/distance] epoch 84/120  interaction=-0.4896  marginal=0.4754
+  [nplm/distance] epoch 85/120  interaction=-0.4884  marginal=0.4616
+  [nplm/distance] epoch 86/120  interaction=-0.4873  marginal=0.4683
+  [nplm/distance] epoch 87/120  interaction=-0.4849  marginal=0.4512
+  [nplm/distance] epoch 88/120  interaction=-0.4845  marginal=0.4588
+  [nplm/distance] epoch 89/120  interaction=-0.4891  marginal=0.4552
+  [nplm/distance] epoch 90/120  interaction=-0.4877  marginal=0.4519
+  [nplm/distance] epoch 91/120  interaction=-0.4900  marginal=0.4710
+  [nplm/distance] epoch 92/120  interaction=-0.4882  marginal=0.4704
+  [nplm/distance] epoch 93/120  interaction=-0.4951  marginal=0.4636
+  [nplm/distance] epoch 94/120  interaction=-0.4938  marginal=0.4401
+  [nplm/distance] epoch 95/120  interaction=-0.5049  marginal=0.4497
+  [nplm/distance] epoch 96/120  interaction=-0.4975  marginal=0.4577
+  [nplm/distance] epoch 97/120  interaction=-0.5033  marginal=0.4496
+  [nplm/distance] epoch 98/120  interaction=-0.5000  marginal=0.4533
+  [nplm/distance] epoch 99/120  interaction=-0.4958  marginal=0.4615
+  [nplm/distance] epoch 100/120  interaction=-0.5047  marginal=0.4526
+  [nplm/distance] epoch 101/120  interaction=-0.5032  marginal=0.4464
+  [nplm/distance] epoch 102/120  interaction=-0.5063  marginal=0.4664
+  [nplm/distance] epoch 103/120  interaction=-0.5047  marginal=0.4624
+  [nplm/distance] epoch 104/120  interaction=-0.5047  marginal=0.4564
+  [nplm/distance] epoch 105/120  interaction=-0.4960  marginal=0.4517
+  [nplm/distance] epoch 106/120  interaction=-0.5002  marginal=0.4589
+  [nplm/distance] epoch 107/120  interaction=-0.5060  marginal=0.4466
+  [nplm/distance] epoch 108/120  interaction=-0.5031  marginal=0.4538
+  [nplm/distance] epoch 109/120  interaction=-0.5081  marginal=0.4474
+  [nplm/distance] epoch 110/120  interaction=-0.5136  marginal=0.4517
+  [nplm/distance] epoch 111/120  interaction=-0.5102  marginal=0.4558
+  [nplm/distance] epoch 112/120  interaction=-0.5101  marginal=0.4635
+  [nplm/distance] epoch 113/120  interaction=-0.5159  marginal=0.4445
+  [nplm/distance] epoch 114/120  interaction=-0.5034  marginal=0.4485
+  [nplm/distance] epoch 115/120  interaction=-0.5137  marginal=0.4532
+  [nplm/distance] epoch 116/120  interaction=-0.5165  marginal=0.4326
+  [nplm/distance] epoch 117/120  interaction=-0.5181  marginal=0.4506
+  [nplm/distance] epoch 118/120  interaction=-0.5111  marginal=0.4554
+  [nplm/distance] epoch 119/120  interaction=-0.5082  marginal=0.4538
+  [nplm/distance] epoch 120/120  interaction=-0.5186  marginal=0.4398
+  [nplm_sup_dist ] probe=0.7424+-0.0042 acc=0.2130 supAUC=0.9290 eucl=0.6942 mahaT=0.6942 mahaPC=0.6784 lid=0.5433
+
+===== performance / novelty table =====
+  arm                        probe     acc  supAUC    eucl   mahaT  mahaPC     lid
+  simclr             0.6682+-0.0231  0.1543  0.8176  0.5777  0.5411  0.5234  0.5213
+  lejepa             0.7001+-0.0039  0.1187  0.7861  0.4870  0.5594  0.5726  0.4890
+  simclr_sigreg      0.7177+-0.0004  0.1593  0.8501  0.4140  0.4822  0.5587  0.5143
+  supcon             0.7375+-0.0038  0.5643  0.9676  0.7241  0.7119  0.4894  0.6428
+  supcon_sigreg      0.7865+-0.0047  0.5887  0.9795  0.7534  0.7462  0.6685  0.7031
+  nplm_bilinear      0.6392+-0.0021  0.1057  0.7474  0.5410  0.6077  0.6200  0.5376
+  nplm_distance      0.7136+-0.0059  0.0793  0.7249  0.4570  0.5370  0.5216  0.4807
+  nplm_sup_dist      0.7424+-0.0042  0.2130  0.9290  0.6942  0.6942  0.6784  0.5433
+
+===== gaussianity (seen classes, test set) =====
+  metric                            simclr        lejepa simclr_sigreg        supcon supcon_sigreg nplm_bilinear nplm_distance nplm_sup_dist
+  eig min (class cov)               -0.000        -0.000        -0.000         0.000        -0.000         0.000        -0.000        -0.000
+  eig max (class cov)              916.775        15.748        14.147       113.675        16.561         0.747        14.501         3.646
+  eig cond worst            4035499524096.07396705959936.08408932548608.0   495940640.05503082561536.0  7825973760.03932552953856.03646185537536.0
+  class RMS min                      0.600         0.579         0.550         0.127         0.343         0.154         0.393         0.065
+  class RMS mean                     1.312         0.819         0.902         0.335         0.528         0.194         0.680         0.124
+  class RMS max                      5.336         0.959         1.082         2.065         0.966         0.231         0.886         0.343
+  max |corr| (worst class)           0.996         0.961         0.942         0.984         0.960         0.939         0.995         1.000
+  SW ratio mean                       5.02          1.63          1.33          2.87          1.47          1.39          2.55          2.78
+  SW ratio worst                     23.63          4.29          2.93         14.65          3.26          3.47          4.96         14.49
+  |skew| mean                        1.139         0.445         0.384         0.745         0.439         0.384         0.558         0.802
+  |ex-kurt| mean                     3.569         0.811         0.717         2.170         0.931         0.847         1.184         1.664
+  centroid dist min                   0.57          0.65          0.74          0.31          0.56          0.15          0.24          0.01
+  centroid dist mean                  5.30          3.04          3.19          4.48          5.74          0.77          2.65          2.96
+  separation (min d/RMS)              0.44          0.80          0.82          0.93          1.06          0.78          0.35          0.10
+saved /home/pharris/sigreg/SuperSig/plots/exp51_probe_aircraft_dino_nplm-sup-ft_seen.png
+
+===== EXP51 SUMMARY =====
+  [simclr        ] probe=0.6682+-0.0231  acc=0.1543  eucl=0.5777  mahaT=0.5411
+  [lejepa        ] probe=0.7001+-0.0039  acc=0.1187  eucl=0.4870  mahaT=0.5594
+  [simclr_sigreg ] probe=0.7177+-0.0004  acc=0.1593  eucl=0.4140  mahaT=0.4822
+  [supcon        ] probe=0.7375+-0.0038  acc=0.5643  eucl=0.7241  mahaT=0.7119
+  [supcon_sigreg ] probe=0.7865+-0.0047  acc=0.5887  eucl=0.7534  mahaT=0.7462
+  [nplm_bilinear ] probe=0.6392+-0.0021  acc=0.1057  eucl=0.5410  mahaT=0.6077
+  [nplm_distance ] probe=0.7136+-0.0059  acc=0.0793  eucl=0.4570  mahaT=0.5370
+  [nplm_sup_dist ] probe=0.7424+-0.0042  acc=0.2130  eucl=0.6942  mahaT=0.6942
+Done.
+----- exp84 stage1 aircraft:lejepa nplm-sup-ft (seen-only) -----
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+exp70 [aircraft_lejepa_ft70] end-to-end ft suite, arms=['nplm-sup-ft'], ft_epochs=20, emb=100, holdouts 90-99 EXCLUDED from ft
+  ft corpus: 6000/6667 train images (holdout classes removed)
+
+===== [nplm-sup-ft] (supervised) =====
+Fetching 37 files:   0%|          | 0/37 [00:00<?, ?it/s]Fetching 37 files: 100%|██████████| 37/37 [00:00<00:00, 88781.03it/s]
+  [nplm-sup-ft] epoch 1/20  main=-0.2661  aux=0.7850
+  [nplm-sup-ft] epoch 5/20  main=-0.5098  aux=0.6790
+  [nplm-sup-ft] epoch 10/20  main=-0.5666  aux=0.6129
+  [nplm-sup-ft] epoch 15/20  main=-0.6041  aux=0.5847
+  [nplm-sup-ft] epoch 20/20  main=-0.6178  aux=0.5666
+  extracted ft70_nplm-sup-ft train: (6667, 768)
+  extracted ft70_nplm-sup-ft test: (3333, 768)
+  [nplm-sup-ft   ] probe=0.7179+-0.0482 acc=0.2650 supAUC=0.9514 eucl=0.7042 mahaT=0.7538 mahaPC=0.7090 lid=0.4144
+
+===== PRE table =====
+  arm                        probe     acc  supAUC    eucl   mahaT  mahaPC
+  nplm-sup-ft        0.7179+-0.0482  0.2650  0.9514  0.7042  0.7538  0.7090
+
+===== gaussianity (seen classes, test set) =====
+  metric                       nplm-sup-ft
+  eig min (class cov)               -0.000
+  eig max (class cov)                2.488
+  eig cond worst            2488125620224.0
+  class RMS min                      0.041
+  class RMS mean                     0.072
+  class RMS max                      0.157
+  max |corr| (worst class)           1.000
+  SW ratio mean                       3.58
+  SW ratio worst                     13.87
+  |skew| mean                        0.988
+  |ex-kurt| mean                     2.249
+  centroid dist min                   0.05
+  centroid dist mean                  3.79
+  separation (min d/RMS)              0.66
+
+===== EXP70 SUMMARY [aircraft_lejepa_ft70] =====
+  [nplm-sup-ft   ] probe=0.7179+-0.0482 acc=0.2650 eucl=0.7042 mahaT=0.7538
+saved /home/pharris/sigreg/SuperSig/plots/exp70_probe_aircraft_lejepa_ft70.png
+Done.
+----- exp84 stage2 aircraft:lejepa 8-arm head suite -----
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+exp51 [aircraft_lejepa_nplm-sup-ft_seen] NPLM suite, dim=32, epochs=120, holdouts=[90, 91, 92, 93, 94, 95, 96, 97, 98, 99], lam=1.0, arms=['simclr', 'lejepa', 'simclr_sigreg', 'supcon', 'supcon_sigreg', 'nplm_bilinear', 'nplm_distance', 'nplm_sup_dist']
+Fetching 37 files:   0%|          | 0/37 [00:00<?, ?it/s]Fetching 37 files: 100%|██████████| 37/37 [00:00<00:00, 66122.39it/s]
+  loading ft trunk /home/pharris/sigreg/SuperSig/checkpoints/aircraft_ft_lejepa_nplm-sup-ft_seen.pt
+  extracted aircraft_lejepa_vitb16_nplm-sup-ft_seen train: (6667, 768)
+  extracted aircraft_lejepa_vitb16_nplm-sup-ft_seen test: (3333, 768)
+  aircraft_lejepa_vitb16_nplm-sup-ft_seen aug replica 1/8
+  aircraft_lejepa_vitb16_nplm-sup-ft_seen aug replica 2/8
+  aircraft_lejepa_vitb16_nplm-sup-ft_seen aug replica 3/8
+  aircraft_lejepa_vitb16_nplm-sup-ft_seen aug replica 4/8
+  aircraft_lejepa_vitb16_nplm-sup-ft_seen aug replica 5/8
+  aircraft_lejepa_vitb16_nplm-sup-ft_seen aug replica 6/8
+  aircraft_lejepa_vitb16_nplm-sup-ft_seen aug replica 7/8
+  aircraft_lejepa_vitb16_nplm-sup-ft_seen aug replica 8/8
+  train pool 6667 (seen bank 6000), test pool 3333 (333 holdout)
+
+----- simclr (augmentations only) -----
+  [simclr] epoch 1/120  loss=5.6944
+  [simclr] epoch 2/120  loss=5.4256
+  [simclr] epoch 3/120  loss=5.3047
+  [simclr] epoch 4/120  loss=5.2580
+  [simclr] epoch 5/120  loss=5.2352
+  [simclr] epoch 6/120  loss=5.2155
+  [simclr] epoch 7/120  loss=5.2018
+  [simclr] epoch 8/120  loss=5.1923
+  [simclr] epoch 9/120  loss=5.1845
+  [simclr] epoch 10/120  loss=5.1773
+  [simclr] epoch 11/120  loss=5.1771
+  [simclr] epoch 12/120  loss=5.1700
+  [simclr] epoch 13/120  loss=5.1674
+  [simclr] epoch 14/120  loss=5.1648
+  [simclr] epoch 15/120  loss=5.1588
+  [simclr] epoch 16/120  loss=5.1525
+  [simclr] epoch 17/120  loss=5.1503
+  [simclr] epoch 18/120  loss=5.1461
+  [simclr] epoch 19/120  loss=5.1415
+  [simclr] epoch 20/120  loss=5.1401
+  [simclr] epoch 21/120  loss=5.1355
+  [simclr] epoch 22/120  loss=5.1359
+  [simclr] epoch 23/120  loss=5.1317
+  [simclr] epoch 24/120  loss=5.1308
+  [simclr] epoch 25/120  loss=5.1283
+  [simclr] epoch 26/120  loss=5.1258
+  [simclr] epoch 27/120  loss=5.1240
+  [simclr] epoch 28/120  loss=5.1226
+  [simclr] epoch 29/120  loss=5.1222
+  [simclr] epoch 30/120  loss=5.1205
+  [simclr] epoch 31/120  loss=5.1212
+  [simclr] epoch 32/120  loss=5.1219
+  [simclr] epoch 33/120  loss=5.1189
+  [simclr] epoch 34/120  loss=5.1163
+  [simclr] epoch 35/120  loss=5.1167
+  [simclr] epoch 36/120  loss=5.1118
+  [simclr] epoch 37/120  loss=5.1103
+  [simclr] epoch 38/120  loss=5.1109
+  [simclr] epoch 39/120  loss=5.1109
+  [simclr] epoch 40/120  loss=5.1083
+  [simclr] epoch 41/120  loss=5.1097
+  [simclr] epoch 42/120  loss=5.1059
+  [simclr] epoch 43/120  loss=5.1025
+  [simclr] epoch 44/120  loss=5.1001
+  [simclr] epoch 45/120  loss=5.1005
+  [simclr] epoch 46/120  loss=5.0978
+  [simclr] epoch 47/120  loss=5.0977
+  [simclr] epoch 48/120  loss=5.0954
+  [simclr] epoch 49/120  loss=5.0959
+  [simclr] epoch 50/120  loss=5.0943
+  [simclr] epoch 51/120  loss=5.0954
+  [simclr] epoch 52/120  loss=5.0957
+  [simclr] epoch 53/120  loss=5.0936
+  [simclr] epoch 54/120  loss=5.0930
+  [simclr] epoch 55/120  loss=5.0929
+  [simclr] epoch 56/120  loss=5.0890
+  [simclr] epoch 57/120  loss=5.0913
+  [simclr] epoch 58/120  loss=5.0907
+  [simclr] epoch 59/120  loss=5.0907
+  [simclr] epoch 60/120  loss=5.0899
+  [simclr] epoch 61/120  loss=5.0873
+  [simclr] epoch 62/120  loss=5.0868
+  [simclr] epoch 63/120  loss=5.0850
+  [simclr] epoch 64/120  loss=5.0858
+  [simclr] epoch 65/120  loss=5.0848
+  [simclr] epoch 66/120  loss=5.0831
+  [simclr] epoch 67/120  loss=5.0820
+  [simclr] epoch 68/120  loss=5.0831
+  [simclr] epoch 69/120  loss=5.0825
+  [simclr] epoch 70/120  loss=5.0823
+  [simclr] epoch 71/120  loss=5.0828
+  [simclr] epoch 72/120  loss=5.0797
+  [simclr] epoch 73/120  loss=5.0793
+  [simclr] epoch 74/120  loss=5.0817
+  [simclr] epoch 75/120  loss=5.0814
+  [simclr] epoch 76/120  loss=5.0810
+  [simclr] epoch 77/120  loss=5.0802
+  [simclr] epoch 78/120  loss=5.0792
+  [simclr] epoch 79/120  loss=5.0780
+  [simclr] epoch 80/120  loss=5.0788
+  [simclr] epoch 81/120  loss=5.0781
+  [simclr] epoch 82/120  loss=5.0741
+  [simclr] epoch 83/120  loss=5.0733
+  [simclr] epoch 84/120  loss=5.0737
+  [simclr] epoch 85/120  loss=5.0760
+  [simclr] epoch 86/120  loss=5.0763
+  [simclr] epoch 87/120  loss=5.0743
+  [simclr] epoch 88/120  loss=5.0745
+  [simclr] epoch 89/120  loss=5.0730
+  [simclr] epoch 90/120  loss=5.0747
+  [simclr] epoch 91/120  loss=5.0724
+  [simclr] epoch 92/120  loss=5.0732
+  [simclr] epoch 93/120  loss=5.0704
+  [simclr] epoch 94/120  loss=5.0715
+  [simclr] epoch 95/120  loss=5.0699
+  [simclr] epoch 96/120  loss=5.0705
+  [simclr] epoch 97/120  loss=5.0713
+  [simclr] epoch 98/120  loss=5.0706
+  [simclr] epoch 99/120  loss=5.0688
+  [simclr] epoch 100/120  loss=5.0692
+  [simclr] epoch 101/120  loss=5.0685
+  [simclr] epoch 102/120  loss=5.0679
+  [simclr] epoch 103/120  loss=5.0670
+  [simclr] epoch 104/120  loss=5.0673
+  [simclr] epoch 105/120  loss=5.0649
+  [simclr] epoch 106/120  loss=5.0669
+  [simclr] epoch 107/120  loss=5.0641
+  [simclr] epoch 108/120  loss=5.0651
+  [simclr] epoch 109/120  loss=5.0660
+  [simclr] epoch 110/120  loss=5.0643
+  [simclr] epoch 111/120  loss=5.0640
+  [simclr] epoch 112/120  loss=5.0653
+  [simclr] epoch 113/120  loss=5.0660
+  [simclr] epoch 114/120  loss=5.0685
+  [simclr] epoch 115/120  loss=5.0650
+  [simclr] epoch 116/120  loss=5.0642
+  [simclr] epoch 117/120  loss=5.0633
+  [simclr] epoch 118/120  loss=5.0652
+  [simclr] epoch 119/120  loss=5.0619
+  [simclr] epoch 120/120  loss=5.0631
+  [simclr        ] probe=0.6754+-0.0096 acc=0.2147 supAUC=0.8877 eucl=0.6083 mahaT=0.5943 mahaPC=0.5762 lid=0.5817
+
+----- lejepa (augmentations only) -----
+  [sigreg-ssl] epoch 1/120  inv=0.0104  sigreg=0.5769
+  [sigreg-ssl] epoch 2/120  inv=0.0499  sigreg=0.2321
+  [sigreg-ssl] epoch 3/120  inv=0.0442  sigreg=0.1781
+  [sigreg-ssl] epoch 4/120  inv=0.0429  sigreg=0.1657
+  [sigreg-ssl] epoch 5/120  inv=0.0386  sigreg=0.1677
+  [sigreg-ssl] epoch 6/120  inv=0.0337  sigreg=0.1622
+  [sigreg-ssl] epoch 7/120  inv=0.0366  sigreg=0.1384
+  [sigreg-ssl] epoch 8/120  inv=0.0368  sigreg=0.1391
+  [sigreg-ssl] epoch 9/120  inv=0.0372  sigreg=0.1213
+  [sigreg-ssl] epoch 10/120  inv=0.0409  sigreg=0.1146
+  [sigreg-ssl] epoch 11/120  inv=0.0419  sigreg=0.1133
+  [sigreg-ssl] epoch 12/120  inv=0.0441  sigreg=0.1084
+  [sigreg-ssl] epoch 13/120  inv=0.0449  sigreg=0.1028
+  [sigreg-ssl] epoch 14/120  inv=0.0439  sigreg=0.1030
+  [sigreg-ssl] epoch 15/120  inv=0.0426  sigreg=0.0935
+  [sigreg-ssl] epoch 16/120  inv=0.0424  sigreg=0.0997
+  [sigreg-ssl] epoch 17/120  inv=0.0431  sigreg=0.0890
+  [sigreg-ssl] epoch 18/120  inv=0.0438  sigreg=0.0845
+  [sigreg-ssl] epoch 19/120  inv=0.0428  sigreg=0.0901
+  [sigreg-ssl] epoch 20/120  inv=0.0431  sigreg=0.0851
+  [sigreg-ssl] epoch 21/120  inv=0.0432  sigreg=0.0796
+  [sigreg-ssl] epoch 22/120  inv=0.0426  sigreg=0.0801
+  [sigreg-ssl] epoch 23/120  inv=0.0419  sigreg=0.0790
+  [sigreg-ssl] epoch 24/120  inv=0.0429  sigreg=0.0774
+  [sigreg-ssl] epoch 25/120  inv=0.0412  sigreg=0.0736
+  [sigreg-ssl] epoch 26/120  inv=0.0414  sigreg=0.0777
+  [sigreg-ssl] epoch 27/120  inv=0.0414  sigreg=0.0742
+  [sigreg-ssl] epoch 28/120  inv=0.0413  sigreg=0.0748
+  [sigreg-ssl] epoch 29/120  inv=0.0393  sigreg=0.0773
+  [sigreg-ssl] epoch 30/120  inv=0.0406  sigreg=0.0769
+  [sigreg-ssl] epoch 31/120  inv=0.0412  sigreg=0.0723
+  [sigreg-ssl] epoch 32/120  inv=0.0407  sigreg=0.0722
+  [sigreg-ssl] epoch 33/120  inv=0.0393  sigreg=0.0784
+  [sigreg-ssl] epoch 34/120  inv=0.0414  sigreg=0.0701
+  [sigreg-ssl] epoch 35/120  inv=0.0389  sigreg=0.0723
+  [sigreg-ssl] epoch 36/120  inv=0.0399  sigreg=0.0710
+  [sigreg-ssl] epoch 37/120  inv=0.0397  sigreg=0.0651
+  [sigreg-ssl] epoch 38/120  inv=0.0396  sigreg=0.0678
+  [sigreg-ssl] epoch 39/120  inv=0.0404  sigreg=0.0693
+  [sigreg-ssl] epoch 40/120  inv=0.0386  sigreg=0.0687
+  [sigreg-ssl] epoch 41/120  inv=0.0389  sigreg=0.0656
+  [sigreg-ssl] epoch 42/120  inv=0.0404  sigreg=0.0690
+  [sigreg-ssl] epoch 43/120  inv=0.0382  sigreg=0.0663
+  [sigreg-ssl] epoch 44/120  inv=0.0395  sigreg=0.0623
+  [sigreg-ssl] epoch 45/120  inv=0.0391  sigreg=0.0617
+  [sigreg-ssl] epoch 46/120  inv=0.0397  sigreg=0.0651
+  [sigreg-ssl] epoch 47/120  inv=0.0393  sigreg=0.0607
+  [sigreg-ssl] epoch 48/120  inv=0.0394  sigreg=0.0626
+  [sigreg-ssl] epoch 49/120  inv=0.0379  sigreg=0.0628
+  [sigreg-ssl] epoch 50/120  inv=0.0382  sigreg=0.0608
+  [sigreg-ssl] epoch 51/120  inv=0.0387  sigreg=0.0580
+  [sigreg-ssl] epoch 52/120  inv=0.0380  sigreg=0.0632
+  [sigreg-ssl] epoch 53/120  inv=0.0382  sigreg=0.0592
+  [sigreg-ssl] epoch 54/120  inv=0.0381  sigreg=0.0587
+  [sigreg-ssl] epoch 55/120  inv=0.0373  sigreg=0.0617
+  [sigreg-ssl] epoch 56/120  inv=0.0372  sigreg=0.0565
+  [sigreg-ssl] epoch 57/120  inv=0.0385  sigreg=0.0553
+  [sigreg-ssl] epoch 58/120  inv=0.0379  sigreg=0.0571
+  [sigreg-ssl] epoch 59/120  inv=0.0385  sigreg=0.0530
+  [sigreg-ssl] epoch 60/120  inv=0.0376  sigreg=0.0590
+  [sigreg-ssl] epoch 61/120  inv=0.0369  sigreg=0.0568
+  [sigreg-ssl] epoch 62/120  inv=0.0368  sigreg=0.0568
+  [sigreg-ssl] epoch 63/120  inv=0.0364  sigreg=0.0566
+  [sigreg-ssl] epoch 64/120  inv=0.0375  sigreg=0.0575
+  [sigreg-ssl] epoch 65/120  inv=0.0369  sigreg=0.0574
+  [sigreg-ssl] epoch 66/120  inv=0.0371  sigreg=0.0562
+  [sigreg-ssl] epoch 67/120  inv=0.0368  sigreg=0.0577
+  [sigreg-ssl] epoch 68/120  inv=0.0369  sigreg=0.0555
+  [sigreg-ssl] epoch 69/120  inv=0.0371  sigreg=0.0545
+  [sigreg-ssl] epoch 70/120  inv=0.0371  sigreg=0.0523
+  [sigreg-ssl] epoch 71/120  inv=0.0365  sigreg=0.0527
+  [sigreg-ssl] epoch 72/120  inv=0.0362  sigreg=0.0510
+  [sigreg-ssl] epoch 73/120  inv=0.0373  sigreg=0.0530
+  [sigreg-ssl] epoch 74/120  inv=0.0358  sigreg=0.0554
+  [sigreg-ssl] epoch 75/120  inv=0.0364  sigreg=0.0537
+  [sigreg-ssl] epoch 76/120  inv=0.0359  sigreg=0.0531
+  [sigreg-ssl] epoch 77/120  inv=0.0352  sigreg=0.0533
+  [sigreg-ssl] epoch 78/120  inv=0.0351  sigreg=0.0554
+  [sigreg-ssl] epoch 79/120  inv=0.0356  sigreg=0.0524
+  [sigreg-ssl] epoch 80/120  inv=0.0354  sigreg=0.0528
+  [sigreg-ssl] epoch 81/120  inv=0.0356  sigreg=0.0533
+  [sigreg-ssl] epoch 82/120  inv=0.0370  sigreg=0.0523
+  [sigreg-ssl] epoch 83/120  inv=0.0349  sigreg=0.0525
+  [sigreg-ssl] epoch 84/120  inv=0.0361  sigreg=0.0500
+  [sigreg-ssl] epoch 85/120  inv=0.0354  sigreg=0.0501
+  [sigreg-ssl] epoch 86/120  inv=0.0349  sigreg=0.0521
+  [sigreg-ssl] epoch 87/120  inv=0.0357  sigreg=0.0505
+  [sigreg-ssl] epoch 88/120  inv=0.0345  sigreg=0.0506
+  [sigreg-ssl] epoch 89/120  inv=0.0345  sigreg=0.0492
+  [sigreg-ssl] epoch 90/120  inv=0.0357  sigreg=0.0489
+  [sigreg-ssl] epoch 91/120  inv=0.0343  sigreg=0.0469
+  [sigreg-ssl] epoch 92/120  inv=0.0347  sigreg=0.0475
+  [sigreg-ssl] epoch 93/120  inv=0.0344  sigreg=0.0502
+  [sigreg-ssl] epoch 94/120  inv=0.0359  sigreg=0.0505
+  [sigreg-ssl] epoch 95/120  inv=0.0333  sigreg=0.0513
+  [sigreg-ssl] epoch 96/120  inv=0.0337  sigreg=0.0504
+  [sigreg-ssl] epoch 97/120  inv=0.0344  sigreg=0.0502
+  [sigreg-ssl] epoch 98/120  inv=0.0350  sigreg=0.0488
+  [sigreg-ssl] epoch 99/120  inv=0.0339  sigreg=0.0495
+  [sigreg-ssl] epoch 100/120  inv=0.0326  sigreg=0.0508
+  [sigreg-ssl] epoch 101/120  inv=0.0342  sigreg=0.0476
+  [sigreg-ssl] epoch 102/120  inv=0.0334  sigreg=0.0490
+  [sigreg-ssl] epoch 103/120  inv=0.0339  sigreg=0.0483
+  [sigreg-ssl] epoch 104/120  inv=0.0337  sigreg=0.0479
+  [sigreg-ssl] epoch 105/120  inv=0.0336  sigreg=0.0520
+  [sigreg-ssl] epoch 106/120  inv=0.0335  sigreg=0.0485
+  [sigreg-ssl] epoch 107/120  inv=0.0329  sigreg=0.0479
+  [sigreg-ssl] epoch 108/120  inv=0.0341  sigreg=0.0480
+  [sigreg-ssl] epoch 109/120  inv=0.0334  sigreg=0.0472
+  [sigreg-ssl] epoch 110/120  inv=0.0339  sigreg=0.0472
+  [sigreg-ssl] epoch 111/120  inv=0.0326  sigreg=0.0486
+  [sigreg-ssl] epoch 112/120  inv=0.0333  sigreg=0.0489
+  [sigreg-ssl] epoch 113/120  inv=0.0331  sigreg=0.0459
+  [sigreg-ssl] epoch 114/120  inv=0.0334  sigreg=0.0440
+  [sigreg-ssl] epoch 115/120  inv=0.0332  sigreg=0.0461
+  [sigreg-ssl] epoch 116/120  inv=0.0324  sigreg=0.0470
+  [sigreg-ssl] epoch 117/120  inv=0.0324  sigreg=0.0462
+  [sigreg-ssl] epoch 118/120  inv=0.0323  sigreg=0.0436
+  [sigreg-ssl] epoch 119/120  inv=0.0337  sigreg=0.0466
+  [sigreg-ssl] epoch 120/120  inv=0.0325  sigreg=0.0461
+  [lejepa        ] probe=0.7305+-0.0030 acc=0.1817 supAUC=0.9012 eucl=0.5148 mahaT=0.6258 mahaPC=0.7000 lid=0.5834
+
+----- simclr_sigreg (augmentations only) -----
+  [softmax/cosine] epoch 1/120  interaction=5.6954  marginal=0.7944
+  [softmax/cosine] epoch 2/120  interaction=5.5073  marginal=0.5972
+  [softmax/cosine] epoch 3/120  interaction=5.4714  marginal=0.4112
+  [softmax/cosine] epoch 4/120  interaction=5.4441  marginal=0.2587
+  [softmax/cosine] epoch 5/120  interaction=5.4250  marginal=0.1557
+  [softmax/cosine] epoch 6/120  interaction=5.4033  marginal=0.1132
+  [softmax/cosine] epoch 7/120  interaction=5.3794  marginal=0.0921
+  [softmax/cosine] epoch 8/120  interaction=5.3592  marginal=0.0815
+  [softmax/cosine] epoch 9/120  interaction=5.3450  marginal=0.0791
+  [softmax/cosine] epoch 10/120  interaction=5.3240  marginal=0.0788
+  [softmax/cosine] epoch 11/120  interaction=5.3133  marginal=0.0712
+  [softmax/cosine] epoch 12/120  interaction=5.3024  marginal=0.0680
+  [softmax/cosine] epoch 13/120  interaction=5.2966  marginal=0.0628
+  [softmax/cosine] epoch 14/120  interaction=5.2895  marginal=0.0609
+  [softmax/cosine] epoch 15/120  interaction=5.2809  marginal=0.0574
+  [softmax/cosine] epoch 16/120  interaction=5.2803  marginal=0.0612
+  [softmax/cosine] epoch 17/120  interaction=5.2720  marginal=0.0559
+  [softmax/cosine] epoch 18/120  interaction=5.2719  marginal=0.0606
+  [softmax/cosine] epoch 19/120  interaction=5.2631  marginal=0.0570
+  [softmax/cosine] epoch 20/120  interaction=5.2539  marginal=0.0540
+  [softmax/cosine] epoch 21/120  interaction=5.2493  marginal=0.0474
+  [softmax/cosine] epoch 22/120  interaction=5.2435  marginal=0.0523
+  [softmax/cosine] epoch 23/120  interaction=5.2401  marginal=0.0509
+  [softmax/cosine] epoch 24/120  interaction=5.2381  marginal=0.0485
+  [softmax/cosine] epoch 25/120  interaction=5.2352  marginal=0.0501
+  [softmax/cosine] epoch 26/120  interaction=5.2323  marginal=0.0457
+  [softmax/cosine] epoch 27/120  interaction=5.2275  marginal=0.0487
+  [softmax/cosine] epoch 28/120  interaction=5.2219  marginal=0.0428
+  [softmax/cosine] epoch 29/120  interaction=5.2222  marginal=0.0448
+  [softmax/cosine] epoch 30/120  interaction=5.2213  marginal=0.0483
+  [softmax/cosine] epoch 31/120  interaction=5.2178  marginal=0.0416
+  [softmax/cosine] epoch 32/120  interaction=5.2140  marginal=0.0389
+  [softmax/cosine] epoch 33/120  interaction=5.2147  marginal=0.0445
+  [softmax/cosine] epoch 34/120  interaction=5.2117  marginal=0.0435
+  [softmax/cosine] epoch 35/120  interaction=5.2092  marginal=0.0424
+  [softmax/cosine] epoch 36/120  interaction=5.2053  marginal=0.0366
+  [softmax/cosine] epoch 37/120  interaction=5.2043  marginal=0.0395
+  [softmax/cosine] epoch 38/120  interaction=5.2039  marginal=0.0392
+  [softmax/cosine] epoch 39/120  interaction=5.2046  marginal=0.0398
+  [softmax/cosine] epoch 40/120  interaction=5.1990  marginal=0.0379
+  [softmax/cosine] epoch 41/120  interaction=5.1991  marginal=0.0375
+  [softmax/cosine] epoch 42/120  interaction=5.1972  marginal=0.0391
+  [softmax/cosine] epoch 43/120  interaction=5.1935  marginal=0.0392
+  [softmax/cosine] epoch 44/120  interaction=5.1949  marginal=0.0372
+  [softmax/cosine] epoch 45/120  interaction=5.1914  marginal=0.0362
+  [softmax/cosine] epoch 46/120  interaction=5.1951  marginal=0.0382
+  [softmax/cosine] epoch 47/120  interaction=5.1921  marginal=0.0373
+  [softmax/cosine] epoch 48/120  interaction=5.1888  marginal=0.0355
+  [softmax/cosine] epoch 49/120  interaction=5.1894  marginal=0.0387
+  [softmax/cosine] epoch 50/120  interaction=5.1882  marginal=0.0355
+  [softmax/cosine] epoch 51/120  interaction=5.1884  marginal=0.0376
+  [softmax/cosine] epoch 52/120  interaction=5.1856  marginal=0.0372
+  [softmax/cosine] epoch 53/120  interaction=5.1865  marginal=0.0355
+  [softmax/cosine] epoch 54/120  interaction=5.1836  marginal=0.0355
+  [softmax/cosine] epoch 55/120  interaction=5.1862  marginal=0.0383
+  [softmax/cosine] epoch 56/120  interaction=5.1845  marginal=0.0370
+  [softmax/cosine] epoch 57/120  interaction=5.1837  marginal=0.0364
+  [softmax/cosine] epoch 58/120  interaction=5.1793  marginal=0.0354
+  [softmax/cosine] epoch 59/120  interaction=5.1764  marginal=0.0332
+  [softmax/cosine] epoch 60/120  interaction=5.1766  marginal=0.0333
+  [softmax/cosine] epoch 61/120  interaction=5.1754  marginal=0.0333
+  [softmax/cosine] epoch 62/120  interaction=5.1755  marginal=0.0343
+  [softmax/cosine] epoch 63/120  interaction=5.1741  marginal=0.0320
+  [softmax/cosine] epoch 64/120  interaction=5.1731  marginal=0.0321
+  [softmax/cosine] epoch 65/120  interaction=5.1725  marginal=0.0324
+  [softmax/cosine] epoch 66/120  interaction=5.1721  marginal=0.0315
+  [softmax/cosine] epoch 67/120  interaction=5.1687  marginal=0.0306
+  [softmax/cosine] epoch 68/120  interaction=5.1659  marginal=0.0314
+  [softmax/cosine] epoch 69/120  interaction=5.1656  marginal=0.0295
+  [softmax/cosine] epoch 70/120  interaction=5.1682  marginal=0.0300
+  [softmax/cosine] epoch 71/120  interaction=5.1662  marginal=0.0310
+  [softmax/cosine] epoch 72/120  interaction=5.1650  marginal=0.0305
+  [softmax/cosine] epoch 73/120  interaction=5.1669  marginal=0.0295
+  [softmax/cosine] epoch 74/120  interaction=5.1668  marginal=0.0330
+  [softmax/cosine] epoch 75/120  interaction=5.1636  marginal=0.0312
+  [softmax/cosine] epoch 76/120  interaction=5.1629  marginal=0.0301
+  [softmax/cosine] epoch 77/120  interaction=5.1616  marginal=0.0306
+  [softmax/cosine] epoch 78/120  interaction=5.1627  marginal=0.0286
+  [softmax/cosine] epoch 79/120  interaction=5.1636  marginal=0.0306
+  [softmax/cosine] epoch 80/120  interaction=5.1631  marginal=0.0323
+  [softmax/cosine] epoch 81/120  interaction=5.1621  marginal=0.0306
+  [softmax/cosine] epoch 82/120  interaction=5.1632  marginal=0.0313
+  [softmax/cosine] epoch 83/120  interaction=5.1569  marginal=0.0273
+  [softmax/cosine] epoch 84/120  interaction=5.1566  marginal=0.0300
+  [softmax/cosine] epoch 85/120  interaction=5.1569  marginal=0.0302
+  [softmax/cosine] epoch 86/120  interaction=5.1574  marginal=0.0285
+  [softmax/cosine] epoch 87/120  interaction=5.1565  marginal=0.0286
+  [softmax/cosine] epoch 88/120  interaction=5.1546  marginal=0.0283
+  [softmax/cosine] epoch 89/120  interaction=5.1548  marginal=0.0290
+  [softmax/cosine] epoch 90/120  interaction=5.1517  marginal=0.0268
+  [softmax/cosine] epoch 91/120  interaction=5.1522  marginal=0.0261
+  [softmax/cosine] epoch 92/120  interaction=5.1540  marginal=0.0276
+  [softmax/cosine] epoch 93/120  interaction=5.1531  marginal=0.0278
+  [softmax/cosine] epoch 94/120  interaction=5.1473  marginal=0.0268
+  [softmax/cosine] epoch 95/120  interaction=5.1490  marginal=0.0278
+  [softmax/cosine] epoch 96/120  interaction=5.1498  marginal=0.0268
+  [softmax/cosine] epoch 97/120  interaction=5.1467  marginal=0.0264
+  [softmax/cosine] epoch 98/120  interaction=5.1475  marginal=0.0261
+  [softmax/cosine] epoch 99/120  interaction=5.1463  marginal=0.0277
+  [softmax/cosine] epoch 100/120  interaction=5.1450  marginal=0.0258
+  [softmax/cosine] epoch 101/120  interaction=5.1465  marginal=0.0273
+  [softmax/cosine] epoch 102/120  interaction=5.1458  marginal=0.0259
+  [softmax/cosine] epoch 103/120  interaction=5.1424  marginal=0.0237
+  [softmax/cosine] epoch 104/120  interaction=5.1428  marginal=0.0264
+  [softmax/cosine] epoch 105/120  interaction=5.1446  marginal=0.0265
+  [softmax/cosine] epoch 106/120  interaction=5.1426  marginal=0.0249
+  [softmax/cosine] epoch 107/120  interaction=5.1441  marginal=0.0264
+  [softmax/cosine] epoch 108/120  interaction=5.1397  marginal=0.0251
+  [softmax/cosine] epoch 109/120  interaction=5.1404  marginal=0.0254
+  [softmax/cosine] epoch 110/120  interaction=5.1386  marginal=0.0248
+  [softmax/cosine] epoch 111/120  interaction=5.1417  marginal=0.0255
+  [softmax/cosine] epoch 112/120  interaction=5.1395  marginal=0.0250
+  [softmax/cosine] epoch 113/120  interaction=5.1434  marginal=0.0278
+  [softmax/cosine] epoch 114/120  interaction=5.1402  marginal=0.0269
+  [softmax/cosine] epoch 115/120  interaction=5.1341  marginal=0.0240
+  [softmax/cosine] epoch 116/120  interaction=5.1371  marginal=0.0246
+  [softmax/cosine] epoch 117/120  interaction=5.1345  marginal=0.0249
+  [softmax/cosine] epoch 118/120  interaction=5.1340  marginal=0.0231
+  [softmax/cosine] epoch 119/120  interaction=5.1355  marginal=0.0231
+  [softmax/cosine] epoch 120/120  interaction=5.1343  marginal=0.0226
+  [simclr_sigreg ] probe=0.7528+-0.0023 acc=0.2357 supAUC=0.9329 eucl=0.5272 mahaT=0.6404 mahaPC=0.6883 lid=0.5381
+
+----- supcon (labels) -----
+  [supcon] epoch 1/120  loss=5.6370
+  [supcon] epoch 2/120  loss=5.1917
+  [supcon] epoch 3/120  loss=4.9848
+  [supcon] epoch 4/120  loss=4.8325
+  [supcon] epoch 5/120  loss=4.7201
+  [supcon] epoch 6/120  loss=4.6185
+  [supcon] epoch 7/120  loss=4.5360
+  [supcon] epoch 8/120  loss=4.4530
+  [supcon] epoch 9/120  loss=4.3854
+  [supcon] epoch 10/120  loss=4.3051
+  [supcon] epoch 11/120  loss=4.2475
+  [supcon] epoch 12/120  loss=4.1986
+  [supcon] epoch 13/120  loss=4.1477
+  [supcon] epoch 14/120  loss=4.1053
+  [supcon] epoch 15/120  loss=4.0566
+  [supcon] epoch 16/120  loss=4.0148
+  [supcon] epoch 17/120  loss=3.9782
+  [supcon] epoch 18/120  loss=3.9530
+  [supcon] epoch 19/120  loss=3.9079
+  [supcon] epoch 20/120  loss=3.8669
+  [supcon] epoch 21/120  loss=3.8450
+  [supcon] epoch 22/120  loss=3.8276
+  [supcon] epoch 23/120  loss=3.7875
+  [supcon] epoch 24/120  loss=3.7718
+  [supcon] epoch 25/120  loss=3.7465
+  [supcon] epoch 26/120  loss=3.7264
+  [supcon] epoch 27/120  loss=3.7229
+  [supcon] epoch 28/120  loss=3.7037
+  [supcon] epoch 29/120  loss=3.6601
+  [supcon] epoch 30/120  loss=3.6433
+  [supcon] epoch 31/120  loss=3.6249
+  [supcon] epoch 32/120  loss=3.6068
+  [supcon] epoch 33/120  loss=3.5784
+  [supcon] epoch 34/120  loss=3.5758
+  [supcon] epoch 35/120  loss=3.5570
+  [supcon] epoch 36/120  loss=3.5432
+  [supcon] epoch 37/120  loss=3.5170
+  [supcon] epoch 38/120  loss=3.5077
+  [supcon] epoch 39/120  loss=3.4761
+  [supcon] epoch 40/120  loss=3.4831
+  [supcon] epoch 41/120  loss=3.4706
+  [supcon] epoch 42/120  loss=3.4582
+  [supcon] epoch 43/120  loss=3.4333
+  [supcon] epoch 44/120  loss=3.4318
+  [supcon] epoch 45/120  loss=3.4408
+  [supcon] epoch 46/120  loss=3.4132
+  [supcon] epoch 47/120  loss=3.4044
+  [supcon] epoch 48/120  loss=3.4047
+  [supcon] epoch 49/120  loss=3.3827
+  [supcon] epoch 50/120  loss=3.3643
+  [supcon] epoch 51/120  loss=3.3293
+  [supcon] epoch 52/120  loss=3.3275
+  [supcon] epoch 53/120  loss=3.3196
+  [supcon] epoch 54/120  loss=3.3009
+  [supcon] epoch 55/120  loss=3.3119
+  [supcon] epoch 56/120  loss=3.2978
+  [supcon] epoch 57/120  loss=3.2789
+  [supcon] epoch 58/120  loss=3.2677
+  [supcon] epoch 59/120  loss=3.2586
+  [supcon] epoch 60/120  loss=3.2605
+  [supcon] epoch 61/120  loss=3.2400
+  [supcon] epoch 62/120  loss=3.2394
+  [supcon] epoch 63/120  loss=3.2551
+  [supcon] epoch 64/120  loss=3.2194
+  [supcon] epoch 65/120  loss=3.2092
+  [supcon] epoch 66/120  loss=3.2107
+  [supcon] epoch 67/120  loss=3.2007
+  [supcon] epoch 68/120  loss=3.1902
+  [supcon] epoch 69/120  loss=3.1767
+  [supcon] epoch 70/120  loss=3.1704
+  [supcon] epoch 71/120  loss=3.1774
+  [supcon] epoch 72/120  loss=3.1672
+  [supcon] epoch 73/120  loss=3.1593
+  [supcon] epoch 74/120  loss=3.1506
+  [supcon] epoch 75/120  loss=3.1407
+  [supcon] epoch 76/120  loss=3.1391
+  [supcon] epoch 77/120  loss=3.1306
+  [supcon] epoch 78/120  loss=3.1267
+  [supcon] epoch 79/120  loss=3.1378
+  [supcon] epoch 80/120  loss=3.1005
+  [supcon] epoch 81/120  loss=3.1035
+  [supcon] epoch 82/120  loss=3.0985
+  [supcon] epoch 83/120  loss=3.1044
+  [supcon] epoch 84/120  loss=3.0905
+  [supcon] epoch 85/120  loss=3.1031
+  [supcon] epoch 86/120  loss=3.0960
+  [supcon] epoch 87/120  loss=3.0910
+  [supcon] epoch 88/120  loss=3.0809
+  [supcon] epoch 89/120  loss=3.0682
+  [supcon] epoch 90/120  loss=3.0673
+  [supcon] epoch 91/120  loss=3.0570
+  [supcon] epoch 92/120  loss=3.0497
+  [supcon] epoch 93/120  loss=3.0342
+  [supcon] epoch 94/120  loss=3.0437
+  [supcon] epoch 95/120  loss=3.0529
+  [supcon] epoch 96/120  loss=3.0396
+  [supcon] epoch 97/120  loss=3.0339
+  [supcon] epoch 98/120  loss=3.0276
+  [supcon] epoch 99/120  loss=3.0109
+  [supcon] epoch 100/120  loss=2.9966
+  [supcon] epoch 101/120  loss=2.9927
+  [supcon] epoch 102/120  loss=2.9860
+  [supcon] epoch 103/120  loss=2.9978
+  [supcon] epoch 104/120  loss=2.9960
+  [supcon] epoch 105/120  loss=2.9770
+  [supcon] epoch 106/120  loss=2.9678
+  [supcon] epoch 107/120  loss=2.9619
+  [supcon] epoch 108/120  loss=2.9712
+  [supcon] epoch 109/120  loss=2.9541
+  [supcon] epoch 110/120  loss=2.9626
+  [supcon] epoch 111/120  loss=2.9734
+  [supcon] epoch 112/120  loss=2.9680
+  [supcon] epoch 113/120  loss=2.9588
+  [supcon] epoch 114/120  loss=2.9427
+  [supcon] epoch 115/120  loss=2.9394
+  [supcon] epoch 116/120  loss=2.9447
+  [supcon] epoch 117/120  loss=2.9365
+  [supcon] epoch 118/120  loss=2.9397
+  [supcon] epoch 119/120  loss=2.9436
+  [supcon] epoch 120/120  loss=2.9311
+  [supcon        ] probe=0.7458+-0.0038 acc=0.6113 supAUC=0.9609 eucl=0.6841 mahaT=0.7005 mahaPC=0.6671 lid=0.6706
+
+----- supcon_sigreg (labels) -----
+  [softmax/cosine] epoch 1/120  interaction=5.6540  marginal=0.7906
+  [softmax/cosine] epoch 2/120  interaction=5.2044  marginal=0.6504
+  [softmax/cosine] epoch 3/120  interaction=5.0976  marginal=0.5368
+  [softmax/cosine] epoch 4/120  interaction=5.0136  marginal=0.4298
+  [softmax/cosine] epoch 5/120  interaction=4.9605  marginal=0.3568
+  [softmax/cosine] epoch 6/120  interaction=4.9217  marginal=0.2901
+  [softmax/cosine] epoch 7/120  interaction=4.8916  marginal=0.2478
+  [softmax/cosine] epoch 8/120  interaction=4.8513  marginal=0.2163
+  [softmax/cosine] epoch 9/120  interaction=4.8325  marginal=0.1889
+  [softmax/cosine] epoch 10/120  interaction=4.8080  marginal=0.1807
+  [softmax/cosine] epoch 11/120  interaction=4.7589  marginal=0.1587
+  [softmax/cosine] epoch 12/120  interaction=4.7238  marginal=0.1550
+  [softmax/cosine] epoch 13/120  interaction=4.6889  marginal=0.1421
+  [softmax/cosine] epoch 14/120  interaction=4.6679  marginal=0.1387
+  [softmax/cosine] epoch 15/120  interaction=4.6369  marginal=0.1315
+  [softmax/cosine] epoch 16/120  interaction=4.6120  marginal=0.1277
+  [softmax/cosine] epoch 17/120  interaction=4.6044  marginal=0.1187
+  [softmax/cosine] epoch 18/120  interaction=4.5747  marginal=0.1267
+  [softmax/cosine] epoch 19/120  interaction=4.5379  marginal=0.1204
+  [softmax/cosine] epoch 20/120  interaction=4.5240  marginal=0.1151
+  [softmax/cosine] epoch 21/120  interaction=4.4967  marginal=0.1162
+  [softmax/cosine] epoch 22/120  interaction=4.4666  marginal=0.1099
+  [softmax/cosine] epoch 23/120  interaction=4.4474  marginal=0.1114
+  [softmax/cosine] epoch 24/120  interaction=4.4435  marginal=0.1091
+  [softmax/cosine] epoch 25/120  interaction=4.4108  marginal=0.1064
+  [softmax/cosine] epoch 26/120  interaction=4.3797  marginal=0.1046
+  [softmax/cosine] epoch 27/120  interaction=4.3517  marginal=0.0987
+  [softmax/cosine] epoch 28/120  interaction=4.3335  marginal=0.1035
+  [softmax/cosine] epoch 29/120  interaction=4.3281  marginal=0.1013
+  [softmax/cosine] epoch 30/120  interaction=4.3188  marginal=0.1056
+  [softmax/cosine] epoch 31/120  interaction=4.2931  marginal=0.0959
+  [softmax/cosine] epoch 32/120  interaction=4.2655  marginal=0.0934
+  [softmax/cosine] epoch 33/120  interaction=4.2701  marginal=0.0980
+  [softmax/cosine] epoch 34/120  interaction=4.2511  marginal=0.0941
+  [softmax/cosine] epoch 35/120  interaction=4.2328  marginal=0.0914
+  [softmax/cosine] epoch 36/120  interaction=4.2183  marginal=0.0921
+  [softmax/cosine] epoch 37/120  interaction=4.1976  marginal=0.0898
+  [softmax/cosine] epoch 38/120  interaction=4.1909  marginal=0.0879
+  [softmax/cosine] epoch 39/120  interaction=4.1701  marginal=0.0910
+  [softmax/cosine] epoch 40/120  interaction=4.1631  marginal=0.0896
+  [softmax/cosine] epoch 41/120  interaction=4.1282  marginal=0.0879
+  [softmax/cosine] epoch 42/120  interaction=4.1264  marginal=0.0901
+  [softmax/cosine] epoch 43/120  interaction=4.1245  marginal=0.0843
+  [softmax/cosine] epoch 44/120  interaction=4.0958  marginal=0.0838
+  [softmax/cosine] epoch 45/120  interaction=4.0746  marginal=0.0856
+  [softmax/cosine] epoch 46/120  interaction=4.0823  marginal=0.0885
+  [softmax/cosine] epoch 47/120  interaction=4.0520  marginal=0.0809
+  [softmax/cosine] epoch 48/120  interaction=4.0431  marginal=0.0819
+  [softmax/cosine] epoch 49/120  interaction=4.0189  marginal=0.0844
+  [softmax/cosine] epoch 50/120  interaction=4.0139  marginal=0.0843
+  [softmax/cosine] epoch 51/120  interaction=4.0035  marginal=0.0846
+  [softmax/cosine] epoch 52/120  interaction=4.0028  marginal=0.0819
+  [softmax/cosine] epoch 53/120  interaction=3.9717  marginal=0.0794
+  [softmax/cosine] epoch 54/120  interaction=3.9785  marginal=0.0797
+  [softmax/cosine] epoch 55/120  interaction=3.9602  marginal=0.0786
+  [softmax/cosine] epoch 56/120  interaction=3.9437  marginal=0.0790
+  [softmax/cosine] epoch 57/120  interaction=3.9303  marginal=0.0779
+  [softmax/cosine] epoch 58/120  interaction=3.9192  marginal=0.0787
+  [softmax/cosine] epoch 59/120  interaction=3.9078  marginal=0.0793
+  [softmax/cosine] epoch 60/120  interaction=3.9040  marginal=0.0817
+  [softmax/cosine] epoch 61/120  interaction=3.8863  marginal=0.0770
+  [softmax/cosine] epoch 62/120  interaction=3.8817  marginal=0.0807
+  [softmax/cosine] epoch 63/120  interaction=3.8746  marginal=0.0791
+  [softmax/cosine] epoch 64/120  interaction=3.8593  marginal=0.0770
+  [softmax/cosine] epoch 65/120  interaction=3.8472  marginal=0.0763
+  [softmax/cosine] epoch 66/120  interaction=3.8488  marginal=0.0769
+  [softmax/cosine] epoch 67/120  interaction=3.8221  marginal=0.0760
+  [softmax/cosine] epoch 68/120  interaction=3.8208  marginal=0.0797
+  [softmax/cosine] epoch 69/120  interaction=3.7871  marginal=0.0715
+  [softmax/cosine] epoch 70/120  interaction=3.7807  marginal=0.0740
+  [softmax/cosine] epoch 71/120  interaction=3.7963  marginal=0.0765
+  [softmax/cosine] epoch 72/120  interaction=3.7784  marginal=0.0786
+  [softmax/cosine] epoch 73/120  interaction=3.7658  marginal=0.0756
+  [softmax/cosine] epoch 74/120  interaction=3.7625  marginal=0.0740
+  [softmax/cosine] epoch 75/120  interaction=3.7593  marginal=0.0765
+  [softmax/cosine] epoch 76/120  interaction=3.7356  marginal=0.0744
+  [softmax/cosine] epoch 77/120  interaction=3.7203  marginal=0.0773
+  [softmax/cosine] epoch 78/120  interaction=3.7284  marginal=0.0758
+  [softmax/cosine] epoch 79/120  interaction=3.7098  marginal=0.0756
+  [softmax/cosine] epoch 80/120  interaction=3.7012  marginal=0.0721
+  [softmax/cosine] epoch 81/120  interaction=3.6949  marginal=0.0743
+  [softmax/cosine] epoch 82/120  interaction=3.6952  marginal=0.0706
+  [softmax/cosine] epoch 83/120  interaction=3.6823  marginal=0.0792
+  [softmax/cosine] epoch 84/120  interaction=3.6747  marginal=0.0741
+  [softmax/cosine] epoch 85/120  interaction=3.6735  marginal=0.0724
+  [softmax/cosine] epoch 86/120  interaction=3.6550  marginal=0.0712
+  [softmax/cosine] epoch 87/120  interaction=3.6451  marginal=0.0687
+  [softmax/cosine] epoch 88/120  interaction=3.6481  marginal=0.0735
+  [softmax/cosine] epoch 89/120  interaction=3.6377  marginal=0.0732
+  [softmax/cosine] epoch 90/120  interaction=3.6227  marginal=0.0689
+  [softmax/cosine] epoch 91/120  interaction=3.6126  marginal=0.0689
+  [softmax/cosine] epoch 92/120  interaction=3.6207  marginal=0.0718
+  [softmax/cosine] epoch 93/120  interaction=3.6059  marginal=0.0721
+  [softmax/cosine] epoch 94/120  interaction=3.6033  marginal=0.0698
+  [softmax/cosine] epoch 95/120  interaction=3.5856  marginal=0.0723
+  [softmax/cosine] epoch 96/120  interaction=3.5833  marginal=0.0703
+  [softmax/cosine] epoch 97/120  interaction=3.5627  marginal=0.0683
+  [softmax/cosine] epoch 98/120  interaction=3.5636  marginal=0.0679
+  [softmax/cosine] epoch 99/120  interaction=3.5752  marginal=0.0703
+  [softmax/cosine] epoch 100/120  interaction=3.5550  marginal=0.0676
+  [softmax/cosine] epoch 101/120  interaction=3.5471  marginal=0.0687
+  [softmax/cosine] epoch 102/120  interaction=3.5479  marginal=0.0686
+  [softmax/cosine] epoch 103/120  interaction=3.5366  marginal=0.0700
+  [softmax/cosine] epoch 104/120  interaction=3.5253  marginal=0.0688
+  [softmax/cosine] epoch 105/120  interaction=3.5380  marginal=0.0663
+  [softmax/cosine] epoch 106/120  interaction=3.5268  marginal=0.0687
+  [softmax/cosine] epoch 107/120  interaction=3.5129  marginal=0.0663
+  [softmax/cosine] epoch 108/120  interaction=3.5149  marginal=0.0675
+  [softmax/cosine] epoch 109/120  interaction=3.4979  marginal=0.0669
+  [softmax/cosine] epoch 110/120  interaction=3.4913  marginal=0.0678
+  [softmax/cosine] epoch 111/120  interaction=3.4805  marginal=0.0652
+  [softmax/cosine] epoch 112/120  interaction=3.4853  marginal=0.0672
+  [softmax/cosine] epoch 113/120  interaction=3.4675  marginal=0.0645
+  [softmax/cosine] epoch 114/120  interaction=3.4658  marginal=0.0680
+  [softmax/cosine] epoch 115/120  interaction=3.4634  marginal=0.0692
+  [softmax/cosine] epoch 116/120  interaction=3.4501  marginal=0.0655
+  [softmax/cosine] epoch 117/120  interaction=3.4401  marginal=0.0651
+  [softmax/cosine] epoch 118/120  interaction=3.4391  marginal=0.0681
+  [softmax/cosine] epoch 119/120  interaction=3.4292  marginal=0.0677
+  [softmax/cosine] epoch 120/120  interaction=3.4306  marginal=0.0666
+  [supcon_sigreg ] probe=0.7964+-0.0140 acc=0.6260 supAUC=0.9868 eucl=0.8174 mahaT=0.8023 mahaPC=0.8063 lid=0.7109
+
+----- nplm_bilinear (augmentations only) -----
+  [nplm/bilinear] epoch 1/120  interaction=-0.5326  marginal=0.7259
+  [nplm/bilinear] epoch 2/120  interaction=-0.9909  marginal=0.6207
+  [nplm/bilinear] epoch 3/120  interaction=-1.1723  marginal=0.5909
+  [nplm/bilinear] epoch 4/120  interaction=-1.4166  marginal=0.5629
+  [nplm/bilinear] epoch 5/120  interaction=-1.6728  marginal=0.5207
+  [nplm/bilinear] epoch 6/120  interaction=-1.9261  marginal=0.4829
+  [nplm/bilinear] epoch 7/120  interaction=-2.1159  marginal=0.4712
+  [nplm/bilinear] epoch 8/120  interaction=-2.3076  marginal=0.4492
+  [nplm/bilinear] epoch 9/120  interaction=-2.4592  marginal=0.4359
+  [nplm/bilinear] epoch 10/120  interaction=-2.5731  marginal=0.4222
+  [nplm/bilinear] epoch 11/120  interaction=-2.7044  marginal=0.4141
+  [nplm/bilinear] epoch 12/120  interaction=-2.5375  marginal=0.4076
+  [nplm/bilinear] epoch 13/120  interaction=-2.6243  marginal=0.4318
+  [nplm/bilinear] epoch 14/120  interaction=-2.8298  marginal=0.3984
+  [nplm/bilinear] epoch 15/120  interaction=-2.9152  marginal=0.4009
+  [nplm/bilinear] epoch 16/120  interaction=-3.0070  marginal=0.3864
+  [nplm/bilinear] epoch 17/120  interaction=-3.0827  marginal=0.3775
+  [nplm/bilinear] epoch 18/120  interaction=-3.1224  marginal=0.3804
+  [nplm/bilinear] epoch 19/120  interaction=-3.1952  marginal=0.3727
+  [nplm/bilinear] epoch 20/120  interaction=-3.2511  marginal=0.3669
+  [nplm/bilinear] epoch 21/120  interaction=-3.2765  marginal=0.3661
+  [nplm/bilinear] epoch 22/120  interaction=-3.3213  marginal=0.3630
+  [nplm/bilinear] epoch 23/120  interaction=-3.4103  marginal=0.3586
+  [nplm/bilinear] epoch 24/120  interaction=-3.4151  marginal=0.3565
+  [nplm/bilinear] epoch 25/120  interaction=-3.4823  marginal=0.3506
+  [nplm/bilinear] epoch 26/120  interaction=-3.5105  marginal=0.3521
+  [nplm/bilinear] epoch 27/120  interaction=-3.5350  marginal=0.3465
+  [nplm/bilinear] epoch 28/120  interaction=-3.5383  marginal=0.3481
+  [nplm/bilinear] epoch 29/120  interaction=-3.6103  marginal=0.3420
+  [nplm/bilinear] epoch 30/120  interaction=-3.6802  marginal=0.3401
+  [nplm/bilinear] epoch 31/120  interaction=-3.6876  marginal=0.3357
+  [nplm/bilinear] epoch 32/120  interaction=-3.7416  marginal=0.3345
+  [nplm/bilinear] epoch 33/120  interaction=-3.7881  marginal=0.3297
+  [nplm/bilinear] epoch 34/120  interaction=-3.7958  marginal=0.3310
+  [nplm/bilinear] epoch 35/120  interaction=-3.8186  marginal=0.3274
+  [nplm/bilinear] epoch 36/120  interaction=-3.8673  marginal=0.3245
+  [nplm/bilinear] epoch 37/120  interaction=-3.8427  marginal=0.3284
+  [nplm/bilinear] epoch 38/120  interaction=-3.9290  marginal=0.3201
+  [nplm/bilinear] epoch 39/120  interaction=-3.9886  marginal=0.3205
+  [nplm/bilinear] epoch 40/120  interaction=-3.9916  marginal=0.3150
+  [nplm/bilinear] epoch 41/120  interaction=-3.9576  marginal=0.3203
+  [nplm/bilinear] epoch 42/120  interaction=-3.9479  marginal=0.3235
+  [nplm/bilinear] epoch 43/120  interaction=-4.0331  marginal=0.3116
+  [nplm/bilinear] epoch 44/120  interaction=-4.0153  marginal=0.3158
+  [nplm/bilinear] epoch 45/120  interaction=-4.0433  marginal=0.3131
+  [nplm/bilinear] epoch 46/120  interaction=-4.1439  marginal=0.3085
+  [nplm/bilinear] epoch 47/120  interaction=-4.1294  marginal=0.3075
+  [nplm/bilinear] epoch 48/120  interaction=-4.1705  marginal=0.3113
+  [nplm/bilinear] epoch 49/120  interaction=1136.3624  marginal=0.3363
+  [nplm/bilinear] epoch 50/120  interaction=-2.5169  marginal=0.4395
+  [nplm/bilinear] epoch 51/120  interaction=66015769783.6844  marginal=0.6148
+  [nplm/bilinear] epoch 52/120  interaction=16618284837.0647  marginal=0.7106
+  [nplm/bilinear] epoch 53/120  interaction=-0.3581  marginal=0.7088
+  [nplm/bilinear] epoch 54/120  interaction=-0.6349  marginal=0.7236
+  [nplm/bilinear] epoch 55/120  interaction=-0.5921  marginal=0.7257
+  [nplm/bilinear] epoch 56/120  interaction=-0.5838  marginal=0.7270
+  [nplm/bilinear] epoch 57/120  interaction=-0.5763  marginal=0.7283
+  [nplm/bilinear] epoch 58/120  interaction=-0.5330  marginal=0.7255
+  [nplm/bilinear] epoch 59/120  interaction=-0.5942  marginal=0.7315
+  [nplm/bilinear] epoch 60/120  interaction=-0.5945  marginal=0.7306
+  [nplm/bilinear] epoch 61/120  interaction=-0.5676  marginal=0.7310
+  [nplm/bilinear] epoch 62/120  interaction=-0.5895  marginal=0.7305
+  [nplm/bilinear] epoch 63/120  interaction=-0.5531  marginal=0.7311
+  [nplm/bilinear] epoch 64/120  interaction=-0.5983  marginal=0.7293
+  [nplm/bilinear] epoch 65/120  interaction=-0.5599  marginal=0.7264
+  [nplm/bilinear] epoch 66/120  interaction=-0.5917  marginal=0.7302
+  [nplm/bilinear] epoch 67/120  interaction=-0.5859  marginal=0.7297
+  [nplm/bilinear] epoch 68/120  interaction=-0.5940  marginal=0.7260
+  [nplm/bilinear] epoch 69/120  interaction=-0.6026  marginal=0.7329
+  [nplm/bilinear] epoch 70/120  interaction=-0.6060  marginal=0.7276
+  [nplm/bilinear] epoch 71/120  interaction=-0.5845  marginal=0.7288
+  [nplm/bilinear] epoch 72/120  interaction=-0.4419  marginal=0.7300
+  [nplm/bilinear] epoch 73/120  interaction=-0.6062  marginal=0.7300
+  [nplm/bilinear] epoch 74/120  interaction=-0.6697  marginal=0.7152
+  [nplm/bilinear] epoch 75/120  interaction=-0.6604  marginal=0.6951
+  [nplm/bilinear] epoch 76/120  interaction=8250.3119  marginal=0.6756
+  [nplm/bilinear] epoch 77/120  interaction=-0.8656  marginal=0.6669
+  [nplm/bilinear] epoch 78/120  interaction=-0.6313  marginal=0.6691
+  [nplm/bilinear] epoch 79/120  interaction=-0.8855  marginal=0.6688
+  [nplm/bilinear] epoch 80/120  interaction=-0.8876  marginal=0.6663
+  [nplm/bilinear] epoch 81/120  interaction=-0.8860  marginal=0.6630
+  [nplm/bilinear] epoch 82/120  interaction=-0.8947  marginal=0.6670
+  [nplm/bilinear] epoch 83/120  interaction=-0.8851  marginal=0.6739
+  [nplm/bilinear] epoch 84/120  interaction=-0.8911  marginal=0.6732
+  [nplm/bilinear] epoch 85/120  interaction=-0.8868  marginal=0.6694
+  [nplm/bilinear] epoch 86/120  interaction=-0.8972  marginal=0.6687
+  [nplm/bilinear] epoch 87/120  interaction=-0.8931  marginal=0.6725
+  [nplm/bilinear] epoch 88/120  interaction=-0.9004  marginal=0.6722
+  [nplm/bilinear] epoch 89/120  interaction=233.3772  marginal=0.6709
+  [nplm/bilinear] epoch 90/120  interaction=-0.8874  marginal=0.6730
+  [nplm/bilinear] epoch 91/120  interaction=-0.8815  marginal=0.6724
+  [nplm/bilinear] epoch 92/120  interaction=-0.8825  marginal=0.6729
+  [nplm/bilinear] epoch 93/120  interaction=-0.8793  marginal=0.6733
+  [nplm/bilinear] epoch 94/120  interaction=-0.8868  marginal=0.6748
+  [nplm/bilinear] epoch 95/120  interaction=-0.8773  marginal=0.6758
+  [nplm/bilinear] epoch 96/120  interaction=-0.8849  marginal=0.6754
+  [nplm/bilinear] epoch 97/120  interaction=-0.8842  marginal=0.6666
+  [nplm/bilinear] epoch 98/120  interaction=-0.8876  marginal=0.6718
+  [nplm/bilinear] epoch 99/120  interaction=-0.6690  marginal=0.6762
+  [nplm/bilinear] epoch 100/120  interaction=-0.8845  marginal=0.6755
+  [nplm/bilinear] epoch 101/120  interaction=-0.8897  marginal=0.6729
+  [nplm/bilinear] epoch 102/120  interaction=-0.8871  marginal=0.6734
+  [nplm/bilinear] epoch 103/120  interaction=-0.8896  marginal=0.6710
+  [nplm/bilinear] epoch 104/120  interaction=-0.8911  marginal=0.6724
+  [nplm/bilinear] epoch 105/120  interaction=-0.8901  marginal=0.6682
+  [nplm/bilinear] epoch 106/120  interaction=-0.8882  marginal=0.6668
+  [nplm/bilinear] epoch 107/120  interaction=-0.8974  marginal=0.6718
+  [nplm/bilinear] epoch 108/120  interaction=-0.8977  marginal=0.6695
+  [nplm/bilinear] epoch 109/120  interaction=-0.9115  marginal=0.6697
+  [nplm/bilinear] epoch 110/120  interaction=-0.9228  marginal=0.6658
+  [nplm/bilinear] epoch 111/120  interaction=-0.9512  marginal=0.6580
+  [nplm/bilinear] epoch 112/120  interaction=-0.9678  marginal=0.6554
+  [nplm/bilinear] epoch 113/120  interaction=-0.9848  marginal=0.6458
+  [nplm/bilinear] epoch 114/120  interaction=-0.8620  marginal=0.6461
+  [nplm/bilinear] epoch 115/120  interaction=-1.0297  marginal=0.6403
+  [nplm/bilinear] epoch 116/120  interaction=-1.0413  marginal=0.6383
+  [nplm/bilinear] epoch 117/120  interaction=-1.0484  marginal=0.6331
+  [nplm/bilinear] epoch 118/120  interaction=-1.0599  marginal=0.6361
+  [nplm/bilinear] epoch 119/120  interaction=-1.0661  marginal=0.6338
+  [nplm/bilinear] epoch 120/120  interaction=-1.0703  marginal=0.6333
+  [nplm_bilinear ] probe=0.7275+-0.0019 acc=0.2140 supAUC=0.8815 eucl=0.6708 mahaT=0.7072 mahaPC=0.7182 lid=0.6502
+
+----- nplm_distance (augmentations only) -----
+  [nplm/distance] epoch 1/120  interaction=-0.5139  marginal=0.5813
+  [nplm/distance] epoch 2/120  interaction=-0.6705  marginal=0.2906
+  [nplm/distance] epoch 3/120  interaction=-0.7499  marginal=0.2751
+  [nplm/distance] epoch 4/120  interaction=-0.7610  marginal=0.2517
+  [nplm/distance] epoch 5/120  interaction=-0.7687  marginal=0.2370
+  [nplm/distance] epoch 6/120  interaction=-0.7850  marginal=0.2385
+  [nplm/distance] epoch 7/120  interaction=-0.7842  marginal=0.2192
+  [nplm/distance] epoch 8/120  interaction=-0.7894  marginal=0.2206
+  [nplm/distance] epoch 9/120  interaction=-0.7948  marginal=0.2195
+  [nplm/distance] epoch 10/120  interaction=-0.7993  marginal=0.2075
+  [nplm/distance] epoch 11/120  interaction=-0.7998  marginal=0.2171
+  [nplm/distance] epoch 12/120  interaction=-0.8118  marginal=0.2059
+  [nplm/distance] epoch 13/120  interaction=-0.8105  marginal=0.2046
+  [nplm/distance] epoch 14/120  interaction=-0.8124  marginal=0.2023
+  [nplm/distance] epoch 15/120  interaction=-0.8091  marginal=0.2043
+  [nplm/distance] epoch 16/120  interaction=-0.8126  marginal=0.2133
+  [nplm/distance] epoch 17/120  interaction=-0.8206  marginal=0.1979
+  [nplm/distance] epoch 18/120  interaction=-0.8184  marginal=0.1882
+  [nplm/distance] epoch 19/120  interaction=-0.8213  marginal=0.1823
+  [nplm/distance] epoch 20/120  interaction=-0.8202  marginal=0.1891
+  [nplm/distance] epoch 21/120  interaction=-0.8261  marginal=0.1786
+  [nplm/distance] epoch 22/120  interaction=-0.8236  marginal=0.1901
+  [nplm/distance] epoch 23/120  interaction=-0.8280  marginal=0.1753
+  [nplm/distance] epoch 24/120  interaction=-0.8321  marginal=0.1756
+  [nplm/distance] epoch 25/120  interaction=-0.8290  marginal=0.1698
+  [nplm/distance] epoch 26/120  interaction=-0.8307  marginal=0.1782
+  [nplm/distance] epoch 27/120  interaction=-0.8307  marginal=0.1693
+  [nplm/distance] epoch 28/120  interaction=-0.8386  marginal=0.1827
+  [nplm/distance] epoch 29/120  interaction=-0.8323  marginal=0.1808
+  [nplm/distance] epoch 30/120  interaction=-0.8356  marginal=0.1683
+  [nplm/distance] epoch 31/120  interaction=-0.8381  marginal=0.1765
+  [nplm/distance] epoch 32/120  interaction=-0.8372  marginal=0.1684
+  [nplm/distance] epoch 33/120  interaction=-0.8419  marginal=0.1737
+  [nplm/distance] epoch 34/120  interaction=-0.8357  marginal=0.1685
+  [nplm/distance] epoch 35/120  interaction=-0.8388  marginal=0.1755
+  [nplm/distance] epoch 36/120  interaction=-0.8390  marginal=0.1740
+  [nplm/distance] epoch 37/120  interaction=-0.8466  marginal=0.1698
+  [nplm/distance] epoch 38/120  interaction=-0.8445  marginal=0.1610
+  [nplm/distance] epoch 39/120  interaction=-0.8436  marginal=0.1611
+  [nplm/distance] epoch 40/120  interaction=-0.8435  marginal=0.1575
+  [nplm/distance] epoch 41/120  interaction=-0.8449  marginal=0.1660
+  [nplm/distance] epoch 42/120  interaction=-0.8491  marginal=0.1666
+  [nplm/distance] epoch 43/120  interaction=-0.8486  marginal=0.1652
+  [nplm/distance] epoch 44/120  interaction=-0.8511  marginal=0.1610
+  [nplm/distance] epoch 45/120  interaction=-0.8518  marginal=0.1568
+  [nplm/distance] epoch 46/120  interaction=-0.8487  marginal=0.1611
+  [nplm/distance] epoch 47/120  interaction=-0.8531  marginal=0.1594
+  [nplm/distance] epoch 48/120  interaction=-0.8501  marginal=0.1518
+  [nplm/distance] epoch 49/120  interaction=-0.8490  marginal=0.1552
+  [nplm/distance] epoch 50/120  interaction=-0.8575  marginal=0.1581
+  [nplm/distance] epoch 51/120  interaction=-0.8568  marginal=0.1602
+  [nplm/distance] epoch 52/120  interaction=-0.8548  marginal=0.1536
+  [nplm/distance] epoch 53/120  interaction=-0.8564  marginal=0.1537
+  [nplm/distance] epoch 54/120  interaction=-0.8620  marginal=0.1566
+  [nplm/distance] epoch 55/120  interaction=-0.8559  marginal=0.1500
+  [nplm/distance] epoch 56/120  interaction=-0.8607  marginal=0.1601
+  [nplm/distance] epoch 57/120  interaction=-0.8547  marginal=0.1485
+  [nplm/distance] epoch 58/120  interaction=-0.8580  marginal=0.1496
+  [nplm/distance] epoch 59/120  interaction=-0.8574  marginal=0.1564
+  [nplm/distance] epoch 60/120  interaction=-0.8611  marginal=0.1548
+  [nplm/distance] epoch 61/120  interaction=-0.8554  marginal=0.1502
+  [nplm/distance] epoch 62/120  interaction=-0.8620  marginal=0.1602
+  [nplm/distance] epoch 63/120  interaction=-0.8594  marginal=0.1427
+  [nplm/distance] epoch 64/120  interaction=-0.8619  marginal=0.1561
+  [nplm/distance] epoch 65/120  interaction=-0.8596  marginal=0.1473
+  [nplm/distance] epoch 66/120  interaction=-0.8622  marginal=0.1428
+  [nplm/distance] epoch 67/120  interaction=-0.8638  marginal=0.1525
+  [nplm/distance] epoch 68/120  interaction=-0.8635  marginal=0.1423
+  [nplm/distance] epoch 69/120  interaction=-0.8646  marginal=0.1415
+  [nplm/distance] epoch 70/120  interaction=-0.8648  marginal=0.1458
+  [nplm/distance] epoch 71/120  interaction=-0.8609  marginal=0.1461
+  [nplm/distance] epoch 72/120  interaction=-0.8660  marginal=0.1463
+  [nplm/distance] epoch 73/120  interaction=-0.8659  marginal=0.1428
+  [nplm/distance] epoch 74/120  interaction=-0.8687  marginal=0.1374
+  [nplm/distance] epoch 75/120  interaction=-0.8632  marginal=0.1531
+  [nplm/distance] epoch 76/120  interaction=-0.8680  marginal=0.1431
+  [nplm/distance] epoch 77/120  interaction=-0.8698  marginal=0.1411
+  [nplm/distance] epoch 78/120  interaction=-0.8665  marginal=0.1408
+  [nplm/distance] epoch 79/120  interaction=-0.8681  marginal=0.1430
+  [nplm/distance] epoch 80/120  interaction=-0.8661  marginal=0.1397
+  [nplm/distance] epoch 81/120  interaction=-0.8698  marginal=0.1412
+  [nplm/distance] epoch 82/120  interaction=-0.8646  marginal=0.1460
+  [nplm/distance] epoch 83/120  interaction=-0.8723  marginal=0.1409
+  [nplm/distance] epoch 84/120  interaction=-0.8688  marginal=0.1393
+  [nplm/distance] epoch 85/120  interaction=-0.8719  marginal=0.1316
+  [nplm/distance] epoch 86/120  interaction=-0.8720  marginal=0.1428
+  [nplm/distance] epoch 87/120  interaction=-0.8709  marginal=0.1495
+  [nplm/distance] epoch 88/120  interaction=-0.8695  marginal=0.1340
+  [nplm/distance] epoch 89/120  interaction=-0.8731  marginal=0.1365
+  [nplm/distance] epoch 90/120  interaction=-0.8737  marginal=0.1330
+  [nplm/distance] epoch 91/120  interaction=-0.8738  marginal=0.1409
+  [nplm/distance] epoch 92/120  interaction=-0.8750  marginal=0.1314
+  [nplm/distance] epoch 93/120  interaction=-0.8724  marginal=0.1336
+  [nplm/distance] epoch 94/120  interaction=-0.8747  marginal=0.1314
+  [nplm/distance] epoch 95/120  interaction=-0.8768  marginal=0.1394
+  [nplm/distance] epoch 96/120  interaction=-0.8738  marginal=0.1409
+  [nplm/distance] epoch 97/120  interaction=-0.8775  marginal=0.1396
+  [nplm/distance] epoch 98/120  interaction=-0.8755  marginal=0.1324
+  [nplm/distance] epoch 99/120  interaction=-0.8728  marginal=0.1378
+  [nplm/distance] epoch 100/120  interaction=-0.8754  marginal=0.1392
+  [nplm/distance] epoch 101/120  interaction=-0.8766  marginal=0.1269
+  [nplm/distance] epoch 102/120  interaction=-0.8773  marginal=0.1290
+  [nplm/distance] epoch 103/120  interaction=-0.8773  marginal=0.1238
+  [nplm/distance] epoch 104/120  interaction=-0.8770  marginal=0.1379
+  [nplm/distance] epoch 105/120  interaction=-0.8788  marginal=0.1330
+  [nplm/distance] epoch 106/120  interaction=-0.8783  marginal=0.1319
+  [nplm/distance] epoch 107/120  interaction=-0.8798  marginal=0.1342
+  [nplm/distance] epoch 108/120  interaction=-0.8782  marginal=0.1330
+  [nplm/distance] epoch 109/120  interaction=-0.8795  marginal=0.1288
+  [nplm/distance] epoch 110/120  interaction=-0.8811  marginal=0.1317
+  [nplm/distance] epoch 111/120  interaction=-0.8793  marginal=0.1261
+  [nplm/distance] epoch 112/120  interaction=-0.8800  marginal=0.1253
+  [nplm/distance] epoch 113/120  interaction=-0.8813  marginal=0.1261
+  [nplm/distance] epoch 114/120  interaction=-0.8803  marginal=0.1242
+  [nplm/distance] epoch 115/120  interaction=-0.8842  marginal=0.1288
+  [nplm/distance] epoch 116/120  interaction=-0.8799  marginal=0.1319
+  [nplm/distance] epoch 117/120  interaction=-0.8797  marginal=0.1289
+  [nplm/distance] epoch 118/120  interaction=-0.8829  marginal=0.1302
+  [nplm/distance] epoch 119/120  interaction=-0.8824  marginal=0.1275
+  [nplm/distance] epoch 120/120  interaction=-0.8851  marginal=0.1310
+  [nplm_distance ] probe=0.7207+-0.0024 acc=0.1160 supAUC=0.8601 eucl=0.4823 mahaT=0.6546 mahaPC=0.6323 lid=0.5410
+
+----- nplm_sup_dist (labels) -----
+  [nplm/distance] epoch 1/120  interaction=-0.2796  marginal=0.6201
+  [nplm/distance] epoch 2/120  interaction=-0.4629  marginal=0.5441
+  [nplm/distance] epoch 3/120  interaction=-0.4715  marginal=0.4843
+  [nplm/distance] epoch 4/120  interaction=-0.5116  marginal=0.4899
+  [nplm/distance] epoch 5/120  interaction=-0.5042  marginal=0.4722
+  [nplm/distance] epoch 6/120  interaction=-0.5257  marginal=0.4510
+  [nplm/distance] epoch 7/120  interaction=-0.5367  marginal=0.4391
+  [nplm/distance] epoch 8/120  interaction=-0.5388  marginal=0.4380
+  [nplm/distance] epoch 9/120  interaction=-0.5405  marginal=0.4387
+  [nplm/distance] epoch 10/120  interaction=-0.5504  marginal=0.4285
+  [nplm/distance] epoch 11/120  interaction=-0.5556  marginal=0.4215
+  [nplm/distance] epoch 12/120  interaction=-0.5621  marginal=0.4150
+  [nplm/distance] epoch 13/120  interaction=-0.5522  marginal=0.4126
+  [nplm/distance] epoch 14/120  interaction=-0.5564  marginal=0.4101
+  [nplm/distance] epoch 15/120  interaction=-0.5771  marginal=0.4126
+  [nplm/distance] epoch 16/120  interaction=-0.5746  marginal=0.4019
+  [nplm/distance] epoch 17/120  interaction=-0.5678  marginal=0.3830
+  [nplm/distance] epoch 18/120  interaction=-0.5757  marginal=0.4061
+  [nplm/distance] epoch 19/120  interaction=-0.5810  marginal=0.4208
+  [nplm/distance] epoch 20/120  interaction=-0.5801  marginal=0.4076
+  [nplm/distance] epoch 21/120  interaction=-0.5853  marginal=0.3943
+  [nplm/distance] epoch 22/120  interaction=-0.5825  marginal=0.3832
+  [nplm/distance] epoch 23/120  interaction=-0.6002  marginal=0.3877
+  [nplm/distance] epoch 24/120  interaction=-0.5954  marginal=0.3905
+  [nplm/distance] epoch 25/120  interaction=-0.5957  marginal=0.3709
+  [nplm/distance] epoch 26/120  interaction=-0.5974  marginal=0.3805
+  [nplm/distance] epoch 27/120  interaction=-0.5990  marginal=0.3839
+  [nplm/distance] epoch 28/120  interaction=-0.6093  marginal=0.3867
+  [nplm/distance] epoch 29/120  interaction=-0.6056  marginal=0.3744
+  [nplm/distance] epoch 30/120  interaction=-0.6093  marginal=0.3858
+  [nplm/distance] epoch 31/120  interaction=-0.6085  marginal=0.3757
+  [nplm/distance] epoch 32/120  interaction=-0.6092  marginal=0.3637
+  [nplm/distance] epoch 33/120  interaction=-0.6156  marginal=0.3751
+  [nplm/distance] epoch 34/120  interaction=-0.6140  marginal=0.3606
+  [nplm/distance] epoch 35/120  interaction=-0.6177  marginal=0.3734
+  [nplm/distance] epoch 36/120  interaction=-0.6174  marginal=0.3659
+  [nplm/distance] epoch 37/120  interaction=-0.6208  marginal=0.3665
+  [nplm/distance] epoch 38/120  interaction=-0.6165  marginal=0.3774
+  [nplm/distance] epoch 39/120  interaction=-0.6226  marginal=0.3727
+  [nplm/distance] epoch 40/120  interaction=-0.6227  marginal=0.3628
+  [nplm/distance] epoch 41/120  interaction=-0.6228  marginal=0.3687
+  [nplm/distance] epoch 42/120  interaction=-0.6276  marginal=0.3798
+  [nplm/distance] epoch 43/120  interaction=-0.6306  marginal=0.3528
+  [nplm/distance] epoch 44/120  interaction=-0.6354  marginal=0.3672
+  [nplm/distance] epoch 45/120  interaction=-0.6403  marginal=0.3720
+  [nplm/distance] epoch 46/120  interaction=-0.6345  marginal=0.3525
+  [nplm/distance] epoch 47/120  interaction=-0.6403  marginal=0.3475
+  [nplm/distance] epoch 48/120  interaction=-0.6368  marginal=0.3610
+  [nplm/distance] epoch 49/120  interaction=-0.6355  marginal=0.3549
+  [nplm/distance] epoch 50/120  interaction=-0.6429  marginal=0.3540
+  [nplm/distance] epoch 51/120  interaction=-0.6446  marginal=0.3571
+  [nplm/distance] epoch 52/120  interaction=-0.6485  marginal=0.3457
+  [nplm/distance] epoch 53/120  interaction=-0.6386  marginal=0.3383
+  [nplm/distance] epoch 54/120  interaction=-0.6487  marginal=0.3510
+  [nplm/distance] epoch 55/120  interaction=-0.6517  marginal=0.3593
+  [nplm/distance] epoch 56/120  interaction=-0.6481  marginal=0.3393
+  [nplm/distance] epoch 57/120  interaction=-0.6562  marginal=0.3449
+  [nplm/distance] epoch 58/120  interaction=-0.6596  marginal=0.3488
+  [nplm/distance] epoch 59/120  interaction=-0.6580  marginal=0.3428
+  [nplm/distance] epoch 60/120  interaction=-0.6540  marginal=0.3511
+  [nplm/distance] epoch 61/120  interaction=-0.6612  marginal=0.3453
+  [nplm/distance] epoch 62/120  interaction=-0.6649  marginal=0.3209
+  [nplm/distance] epoch 63/120  interaction=-0.6646  marginal=0.3352
+  [nplm/distance] epoch 64/120  interaction=-0.6596  marginal=0.3395
+  [nplm/distance] epoch 65/120  interaction=-0.6613  marginal=0.3396
+  [nplm/distance] epoch 66/120  interaction=-0.6720  marginal=0.3382
+  [nplm/distance] epoch 67/120  interaction=-0.6722  marginal=0.3229
+  [nplm/distance] epoch 68/120  interaction=-0.6694  marginal=0.3323
+  [nplm/distance] epoch 69/120  interaction=-0.6768  marginal=0.3335
+  [nplm/distance] epoch 70/120  interaction=-0.6776  marginal=0.3367
+  [nplm/distance] epoch 71/120  interaction=-0.6791  marginal=0.3327
+  [nplm/distance] epoch 72/120  interaction=-0.6793  marginal=0.3254
+  [nplm/distance] epoch 73/120  interaction=-0.6821  marginal=0.3306
+  [nplm/distance] epoch 74/120  interaction=-0.6790  marginal=0.3291
+  [nplm/distance] epoch 75/120  interaction=-0.6856  marginal=0.3272
+  [nplm/distance] epoch 76/120  interaction=-0.6922  marginal=0.3283
+  [nplm/distance] epoch 77/120  interaction=-0.6860  marginal=0.3380
+  [nplm/distance] epoch 78/120  interaction=-0.6865  marginal=0.3230
+  [nplm/distance] epoch 79/120  interaction=-0.6902  marginal=0.3243
+  [nplm/distance] epoch 80/120  interaction=-0.6869  marginal=0.3266
+  [nplm/distance] epoch 81/120  interaction=-0.6853  marginal=0.3209
+  [nplm/distance] epoch 82/120  interaction=-0.6920  marginal=0.3254
+  [nplm/distance] epoch 83/120  interaction=-0.6966  marginal=0.3130
+  [nplm/distance] epoch 84/120  interaction=-0.6911  marginal=0.3128
+  [nplm/distance] epoch 85/120  interaction=-0.6978  marginal=0.3297
+  [nplm/distance] epoch 86/120  interaction=-0.6947  marginal=0.3287
+  [nplm/distance] epoch 87/120  interaction=-0.6976  marginal=0.3082
+  [nplm/distance] epoch 88/120  interaction=-0.6926  marginal=0.3272
+  [nplm/distance] epoch 89/120  interaction=-0.6996  marginal=0.3223
+  [nplm/distance] epoch 90/120  interaction=-0.6999  marginal=0.3232
+  [nplm/distance] epoch 91/120  interaction=-0.7056  marginal=0.3088
+  [nplm/distance] epoch 92/120  interaction=-0.7090  marginal=0.3185
+  [nplm/distance] epoch 93/120  interaction=-0.7093  marginal=0.3192
+  [nplm/distance] epoch 94/120  interaction=-0.7070  marginal=0.3059
+  [nplm/distance] epoch 95/120  interaction=-0.7088  marginal=0.3185
+  [nplm/distance] epoch 96/120  interaction=-0.7116  marginal=0.3154
+  [nplm/distance] epoch 97/120  interaction=-0.7102  marginal=0.3093
+  [nplm/distance] epoch 98/120  interaction=-0.7158  marginal=0.3016
+  [nplm/distance] epoch 99/120  interaction=-0.7134  marginal=0.3076
+  [nplm/distance] epoch 100/120  interaction=-0.7175  marginal=0.2997
+  [nplm/distance] epoch 101/120  interaction=-0.7155  marginal=0.3126
+  [nplm/distance] epoch 102/120  interaction=-0.7168  marginal=0.3051
+  [nplm/distance] epoch 103/120  interaction=-0.7222  marginal=0.3037
+  [nplm/distance] epoch 104/120  interaction=-0.7193  marginal=0.3038
+  [nplm/distance] epoch 105/120  interaction=-0.7224  marginal=0.3109
+  [nplm/distance] epoch 106/120  interaction=-0.7251  marginal=0.3029
+  [nplm/distance] epoch 107/120  interaction=-0.7308  marginal=0.2965
+  [nplm/distance] epoch 108/120  interaction=-0.7228  marginal=0.3075
+  [nplm/distance] epoch 109/120  interaction=-0.7287  marginal=0.3041
+  [nplm/distance] epoch 110/120  interaction=-0.7309  marginal=0.3040
+  [nplm/distance] epoch 111/120  interaction=-0.7305  marginal=0.2868
+  [nplm/distance] epoch 112/120  interaction=-0.7291  marginal=0.3092
+  [nplm/distance] epoch 113/120  interaction=-0.7312  marginal=0.3077
+  [nplm/distance] epoch 114/120  interaction=-0.7365  marginal=0.3172
+  [nplm/distance] epoch 115/120  interaction=-0.7397  marginal=0.3121
+  [nplm/distance] epoch 116/120  interaction=-0.7329  marginal=0.2931
+  [nplm/distance] epoch 117/120  interaction=-0.7344  marginal=0.3080
+  [nplm/distance] epoch 118/120  interaction=-0.7356  marginal=0.2925
+  [nplm/distance] epoch 119/120  interaction=-0.7345  marginal=0.2971
+  [nplm/distance] epoch 120/120  interaction=-0.7446  marginal=0.2936
+  [nplm_sup_dist ] probe=0.7217+-0.0283 acc=0.3423 supAUC=0.9613 eucl=0.7536 mahaT=0.7638 mahaPC=0.7066 lid=0.5199
+
+===== performance / novelty table =====
+  arm                        probe     acc  supAUC    eucl   mahaT  mahaPC     lid
+  simclr             0.6754+-0.0096  0.2147  0.8877  0.6083  0.5943  0.5762  0.5817
+  lejepa             0.7305+-0.0030  0.1817  0.9012  0.5148  0.6258  0.7000  0.5834
+  simclr_sigreg      0.7528+-0.0023  0.2357  0.9329  0.5272  0.6404  0.6883  0.5381
+  supcon             0.7458+-0.0038  0.6113  0.9609  0.6841  0.7005  0.6671  0.6706
+  supcon_sigreg      0.7964+-0.0140  0.6260  0.9868  0.8174  0.8023  0.8063  0.7109
+  nplm_bilinear      0.7275+-0.0019  0.2140  0.8815  0.6708  0.7072  0.7182  0.6502
+  nplm_distance      0.7207+-0.0024  0.1160  0.8601  0.4823  0.6546  0.6323  0.5410
+  nplm_sup_dist      0.7217+-0.0283  0.3423  0.9613  0.7536  0.7638  0.7066  0.5199
+
+===== gaussianity (seen classes, test set) =====
+  metric                            simclr        lejepa simclr_sigreg        supcon supcon_sigreg nplm_bilinear nplm_distance nplm_sup_dist
+  eig min (class cov)               -0.000         0.000        -0.000         0.000        -0.000         0.000         0.000        -0.000
+  eig max (class cov)                7.103        11.492        16.242         0.679         8.088         0.670        12.333         4.460
+  eig cond worst            221413490688.0  2648488960.06065350508544.0  1378419712.02261230288896.0   575825472.0   288807264.01536386662400.0
+  class RMS min                      0.081         0.491         0.595         0.014         0.272         0.108         0.356         0.070
+  class RMS mean                     0.173         0.744         0.815         0.037         0.421         0.150         0.632         0.139
+  class RMS max                      0.492         0.935         0.992         0.162         0.628         0.188         0.875         0.372
+  max |corr| (worst class)           0.995         0.968         0.947         0.979         0.944         0.977         0.989         1.000
+  SW ratio mean                       4.29          1.59          1.36          2.15          1.23          1.76          2.55          4.39
+  SW ratio worst                     18.96          2.83          2.58          9.63          2.38          5.44          5.53         16.49
+  |skew| mean                        1.024         0.425         0.382         0.599         0.369         0.504         0.573         1.146
+  |ex-kurt| mean                     2.990         0.824         0.764         1.532         0.716         0.970         1.208         2.979
+  centroid dist min                   0.08          0.60          0.72          0.04          0.45          0.10          0.23          0.02
+  centroid dist mean                  0.73          3.98          4.02          0.51          5.86          1.19          3.84          4.64
+  separation (min d/RMS)              0.48          0.80          0.89          1.08          1.08          0.65          0.36          0.15
+saved /home/pharris/sigreg/SuperSig/plots/exp51_probe_aircraft_lejepa_nplm-sup-ft_seen.png
+
+===== EXP51 SUMMARY =====
+  [simclr        ] probe=0.6754+-0.0096  acc=0.2147  eucl=0.6083  mahaT=0.5943
+  [lejepa        ] probe=0.7305+-0.0030  acc=0.1817  eucl=0.5148  mahaT=0.6258
+  [simclr_sigreg ] probe=0.7528+-0.0023  acc=0.2357  eucl=0.5272  mahaT=0.6404
+  [supcon        ] probe=0.7458+-0.0038  acc=0.6113  eucl=0.6841  mahaT=0.7005
+  [supcon_sigreg ] probe=0.7964+-0.0140  acc=0.6260  eucl=0.8174  mahaT=0.8023
+  [nplm_bilinear ] probe=0.7275+-0.0019  acc=0.2140  eucl=0.6708  mahaT=0.7072
+  [nplm_distance ] probe=0.7207+-0.0024  acc=0.1160  eucl=0.4823  mahaT=0.6546
+  [nplm_sup_dist ] probe=0.7217+-0.0283  acc=0.3423  eucl=0.7536  mahaT=0.7638
+Done.
+----- exp84 stage1 aircraft:visreg nplm-sup-ft (seen-only) -----
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+exp70 [aircraft_visreg_ft70] end-to-end ft suite, arms=['nplm-sup-ft'], ft_epochs=20, emb=100, holdouts 90-99 EXCLUDED from ft
+  ft corpus: 6000/6667 train images (holdout classes removed)
+
+===== [nplm-sup-ft] (supervised) =====
+  [nplm-sup-ft] epoch 1/20  main=-0.2583  aux=0.7850
+  [nplm-sup-ft] epoch 5/20  main=-0.5283  aux=0.6713
+  [nplm-sup-ft] epoch 10/20  main=-0.5797  aux=0.6094
+  [nplm-sup-ft] epoch 15/20  main=-0.6070  aux=0.5656
+  [nplm-sup-ft] epoch 20/20  main=-0.6283  aux=0.5581
+  extracted ft70_nplm-sup-ft train: (6667, 768)
+  extracted ft70_nplm-sup-ft test: (3333, 768)
+  [nplm-sup-ft   ] probe=0.7269+-0.0258 acc=0.2680 supAUC=0.9513 eucl=0.7559 mahaT=0.7682 mahaPC=0.7332 lid=0.5729
+
+===== PRE table =====
+  arm                        probe     acc  supAUC    eucl   mahaT  mahaPC
+  nplm-sup-ft        0.7269+-0.0258  0.2680  0.9513  0.7559  0.7682  0.7332
+
+===== gaussianity (seen classes, test set) =====
+  metric                       nplm-sup-ft
+  eig min (class cov)               -0.000
+  eig max (class cov)                2.163
+  eig cond worst            2162860883968.0
+  class RMS min                      0.037
+  class RMS mean                     0.071
+  class RMS max                      0.147
+  max |corr| (worst class)           1.000
+  SW ratio mean                       4.01
+  SW ratio worst                     16.68
+  |skew| mean                        1.057
+  |ex-kurt| mean                     2.580
+  centroid dist min                   0.04
+  centroid dist mean                  4.01
+  separation (min d/RMS)              0.50
+
+===== EXP70 SUMMARY [aircraft_visreg_ft70] =====
+  [nplm-sup-ft   ] probe=0.7269+-0.0258 acc=0.2680 eucl=0.7559 mahaT=0.7682
+saved /home/pharris/sigreg/SuperSig/plots/exp70_probe_aircraft_visreg_ft70.png
+Done.
+----- exp84 stage2 aircraft:visreg 8-arm head suite -----
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+exp51 [aircraft_visreg_nplm-sup-ft_seen] NPLM suite, dim=32, epochs=120, holdouts=[90, 91, 92, 93, 94, 95, 96, 97, 98, 99], lam=1.0, arms=['simclr', 'lejepa', 'simclr_sigreg', 'supcon', 'supcon_sigreg', 'nplm_bilinear', 'nplm_distance', 'nplm_sup_dist']
+  loading ft trunk /home/pharris/sigreg/SuperSig/checkpoints/aircraft_ft_visreg_nplm-sup-ft_seen.pt
+  extracted aircraft_visreg_vitb16_nplm-sup-ft_seen train: (6667, 768)
+  extracted aircraft_visreg_vitb16_nplm-sup-ft_seen test: (3333, 768)
+  aircraft_visreg_vitb16_nplm-sup-ft_seen aug replica 1/8
+  aircraft_visreg_vitb16_nplm-sup-ft_seen aug replica 2/8
+  aircraft_visreg_vitb16_nplm-sup-ft_seen aug replica 3/8
+  aircraft_visreg_vitb16_nplm-sup-ft_seen aug replica 4/8
+  aircraft_visreg_vitb16_nplm-sup-ft_seen aug replica 5/8
+  aircraft_visreg_vitb16_nplm-sup-ft_seen aug replica 6/8
+  aircraft_visreg_vitb16_nplm-sup-ft_seen aug replica 7/8
+  aircraft_visreg_vitb16_nplm-sup-ft_seen aug replica 8/8
+  train pool 6667 (seen bank 6000), test pool 3333 (333 holdout)
+
+----- simclr (augmentations only) -----
+  [simclr] epoch 1/120  loss=5.8996
+  [simclr] epoch 2/120  loss=5.5152
+  [simclr] epoch 3/120  loss=5.4086
+  [simclr] epoch 4/120  loss=5.3560
+  [simclr] epoch 5/120  loss=5.3314
+  [simclr] epoch 6/120  loss=5.3165
+  [simclr] epoch 7/120  loss=5.2905
+  [simclr] epoch 8/120  loss=5.2777
+  [simclr] epoch 9/120  loss=5.2524
+  [simclr] epoch 10/120  loss=5.2408
+  [simclr] epoch 11/120  loss=5.2341
+  [simclr] epoch 12/120  loss=5.2316
+  [simclr] epoch 13/120  loss=5.2265
+  [simclr] epoch 14/120  loss=5.2232
+  [simclr] epoch 15/120  loss=5.2163
+  [simclr] epoch 16/120  loss=5.2139
+  [simclr] epoch 17/120  loss=5.2102
+  [simclr] epoch 18/120  loss=5.2032
+  [simclr] epoch 19/120  loss=5.2011
+  [simclr] epoch 20/120  loss=5.1907
+  [simclr] epoch 21/120  loss=5.1878
+  [simclr] epoch 22/120  loss=5.1865
+  [simclr] epoch 23/120  loss=5.1803
+  [simclr] epoch 24/120  loss=5.1841
+  [simclr] epoch 25/120  loss=5.1790
+  [simclr] epoch 26/120  loss=5.1783
+  [simclr] epoch 27/120  loss=5.1743
+  [simclr] epoch 28/120  loss=5.1706
+  [simclr] epoch 29/120  loss=5.1691
+  [simclr] epoch 30/120  loss=5.1636
+  [simclr] epoch 31/120  loss=5.1675
+  [simclr] epoch 32/120  loss=5.1653
+  [simclr] epoch 33/120  loss=5.1591
+  [simclr] epoch 34/120  loss=5.1542
+  [simclr] epoch 35/120  loss=5.1569
+  [simclr] epoch 36/120  loss=5.1533
+  [simclr] epoch 37/120  loss=5.1510
+  [simclr] epoch 38/120  loss=5.1524
+  [simclr] epoch 39/120  loss=5.1534
+  [simclr] epoch 40/120  loss=5.1516
+  [simclr] epoch 41/120  loss=5.1512
+  [simclr] epoch 42/120  loss=5.1476
+  [simclr] epoch 43/120  loss=5.1427
+  [simclr] epoch 44/120  loss=5.1419
+  [simclr] epoch 45/120  loss=5.1456
+  [simclr] epoch 46/120  loss=5.1413
+  [simclr] epoch 47/120  loss=5.1406
+  [simclr] epoch 48/120  loss=5.1382
+  [simclr] epoch 49/120  loss=5.1346
+  [simclr] epoch 50/120  loss=5.1351
+  [simclr] epoch 51/120  loss=5.1314
+  [simclr] epoch 52/120  loss=5.1305
+  [simclr] epoch 53/120  loss=5.1300
+  [simclr] epoch 54/120  loss=5.1306
+  [simclr] epoch 55/120  loss=5.1270
+  [simclr] epoch 56/120  loss=5.1288
+  [simclr] epoch 57/120  loss=5.1322
+  [simclr] epoch 58/120  loss=5.1307
+  [simclr] epoch 59/120  loss=5.1275
+  [simclr] epoch 60/120  loss=5.1257
+  [simclr] epoch 61/120  loss=5.1256
+  [simclr] epoch 62/120  loss=5.1265
+  [simclr] epoch 63/120  loss=5.1261
+  [simclr] epoch 64/120  loss=5.1234
+  [simclr] epoch 65/120  loss=5.1201
+  [simclr] epoch 66/120  loss=5.1222
+  [simclr] epoch 67/120  loss=5.1189
+  [simclr] epoch 68/120  loss=5.1203
+  [simclr] epoch 69/120  loss=5.1144
+  [simclr] epoch 70/120  loss=5.1146
+  [simclr] epoch 71/120  loss=5.1155
+  [simclr] epoch 72/120  loss=5.1113
+  [simclr] epoch 73/120  loss=5.1113
+  [simclr] epoch 74/120  loss=5.1106
+  [simclr] epoch 75/120  loss=5.1135
+  [simclr] epoch 76/120  loss=5.1120
+  [simclr] epoch 77/120  loss=5.1094
+  [simclr] epoch 78/120  loss=5.1113
+  [simclr] epoch 79/120  loss=5.1090
+  [simclr] epoch 80/120  loss=5.1138
+  [simclr] epoch 81/120  loss=5.1119
+  [simclr] epoch 82/120  loss=5.1077
+  [simclr] epoch 83/120  loss=5.1083
+  [simclr] epoch 84/120  loss=5.1075
+  [simclr] epoch 85/120  loss=5.1056
+  [simclr] epoch 86/120  loss=5.1068
+  [simclr] epoch 87/120  loss=5.1059
+  [simclr] epoch 88/120  loss=5.1034
+  [simclr] epoch 89/120  loss=5.1019
+  [simclr] epoch 90/120  loss=5.1041
+  [simclr] epoch 91/120  loss=5.1033
+  [simclr] epoch 92/120  loss=5.1018
+  [simclr] epoch 93/120  loss=5.0998
+  [simclr] epoch 94/120  loss=5.1017
+  [simclr] epoch 95/120  loss=5.1018
+  [simclr] epoch 96/120  loss=5.1023
+  [simclr] epoch 97/120  loss=5.0999
+  [simclr] epoch 98/120  loss=5.0970
+  [simclr] epoch 99/120  loss=5.0985
+  [simclr] epoch 100/120  loss=5.0975
+  [simclr] epoch 101/120  loss=5.0954
+  [simclr] epoch 102/120  loss=5.0949
+  [simclr] epoch 103/120  loss=5.0938
+  [simclr] epoch 104/120  loss=5.0929
+  [simclr] epoch 105/120  loss=5.0940
+  [simclr] epoch 106/120  loss=5.0911
+  [simclr] epoch 107/120  loss=5.0906
+  [simclr] epoch 108/120  loss=5.0928
+  [simclr] epoch 109/120  loss=5.0927
+  [simclr] epoch 110/120  loss=5.0887
+  [simclr] epoch 111/120  loss=5.0919
+  [simclr] epoch 112/120  loss=5.0896
+  [simclr] epoch 113/120  loss=5.0909
+  [simclr] epoch 114/120  loss=5.0940
+  [simclr] epoch 115/120  loss=5.0922
+  [simclr] epoch 116/120  loss=5.0901
+  [simclr] epoch 117/120  loss=5.0900
+  [simclr] epoch 118/120  loss=5.0896
+  [simclr] epoch 119/120  loss=5.0894
+  [simclr] epoch 120/120  loss=5.0898
+  [simclr        ] probe=0.6952+-0.0084 acc=0.2263 supAUC=0.9081 eucl=0.6080 mahaT=0.6008 mahaPC=0.6305 lid=0.6046
+
+----- lejepa (augmentations only) -----
+  [sigreg-ssl] epoch 1/120  inv=0.0232  sigreg=0.4451
+  [sigreg-ssl] epoch 2/120  inv=0.0406  sigreg=0.2352
+  [sigreg-ssl] epoch 3/120  inv=0.0452  sigreg=0.2013
+  [sigreg-ssl] epoch 4/120  inv=0.0416  sigreg=0.1583
+  [sigreg-ssl] epoch 5/120  inv=0.0439  sigreg=0.1525
+  [sigreg-ssl] epoch 6/120  inv=0.0453  sigreg=0.1427
+  [sigreg-ssl] epoch 7/120  inv=0.0441  sigreg=0.1224
+  [sigreg-ssl] epoch 8/120  inv=0.0464  sigreg=0.1227
+  [sigreg-ssl] epoch 9/120  inv=0.0426  sigreg=0.1197
+  [sigreg-ssl] epoch 10/120  inv=0.0456  sigreg=0.1061
+  [sigreg-ssl] epoch 11/120  inv=0.0422  sigreg=0.1113
+  [sigreg-ssl] epoch 12/120  inv=0.0449  sigreg=0.1130
+  [sigreg-ssl] epoch 13/120  inv=0.0420  sigreg=0.1157
+  [sigreg-ssl] epoch 14/120  inv=0.0430  sigreg=0.1061
+  [sigreg-ssl] epoch 15/120  inv=0.0419  sigreg=0.0999
+  [sigreg-ssl] epoch 16/120  inv=0.0429  sigreg=0.0949
+  [sigreg-ssl] epoch 17/120  inv=0.0424  sigreg=0.0936
+  [sigreg-ssl] epoch 18/120  inv=0.0423  sigreg=0.0882
+  [sigreg-ssl] epoch 19/120  inv=0.0432  sigreg=0.0910
+  [sigreg-ssl] epoch 20/120  inv=0.0420  sigreg=0.0910
+  [sigreg-ssl] epoch 21/120  inv=0.0427  sigreg=0.0878
+  [sigreg-ssl] epoch 22/120  inv=0.0428  sigreg=0.0846
+  [sigreg-ssl] epoch 23/120  inv=0.0422  sigreg=0.0847
+  [sigreg-ssl] epoch 24/120  inv=0.0412  sigreg=0.0817
+  [sigreg-ssl] epoch 25/120  inv=0.0414  sigreg=0.0785
+  [sigreg-ssl] epoch 26/120  inv=0.0420  sigreg=0.0780
+  [sigreg-ssl] epoch 27/120  inv=0.0424  sigreg=0.0737
+  [sigreg-ssl] epoch 28/120  inv=0.0395  sigreg=0.0803
+  [sigreg-ssl] epoch 29/120  inv=0.0412  sigreg=0.0762
+  [sigreg-ssl] epoch 30/120  inv=0.0408  sigreg=0.0765
+  [sigreg-ssl] epoch 31/120  inv=0.0423  sigreg=0.0746
+  [sigreg-ssl] epoch 32/120  inv=0.0404  sigreg=0.0732
+  [sigreg-ssl] epoch 33/120  inv=0.0414  sigreg=0.0748
+  [sigreg-ssl] epoch 34/120  inv=0.0403  sigreg=0.0721
+  [sigreg-ssl] epoch 35/120  inv=0.0399  sigreg=0.0701
+  [sigreg-ssl] epoch 36/120  inv=0.0407  sigreg=0.0688
+  [sigreg-ssl] epoch 37/120  inv=0.0414  sigreg=0.0660
+  [sigreg-ssl] epoch 38/120  inv=0.0412  sigreg=0.0692
+  [sigreg-ssl] epoch 39/120  inv=0.0404  sigreg=0.0684
+  [sigreg-ssl] epoch 40/120  inv=0.0407  sigreg=0.0654
+  [sigreg-ssl] epoch 41/120  inv=0.0408  sigreg=0.0645
+  [sigreg-ssl] epoch 42/120  inv=0.0409  sigreg=0.0663
+  [sigreg-ssl] epoch 43/120  inv=0.0390  sigreg=0.0626
+  [sigreg-ssl] epoch 44/120  inv=0.0401  sigreg=0.0624
+  [sigreg-ssl] epoch 45/120  inv=0.0412  sigreg=0.0650
+  [sigreg-ssl] epoch 46/120  inv=0.0402  sigreg=0.0594
+  [sigreg-ssl] epoch 47/120  inv=0.0393  sigreg=0.0610
+  [sigreg-ssl] epoch 48/120  inv=0.0393  sigreg=0.0601
+  [sigreg-ssl] epoch 49/120  inv=0.0393  sigreg=0.0630
+  [sigreg-ssl] epoch 50/120  inv=0.0392  sigreg=0.0621
+  [sigreg-ssl] epoch 51/120  inv=0.0386  sigreg=0.0615
+  [sigreg-ssl] epoch 52/120  inv=0.0383  sigreg=0.0618
+  [sigreg-ssl] epoch 53/120  inv=0.0384  sigreg=0.0622
+  [sigreg-ssl] epoch 54/120  inv=0.0387  sigreg=0.0596
+  [sigreg-ssl] epoch 55/120  inv=0.0385  sigreg=0.0599
+  [sigreg-ssl] epoch 56/120  inv=0.0381  sigreg=0.0554
+  [sigreg-ssl] epoch 57/120  inv=0.0380  sigreg=0.0593
+  [sigreg-ssl] epoch 58/120  inv=0.0381  sigreg=0.0590
+  [sigreg-ssl] epoch 59/120  inv=0.0384  sigreg=0.0567
+  [sigreg-ssl] epoch 60/120  inv=0.0380  sigreg=0.0609
+  [sigreg-ssl] epoch 61/120  inv=0.0384  sigreg=0.0562
+  [sigreg-ssl] epoch 62/120  inv=0.0381  sigreg=0.0548
+  [sigreg-ssl] epoch 63/120  inv=0.0367  sigreg=0.0601
+  [sigreg-ssl] epoch 64/120  inv=0.0369  sigreg=0.0581
+  [sigreg-ssl] epoch 65/120  inv=0.0370  sigreg=0.0566
+  [sigreg-ssl] epoch 66/120  inv=0.0388  sigreg=0.0550
+  [sigreg-ssl] epoch 67/120  inv=0.0368  sigreg=0.0590
+  [sigreg-ssl] epoch 68/120  inv=0.0353  sigreg=0.0563
+  [sigreg-ssl] epoch 69/120  inv=0.0371  sigreg=0.0554
+  [sigreg-ssl] epoch 70/120  inv=0.0373  sigreg=0.0589
+  [sigreg-ssl] epoch 71/120  inv=0.0362  sigreg=0.0563
+  [sigreg-ssl] epoch 72/120  inv=0.0365  sigreg=0.0526
+  [sigreg-ssl] epoch 73/120  inv=0.0360  sigreg=0.0564
+  [sigreg-ssl] epoch 74/120  inv=0.0364  sigreg=0.0605
+  [sigreg-ssl] epoch 75/120  inv=0.0368  sigreg=0.0547
+  [sigreg-ssl] epoch 76/120  inv=0.0368  sigreg=0.0569
+  [sigreg-ssl] epoch 77/120  inv=0.0355  sigreg=0.0575
+  [sigreg-ssl] epoch 78/120  inv=0.0359  sigreg=0.0557
+  [sigreg-ssl] epoch 79/120  inv=0.0359  sigreg=0.0552
+  [sigreg-ssl] epoch 80/120  inv=0.0348  sigreg=0.0548
+  [sigreg-ssl] epoch 81/120  inv=0.0361  sigreg=0.0560
+  [sigreg-ssl] epoch 82/120  inv=0.0359  sigreg=0.0516
+  [sigreg-ssl] epoch 83/120  inv=0.0363  sigreg=0.0564
+  [sigreg-ssl] epoch 84/120  inv=0.0349  sigreg=0.0547
+  [sigreg-ssl] epoch 85/120  inv=0.0356  sigreg=0.0513
+  [sigreg-ssl] epoch 86/120  inv=0.0352  sigreg=0.0524
+  [sigreg-ssl] epoch 87/120  inv=0.0350  sigreg=0.0533
+  [sigreg-ssl] epoch 88/120  inv=0.0349  sigreg=0.0527
+  [sigreg-ssl] epoch 89/120  inv=0.0355  sigreg=0.0526
+  [sigreg-ssl] epoch 90/120  inv=0.0357  sigreg=0.0522
+  [sigreg-ssl] epoch 91/120  inv=0.0354  sigreg=0.0528
+  [sigreg-ssl] epoch 92/120  inv=0.0349  sigreg=0.0519
+  [sigreg-ssl] epoch 93/120  inv=0.0346  sigreg=0.0555
+  [sigreg-ssl] epoch 94/120  inv=0.0351  sigreg=0.0530
+  [sigreg-ssl] epoch 95/120  inv=0.0351  sigreg=0.0501
+  [sigreg-ssl] epoch 96/120  inv=0.0347  sigreg=0.0492
+  [sigreg-ssl] epoch 97/120  inv=0.0348  sigreg=0.0534
+  [sigreg-ssl] epoch 98/120  inv=0.0333  sigreg=0.0515
+  [sigreg-ssl] epoch 99/120  inv=0.0334  sigreg=0.0521
+  [sigreg-ssl] epoch 100/120  inv=0.0350  sigreg=0.0507
+  [sigreg-ssl] epoch 101/120  inv=0.0335  sigreg=0.0499
+  [sigreg-ssl] epoch 102/120  inv=0.0350  sigreg=0.0498
+  [sigreg-ssl] epoch 103/120  inv=0.0346  sigreg=0.0480
+  [sigreg-ssl] epoch 104/120  inv=0.0329  sigreg=0.0518
+  [sigreg-ssl] epoch 105/120  inv=0.0334  sigreg=0.0498
+  [sigreg-ssl] epoch 106/120  inv=0.0341  sigreg=0.0487
+  [sigreg-ssl] epoch 107/120  inv=0.0329  sigreg=0.0499
+  [sigreg-ssl] epoch 108/120  inv=0.0343  sigreg=0.0505
+  [sigreg-ssl] epoch 109/120  inv=0.0346  sigreg=0.0466
+  [sigreg-ssl] epoch 110/120  inv=0.0343  sigreg=0.0476
+  [sigreg-ssl] epoch 111/120  inv=0.0341  sigreg=0.0512
+  [sigreg-ssl] epoch 112/120  inv=0.0328  sigreg=0.0518
+  [sigreg-ssl] epoch 113/120  inv=0.0333  sigreg=0.0489
+  [sigreg-ssl] epoch 114/120  inv=0.0333  sigreg=0.0453
+  [sigreg-ssl] epoch 115/120  inv=0.0339  sigreg=0.0470
+  [sigreg-ssl] epoch 116/120  inv=0.0341  sigreg=0.0458
+  [sigreg-ssl] epoch 117/120  inv=0.0328  sigreg=0.0489
+  [sigreg-ssl] epoch 118/120  inv=0.0331  sigreg=0.0464
+  [sigreg-ssl] epoch 119/120  inv=0.0343  sigreg=0.0491
+  [sigreg-ssl] epoch 120/120  inv=0.0321  sigreg=0.0488
+  [lejepa        ] probe=0.7496+-0.0052 acc=0.1963 supAUC=0.9108 eucl=0.5409 mahaT=0.6887 mahaPC=0.7508 lid=0.5882
+
+----- simclr_sigreg (augmentations only) -----
+  [softmax/cosine] epoch 1/120  interaction=5.9877  marginal=0.4620
+  [softmax/cosine] epoch 2/120  interaction=5.6441  marginal=0.1879
+  [softmax/cosine] epoch 3/120  interaction=5.5356  marginal=0.1546
+  [softmax/cosine] epoch 4/120  interaction=5.4774  marginal=0.1214
+  [softmax/cosine] epoch 5/120  interaction=5.4262  marginal=0.1005
+  [softmax/cosine] epoch 6/120  interaction=5.3900  marginal=0.0893
+  [softmax/cosine] epoch 7/120  interaction=5.3659  marginal=0.0798
+  [softmax/cosine] epoch 8/120  interaction=5.3543  marginal=0.0767
+  [softmax/cosine] epoch 9/120  interaction=5.3427  marginal=0.0770
+  [softmax/cosine] epoch 10/120  interaction=5.3349  marginal=0.0789
+  [softmax/cosine] epoch 11/120  interaction=5.3199  marginal=0.0698
+  [softmax/cosine] epoch 12/120  interaction=5.3088  marginal=0.0655
+  [softmax/cosine] epoch 13/120  interaction=5.2928  marginal=0.0603
+  [softmax/cosine] epoch 14/120  interaction=5.2897  marginal=0.0595
+  [softmax/cosine] epoch 15/120  interaction=5.2811  marginal=0.0594
+  [softmax/cosine] epoch 16/120  interaction=5.2726  marginal=0.0542
+  [softmax/cosine] epoch 17/120  interaction=5.2675  marginal=0.0571
+  [softmax/cosine] epoch 18/120  interaction=5.2586  marginal=0.0522
+  [softmax/cosine] epoch 19/120  interaction=5.2624  marginal=0.0543
+  [softmax/cosine] epoch 20/120  interaction=5.2579  marginal=0.0571
+  [softmax/cosine] epoch 21/120  interaction=5.2474  marginal=0.0531
+  [softmax/cosine] epoch 22/120  interaction=5.2413  marginal=0.0483
+  [softmax/cosine] epoch 23/120  interaction=5.2354  marginal=0.0446
+  [softmax/cosine] epoch 24/120  interaction=5.2320  marginal=0.0445
+  [softmax/cosine] epoch 25/120  interaction=5.2312  marginal=0.0457
+  [softmax/cosine] epoch 26/120  interaction=5.2338  marginal=0.0483
+  [softmax/cosine] epoch 27/120  interaction=5.2207  marginal=0.0410
+  [softmax/cosine] epoch 28/120  interaction=5.2159  marginal=0.0406
+  [softmax/cosine] epoch 29/120  interaction=5.2180  marginal=0.0408
+  [softmax/cosine] epoch 30/120  interaction=5.2134  marginal=0.0411
+  [softmax/cosine] epoch 31/120  interaction=5.2137  marginal=0.0402
+  [softmax/cosine] epoch 32/120  interaction=5.2171  marginal=0.0434
+  [softmax/cosine] epoch 33/120  interaction=5.2136  marginal=0.0430
+  [softmax/cosine] epoch 34/120  interaction=5.2108  marginal=0.0435
+  [softmax/cosine] epoch 35/120  interaction=5.2064  marginal=0.0415
+  [softmax/cosine] epoch 36/120  interaction=5.2017  marginal=0.0376
+  [softmax/cosine] epoch 37/120  interaction=5.1990  marginal=0.0363
+  [softmax/cosine] epoch 38/120  interaction=5.1989  marginal=0.0372
+  [softmax/cosine] epoch 39/120  interaction=5.1961  marginal=0.0368
+  [softmax/cosine] epoch 40/120  interaction=5.1939  marginal=0.0360
+  [softmax/cosine] epoch 41/120  interaction=5.1915  marginal=0.0322
+  [softmax/cosine] epoch 42/120  interaction=5.1927  marginal=0.0355
+  [softmax/cosine] epoch 43/120  interaction=5.1923  marginal=0.0350
+  [softmax/cosine] epoch 44/120  interaction=5.1920  marginal=0.0361
+  [softmax/cosine] epoch 45/120  interaction=5.1897  marginal=0.0353
+  [softmax/cosine] epoch 46/120  interaction=5.1888  marginal=0.0342
+  [softmax/cosine] epoch 47/120  interaction=5.1872  marginal=0.0340
+  [softmax/cosine] epoch 48/120  interaction=5.1882  marginal=0.0355
+  [softmax/cosine] epoch 49/120  interaction=5.1834  marginal=0.0346
+  [softmax/cosine] epoch 50/120  interaction=5.1828  marginal=0.0322
+  [softmax/cosine] epoch 51/120  interaction=5.1860  marginal=0.0349
+  [softmax/cosine] epoch 52/120  interaction=5.1844  marginal=0.0361
+  [softmax/cosine] epoch 53/120  interaction=5.1833  marginal=0.0351
+  [softmax/cosine] epoch 54/120  interaction=5.1817  marginal=0.0361
+  [softmax/cosine] epoch 55/120  interaction=5.1797  marginal=0.0342
+  [softmax/cosine] epoch 56/120  interaction=5.1749  marginal=0.0312
+  [softmax/cosine] epoch 57/120  interaction=5.1764  marginal=0.0331
+  [softmax/cosine] epoch 58/120  interaction=5.1752  marginal=0.0324
+  [softmax/cosine] epoch 59/120  interaction=5.1746  marginal=0.0329
+  [softmax/cosine] epoch 60/120  interaction=5.1735  marginal=0.0323
+  [softmax/cosine] epoch 61/120  interaction=5.1694  marginal=0.0314
+  [softmax/cosine] epoch 62/120  interaction=5.1684  marginal=0.0310
+  [softmax/cosine] epoch 63/120  interaction=5.1682  marginal=0.0301
+  [softmax/cosine] epoch 64/120  interaction=5.1672  marginal=0.0304
+  [softmax/cosine] epoch 65/120  interaction=5.1642  marginal=0.0288
+  [softmax/cosine] epoch 66/120  interaction=5.1658  marginal=0.0277
+  [softmax/cosine] epoch 67/120  interaction=5.1663  marginal=0.0309
+  [softmax/cosine] epoch 68/120  interaction=5.1703  marginal=0.0326
+  [softmax/cosine] epoch 69/120  interaction=5.1633  marginal=0.0285
+  [softmax/cosine] epoch 70/120  interaction=5.1636  marginal=0.0285
+  [softmax/cosine] epoch 71/120  interaction=5.1627  marginal=0.0297
+  [softmax/cosine] epoch 72/120  interaction=5.1652  marginal=0.0313
+  [softmax/cosine] epoch 73/120  interaction=5.1679  marginal=0.0337
+  [softmax/cosine] epoch 74/120  interaction=5.1663  marginal=0.0332
+  [softmax/cosine] epoch 75/120  interaction=5.1627  marginal=0.0314
+  [softmax/cosine] epoch 76/120  interaction=5.1587  marginal=0.0281
+  [softmax/cosine] epoch 77/120  interaction=5.1588  marginal=0.0281
+  [softmax/cosine] epoch 78/120  interaction=5.1566  marginal=0.0291
+  [softmax/cosine] epoch 79/120  interaction=5.1599  marginal=0.0299
+  [softmax/cosine] epoch 80/120  interaction=5.1557  marginal=0.0278
+  [softmax/cosine] epoch 81/120  interaction=5.1547  marginal=0.0278
+  [softmax/cosine] epoch 82/120  interaction=5.1565  marginal=0.0302
+  [softmax/cosine] epoch 83/120  interaction=5.1573  marginal=0.0286
+  [softmax/cosine] epoch 84/120  interaction=5.1578  marginal=0.0311
+  [softmax/cosine] epoch 85/120  interaction=5.1548  marginal=0.0288
+  [softmax/cosine] epoch 86/120  interaction=5.1511  marginal=0.0258
+  [softmax/cosine] epoch 87/120  interaction=5.1519  marginal=0.0252
+  [softmax/cosine] epoch 88/120  interaction=5.1483  marginal=0.0251
+  [softmax/cosine] epoch 89/120  interaction=5.1479  marginal=0.0234
+  [softmax/cosine] epoch 90/120  interaction=5.1474  marginal=0.0241
+  [softmax/cosine] epoch 91/120  interaction=5.1451  marginal=0.0253
+  [softmax/cosine] epoch 92/120  interaction=5.1504  marginal=0.0272
+  [softmax/cosine] epoch 93/120  interaction=5.1524  marginal=0.0273
+  [softmax/cosine] epoch 94/120  interaction=5.1487  marginal=0.0269
+  [softmax/cosine] epoch 95/120  interaction=5.1463  marginal=0.0243
+  [softmax/cosine] epoch 96/120  interaction=5.1460  marginal=0.0278
+  [softmax/cosine] epoch 97/120  interaction=5.1470  marginal=0.0263
+  [softmax/cosine] epoch 98/120  interaction=5.1460  marginal=0.0266
+  [softmax/cosine] epoch 99/120  interaction=5.1476  marginal=0.0282
+  [softmax/cosine] epoch 100/120  interaction=5.1455  marginal=0.0279
+  [softmax/cosine] epoch 101/120  interaction=5.1449  marginal=0.0267
+  [softmax/cosine] epoch 102/120  interaction=5.1428  marginal=0.0252
+  [softmax/cosine] epoch 103/120  interaction=5.1417  marginal=0.0256
+  [softmax/cosine] epoch 104/120  interaction=5.1425  marginal=0.0263
+  [softmax/cosine] epoch 105/120  interaction=5.1412  marginal=0.0258
+  [softmax/cosine] epoch 106/120  interaction=5.1415  marginal=0.0256
+  [softmax/cosine] epoch 107/120  interaction=5.1392  marginal=0.0235
+  [softmax/cosine] epoch 108/120  interaction=5.1366  marginal=0.0233
+  [softmax/cosine] epoch 109/120  interaction=5.1372  marginal=0.0227
+  [softmax/cosine] epoch 110/120  interaction=5.1402  marginal=0.0243
+  [softmax/cosine] epoch 111/120  interaction=5.1399  marginal=0.0257
+  [softmax/cosine] epoch 112/120  interaction=5.1416  marginal=0.0242
+  [softmax/cosine] epoch 113/120  interaction=5.1396  marginal=0.0251
+  [softmax/cosine] epoch 114/120  interaction=5.1390  marginal=0.0251
+  [softmax/cosine] epoch 115/120  interaction=5.1351  marginal=0.0237
+  [softmax/cosine] epoch 116/120  interaction=5.1387  marginal=0.0242
+  [softmax/cosine] epoch 117/120  interaction=5.1353  marginal=0.0229
+  [softmax/cosine] epoch 118/120  interaction=5.1345  marginal=0.0242
+  [softmax/cosine] epoch 119/120  interaction=5.1416  marginal=0.0267
+  [softmax/cosine] epoch 120/120  interaction=5.1382  marginal=0.0259
+  [simclr_sigreg ] probe=0.7814+-0.0076 acc=0.2617 supAUC=0.9373 eucl=0.4855 mahaT=0.6389 mahaPC=0.7149 lid=0.5727
+
+----- supcon (labels) -----
+  [supcon] epoch 1/120  loss=5.4924
+  [supcon] epoch 2/120  loss=5.0981
+  [supcon] epoch 3/120  loss=4.9456
+  [supcon] epoch 4/120  loss=4.8335
+  [supcon] epoch 5/120  loss=4.7475
+  [supcon] epoch 6/120  loss=4.6674
+  [supcon] epoch 7/120  loss=4.6174
+  [supcon] epoch 8/120  loss=4.5433
+  [supcon] epoch 9/120  loss=4.4925
+  [supcon] epoch 10/120  loss=4.4325
+  [supcon] epoch 11/120  loss=4.3875
+  [supcon] epoch 12/120  loss=4.3465
+  [supcon] epoch 13/120  loss=4.3228
+  [supcon] epoch 14/120  loss=4.2850
+  [supcon] epoch 15/120  loss=4.2551
+  [supcon] epoch 16/120  loss=4.2329
+  [supcon] epoch 17/120  loss=4.1987
+  [supcon] epoch 18/120  loss=4.1536
+  [supcon] epoch 19/120  loss=4.1381
+  [supcon] epoch 20/120  loss=4.1023
+  [supcon] epoch 21/120  loss=4.0752
+  [supcon] epoch 22/120  loss=4.0577
+  [supcon] epoch 23/120  loss=4.0428
+  [supcon] epoch 24/120  loss=4.0184
+  [supcon] epoch 25/120  loss=4.0047
+  [supcon] epoch 26/120  loss=3.9681
+  [supcon] epoch 27/120  loss=3.9919
+  [supcon] epoch 28/120  loss=3.9458
+  [supcon] epoch 29/120  loss=3.9295
+  [supcon] epoch 30/120  loss=3.9142
+  [supcon] epoch 31/120  loss=3.8927
+  [supcon] epoch 32/120  loss=3.8885
+  [supcon] epoch 33/120  loss=3.8645
+  [supcon] epoch 34/120  loss=3.8677
+  [supcon] epoch 35/120  loss=3.8347
+  [supcon] epoch 36/120  loss=3.8158
+  [supcon] epoch 37/120  loss=3.8251
+  [supcon] epoch 38/120  loss=3.8300
+  [supcon] epoch 39/120  loss=3.7913
+  [supcon] epoch 40/120  loss=3.7766
+  [supcon] epoch 41/120  loss=3.7590
+  [supcon] epoch 42/120  loss=3.7573
+  [supcon] epoch 43/120  loss=3.7591
+  [supcon] epoch 44/120  loss=3.7436
+  [supcon] epoch 45/120  loss=3.7257
+  [supcon] epoch 46/120  loss=3.7231
+  [supcon] epoch 47/120  loss=3.6919
+  [supcon] epoch 48/120  loss=3.6848
+  [supcon] epoch 49/120  loss=3.6827
+  [supcon] epoch 50/120  loss=3.6745
+  [supcon] epoch 51/120  loss=3.6631
+  [supcon] epoch 52/120  loss=3.6487
+  [supcon] epoch 53/120  loss=3.6548
+  [supcon] epoch 54/120  loss=3.6396
+  [supcon] epoch 55/120  loss=3.6298
+  [supcon] epoch 56/120  loss=3.6267
+  [supcon] epoch 57/120  loss=3.6161
+  [supcon] epoch 58/120  loss=3.6016
+  [supcon] epoch 59/120  loss=3.6139
+  [supcon] epoch 60/120  loss=3.5957
+  [supcon] epoch 61/120  loss=3.6005
+  [supcon] epoch 62/120  loss=3.6072
+  [supcon] epoch 63/120  loss=3.5962
+  [supcon] epoch 64/120  loss=3.5934
+  [supcon] epoch 65/120  loss=3.5532
+  [supcon] epoch 66/120  loss=3.5547
+  [supcon] epoch 67/120  loss=3.5436
+  [supcon] epoch 68/120  loss=3.5462
+  [supcon] epoch 69/120  loss=3.5509
+  [supcon] epoch 70/120  loss=3.5059
+  [supcon] epoch 71/120  loss=3.5168
+  [supcon] epoch 72/120  loss=3.5037
+  [supcon] epoch 73/120  loss=3.5301
+  [supcon] epoch 74/120  loss=3.5253
+  [supcon] epoch 75/120  loss=3.5238
+  [supcon] epoch 76/120  loss=3.5051
+  [supcon] epoch 77/120  loss=3.5066
+  [supcon] epoch 78/120  loss=3.4994
+  [supcon] epoch 79/120  loss=3.4971
+  [supcon] epoch 80/120  loss=3.4579
+  [supcon] epoch 81/120  loss=3.4736
+  [supcon] epoch 82/120  loss=3.4606
+  [supcon] epoch 83/120  loss=3.4708
+  [supcon] epoch 84/120  loss=3.4582
+  [supcon] epoch 85/120  loss=3.4690
+  [supcon] epoch 86/120  loss=3.4685
+  [supcon] epoch 87/120  loss=3.4724
+  [supcon] epoch 88/120  loss=3.4660
+  [supcon] epoch 89/120  loss=3.4469
+  [supcon] epoch 90/120  loss=3.4399
+  [supcon] epoch 91/120  loss=3.4360
+  [supcon] epoch 92/120  loss=3.4117
+  [supcon] epoch 93/120  loss=3.3951
+  [supcon] epoch 94/120  loss=3.4003
+  [supcon] epoch 95/120  loss=3.3953
+  [supcon] epoch 96/120  loss=3.4102
+  [supcon] epoch 97/120  loss=3.4101
+  [supcon] epoch 98/120  loss=3.4163
+  [supcon] epoch 99/120  loss=3.3942
+  [supcon] epoch 100/120  loss=3.3862
+  [supcon] epoch 101/120  loss=3.3942
+  [supcon] epoch 102/120  loss=3.3864
+  [supcon] epoch 103/120  loss=3.3628
+  [supcon] epoch 104/120  loss=3.3791
+  [supcon] epoch 105/120  loss=3.3942
+  [supcon] epoch 106/120  loss=3.3705
+  [supcon] epoch 107/120  loss=3.3600
+  [supcon] epoch 108/120  loss=3.3675
+  [supcon] epoch 109/120  loss=3.3256
+  [supcon] epoch 110/120  loss=3.3348
+  [supcon] epoch 111/120  loss=3.3546
+  [supcon] epoch 112/120  loss=3.3672
+  [supcon] epoch 113/120  loss=3.3437
+  [supcon] epoch 114/120  loss=3.3316
+  [supcon] epoch 115/120  loss=3.3336
+  [supcon] epoch 116/120  loss=3.3214
+  [supcon] epoch 117/120  loss=3.3222
+  [supcon] epoch 118/120  loss=3.2950
+  [supcon] epoch 119/120  loss=3.3039
+  [supcon] epoch 120/120  loss=3.3097
+  [supcon        ] probe=0.7891+-0.0054 acc=0.6660 supAUC=0.9754 eucl=0.7595 mahaT=0.7634 mahaPC=0.7651 lid=0.6597
+
+----- supcon_sigreg (labels) -----
+  [softmax/cosine] epoch 1/120  interaction=5.6289  marginal=0.5051
+  [softmax/cosine] epoch 2/120  interaction=5.2261  marginal=0.2707
+  [softmax/cosine] epoch 3/120  interaction=5.1052  marginal=0.2050
+  [softmax/cosine] epoch 4/120  interaction=5.0107  marginal=0.1945
+  [softmax/cosine] epoch 5/120  interaction=4.9422  marginal=0.1707
+  [softmax/cosine] epoch 6/120  interaction=4.8826  marginal=0.1650
+  [softmax/cosine] epoch 7/120  interaction=4.8411  marginal=0.1721
+  [softmax/cosine] epoch 8/120  interaction=4.7970  marginal=0.1540
+  [softmax/cosine] epoch 9/120  interaction=4.7495  marginal=0.1512
+  [softmax/cosine] epoch 10/120  interaction=4.7354  marginal=0.1383
+  [softmax/cosine] epoch 11/120  interaction=4.6870  marginal=0.1444
+  [softmax/cosine] epoch 12/120  interaction=4.6517  marginal=0.1426
+  [softmax/cosine] epoch 13/120  interaction=4.6126  marginal=0.1243
+  [softmax/cosine] epoch 14/120  interaction=4.5704  marginal=0.1184
+  [softmax/cosine] epoch 15/120  interaction=4.5359  marginal=0.1161
+  [softmax/cosine] epoch 16/120  interaction=4.5256  marginal=0.1174
+  [softmax/cosine] epoch 17/120  interaction=4.4985  marginal=0.1100
+  [softmax/cosine] epoch 18/120  interaction=4.4741  marginal=0.1098
+  [softmax/cosine] epoch 19/120  interaction=4.4489  marginal=0.1162
+  [softmax/cosine] epoch 20/120  interaction=4.4198  marginal=0.1104
+  [softmax/cosine] epoch 21/120  interaction=4.3944  marginal=0.1031
+  [softmax/cosine] epoch 22/120  interaction=4.3748  marginal=0.1040
+  [softmax/cosine] epoch 23/120  interaction=4.3743  marginal=0.0966
+  [softmax/cosine] epoch 24/120  interaction=4.3537  marginal=0.1007
+  [softmax/cosine] epoch 25/120  interaction=4.3062  marginal=0.0922
+  [softmax/cosine] epoch 26/120  interaction=4.2906  marginal=0.0887
+  [softmax/cosine] epoch 27/120  interaction=4.2771  marginal=0.0885
+  [softmax/cosine] epoch 28/120  interaction=4.2635  marginal=0.0991
+  [softmax/cosine] epoch 29/120  interaction=4.2557  marginal=0.1008
+  [softmax/cosine] epoch 30/120  interaction=4.2357  marginal=0.0947
+  [softmax/cosine] epoch 31/120  interaction=4.2087  marginal=0.0989
+  [softmax/cosine] epoch 32/120  interaction=4.1852  marginal=0.0965
+  [softmax/cosine] epoch 33/120  interaction=4.1865  marginal=0.0875
+  [softmax/cosine] epoch 34/120  interaction=4.1655  marginal=0.0933
+  [softmax/cosine] epoch 35/120  interaction=4.1378  marginal=0.0878
+  [softmax/cosine] epoch 36/120  interaction=4.1372  marginal=0.0972
+  [softmax/cosine] epoch 37/120  interaction=4.1261  marginal=0.0924
+  [softmax/cosine] epoch 38/120  interaction=4.1225  marginal=0.0850
+  [softmax/cosine] epoch 39/120  interaction=4.1039  marginal=0.0802
+  [softmax/cosine] epoch 40/120  interaction=4.0849  marginal=0.0840
+  [softmax/cosine] epoch 41/120  interaction=4.0651  marginal=0.0848
+  [softmax/cosine] epoch 42/120  interaction=4.0527  marginal=0.0847
+  [softmax/cosine] epoch 43/120  interaction=4.0468  marginal=0.0851
+  [softmax/cosine] epoch 44/120  interaction=4.0204  marginal=0.0820
+  [softmax/cosine] epoch 45/120  interaction=4.0118  marginal=0.0823
+  [softmax/cosine] epoch 46/120  interaction=4.0043  marginal=0.0800
+  [softmax/cosine] epoch 47/120  interaction=3.9933  marginal=0.0782
+  [softmax/cosine] epoch 48/120  interaction=3.9789  marginal=0.0795
+  [softmax/cosine] epoch 49/120  interaction=3.9589  marginal=0.0741
+  [softmax/cosine] epoch 50/120  interaction=3.9500  marginal=0.0767
+  [softmax/cosine] epoch 51/120  interaction=3.9446  marginal=0.0795
+  [softmax/cosine] epoch 52/120  interaction=3.9498  marginal=0.0851
+  [softmax/cosine] epoch 53/120  interaction=3.9353  marginal=0.0802
+  [softmax/cosine] epoch 54/120  interaction=3.9367  marginal=0.0781
+  [softmax/cosine] epoch 55/120  interaction=3.9127  marginal=0.0785
+  [softmax/cosine] epoch 56/120  interaction=3.8994  marginal=0.0769
+  [softmax/cosine] epoch 57/120  interaction=3.8823  marginal=0.0789
+  [softmax/cosine] epoch 58/120  interaction=3.8826  marginal=0.0764
+  [softmax/cosine] epoch 59/120  interaction=3.8616  marginal=0.0737
+  [softmax/cosine] epoch 60/120  interaction=3.8613  marginal=0.0795
+  [softmax/cosine] epoch 61/120  interaction=3.8482  marginal=0.0698
+  [softmax/cosine] epoch 62/120  interaction=3.8476  marginal=0.0687
+  [softmax/cosine] epoch 63/120  interaction=3.8435  marginal=0.0719
+  [softmax/cosine] epoch 64/120  interaction=3.8287  marginal=0.0758
+  [softmax/cosine] epoch 65/120  interaction=3.8143  marginal=0.0764
+  [softmax/cosine] epoch 66/120  interaction=3.8065  marginal=0.0700
+  [softmax/cosine] epoch 67/120  interaction=3.8030  marginal=0.0749
+  [softmax/cosine] epoch 68/120  interaction=3.7904  marginal=0.0728
+  [softmax/cosine] epoch 69/120  interaction=3.7935  marginal=0.0707
+  [softmax/cosine] epoch 70/120  interaction=3.7727  marginal=0.0702
+  [softmax/cosine] epoch 71/120  interaction=3.7815  marginal=0.0752
+  [softmax/cosine] epoch 72/120  interaction=3.7611  marginal=0.0711
+  [softmax/cosine] epoch 73/120  interaction=3.7546  marginal=0.0699
+  [softmax/cosine] epoch 74/120  interaction=3.7544  marginal=0.0723
+  [softmax/cosine] epoch 75/120  interaction=3.7434  marginal=0.0690
+  [softmax/cosine] epoch 76/120  interaction=3.7414  marginal=0.0699
+  [softmax/cosine] epoch 77/120  interaction=3.7282  marginal=0.0694
+  [softmax/cosine] epoch 78/120  interaction=3.7168  marginal=0.0691
+  [softmax/cosine] epoch 79/120  interaction=3.7130  marginal=0.0693
+  [softmax/cosine] epoch 80/120  interaction=3.7152  marginal=0.0726
+  [softmax/cosine] epoch 81/120  interaction=3.7238  marginal=0.0788
+  [softmax/cosine] epoch 82/120  interaction=3.7163  marginal=0.0758
+  [softmax/cosine] epoch 83/120  interaction=3.7092  marginal=0.0698
+  [softmax/cosine] epoch 84/120  interaction=3.6931  marginal=0.0753
+  [softmax/cosine] epoch 85/120  interaction=3.6943  marginal=0.0716
+  [softmax/cosine] epoch 86/120  interaction=3.6669  marginal=0.0615
+  [softmax/cosine] epoch 87/120  interaction=3.6607  marginal=0.0648
+  [softmax/cosine] epoch 88/120  interaction=3.6525  marginal=0.0659
+  [softmax/cosine] epoch 89/120  interaction=3.6465  marginal=0.0669
+  [softmax/cosine] epoch 90/120  interaction=3.6389  marginal=0.0640
+  [softmax/cosine] epoch 91/120  interaction=3.6368  marginal=0.0629
+  [softmax/cosine] epoch 92/120  interaction=3.6345  marginal=0.0679
+  [softmax/cosine] epoch 93/120  interaction=3.6385  marginal=0.0701
+  [softmax/cosine] epoch 94/120  interaction=3.6305  marginal=0.0633
+  [softmax/cosine] epoch 95/120  interaction=3.6170  marginal=0.0623
+  [softmax/cosine] epoch 96/120  interaction=3.6050  marginal=0.0655
+  [softmax/cosine] epoch 97/120  interaction=3.6042  marginal=0.0646
+  [softmax/cosine] epoch 98/120  interaction=3.6110  marginal=0.0652
+  [softmax/cosine] epoch 99/120  interaction=3.5912  marginal=0.0607
+  [softmax/cosine] epoch 100/120  interaction=3.5968  marginal=0.0676
+  [softmax/cosine] epoch 101/120  interaction=3.5969  marginal=0.0636
+  [softmax/cosine] epoch 102/120  interaction=3.5954  marginal=0.0625
+  [softmax/cosine] epoch 103/120  interaction=3.5827  marginal=0.0653
+  [softmax/cosine] epoch 104/120  interaction=3.5751  marginal=0.0633
+  [softmax/cosine] epoch 105/120  interaction=3.5605  marginal=0.0619
+  [softmax/cosine] epoch 106/120  interaction=3.5649  marginal=0.0628
+  [softmax/cosine] epoch 107/120  interaction=3.5808  marginal=0.0722
+  [softmax/cosine] epoch 108/120  interaction=3.5539  marginal=0.0675
+  [softmax/cosine] epoch 109/120  interaction=3.5400  marginal=0.0614
+  [softmax/cosine] epoch 110/120  interaction=3.5585  marginal=0.0625
+  [softmax/cosine] epoch 111/120  interaction=3.5372  marginal=0.0620
+  [softmax/cosine] epoch 112/120  interaction=3.5335  marginal=0.0635
+  [softmax/cosine] epoch 113/120  interaction=3.5283  marginal=0.0577
+  [softmax/cosine] epoch 114/120  interaction=3.5280  marginal=0.0597
+  [softmax/cosine] epoch 115/120  interaction=3.5121  marginal=0.0570
+  [softmax/cosine] epoch 116/120  interaction=3.5148  marginal=0.0588
+  [softmax/cosine] epoch 117/120  interaction=3.5094  marginal=0.0605
+  [softmax/cosine] epoch 118/120  interaction=3.5086  marginal=0.0580
+  [softmax/cosine] epoch 119/120  interaction=3.5022  marginal=0.0629
+  [softmax/cosine] epoch 120/120  interaction=3.5268  marginal=0.0638
+  [supcon_sigreg ] probe=0.8047+-0.0022 acc=0.6697 supAUC=0.9891 eucl=0.7832 mahaT=0.7729 mahaPC=0.8366 lid=0.6933
+
+----- nplm_bilinear (augmentations only) -----
+  [nplm/bilinear] epoch 1/120  interaction=4.4399  marginal=0.8490
+  [nplm/bilinear] epoch 2/120  interaction=-0.0646  marginal=0.8318
+  [nplm/bilinear] epoch 3/120  interaction=-0.4647  marginal=0.7493
+  [nplm/bilinear] epoch 4/120  interaction=-0.6332  marginal=0.7096
+  [nplm/bilinear] epoch 5/120  interaction=-0.7383  marginal=0.6845
+  [nplm/bilinear] epoch 6/120  interaction=2.3015  marginal=0.6643
+  [nplm/bilinear] epoch 7/120  interaction=0.2525  marginal=0.7211
+  [nplm/bilinear] epoch 8/120  interaction=-0.4014  marginal=0.7492
+  [nplm/bilinear] epoch 9/120  interaction=-0.6227  marginal=0.7110
+  [nplm/bilinear] epoch 10/120  interaction=-0.7016  marginal=0.6744
+  [nplm/bilinear] epoch 11/120  interaction=-0.7897  marginal=0.6755
+  [nplm/bilinear] epoch 12/120  interaction=-0.8527  marginal=0.6579
+  [nplm/bilinear] epoch 13/120  interaction=-0.9087  marginal=0.6439
+  [nplm/bilinear] epoch 14/120  interaction=-0.9567  marginal=0.6353
+  [nplm/bilinear] epoch 15/120  interaction=-1.0184  marginal=0.6304
+  [nplm/bilinear] epoch 16/120  interaction=-1.0883  marginal=0.6134
+  [nplm/bilinear] epoch 17/120  interaction=-1.1480  marginal=0.6021
+  [nplm/bilinear] epoch 18/120  interaction=-1.1947  marginal=0.5887
+  [nplm/bilinear] epoch 19/120  interaction=-1.2407  marginal=0.5879
+  [nplm/bilinear] epoch 20/120  interaction=-1.2967  marginal=0.5721
+  [nplm/bilinear] epoch 21/120  interaction=-1.3479  marginal=0.5649
+  [nplm/bilinear] epoch 22/120  interaction=-1.3949  marginal=0.5595
+  [nplm/bilinear] epoch 23/120  interaction=-1.4424  marginal=0.5566
+  [nplm/bilinear] epoch 24/120  interaction=-1.4904  marginal=0.5485
+  [nplm/bilinear] epoch 25/120  interaction=-1.5220  marginal=0.5390
+  [nplm/bilinear] epoch 26/120  interaction=-1.5771  marginal=0.5363
+  [nplm/bilinear] epoch 27/120  interaction=-1.6269  marginal=0.5277
+  [nplm/bilinear] epoch 28/120  interaction=-1.6720  marginal=0.5185
+  [nplm/bilinear] epoch 29/120  interaction=-1.6993  marginal=0.5169
+  [nplm/bilinear] epoch 30/120  interaction=-1.7388  marginal=0.5052
+  [nplm/bilinear] epoch 31/120  interaction=-1.7826  marginal=0.5143
+  [nplm/bilinear] epoch 32/120  interaction=-1.8028  marginal=0.5005
+  [nplm/bilinear] epoch 33/120  interaction=-1.8236  marginal=0.5027
+  [nplm/bilinear] epoch 34/120  interaction=-1.8248  marginal=0.5050
+  [nplm/bilinear] epoch 35/120  interaction=-1.8944  marginal=0.4965
+  [nplm/bilinear] epoch 36/120  interaction=-1.9398  marginal=0.4910
+  [nplm/bilinear] epoch 37/120  interaction=-1.9510  marginal=0.4828
+  [nplm/bilinear] epoch 38/120  interaction=-1.9686  marginal=0.4819
+  [nplm/bilinear] epoch 39/120  interaction=-2.0017  marginal=0.4793
+  [nplm/bilinear] epoch 40/120  interaction=-2.0344  marginal=0.4704
+  [nplm/bilinear] epoch 41/120  interaction=-2.0800  marginal=0.4718
+  [nplm/bilinear] epoch 42/120  interaction=-2.0640  marginal=0.4708
+  [nplm/bilinear] epoch 43/120  interaction=-2.1046  marginal=0.4713
+  [nplm/bilinear] epoch 44/120  interaction=-2.1299  marginal=0.4628
+  [nplm/bilinear] epoch 45/120  interaction=-2.1746  marginal=0.4589
+  [nplm/bilinear] epoch 46/120  interaction=-2.2068  marginal=0.4582
+  [nplm/bilinear] epoch 47/120  interaction=-2.2202  marginal=0.4513
+  [nplm/bilinear] epoch 48/120  interaction=-2.2432  marginal=0.4521
+  [nplm/bilinear] epoch 49/120  interaction=-2.2795  marginal=0.4482
+  [nplm/bilinear] epoch 50/120  interaction=-2.2771  marginal=0.4463
+  [nplm/bilinear] epoch 51/120  interaction=-2.3204  marginal=0.4425
+  [nplm/bilinear] epoch 52/120  interaction=-2.2679  marginal=0.4467
+  [nplm/bilinear] epoch 53/120  interaction=-2.3264  marginal=0.4514
+  [nplm/bilinear] epoch 54/120  interaction=-2.3846  marginal=0.4423
+  [nplm/bilinear] epoch 55/120  interaction=-2.3769  marginal=0.4386
+  [nplm/bilinear] epoch 56/120  interaction=-2.4235  marginal=0.4408
+  [nplm/bilinear] epoch 57/120  interaction=-2.4721  marginal=0.4323
+  [nplm/bilinear] epoch 58/120  interaction=-2.4643  marginal=0.4238
+  [nplm/bilinear] epoch 59/120  interaction=-2.4904  marginal=0.4288
+  [nplm/bilinear] epoch 60/120  interaction=-2.5172  marginal=0.4312
+  [nplm/bilinear] epoch 61/120  interaction=-2.5473  marginal=0.4211
+  [nplm/bilinear] epoch 62/120  interaction=-2.5781  marginal=0.4246
+  [nplm/bilinear] epoch 63/120  interaction=-2.5892  marginal=0.4212
+  [nplm/bilinear] epoch 64/120  interaction=-2.5959  marginal=0.4153
+  [nplm/bilinear] epoch 65/120  interaction=-2.5990  marginal=0.4125
+  [nplm/bilinear] epoch 66/120  interaction=-2.5999  marginal=0.4184
+  [nplm/bilinear] epoch 67/120  interaction=-2.6358  marginal=0.4196
+  [nplm/bilinear] epoch 68/120  interaction=-2.6806  marginal=0.4083
+  [nplm/bilinear] epoch 69/120  interaction=-2.6865  marginal=0.4060
+  [nplm/bilinear] epoch 70/120  interaction=-2.7043  marginal=0.4025
+  [nplm/bilinear] epoch 71/120  interaction=-2.7179  marginal=0.4092
+  [nplm/bilinear] epoch 72/120  interaction=-2.7414  marginal=0.4074
+  [nplm/bilinear] epoch 73/120  interaction=-2.7798  marginal=0.4013
+  [nplm/bilinear] epoch 74/120  interaction=-2.7850  marginal=0.3983
+  [nplm/bilinear] epoch 75/120  interaction=-2.8008  marginal=0.4022
+  [nplm/bilinear] epoch 76/120  interaction=-2.8627  marginal=0.3947
+  [nplm/bilinear] epoch 77/120  interaction=-2.8146  marginal=0.3926
+  [nplm/bilinear] epoch 78/120  interaction=-2.8434  marginal=0.4002
+  [nplm/bilinear] epoch 79/120  interaction=-2.8795  marginal=0.3928
+  [nplm/bilinear] epoch 80/120  interaction=-2.8924  marginal=0.3949
+  [nplm/bilinear] epoch 81/120  interaction=-2.8872  marginal=0.3930
+  [nplm/bilinear] epoch 82/120  interaction=-2.9346  marginal=0.3917
+  [nplm/bilinear] epoch 83/120  interaction=-2.9441  marginal=0.3903
+  [nplm/bilinear] epoch 84/120  interaction=-2.8732  marginal=0.3908
+  [nplm/bilinear] epoch 85/120  interaction=-2.9167  marginal=0.3944
+  [nplm/bilinear] epoch 86/120  interaction=-2.9083  marginal=0.3874
+  [nplm/bilinear] epoch 87/120  interaction=-2.9364  marginal=0.3898
+  [nplm/bilinear] epoch 88/120  interaction=-2.9826  marginal=0.3842
+  [nplm/bilinear] epoch 89/120  interaction=-2.9778  marginal=0.3824
+  [nplm/bilinear] epoch 90/120  interaction=-2.9945  marginal=0.3844
+  [nplm/bilinear] epoch 91/120  interaction=-3.0274  marginal=0.3851
+  [nplm/bilinear] epoch 92/120  interaction=-3.0658  marginal=0.3789
+  [nplm/bilinear] epoch 93/120  interaction=-3.0685  marginal=0.3748
+  [nplm/bilinear] epoch 94/120  interaction=-3.0736  marginal=0.3752
+  [nplm/bilinear] epoch 95/120  interaction=-3.0882  marginal=0.3763
+  [nplm/bilinear] epoch 96/120  interaction=-3.0956  marginal=0.3753
+  [nplm/bilinear] epoch 97/120  interaction=-3.0976  marginal=0.3782
+  [nplm/bilinear] epoch 98/120  interaction=-3.1401  marginal=0.3743
+  [nplm/bilinear] epoch 99/120  interaction=-3.1503  marginal=0.3712
+  [nplm/bilinear] epoch 100/120  interaction=-3.1816  marginal=0.3744
+  [nplm/bilinear] epoch 101/120  interaction=-3.1939  marginal=0.3674
+  [nplm/bilinear] epoch 102/120  interaction=-3.2131  marginal=0.3724
+  [nplm/bilinear] epoch 103/120  interaction=-3.1746  marginal=0.3691
+  [nplm/bilinear] epoch 104/120  interaction=-3.2026  marginal=0.3664
+  [nplm/bilinear] epoch 105/120  interaction=-3.1965  marginal=0.3674
+  [nplm/bilinear] epoch 106/120  interaction=-3.1907  marginal=0.3699
+  [nplm/bilinear] epoch 107/120  interaction=-3.2251  marginal=0.3673
+  [nplm/bilinear] epoch 108/120  interaction=-3.2325  marginal=0.3652
+  [nplm/bilinear] epoch 109/120  interaction=-3.2264  marginal=0.3691
+  [nplm/bilinear] epoch 110/120  interaction=-3.2556  marginal=0.3642
+  [nplm/bilinear] epoch 111/120  interaction=-3.2828  marginal=0.3646
+  [nplm/bilinear] epoch 112/120  interaction=-3.3037  marginal=0.3630
+  [nplm/bilinear] epoch 113/120  interaction=-3.3120  marginal=0.3584
+  [nplm/bilinear] epoch 114/120  interaction=-3.2763  marginal=0.3632
+  [nplm/bilinear] epoch 115/120  interaction=-3.2969  marginal=0.3616
+  [nplm/bilinear] epoch 116/120  interaction=-3.2843  marginal=0.3610
+  [nplm/bilinear] epoch 117/120  interaction=-3.3230  marginal=0.3605
+  [nplm/bilinear] epoch 118/120  interaction=-3.3438  marginal=0.3572
+  [nplm/bilinear] epoch 119/120  interaction=-3.3442  marginal=0.3585
+  [nplm/bilinear] epoch 120/120  interaction=-3.3681  marginal=0.3555
+  [nplm_bilinear ] probe=0.8153+-0.0027 acc=0.3337 supAUC=0.9400 eucl=0.6186 mahaT=0.7040 mahaPC=0.7303 lid=0.6079
+
+----- nplm_distance (augmentations only) -----
+  [nplm/distance] epoch 1/120  interaction=-0.5864  marginal=0.4376
+  [nplm/distance] epoch 2/120  interaction=-0.7193  marginal=0.3019
+  [nplm/distance] epoch 3/120  interaction=-0.7192  marginal=0.2352
+  [nplm/distance] epoch 4/120  interaction=-0.7455  marginal=0.2460
+  [nplm/distance] epoch 5/120  interaction=-0.7592  marginal=0.2316
+  [nplm/distance] epoch 6/120  interaction=-0.7628  marginal=0.2175
+  [nplm/distance] epoch 7/120  interaction=-0.7779  marginal=0.2254
+  [nplm/distance] epoch 8/120  interaction=-0.7774  marginal=0.2239
+  [nplm/distance] epoch 9/120  interaction=-0.7794  marginal=0.2082
+  [nplm/distance] epoch 10/120  interaction=-0.7876  marginal=0.2161
+  [nplm/distance] epoch 11/120  interaction=-0.7947  marginal=0.2219
+  [nplm/distance] epoch 12/120  interaction=-0.7932  marginal=0.2101
+  [nplm/distance] epoch 13/120  interaction=-0.7962  marginal=0.1992
+  [nplm/distance] epoch 14/120  interaction=-0.8020  marginal=0.2086
+  [nplm/distance] epoch 15/120  interaction=-0.8016  marginal=0.1934
+  [nplm/distance] epoch 16/120  interaction=-0.7955  marginal=0.1894
+  [nplm/distance] epoch 17/120  interaction=-0.8099  marginal=0.2077
+  [nplm/distance] epoch 18/120  interaction=-0.8115  marginal=0.2035
+  [nplm/distance] epoch 19/120  interaction=-0.8100  marginal=0.2016
+  [nplm/distance] epoch 20/120  interaction=-0.8096  marginal=0.1901
+  [nplm/distance] epoch 21/120  interaction=-0.8097  marginal=0.1917
+  [nplm/distance] epoch 22/120  interaction=-0.8130  marginal=0.1895
+  [nplm/distance] epoch 23/120  interaction=-0.8181  marginal=0.1885
+  [nplm/distance] epoch 24/120  interaction=-0.8107  marginal=0.1913
+  [nplm/distance] epoch 25/120  interaction=-0.8182  marginal=0.1858
+  [nplm/distance] epoch 26/120  interaction=-0.8162  marginal=0.1804
+  [nplm/distance] epoch 27/120  interaction=-0.8183  marginal=0.1821
+  [nplm/distance] epoch 28/120  interaction=-0.8279  marginal=0.1766
+  [nplm/distance] epoch 29/120  interaction=-0.8207  marginal=0.1666
+  [nplm/distance] epoch 30/120  interaction=-0.8289  marginal=0.1848
+  [nplm/distance] epoch 31/120  interaction=-0.8258  marginal=0.1771
+  [nplm/distance] epoch 32/120  interaction=-0.8273  marginal=0.1727
+  [nplm/distance] epoch 33/120  interaction=-0.8256  marginal=0.1675
+  [nplm/distance] epoch 34/120  interaction=-0.8271  marginal=0.1725
+  [nplm/distance] epoch 35/120  interaction=-0.8275  marginal=0.1748
+  [nplm/distance] epoch 36/120  interaction=-0.8303  marginal=0.1644
+  [nplm/distance] epoch 37/120  interaction=-0.8311  marginal=0.1655
+  [nplm/distance] epoch 38/120  interaction=-0.8353  marginal=0.1695
+  [nplm/distance] epoch 39/120  interaction=-0.8265  marginal=0.1611
+  [nplm/distance] epoch 40/120  interaction=-0.8297  marginal=0.1723
+  [nplm/distance] epoch 41/120  interaction=-0.8301  marginal=0.1739
+  [nplm/distance] epoch 42/120  interaction=-0.8321  marginal=0.1713
+  [nplm/distance] epoch 43/120  interaction=-0.8368  marginal=0.1681
+  [nplm/distance] epoch 44/120  interaction=-0.8336  marginal=0.1823
+  [nplm/distance] epoch 45/120  interaction=-0.8300  marginal=0.1673
+  [nplm/distance] epoch 46/120  interaction=-0.8359  marginal=0.1604
+  [nplm/distance] epoch 47/120  interaction=-0.8364  marginal=0.1679
+  [nplm/distance] epoch 48/120  interaction=-0.8325  marginal=0.1652
+  [nplm/distance] epoch 49/120  interaction=-0.8368  marginal=0.1736
+  [nplm/distance] epoch 50/120  interaction=-0.8382  marginal=0.1612
+  [nplm/distance] epoch 51/120  interaction=-0.8403  marginal=0.1544
+  [nplm/distance] epoch 52/120  interaction=-0.8370  marginal=0.1650
+  [nplm/distance] epoch 53/120  interaction=-0.8330  marginal=0.1668
+  [nplm/distance] epoch 54/120  interaction=-0.8386  marginal=0.1622
+  [nplm/distance] epoch 55/120  interaction=-0.8374  marginal=0.1604
+  [nplm/distance] epoch 56/120  interaction=-0.8389  marginal=0.1621
+  [nplm/distance] epoch 57/120  interaction=-0.8417  marginal=0.1554
+  [nplm/distance] epoch 58/120  interaction=-0.8393  marginal=0.1616
+  [nplm/distance] epoch 59/120  interaction=-0.8403  marginal=0.1565
+  [nplm/distance] epoch 60/120  interaction=-0.8436  marginal=0.1593
+  [nplm/distance] epoch 61/120  interaction=-0.8471  marginal=0.1554
+  [nplm/distance] epoch 62/120  interaction=-0.8447  marginal=0.1626
+  [nplm/distance] epoch 63/120  interaction=-0.8454  marginal=0.1547
+  [nplm/distance] epoch 64/120  interaction=-0.8455  marginal=0.1568
+  [nplm/distance] epoch 65/120  interaction=-0.8461  marginal=0.1622
+  [nplm/distance] epoch 66/120  interaction=-0.8436  marginal=0.1527
+  [nplm/distance] epoch 67/120  interaction=-0.8427  marginal=0.1513
+  [nplm/distance] epoch 68/120  interaction=-0.8454  marginal=0.1488
+  [nplm/distance] epoch 69/120  interaction=-0.8456  marginal=0.1485
+  [nplm/distance] epoch 70/120  interaction=-0.8468  marginal=0.1448
+  [nplm/distance] epoch 71/120  interaction=-0.8472  marginal=0.1515
+  [nplm/distance] epoch 72/120  interaction=-0.8462  marginal=0.1505
+  [nplm/distance] epoch 73/120  interaction=-0.8471  marginal=0.1496
+  [nplm/distance] epoch 74/120  interaction=-0.8474  marginal=0.1498
+  [nplm/distance] epoch 75/120  interaction=-0.8485  marginal=0.1512
+  [nplm/distance] epoch 76/120  interaction=-0.8500  marginal=0.1467
+  [nplm/distance] epoch 77/120  interaction=-0.8499  marginal=0.1504
+  [nplm/distance] epoch 78/120  interaction=-0.8506  marginal=0.1453
+  [nplm/distance] epoch 79/120  interaction=-0.8514  marginal=0.1437
+  [nplm/distance] epoch 80/120  interaction=-0.8532  marginal=0.1423
+  [nplm/distance] epoch 81/120  interaction=-0.8491  marginal=0.1334
+  [nplm/distance] epoch 82/120  interaction=-0.8503  marginal=0.1418
+  [nplm/distance] epoch 83/120  interaction=-0.8552  marginal=0.1456
+  [nplm/distance] epoch 84/120  interaction=-0.8503  marginal=0.1372
+  [nplm/distance] epoch 85/120  interaction=-0.8527  marginal=0.1478
+  [nplm/distance] epoch 86/120  interaction=-0.8528  marginal=0.1497
+  [nplm/distance] epoch 87/120  interaction=-0.8546  marginal=0.1453
+  [nplm/distance] epoch 88/120  interaction=-0.8533  marginal=0.1480
+  [nplm/distance] epoch 89/120  interaction=-0.8521  marginal=0.1425
+  [nplm/distance] epoch 90/120  interaction=-0.8563  marginal=0.1418
+  [nplm/distance] epoch 91/120  interaction=-0.8515  marginal=0.1466
+  [nplm/distance] epoch 92/120  interaction=-0.8514  marginal=0.1440
+  [nplm/distance] epoch 93/120  interaction=-0.8534  marginal=0.1451
+  [nplm/distance] epoch 94/120  interaction=-0.8555  marginal=0.1441
+  [nplm/distance] epoch 95/120  interaction=-0.8548  marginal=0.1355
+  [nplm/distance] epoch 96/120  interaction=-0.8564  marginal=0.1411
+  [nplm/distance] epoch 97/120  interaction=-0.8543  marginal=0.1449
+  [nplm/distance] epoch 98/120  interaction=-0.8572  marginal=0.1511
+  [nplm/distance] epoch 99/120  interaction=-0.8566  marginal=0.1481
+  [nplm/distance] epoch 100/120  interaction=-0.8582  marginal=0.1460
+  [nplm/distance] epoch 101/120  interaction=-0.8559  marginal=0.1374
+  [nplm/distance] epoch 102/120  interaction=-0.8537  marginal=0.1431
+  [nplm/distance] epoch 103/120  interaction=-0.8551  marginal=0.1506
+  [nplm/distance] epoch 104/120  interaction=-0.8566  marginal=0.1453
+  [nplm/distance] epoch 105/120  interaction=-0.8582  marginal=0.1395
+  [nplm/distance] epoch 106/120  interaction=-0.8518  marginal=0.1360
+  [nplm/distance] epoch 107/120  interaction=-0.8545  marginal=0.1386
+  [nplm/distance] epoch 108/120  interaction=-0.8614  marginal=0.1344
+  [nplm/distance] epoch 109/120  interaction=-0.8558  marginal=0.1477
+  [nplm/distance] epoch 110/120  interaction=-0.8606  marginal=0.1392
+  [nplm/distance] epoch 111/120  interaction=-0.8615  marginal=0.1376
+  [nplm/distance] epoch 112/120  interaction=-0.8583  marginal=0.1424
+  [nplm/distance] epoch 113/120  interaction=-0.8593  marginal=0.1339
+  [nplm/distance] epoch 114/120  interaction=-0.8637  marginal=0.1360
+  [nplm/distance] epoch 115/120  interaction=-0.8616  marginal=0.1370
+  [nplm/distance] epoch 116/120  interaction=-0.8614  marginal=0.1349
+  [nplm/distance] epoch 117/120  interaction=-0.8600  marginal=0.1363
+  [nplm/distance] epoch 118/120  interaction=-0.8606  marginal=0.1351
+  [nplm/distance] epoch 119/120  interaction=-0.8563  marginal=0.1332
+  [nplm/distance] epoch 120/120  interaction=-0.8605  marginal=0.1340
+  [nplm_distance ] probe=0.7184+-0.0044 acc=0.1397 supAUC=0.8693 eucl=0.5141 mahaT=0.7045 mahaPC=0.6889 lid=0.5743
+
+----- nplm_sup_dist (labels) -----
+  [nplm/distance] epoch 1/120  interaction=-0.3543  marginal=0.5403
+  [nplm/distance] epoch 2/120  interaction=-0.4728  marginal=0.4597
+  [nplm/distance] epoch 3/120  interaction=-0.5130  marginal=0.4131
+  [nplm/distance] epoch 4/120  interaction=-0.5301  marginal=0.4394
+  [nplm/distance] epoch 5/120  interaction=-0.5303  marginal=0.4331
+  [nplm/distance] epoch 6/120  interaction=-0.5364  marginal=0.4130
+  [nplm/distance] epoch 7/120  interaction=-0.5447  marginal=0.4177
+  [nplm/distance] epoch 8/120  interaction=-0.5554  marginal=0.4219
+  [nplm/distance] epoch 9/120  interaction=-0.5520  marginal=0.4146
+  [nplm/distance] epoch 10/120  interaction=-0.5666  marginal=0.4155
+  [nplm/distance] epoch 11/120  interaction=-0.5688  marginal=0.3912
+  [nplm/distance] epoch 12/120  interaction=-0.5738  marginal=0.3902
+  [nplm/distance] epoch 13/120  interaction=-0.5692  marginal=0.4132
+  [nplm/distance] epoch 14/120  interaction=-0.5697  marginal=0.4060
+  [nplm/distance] epoch 15/120  interaction=-0.5795  marginal=0.3988
+  [nplm/distance] epoch 16/120  interaction=-0.5844  marginal=0.3886
+  [nplm/distance] epoch 17/120  interaction=-0.5811  marginal=0.3873
+  [nplm/distance] epoch 18/120  interaction=-0.5853  marginal=0.4075
+  [nplm/distance] epoch 19/120  interaction=-0.5887  marginal=0.3957
+  [nplm/distance] epoch 20/120  interaction=-0.5871  marginal=0.3960
+  [nplm/distance] epoch 21/120  interaction=-0.5878  marginal=0.3939
+  [nplm/distance] epoch 22/120  interaction=-0.5914  marginal=0.3756
+  [nplm/distance] epoch 23/120  interaction=-0.5999  marginal=0.3853
+  [nplm/distance] epoch 24/120  interaction=-0.5986  marginal=0.3929
+  [nplm/distance] epoch 25/120  interaction=-0.6033  marginal=0.3775
+  [nplm/distance] epoch 26/120  interaction=-0.5959  marginal=0.3910
+  [nplm/distance] epoch 27/120  interaction=-0.5953  marginal=0.3873
+  [nplm/distance] epoch 28/120  interaction=-0.5992  marginal=0.3743
+  [nplm/distance] epoch 29/120  interaction=-0.6018  marginal=0.3926
+  [nplm/distance] epoch 30/120  interaction=-0.6024  marginal=0.3854
+  [nplm/distance] epoch 31/120  interaction=-0.6025  marginal=0.3714
+  [nplm/distance] epoch 32/120  interaction=-0.6064  marginal=0.3892
+  [nplm/distance] epoch 33/120  interaction=-0.6063  marginal=0.3842
+  [nplm/distance] epoch 34/120  interaction=-0.6131  marginal=0.3605
+  [nplm/distance] epoch 35/120  interaction=-0.5988  marginal=0.3748
+  [nplm/distance] epoch 36/120  interaction=-0.6125  marginal=0.3745
+  [nplm/distance] epoch 37/120  interaction=-0.6081  marginal=0.3655
+  [nplm/distance] epoch 38/120  interaction=-0.6179  marginal=0.3847
+  [nplm/distance] epoch 39/120  interaction=-0.6266  marginal=0.3788
+  [nplm/distance] epoch 40/120  interaction=-0.6141  marginal=0.3688
+  [nplm/distance] epoch 41/120  interaction=-0.6127  marginal=0.3599
+  [nplm/distance] epoch 42/120  interaction=-0.6213  marginal=0.3634
+  [nplm/distance] epoch 43/120  interaction=-0.6274  marginal=0.3625
+  [nplm/distance] epoch 44/120  interaction=-0.6293  marginal=0.3803
+  [nplm/distance] epoch 45/120  interaction=-0.6213  marginal=0.3735
+  [nplm/distance] epoch 46/120  interaction=-0.6189  marginal=0.3590
+  [nplm/distance] epoch 47/120  interaction=-0.6281  marginal=0.3693
+  [nplm/distance] epoch 48/120  interaction=-0.6202  marginal=0.3759
+  [nplm/distance] epoch 49/120  interaction=-0.6203  marginal=0.3636
+  [nplm/distance] epoch 50/120  interaction=-0.6232  marginal=0.3558
+  [nplm/distance] epoch 51/120  interaction=-0.6229  marginal=0.3601
+  [nplm/distance] epoch 52/120  interaction=-0.6332  marginal=0.3539
+  [nplm/distance] epoch 53/120  interaction=-0.6165  marginal=0.3640
+  [nplm/distance] epoch 54/120  interaction=-0.6332  marginal=0.3538
+  [nplm/distance] epoch 55/120  interaction=-0.6312  marginal=0.3622
+  [nplm/distance] epoch 56/120  interaction=-0.6311  marginal=0.3581
+  [nplm/distance] epoch 57/120  interaction=-0.6334  marginal=0.3582
+  [nplm/distance] epoch 58/120  interaction=-0.6343  marginal=0.3486
+  [nplm/distance] epoch 59/120  interaction=-0.6330  marginal=0.3536
+  [nplm/distance] epoch 60/120  interaction=-0.6347  marginal=0.3710
+  [nplm/distance] epoch 61/120  interaction=-0.6295  marginal=0.3568
+  [nplm/distance] epoch 62/120  interaction=-0.6265  marginal=0.3652
+  [nplm/distance] epoch 63/120  interaction=-0.6385  marginal=0.3534
+  [nplm/distance] epoch 64/120  interaction=-0.6418  marginal=0.3628
+  [nplm/distance] epoch 65/120  interaction=-0.6341  marginal=0.3537
+  [nplm/distance] epoch 66/120  interaction=-0.6340  marginal=0.3567
+  [nplm/distance] epoch 67/120  interaction=-0.6396  marginal=0.3516
+  [nplm/distance] epoch 68/120  interaction=-0.6331  marginal=0.3501
+  [nplm/distance] epoch 69/120  interaction=-0.6410  marginal=0.3478
+  [nplm/distance] epoch 70/120  interaction=-0.6397  marginal=0.3576
+  [nplm/distance] epoch 71/120  interaction=-0.6399  marginal=0.3571
+  [nplm/distance] epoch 72/120  interaction=-0.6444  marginal=0.3360
+  [nplm/distance] epoch 73/120  interaction=-0.6455  marginal=0.3551
+  [nplm/distance] epoch 74/120  interaction=-0.6451  marginal=0.3554
+  [nplm/distance] epoch 75/120  interaction=-0.6480  marginal=0.3565
+  [nplm/distance] epoch 76/120  interaction=-0.6504  marginal=0.3527
+  [nplm/distance] epoch 77/120  interaction=-0.6473  marginal=0.3688
+  [nplm/distance] epoch 78/120  interaction=-0.6494  marginal=0.3621
+  [nplm/distance] epoch 79/120  interaction=-0.6491  marginal=0.3532
+  [nplm/distance] epoch 80/120  interaction=-0.6482  marginal=0.3554
+  [nplm/distance] epoch 81/120  interaction=-0.6442  marginal=0.3429
+  [nplm/distance] epoch 82/120  interaction=-0.6515  marginal=0.3329
+  [nplm/distance] epoch 83/120  interaction=-0.6435  marginal=0.3644
+  [nplm/distance] epoch 84/120  interaction=-0.6520  marginal=0.3494
+  [nplm/distance] epoch 85/120  interaction=-0.6567  marginal=0.3362
+  [nplm/distance] epoch 86/120  interaction=-0.6525  marginal=0.3236
+  [nplm/distance] epoch 87/120  interaction=-0.6542  marginal=0.3389
+  [nplm/distance] epoch 88/120  interaction=-0.6425  marginal=0.3347
+  [nplm/distance] epoch 89/120  interaction=-0.6556  marginal=0.3452
+  [nplm/distance] epoch 90/120  interaction=-0.6541  marginal=0.3460
+  [nplm/distance] epoch 91/120  interaction=-0.6543  marginal=0.3439
+  [nplm/distance] epoch 92/120  interaction=-0.6569  marginal=0.3344
+  [nplm/distance] epoch 93/120  interaction=-0.6574  marginal=0.3269
+  [nplm/distance] epoch 94/120  interaction=-0.6473  marginal=0.3289
+  [nplm/distance] epoch 95/120  interaction=-0.6536  marginal=0.3387
+  [nplm/distance] epoch 96/120  interaction=-0.6529  marginal=0.3381
+  [nplm/distance] epoch 97/120  interaction=-0.6627  marginal=0.3259
+  [nplm/distance] epoch 98/120  interaction=-0.6529  marginal=0.3352
+  [nplm/distance] epoch 99/120  interaction=-0.6653  marginal=0.3311
+  [nplm/distance] epoch 100/120  interaction=-0.6658  marginal=0.3336
+  [nplm/distance] epoch 101/120  interaction=-0.6613  marginal=0.3434
+  [nplm/distance] epoch 102/120  interaction=-0.6573  marginal=0.3445
+  [nplm/distance] epoch 103/120  interaction=-0.6552  marginal=0.3251
+  [nplm/distance] epoch 104/120  interaction=-0.6545  marginal=0.3463
+  [nplm/distance] epoch 105/120  interaction=-0.6568  marginal=0.3306
+  [nplm/distance] epoch 106/120  interaction=-0.6589  marginal=0.3326
+  [nplm/distance] epoch 107/120  interaction=-0.6602  marginal=0.3315
+  [nplm/distance] epoch 108/120  interaction=-0.6631  marginal=0.3353
+  [nplm/distance] epoch 109/120  interaction=-0.6664  marginal=0.3276
+  [nplm/distance] epoch 110/120  interaction=-0.6675  marginal=0.3307
+  [nplm/distance] epoch 111/120  interaction=-0.6734  marginal=0.3236
+  [nplm/distance] epoch 112/120  interaction=-0.6568  marginal=0.3184
+  [nplm/distance] epoch 113/120  interaction=-0.6612  marginal=0.3312
+  [nplm/distance] epoch 114/120  interaction=-0.6723  marginal=0.3220
+  [nplm/distance] epoch 115/120  interaction=-0.6720  marginal=0.3292
+  [nplm/distance] epoch 116/120  interaction=-0.6682  marginal=0.3355
+  [nplm/distance] epoch 117/120  interaction=-0.6695  marginal=0.3271
+  [nplm/distance] epoch 118/120  interaction=-0.6716  marginal=0.3341
+  [nplm/distance] epoch 119/120  interaction=-0.6696  marginal=0.3309
+  [nplm/distance] epoch 120/120  interaction=-0.6755  marginal=0.3191
+  [nplm_sup_dist ] probe=0.7386+-0.0078 acc=0.3313 supAUC=0.9595 eucl=0.7932 mahaT=0.8139 mahaPC=0.7583 lid=0.5438
+
+===== performance / novelty table =====
+  arm                        probe     acc  supAUC    eucl   mahaT  mahaPC     lid
+  simclr             0.6952+-0.0084  0.2263  0.9081  0.6080  0.6008  0.6305  0.6046
+  lejepa             0.7496+-0.0052  0.1963  0.9108  0.5409  0.6887  0.7508  0.5882
+  simclr_sigreg      0.7814+-0.0076  0.2617  0.9373  0.4855  0.6389  0.7149  0.5727
+  supcon             0.7891+-0.0054  0.6660  0.9754  0.7595  0.7634  0.7651  0.6597
+  supcon_sigreg      0.8047+-0.0022  0.6697  0.9891  0.7832  0.7729  0.8366  0.6933
+  nplm_bilinear      0.8153+-0.0027  0.3337  0.9400  0.6186  0.7040  0.7303  0.6079
+  nplm_distance      0.7184+-0.0044  0.1397  0.8693  0.5141  0.7045  0.6889  0.5743
+  nplm_sup_dist      0.7386+-0.0078  0.3313  0.9595  0.7932  0.8139  0.7583  0.5438
+
+===== gaussianity (seen classes, test set) =====
+  metric                            simclr        lejepa simclr_sigreg        supcon supcon_sigreg nplm_bilinear nplm_distance nplm_sup_dist
+  eig min (class cov)               -0.000        -0.000        -0.000         0.000        -0.000         0.000         0.000        -0.000
+  eig max (class cov)               20.391        15.130        11.034         7.809         6.965         1.373        10.992         2.236
+  eig cond worst            331860049920.07438233239552.02585365577728.0  2763321856.01180749529088.0   396347680.0  1573324800.01032336703488.0
+  class RMS min                      0.147         0.498         0.501         0.053         0.268         0.244         0.328         0.051
+  class RMS mean                     0.310         0.745         0.806         0.102         0.427         0.341         0.570         0.118
+  class RMS max                      0.921         0.954         0.972         0.544         0.643         0.386         0.820         0.268
+  max |corr| (worst class)           0.991         0.983         0.954         0.975         0.932         0.881         0.997         1.000
+  SW ratio mean                       3.56          1.99          1.45          1.59          1.38          1.26          2.73          4.69
+  SW ratio worst                     15.76          4.81          3.23          4.89          3.23          1.92          8.83         16.26
+  |skew| mean                        0.873         0.496         0.405         0.478         0.426         0.370         0.605         1.188
+  |ex-kurt| mean                     2.356         0.930         0.777         0.979         0.773         0.701         1.353         3.307
+  centroid dist min                   0.17          0.54          0.75          0.10          0.40          0.32          0.27          0.03
+  centroid dist mean                  1.52          4.46          4.38          1.56          6.03          1.73          3.88          4.23
+  separation (min d/RMS)              0.55          0.72          0.93          1.03          0.93          0.93          0.48          0.21
+saved /home/pharris/sigreg/SuperSig/plots/exp51_probe_aircraft_visreg_nplm-sup-ft_seen.png
+
+===== EXP51 SUMMARY =====
+  [simclr        ] probe=0.6952+-0.0084  acc=0.2263  eucl=0.6080  mahaT=0.6008
+  [lejepa        ] probe=0.7496+-0.0052  acc=0.1963  eucl=0.5409  mahaT=0.6887
+  [simclr_sigreg ] probe=0.7814+-0.0076  acc=0.2617  eucl=0.4855  mahaT=0.6389
+  [supcon        ] probe=0.7891+-0.0054  acc=0.6660  eucl=0.7595  mahaT=0.7634
+  [supcon_sigreg ] probe=0.8047+-0.0022  acc=0.6697  eucl=0.7832  mahaT=0.7729
+  [nplm_bilinear ] probe=0.8153+-0.0027  acc=0.3337  eucl=0.6186  mahaT=0.7040
+  [nplm_distance ] probe=0.7184+-0.0044  acc=0.1397  eucl=0.5141  mahaT=0.7045
+  [nplm_sup_dist ] probe=0.7386+-0.0078  acc=0.3313  eucl=0.7932  mahaT=0.8139
+Done.
+EXP84 DONE.
+EXP84 CHAIN DONE

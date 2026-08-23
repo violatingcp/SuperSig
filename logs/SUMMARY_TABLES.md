@@ -914,3 +914,221 @@ the stated falsifier.  Three fts fresh-paired on both exp-58 arms
   class-structure-preserving term before any attempt.
 - The proto/nplm split reproduces exp 58 exactly (probe vs power/purity
   dissociation) under the lighter battery -- the harness is sound.
+
+Exp 103 (`103_lid_neighbourhood.py`, 2026-08-21; IMPROVEMENT_TESTS
+#103): LID neighbourhood decomposition -- NEITHER the prediction nor
+the falsifier; the mechanism is now measured.  AUC by component
+(k=20 split at the modal reference class; parent/concat averaged):
+
+  cell      full     same-class  mixed    frac-mixed(composition)
+  flowers   0.87-0.96  0.85-0.95  0.52-0.62  0.83-0.94
+  cars      0.60-0.72  0.60-0.73  0.54-0.65  0.59-0.70
+
+- The prediction said the MIXED component carries the signal; observed:
+  the SAME-CLASS component carries nearly all of it (flowers same
+  0.94-0.95 vs full 0.95) while mixed sits at chance -- AND the bare
+  neighbourhood composition (fraction of non-modal neighbours) is
+  almost as good as LID itself (0.83-0.94).
+- Mechanism, finally measured: a novel flower looks like a member of
+  ONE seen class by distance, but (a) its radial ratio profile within
+  that class's neighbours is wrong (off the class's local sheet), and
+  (b) its neighbourhood is more mixed than a true member's.  The
+  between-class distances carry nothing.  "Class-level anomaly" means
+  anomalous AGAINST the modal class's local geometry.
+- Cars: no component separates (all 0.54-0.73) -- consistent with
+  0.545-0.75 full-LID; the regime rule stands, now with a mechanism on
+  the side where LID works.
+- Bonus practical finding: frac-mixed is a parameter-free, ratio-free
+  novelty score at 0.94 on flowers -- worth a battery slot next sweep.
+
+Exp 89 (`89_c100_rate_grid.py`, 2026-08-21; IMPROVEMENT_TESTS #89): the
+C100 purity gate CANNOT be calibrated this way -- a sharpened falsifier.
+Grid holdout size {1,5,10} x tau_quantile {.95,.99,.995} on fresh exp-73
+resnplm concats (100-D, seed 0); purity r1/r2 and probe pre->post:
+
+  size  q=.95        q=.99        q=.995       probe delta
+  h1    .000/.004    .000/.002    .000/.004    ~0
+  h5    .015/.094    .002/.059    .000/.105    -0.031
+  h10   .036/.120    .002/.085    .000/.121    -0.034..-0.038
+
+- Purity scales with holdout fraction but SATURATES far below the
+  0.15-0.3 gate (max 0.121 at h10 = 10% novel corpus).
+- Stricter quantiles HURT round-1 purity (h10: 0.036 -> 0.002): the
+  extreme distance tail on C100 is owned by background outliers, not
+  novelty.  C100 novelty is not geometrically outlying -- the same
+  mechanism exp-92 identified on cars.
+- Probes move DOWN wherever pools form (impure pseudo-labels poison the
+  ft), so the gate's bindingness cannot even be tested by this grid.
+- Conclusion: C100 discovery is not rate-blocked but GEOMETRY-blocked;
+  the distance pool is the wrong instrument.  The exp-92 density-ratio
+  pool (+ frozen space per 92b) is the remaining lever.
+
+Exp 100 (`100_dense_reach.py`, 2026-08-21; IMPROVEMENT_TESTS #100):
+dense f95 reach on the 17 champion spaces -- PARTIALLY CONFIRMED, and
+the dataset ordering is now citable:
+
+  citable reach (CP band):  cifar100 0.029 [.029,.035] < cifar10 0.038
+  [.037,.039] < cars/visreg 0.063 [.059,.076] < galaxy10/visreg 0.067 <
+  galaxy10/lejepa 0.071 < aircraft/visreg 0.072 [.068,.078] < dtd/visreg
+  0.079 ~ cars/dino 0.079
+  top-bracketed (*): dtd/dino 0.087, cars/lejepa 0.099
+  never (> 0.1): all three flowers cells (max power 0.14-0.76),
+  aircraft/dino+lejepa, dtd/lejepa, galaxy10/dino
+
+- 8/17 cleanly bracketed vs the exp-99 baseline of 4/106 -- the dense
+  grid converts half the champion table from bounds to measurements.
+  The prediction ("every starred cell resolves within <=0.02") holds
+  only partially: 7 cells genuinely need f > 0.1, so their reach IS the
+  bound, not a grid artifact.
+- Flowers confirmed >0.1 on all bases with SHALLOW curves (0.14-0.76 at
+  f=0.1): per-event-detectable novelty (LID 0.95) that dataset-level
+  kernel tests barely see -- the strongest score-vs-statistic regime
+  split in the program.
+- The visreg base owns transfer reach (best cell on all four transfer
+  datasets); CIFAR concats dominate overall (0.029/0.038).
+
+Exp 104 (`104_interpretability_panel.py`, 2026-08-21; Part C of
+METRICS.md): the interpretability panel across every space -- is
+distance to a labelled anchor a delta log-likelihood?  Selftest
+validates all synthetic cases.  Reliable cells = CIFAR (450+/class);
+the transfer cells are shrinkage-dominated (cond ~1e6-1e13 at 10-40
+samples/class in 100-D) and should be read qualitatively only.
+
+  c10:  supcon r_llr=.68 ece=.033 rms=.45 sep=7.7 | res r_llr=.81
+        slope=4.3 rms=.79 sep=0.8 | resnplm rms=.13 | res-cat
+        r_llr=.82 ece=.048 sep=5.5 | resnplm-cat r_llr=.67 ece=.035
+        sep=10.6
+  c100: everything r_llr .27-.64; supcon r_llr=.27 ece=.16; res child
+        best r_llr=.64 but ece=.51
+
+- NO space reaches slope~1: class-conditional widths are 0.13-0.79
+  (all narrower than the unit target), so raw squared distances
+  OVERSTATE delta-logL by 4-37x.  The SIGReg unit-width target is not
+  actually achieved class-conditionally anywhere.
+- The plain-res child on c10 is the most FAITHFUL space (slope 4.3,
+  rms 0.79, r_llr 0.81) and the least discriminative (sep 0.85) -- the
+  "perfectly faithful and useless" corner the panel was designed to
+  expose.  The concats are the deployable compromise: c10 res-cat
+  r_llr 0.82 + ece 0.048 + sep 5.5.
+- Distance-as-LLR degrades with class count: c100 r_llr <= 0.64 and
+  supcon c100 r_llr = 0.27 -- the proto-posterior reading is weakest
+  exactly where mahaT is weakest.  Interpretability and class count
+  trade off.
+
+Exp 102 (`102_child_standalone.py`, 2026-08-21; IMPROVEMENT_TESTS
+#102): is the residual child a standalone detector?  YES on the
+visreg/dino fine-grained cells -- and cheaper than predicted:
+
+  cell             probe(child/concat)  f95(child/concat)  perevt  agree1
+  aircraft:visreg  0.858 / 0.863        0.063 / 0.072      0.411   0.53
+  cars:visreg      0.836 / 0.855        0.049 / 0.063      0.256   0.44
+  cars:dino        0.787 / 0.821        0.063 / 0.079      0.143   0.43
+  aircraft:dino    0.811 / 0.816        0.085*/ >0.1       0.267   0.48
+  dtd (all)        0.80-0.82            >0.1 / 0.079-0.087   --      --
+  lejepa children  weak everywhere (cars:lejepa probe 0.63, f95 >0.1)
+
+- On the visreg/dino fine-grained cells the child ALONE beats the
+  concat's reach (cars:visreg f95 0.049 = best transfer reach measured
+  anywhere) at a probe cost of only 0.005-0.034 -- NOT the "large probe
+  cost" predicted -- and its semantics are legible (agree@1 0.43-0.53
+  vs ~0.04 chance), NOT scrambled: the exp-76 scrambling result was
+  about PLAIN-res residuals; the res-nplm children keep class structure.
+- The falsifier fires on dtd: children standalone never cross 0.95
+  while their concats bracket ~0.08 -- there the concat does the work.
+  Same on flowers/galaxy10-dino (no standalone reach).
+- Deployment rule: on fine-grained visreg/dino cells a detection
+  pipeline can drop the parent (half the embedding, better reach,
+  ~0.02 probe cost); elsewhere keep the concat.
+
+Exp 101 (`101_frozen_generality.py`, 2026-08-21; IMPROVEMENT_TESTS
+#101): frozen-space discovery generality -- PREDICTION CONFIRMED IN
+FULL, including its coarse-cell clause.  Freeze-both discovery (zero
+probe cost by construction) across the remaining 14 cells; per-event
+from discovered anchors:
+
+  fine-grained: cars/visreg 0.373, flowers/visreg 0.803, flowers/dino
+    0.737, flowers/lejepa 0.472, cars/dino 0.228, dtd/lejepa 0.307 --
+    strong retention; flowers frozen per-event is the best flowers
+    dataset-level detection on record.
+  coarse: galaxy10/dino 0.015, galaxy10/lejepa 0.023, cifar10 0.096
+    (vs 0.73-0.75 unfrozen!), cifar100 0.030 -- the space update does
+    real work where novelty is genuinely outlying; galaxy10/visreg is
+    the coarse exception (0.348, its unfrozen 0.32-0.45 retained).
+
+- The exp-86 recipe is now REGIME-SCOPED, not universal: freeze the
+  space on fine-grained/on-manifold cells (all the probe-record cells
+  keep their records WITH detection), fine-tune on coarse/outlying
+  cells (CIFAR, galaxy10) where discovery ft earns its probe cost.
+- "Choose by consumer" survives but flips axis: the choice is now by
+  NOVELTY GEOMETRY (on-manifold -> frozen anchors; outlying -> ft),
+  not by readout.
+
+Exp 83 (`83_variance_reduced_nplm.py`, 2026-08-21; IMPROVEMENT_TESTS
+#83): variance-reduced NPLM -- FALSIFIED, and the watched falsifier
+fired too.  C100 32-D, 5 paired seeds (refs = exp-81 archived):
+
+  arm             probe mean+-sd    perevt  |resid|
+  bil+clamp(ref)  0.8914+-0.0320    0.042   1.77
+  bil-norm        0.7808+-0.0401    0.024   0.11
+  dist-bias       0.7761+-0.0249    0.006   0.12
+  dist-bias-norm  0.8187+-0.0175    0.008   0.03
+
+- No variant cuts sd >=2x at equal-or-better mean: bil-norm RAISES sd
+  and drops the mean -0.11; dist-bias-norm halves sd (0.018) but costs
+  -0.072 mean and kills per-event (0.008 vs 0.042) -- the watched
+  falsifier (variance drops WITH the absolute scale).
+- The deeper negative, paired with exp 82: the fixes genuinely ACHIEVE
+  calibration (dist-bias-norm |E_ref[e^g]-1| = 0.03 vs the clamp arm's
+  1.77) and it buys NOTHING -- neither probe, nor variance, nor
+  per-event.  Calibration-in-the-residual-sense is neither the variance
+  problem (exp 82) nor the performance lever (exp 83).  The bilinear
+  clamp's "miscalibration" is where its probe performance LIVES.
+- bil+clamp stands as the best label-free NPLM arm; the exp-81 rule
+  (accept the variance or use dist-sup) is the final word on this line.
+
+Exp 84 (`84_two_stage_strict.sh`, 2026-08-21; IMPROVEMENT_TESTS #84):
+the two-stage recipe under the strict open-world protocol -- PREDICTION
+CONFIRMED: the gains shrink slightly but SURVIVE; reading #8 was not
+contamination.  Seen-only nplm-sup-ft trunks (exp-70 protocol) + exp-51
+8-arm head suites; best rows per base:
+
+  base    two-stage supcon_sigreg      caveated #8      exp-71 champ
+  dino    0.787 / mahaT 0.746          --               0.816
+  lejepa  0.796 / eucl .817 / mahaT .802   0.812/0.638/0.800   0.848
+  visreg  0.805 / mahaT 0.773; nplm_sup_dist mahaT 0.814   (mahaT 0.812)  0.866
+
+- The strict numbers land within 0.007-0.016 of the caveated ones
+  (lejepa mahaT and visreg nplm_sup_dist mahaT fully survive at
+  0.80-0.81): holdout exclusion barely moves the two-stage result, so
+  reading #8 graduates from caveat to citable.
+- As predicted, two-stage lands BETWEEN the exp-70 parents and the
+  exp-71 residual champions on every base (0.787-0.805 vs champions
+  0.816-0.866): a real recipe, but the residual construction remains
+  strictly better on aircraft.
+- The caveat can be struck from AIRCRAFT_MASTER_TABLE; cite the strict
+  numbers above.
+
+Exp 85 (`85_iterated_residuals.py`, 2026-08-21; IMPROVEMENT_TESTS #85):
+iterated residuals -- SPLIT VERDICT along the campaign's regime line,
+and TWO NEW RECORDS.  3 paired seeds, width-matched control (both
+concats 300-D):
+
+  cell           2way            3way [p;r1;r2]     wide [p;rW200]
+  cars/visreg    0.833+-0.017    0.881+-0.008       0.884+-0.003
+  flowers/dino   0.833+-0.040    0.910+-0.012       0.859+-0.004
+
+- CARS: the falsifier fires -- the width-matched single residual
+  matches/beats the 3-way (+0.051 vs +0.048).  There the residual gain
+  is a CAPACITY effect.  Either construction sets a new cars record:
+  0.884+-0.003 (was 0.855 single-seed / 0.833+-0.017 honest).
+- FLOWERS: the prediction holds emphatically -- 3-way +0.077 vs wide
+  +0.026, and the effect is LARGEST on the weakest parent seed (+0.123
+  on s1): the second residual is also a seed-variance stabilizer
+  (2way sd 0.040 -> 3way 0.012).  New flowers record 0.910+-0.012,
+  beating the discovery-assisted 0.887+-0.019 WITHOUT discovery.
+- The decomposition-vs-capacity split follows the SAME on-manifold vs
+  off-manifold line as exps 78/92/101: on-manifold novelty (flowers)
+  rewards a second decomposition step; off-manifold (cars) just wants
+  residual capacity.
+- Detection trade: the wide control keeps/raises per-event (0.35-0.41
+  on flowers) while the 3-way trades a little of it for probe.
