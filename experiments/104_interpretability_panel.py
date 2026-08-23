@@ -61,7 +61,7 @@ from supersig.config import DEVICE
 from supersig.metrics import gaussianity_summary
 
 
-def _class_stats(z, y, classes, shrink=0.1):
+def _class_stats(z, y, classes, shrink=0.1, cov_mode="full"):
     mus, covs = [], []
     d = z.shape[1]
     for c in classes:
@@ -69,6 +69,10 @@ def _class_stats(z, y, classes, shrink=0.1):
         mu = zc.mean(0)
         X = zc - mu
         S = X.T @ X / max(len(zc) - 1, 1)
+        if cov_mode == "diag":
+            S = np.diag(np.diag(S))
+        elif cov_mode == "iso":
+            S = (np.trace(S) / d) * np.eye(d)
         S = (1 - shrink) * S + shrink * (np.trace(S) / d) * np.eye(d)
         mus.append(mu); covs.append(S)
     return np.stack(mus), np.stack(covs)
@@ -98,19 +102,20 @@ def _ece(prob, y_idx, n_bins=15):
     return float(e)
 
 
-def panel(z, y, classes=None, shrink=0.1, sw=True, seed=0):
+def panel(z, y, classes=None, shrink=0.1, sw=True, seed=0, cov_mode="full"):
     """The six-number interpretability panel for one space.
 
     z: (n, d) embeddings.  y: (n,) integer labels.  Uses only labelled points
     of `classes` (default: all present), which is the anchor set a hypothesis
-    test would compare against.
+    test would compare against.  cov_mode 'diag'/'iso' restricts the reference
+    density's covariance (exp-106 shrinkage bounds).
     """
     z = np.asarray(z, dtype=np.float64)
     y = np.asarray(y)
     classes = np.unique(y) if classes is None else np.asarray(classes)
     keep = np.isin(y, classes)
     z, y = z[keep], y[keep]
-    mus, covs = _class_stats(z, y, classes, shrink)
+    mus, covs = _class_stats(z, y, classes, shrink, cov_mode)
 
     # (n, C) proxy and reference log-densities
     proxy = -0.5 * ((z[:, None, :] - mus[None]) ** 2).sum(-1)
