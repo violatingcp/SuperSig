@@ -1,4 +1,4 @@
-# Proposed tests to improve performance — exps 81–104
+# Proposed tests to improve performance — exps 81–111
 
 Companion to [QUESTIONS.md](QUESTIONS.md) (whose "open items as of exp 58" list
 this supersedes).  Every entry follows the standard protocol in
@@ -758,6 +758,203 @@ most needs.**
 
 ---
 
+## Tier 6 — what the completed campaign opened (exps 105+)
+
+The queue from Tiers 1-5 is empty: everything specified has run, except exp 95
+(contraindicated).  What follows are the questions the results actually raised,
+written to the same standard.
+
+**A meta-lesson to design against.**  Four times now a theoretical defect has
+been identified, fixed, and the fix has bought nothing: the calibration residual
+did not select seeds (82), achieving calibration cost probe and per-event (83),
+warm-starting the test from the representation hurt (96), and optimizing the
+representation through the test destroyed the separation it measures (98).  The
+campaign's most reliable pattern is that **repairing an identity is not the same
+as improving a space.**  Exp 105 is another identity repair, so its watched
+falsifier is that same pattern; we state it up front rather than discovering it
+again.
+
+### Exp 105 — A direct class-conditional width penalty
+
+**Motivation.**  Exp 104's headline: no space achieves unit class-conditional
+width (0.13-0.79 against a target of 1), so squared distances overstate
+delta-logL by 4-37x and the paper's central identity holds only up to a large
+unknown factor.  SIGReg pins the AGGREGATE marginal, which demonstrably does not
+pin the conditionals.  The classwise marginal was supposed to, and exp 88 showed
+it never reaches its anchors for an optimization reason.  But a *width* penalty
+needs no anchors at all: regularise `E||z - mu_y||^2 / d` toward 1 directly,
+with `mu_y` the running class centroid.  This is the smallest intervention that
+targets the stated ideal, and it has never been tried.
+
+**Protocol.**  C10 32-D and C100 100-D (the panel's quantitative cells), 5
+paired seeds, arms: baseline supcon / supcon_sigreg / res-cat; each with and
+without the width term at lambda_w in {0.1, 1, 10}.  Report the FULL panel
+(r_ll, slope, r_llr, ece, sw, rms, sep) plus probe, per-event and f95.
+
+**Prediction.**  rms -> 1 and slope -> 1 (nearly by construction); r_llr and ECE
+improve materially; sep degrades somewhat as classes are forced to a common
+width.
+
+**Falsifier — the one to watch.**  rms reaches 1 and *nothing else moves*, or
+probe/per-event fall as they did in exp 83.  That would establish that the
+distance-as-log-likelihood identity is decorative in this program: satisfiable
+on demand, and not the thing that makes a space work.  Given the meta-lesson
+above this is a live possibility and arguably the modal outcome; it would be a
+significant negative result and should be published as one.
+
+**Second falsifier.**  rms -> 1 but slope does not follow → the departure is
+anisotropy or shape, not scale, and the panel's `cond`/`sw` columns will say
+which.
+
+**Cost.**  ~30 short runs.  **The most direct test of the paper's stated ideal.**
+
+### Exp 106 — Panel control: unfaithful space, or unestimable covariance?
+
+**Motivation.**  A control on our own instrument.  Exp 104's transfer numbers
+are shrinkage-dominated (10-40 samples/class in 100-D, cond 1e6-1e13), so we
+reported them qualitatively.  We cannot presently tell "this space is
+unfaithful" from "this covariance is unestimable at this sample size" — and the
+paper's width claim would be much weaker if the transfer cells were an artifact.
+
+**Protocol.**  (a) Subsample the CIFAR cells to 10, 20, 40 samples/class and
+re-run the panel: how much of the transfer-cell degradation is reproduced on a
+space we know is well-estimated?  (b) Re-run the transfer panel at head dim 16
+and 32 as well as 100, where the covariance is estimable.  (c) Report the panel
+under isotropic and diagonal reference densities as shrinkage bounds.
+
+**Prediction.**  The CIFAR subsample reproduces most of the r_llr degradation
+but NOT the width result: `rms` is a first-moment-style quantity and should be
+stable at small n, whereas r_llr and ECE depend on the full covariance.  If so,
+the width headline survives for the transfer cells and the correlation columns
+do not.
+
+**Falsifier.**  Subsampled CIFAR reproduces the width numbers too → the
+0.13-0.79 widths are partly an estimation artifact, and the paper's central
+negative needs qualifying.  **Run this before leaning further on exp 104.**
+
+**Cost.**  Evaluation-only.  Cheap and it audits our own headline.
+
+### Exp 107 — Is neighbourhood composition enough? (LID demotion test)
+
+**Motivation.**  Exp 103's sobering coda: the bare fraction of a point's
+neighbours that are not of the modal class scores 0.83-0.94 against LID's
+0.87-0.96.  A parameter-free counting statistic nearly matches the ratio
+estimator we have been recommending.  If it ties across the grid, the standard
+battery should carry the simpler statistic.
+
+**Protocol.**  Head-to-head across all 17 champion cells plus the CIFAR
+concats: LID(k=20), neighbourhood composition, kNN-distance, `eucl`, and the
+rank ensemble of composition+distance.  Report novelty AUC, and the exp-78
+holdout-rotation control for the winner.
+
+**Prediction.**  Composition ties LID within 0.02 on the on-manifold cells and
+is no worse elsewhere; the composition+distance ensemble beats both, because
+composition is explicitly scale-free and distance is explicitly not.
+
+**Falsifier.**  Composition trails by >0.05 on flowers → LID's radial-ratio
+information is doing real work beyond neighbour counting, and the extra
+machinery is justified.
+
+**Cost.**  Evaluation-only.  Cheap, and it could simplify the battery.
+
+### Exp 108 — The on-manifold diagnostic, second attempt
+
+**Motivation.**  Exp 90 tried to predict the LID-vs-distance regime from generic
+tail diagnostics and failed (best 12/17 against an 11/17 base rate).  It used
+features chosen before we understood the mechanism.  Exp 103 has since supplied
+one: novelty sits ON a seen class by distance but OFF that class's local sheet,
+and its neighbourhood is more mixed than a true member's.  Those are directly
+measurable on unlabelled data and were not among the candidates exp 90 tried.
+Since the on-manifold/off-manifold axis now decides six downstream choices
+(§ the organizing axis), a working predictor is worth a second attempt.
+
+**Protocol.**  Candidate label-free features: mean neighbourhood-composition gap
+between the pool tail and the seen population; within-modal-class radial-ratio
+dispersion; the ratio of these two.  Regress against the measured LID-minus-eucl
+gap over 17 cells, as in exp 90.  Report sign accuracy against the same base
+rate, and be explicit that this is a second attempt on the same 17 points.
+
+**Prediction.**  Sign accuracy >= 15/17, materially above exp 90's 12/17.
+
+**Falsifier.**  Still at or near base rate.  Then we stop: two mechanism-driven
+attempts and one generic attempt having failed, the regime should be declared
+empirically identifiable but not predictable, and the paper should say so
+without a third try.  **Pre-committing to that stopping rule here.**
+
+**Cost.**  Evaluation-only.
+
+### Exp 109 — Density-ratio pooling on CIFAR-100
+
+**Motivation.**  Exp 89 established that C100 discovery is geometry-blocked, not
+rate-blocked: the distance pool is the wrong instrument because the extreme tail
+is owned by background outliers.  Exp 92/92b established that the density-ratio
+pool is immune to exactly the failure modes that cause this, and that in a
+frozen space it costs nothing.  The combination has never been run on C100,
+which is the campaign's one fully-blocked discovery dataset.
+
+**Protocol.**  Exp-92b recipe (SparKer pooling, frozen space, anchors only) on
+the exp-73 C100 concats, against the exp-89 distance grid at matched holdout
+sizes.  Purity r1/r2 is the primary readout; probe and per-event secondary.
+
+**Prediction.**  Round-1 purity clears 0.15 for the first time on C100 (against
+the 0.121 ceiling of the distance grid), with round-2 holding rather than
+collapsing.
+
+**Falsifier.**  Purity stays below 0.15 → C100 novelty is invisible to the
+density ratio as well as to distance, and the dataset is genuinely undiscoverable
+by tail-pooling of any kind.  That is a clean and citable stopping point for the
+C100 thread.
+
+**Cost.**  ~6 discovery runs, no retraining.
+
+### Exp 110 — Why did the softmax control break the C100 ceiling?
+
+**Motivation.**  Exp 88's unpredicted headline is unexplained: plain
+`supcon_sigreg` at 100-128-D posts mahaT 0.545-0.558 while holding probe
+0.90-0.91, above the 0.47-0.49 band that had bounded every NPLM arm.  It is now
+the best single-loss both-currencies C100 space on record and nobody designed
+it.  We do not know whether the cause is the dimension, the SIGReg marginal, the
+supervised positives, or an interaction.
+
+**Protocol.**  Factorial at 32/64/100/128/200-D: {supcon, supcon_sigreg} x
+{global sigreg on/off} x 3 seeds, full battery plus the exp-104 panel.  The
+panel matters here: if the ceiling break is a width effect it will show up as
+`rms` moving toward 1 with dimension.
+
+**Prediction.**  The marginal is necessary (plain supcon does not break it) and
+the effect grows with dimension up to ~128-D then saturates, tracking `rms`.
+
+**Falsifier.**  Plain supcon breaks it too → the effect is dimensional and the
+SIGReg marginal is incidental, which would further weaken the marginal's role
+in this paper.
+
+**Cost.**  ~30 runs.  Explains the best C100 space we have.
+
+### Exp 111 — Child-only deployment study
+
+**Motivation.**  Exp 102 showed the res-nplm child alone beats its concat's
+reach on fine-grained VISReg/DINO cells (cars/visreg f95 0.049, the best
+transfer reach measured anywhere) at a probe cost of only 0.005-0.034, and
+stays semantically legible.  That suggests a deployable configuration nobody has
+evaluated end to end: detect with the child, keep the parent only for
+explanation.
+
+**Protocol.**  Full pipeline on the three qualifying cells: child-only detection
+(f95, per-event, SparKer), parent consulted only for the nearest-centroid
+explanation of flagged events; measure the explanation quality (agree@1,
+top-5 tables) and the total embedding cost against the concat baseline.
+
+**Prediction.**  Equal or better detection at half the embedding width, with
+explanation quality within 0.05 agree@1 of the concat.
+
+**Falsifier.**  Explanations degrade materially when the parent is not part of
+the scored space → the child's legibility depends on the concat context and the
+split is not deployable.
+
+**Cost.**  Evaluation-only on existing checkpoints.
+
+---
+
 ## Deliberately not proposed
 
 - **More bases / more datasets.**  The regime rules already replicate on three
@@ -781,33 +978,23 @@ most needs.**
 NPLM) -> 84 (two-stage strict) -> 85 (iterated residuals), chained on the
 GPU.
 
-**Everything specified in this document has now been run**, except exp 95
-(contraindicated below).  The queue is empty; what follows are the open
-questions the results opened, in the order we would pursue them.
+**Everything specified in Tiers 1-5 has now been run**, except exp 95
+(contraindicated below).  The follow-up queue is Tier 6 above; in the order we
+would pursue it:
 
-1. **Unit class-conditional width.**  Exp 104's headline is that no space
-   achieves it (0.13-0.79 vs a target of 1), so distances overstate delta-logL
-   by 4-37x.  The classwise marginal was meant to supply the per-class second
-   moment and provably never reaches its anchors (exp 88).  A direct
-   width-penalty term — regularise `E||z-mu_y||^2/d` toward 1 rather than
-   relying on the aggregate marginal — is untested and is the most direct
-   route to the paper's stated ideal.
-2. **Density-ratio pooling on C100.**  Exp 89 showed the distance pool is the
-   wrong instrument there (geometry-blocked); exp 92/92b showed the
-   density-ratio pool is immune to the failure modes that cause it.  The
-   combination has not been run on C100 and is the remaining lever.
-3. **Neighbourhood composition as a novelty score.**  Exp 103 found that the
-   bare fraction of non-modal neighbours scores 0.83-0.94 against LID's
-   0.87-0.96 — nearly free, no ratio estimator.  Worth a proper head-to-head
-   across the grid before LID is recommended as the default scale-free score.
-4. **Panel on quantitative transfer cells.**  Exp 104's transfer numbers are
-   shrinkage-dominated (10-40 samples/class in 100-D).  Either subsample CIFAR
-   to match, or run the panel at lower head dimension, to separate "the space
-   is unfaithful" from "the covariance is unestimable".
-5. **Child-only pipelines.**  Exp 102 showed the res-nplm child beats its
-   concat's reach on fine-grained visreg/dino cells at ~0.02 probe cost.  A
-   deployment study — child-only detection with the parent kept only for
-   explanation — is the natural product of that.
+1. **Exp 106** (panel sample-size control) — audits our own headline before we
+   lean further on it.  Evaluation-only.
+2. **Exp 105** (class-conditional width penalty) — the most direct test of the
+   paper's stated ideal, designed against the campaign's own meta-lesson.
+3. **Exp 107** (neighbourhood composition vs LID) — could simplify the standard
+   battery.  Evaluation-only.
+4. **Exp 109** (density-ratio pooling on C100) — the remaining lever on the one
+   fully-blocked dataset; cheap.
+5. **Exp 108** (on-manifold predictor, second attempt) — with a pre-committed
+   stopping rule.  Evaluation-only.
+6. **Exp 110** (why the softmax control broke the C100 ceiling) — explains the
+   best C100 space we have.
+7. **Exp 111** (child-only deployment) — evaluation-only.
 
 Not to be run as specified: **Exp 95** (SparKer as a training loss).  Formally
 cleared by exp 94, but contraindicated by 96 (warm start harmful) and 98
