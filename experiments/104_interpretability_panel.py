@@ -179,24 +179,59 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--selftest", action="store_true")
     ap.add_argument("--shrink", type=float, default=0.1)
-    ap.add_argument("--cells", default="")
+    ap.add_argument("--cells", default=",".join(
+        [f"{d}:{b}" for d in ("aircraft", "cars", "flowers", "dtd",
+                              "galaxy10") for b in ("dino", "lejepa",
+                                                    "visreg")]
+        + ["cifar10", "cifar100"]))
+    ap.add_argument("--max-rows", type=int, default=8000,
+                    help="subsample cap (the (n, C, d) proxy tensor)")
     ap.add_argument("--out", default="logs/exp104")
     args = ap.parse_args()
 
     if args.selftest:
         _selftest(); return
 
-    # Space loading mirrors exp 77/80 (cached banks + heads); left to the
-    # caller's environment because it needs the feature caches.
+    # Space loading mirrors exp 77/80 (cached banks + heads / exp-76 ckpts).
+    import argparse as _ap
     import importlib
+    exp44 = importlib.import_module("44_transfer_32d")
     exp77 = importlib.import_module("77_space_similarity")
     os.makedirs(args.out, exist_ok=True)
+    rng = np.random.default_rng(0)
     rows = {}
     for cell in args.cells.split(","):
-        ds, base = cell.split(":")
-        for name, (z_tr, y_tr, _, _) in exp77.load_cell_spaces(ds, base).items():
-            rows[f"{ds}_{base}_{name}"] = panel(z_tr, y_tr, shrink=args.shrink)
-            print(cell, name, rows[f"{ds}_{base}_{name}"])
+        if cell.startswith("cifar"):
+            ds = cell
+            ns = _ap.Namespace(dim=32 if ds == "cifar10" else 100,
+                               arms=[], quick=False)
+            spaces = exp77.cifar_cell(ns, ds)
+            n_cls = 10 if ds == "cifar10" else 100
+            holdouts = {4}
+            key_pre = ds
+        else:
+            ds, base = cell.split(":")
+            ns = _ap.Namespace(emb_dim=100)
+            spaces = exp77.transfer_cell(ns, ds, base)
+            spaces.pop("frozen", None)
+            n_cls = 47 if ds == "dtd" else exp44.N_CLASSES[ds]
+            nh = 1 if ds == "galaxy10" else 10
+            holdouts = set(range(n_cls - nh, n_cls))
+            key_pre = f"{ds}_{base}"
+        seen = np.array([c for c in range(n_cls) if c not in holdouts])
+        print(f"######## {cell}: {len(spaces)} spaces ########", flush=True)
+        for name, (z_tr, y_tr, _, _) in spaces.items():
+            z_tr = np.asarray(z_tr, dtype=np.float64)
+            y_tr = np.asarray(y_tr)
+            if len(z_tr) > args.max_rows:
+                idx = rng.choice(len(z_tr), args.max_rows, replace=False)
+                z_tr, y_tr = z_tr[idx], y_tr[idx]
+            rows[f"{key_pre}_{name}"] = panel(z_tr, y_tr, classes=seen,
+                                              shrink=args.shrink)
+            r = rows[f"{key_pre}_{name}"]
+            print(f"  {name:<26}" + "  ".join(f"{k}={v:.3f}"
+                                              for k, v in r.items()),
+                  flush=True)
     np.savez(os.path.join(args.out, "panel.npz"),
              **{k: np.array(list(v.values())) for k, v in rows.items()},
              fields=np.array(list(next(iter(rows.values())).keys())))

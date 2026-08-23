@@ -538,3 +538,19 @@ seed spread 0.787-0.885, discovery compensates weak parents), dtd/visreg
 + disc 0.867+-0.004 (seed-2 best 0.8709), galaxy10/lejepa 0.971+-0.004,
 cars/visreg 0.833+-0.017 (exp 75).  No ordering flips; cite with these
 uncertainties.
+
+**Exp-84 update (2026-08-21)**: reading #8's caveat is RESOLVED -- the
+two-stage recipe survives the strict open-world protocol (seen-only
+nplm-sup-ft trunks): supcon_sigreg heads 0.787/0.796/0.805
+(dino/lejepa/visreg) with mahaT 0.75-0.80, and visreg nplm_sup_dist
+mahaT 0.814.  Within 0.007-0.016 of the contaminated numbers; strictly
+between the exp-70 parents and the exp-71 residual champions.  Cite
+these; the residual concat remains the aircraft record construction.
+
+**Exp-85 update (2026-08-21)**: iterated/wider residuals set two new
+records -- cars/visreg 0.884+-0.003 (width-matched wide residual; the
+gain there is capacity, not decomposition) and flowers/dino 0.910+-0.012
+(3-way [p;r1;r2] concat, discovery-free, beats the discovery-assisted
+0.887+-0.019; the second residual also stabilizes seed variance
+0.040->0.012).  Decomposition-vs-capacity splits along the on/off-
+manifold regime line.
