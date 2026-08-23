@@ -57,6 +57,18 @@ full suite green (103 passed incl. test_calibration).
 
 | 95 | SparKer as a training loss | **CONTRAINDICATED** by 96+98 — do not run in the alternating form |
 
+Tier 6 (run 2026-08-22/23; verdicts in `logs/SUMMARY_TABLES.md`):
+
+| exp | what it asked | outcome |
+|---|---|---|
+| 106 | panel control: unfaithful space or unestimable covariance? | **PREDICTION HOLDS** — rms stable within ±0.05 down to n=10/class (the width headline survives); r_llr collapses at small n and rises to 0.73–0.91 under diag/iso references → cite transfer r_llr only as [full, iso] bounds |
+| 105 | direct class-conditional width penalty | **WATCHED FALSIFIER FIRES** (5th meta-lesson confirmation) — rms→1 on demand at λ_w=1, but slope stalls at 2.3–4.6 (shape, not scale), r_llr flat-to-down, ECE worse; safe, decorative. Exceptions: c10 res-cat improves (probe 0.9593, sep 10.9); c100 supcon_sigreg jumps mahaT 0.389→0.574 — the exp-110 ceiling break by an independent route |
+| 107 | is neighbourhood composition enough? | **FALSIFIER DOES NOT FIRE, LID NOT DEMOTED** — comp ties LID on flowers (−0.016), beats it on dtd/c10 (0.865 vs 0.672), but is ANTI-correlated on aircraft (0.42) and loses the rotation control (0.818 vs 0.875). Battery: add comp, keep lid |
+| 109 | density-ratio pooling on C100 | **PREDICTION HOLDS — GEOMETRY BLOCK BROKEN** — sparker-frozen r1 purity 0.358 at h10:q0.99 (distance ceiling 0.121; matched point 0.002), r2 RISES to 0.418; strict quantiles now help (f-tail owned by novelty). h1 stays blocked: rate floor, not geometry |
+| 108 | on-manifold predictor, second attempt | **PREDICTION MET** — rr_disp (the mechanism feature) 15/17 sign accuracy vs 11/17 base; comp_gap at base rate. In-sample caveat stands; line closes successfully, no third attempt |
+| 110 | why did the softmax control break the C100 ceiling? | **CAUSE FOUND: τ×marginal interaction** — exp-88's arm accidentally ran at τ=1.0; only τ=1.0 AND SIGReg break the ceiling (0.539–0.572 at 32–128-D), each alone ≤0.43. Dimension incidental (present at 32-D); NOT a width effect (winner rms~0.5). New designed record mahaT 0.572±0.031 @128-D, probe 0.910 |
+| 111 | child-only deployment | **PREDICTION HOLDS, DEPLOYABLE** — child-only detection ties/beats concat (aircraft:visreg +0.048 per-event) at half width with better f95; parent-only explanations overlap concat's at 0.73–0.85 top-1. Protocol limit: alphabetical holdouts make absolute superclass agreement near-unmeasurable |
+
 Fifteen of twenty-four predictions were falsified or materially revised.  That is the intended hit rate: the
 entries below are written to be wrong in a specific way, and two of them
 (82, 87) taught us more by failing than they would have by passing.  Where a
@@ -972,29 +984,21 @@ split is not deployable.
 
 ## Suggested order
 
-**Done** (see the status board above): 80, 81, 82, 86, 87, 88, 90, 91, 92,
-92b, 93, 94, 96, 97, 98, 99.
-**In flight** (2026-08-21): 89 (gate grid, running) -> 83 (variance-reduced
-NPLM) -> 84 (two-stage strict) -> 85 (iterated residuals), chained on the
-GPU.
+**Done** (see the status boards above): everything in Tiers 1-6 — 80-94,
+96-104 (Tiers 1-5, completed 2026-08-21) and 105-111 (Tier 6, completed
+2026-08-23).  Exp 95 remains contraindicated and unrun.
 
-**Everything specified in Tiers 1-5 has now been run**, except exp 95
-(contraindicated below).  The follow-up queue is Tier 6 above; in the order we
-would pursue it:
-
-1. **Exp 106** (panel sample-size control) — audits our own headline before we
-   lean further on it.  Evaluation-only.
-2. **Exp 105** (class-conditional width penalty) — the most direct test of the
-   paper's stated ideal, designed against the campaign's own meta-lesson.
-3. **Exp 107** (neighbourhood composition vs LID) — could simplify the standard
-   battery.  Evaluation-only.
-4. **Exp 109** (density-ratio pooling on C100) — the remaining lever on the one
-   fully-blocked dataset; cheap.
-5. **Exp 108** (on-manifold predictor, second attempt) — with a pre-committed
-   stopping rule.  Evaluation-only.
-6. **Exp 110** (why the softmax control broke the C100 ceiling) — explains the
-   best C100 space we have.
-7. **Exp 111** (child-only deployment) — evaluation-only.
+The Tier-6 pass closed every line it opened: the width identity is
+repairable-but-decorative (105, fifth meta-lesson confirmation), the width
+headline survives its own audit (106), composition joins but does not
+replace LID (107), the regime is label-free identifiable via rr_disp
+(108, pre-registered bar met), the C100 geometry block is broken by the
+frozen density-ratio pool (109), the C100 ceiling break is a designed
+tau=1.0 x marginal recipe (110, corroborated by 105's independent width
+route), and the child-only deployment split is citable (111).  No Tier 7
+is proposed: the two open threads worth money are an 18th cell to take
+rr_disp out of sample, and a rotated-holdout protocol if absolute
+explanation agreement is ever needed.
 
 Not to be run as specified: **Exp 95** (SparKer as a training loss).  Formally
 cleared by exp 94, but contraindicated by 96 (warm start harmful) and 98
