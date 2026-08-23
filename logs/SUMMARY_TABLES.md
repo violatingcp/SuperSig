@@ -1162,3 +1162,28 @@ only) on the exp-89 cached spaces, seed 0:
 - Recipe addendum for the master line: coarse cells with MULTI-CLASS
   novelty now also take the frozen density-ratio pool; the classic
   unfrozen loop remains only for the single-holdout regime.
+
+Exp 106 (`106_panel_control.py`, 2026-08-23; IMPROVEMENT_TESTS #106):
+panel sample-size control -- PREDICTION HOLDS; the width headline
+survives its own audit, the correlation columns do not.
+
+(a) CIFAR subsampled to 10/20/40 samples/class (the transfer-cell
+    regime): rms is STABLE within +-0.05 of full-n on every space
+    (e.g. c10 resnplm 0.11@n10 vs 0.13@full; c100 res 0.65 vs 0.70) --
+    the width measurement is first-moment-ish as predicted.  r_llr
+    degrades sharply at n10 on the quantitative cells (c100 supcon
+    0.28->0.04, resnplm-cat 0.38->0.23, c10 resnplm 0.82->0.59).
+(b) PCA 16/32-D projections of the transfer heads (estimable
+    covariance, same space): r_llr barely moves (examples 0.124->
+    0.133-0.140, 0.446->0.438-0.456, 0.536->0.533) -- the low transfer
+    r_llr is NOT a dimension artifact.  (rms under PCA is not
+    comparable: top-PC variance concentration inflates it.)
+(c) diag/iso reference bounds: r_llr rises to 0.73-0.91 where the
+    full-covariance reference gives 0.12-0.45 -- much of the apparent
+    correlation failure is covariance UNESTIMABILITY, bracketed
+    between the full (pessimistic) and iso (optimistic) references.
+    ece is invariant to cov_mode as it must be (consistency check).
+
+- Verdict: exp 104's rms/width claim stands on ALL cells including the
+  shrinkage-dominated transfer ones; its r_llr/ece columns on transfer
+  cells should be cited only as [full, iso] reference bounds.
