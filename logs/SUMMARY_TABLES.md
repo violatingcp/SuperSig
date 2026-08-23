@@ -1298,3 +1298,40 @@ tau=1.0, not the canonical supcon temperature 0.1.  Factorial, C100,
   i.e. still anisotropic, yet mahaT-best).
 - Nomenclature correction for exp-88/QUESTIONS: the C100
   ceiling-breaker is `supcon_sigreg @ tau=1.0`.
+
+Exp 105 (`105_width_penalty.py`, 2026-08-23; IMPROVEMENT_TESTS #105):
+direct class-conditional width penalty -- THE WATCHED FALSIFIER FIRES
+(fifth confirmation of the meta-lesson), with two informative
+exceptions.  Stage 1 scanned lambda_w {0, 0.1, 1, 10} at seed 0
+(lambda=1 the operating point: rms~1 with no probe damage; lambda=10
+reaches slope~1 but costs probe up to -0.04); stage 2 = 5 paired
+seeds on lambda 0 vs 1, C10-32D + C100-100D x supcon/supcon_sigreg/
+res-cat:
+
+  the identity IS repairable: rms 0.37-0.65 -> 0.80-1.04 everywhere.
+  what was promised does NOT follow: slope stops at 2.3-4.6 (the
+  residual departure is SHAPE/anisotropy -- second falsifier also
+  active); r_llr flat-to-down (c10 res-cat 0.766->0.695; c100
+  supcon_sigreg 0.611->0.197); ece WORSENS nearly everywhere (c100
+  supcon 0.138->0.312).
+- Unlike exp 83, nothing collapses: probe moves <=0.004 on supcon/
+  res-cat (supcon_sigreg pays 0.008-0.017) and per-event is
+  unchanged-to-up.  The width term is SAFE at lambda=1 -- merely
+  decorative for calibration.  "Repairing an identity is not the same
+  as improving a space" now stands at five confirmations (82, 83, 96,
+  98, 105); the distance-as-logL identity is satisfiable on demand
+  and is not what makes a space work.  Publish as the significant
+  negative it is.
+- Exception 1: c10 res-cat improves as a SPACE (probe 0.9551->0.9593,
+  sep 5.88->10.93, mahaT 0.537->0.601) -- the width term acts as a
+  useful regularizer on the record concat construction.
+- Exception 2 (headline): c100 supcon_sigreg + width jumps mahaT
+  0.389->0.574+-0.031 with per-event 0->0.066 -- numerically the SAME
+  ceiling break exp 110 traces to tau=1.0, reached by an independent
+  intervention.  Both routes weaken/reshape the supcon interaction
+  under the SIGReg marginal; the C100 ceiling break is a basin, not a
+  knife-edge.  (c10 shows the opposite sign, 0.549->0.346: the basin
+  is a C100/many-class phenomenon.)
+- f95 was not run on these arms (spaces not all checkpointed; the
+  verdict rests on probe/per-event/panel, which suffice for the
+  stated falsifiers).
