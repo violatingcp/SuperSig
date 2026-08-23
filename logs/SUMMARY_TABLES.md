@@ -1267,3 +1267,34 @@ deployable.  Three qualifying cells (exp-102 clean-reach + legible):
 - Deployment recipe (citable): embed the res-nplm child for every
   event, flag at the 0.95 background quantile, embed the parent only
   for flagged events and explain by its nearest seen centroids.
+
+Exp 110 (`110_c100_ceiling.py`, 2026-08-23; IMPROVEMENT_TESTS #110):
+why the softmax control broke the C100 mahaT ceiling -- CAUSE
+IDENTIFIED: a temperature x marginal INTERACTION, not dimension, not
+width.  First finding: exp-88's "softmax" spec never set tau, so its
+record arm accidentally ran at the HybridContrastiveLoss default
+tau=1.0, not the canonical supcon temperature 0.1.  Factorial, C100,
+3 paired seeds:
+
+  arm (tau, sigreg)       mahaT @32d  @64d   @100d  @128d  @200d
+  supcon (0.1, off)       0.356      0.342  0.344  0.363  0.368
+  supcon_sigreg (0.1, on) 0.404      0.367  0.382  0.399  0.354
+  supcon_t1 (1.0, off)    0.410      0.395  0.425  0.420  0.395
+  supcon_sigreg_t1 (1.0,on) 0.539    0.557  0.562  0.572  0.492
+
+- Only tau=1.0 AND the SIGReg marginal together break the 0.47-0.49
+  ceiling; each alone stays under it.  The effect is fully present at
+  32-D (0.539 +- 0.030) -- dimension is incidental (exp 88 only looked
+  >=100-D); mild peak at 128-D, decline at 200-D.
+- probe holds 0.90-0.92 (vs 0.94 at tau 0.1): the both-currencies
+  record improves to mahaT 0.572+-0.031 @ 128-D, probe 0.910 -- the
+  new best single-loss C100 space, now DESIGNED rather than
+  accidental.  Also the only arms with nonzero per-event (0.04-0.06).
+- The rms-tracking clause of the prediction is FALSIFIED informatively:
+  the winner sits at rms~0.50 while supcon_t1 reaches rms~1.0 with low
+  mahaT -- consistent with exps 105/83: unit width is neither necessary
+  nor sufficient; what tau=1.0 buys under the marginal is a looser
+  interaction that lets SIGReg shape the full covariance (slope 10-18,
+  i.e. still anisotropic, yet mahaT-best).
+- Nomenclature correction for exp-88/QUESTIONS: the C100
+  ceiling-breaker is `supcon_sigreg @ tau=1.0`.
