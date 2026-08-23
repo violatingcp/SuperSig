@@ -38,9 +38,15 @@ from supersig.train import collect_embeddings, train_supcon
 exp34h = importlib.import_module("34h_hybrid_nplm_cifar")
 exp105 = importlib.import_module("105_width_penalty")
 
-ARMS = ["supcon", "supcon_sigreg"]
+ARMS = ["supcon", "supcon_sigreg", "supcon_t1", "supcon_sigreg_t1"]
+# The exp-88 "softmax" arm never set tau, so it ran at the
+# HybridContrastiveLoss DEFAULT tau=1.0 -- not the canonical supcon_sigreg
+# temperature 0.1.  The _t1 arms reproduce that accidental configuration;
+# the marginal contrast at tau=1.0 is supcon_t1 vs supcon_sigreg_t1.
 SPEC_SS = dict(positives="supervised", critic="cosine",
                estimator="softmax", marginal="sigreg", tau=0.1)
+SPEC_SS_T1 = dict(positives="supervised", critic="cosine",
+                  estimator="softmax", marginal="sigreg", tau=1.0)
 
 
 def main():
@@ -93,8 +99,11 @@ def main():
                                                dataset=ds)
                 if arm == "supcon":
                     train_supcon(net, loader, con_ep)
+                elif arm == "supcon_t1":
+                    train_supcon(net, loader, con_ep, temp=1.0)
                 else:
-                    exp34h.train_hybrid(net, loader, con_ep, SPEC_SS,
+                    spec = SPEC_SS_T1 if arm.endswith("_t1") else SPEC_SS
+                    exp34h.train_hybrid(net, loader, con_ep, spec,
                                         True, lam=args.lam,
                                         n_slices=cfg["n_slices"])
                 tr, tr_lab = collect_embeddings(net, tel)
