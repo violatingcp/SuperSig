@@ -1187,3 +1187,31 @@ survives its own audit, the correlation columns do not.
 - Verdict: exp 104's rms/width claim stands on ALL cells including the
   shrinkage-dominated transfer ones; its r_llr/ece columns on transfer
   cells should be cited only as [full, iso] reference bounds.
+
+Exp 107 (`107_composition_vs_lid.py`, 2026-08-23; IMPROVEMENT_TESTS
+#107): neighbourhood composition vs LID -- FALSIFIER DOES NOT FIRE,
+but LID is NOT demoted.  17 cells (champion concats + CIFAR records):
+
+  score    mean AUC   wins       notes
+  lid20    0.694      3/17
+  comp     0.680      2/17       ties lid within 0.02 on flowers
+  knnd     0.679      5/17       aircraft's best (0.75-0.81)
+  eucl     0.669      0/17
+  ens      0.712      0/17       comp+knnd rank ensemble
+  ens-lid  0.715      7/17       lid+eucl (exp-78) -- still the best slot
+
+- On-manifold, as predicted: flowers comp within 0.016-0.033 of lid;
+  dtd comp BEATS lid on 2/3 bases; cifar10 comp 0.865 vs lid 0.672
+  (biggest composition win anywhere).
+- The falsifier (comp trails >0.05 on flowers) does not fire.  But two
+  results keep LID in the battery: (i) aircraft -- comp is
+  ANTI-correlated (0.42-0.48; novel variants sit in high-purity
+  same-manufacturer neighbourhoods, so counting says "member"), while
+  lid stays >=0.52 and knnd carries the cell; (ii) the exp-78
+  holdout-rotation control on frozen flowers keeps a real lid edge
+  (0.875+-0.029 vs comp 0.818+-0.038; cars parity 0.56).
+- Verdict: composition is a free extra battery slot and the best
+  simple statistic on texture-like/coarse cells, but the radial-ratio
+  information is doing real work exactly where the on-manifold story
+  lives.  Battery: ADD comp, KEEP lid; ens-lid remains the default
+  ensemble.
