@@ -1132,3 +1132,33 @@ concats 300-D):
   residual capacity.
 - Detection trade: the wide control keeps/raises per-event (0.35-0.41
   on flowers) while the 3-way trades a little of it for probe.
+
+Exp 109 (`109_c100_density_pool.py`, 2026-08-22; IMPROVEMENT_TESTS #109):
+density-ratio pooling on CIFAR-100 -- PREDICTION HOLDS, the geometry
+block is BROKEN.  Exp-92b sparker-frozen recipe (freeze the exp-89
+concat space, SparKer density-ratio pool + centre proposals, anchors
+only) on the exp-89 cached spaces, seed 0:
+
+  cfg          sparker r1   sparker r2   exp-89 distance r1
+  h1:q0.95     0.030        0.034        0.000
+  h1:q0.99     0.029        0.020        0.000
+  h5:q0.95     0.148        0.169        0.015
+  h5:q0.99     0.198        0.234        0.002
+  h10:q0.95    0.232        0.265        0.036
+  h10:q0.99    0.358        0.418        0.002
+
+- Round-1 purity clears the 0.15 gate at h5 and h10 (best 0.358 at
+  h10:q0.99, vs the distance grid's all-time ceiling 0.121), and round
+  2 RISES (0.418) instead of collapsing -- exactly the exp-92b
+  signature transplanted to the one fully-blocked dataset.
+- The strictest quantile is now the BEST setting (q0.99 > q0.95 at
+  h5/h10) -- opposite to the distance pool, where strict tails were
+  pure background: the f-ratio tail is owned by novelty, the distance
+  tail by outliers.  Exp 89's verdict is hereby SCOPED: C100 is
+  geometry-blocked FOR DISTANCE POOLING only.
+- h1 (single class, 500 images) stays at 0.03: with the class rate
+  ~1% no pooling statistic reaches the gate -- a rate floor, not
+  geometry.  Margin/mean-anchor at h10:q0.99: 0.708/0.771.
+- Recipe addendum for the master line: coarse cells with MULTI-CLASS
+  novelty now also take the frozen density-ratio pool; the classic
+  unfrozen loop remains only for the single-holdout regime.
