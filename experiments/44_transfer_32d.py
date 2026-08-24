@@ -52,7 +52,8 @@ PAPER = {  # dataset -> {method: acc}
     "flowers": {"MoCoV3": 91.5, "DINO": 94.6, "VISReg-B": 90.4},
     "galaxy10": {"MoCoV3": 73.1, "DINO": 72.8, "VISReg-B": 74.0},
 }
-N_CLASSES = {"aircraft": 100, "cars": 196, "flowers": 102, "galaxy10": 10}
+N_CLASSES = {"aircraft": 100, "cars": 196, "flowers": 102, "galaxy10": 10,
+             "food101": 101}
 
 
 class Galaxy10(Dataset):
@@ -155,6 +156,9 @@ def make_split(name, split, transform):
             return HFCars(split, transform)
     if name == "galaxy10":
         return Galaxy10(split, transform)
+    if name == "food101":
+        return datasets.Food101(DATA_DIR, split=split, download=True,
+                                transform=transform)
     raise ValueError(name)
 
 

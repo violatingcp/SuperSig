@@ -89,11 +89,15 @@ def main():
     ap.add_argument("--foldover", action="store_true",
                     help="add the mirror design to de-alias 2-factor terms")
     ap.add_argument("--quick", action="store_true")
+    ap.add_argument("--tag", default="",
+                    help="npz suffix so concurrent invocations don't clobber")
     args = ap.parse_args()
 
     D = design(args.foldover)
     holdouts = {args.holdout}
-    sfx = ("_fold" if args.foldover else "") + ("_quick" if args.quick else "")
+    sfx = ("_" + args.tag if args.tag else "") + \
+        ("_fold" if args.foldover else "") + \
+        ("_quick" if args.quick else "")
     out = os.path.join("logs", "exp114", f"results{sfx}.npz")
     os.makedirs(os.path.dirname(out), exist_ok=True)
     done = {}

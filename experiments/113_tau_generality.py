@@ -56,11 +56,14 @@ def main():
     ap.add_argument("--lam", type=float, default=1.0)
     ap.add_argument("--alpha", type=float, default=0.05)
     ap.add_argument("--quick", action="store_true")
+    ap.add_argument("--tag", default="",
+                    help="npz suffix so concurrent invocations don't clobber")
     args = ap.parse_args()
 
     holdouts = {args.holdout}
     ep = args.epochs or (2 if args.quick else 20)
-    sfx = "_quick" if args.quick else ""
+    sfx = ("_" + args.tag if args.tag else "") + \
+        ("_quick" if args.quick else "")
     out = os.path.join("logs", "exp113", f"results{sfx}.npz")
     os.makedirs(os.path.dirname(out), exist_ok=True)
     done = {}

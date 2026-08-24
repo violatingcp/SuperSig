@@ -56,13 +56,46 @@ def rr_disp(Xtr, ytr, Xte, seen, k=20):
     return float(lr.std())
 
 
-def cell_arrays(ds, base):
-    """(Xtr, ytr, Xte, yte, seen, holdouts) for a champion cell."""
+def cell_arrays(ds, base=None):
+    """(Xtr, ytr, Xte, yte, seen, holdouts) for a champion cell (incl. the
+    CIFAR record concats), or -- for a NEW dataset with no exp-72 champion --
+    its frozen ViT bank (that is the only space a genuinely held-out cell can
+    have; subsampled so the O(n^2) feature/gap computations stay tractable)."""
+    import torch as T
     exp44 = importlib.import_module("44_transfer_32d")
-    sp = exp100.champion_space(ds, base)
-    if sp is None:
-        raise RuntimeError(f"missing banks for {ds}:{base}")
-    Xtr, ytr, Xte, yte = sp
+    exp72 = importlib.import_module("72_residual_discovery")
+    if base is None:                                  # cifar10 / cifar100
+        sp, _ = exp100.cifar_space(ds)
+        if sp is None:
+            raise RuntimeError(f"missing CIFAR ckpts for {ds}")
+        Xtr, ytr, Xte, yte = sp
+        n_cls = 10 if ds == "cifar10" else 100
+        holdouts = {4}
+        seen = [c for c in range(n_cls) if c not in holdouts]
+        return (np.asarray(Xtr, np.float32), np.asarray(ytr),
+                np.asarray(Xte, np.float32), np.asarray(yte), seen, holdouts)
+    if (ds, base) in exp72.WINNERS:
+        sp = exp100.champion_space(ds, base)
+        if sp is None:
+            raise RuntimeError(f"missing banks for {ds}:{base}")
+        Xtr, ytr, Xte, yte = sp
+    else:
+        from supersig.config import DATA_DIR
+        fz = os.path.join(DATA_DIR, f"tf_feats_{ds}_{base}_vitb16.pt")
+        if not os.path.exists(fz):
+            raise RuntimeError(f"missing frozen bank {fz}")
+        b = T.load(fz)
+        Xtr, ytr = b["train"][0].float().numpy(), b["train"][1].numpy()
+        Xte, yte = b["test"][0].float().numpy(), b["test"][1].numpy()
+        rng = np.random.default_rng(0)
+        keep = np.concatenate([
+            rng.choice(np.where(ytr == c)[0],
+                       min(60, (ytr == c).sum()), replace=False)
+            for c in np.unique(ytr)])
+        Xtr, ytr = Xtr[keep], ytr[keep]
+        if len(yte) > 6000:
+            qi = rng.choice(len(yte), 6000, replace=False)
+            Xte, yte = Xte[qi], yte[qi]
     n_cls = 47 if ds == "dtd" else exp44.N_CLASSES[ds]
     nh = 1 if ds == "galaxy10" else 10
     holdouts = set(range(n_cls - nh, n_cls))
@@ -108,7 +141,7 @@ def main():
         # store the best in-sample threshold, so it can never drift afterwards.
         rr, gp = [], []
         for cell in exp108.CELLS:
-            ds, base = cell.split(":")
+            ds, base = cell.split(":") if ":" in cell else (cell, None)
             try:
                 Xtr, ytr, Xte, _yte, seen, _h = cell_arrays(ds, base)
             except Exception as e:
@@ -139,7 +172,7 @@ def main():
             sys.exit("run --freeze first")
         preds = _load("predictions.json")
         for cell in [c for c in args.cells.split(",") if c]:
-            ds, base = cell.split(":")
+            ds, base = cell.split(":") if ":" in cell else (cell, None)
             Xtr, ytr, Xte, _yte, seen, _h = cell_arrays(ds, base)
             rr = rr_disp(Xtr, ytr, Xte, seen, k=args.k)
             pred = "LID" if (rr > thr["threshold"]) == (thr["sign"] > 0) \
@@ -158,7 +191,7 @@ def main():
         n_ok = 0
         print(f"{'cell':22s}{'predicted':>11s}{'actual':>10s}{'gap':>9s}")
         for cell, p in preds.items():
-            ds, base = cell.split(":")
+            ds, base = cell.split(":") if ":" in cell else (cell, None)
             gap = measured_gap(ds, base, k=args.k, seed=args.seed)
             actual = "LID" if gap > 0 else "distance"
             ok = actual == p["predicted"]
