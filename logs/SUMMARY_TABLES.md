@@ -1390,3 +1390,28 @@ table -- PARTIAL; the exp-97 rule does not transfer monotonically.
 - Recommendation: keep M=16 as the default reach protocol; cite
   matched-M as a sensitivity band, and note the two extra crossings
   raise the citable count from 8/17 to 10/17 under best-of-two.
+
+Exp 118 (`118_holdout_audit.py`, 2026-08-24; IMPROVEMENT_TESTS #118):
+holdout-selection audit -- PREDICTION HOLDS on the probe side, with a
+variance refinement.  C100, 5 random 1-class draws x 3 seeds vs the
+archived last-class holdout:
+
+  draw       probe mean+-sd(seeds)   mahaT
+  archived   0.9567+-0.0104          0.500
+  random1-5  0.9302-0.9837           0.391-0.569
+
+- The archived alphabetical draw sits WITHIN the random-draw
+  distribution: the falsifier (headline probe confounded by
+  alphabetical holdouts) does not fire.
+- Refinement worth republishing: draw-to-draw spread (sd ~0.019 on
+  probe, 0.18 range relative on mahaT) EXCEEDS the seed spread
+  (0.001-0.010) -- WHICH class is held out matters more than the
+  seed.  Any cross-holdout generalization claim needs draw-resampled
+  intervals, not just seed-resampled ones (feeds the exp-117 MDE
+  accounting).  Calibration (mahaT) figures are substantially
+  draw-dependent and should be quoted with draw ranges.
+- Scope limit: the script retrains per draw and supports CIFAR only;
+  the transfer-cell superclass-agreement half of the original
+  motivation (exp-111's scorable-class collapse) remains covered by
+  exp 111's protocol note rather than by new random-draw numbers
+  (retraining transfer heads per draw is not evaluation-only).
