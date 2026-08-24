@@ -1,4 +1,4 @@
-# Proposed tests to improve performance — exps 81–118
+# Proposed tests to improve performance — exps 81–119
 
 Companion to [QUESTIONS.md](QUESTIONS.md) (whose "open items as of exp 58" list
 this supersedes).  Every entry follows the standard protocol in
@@ -1137,6 +1137,31 @@ confound in the headline results, not just the interpretability ones.
 
 **Cost.**  Moderate; the interpretability half is evaluation-only.
 
+### Exp 119 — An 18th cell: `rr_disp` out of sample
+
+**Motivation.**  Exp 108 met its pre-registered bar (15/17) but stated the
+caveat itself: the threshold is chosen in-sample on the same 17 cells exp 90
+used, and Spearman 0.37 says the relation is threshold-like rather than
+monotone.  As it stands the claim supportable is "the regime is label-free
+identifiable", not "here is a predictor".  One genuinely held-out cell converts
+the first into the second, or kills it.
+
+**Protocol.**  Build 3-5 cells not in the original 17 — new dataset (e.g.
+Food-101 or CUB, both fine-grained and plausibly on-manifold), or a new base on
+an existing dataset — freeze the exp-108 threshold at its in-sample value, and
+predict the LID-vs-eucl sign BEFORE measuring it.  Pre-register the predictions
+in the log.
+
+**Prediction.**  Correct sign on >= 4 of 5 held-out cells at the frozen
+threshold.
+
+**Falsifier.**  <= 3 of 5.  Then `rr_disp` is an in-sample artifact, the exp-108
+result is downgraded to a descriptive correlation, and — per exp 108's own
+stopping rule — the regime line closes for good.
+
+**Cost.**  One new feature-bank extraction plus evaluation.  Moderate, and it is
+the difference between a mechanism and a method.
+
 ---
 
 ## Deliberately not proposed
@@ -1167,10 +1192,35 @@ replace LID (107), the regime is label-free identifiable via rr_disp
 (108, pre-registered bar met), the C100 geometry block is broken by the
 frozen density-ratio pool (109), the C100 ceiling break is a designed
 tau=1.0 x marginal recipe (110, corroborated by 105's independent width
-route), and the child-only deployment split is citable (111).  No Tier 7
-is proposed: the two open threads worth money are an 18th cell to take
-rr_disp out of sample, and a rotated-holdout protocol if absolute
-explanation agreement is ever needed.
+route), and the child-only deployment split is citable (111).  The two open threads identified at
+the close of Tier 6 were an 18th cell to take `rr_disp` out of sample, and a
+rotated-holdout protocol if absolute explanation agreement is ever needed.
+Both are carried forward: the first as **exp 119**, the second as **exp 118**.
+
+**Tier 7 adds a third thread that the exp-110 accident forces.**  The argument
+for it is not "more tuning is generally good" — it is that the campaign swept
+the DISCRETE design cube exhaustively and never swept the CONTINUOUS constants
+at all, and that the one time a constant varied (by accident) it produced the
+best C100 space on record via an INTERACTION that no one-at-a-time scan could
+have seen.  That is a methodological gap, not a missed hyperparameter.  It is
+scoped as an audit rather than a redo, and ordered so the analysis-only checks
+come first:
+
+1. **Exp 112** (inherited-constants audit) — hours of code archaeology; scopes
+   everything else by saying what was never chosen.
+2. **Exp 117** (power analysis) — analysis-only; says which existing claims are
+   even resolvable before we spend GPU time adding more.
+3. **Exp 116** (SparKer M matched to ID) — battery-only; exp 100's reach table
+   was measured at a kernel budget exp 97 showed to be wrong for high-ID spaces.
+4. **Exp 119** (18th cell for `rr_disp`) — the pre-registered out-of-sample test
+   exp 108 explicitly deferred.
+5. **Exp 115** (does the dissociation survive per-arm tuning?) — the most
+   important test in the tier, and the one most able to undermine the paper.
+6. **Exp 113** (is the `tau x marginal` basin general or many-class?) — decides
+   whether every softmax row needs re-running.
+7. **Exp 118** (holdout-selection audit) — the alphabetical-holdout confound.
+8. **Exp 114** (fractional factorial) — the general answer to what else our
+   one-at-a-time scans are missing.
 
 Not to be run as specified: **Exp 95** (SparKer as a training loss).  Formally
 cleared by exp 94, but contraindicated by 96 (warm start harmful) and 98
