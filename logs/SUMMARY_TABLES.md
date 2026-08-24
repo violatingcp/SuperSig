@@ -1335,3 +1335,30 @@ res-cat:
 - f95 was not run on these arms (spaces not all checkpointed; the
   verdict rests on probe/per-event/panel, which suffice for the
   stated falsifiers).
+
+Exp 119 (`119_rrdisp_holdout_cell.py` + `119b_food101_banks.py`,
+2026-08-24; IMPROVEMENT_TESTS #119): rr_disp out of sample -- FAILS AT
+THE FROZEN THRESHOLD; per the pre-registered stopping rule the regime
+line CLOSES.  Order of operations was enforced and is in git history:
+threshold frozen on the original 17 cells (0.06052, sign +1, in-sample
+14/17 under exp-119's self-consistent pipeline), predictions committed
+(commit 2131998) BEFORE any scoring.
+
+  held-out cell     rr_disp   predicted   actual     gap
+  food101:dino      0.02597   distance    LID       +0.030   MISS
+  food101:lejepa    0.03740   distance    distance  -0.018   OK
+  food101:visreg    0.04198   distance    distance  -0.003   OK
+
+- 2/3 correct; the bar (>=4/5, i.e. >=80%) is not met.  Verdict per
+  exp 108's own stopping rule: rr_disp is downgraded to a DESCRIPTIVE
+  correlation; the paper may say "the regime is label-free
+  identifiable in-sample" and no more; no further attempts.
+- Deviations from spec, stated: only 3 held-out cells were buildable
+  (Food-101 x 3 bases on frozen ViT banks; CUB is not packaged, and a
+  new base or ft-head spaces would not be evaluation-only), so the
+  effective bar was 3/3.
+- Context, not exculpation: every held-out gap is |gap| <= 0.03 --
+  the held-out dataset happens to sit ON the regime boundary, where
+  sign prediction is hardest and least consequential (either score
+  works equally well there).  A future cell with a large true gap
+  would be more diagnostic, but the pre-registered verdict stands.
