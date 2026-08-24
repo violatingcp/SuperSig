@@ -1415,3 +1415,29 @@ archived last-class holdout:
   motivation (exp-111's scorable-class collapse) remains covered by
   exp 111's protocol note rather than by new random-draw numbers
   (retraining transfer heads per draw is not evaluation-only).
+
+Exp 113 (`113_tau_generality.py`, 2026-08-24; IMPROVEMENT_TESTS #113):
+is the tau x marginal basin general or many-class?  -- MANY-CLASS
+ONLY, the prediction holds; the expensive falsifier does not fire.
+tau {0.05,0.1,0.3,1.0,3.0} x marginal {on,off} x 3 seeds:
+
+  C100 mahaT:  on 0.238->0.506/0.502/0.510 (plateau from tau=0.3);
+               off flat 0.355-0.420.  In the basin probe holds
+               0.917-0.926 and per-event turns on (0.03-0.05, the only
+               nonzero cells).  The basin is a PLATEAU starting at
+               tau>=0.3, not a knife-edge at 1.0.
+  C10  mahaT:  on peaks 0.748 @0.3 vs off 0.715 (+0.03, noise-scale)
+               -- and at tau>=0.3 the probe COLLAPSES (0.64-0.67 on,
+               vs 0.94 at tau<=0.1).  High tau on C10 buys nothing and
+               costs a lot: no basin.
+
+- Verdict: the tau x marginal interaction is a MANY-CLASS regime rule,
+  not a global recipe change.  The paper's softmax rows at tau=0.1 are
+  correctly tuned for C10 and under-tuned for C100 only -- exactly the
+  cells exp 110 already re-ran.  No campaign-wide re-run is needed.
+- Cross-check: tau=1.0-on at 100-D gives mahaT 0.502 here vs exp-110's
+  0.562+-0.037 (probe matches at 0.917 vs 0.910); within ~1.5 combined
+  sd -- noted, not resolved.
+- Scope: run on CIFAR as scripted; the 196-class cars clause of the
+  prediction (basin should reappear) is untested -- class-count
+  support rests on the 10-vs-100 contrast.
