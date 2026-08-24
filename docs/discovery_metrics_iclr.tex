@@ -503,6 +503,20 @@ marginal reaches RMS $\approx1.0$ with poor mahaT: unit width is neither
 necessary nor sufficient, and what $\tau=1$ buys is a looser interaction, not a
 better width.
 
+\paragraph{How far the basin extends}
+A follow-up scan settles the scope, and the answer limits the damage. Sweeping
+$\tau\in\{0.05,\ldots,3.0\}$ against the marginal on both CIFAR datasets, the
+basin is \textbf{many-class only}. On CIFAR-100 it is a \emph{plateau} from
+$\tau\ge0.3$ rather than a knife-edge at $1.0$ (mahaT $0.238\to0.506$, probe
+holding $0.917$--$0.926$, and these are the only cells with nonzero per-event).
+On CIFAR-10 the same move buys $0.03$ of mahaT --- noise-scale --- and
+collapses the probe from $0.94$ to $0.64$--$0.67$. So $\tau=0.1$ is correctly
+tuned for few-class data and under-tuned only for many-class data, which is the
+regime we have already re-run. No campaign-wide re-tuning follows. We note one
+unresolved discrepancy: the scan gives mahaT $0.502$ at 100-D where the
+dedicated factorial gave $0.562\pm0.037$, about $1.5$ combined standard
+deviations apart.
+
 \paragraph{The uncomfortable part}
 $\tau=0.1$ was inherited as ``the SupCon temperature'' and held fixed across
 the entire campaign; it was never a measured choice. The best CIFAR-100 space
@@ -930,10 +944,17 @@ the high-ID \texttt{supcon-ft} space (TwoNN ID $\approx12$) does far better with
 ensemble overfits the null, raising the detection threshold and costing real
 power --- and \texttt{sigreg-ssl-ft} is killed outright at $M{=}64$ ($0.00$ at
 every ratio). Our default $M{=}16$ therefore leaves up to $0.16$ of power on the
-table on high-ID spaces. \textbf{Match $M$ inversely to intrinsic dimension}
-(high-ID $\to M{=}4$, low-ID $\to M{=}16$--$64$), and note that this couples the
-detection protocol to the loss fingerprint of \S\ref{sec:interp}: the TwoNN
-ordering is not merely descriptive, it tells you how to configure the test.
+table on high-ID spaces. It is tempting to promote this to a rule --- match $M$ inversely to intrinsic
+dimension --- and we tested that by re-measuring the whole reach table with $M$
+set from each space's own TwoNN estimate. It does not survive as a recipe.
+Matched $M$ helps at the \emph{extremes} (two first-time crossings: a very
+high-ID coarse cell at $M{=}4$, a very low-ID texture cell at $M{=}64$) and
+\emph{hurts} the mid-ID fine-grained cells. Same-$M$ reruns put the measurement
+noise at $0.012$--$0.015$, below several of the apparent differences. We
+therefore keep $M{=}16$ as the reach protocol and cite matched-$M$ as a
+sensitivity band, under which the citable count rises from $8/17$ to $10/17$.
+The dataset ordering is preserved either way, so the sensitivity ranking of
+App.~\ref{app:reach} stands.
 
 \paragraph{Statistic--geometry matching}
 No single dataset-level statistic dominates. Parametric statistics (per-event
@@ -1432,10 +1453,32 @@ as \emph{regime} predictors rather than scores, the roles invert: composition
 carries no regime signal at all (base rate), while the within-modal-class
 radial-ratio dispersion --- precisely the quantity LID inverts --- identifies
 the regime in $15/17$ cells. The division of labour is clean: composition
-detects, radial ratios regime-select. We report the $15/17$ as evidence that
-\emph{the regime is label-free identifiable}, not as a plug-in predictor: the
-threshold is in-sample on the same 17 cells as our earlier failed attempt, and
-a Spearman of $0.37$ says the relation is threshold-like rather than monotone.
+detects, radial ratios regime-select.
+
+\paragraph{But the regime is not predictable out of sample}
+That $15/17$ was in-sample: the threshold separating the two regimes was chosen
+on the same 17 cells it was then scored on, and a Spearman of $0.37$ says the
+relation is threshold-like rather than monotone. We therefore ran the test that
+distinguishes a description from a predictor, with the order of operations
+enforced: the threshold was frozen on the original cells and written to disk,
+predictions on genuinely held-out cells were committed \emph{before} any
+scoring, and only then was the outcome measured.
+
+It fails. On three held-out Food-101 cells the frozen predictor scores $2/3$
+against a pre-registered bar of $80\%$ --- and the more damning detail is that
+it returned the \emph{same} answer for all three inputs, so it made no
+discriminating call at all. We had committed in advance to a stopping rule for
+this outcome, and we apply it: \textbf{the radial-ratio feature is a
+descriptive correlation, not a predictor, and we make no further attempts.}
+What the paper may claim is that the regime is label-free identifiable
+\emph{in-sample}, and no more.
+
+One mitigating fact, which we record without leaning on it: all three held-out
+gaps satisfy $|\Delta \auc| \le 0.03$, so Food-101 sits on the regime boundary
+where the sign is nearly arbitrary and where the choice of score barely matters
+anyway. A held-out cell with a large true gap would have been more diagnostic.
+But accepting that as an excuse after seeing the result is precisely what
+pre-registration exists to prevent, so the verdict stands.
 
 \paragraph{We could not predict the regime in advance}
 The obvious next step is to turn ``which regime am I in'' into a measurement,
@@ -1831,6 +1874,14 @@ because the currencies are anti-correlated by construction.
 the centroid-to-anchor distance.} These determine which corner of the design
 cube is even available (classwise marginals require
 $\dim \geq n_{\text{classes}}$).
+\item \textbf{Resample the holdout draw, not just the seed.} Which classes are
+held out matters \emph{more} than which seed is used: across random single-class
+draws on CIFAR-100 the probe spread is $\mathrm{sd}\approx0.019$ against a seed
+spread of $0.001$--$0.010$, and mahaT ranges $0.391$--$0.569$. Cross-holdout
+generalization claims need draw-resampled intervals, and calibration figures
+should be quoted with draw ranges. (Reassuringly, the conventional
+``last $N$ classes'' holdout sits inside the random-draw distribution, so it is
+not a confound --- only an under-reported source of variance.)
 \item \textbf{Never claim a probe gap below $0.02$ from one seed.} Single-seed
 spread is $\approx0.017$. Two rankings in this campaign flipped under
 averaging.

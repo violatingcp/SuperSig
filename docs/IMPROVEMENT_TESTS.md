@@ -48,6 +48,12 @@ full suite green (103 passed incl. test_calibration).
 | 102 | residual child as standalone detector | **YES, and cheaper than predicted** — best transfer reach anywhere (cars/visreg f95 0.049); semantics legible, not scrambled |
 | 103 | LID neighbourhood decomposition | **NEITHER prediction nor falsifier** — same-class component carries it; bare composition nearly matches LID |
 | 104 | interpretability panel | **RUN** — no space achieves unit width (0.13–0.79); distances overstate ΔlogL by 4–37× |
+| 113 | is the tau x marginal basin general? | **MANY-CLASS ONLY** (prediction held) — plateau from tau>=0.3 on C100; on C10 it costs 0.94->0.65 probe. No campaign-wide re-run |
+| 116 | SparKer M matched to intrinsic dimension | **PARTIAL** — helps at the ID extremes (2 new crossings), hurts mid-ID cars; ordering preserved so M=16 stays default |
+| 118 | holdout-selection audit | **CONFIRMED + refinement** — alphabetical draw is not a confound, but DRAW variance (sd 0.019) exceeds SEED variance (0.001-0.010) |
+| 119 | 18th cell: rr_disp out of sample | **FAILED at the frozen threshold (2/3)** — and returned one answer for three inputs; regime line CLOSES per the pre-registered stopping rule |
+| 112 | inherited-constants audit | **done** — 9 never-swept constants sit under named claims (predicted >=3) |
+| 117 | power analysis | **half falsified** — paired MDE 0.0180 at n=3; CIFAR spreads are WIDER than transfer, opposite to prediction |
 | 99 | SparKer discovery reach `f95` | **done** — and mostly *unresolvable* on the current fraction grid (see exp 100) |
 | 88 | classwise-realizable C100 | **BOTH CLAUSES FALSIFIED** — cent->anchor stall (~3.5) dim-independent at 100/128/200-D (optimization equilibrium, Q4 restated); unpredicted: supcon_sigreg control posts mahaT 0.545–0.558 at 100–128-D with probe 0.90–0.91, above the old ceiling |
 | 91 | multi-seed the records | **done** — all citable, no ordering flips: aircraft 0.866±0.002, flowers 0.887±0.019, dtd 0.867±0.004 (seed-2 new best), galaxy10 0.971±0.004 |
@@ -69,7 +75,7 @@ Tier 6 (run 2026-08-22/23; verdicts in `logs/SUMMARY_TABLES.md`):
 | 110 | why did the softmax control break the C100 ceiling? | **CAUSE FOUND: τ×marginal interaction** — exp-88's arm accidentally ran at τ=1.0; only τ=1.0 AND SIGReg break the ceiling (0.539–0.572 at 32–128-D), each alone ≤0.43. Dimension incidental (present at 32-D); NOT a width effect (winner rms~0.5). New designed record mahaT 0.572±0.031 @128-D, probe 0.910 |
 | 111 | child-only deployment | **PREDICTION HOLDS, DEPLOYABLE** — child-only detection ties/beats concat (aircraft:visreg +0.048 per-event) at half width with better f95; parent-only explanations overlap concat's at 0.73–0.85 top-1. Protocol limit: alphabetical holdouts make absolute superclass agreement near-unmeasurable |
 
-Fifteen of twenty-four predictions were falsified or materially revised.  That is the intended hit rate: the
+Nineteen of thirty predictions were falsified or materially revised.  That is the intended hit rate: the
 entries below are written to be wrong in a specific way, and two of them
 (82, 87) taught us more by failing than they would have by passing.  Where a
 result changed the motivation for a pending test, the entry has been rewritten
@@ -1013,6 +1019,8 @@ claims.
 
 ### Exp 113 — Is the `tau x marginal` basin general or many-class?
 
+> **DONE 2026-08-24 — PREDICTION HELD; the expensive falsifier did not fire.**  The basin is many-class only, and is a PLATEAU from tau>=0.3 rather than a knife-edge at 1.0 (C100 mahaT 0.238 -> ~0.506, probe 0.917-0.926, the only cells with nonzero per-event).  On C10 the same move buys 0.03 mahaT (noise) and collapses the probe 0.94 -> 0.64-0.67.  tau=0.1 is correctly tuned for few-class and under-tuned for many-class only -- the cells exp 110 already re-ran.  Unresolved: 0.502 here vs exp-110's 0.562+-0.037 at 100-D (~1.5 combined sd).
+
 **Motivation.**  Exp 110 established the basin on C100; exp 105 reached it by an
 independent route and noted C10 shows the OPPOSITE sign.  If the basin is
 general it is a recipe change for the whole program; if it is many-class only it
@@ -1082,6 +1090,8 @@ should be run even though — especially though — it can undermine the paper.*
 
 ### Exp 116 — SparKer M matched to intrinsic dimension, applied
 
+> **DONE 2026-08-24 — PARTIAL; the exp-97 rule does not transfer as a recipe.**  Falsifier does NOT fire: dataset ordering preserved, so exp 100's ranking stands.  But matched M helps only at the extremes (galaxy10:dino >0.1 -> 0.075 at M=4; dtd:lejepa >0.1 -> 0.079 at M=64) and HURTS mid-ID cars (0.063 -> 0.079).  Same-M reruns put measurement noise at 0.012-0.015.  Keep M=16 as default; cite matched-M as a sensitivity band (citable 8/17 -> 10/17 best-of-two).
+
 **Motivation.**  Exp 97 found `M` should be matched INVERSELY to intrinsic
 dimension and that the default `M=16` leaves up to 0.16 power on the table on
 high-ID spaces.  We then reported the entire reach table (exp 100) at `M=16`.
@@ -1118,6 +1128,8 @@ transfer cells need more seeds than CIFAR (their spreads are wider).
 
 ### Exp 118 — Holdout-selection audit
 
+> **DONE 2026-08-24 — PREDICTION HELD, with a refinement worth more than the test.**  The archived alphabetical draw sits WITHIN the random-draw distribution, so it is not a headline confound.  But draw-to-draw spread (probe sd ~0.019; mahaT 0.391-0.569) EXCEEDS seed spread (0.001-0.010): WHICH class is held out matters more than the seed.  Cross-holdout claims need draw-resampled intervals, which feeds directly into the exp-117 MDE accounting.  Scope: CIFAR only.
+
 **Motivation.**  Exp 111 found that alphabetically-ordered holdouts can leave
 0-15 scorable superclasses out of 61-137, so some absolute superclass-agreement
 figures rest on very few classes.  The whole campaign uses "last N classes" as
@@ -1138,6 +1150,8 @@ confound in the headline results, not just the interpretability ones.
 **Cost.**  Moderate; the interpretability half is evaluation-only.
 
 ### Exp 119 — An 18th cell: `rr_disp` out of sample
+
+> **DONE 2026-08-24 — FAILED; the pre-registered stopping rule TRIGGERS and the regime line closes.**  Threshold frozen at 0.06052 on the original 17 cells, predictions committed in their own commit (2131998) BEFORE scoring.  2/3 on held-out Food-101 cells against an >=80% bar -- and the predictor returned the SAME answer for all three inputs, so it discriminated nothing.  rr_disp is downgraded to a descriptive correlation; the paper may claim in-sample identifiability only; no further attempts.  Deviation stated: only 3 cells were buildable, so the effective bar was 3/3.  Mitigation recorded but not leaned on: all held-out |gap| <= 0.03, i.e. Food-101 sits on the regime boundary.
 
 **Motivation.**  Exp 108 met its pre-registered bar (15/17) but stated the
 caveat itself: the threshold is chosen in-sample on the same 17 cells exp 90
