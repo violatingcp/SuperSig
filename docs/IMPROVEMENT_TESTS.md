@@ -1,4 +1,4 @@
-# Proposed tests to improve performance — exps 81–111
+# Proposed tests to improve performance — exps 81–118
 
 Companion to [QUESTIONS.md](QUESTIONS.md) (whose "open items as of exp 58" list
 this supersedes).  Every entry follows the standard protocol in
@@ -964,6 +964,178 @@ the scored space → the child's legibility depends on the concat context and th
 split is not deployable.
 
 **Cost.**  Evaluation-only on existing checkpoints.
+
+---
+
+## Tier 7 — the tuning audit (exps 112+)
+
+**Should we redo things with more tuning?  Partly yes, and the reason is
+specific.**  Exp 110 found that the best C100 both-currencies space in the
+campaign came from a configuration slip: `tau` was never set, so the arm ran at
+the loss-class default 1.0 instead of the inherited SupCon 0.1.  Neither knob
+alone breaks the ceiling — it is a `tau x marginal` INTERACTION — which is
+exactly the thing a one-at-a-time scan cannot see.
+
+That points at a structural blind spot rather than a tuning oversight.  The
+campaign's method has been to vary the DISCRETE corners of the design cube
+(positives / critic / estimator / marginal) while holding the CONTINUOUS knobs
+at inherited defaults.  The cube was swept exhaustively; the constants were
+never swept at all.
+
+But this is not an argument for re-running everything.  Note the contrast with
+Tier 6's meta-lesson: the five failed interventions were all *identity repairs*
+— theoretically motivated fixes.  `tau` is not a repair, it is an empirical
+capacity knob, and it worked.  The distinction is worth respecting: sweep the
+constants, don't re-derive the theory.  Tier 7 is therefore a scoped audit, not
+a redo, and it is ordered so the cheap correctness checks come before any
+retraining.
+
+### Exp 112 — The inherited-constants audit
+
+**Motivation.**  Before deciding what to re-run we should know what was never
+chosen.  Cheap, and it scopes everything below.
+
+**Protocol.**  Enumerate every continuous constant in the pipeline with its
+value, its provenance (measured / inherited / arbitrary), and whether it was
+ever swept.  Candidates already known: `tau` 0.1 for softmax arms (inherited,
+NEVER swept — exp 110), `lam` sigreg weight (20 on c10, 1 on c100 — provenance
+unclear), `n_slices` 256/64, NPLM `clamp` 30, SparKer `M` 16 (swept only at exp
+97, and the answer inverted the default), `sigma_ratio` 10 (flat, exp 97), LID
+`k` 20 (swept, exp 78), Mahalanobis `shrink` 0.1, `tau_quantile` 0.95 (swept
+exp 89, distance only), BIC `kmax` 4, `merge_dist`, ft epochs/lr.  Deliverable:
+a table in METRICS.md, and a shortlist of never-swept constants that sit under
+load-bearing claims.
+
+**Prediction.**  At least three more never-swept constants sit under headline
+claims.
+
+**Cost.**  Code archaeology.  Hours.  **Do first.**
+
+### Exp 113 — Is the `tau x marginal` basin general or many-class?
+
+**Motivation.**  Exp 110 established the basin on C100; exp 105 reached it by an
+independent route and noted C10 shows the OPPOSITE sign.  If the basin is
+general it is a recipe change for the whole program; if it is many-class only it
+is a regime rule.  This is the highest-value follow-up because it decides
+whether every softmax comparison in the paper needs re-running.
+
+**Protocol.**  `tau` in {0.05, 0.1, 0.3, 1.0, 3.0} x {marginal on, off} x 3
+seeds on c10, c100, and two transfer cells (cars/visreg fine-grained,
+galaxy10/dino coarse).  Full battery plus the exp-104 panel.
+
+**Prediction.**  Many-class only: the basin appears on c100 and cars (196
+classes) and inverts on c10/galaxy10 — i.e. it tracks the class-count axis of
+§the regime rules, not the on-manifold axis.
+
+**Falsifier.**  The basin appears everywhere → `tau=0.1` was simply wrong
+throughout and every softmax row in this paper is under-tuned.  That would be
+the most expensive outcome and we should want to know.
+
+**Cost.**  ~60 short runs.
+
+### Exp 114 — A factorial, not a scan: which knobs INTERACT?
+
+**Motivation.**  Exp 110's effect was invisible to every one-at-a-time scan we
+ran because it lives entirely in an interaction.  We have never run a factorial
+design over the continuous knobs, so we do not know which others interact.
+
+**Protocol.**  Fractional factorial (resolution IV, so two-factor interactions
+are not aliased with main effects) over five knobs — `tau`, marginal weight
+`lam`, `n_slices`, embedding dim, ft epochs — on two cells (c100, cars/visreg),
+3 seeds.  Estimate main effects AND all two-factor interactions on probe,
+mahaT, per-event.  Deliverable: an effects table saying which knobs matter,
+which interact, and which are genuinely inert.
+
+**Prediction.**  `tau x marginal` is the largest interaction; most main effects
+are small; `n_slices` is inert (it is a Monte-Carlo budget, not a modelling
+choice).
+
+**Falsifier.**  Several large interactions → the space is not
+approximately-separable in its knobs and single-arm comparisons are unsafe as a
+methodology, not just under-tuned.
+
+**Cost.**  ~50 runs for a resolution-IV design; far cheaper than the full grid.
+
+### Exp 115 — The fairness audit: does the dissociation survive per-arm tuning?
+
+**Motivation.**  The uncomfortable one, and the reason to do this at all.  Every
+comparative claim in the paper — the probe/calibration dissociation above all —
+compares arms AT THEIR INHERITED DEFAULTS.  Exp 110 showed at least one arm was
+badly served by its default.  If each arm is given its own best `tau` (and
+marginal weight), does the dissociation survive?
+
+**Protocol.**  Per-arm tuning on a validation split with NO holdout-class
+access (so the tuning is open-world legal), then re-run the c10/c100
+dissociation table at each arm's tuned setting.  Report the tuned table beside
+the archived one.
+
+**Prediction.**  The dissociation narrows but survives: softmax arms gain
+per-event from ~0 to 0.05-0.10 while NPLM arms keep a clear per-event edge, and
+the probe ordering is unchanged.
+
+**Falsifier.**  The dissociation disappears under tuning → the paper's central
+empirical claim was substantially a statement about defaults, and would need to
+be rewritten as such.  **This is the single most important test in Tier 7 and
+should be run even though — especially though — it can undermine the paper.**
+
+**Cost.**  Tuning runs + a re-run of the headline table.  Moderate.
+
+### Exp 116 — SparKer M matched to intrinsic dimension, applied
+
+**Motivation.**  Exp 97 found `M` should be matched INVERSELY to intrinsic
+dimension and that the default `M=16` leaves up to 0.16 power on the table on
+high-ID spaces.  We then reported the entire reach table (exp 100) at `M=16`.
+
+**Protocol.**  Re-measure `f95` on the 17 champion cells with `M` set from each
+space's TwoNN ID (high-ID -> 4, mid -> 16, low -> 64), against the archived
+M=16 numbers.
+
+**Prediction.**  Reach improves on the high-ID (softmax-parent) cells; several
+of the seven `>0.1` cells cross for the first time.  The dataset ORDERING is
+preserved.
+
+**Falsifier.**  The ordering changes → our sensitivity ranking was an artifact
+of a fixed kernel budget, and exp 100's headline needs restating.
+
+**Cost.**  Battery only, no retraining.  Cheap.
+
+### Exp 117 — Are our comparisons adequately powered?
+
+**Motivation.**  Protocol hygiene we have never done. Many claims rest on 3-5
+seeds with a stated single-seed spread of ~0.017, and we have adopted a "gaps
+below 0.02 need 3-5 seeds" rule by folklore rather than by calculation.  A power
+analysis would say which comparisons in the paper are actually resolvable.
+
+**Protocol.**  From the multi-seed archives (exps 61, 75, 81, 91, 105, 110),
+estimate the per-cell seed variance by arm and dataset, then compute the
+minimum detectable effect at 3, 5 and 10 seeds.  Cross-reference against every
+comparative claim in the paper and flag the underpowered ones.
+
+**Prediction.**  Several sub-0.02 claims are underpowered at 3 seeds, and the
+transfer cells need more seeds than CIFAR (their spreads are wider).
+
+**Cost.**  Analysis-only.  Cheap, and it protects everything else.
+
+### Exp 118 — Holdout-selection audit
+
+**Motivation.**  Exp 111 found that alphabetically-ordered holdouts can leave
+0-15 scorable superclasses out of 61-137, so some absolute superclass-agreement
+figures rest on very few classes.  The whole campaign uses "last N classes" as
+its holdout rule, which is alphabetical on several datasets and therefore not
+random with respect to semantics.
+
+**Protocol.**  Re-run the exp-76 interpretability battery and the headline probe
+numbers under 5 RANDOM holdout draws per dataset, with the scorable-class count
+reported.  Compare against the archived alphabetical numbers.
+
+**Prediction.**  Probe numbers are stable (exp 78's rotation control already
+suggests this), but the superclass-agreement figures move materially and should
+be republished as random-draw means.
+
+**Falsifier.**  Probe numbers also move → the alphabetical holdout is a
+confound in the headline results, not just the interpretability ones.
+
+**Cost.**  Moderate; the interpretability half is evaluation-only.
 
 ---
 

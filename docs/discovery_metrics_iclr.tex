@@ -91,7 +91,8 @@ $4\times3\times6$ grid of transfer datasets (Stanford Cars, Flowers-102, DTD,
 Galaxy10~DECals) $\times$ pretraining bases (DINO, LeJEPA, VISReg) $\times$
 contrastive/regularized objectives, we establish four further results. (i) Detection and calibration are
 \emph{empirically dissociated}: softmax-contrastive spaces win the probe and
-score exactly $0.000$ per-event detection power, while density-ratio-calibrated
+score $0.000$ per-event detection power at their conventional temperature,
+while density-ratio-calibrated
 spaces invert the ordering; no CIFAR-100 space in our sweep exceeds probe
 $0.94$ with tied-Mahalanobis $\auc>0.42$. (ii) The dissociation is
 \emph{repairable by construction rather than by loss design}: residual
@@ -173,6 +174,12 @@ finds real classes, show that below it the loop is a regularizer rather than a
 discovery method (established by a reversal in which the outcome flips sign
 while purity does not change), and document a bandwidth pathology in kernel
 two-sample testing that we expect to affect comparisons beyond this work.
+\item \textbf{A methodological result we did not set out to find}
+(\S\ref{sec:meta}): across five independent interventions, \emph{repairing a
+theoretical identity did not improve the space}. Each repair was
+well-motivated, each succeeded on its own terms, and none delivered the
+downstream benefit its motivation implied. We think this generalizes beyond
+this program and state it as a caution for principled-objective design.
 \item \textbf{Two repairs, benchmarked head to head} (\S\ref{sec:repair}):
 iterated anchor \emph{discovery} and \emph{residual fine-tuning}. Residual
 fine-tuning wins $12/12$ cells and produces the campaign's records.
@@ -325,8 +332,15 @@ target was actually reached rather than merely optimized.
 $\alpha=0.05$ null quantile of the reference score distribution. This is the
 metric that most sharply separates the objective families, and it is the one
 closest to how a physics search actually operates. \textbf{SupCon-family spaces
-score $0.000$ here}, on every dataset, at every signal fraction: a
-self-normalized objective simply does not produce a transferable threshold.
+score $0.000$ here} at the conventional temperature $\tau=0.1$, on every
+dataset and at every signal fraction. We first read this as a property of
+self-normalized objectives as such. It is not: it is a property of that
+temperature. Raising $\tau$ to $1$ \emph{with} a SIGReg marginal yields
+per-event $0.04$--$0.06$ (\S\ref{sec:tau}). The correct statement is the one
+App.~\ref{app:grad} actually proves --- the softmax \emph{interaction} cannot
+supply absolute scale --- and whether the \emph{space} has usable scale then
+depends on whether the marginal is allowed to supply it instead, which a sharp
+temperature prevents.
 
 \emph{Dataset-level:} three two-sample batteries --- SparKer (semi-parametric
 kernel discrepancy, $M{=}16$ kernels), Mahalanobis, and MMD --- run as toy
@@ -407,7 +421,8 @@ space (CIFAR-10, 32-D, holdout 4) & probe & acc & \texttt{eucl} & \texttt{mahaT}
 \texttt{lejepa}                     & 0.864 & 0.695 & 0.408 & 0.371 & --- \\
 \bottomrule
 \end{tabular}
-\caption{The dissociation in one table. The probe ordering and the
+\caption{The dissociation in one table, at the conventional $\tau=0.1$;
+\S\ref{sec:tau} shows the per-event column is temperature-dependent. The probe ordering and the
 calibration ordering are close to reversed. Note \texttt{simclr}'s
 \texttt{eucl} of $0.236$ --- \emph{below} chance-adjusted expectations for a
 space with a probe of $0.867$: the information is there and is not in the
@@ -440,7 +455,62 @@ dimension and without labels}, which is a narrower and more contingent claim.
 We flag this as the clearest instance in the campaign of a ceiling that was an
 artifact of which arms had been swept rather than a property of the problem, and
 we would treat the remaining ceilings in this paper with corresponding
-suspicion.
+suspicion. That suspicion was warranted: a second one fell within days
+(\S\ref{sec:axis}).
+
+\subsection{The cause: a temperature $\times$ marginal interaction}
+\label{sec:tau}
+
+The ceiling-breaking arm was found by accident, and tracing it is worth the
+space because the lesson is methodological.
+
+The configuration that broke the ceiling never set its temperature, and so ran
+at the loss class's default $\tau=1$ rather than the canonical SupCon value
+$0.1$. Under a controlled factorial the effect is unambiguous, and it is an
+\emph{interaction}:
+
+\begin{table}[h]\centering\small
+\begin{tabular}{lccccc}
+\toprule
+arm ($\tau$, marginal) & 32-D & 64-D & 100-D & 128-D & 200-D \\
+\midrule
+\texttt{supcon} ($0.1$, none)         & 0.356 & 0.342 & 0.344 & 0.363 & 0.368 \\
+\texttt{supcon\_sigreg} ($0.1$, on)   & 0.404 & 0.367 & 0.382 & 0.399 & 0.354 \\
+\texttt{supcon} ($1.0$, none)         & 0.410 & 0.395 & 0.425 & 0.420 & 0.395 \\
+\texttt{supcon\_sigreg} ($1.0$, on)   & \best{0.539} & \best{0.557} & \best{0.562} & \best{0.572} & 0.492 \\
+\bottomrule
+\end{tabular}
+\caption{CIFAR-100 tied-Mahalanobis novelty AUC, 3 paired seeds. Only
+$\tau=1$ \emph{and} the marginal together clear the $0.47$--$0.49$ band; each
+alone stays under it.}
+\label{tab:tau}
+\end{table}
+
+Neither knob alone suffices, which is why every one-knob scan in the campaign
+missed it. The effect is fully present at 32-D, so the dimension we originally
+credited is incidental. The resulting space --- mahaT $0.572\pm0.031$ at 128-D
+with probe $0.910$ --- is the best single-loss both-currencies CIFAR-100 space
+on record, and is now designed rather than accidental. An independent
+intervention (\S\ref{sec:panel-results}) reaches numerically the same place, so
+this is a basin rather than a knife-edge.
+
+The mechanistic reading connects to App.~\ref{app:grad}. A sharp temperature
+makes the softmax interaction dominate, and the interaction provably cannot
+supply absolute scale. Loosening it lets the SIGReg marginal shape the full
+covariance instead --- which is where the calibration comes from. Consistently,
+the winner sits at RMS $\approx0.50$ while the $\tau=1$ arm \emph{without} the
+marginal reaches RMS $\approx1.0$ with poor mahaT: unit width is neither
+necessary nor sufficient, and what $\tau=1$ buys is a looser interaction, not a
+better width.
+
+\paragraph{The uncomfortable part}
+$\tau=0.1$ was inherited as ``the SupCon temperature'' and held fixed across
+the entire campaign; it was never a measured choice. The best CIFAR-100 space
+we have was therefore found by a configuration slip, and an entire continuous
+axis under the family that wins most of our probe comparisons had gone
+unswept. We report this plainly because it bounds how much weight the
+comparative claims in this paper can carry: they compare arms \emph{at their
+inherited defaults}, which is not the same as comparing arms at their best.
 
 The frontier between the two currencies is otherwise populated only by
 \emph{concatenations} (\S\ref{sec:repair}).
@@ -639,7 +709,9 @@ this evidence rather than on taste. The $e^{f}-1$ term plays an identical role i
 $\E_{\mathrm{ref}}[e^{f}]=1$ and thereby fixes the additive constant --- which
 is why a softmax-trained space, whose scale is a gauge choice
 (App.~\ref{app:grad}), has nothing for a Neyman--Pearson test to threshold and
-scores $0.000$ per-event power.
+scores $0.000$ per-event power at $\tau=0.1$ --- though see \S\ref{sec:tau},
+where a looser temperature lets the marginal supply the scale the interaction
+cannot.
 
 \subsection{Why clustering is correctly specified in a calibrated latent}
 \label{sec:cluster-spec}
@@ -815,6 +887,17 @@ chance. A detection-only pipeline on these cells can therefore halve the
 embedding, improve reach, and still explain what it found. The falsifier fires
 on DTD and Flowers, where standalone children never cross $0.95$ while their
 concats bracket $\approx0.08$: there the concatenation is doing the work.
+
+\paragraph{The split is deployable}
+Carried through to a full pipeline on the three qualifying cells --- detect with
+the child, consult the parent only to explain what was flagged --- child-only
+detection matches the concatenation within $0.005$--$0.007$ on Cars and
+\emph{beats} it on Aircraft/VISReg ($+0.048$ per-event), with better reach on
+all three, at half the embedding width per event. Explanations are preserved:
+parent-only nearest-centroid tables overlap the concatenation's at $0.73$--$0.85$
+top-1, and the parent is always closer to the concatenation than the child is.
+Removing the parent from the \emph{scored} space does not change what the
+analyst is told.
 
 \paragraph{Score regime and statistic regime coincide}
 The most interesting entry is a negative one. \textbf{Flowers is SparKer-weak in
@@ -1095,6 +1178,20 @@ CIFAR-100 is owned by background outliers rather than by novelty. CIFAR-100
 belongs with Cars, not with CIFAR-10, and the distance pool is simply the wrong
 instrument there.
 
+\emph{And the block is not structural either.} Replacing the distance pool with
+the density-ratio pool of \S\ref{sec:spk-pool}, in a frozen space, breaks it:
+round-1 purity reaches $0.358$ against the distance grid's all-time ceiling of
+$0.121$, and round-2 \emph{rises} to $0.418$ rather than collapsing. The
+diagnostic detail is the clean one --- under the distance pool a stricter tail
+quantile made purity \emph{worse}, because the extreme distance tail is owned
+by background outliers; under the density-ratio pool the strictest quantile is
+\emph{best}. The $f$-ratio tail is owned by novelty. So the second of our two
+CIFAR-100 ``structural'' limits was also an artifact of the instrument, and both
+fell within days of each other. We now state the pattern rather than the
+individual results: \textbf{a limit established by sweeping one family of
+methods is a limit on that family, and this paper's remaining ceilings should
+be read that way.}
+
 \emph{Residual stacking splits on the same line.} A second residual head helps
 emphatically on Flowers ($+0.077$ against $+0.026$ for a width-matched control,
 and largest on the weakest parent seed) and not at all on Cars, where a
@@ -1319,6 +1416,26 @@ scores $0.83$--$0.94$, nearly matching LID itself, so most of what our
 ratio estimator provides is available from a far simpler statistic. On Cars no
 component separates ($0.54$--$0.73$), consistent with everything else about that
 dataset.
+
+\paragraph{Composition detects; radial ratios regime-select}
+Two follow-ups sharpen what LID is contributing. First, a parameter-free
+alternative --- the bare fraction of a point's neighbours not of the modal class
+--- ties LID on the on-manifold cells (within $0.016$--$0.033$ on Flowers, and
+beating it on CIFAR-10, $0.865$ against $0.672$), so on those cells the ratio
+estimator is not earning its complexity. But it does not replace LID, for a
+specific and instructive reason: on Aircraft composition \emph{anti}-correlates
+with novelty ($0.42$--$0.48$), because novel variants sit in high-purity
+same-manufacturer neighbourhoods and counting therefore votes ``member''. LID
+holds above chance there, and a holdout-rotation control retains a real LID edge
+on Flowers ($0.875\pm0.029$ vs $0.818\pm0.038$). Second, when the two are used
+as \emph{regime} predictors rather than scores, the roles invert: composition
+carries no regime signal at all (base rate), while the within-modal-class
+radial-ratio dispersion --- precisely the quantity LID inverts --- identifies
+the regime in $15/17$ cells. The division of labour is clean: composition
+detects, radial ratios regime-select. We report the $15/17$ as evidence that
+\emph{the regime is label-free identifiable}, not as a plug-in predictor: the
+threshold is in-sample on the same 17 cells as our earlier failed attempt, and
+a Spearman of $0.37$ says the relation is threshold-like rather than monotone.
 
 \paragraph{We could not predict the regime in advance}
 The obvious next step is to turn ``which regime am I in'' into a measurement,
@@ -1569,6 +1686,21 @@ mahaT is weakest (\S\ref{sec:dissoc}). Interpretability and class count trade
 off, which is worth knowing before promising a domain expert that distances in a
 many-class embedding can be read as likelihood ratios.
 
+\paragraph{Auditing our own headline}
+Because the width claim is central and the transfer cells are
+shrinkage-dominated, we audited it. Subsampling the well-estimated CIFAR cells
+to $10$--$40$ samples per class --- the transfer regime --- leaves RMS stable
+within $\pm0.05$ of its full-sample value on every space, while
+$r_{\mathrm{LLR}}$ degrades sharply (CIFAR-100 \texttt{supcon}
+$0.28\to0.04$). PCA projections to 16/32-D, where the covariance is estimable,
+barely move $r_{\mathrm{LLR}}$, so the low transfer values are not a dimension
+artifact; and reporting under isotropic rather than full-covariance references
+raises them to $0.73$--$0.91$, bracketing how much is unestimability. The
+verdict is that \textbf{the width result stands on every cell}, being a
+first-moment quantity, while the correlation and ECE columns on transfer cells
+should be cited only as [full, isotropic] bounds. We have restricted our
+quantitative claims accordingly.
+
 \paragraph{On our own prediction}
 We predicted that SIGReg and NPLM arms would sit near unit width with slope near
 $1$, and that SupCon-family spaces would show slope far from $1$. The second
@@ -1620,6 +1752,71 @@ are directly visible as dimension, which makes ID a cheap objective-provenance
 diagnostic.
 
 % ==========================================================================
+\section{Repairing an identity is not the same as improving a space}
+\label{sec:meta}
+% ==========================================================================
+
+The result we least expected from this campaign is methodological, and it is
+the one we would most want carried into other work. Over its course we
+identified five places where the program failed to satisfy a theoretical
+identity it was built around. In each case we could name the defect precisely,
+we designed a targeted repair, and \textbf{the repair worked on its own terms
+and delivered nothing downstream}.
+
+\begin{table}[t]\centering\small
+\begin{tabular}{p{0.30\textwidth}p{0.28\textwidth}p{0.32\textwidth}}
+\toprule
+identity / defect & repair, and did it work? & what it bought \\
+\midrule
+The summed critic gradient is the calibration residual, so poorly calibrated
+runs should be identifiable &
+yes --- the residual is exactly that quantity &
+nothing: it does not track probe quality; selecting on it \emph{underperforms}
+random seeds \\
+A bare distance critic cannot satisfy $\E_{\mathrm{ref}}[e^{g}]=1$ &
+yes --- adding the bias term drives the residual from $1.77$ to $0.03$ &
+nothing: probe falls, per-event falls $0.042\to0.008$ \\
+The pairwise critic and the event-level test estimate the same object, so one
+should initialize the other &
+n/a --- the transfer is real but harmful &
+worse: power $0.800\to0.560$ at fixed budget \\
+If the test statistic is what we care about, optimize it directly &
+yes --- it optimizes &
+worse on every column \emph{including} the statistic optimized \\
+SIGReg should give unit class-conditional width &
+yes --- width $0.37$--$0.65 \to 0.80$--$1.04$ &
+nothing for calibration: slope stalls, $r_{\mathrm{LLR}}$ flat-to-down, ECE
+worsens \\
+\bottomrule
+\end{tabular}
+\caption{Five independent identity repairs. Every one succeeded as a repair.
+None produced the benefit that motivated it.}
+\label{tab:meta}
+\end{table}
+
+We want to state this carefully, because the obvious over-reading is wrong.
+The repairs are not \emph{harmful} as a class: the width term is safe at its
+operating point and is in fact a useful regularizer on our record concatenation
+(probe $0.9551\to0.9593$, separation $5.88\to10.93$), and two of the five were
+merely neutral. Nor is the theory wrong --- each identity holds exactly where it
+was derived. The claim is narrower and, we think, more useful: \textbf{in this
+program, satisfying a distributional identity was never the operative cause of
+a space being good.} What did move the numbers was architectural (residual
+decomposition and concatenation), procedural (freezing the space during
+discovery, matching the pool statistic to the novelty geometry), and --- in the
+one case we found by accident --- a continuous hyperparameter nobody had swept
+(\S\ref{sec:tau}).
+
+The practical counsel is to treat a satisfied identity as a \emph{license}
+rather than a \emph{mechanism}. Pinning the marginal is what makes the
+clustering correctly specified and the Neyman--Pearson statistic well posed
+(\S\ref{sec:cluster-spec}); that is a real and load-bearing role. It is not a
+reason to expect the resulting space to detect better, and on our evidence it
+does not. Work that motivates an objective by an identity should measure the
+downstream quantity separately, and should be prepared for the two to come
+apart.
+
+% ==========================================================================
 \section{A reporting protocol}
 % ==========================================================================
 
@@ -1664,6 +1861,12 @@ is an order of magnitude in the likelihood ratio.
 \item \textbf{Establish whether your novelty is on-manifold or outlying}
 (\S\ref{sec:axis}) before choosing a score, a pool, or whether to fine-tune at
 all. One diagnostic decides six downstream choices.
+\item \textbf{Sweep your inherited constants before believing a ceiling.}
+Two limits we reported as structural were artifacts of a knob nobody varied
+(\S\ref{sec:tau}, \S\ref{sec:axis}), and the best CIFAR-100 space we have was
+found by a configuration slip. A limit established by sweeping one family of
+methods is a limit on that family. Record which constants were measured and
+which were inherited.
 \item \textbf{Audit semantics explicitly.} Superclass agreement, dendrogram
 purity, and a nearest-centroid table a domain expert can read. Calibration
 does not imply legibility --- we have a space with strong calibration and
@@ -1701,8 +1904,11 @@ predict the LID-versus-distance regime without labels
 (\S\ref{sec:lid}) --- three candidate diagnostics failed --- so that rule is a
 description of our datasets, not a tool. Our discovery loop is one specific algorithm (quantile pool, BIC
 $k$-selection, anchor merge, prototype fine-tune) and the purity-gating
-conclusion may be specific to it. Finally, the interpretability metrics require
-a superclass partition, which is available in our datasets and frequently is
+conclusion may be specific to it. A protocol limit surfaced late: under alphabetically-ordered
+holdouts the number of scorable superclasses can fall to single digits, so some
+absolute superclass-agreement figures rest on few classes and should be read as
+relative comparisons rather than absolute rates. Finally, the interpretability
+metrics require a superclass partition, which is available in our datasets and frequently is
 not in the settings we care about; the nearest-centroid tables remain
 available but require expert reading rather than a number.
 
