@@ -1441,3 +1441,31 @@ tau {0.05,0.1,0.3,1.0,3.0} x marginal {on,off} x 3 seeds:
 - Scope: run on CIFAR as scripted; the 196-class cars clause of the
   prediction (basin should reappear) is untested -- class-count
   support rests on the 10-vs-100 contrast.
+
+Exp 115 (`115_tuning_fairness.py`, 2026-08-24; IMPROVEMENT_TESTS #115):
+the fairness audit -- THE DISSOCIATION SURVIVES, and more strongly
+than predicted.  C100, per-arm tau tuned on a seen-only criterion
+(acc; open-world legal), then the dissociation table at tuned vs
+default, 3 seeds:
+
+  arm             tau(def->tuned)  probe            perevt
+  supcon          0.1 -> 0.1       0.9331           0.000
+  supcon_sigreg   0.1 -> 0.1       0.8774           0.000
+  nplm_sup_dist   1.0 -> 3.0       0.8262 -> 0.8477 0.033 -> 0.013
+  nplm_bilinear   1.0 -> 1.0       0.8958           0.520 mahaT / 0.060
+
+- The falsifier does not fire -- and not for the predicted reason.
+  The prediction was "softmax arms gain per-event 0.05-0.10 under
+  tuning"; in fact LEGAL tuning cannot reach the tau=1.0 calibration
+  basin at all, because entering it costs seen-class accuracy, which
+  is the only signal an open-world tuner may use.  The exp-110/113
+  recipe is visible only to a tuner that can score novelty
+  calibration -- which deployment, by definition, cannot.
+- So the paper's central comparative claim is NOT a statement about
+  defaults: it is a statement about what seen-only model selection
+  converges to, which is the operationally honest comparison.  Quote
+  it that way.
+- Caveat for the record: selection used seen-class accuracy; a
+  seen-only calibration criterion (e.g. seen-class gaussianity/width)
+  was not tried and is the one legal tuner that might find the basin.
+  Left open, one line, not run.
