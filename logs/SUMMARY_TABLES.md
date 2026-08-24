@@ -1362,3 +1362,31 @@ threshold frozen on the original 17 cells (0.06052, sign +1, in-sample
   sign prediction is hardest and least consequential (either score
   works equally well there).  A future cell with a large true gap
   would be more diagnostic, but the pre-registered verdict stands.
+
+Exp 116 (`116_sparker_m_matched.py`, 2026-08-24; IMPROVEMENT_TESTS
+#116): SparKer M matched to intrinsic dimension, applied to the reach
+table -- PARTIAL; the exp-97 rule does not transfer monotonically.
+15 transfer champions, TwoNN ID -> M in {4, 16, 64}, vs exp-100 M=16:
+
+  first-time crossings:  galaxy10:dino (>0.1 -> 0.075 at M=4),
+                         dtd:lejepa   (>0.1 -> 0.079 at M=64)
+  regressions at M=4:    cars:visreg 0.063 -> 0.079,
+                         cars:lejepa 0.099* -> >0.1
+  unchanged/noise:       aircraft (still mostly >0.1), flowers (all
+                         >0.1 -- preserved), galaxy10:lejepa/visreg
+                         identical; same-M reruns (cars:dino 0.079 ->
+                         0.091*, dtd:dino 0.087* -> 0.072) put the
+                         measurement noise at ~0.012-0.015 (n_null 100
+                         vs 200), so differences below that are not
+                         meaningful.
+
+- The falsifier does NOT fire: the dataset ordering is preserved
+  (flowers hardest everywhere, galaxy10/dtd easiest), so exp 100's
+  sensitivity ranking stands.
+- But the prediction only half-holds: matched M helps exactly at the
+  extremes (one very-high-ID coarse cell, two very-low-ID texture
+  cells) and HURTS the mid-ID fine-grained cars cells.  The exp-97
+  bump-recovery rule is not a champion-space recipe.
+- Recommendation: keep M=16 as the default reach protocol; cite
+  matched-M as a sensitivity band, and note the two extra crossings
+  raise the citable count from 8/17 to 10/17 under best-of-two.
