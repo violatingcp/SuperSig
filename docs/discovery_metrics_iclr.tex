@@ -540,13 +540,27 @@ that \textbf{this is what seen-only model selection converges to}, which is the
 operationally honest comparison and the one a practitioner actually faces. We
 state it that way throughout.
 
-One thread is left open and we flag it rather than close it: our tuner selected
-on seen-class \emph{accuracy}. A seen-only \emph{calibration} criterion --- for
-instance the class-conditional width and Gaussianity of \S\ref{sec:panel}, both
-of which are computable without a single novel example --- is equally legal and
-might well find the basin. That is the one legal tuner we did not try, and if
-it works it would convert the accidental discovery of \S\ref{sec:tau} into a
-deployable recipe.
+We then closed the thread that argument leaves open. Accuracy is not the only
+legal criterion: the panel of \S\ref{sec:panel} supplies five more --- class
+conditional width, Gaussianity, log-likelihood slope, posterior calibration and
+class separation --- every one computable without a single novel example. None
+of them finds the basin either. In the decisive cell all five select
+$\tau=0.1$, exactly as the accuracy tuner did, against an oracle at $\tau=3.0$
+worth $+0.11$ mahaT and the difference between zero and nonzero per-event power.
+
+The reason is worth stating because it inverts the paper's own instrument:
+$\tau=0.1$ is the \emph{most faithful} space by every panel column, and the
+worst detector. \textbf{Seen-class fidelity and novelty calibration do not
+merely differ --- here they point in opposite directions.} A practitioner
+auditing interpretability on seen classes, which is the only audit available
+before a discovery is made, would be led away from the space that detects best.
+
+We therefore report the temperature basin as a finding about the loss
+landscape and \emph{not} as a deployable recipe: it can be selected only by
+someone who already holds novelty labels, which is precisely the person who
+does not need it. Whether a \emph{transductive} criterion --- one permitted to
+use the unlabelled evaluation pool, which a deployment does have --- can reach
+it is open, and is the experiment we would run next.
 
 \paragraph{Are the knobs separable at all?}
 Since the campaign's method has been to vary one thing at a time, we also asked

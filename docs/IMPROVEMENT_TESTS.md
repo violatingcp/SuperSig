@@ -1,4 +1,4 @@
-# Proposed tests to improve performance — exps 81–119
+# Proposed tests to improve performance — exps 81–123
 
 Companion to [QUESTIONS.md](QUESTIONS.md) (whose "open items as of exp 58" list
 this supersedes).  Every entry follows the standard protocol in
@@ -1193,6 +1193,115 @@ stopping rule — the regime line closes for good.
 
 **Cost.**  One new feature-bank extraction plus evaluation.  Moderate, and it is
 the difference between a mechanism and a method.
+
+---
+
+## Tier 8 — after the tuning audit (exps 120+)
+
+### Exp 120 — Can an open-world-legal tuner find the temperature basin?
+
+> **DONE 2026-08-25 — PREDICTION FALSIFIED; exp 115's verdict HARDENS.**
+> Analysis-only over the exp-113 archive (no retraining).  In the decisive
+> cell (C100 with the marginal, where exps 110/113 put the basin) the oracle
+> is tau=3.0 (mahaT 0.510, per-event 0.043, probe 0.926) and **all five
+> seen-only criteria pick tau=0.1** (mahaT 0.398, per-event 0.000) -- the same
+> answer exp 115's accuracy tuner gave.  I predicted `sw` would find the basin
+> and `rms` would not; neither does.  Worse, the panel's notion of fidelity
+> *anti-correlates* with novelty calibration here: tau=0.1 is the most
+> faithful space by every panel column (ece 0.077, sw 1.44, rms 0.590) and the
+> worst detector.  Hits in other cells are not evidence about the basin --
+> C10's oracle comes with a collapsed probe, and C100-without-marginal has no
+> basin to find.  (The oracle is now probe-constrained; the first run's
+> headline was too generous and was corrected.)
+
+**Motivation.**  Exp 115 showed the basin is invisible to a tuner selecting on
+seen-class accuracy, and explicitly left open the one criterion it had not
+tried: a seen-only *calibration* criterion.  The exp-104 panel supplies five,
+all computable without a single novel example.
+
+**Verdict and consequence.**  The basin is not merely missed by one tuner; it
+is unreachable by every seen-only criterion available to us.  The paper should
+say that the tau=1.0 recipe is a finding about the loss landscape, **not a
+deployable recipe** -- it can only be selected by someone who already has
+novelty labels, which is precisely who does not need it.  This also sharpens
+the meta-lesson from a new direction: seen-class fidelity and novelty
+calibration are not merely distinct, they can point in opposite directions.
+
+**What would still change this.**  A criterion using unlabelled TEST data
+(transductive: the pool exists at deployment even if unlabelled) rather than
+seen-class training data only -- e.g. the stability of the seen/pool density
+ratio across tau.  That is a different legality class and is exp 121.
+
+### Exp 121 — A transductive tuner *(proposed)*
+
+**Motivation.**  Exp 120 restricted selection to seen TRAINING classes.  But a
+deployed pipeline does have the unlabelled evaluation pool -- it just has no
+labels for it.  Criteria computable from (seen train + unlabelled pool) are a
+strictly larger and still-legal class: pool-vs-seen density-ratio statistics,
+the SparKer t_NP fitted on the pool, LID-gap dispersion, the fraction of pool
+mass in the seen tail.
+
+**Protocol.**  Re-run the exp-120 selection over the exp-113 archive with
+transductive criteria, adding the pool as an input.  Same decisive cell, same
+oracle, same probe-retention constraint.
+
+**Prediction.**  The fitted `t_NP` between pool and seen reference DOES track
+the basin, because it is measuring exactly the density-ratio structure the
+basin creates -- making the recipe deployable after all.
+
+**Falsifier.**  Transductive criteria also pick tau=0.1 -> the basin is
+invisible to anything short of labelled novelty, and the tau finding is
+permanently a curiosity rather than a method.  Report it as such and stop.
+
+**Cost.**  Analysis-only if the pool statistics can be recomputed from cached
+embeddings; one sweep otherwise.  **The natural next run.**
+
+### Exp 122 — What IS the basin geometry? *(proposed)*
+
+**Motivation.**  We have the best single-loss C100 both-currencies space on
+record and no account of *why* it works beyond "a looser interaction lets the
+marginal shape the covariance".  Exp 110 noted the winner sits at rms~0.50
+with slope 10-18 (strongly anisotropic), i.e. it is NOT the unit-width
+isotropic ideal the program was built around -- and exp 105 showed forcing that
+ideal is decorative.  So the best space we have contradicts the stated target
+and nobody has characterised it.
+
+**Protocol.**  Full panel + exp-76 semantic battery + eigenspectrum on the
+tau-sweep spaces, C100, marginal on, tau in {0.1, 0.3, 1.0, 3.0}: how does the
+class-conditional covariance change as the basin is entered?  Report the
+eigenvalue profile, the anisotropy direction, and whether the anisotropy aligns
+with the between-class subspace.
+
+**Prediction.**  The basin spaces are anisotropic in a *structured* way -- high
+variance along between-class directions, low along within-class ones -- which
+is what makes tied-covariance Mahalanobis work while unit width does not.
+
+**Falsifier.**  The anisotropy is unstructured -> "looser interaction" is the
+whole story and there is nothing further to characterise.
+
+**Cost.**  Evaluation-only on the exp-113 checkpoints, if kept.
+
+### Exp 123 — Are the four currencies actually independent? *(proposed)*
+
+**Motivation.**  The paper's organising claim is that a discovery-ready space
+must be audited in four currencies.  We have never tested whether they are
+empirically separable -- if detection and interpretability correlate at 0.9
+across the campaign's spaces, the battery is over-specified and the paper
+should say so.
+
+**Protocol.**  Assemble every metric on every space in the archives (~100+
+spaces x ~15 metrics), compute the correlation matrix and a factor analysis,
+and ask how many latent dimensions the battery actually spans.
+
+**Prediction.**  Three latent factors, not four: probe and semantic agreement
+load together (both track supervision), leaving detection, calibration and
+interpretability-as-fidelity as the separable axes.
+
+**Falsifier.**  Four or more clean factors -> the framing is vindicated as
+stated.  Either outcome is publishable and it validates the paper's own
+skeleton.
+
+**Cost.**  Analysis-only.  Cheap.
 
 ---
 
