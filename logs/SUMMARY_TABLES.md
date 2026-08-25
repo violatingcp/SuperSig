@@ -1495,3 +1495,34 @@ epochs) x 3 seeds x {c100, c10}, effects as change low->high:
 - The script's printed alias caveat is kept with the archived tables;
   the headline terms (tau main, tau x lam) are large enough that
   de-aliasing by foldover would not change the ranking.
+
+Exp 120 (`120_seen_only_tuner.py`, 2026-08-25; the thread exp 115 left
+open): can ANY open-world-legal tuner find the temperature basin? --
+PREDICTION FALSIFIED; exp 115's verdict HARDENS.  Analysis-only over
+the exp-113 archive (no retraining), five seen-only panel criteria
+(rms->1, sw->1, slope->1, ece->0, sep max) vs an illegal
+probe-constrained oracle:
+
+  DECISIVE CELL cifar100+marginal (the basin cell, exps 110/113):
+    oracle: tau=3.0  (mahaT 0.510, perevt 0.043, probe 0.926)
+    ALL FIVE legal criteria pick tau=0.1
+            (mahaT 0.398, perevt 0.000, probe 0.882)
+  cifar10+marginal: oracle tau=3.0, no legal criterion finds it.
+  The two marginal-off cells have no basin; the criteria that "find"
+  their oracles (sw on c10, ece on c100) are matching a default, not
+  discovering anything.
+
+- The predicted winner (sw -> 1) fails like the rest.  Sharper: in
+  the basin cell tau=0.1 is the MOST faithful space by every panel
+  column (ece 0.077, sw 1.44, rms 0.590 nearest 1) and the WORST
+  detector -- seen-class fidelity and novelty calibration do not
+  merely dissociate, they point in opposite directions.
+- Consequence for the paper: the tau=1.0/3.0 recipe is a finding
+  about the loss landscape, NOT a deployable recipe -- it is
+  selectable only with novelty labels, by exactly the party that does
+  not need it.  Exp 115's caveat line is closed.
+- Reproduced here from the committed exp-113 npz archive; matches the
+  laptop run recorded in IMPROVEMENT_TESTS.md (including its
+  probe-constrained-oracle correction).  Next legality class up --
+  transductive criteria using the unlabelled pool -- is proposed as
+  exp 121, not run.
