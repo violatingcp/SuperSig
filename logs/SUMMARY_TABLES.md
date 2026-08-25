@@ -1469,3 +1469,29 @@ default, 3 seeds:
   seen-only calibration criterion (e.g. seen-class gaussianity/width)
   was not tried and is the one legal tuner that might find the basin.
   Left open, one line, not run.
+
+Exp 114 (`114_factorial_interactions.py`, 2026-08-24; IMPROVEMENT_TESTS
+#114): which knobs interact?  -- PREDICTION HOLDS on all three
+clauses.  2^(5-1) fractional factorial (tau, lam, n_slices, dim,
+epochs) x 3 seeds x {c100, c10}, effects as change low->high:
+
+  c100: mahaT  main tau +0.116, lam +0.034, others <=0.023;
+               largest interaction tau x lam -0.058 (then tau x dim
+               +0.041) -- the interaction saturates at high lam, i.e.
+               the basin is entered by EITHER knob and tops out.
+        perevt main tau +0.051 dominant.  probe: everything <=0.017.
+  c10:  probe  main tau -0.094; largest interaction tau x lam +0.090
+               (high lam rescues high tau's probe cost); mahaT main
+               tau +0.148.
+  n_slices: inert on every metric on both datasets (|effect| <=
+  0.007) -- it is a Monte-Carlo budget, as predicted.
+
+- tau x marginal(-weight) is the largest interaction everywhere; no
+  OTHER large interaction exists, so the falsifier (non-separable
+  knob space, single-arm comparisons unsafe) does NOT fire.  The
+  design-cube methodology stands, with one amendment: tau must be
+  treated as a regime knob (many-class basin, exp 113), not a
+  constant.
+- The script's printed alias caveat is kept with the archived tables;
+  the headline terms (tau main, tau x lam) are large enough that
+  de-aliasing by foldover would not change the ranking.
