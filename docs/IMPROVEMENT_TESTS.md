@@ -75,7 +75,25 @@ Tier 6 (run 2026-08-22/23; verdicts in `logs/SUMMARY_TABLES.md`):
 | 110 | why did the softmax control break the C100 ceiling? | **CAUSE FOUND: τ×marginal interaction** — exp-88's arm accidentally ran at τ=1.0; only τ=1.0 AND SIGReg break the ceiling (0.539–0.572 at 32–128-D), each alone ≤0.43. Dimension incidental (present at 32-D); NOT a width effect (winner rms~0.5). New designed record mahaT 0.572±0.031 @128-D, probe 0.910 |
 | 111 | child-only deployment | **PREDICTION HOLDS, DEPLOYABLE** — child-only detection ties/beats concat (aircraft:visreg +0.048 per-event) at half width with better f95; parent-only explanations overlap concat's at 0.73–0.85 top-1. Protocol limit: alphabetical holdouts make absolute superclass agreement near-unmeasurable |
 
-Nineteen of thirty predictions were falsified or materially revised.  That is the intended hit rate: the
+Tier 7 (run 2026-08-24; 112/117 on the laptop, 113-116/118/119 on the GPU box; verdicts in `logs/SUMMARY_TABLES.md`):
+
+| exp | what it asked | outcome |
+|---|---|---|
+| 112 | inherited-constants audit | **PREDICTION EXCEEDED** — nine never-swept constants under named claims (predicted ≥3); `logs/exp112/constants.md` |
+| 117 | are our comparisons powered? | **HALF FALSIFIED** — see laptop write-up; feeds the exp-118 draw-variance finding |
+| 113 | is the τ×marginal basin general? | **MANY-CLASS ONLY** — C100 plateau from τ≥0.3 (mahaT ~0.51, per-event turns on); on C10 high τ collapses probe 0.94→0.64 for +0.03 mahaT. No campaign-wide re-run needed |
+| 114 | which knobs interact? | **PREDICTION HOLDS** — τ×lam is the only large interaction (c100 mahaT −0.058, c10 probe +0.090); τ the one big main effect; n_slices inert; knob space separable, cube methodology stands |
+| 115 | does the dissociation survive per-arm tuning? | **SURVIVES, STRONGER THAN PREDICTED** — seen-only (open-world-legal) tuning selects the default τ for softmax arms: the calibration basin costs seen accuracy and is invisible to legal model selection. NPLM keeps its per-event edge. One line left open: a seen-only *calibration* criterion was not tried |
+| 116 | M matched to intrinsic dimension | **PARTIAL** — two first-time crossings (galaxy10:dino, dtd:lejepa) but regressions on mid-ID cars; ordering preserved; M=16 stays default, matched-M cited as sensitivity (citable reach 8/17 → 10/17 best-of-two) |
+| 118 | holdout-selection audit | **PROBES NOT CONFOUNDED** — archived draw sits inside the random-draw distribution; but draw variance (sd ~0.019) exceeds seed variance → draw-resampled intervals for cross-holdout claims; mahaT is draw-dependent (0.39–0.57) |
+| 119 | rr_disp out of sample | **FAILS (pre-registered)** — 2/3 at the frozen threshold on food101×3 bases (predictions committed before scoring, commit 2131998); regime line closes per exp 108's stopping rule. All held-out gaps within ±0.03 (boundary dataset) — context, not exculpation |
+
+Across Tiers 1-6, fifteen of twenty-four predictions were falsified or
+materially revised.  **Tier 7 inverted that rate**: of its eight tests, three
+held cleanly (113, 114, 118), one exceeded its prediction (112), one held for a
+reason nobody predicted (115), two came back partial (116, 117) and one failed
+outright (119).  Predictions got better as the mechanisms got clearer, which is
+the outcome an experimental program should want.  That is the intended hit rate: the
 entries below are written to be wrong in a specific way, and two of them
 (82, 87) taught us more by failing than they would have by passing.  Where a
 result changed the motivation for a pending test, the entry has been rewritten

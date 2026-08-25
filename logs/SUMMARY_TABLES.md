@@ -1441,3 +1441,57 @@ tau {0.05,0.1,0.3,1.0,3.0} x marginal {on,off} x 3 seeds:
 - Scope: run on CIFAR as scripted; the 196-class cars clause of the
   prediction (basin should reappear) is untested -- class-count
   support rests on the 10-vs-100 contrast.
+
+Exp 115 (`115_tuning_fairness.py`, 2026-08-24; IMPROVEMENT_TESTS #115):
+the fairness audit -- THE DISSOCIATION SURVIVES, and more strongly
+than predicted.  C100, per-arm tau tuned on a seen-only criterion
+(acc; open-world legal), then the dissociation table at tuned vs
+default, 3 seeds:
+
+  arm             tau(def->tuned)  probe            perevt
+  supcon          0.1 -> 0.1       0.9331           0.000
+  supcon_sigreg   0.1 -> 0.1       0.8774           0.000
+  nplm_sup_dist   1.0 -> 3.0       0.8262 -> 0.8477 0.033 -> 0.013
+  nplm_bilinear   1.0 -> 1.0       0.8958           0.520 mahaT / 0.060
+
+- The falsifier does not fire -- and not for the predicted reason.
+  The prediction was "softmax arms gain per-event 0.05-0.10 under
+  tuning"; in fact LEGAL tuning cannot reach the tau=1.0 calibration
+  basin at all, because entering it costs seen-class accuracy, which
+  is the only signal an open-world tuner may use.  The exp-110/113
+  recipe is visible only to a tuner that can score novelty
+  calibration -- which deployment, by definition, cannot.
+- So the paper's central comparative claim is NOT a statement about
+  defaults: it is a statement about what seen-only model selection
+  converges to, which is the operationally honest comparison.  Quote
+  it that way.
+- Caveat for the record: selection used seen-class accuracy; a
+  seen-only calibration criterion (e.g. seen-class gaussianity/width)
+  was not tried and is the one legal tuner that might find the basin.
+  Left open, one line, not run.
+
+Exp 114 (`114_factorial_interactions.py`, 2026-08-24; IMPROVEMENT_TESTS
+#114): which knobs interact?  -- PREDICTION HOLDS on all three
+clauses.  2^(5-1) fractional factorial (tau, lam, n_slices, dim,
+epochs) x 3 seeds x {c100, c10}, effects as change low->high:
+
+  c100: mahaT  main tau +0.116, lam +0.034, others <=0.023;
+               largest interaction tau x lam -0.058 (then tau x dim
+               +0.041) -- the interaction saturates at high lam, i.e.
+               the basin is entered by EITHER knob and tops out.
+        perevt main tau +0.051 dominant.  probe: everything <=0.017.
+  c10:  probe  main tau -0.094; largest interaction tau x lam +0.090
+               (high lam rescues high tau's probe cost); mahaT main
+               tau +0.148.
+  n_slices: inert on every metric on both datasets (|effect| <=
+  0.007) -- it is a Monte-Carlo budget, as predicted.
+
+- tau x marginal(-weight) is the largest interaction everywhere; no
+  OTHER large interaction exists, so the falsifier (non-separable
+  knob space, single-arm comparisons unsafe) does NOT fire.  The
+  design-cube methodology stands, with one amendment: tau must be
+  treated as a regime knob (many-class basin, exp 113), not a
+  constant.
+- The script's printed alias caveat is kept with the archived tables;
+  the headline terms (tau main, tau x lam) are large enough that
+  de-aliasing by foldover would not change the ranking.
