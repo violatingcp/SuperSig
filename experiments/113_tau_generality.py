@@ -55,6 +55,10 @@ def main():
     ap.add_argument("--epochs", type=int, default=None)
     ap.add_argument("--lam", type=float, default=1.0)
     ap.add_argument("--alpha", type=float, default=0.05)
+    ap.add_argument("--save-embs", action="store_true",
+                    help="also archive train/test embeddings per run, so the "
+                         "transductive selection test (exp 121) can be run on "
+                         "the tau axis -- the original sweep saved scalars only")
     ap.add_argument("--quick", action="store_true")
     ap.add_argument("--tag", default="",
                     help="npz suffix so concurrent invocations don't clobber")
@@ -113,6 +117,14 @@ def main():
                     for k, v in r.items():
                         done[f"{key}_{k}"] = np.float64(v)
                     np.savez(out, **done)
+                    if args.save_embs:
+                        ed = os.path.join("logs", "exp113", "embs")
+                        os.makedirs(ed, exist_ok=True)
+                        np.savez(os.path.join(ed, f"{key}.npz"),
+                                 tr=np.asarray(tr, np.float32),
+                                 tr_lab=np.asarray(tr_lab),
+                                 te=np.asarray(te, np.float32),
+                                 te_lab=np.asarray(te_lab))
                     print(f"  [{key}] probe={r['probe']:.4f} "
                           f"mahaT={r['mahaT']:.4f} perevt={r['perevt']:.3f}",
                           flush=True)

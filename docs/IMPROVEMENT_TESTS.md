@@ -1232,7 +1232,28 @@ calibration are not merely distinct, they can point in opposite directions.
 seen-class training data only -- e.g. the stability of the seen/pool density
 ratio across tau.  That is a different legality class and is exp 121.
 
-### Exp 121 — A transductive tuner *(proposed)*
+### Exp 121 — A transductive tuner
+
+> **DONE 2026-08-25 — FALSIFIER FIRES, but the test is under-powered and
+> off-axis; read it as suggestive.**  The exp-113 sweep archived scalars only
+> (no embeddings, no checkpoints), so the tau-basin selection could NOT be
+> re-tested analysis-only.  Ran the one level more general question instead: on
+> the six cached CIFAR-10 NPLM spaces, does the transductive criterion class
+> rank spaces by novelty calibration better than the seen-only class?  Against
+> mahaT (exp 120's oracle) the best transductive criterion is MMD at |rho|=0.54
+> (p=0.27) and the best seen-only is class separation `sep` at |rho|=0.89
+> (p=0.02) — seen-only WINS.  My predicted winner, the fitted `t_np`, is the
+> worst criterion in the table (|rho|=0.09) and is unstable in the fit budget
+> (0.60 at 50 steps, -0.09 at 300), which is itself consistent with exp 98.
+> Caveats that matter: n=6 needs |rho|>=0.83 for p<0.05, so only `sep` is
+> individually significant and the CLASS comparison is not decisive; `sep`
+> predicting mahaT may be near-tautological (both reward well-separated tight
+> seen classes); and the three outcomes DISAGREE IN SIGN (LID AUC
+> anti-correlates with eucl/mahaT across these arms — the on-manifold split
+> appearing within one dataset), so a single target had to be chosen.
+> **Exp 113 has been patched with `--save-embs`; the tau test proper is a GPU
+> re-run away and remains the deciding experiment.**
+
 
 **Motivation.**  Exp 120 restricted selection to seen TRAINING classes.  But a
 deployed pipeline does have the unlabelled evaluation pool -- it just has no
