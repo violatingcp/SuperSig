@@ -91,8 +91,8 @@ $4\times3\times6$ grid of transfer datasets (Stanford Cars, Flowers-102, DTD,
 Galaxy10~DECals) $\times$ pretraining bases (DINO, LeJEPA, VISReg) $\times$
 contrastive/regularized objectives, we establish four further results. (i) Detection and calibration are
 \emph{empirically dissociated}: softmax-contrastive spaces win the probe and
-score $0.000$ per-event detection power at their conventional temperature,
-while density-ratio-calibrated
+score $0.000$ per-event detection power under any open-world-legal model
+selection, while density-ratio-calibrated
 spaces invert the ordering; no CIFAR-100 space in our sweep exceeds probe
 $0.94$ with tied-Mahalanobis $\auc>0.42$. (ii) The dissociation is
 \emph{repairable by construction rather than by loss design}: residual
@@ -516,6 +516,54 @@ regime we have already re-run. No campaign-wide re-tuning follows. We note one
 unresolved discrepancy: the scan gives mahaT $0.502$ at 100-D where the
 dedicated factorial gave $0.562\pm0.037$, about $1.5$ combined standard
 deviations apart.
+
+\paragraph{Does the comparison survive per-arm tuning?}
+The sharpest form of the worry above is that the paper's central comparative
+claim --- the probe/calibration dissociation --- is an artifact of defaults. We
+tested it directly: tune $\tau$ per arm on a criterion that uses \emph{seen
+classes only} (nearest-centroid accuracy), so the tuning is open-world legal,
+then re-run the dissociation table at each arm's tuned setting.
+
+The dissociation survives, and for a reason we did not anticipate. We expected
+the softmax arms to gain per-event power under tuning and the gap to narrow.
+Instead, \textbf{legal tuning does not move them at all}: seen-only selection
+returns $\tau=0.1$ for both \texttt{supcon} and \texttt{supcon\_sigreg}, and
+their per-event power stays at $0.000$. Entering the calibration basin of
+\S\ref{sec:tau} \emph{costs seen-class accuracy}, and seen-class accuracy is the
+only signal an open-world tuner is permitted to use. The basin is real, and it
+is \emph{invisible to any model selection that cannot score novelty} --- which
+is to say, invisible to deployment.
+
+This puts the paper's comparison on firmer ground than the ``defaults'' framing
+would have. The claim is not that these are the best achievable spaces; it is
+that \textbf{this is what seen-only model selection converges to}, which is the
+operationally honest comparison and the one a practitioner actually faces. We
+state it that way throughout.
+
+One thread is left open and we flag it rather than close it: our tuner selected
+on seen-class \emph{accuracy}. A seen-only \emph{calibration} criterion --- for
+instance the class-conditional width and Gaussianity of \S\ref{sec:panel}, both
+of which are computable without a single novel example --- is equally legal and
+might well find the basin. That is the one legal tuner we did not try, and if
+it works it would convert the accidental discovery of \S\ref{sec:tau} into a
+deployable recipe.
+
+\paragraph{Are the knobs separable at all?}
+Since the campaign's method has been to vary one thing at a time, we also asked
+whether that method is safe. A resolution-IV fractional factorial over five
+continuous knobs ($\tau$, marginal weight, SIGReg slice count, dimension,
+epochs) on both CIFAR datasets finds \textbf{exactly one large interaction} ---
+$\tau\times$marginal-weight (CIFAR-100 mahaT $-0.058$; CIFAR-10 probe $+0.090$,
+where a strong marginal rescues the probe cost of a loose temperature) ---
+against a dominant $\tau$ main effect ($+0.116$ mahaT on CIFAR-100, $-0.094$
+probe on CIFAR-10). No other interaction is large. The slice count is inert on
+every metric on both datasets ($|\text{effect}|\le0.007$), confirming it is a
+Monte-Carlo budget rather than a modelling choice.
+
+So the knob space is approximately separable and the one-factor-at-a-time
+methodology stands --- with a single amendment, which is the lesson of this
+whole section: \textbf{$\tau$ is not a constant, it is a regime knob}, and it
+interacts with the marginal. Everything else may be swept independently.
 
 \paragraph{The uncomfortable part}
 $\tau=0.1$ was inherited as ``the SupCon temperature'' and held fixed across
@@ -1946,8 +1994,10 @@ not a withheld member of a curated taxonomy, and the Cars result --- where
 novel classes are not geometrically outlying --- suggests the proxy's
 difficulty varies more than the datasets' nominal difficulty does. Several
 conclusions rest on 3--5 seeds, which resolves $0.02$-scale effects but not
-smaller ones. Two claims in the paper rest on parametrizations we did
-not fully test: the calibration identity does not hold for the bias-free
+smaller ones. Our tuning audit selected on seen-class accuracy; a seen-only
+\emph{calibration} criterion is equally legal, was not tried, and is the one
+tuner that might reach the temperature basin of \S\ref{sec:tau}. Two further
+claims rest on parametrizations we did not fully test: the calibration identity does not hold for the bias-free
 distance critic our implementation uses (App.~\ref{app:grad}), so the
 distance-NPLM arms' detection strength is evidence of good scaling rather than
 of achieved calibration, and adding the bias term is untested. And we cannot
