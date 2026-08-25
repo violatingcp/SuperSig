@@ -1277,7 +1277,9 @@ permanently a curiosity rather than a method.  Report it as such and stop.
 **Cost.**  Analysis-only if the pool statistics can be recomputed from cached
 embeddings; one sweep otherwise.  **The natural next run.**
 
-### Exp 122 — What IS the basin geometry? *(proposed)*
+### Exp 122 — What IS the basin geometry?
+
+> **SCRIPTED, not run** — needs exp 113 re-run with `--save-embs`.
 
 **Motivation.**  We have the best single-loss C100 both-currencies space on
 record and no account of *why* it works beyond "a looser interaction lets the
@@ -1302,7 +1304,25 @@ whole story and there is nothing further to characterise.
 
 **Cost.**  Evaluation-only on the exp-113 checkpoints, if kept.
 
-### Exp 123 — Are the four currencies actually independent? *(proposed)*
+### Exp 123 — Are the four currencies actually independent?
+
+> **DONE 2026-08-25 — NEITHER prediction nor falsifier; the dimension count is
+> roughly right but the LABELS do not carve the space.**  122 spaces x 7-9
+> metrics from the archives.  The robust finding, stable at every coverage
+> threshold: **within-currency |corr| does NOT exceed between-currency |corr|**
+> (0.34 vs 0.30 at min-cov 0.35; 0.28 vs 0.27 at 0.2 and 0.1).  Scree is
+> 0.43/0.21/0.12..., i.e. ~3 components for 80% of variance and 2 by Kaiser --
+> so the battery spans about three dimensions, close to the predicted three,
+> but the metric-to-currency assignment is not what the correlation structure
+> says.  Read as: the paper's DIMENSIONALITY claim survives; its TAXONOMY is
+> not validated by the data.
+> Two caveats that stop this being decisive: (i) DISCOVERABILITY is absent
+> entirely -- purity/margin exist only on discovery runs and never clear the
+> coverage bar -- so this tests 3 of 4 currencies; (ii) the 122 spaces pool
+> heterogeneous datasets, dims and protocols, and pooled correlations across
+> such cells can invert within them (Simpson's paradox), so a per-dataset
+> replication is needed before this is load-bearing.
+
 
 **Motivation.**  The paper's organising claim is that a discovery-ready space
 must be audited in four currencies.  We have never tested whether they are

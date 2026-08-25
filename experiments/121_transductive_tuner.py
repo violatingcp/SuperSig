@@ -107,9 +107,73 @@ def transductive(tr, tr_lab, te, seen, seed=0, steps=300, max_ref=8000):
     return dict(t_np=t_np, mmd=mmd, lid_disp=lid_disp, tail_mass=tail)
 
 
+def tau_axis(args, holdouts):
+    """The test exp 121 was written for: does a transductive criterion select
+    the temperature basin, where every seen-only criterion (exp 120) fails?"""
+    ds, marg = args.cell.rsplit("_", 1)
+    pat = os.path.join(args.tau_archive, f"{ds}_tau*_{marg}_s*.npz")
+    files = sorted(glob.glob(pat))
+    if not files:
+        sys.exit(f"no tau embeddings matching {pat}\n"
+                 f"run: python experiments/113_tau_generality.py --save-embs")
+    by_tau = {}
+    for fn in files:
+        tau = float(os.path.basename(fn).split("_tau")[1].split("_")[0])
+        by_tau.setdefault(tau, []).append(fn)
+
+    rows = {}
+    for tau in sorted(by_tau):
+        crit, outc = [], []
+        for fn in by_tau[tau]:                       # average over seeds
+            d = np.load(fn, allow_pickle=True)
+            tr, tr_lab, te, te_lab = d["tr"], d["tr_lab"], d["te"], d["te_lab"]
+            seen = sorted(set(int(c) for c in np.unique(tr_lab)) - holdouts)
+            crit.append(transductive(tr, tr_lab, te, seen, seed=args.seed,
+                                     steps=50 if args.quick else args.steps))
+            outc.append(outcomes(tr, tr_lab, te, te_lab, seen, holdouts))
+        agg = lambda ds_: {k: float(np.mean([x[k] for x in ds_]))
+                           for k in ds_[0]}
+        rows[tau] = dict(transductive=agg(crit), outcome=agg(outc),
+                         n_seeds=len(by_tau[tau]))
+        print(f"  tau={tau:<5} " +
+              " ".join(f"{k}={v:.4g}" for k, v in rows[tau]["transductive"].items())
+              + "  | mahaT=%.3f perevt=%.3f" % (rows[tau]["outcome"]["mahaT"],
+                                                rows[tau]["outcome"].get("perevt", float("nan"))
+                                                if "perevt" in rows[tau]["outcome"] else float("nan")))
+
+    taus = sorted(rows)
+    oracle = max(taus, key=lambda t: rows[t]["outcome"]["mahaT"])
+    print(f"\n  ORACLE (illegal, best mahaT): tau={oracle}")
+    hits = []
+    for crit_name in ("t_np", "mmd", "lid_disp", "tail_mass"):
+        pick = max(taus, key=lambda t: rows[t]["transductive"][crit_name])
+        ok = pick == oracle
+        hits.append(crit_name) if ok else None
+        print(f"  transductive '{crit_name:9s}' picks tau={pick:<5}"
+              f"{'  <-- FINDS THE ORACLE' if ok else ''}")
+    os.makedirs(args.out, exist_ok=True)
+    json.dump(rows, open(os.path.join(args.out, f"tau_{args.cell}.json"), "w"),
+              indent=1)
+    print("\n=== verdict (tau axis, the test exp 121 was written for) ===")
+    print("  " + ("transductive criteria reaching the oracle: "
+                  + ", ".join(hits) + " -- the basin IS reachable without "
+                  "novelty labels, and the tau recipe is deployable."
+                  if hits else
+                  "NONE.  With exp 120 (five seen-only criteria) this closes "
+                  "the question: the basin is invisible to every label-free "
+                  "selection rule we can construct, transductive included."))
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--glob", default="logs/exp54/embs_*_cifar10.npz")
+    ap.add_argument("--tau-archive", default=None,
+                    help="logs/exp113/embs -- switches to the TAU-AXIS test: "
+                         "rank taus within a cell instead of ranking arms. "
+                         "This is the test exp 121 was written for; it needs "
+                         "exp 113 re-run with --save-embs.")
+    ap.add_argument("--cell", default="cifar100_on",
+                    help="tau-axis mode: {dataset}_{on|off}")
     ap.add_argument("--holdout", type=int, default=4)
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--steps", type=int, default=300)
@@ -121,6 +185,8 @@ def main():
     args = ap.parse_args()
 
     holdouts = {args.holdout}
+    if args.tau_archive:
+        return tau_axis(args, holdouts)
     files = sorted(glob.glob(args.glob))
     if not files:
         sys.exit(f"no cached spaces matching {args.glob}")
