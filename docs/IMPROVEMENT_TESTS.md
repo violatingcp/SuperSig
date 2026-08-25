@@ -1232,7 +1232,28 @@ calibration are not merely distinct, they can point in opposite directions.
 seen-class training data only -- e.g. the stability of the seen/pool density
 ratio across tau.  That is a different legality class and is exp 121.
 
-### Exp 121 — A transductive tuner *(proposed)*
+### Exp 121 — A transductive tuner
+
+> **DONE 2026-08-25 — FALSIFIER FIRES, but the test is under-powered and
+> off-axis; read it as suggestive.**  The exp-113 sweep archived scalars only
+> (no embeddings, no checkpoints), so the tau-basin selection could NOT be
+> re-tested analysis-only.  Ran the one level more general question instead: on
+> the six cached CIFAR-10 NPLM spaces, does the transductive criterion class
+> rank spaces by novelty calibration better than the seen-only class?  Against
+> mahaT (exp 120's oracle) the best transductive criterion is MMD at |rho|=0.54
+> (p=0.27) and the best seen-only is class separation `sep` at |rho|=0.89
+> (p=0.02) — seen-only WINS.  My predicted winner, the fitted `t_np`, is the
+> worst criterion in the table (|rho|=0.09) and is unstable in the fit budget
+> (0.60 at 50 steps, -0.09 at 300), which is itself consistent with exp 98.
+> Caveats that matter: n=6 needs |rho|>=0.83 for p<0.05, so only `sep` is
+> individually significant and the CLASS comparison is not decisive; `sep`
+> predicting mahaT may be near-tautological (both reward well-separated tight
+> seen classes); and the three outcomes DISAGREE IN SIGN (LID AUC
+> anti-correlates with eucl/mahaT across these arms — the on-manifold split
+> appearing within one dataset), so a single target had to be chosen.
+> **Exp 113 has been patched with `--save-embs`; the tau test proper is a GPU
+> re-run away and remains the deciding experiment.**
+
 
 **Motivation.**  Exp 120 restricted selection to seen TRAINING classes.  But a
 deployed pipeline does have the unlabelled evaluation pool -- it just has no
@@ -1256,7 +1277,9 @@ permanently a curiosity rather than a method.  Report it as such and stop.
 **Cost.**  Analysis-only if the pool statistics can be recomputed from cached
 embeddings; one sweep otherwise.  **The natural next run.**
 
-### Exp 122 — What IS the basin geometry? *(proposed)*
+### Exp 122 — What IS the basin geometry?
+
+> **SCRIPTED, not run** — needs exp 113 re-run with `--save-embs`.
 
 **Motivation.**  We have the best single-loss C100 both-currencies space on
 record and no account of *why* it works beyond "a looser interaction lets the
@@ -1281,7 +1304,25 @@ whole story and there is nothing further to characterise.
 
 **Cost.**  Evaluation-only on the exp-113 checkpoints, if kept.
 
-### Exp 123 — Are the four currencies actually independent? *(proposed)*
+### Exp 123 — Are the four currencies actually independent?
+
+> **DONE 2026-08-25 — NEITHER prediction nor falsifier; the dimension count is
+> roughly right but the LABELS do not carve the space.**  122 spaces x 7-9
+> metrics from the archives.  The robust finding, stable at every coverage
+> threshold: **within-currency |corr| does NOT exceed between-currency |corr|**
+> (0.34 vs 0.30 at min-cov 0.35; 0.28 vs 0.27 at 0.2 and 0.1).  Scree is
+> 0.43/0.21/0.12..., i.e. ~3 components for 80% of variance and 2 by Kaiser --
+> so the battery spans about three dimensions, close to the predicted three,
+> but the metric-to-currency assignment is not what the correlation structure
+> says.  Read as: the paper's DIMENSIONALITY claim survives; its TAXONOMY is
+> not validated by the data.
+> Two caveats that stop this being decisive: (i) DISCOVERABILITY is absent
+> entirely -- purity/margin exist only on discovery runs and never clear the
+> coverage bar -- so this tests 3 of 4 currencies; (ii) the 122 spaces pool
+> heterogeneous datasets, dims and protocols, and pooled correlations across
+> such cells can invert within them (Simpson's paradox), so a per-dataset
+> replication is needed before this is load-bearing.
+
 
 **Motivation.**  The paper's organising claim is that a discovery-ready space
 must be audited in four currencies.  We have never tested whether they are
