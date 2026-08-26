@@ -20,6 +20,7 @@ power-at-fixed-f.
 """
 import os, sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from supersig.holdouts import n_holdout, run_tag
 import argparse
 import importlib
 import numpy as np
@@ -74,7 +75,7 @@ def main():
     n_toys = 10 if args.quick else 50
     sparker_kw = dict(M=16, steps=50 if args.quick else 300)
     os.makedirs(os.path.join("logs", "exp100"), exist_ok=True)
-    out_path = os.path.join("logs", "exp100", "results.npz")
+    out_path = os.path.join("logs", "exp100", f"results{run_tag()}.npz")
     done = {}
     if os.path.exists(out_path) and not args.refresh:
         d = np.load(out_path, allow_pickle=True)
@@ -95,7 +96,7 @@ def main():
             sp = champion_space(ds, base)
             name = "champion"
             n_cls = 47 if ds == "dtd" else exp44.N_CLASSES[ds]
-            nh = 1 if ds == "galaxy10" else 10
+            nh = n_holdout(ds)
             holdouts = set(range(n_cls - nh, n_cls))
             n_d = 2000 if ds in ("cars", "galaxy10") else 1000
             fracs = FRACS

@@ -31,6 +31,7 @@ discovery probe/eucl/mahaT pre->post + the injected post-power grid
 """
 import os, sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from supersig.holdouts import n_holdout, run_tag
 import argparse
 import copy
 import importlib
@@ -140,7 +141,7 @@ def seed_sfx(args):
 def trunk_banks(model, arm, args):
     """(train, test) 768-d plain-transform banks from the arm's ft trunk."""
     cache = os.path.join(DATA_DIR, f"tf_feats_{DS}_{BASE}_ft70_{arm}"
-                         f"{seed_sfx(args)}"
+                         f"{run_tag()}{seed_sfx(args)}"
                          f"{'_quick' if args.quick else ''}.pt")
     if os.path.exists(cache) and not args.refresh:
         return torch.load(cache)
@@ -193,7 +194,7 @@ def main():
         args.n_d = 2000 if DS in ("cars", "galaxy10") else 1000
 
     N_CLS = 47 if DS == "dtd" else exp44.N_CLASSES[DS]
-    n_hold = 1 if DS == "galaxy10" else 10
+    n_hold = n_holdout(DS)
     holdouts = set(range(N_CLS - n_hold, N_CLS))
     seen = [c for c in range(N_CLS) if c not in holdouts]
     ft_ep_disc = 1 if args.quick else 5
@@ -207,7 +208,7 @@ def main():
                n_slices=args.n_slices,
                rep_weight=REP_WEIGHT * 45.0 / (N_CLS * (N_CLS - 1) / 2))
     specs = arm_specs(args)
-    tag = f"{DS}_{BASE}_ft70{seed_sfx(args)}"
+    tag = f"{DS}_{BASE}_ft70{run_tag()}{seed_sfx(args)}"
     print(f"exp70 [{tag}] end-to-end ft suite, arms={args.arms}, "
           f"ft_epochs={args.ft_epochs}, emb={args.emb_dim}, "
           f"holdouts {min(holdouts)}-{max(holdouts)} EXCLUDED from ft")
@@ -230,7 +231,7 @@ def main():
         np.random.seed(args.seed + 20 + i)
         model = exp43.FineTuneModel(BASE, args.emb_dim)
         ckpt = os.path.join(CKPT_DIR, f"{DS}_ft_{BASE}_{arm}_seen"
-                            f"{seed_sfx(args)}"
+                            f"{run_tag()}{seed_sfx(args)}"
                             f"{'_quick' if args.quick else ''}.pt")
         if os.path.exists(ckpt) and not args.refresh:
             print(f"  loading {ckpt}")

@@ -28,6 +28,7 @@ checkpoints/exp76_{ds}_{dim}d_{name}.pt.
 """
 import os, sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from supersig.holdouts import n_holdout, run_tag
 import argparse
 import copy
 import importlib
@@ -364,7 +365,7 @@ def main():
     args = ap.parse_args()
     ds = args.dataset
     cifar = ds.startswith("cifar")
-    tag = (f"{ds}_{args.dim}d" if cifar else f"{ds}_{args.base}")
+    tag = (f"{ds}_{args.dim}d" if cifar else f"{ds}_{args.base}") + run_tag()
     print(f"exp76 [{tag}] class-centroid interpretability")
 
     names, sup = class_names_and_sup(ds)
@@ -375,7 +376,7 @@ def main():
         holdouts = {args.holdout}
     else:
         n_cls = 47 if ds == "dtd" else exp44.N_CLASSES[ds]
-        nh = 1 if ds == "galaxy10" else 10
+        nh = n_holdout(ds)
         holdouts = set(range(n_cls - nh, n_cls))
 
     md = [f"# exp76 interpretability [{tag}]",

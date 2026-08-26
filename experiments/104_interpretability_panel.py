@@ -53,6 +53,7 @@ campaign default used elsewhere for Mahalanobis.
 """
 import os, sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from supersig.holdouts import n_holdout, run_tag
 import argparse
 import numpy as np
 import torch
@@ -220,7 +221,7 @@ def main():
             spaces = exp77.transfer_cell(ns, ds, base)
             spaces.pop("frozen", None)
             n_cls = 47 if ds == "dtd" else exp44.N_CLASSES[ds]
-            nh = 1 if ds == "galaxy10" else 10
+            nh = n_holdout(ds)
             holdouts = set(range(n_cls - nh, n_cls))
             key_pre = f"{ds}_{base}"
         seen = np.array([c for c in range(n_cls) if c not in holdouts])
@@ -237,7 +238,7 @@ def main():
             print(f"  {name:<26}" + "  ".join(f"{k}={v:.3f}"
                                               for k, v in r.items()),
                   flush=True)
-    np.savez(os.path.join(args.out, "panel.npz"),
+    np.savez(os.path.join(args.out, f"panel{run_tag()}.npz"),
              **{k: np.array(list(v.values())) for k, v in rows.items()},
              fields=np.array(list(next(iter(rows.values())).keys())))
 

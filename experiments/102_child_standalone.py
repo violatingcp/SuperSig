@@ -21,6 +21,7 @@ scored on its own (the concat was doing the work).
 """
 import os, sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from supersig.holdouts import n_holdout, run_tag
 import argparse
 import importlib
 import numpy as np
@@ -57,7 +58,7 @@ def main():
     n_null = 20 if args.quick else 200
     n_toys = 10 if args.quick else 50
     sparker_kw = dict(M=16, steps=50 if args.quick else 300)
-    out_path = os.path.join("logs", "exp102", "results.npz")
+    out_path = os.path.join("logs", "exp102", f"results{run_tag()}.npz")
     os.makedirs(os.path.dirname(out_path), exist_ok=True)
     done = {}
     if os.path.exists(out_path) and not args.refresh:
@@ -70,7 +71,7 @@ def main():
         parent, obj, kind = exp72.WINNERS[(ds, base)]
         key = cell.replace(":", "_")
         n_cls = 47 if ds == "dtd" else exp44.N_CLASSES[ds]
-        nh = 1 if ds == "galaxy10" else 10
+        nh = n_holdout(ds)
         holdouts = set(range(n_cls - nh, n_cls))
         seen = [c for c in range(n_cls) if c not in holdouts]
         n_d = 2000 if ds in ("cars", "galaxy10") else 1000

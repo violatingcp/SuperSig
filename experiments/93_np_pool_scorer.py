@@ -19,6 +19,7 @@ optimality).
 """
 import os, sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from supersig.holdouts import n_holdout, run_tag
 import argparse
 import copy
 import importlib
@@ -57,7 +58,7 @@ def main():
         parent, obj, kind = exp72.WINNERS[(ds, base)]
         key = f"{ds}_{base}"
         N_CLS = 47 if ds == "dtd" else exp44.N_CLASSES[ds]
-        n_hold = 1 if ds == "galaxy10" else 10
+        n_hold = n_holdout(ds)
         holdouts = set(range(N_CLS - n_hold, N_CLS))
         seen = [c for c in range(N_CLS) if c not in holdouts]
         cfg = dict(n_classes=N_CLS, pair_dist=5.0, sigreg_weight=1.0,

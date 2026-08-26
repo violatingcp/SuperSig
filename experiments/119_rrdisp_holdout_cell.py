@@ -31,6 +31,7 @@ closes.
 """
 import os, sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from supersig.holdouts import n_holdout, run_tag
 import argparse
 import importlib
 import json
@@ -97,7 +98,7 @@ def cell_arrays(ds, base=None):
             qi = rng.choice(len(yte), 6000, replace=False)
             Xte, yte = Xte[qi], yte[qi]
     n_cls = 47 if ds == "dtd" else exp44.N_CLASSES[ds]
-    nh = 1 if ds == "galaxy10" else 10
+    nh = n_holdout(ds)
     holdouts = set(range(n_cls - nh, n_cls))
     seen = [c for c in range(n_cls) if c not in holdouts]
     return (np.asarray(Xtr, np.float32), np.asarray(ytr),
@@ -161,7 +162,7 @@ def main():
         sign = 1 if ((rr > thr) == (gp > 0)).mean() >= 0.5 else -1
         json.dump(dict(threshold=thr, sign=sign, in_sample_acc=float(best),
                        n_cells=len(rr), k=args.k),
-                  open(os.path.join(OUT, "threshold.json"), "w"), indent=1)
+                  open(os.path.join(OUT, f"threshold{run_tag()}.json"), "w"), indent=1)
         print(f"frozen threshold={thr:.5f} sign={sign:+d} "
               f"in-sample acc={best:.3f} on {len(rr)} cells")
         return
@@ -179,7 +180,7 @@ def main():
                 else "distance"
             preds[cell] = dict(rr_disp=float(rr), predicted=pred)
             print(f"  {cell}: rr_disp={rr:.5f} -> predict {pred}")
-        json.dump(preds, open(os.path.join(OUT, "predictions.json"), "w"),
+        json.dump(preds, open(os.path.join(OUT, f"predictions{run_tag()}.json"), "w"),
                   indent=1)
         print("\npredictions committed; only now run --score")
         return

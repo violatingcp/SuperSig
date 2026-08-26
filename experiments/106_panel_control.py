@@ -27,6 +27,7 @@ negative needs qualifying.
 """
 import os, sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from supersig.holdouts import n_holdout, run_tag
 import argparse
 import importlib
 import numpy as np
@@ -90,7 +91,7 @@ def main():
             spaces = exp77.transfer_cell(ns, ds, base)
             spaces.pop("frozen", None)
             n_cls = 47 if ds == "dtd" else exp44.N_CLASSES[ds]
-            nh = 1 if ds == "galaxy10" else 10
+            nh = n_holdout(ds)
             holdouts = set(range(n_cls - nh, n_cls))
             key_pre = f"{ds}_{base}"
             grids = [None]                       # transfer: dims + refs only
@@ -137,7 +138,7 @@ def main():
                 print(f"  {name:<24}{cm:<6}{fmt(r)}", flush=True)
 
     os.makedirs(os.path.join("logs", "exp106"), exist_ok=True)
-    np.savez(os.path.join("logs", "exp106", "results.npz"),
+    np.savez(os.path.join("logs", "exp106", f"results{run_tag()}.npz"),
              summary=np.array([repr(rows)], dtype=object))
 
     # summary: CIFAR rms/r_llr trajectories vs n, transfer full vs pca

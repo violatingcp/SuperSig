@@ -24,6 +24,7 @@ Contrast cell: cars under the identical protocol (a weak-LID cell).
 """
 import os, sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from supersig.holdouts import n_holdout, run_tag
 import argparse
 import importlib
 import numpy as np
@@ -122,7 +123,7 @@ def main():
     results = {}
     for ds in args.datasets:
         n_cls = 47 if ds == "dtd" else exp44.N_CLASSES[ds]
-        nh = 1 if ds == "galaxy10" else 10
+        nh = n_holdout(ds)
         holdouts = set(range(n_cls - nh, n_cls))
         seen = [c for c in range(n_cls) if c not in holdouts]
         for base in ("dino", "lejepa", "visreg"):
@@ -142,7 +143,7 @@ def main():
                     print(f"    {k:<6} AUC {m:.3f}+-{s:.3f} "
                           f"(min {lo:.3f}, max {hi:.3f})")
     os.makedirs(os.path.join("logs", "exp78"), exist_ok=True)
-    np.savez(os.path.join("logs", "exp78", "results.npz"),
+    np.savez(os.path.join("logs", "exp78", f"results{run_tag()}.npz"),
              summary=np.array([repr(results)], dtype=object))
     print("\nDone.")
 

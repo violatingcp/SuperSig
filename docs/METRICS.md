@@ -97,10 +97,29 @@ anchor AUC), and probe pre -> post.
 
 ## Reporting template
 
-House style = `logs/SUMMARY_TABLES.md`.  For a new study add:
+House style = `logs/SUMMARY_TABLES.md`.
+
+**SPLIT EVERY TABLE BY HOLDOUT REGIME.**  Single-holdout and multi-holdout
+numbers must never share a table.  They reach different conclusions: exp 109
+shows the frozen density-ratio pool clears the purity gate at h5/h10 (0.358)
+but is rate-floored at h1 (0.03), and the quantile-strictness verdict INVERTS
+between them; exp 89 shows "discovery hurts the probe" is multi-holdout-only.
+Pooling them is a category error.  Policy: run single-holdout for every
+dataset; run multi-holdout only for the label-rich ones (cars 196,
+flowers 102, aircraft 100, cifar100 100, dtd 47).
+
+Select the regime with `SUPERSIG_NH` (see `supersig/holdouts.py`); it also
+tags artifacts so the two regimes cannot overwrite each other:
+
+```bash
+python experiments/80_sparker_all_spaces.py ...              # campaign default
+SUPERSIG_NH=1 python experiments/80_sparker_all_spaces.py ...  # -> *_h1.npz
+```
+
+For a new study add:
 
 ```markdown
-## <dataset> (exp NN; <base model>, <dim>, holdout <h>, <epochs> ep)
+## <dataset> (exp NN; <base model>, <dim>, holdout <h> [<single|multi>-holdout], <epochs> ep)
 
 | space | probe pre/post | acc | eucl | mahaT | lid | perevt | SpK@.02 | Maha@.02 | MMD@.02 |
 |-------|----------------|-----|------|-------|-----|--------|---------|----------|---------|
@@ -134,3 +153,11 @@ Artifact conventions (a future session should follow these exactly):
 6. exp-50-family scripts recompute spaces from seeds; retrained spaces
    differ slightly (cuDNN nondeterminism, ~0.01 in AUCs).
 7. Single-seed probe gaps < 0.02 are noise (exp 52).
+8. Never pool single- and multi-holdout numbers in one table (exps 89/109 —
+   the gate is reachable at h5/h10 but rate-floored at h1, and the quantile
+   verdict inverts).  Use `SUPERSIG_NH` so artifacts are tagged and cannot
+   collide.
+9. CIFAR cells built with `pretrain=ds` use hub weights that already saw the
+   HELD-OUT class (`supersig/models.py:80-82`) — backbone-level label leakage.
+   For discovery claims use the from-scratch lineage (exps 67/68,
+   `pretrain=None`), which now carries all three shortlisted objectives.

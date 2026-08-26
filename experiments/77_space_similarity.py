@@ -28,6 +28,7 @@ Modes:
 """
 import os, sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from supersig.holdouts import n_holdout, run_tag
 import argparse
 import importlib
 import numpy as np
@@ -241,25 +242,25 @@ def main():
     rng = np.random.default_rng(0)
 
     if cifar:
-        tag = f"{ds}_{args.dim}d"
+        tag = f"{ds}_{args.dim}d" + run_tag()
         spaces = cifar_cell(args, ds)
         n_cls = recipe(ds, emb_dim=args.dim)["n_classes"]
         holdouts = {args.holdout}
     elif args.cross_base:
-        tag = f"{ds}_crossbase"
+        tag = f"{ds}_crossbase" + run_tag()
         spaces = {}
         for b in ("dino", "lejepa", "visreg"):
             spaces.update(transfer_cell(
                 args, ds, b, arms=["supcon-ft", "ss-ft", "simclr-ft"],
                 prefix=f"{b}:"))
         n_cls = 47 if ds == "dtd" else exp44.N_CLASSES[ds]
-        nh = 1 if ds == "galaxy10" else 10
+        nh = n_holdout(ds)
         holdouts = set(range(n_cls - nh, n_cls))
     else:
-        tag = f"{ds}_{args.base}"
+        tag = f"{ds}_{args.base}" + run_tag()
         spaces = transfer_cell(args, ds, args.base)
         n_cls = 47 if ds == "dtd" else exp44.N_CLASSES[ds]
-        nh = 1 if ds == "galaxy10" else 10
+        nh = n_holdout(ds)
         holdouts = set(range(n_cls - nh, n_cls))
     seen = [c for c in range(n_cls) if c not in holdouts]
     names = list(spaces)

@@ -86,46 +86,58 @@ Expect an honest NEGATIVE result here: exp 68's scratch C100 purities are
 fraction (SparKer only fires at f=0.05).  Report the scratch cell as the
 leakage-free control that shows C100 is genuinely hard, not as a showcase.
 
-### 2. Single holdout in the main draft, multi-holdout in the appendix
+### 2. HOLDOUT POLICY (settled 2026-08-25, PH)
 
-Convention across the campaign: CIFAR = `{4}` (single); transfer = last 10
-classes, EXCEPT galaxy10 = last 1.
+**Framing: REGIME SPLIT, adopted.**  Not main-vs-appendix by holdout count.
+Single-holdout is the hard, low-rate regime where only calibrated per-event
+scoring works; multi-class novelty is the higher-rate regime where pooling
+constructions unlock the purity gate.  The rate floor is a RESULT, not an
+omission.
 
-**PH's belief that the multi-holdout regime reaches different conclusions is
-CONFIRMED**, and specifically on the discovery-loop axis (exps 89/109, the only
-direct same-dataset comparisons):
+Three operational rules:
+
+1. **Every table is split by regime.**  Single-holdout and multi-holdout
+   numbers never share a table.  They reach different conclusions (below), so
+   pooling them is a category error.
+2. **Run single-holdout for EVERYTHING** — all datasets, all cells.  This is
+   the uniform backbone of the paper.
+3. **Multi-holdout only for the label-rich datasets**, where holding out 10
+   classes is a small fraction of the label set and the novel-class rate is
+   high enough to matter: cars (196), flowers (102), aircraft (100),
+   cifar100 (100), dtd (47).  NOT galaxy10 (10 classes — already nh=1).
+
+Evidence the regimes genuinely differ (exps 89/109, the only direct
+same-dataset comparisons):
 - exp 109, frozen density-ratio pool on C100: h5/h10 clear the gate (best r1
   purity **0.358**, r2 0.418, vs the 0.121 distance-grid ceiling), but **h1
   stays at 0.03** — a *rate* floor (~1% class rate), not geometry, so no
   pooling statistic rescues it.
-- the quantile-strictness conclusion **inverts**: strictest q is best at
-  h5/h10, worst at h1.
-- `logs/SUMMARY_TABLES.md:1163-1165` already forks the recipe on exactly this.
+- the quantile-strictness conclusion **inverts**: strictest q best at h5/h10,
+  worst at h1.
 - exp 89: "discovery hurts the probe" (-0.031..-0.038) is multi-holdout-only;
   at h1 the probe delta is ~0.
 No experiment shows the *objective ranking* flipping between regimes.
-Caveat: `118_holdout_audit.py` (written to test holdout-draw stability) has
-**never been run** — no `logs/exp118*`.  Its reassurance is a prediction.
+Caveat: `118_holdout_audit.py` (holdout-DRAW stability, not count) has **never
+been run** — no `logs/exp118*`.  Its reassurance is a prediction.
 
-### 3. THE COLLISION — resolve before drafting
+### 2b. Mechanism (implemented)
 
-Taken literally, the two decisions delete the evidence for two pillars:
+The rule `nh = 1 if ds == "galaxy10" else 10` was duplicated across **22
+experiment files (23 sites)**, so neither regime was runnable on demand and a
+single-holdout run would have **silently overwritten** every multi-holdout
+artifact — including exp-70/71 fine-tune CHECKPOINTS, whose `_seen` suffix
+means "trained excluding the holdouts" (contents differ, name does not), and
+exp-80's resume cache, which would then have reused stale results as valid.
 
-| pillar | holdout count of its evidence | survives single-holdout main? |
-|---|---|---|
-| ss-ft (workhorse) | DTD 0.795/0.803/0.811 and flowers 0.62-0.66 are **10-class** | **NO — no headline number left** |
-| supervised distance-NPLM | galaxy10 = **1-class** | YES (and OOD-to-pretraining) |
-| plain SupCon | mixed: 9 multi + 3 single transfer cells; CIFAR single | partly |
-| frozen density-ratio construction | works at h5/h10, **fails at h1** | **NO** |
+Now centralized in **`supersig/holdouts.py`**.  One env var switches the whole
+battery and tags every artifact it writes:
 
-**Proposed resolution (CC, needs PH sign-off):** do not frame it as
-main-vs-appendix by holdout count.  Frame it as a REGIME SPLIT in the main
-text — single-holdout is the hard, low-rate regime where only calibrated
-per-event scoring works (galaxy10, distance-NPLM); multi-class novelty is the
-higher-rate regime where pooling constructions unlock the gate (DTD/flowers
-ss-ft, C100 density-ratio).  This keeps both constructions in the main text,
-makes the rate floor a *result* rather than an omission, and is a stronger
-claim than either regime alone.  Appendix then holds the full per-regime tables.
+    SUPERSIG_NH=1 python experiments/70_cars_ft_suite.py --dataset dtd ...
+
+With `SUPERSIG_NH` unset, holdout sets and filenames are byte-identical to the
+archive (`run_tag() == ""`), so existing results and resume logic are
+untouched.  Enforced by `tests/test_holdouts.py` (25 tests), which also fails
+if any experiment reintroduces the hardcoded rule.
 
 ## Naming hazard to fix first
 

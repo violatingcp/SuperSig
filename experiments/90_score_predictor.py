@@ -29,6 +29,7 @@ Evaluation only, no training.
 """
 import os, sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from supersig.holdouts import n_holdout, run_tag
 import argparse
 import importlib
 import numpy as np
@@ -95,7 +96,7 @@ def main():
             print(f"!! missing banks for {ds}:{base}, skipping")
             continue
         n_cls = 47 if ds == "dtd" else exp44.N_CLASSES[ds]
-        nh = 1 if ds == "galaxy10" else 10
+        nh = n_holdout(ds)
         cells[f"{ds}:{base}"] = (sp, set(range(n_cls - nh, n_cls)), n_cls)
     if not args.skip_cifar:
         ns = argparse.Namespace(dim=32, arms=[], quick=False)
@@ -145,7 +146,7 @@ def main():
               f"{best * len(names):.0f}/{len(names)}")
 
     os.makedirs(os.path.join("logs", "exp90"), exist_ok=True)
-    np.savez(os.path.join("logs", "exp90", "results.npz"),
+    np.savez(os.path.join("logs", "exp90", f"results{run_tag()}.npz"),
              summary=np.array([repr(rows)], dtype=object))
     print("EXP90 DONE.")
 

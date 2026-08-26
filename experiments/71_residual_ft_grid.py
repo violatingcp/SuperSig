@@ -23,6 +23,7 @@ last 1).  Checkpoints {ds}_ft_{base}_{parent}_res[nplm]_seen.pt.
 """
 import os, sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from supersig.holdouts import n_holdout, run_tag
 import argparse
 import copy
 import importlib
@@ -94,10 +95,10 @@ def main():
     args.ft_epochs = args.ft_epochs or (1 if args.quick else 20)
 
     N_CLS = 47 if DS == "dtd" else exp44.N_CLASSES[DS]
-    n_hold = 1 if DS == "galaxy10" else 10
+    n_hold = n_holdout(DS)
     holdouts = set(range(N_CLS - n_hold, N_CLS))
     seen = [c for c in range(N_CLS) if c not in holdouts]
-    tag = f"{DS}_{BASE}_ft71{exp70.seed_sfx(args)}"
+    tag = f"{DS}_{BASE}_ft71{run_tag()}{exp70.seed_sfx(args)}"
     print(f"exp71 [{tag}] residual ft on exp-70 parents, runs={RUNS}, "
           f"epochs={args.ft_epochs}")
 
@@ -139,7 +140,7 @@ def main():
         key = f"{parent}->{obj}"
         print(f"\n===== [{tag}] {key} =====")
         pck = os.path.join(CKPT_DIR, f"{DS}_ft_{BASE}_{parent}_seen"
-                           f"{exp70.seed_sfx(args)}"
+                           f"{run_tag()}{exp70.seed_sfx(args)}"
                            f"{'_quick' if args.quick else ''}.pt")
         if not os.path.exists(pck):
             print(f"  !! missing parent {pck}, skipping")
@@ -166,7 +167,7 @@ def main():
 
         rck = os.path.join(CKPT_DIR, f"{DS}_ft_{BASE}_{parent}_"
                            f"{obj.replace('-', '')}_seen"
-                           f"{exp70.seed_sfx(args)}"
+                           f"{run_tag()}{exp70.seed_sfx(args)}"
                            f"{'_quick' if args.quick else ''}.pt")
         torch.manual_seed(args.seed + 7); np.random.seed(args.seed + 7)
         child = copy.deepcopy(par)

@@ -17,6 +17,7 @@ post-power grid (per-event / SparKer annealed / Maha / MMD).
 """
 import os, sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from supersig.holdouts import n_holdout, run_tag
 import argparse
 import copy
 import importlib
@@ -83,11 +84,11 @@ def load_cell(ds, base, parent, obj, args):
     sfx = getattr(args, "ckpt_sfx", "")
     par = exp43.FineTuneModel(base, args.emb_dim)
     par.load_state_dict(torch.load(
-        os.path.join(CKPT_DIR, f"{ds}_ft_{base}_{parent}_seen{sfx}.pt"),
+        os.path.join(CKPT_DIR, f"{ds}_ft_{base}_{parent}_seen{run_tag()}{sfx}.pt"),
         map_location=DEVICE))
     child = exp43.FineTuneModel(base, args.emb_dim)
     child.load_state_dict(torch.load(
-        os.path.join(CKPT_DIR, f"{ds}_ft_{base}_{parent}_{obj}_seen{sfx}.pt"),
+        os.path.join(CKPT_DIR, f"{ds}_ft_{base}_{parent}_{obj}_seen{run_tag()}{sfx}.pt"),
         map_location=DEVICE))
     bank_args = argparse.Namespace(quick=False, refresh=args.refresh,
                                    seed=int(sfx[2:]) if sfx else 0)
@@ -139,7 +140,7 @@ def main():
         key = f"{ds}_{base}"
         space = f"{parent}->{obj} {kind}"
         N_CLS = 47 if ds == "dtd" else exp44.N_CLASSES[ds]
-        n_hold = 1 if ds == "galaxy10" else 10
+        n_hold = n_holdout(ds)
         holdouts = set(range(N_CLS - n_hold, N_CLS))
         seen = [c for c in range(N_CLS) if c not in holdouts]
         n_d = 2000 if ds in ("cars", "galaxy10") else 1000
@@ -288,14 +289,14 @@ def main():
     plt.legend()
     plt.grid(alpha=0.25, axis="y")
     plt.tight_layout()
-    out = plot_path(f"exp72_residual_discovery{args.ckpt_sfx}.png")
+    out = plot_path(f"exp72_residual_discovery{run_tag()}{args.ckpt_sfx}.png")
     plt.savefig(out, dpi=150); plt.close()
     print("saved", out)
 
     os.makedirs(os.path.join("logs", "exp72"), exist_ok=True)
     ftag = (("_" + "_".join(k for k in keys)) if args.cells else "") \
         + args.ckpt_sfx
-    np.savez(os.path.join("logs", "exp72", f"residual_discovery{ftag}.npz"),
+    np.savez(os.path.join("logs", "exp72", f"residual_discovery{run_tag()}{ftag}.npz"),
              cells=np.array(keys),
              **{f"{k}_{f}": np.array(all_out[k][f]) for k in keys
                 for f in ("probe_pre", "probe_post", "eucl_pre", "eucl_post",

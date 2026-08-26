@@ -25,6 +25,7 @@ cell, rewritten after every space; existing spaces are skipped.
 """
 import os, sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from supersig.holdouts import n_holdout, run_tag
 import argparse
 import importlib
 import numpy as np
@@ -62,7 +63,7 @@ def cell_spaces(cell, args):
         if ds != "aircraft":                 # e2e arms already have SparKer
             spaces = {k: v for k, v in spaces.items() if k not in E2E_ARMS}
         n_cls = 47 if ds == "dtd" else exp44.N_CLASSES[ds]
-        nh = 1 if ds == "galaxy10" else 10
+        nh = n_holdout(ds)
         holdouts = set(range(n_cls - nh, n_cls))
         fracs = [0.003, 0.01, 0.02, 0.05, 0.1]
         n_d = 2000 if ds in ("cars", "galaxy10") else 1000
@@ -89,7 +90,7 @@ def main():
     os.makedirs(os.path.join("logs", "exp80"), exist_ok=True)
 
     for cell in args.cells.split(","):
-        tag = cell.replace(":", "_")
+        tag = cell.replace(":", "_") + run_tag()
         out_path = os.path.join("logs", "exp80", f"results_{tag}.npz")
         done = {}
         if os.path.exists(out_path) and not args.refresh:
@@ -125,7 +126,7 @@ def main():
 
     print("\n===== EXP80 SUMMARY (SparKer pre-discovery, new spaces) =====")
     for cell in args.cells.split(","):
-        tag = cell.replace(":", "_")
+        tag = cell.replace(":", "_") + run_tag()
         p = os.path.join("logs", "exp80", f"results_{tag}.npz")
         if not os.path.exists(p):
             continue
