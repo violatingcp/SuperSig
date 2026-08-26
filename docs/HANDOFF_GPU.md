@@ -12,7 +12,7 @@ results to `logs/SUMMARY_TABLES.md` in the house style (`docs/METRICS.md`).**
 ## 0. Read first (5 minutes, prevents every known footgun)
 
 1. `supersig/holdouts.py` — the two env vars that control holdouts.
-2. `docs/METRICS.md` "Known pitfalls checklist" — all 9.
+2. `docs/METRICS.md` "Known pitfalls checklist" — all 10.
 3. This section.
 
 ### The two environment variables
@@ -29,7 +29,7 @@ This matters: before this mechanism existed, a single-holdout run would have
 destroyed the multi-holdout fine-tune checkpoints, whose `_seen` suffix means
 "trained excluding the holdouts" — contents differ, filename did not.
 
-### Four rules
+### Five rules
 
 1. **Never pool single- and multi-holdout numbers in one table.**  They reach
    different conclusions (exps 89/109: the purity gate is reachable at h5/h10
@@ -46,11 +46,19 @@ destroyed the multi-holdout fine-tune checkpoints, whose `_seen` suffix means
    - `"ss"` (`docs/LOSSES.md`) = **SimCLR** + SIGReg, unsupervised
    `ssig` in exp 67 is lam=5, i.e. the `ss-ft` twin.
 4. **`--quick` numbers are pipeline checks, never results.**
+5. **Frozen-space runs changed on 2026-08-26.**  "Frozen" now really means
+   frozen: `supersig.train.set_train_mode` puts a fully-frozen backbone in
+   eval() so BatchNorm running statistics stop drifting.  Before the fix the
+   CIFAR ResNet-20 trunk moved embeddings by up to 1.29 (mean |z| 0.52) over 3
+   "frozen" rounds.  Consequence: **archived frozen CIFAR numbers (exps
+   86/92b/109) will not reproduce exactly.**  If you re-run any of them, report
+   the new number and note the change rather than treating a mismatch as a bug.
+   Transfer cells (ViT/LayerNorm) are unaffected and should reproduce.
 
 ### Sanity check before starting
 
 ```bash
-python -m pytest tests/ -q          # expect 137 passed
+python -m pytest tests/ -q          # expect 146 passed
 python supersig/holdouts.py         # prints the default vs SUPERSIG_NH=1 sets
 ```
 
@@ -158,7 +166,13 @@ the hazard exp 118 identified.
 
 Lower priority; run only if A-C finish.
 
+First, the cheap re-validation (exp 127): re-run the frozen density-ratio
+pool now that BN is actually frozen, and compare to archived `logs/exp109/`.
+It is evaluation-only and it re-validates the paper's second construction.
+
 ```bash
+python experiments/109_c100_density_pool.py
+
 python experiments/113_tau_generality.py --save-embs
 python experiments/121_transductive_tuner.py --tau-archive logs/exp113/embs --cell cifar100_on
 python experiments/122_basin_geometry.py --cell cifar100_on

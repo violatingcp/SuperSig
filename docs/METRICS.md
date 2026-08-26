@@ -161,3 +161,13 @@ Artifact conventions (a future session should follow these exactly):
    HELD-OUT class (`supersig/models.py:80-82`) — backbone-level label leakage.
    For discovery claims use the from-scratch lineage (exps 67/68,
    `pretrain=None`), which now carries all three shortlisted objectives.
+10. "Frozen" backbone != frozen embeddings if the trunk has BatchNorm.
+   `requires_grad_(False)` stops the WEIGHTS but not the BN running statistics,
+   which keep accumulating in `.train()` mode; `collect_embeddings` then reads
+   the drifted stats.  On the CIFAR ResNet-20 (21 BN layers) this moved
+   embeddings by up to 1.29 over 3 frozen rounds, against a mean |z| of 0.52.
+   The transfer ViT (LayerNorm) was never affected.  Fixed 2026-08-26:
+   `supersig.train.set_train_mode` puts a fully-frozen backbone in eval mode;
+   pinned by `tests/test_frozen_backbone.py`.  **Frozen CIFAR results archived
+   before that date (exps 86/92b/109) were produced with BN still adapting and
+   will not reproduce exactly on re-run.**

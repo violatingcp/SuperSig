@@ -1530,3 +1530,28 @@ resampling with a wider interval; the exp-109 density-ratio result
 workhorse claim was a favourable alphabetical draw, exactly the exp-118 hazard.
 
 **Cost.**  Low if re-tabulation only; moderate with draws.
+
+### Exp 127 — Re-run the frozen density-ratio pool with BN actually frozen
+
+**Motivation.**  Exps 86/92b/109 froze backbone WEIGHTS but not BatchNorm
+running statistics, so on the CIFAR trunk the "frozen" space still drifted (up
+to 1.29 in embedding units against mean |z| 0.52 over 3 rounds).  The transfer
+cells use a LayerNorm ViT and were exact; only CIFAR is affected.  Fixed
+2026-08-26 (`supersig.train.set_train_mode`).
+
+The exp-109 headline — C100 purity 0.121 -> 0.358, round 2 rising to 0.418 —
+is the evidence for the second of the paper's two constructions, and it was
+produced under the leaky freeze.
+
+**Protocol.**  Re-run `109_c100_density_pool.py` unchanged; the fix is in the
+trainer.  Compare against the archived `logs/exp109/` numbers.
+
+**Prediction.**  The result survives.  The mechanism (critic refit + pool
+growth + anchor updates) does not depend on BN drift, and the transfer cells
+showed the same round-2-rises signature with an exactly frozen ViT.
+
+**Falsifier.**  Purity no longer clears the gate, or round 2 stops rising →
+part of the exp-109 gain came from the space quietly moving, and the
+"frozen density-ratio pool" construction needs restating.
+
+**Cost.**  Low — evaluation-only, no retraining (the space is frozen).
