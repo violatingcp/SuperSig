@@ -58,7 +58,7 @@ destroyed the multi-holdout fine-tune checkpoints, whose `_seen` suffix means
 ### Sanity check before starting
 
 ```bash
-python -m pytest tests/ -q          # expect 146 passed
+python -m pytest tests/ -q          # expect 155 passed
 python supersig/holdouts.py         # prints the default vs SUPERSIG_NH=1 sets
 ```
 
@@ -177,6 +177,28 @@ python experiments/113_tau_generality.py --save-embs
 python experiments/121_transductive_tuner.py --tau-archive logs/exp113/embs --cell cifar100_on
 python experiments/122_basin_geometry.py --cell cifar100_on
 ```
+
+---
+
+## Block E — Exp 128: the pool cut (run on every cell that yields embeddings)
+
+Evaluation-only, minutes.  `tau_quantile=0.95` was inherited from exp 23 and
+never derived; this sweeps it densely against the analytic ceiling
+`purity <= min(1, b/q)`.
+
+```bash
+python experiments/128_pool_cut_optimization.py --selftest        # expect 8 OK
+python experiments/128_pool_cut_optimization.py \
+    --embs logs/exp113/embs/cifar100_on.npz --holdouts 99 --bic
+```
+
+It needs an npz with `tr` / `tr_lab`, which is what `113 --save-embs` writes.
+**If any run in Blocks A/B can cheaply dump its train embeddings in that
+format, do so** -- this analysis is free once the bank exists and it tells us
+whether our purity numbers are limited by the scorer or by an arbitrary cut.
+
+Report per scorer: the best usable cut (highest purity with n_novel >= 100),
+its headroom (purity/ceiling), and the cut-free AUC.
 
 ---
 

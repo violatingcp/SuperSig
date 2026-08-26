@@ -110,8 +110,12 @@ Evidence the regimes genuinely differ (exps 89/109, the only direct
 same-dataset comparisons):
 - exp 109, frozen density-ratio pool on C100: h5/h10 clear the gate (best r1
   purity **0.358**, r2 0.418, vs the 0.121 distance-grid ceiling), but **h1
-  stays at 0.03** — a *rate* floor (~1% class rate), not geometry, so no
-  pooling statistic rescues it.
+  stays at 0.03**.  CAVEAT (exp 128, 2026-08-26): calling this a "rate floor"
+  overstates it.  purity <= min(1, b/q), so at q=0.05, b=0.01 the CEILING is
+  0.20 — a 20x enrichment is available and we measure 3x.  h1 is
+  signal-efficiency blocked, not information-theoretically blocked.  What does
+  bind at h1 is BIC detectability: tightening q to raise purity leaves ~15
+  novel points, too few to be a cluster.  State it that way in the paper.
 - the quantile-strictness conclusion **inverts**: strictest q best at h5/h10,
   worst at h1.
 - exp 89: "discovery hurts the probe" (-0.031..-0.038) is multi-holdout-only;

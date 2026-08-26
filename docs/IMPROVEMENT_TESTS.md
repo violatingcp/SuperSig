@@ -1,4 +1,4 @@
-# Proposed tests to improve performance — exps 81–126
+# Proposed tests to improve performance — exps 81–128
 
 Companion to [QUESTIONS.md](QUESTIONS.md) (whose "open items as of exp 58" list
 this supersedes).  Every entry follows the standard protocol in
@@ -1555,3 +1555,62 @@ part of the exp-109 gain came from the space quietly moving, and the
 "frozen density-ratio pool" construction needs restating.
 
 **Cost.**  Low — evaluation-only, no retraining (the space is frozen).
+
+### Exp 128 — Where should the pool cut actually sit?
+
+> **SCRIPT READY, ALGEBRA VALIDATED (2026-08-26).**  `128_pool_cut_optimization.py`,
+> evaluation-only, `--selftest` green (8 checks) + `tests/test_pool_cut.py` (9).
+> Needs embeddings from a real cell to produce results.
+
+**Motivation.**  `tau_quantile=0.95` has been the pool cut since exp 23 and was
+never derived.  Exp 112 lists it as "swept exp 89 (distance only)"; exp 109
+tried only {0.95, 0.99} for the density scorer.  Three values on a grid that
+skips the whole 0.95-0.99 interval where the h10 optimum evidently lives.
+
+**The algebra.**  With b = base rate, q = pool/N, e_s = signal efficiency:
+
+    purity = e_s*b/q,    E = purity/b = e_s/q,    purity <= min(1, b/q)
+
+At q=0.05, b=0.01 the CEILING is 0.20 (20x) while measured density-ratio purity
+at h1 is 0.030 (E=3.0, e_s=0.15).  **This corrects the "rate floor" framing**:
+h1 is not information-theoretically blocked, it is SIGNAL-EFFICIENCY blocked,
+and the cut is a free parameter sitting far from its own ceiling.  The earlier
+"base rate >= 4%" rule silently treated E~3.5 as a property of the problem
+rather than of one arbitrary cut.
+
+Second constraint: `n_novel = purity*q*N >= n_min` for BIC to find a component.
+h10/q0.99 leaves ~179 novel points; h1/q0.99 leaves ~15.  That is why
+tightening helped at h10 (0.232->0.358) and did nothing at h1 (0.030->0.029).
+Objective: maximize purity(q) s.t. n_novel(q) >= n_min.
+
+**Protocol.**  Feed archived embeddings (`113 --save-embs` format: `tr`,
+`tr_lab`) and sweep q over a dense log+linear grid for all three scorers
+(dist/lid/np), reporting purity, ceiling, headroom, E, e_s, n_novel, the
+campaign's own tau_q cuts for reference, and (with `--bic`) whether BIC
+actually recovers a majority-novel cluster.  Also reports each scorer's
+cut-free novel-vs-seen AUC.
+
+**Prediction.**  (a) The optimum for `np` is tighter than 0.95 on every
+multi-class cell.  (b) Headroom (purity/ceiling) is well below 1 everywhere,
+i.e. the deficit is scorer efficiency, not the cut.  (c) On h1 no q satisfies
+both constraints, so the floor is real but for the n_min reason, not the
+enrichment reason.
+
+**Falsifier.**  Headroom is already ~1 at q=0.05 → the scorers are at their
+ceiling and only the cut was ever wrong; the "improve the scorer" program is
+misdirected.
+
+**Validated synthetically already.**  On a hard synthetic bank (novel class
+adjacent to a seen class, heavy-tailed background) the tool reproduces the
+exp-89/exp-109 inversion from first principles: `dist` has AUC 0.954 yet purity
+**0.000** at tight cuts (tail owned by background outliers, tightening HURTS:
+0.117 -> 0.000), while `np` at AUC 0.9998 improves monotonically under
+tightening (0.168 -> 0.669) with a best usable cut of purity 0.99.
+
+**A caution the synthetic exposed.**  A scorer can have HIGH AUC and still pool
+badly, because AUC is blind to tail structure -- pinned by
+`test_high_auc_can_still_pool_badly`.  So report the operating curve, not AUC
+alone; AUC separates scorer quality from cut choice but does not replace it.
+
+**Cost.**  Minutes, evaluation-only.  Run it on every cell that produces
+embeddings in exps 124/125.
