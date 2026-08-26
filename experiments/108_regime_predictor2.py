@@ -29,7 +29,7 @@ STOP; the regime is declared empirically identifiable but not predictable
 """
 import os, sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from supersig.holdouts import n_holdout, run_tag
+from supersig.holdouts import holdout_set, n_holdout, run_tag
 import argparse
 import importlib
 import numpy as np
@@ -88,7 +88,7 @@ def main():
             sp = exp100.champion_space(ds, base)
             n_cls = 47 if ds == "dtd" else exp44.N_CLASSES[ds]
             nh = n_holdout(ds)
-            holdouts = set(range(n_cls - nh, n_cls))
+            holdouts = holdout_set(ds, n_cls)
         if sp is None:
             print(f"  !! [{cell}] missing banks, skipping")
             continue

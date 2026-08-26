@@ -20,7 +20,7 @@ fixed kernel budget and exp 100's headline needs restating.
 """
 import os, sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from supersig.holdouts import n_holdout, run_tag
+from supersig.holdouts import holdout_set, n_holdout, run_tag
 import argparse
 import importlib
 
@@ -77,7 +77,7 @@ def main():
         Xtr, ytr, Xte, yte = sp
         n_cls = 47 if ds == "dtd" else exp44.N_CLASSES[ds]
         nh = n_holdout(ds)
-        holdouts = set(range(n_cls - nh, n_cls))
+        holdouts = holdout_set(ds, n_cls)
         seen = [c for c in range(n_cls) if c not in holdouts]
         n_d = 2000 if ds in ("cars", "galaxy10") else 1000
         Xtr = np.asarray(Xtr, np.float32); Xte = np.asarray(Xte, np.float32)

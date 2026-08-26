@@ -20,7 +20,7 @@ power-at-fixed-f.
 """
 import os, sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from supersig.holdouts import n_holdout, run_tag
+from supersig.holdouts import holdout_set, n_holdout, run_tag
 import argparse
 import importlib
 import numpy as np
@@ -97,7 +97,7 @@ def main():
             name = "champion"
             n_cls = 47 if ds == "dtd" else exp44.N_CLASSES[ds]
             nh = n_holdout(ds)
-            holdouts = set(range(n_cls - nh, n_cls))
+            holdouts = holdout_set(ds, n_cls)
             n_d = 2000 if ds in ("cars", "galaxy10") else 1000
             fracs = FRACS
         if sp is None:

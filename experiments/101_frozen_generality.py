@@ -19,7 +19,7 @@ per-event GAIN on some cells -> exp 86 is a regime result, not a recipe.
 """
 import os, sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from supersig.holdouts import n_holdout, run_tag
+from supersig.holdouts import holdout_set, n_holdout, run_tag
 import argparse
 import copy
 import importlib
@@ -99,7 +99,7 @@ def main():
             parent, obj, kind = exp72.WINNERS[(ds, base)]
             n_cls = 47 if ds == "dtd" else exp44.N_CLASSES[ds]
             nh = n_holdout(ds)
-            holdouts = set(range(n_cls - nh, n_cls))
+            holdouts = holdout_set(ds, n_cls)
             ft_ep = 1 if args.quick else 5
             bb0, Xtr, ytr, Xte, yte = exp72.load_cell(ds, base, parent,
                                                       obj, args)

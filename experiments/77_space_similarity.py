@@ -28,7 +28,7 @@ Modes:
 """
 import os, sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from supersig.holdouts import n_holdout, run_tag
+from supersig.holdouts import holdout_set, n_holdout, run_tag
 import argparse
 import importlib
 import numpy as np
@@ -255,13 +255,13 @@ def main():
                 prefix=f"{b}:"))
         n_cls = 47 if ds == "dtd" else exp44.N_CLASSES[ds]
         nh = n_holdout(ds)
-        holdouts = set(range(n_cls - nh, n_cls))
+        holdouts = holdout_set(ds, n_cls)
     else:
         tag = f"{ds}_{args.base}" + run_tag()
         spaces = transfer_cell(args, ds, args.base)
         n_cls = 47 if ds == "dtd" else exp44.N_CLASSES[ds]
         nh = n_holdout(ds)
-        holdouts = set(range(n_cls - nh, n_cls))
+        holdouts = holdout_set(ds, n_cls)
     seen = [c for c in range(n_cls) if c not in holdouts]
     names = list(spaces)
     print(f"exp77 [{tag}] {len(names)} spaces: {names}")

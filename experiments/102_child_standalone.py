@@ -21,7 +21,7 @@ scored on its own (the concat was doing the work).
 """
 import os, sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from supersig.holdouts import n_holdout, run_tag
+from supersig.holdouts import holdout_set, n_holdout, run_tag
 import argparse
 import importlib
 import numpy as np
@@ -72,7 +72,7 @@ def main():
         key = cell.replace(":", "_")
         n_cls = 47 if ds == "dtd" else exp44.N_CLASSES[ds]
         nh = n_holdout(ds)
-        holdouts = set(range(n_cls - nh, n_cls))
+        holdouts = holdout_set(ds, n_cls)
         seen = [c for c in range(n_cls) if c not in holdouts]
         n_d = 2000 if ds in ("cars", "galaxy10") else 1000
         c_tr = exp77.head_emb(ds, base, f"{parent}_{obj}", args.emb_dim,

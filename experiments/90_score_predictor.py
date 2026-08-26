@@ -29,7 +29,7 @@ Evaluation only, no training.
 """
 import os, sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from supersig.holdouts import n_holdout, run_tag
+from supersig.holdouts import holdout_set, n_holdout, run_tag
 import argparse
 import importlib
 import numpy as np
@@ -97,7 +97,7 @@ def main():
             continue
         n_cls = 47 if ds == "dtd" else exp44.N_CLASSES[ds]
         nh = n_holdout(ds)
-        cells[f"{ds}:{base}"] = (sp, set(range(n_cls - nh, n_cls)), n_cls)
+        cells[f"{ds}:{base}"] = (sp, holdout_set(ds, n_cls), n_cls)
     if not args.skip_cifar:
         ns = argparse.Namespace(dim=32, arms=[], quick=False)
         for ds, dim, cat in (("cifar10", 32, "res-cat"),

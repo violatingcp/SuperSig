@@ -25,7 +25,7 @@ cell, rewritten after every space; existing spaces are skipped.
 """
 import os, sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from supersig.holdouts import n_holdout, run_tag
+from supersig.holdouts import holdout_set, n_holdout, run_tag
 import argparse
 import importlib
 import numpy as np
@@ -64,7 +64,7 @@ def cell_spaces(cell, args):
             spaces = {k: v for k, v in spaces.items() if k not in E2E_ARMS}
         n_cls = 47 if ds == "dtd" else exp44.N_CLASSES[ds]
         nh = n_holdout(ds)
-        holdouts = set(range(n_cls - nh, n_cls))
+        holdouts = holdout_set(ds, n_cls)
         fracs = [0.003, 0.01, 0.02, 0.05, 0.1]
         n_d = 2000 if ds in ("cars", "galaxy10") else 1000
     seen = [c for c in range(n_cls) if c not in holdouts]

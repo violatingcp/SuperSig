@@ -23,7 +23,7 @@ last 1).  Checkpoints {ds}_ft_{base}_{parent}_res[nplm]_seen.pt.
 """
 import os, sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from supersig.holdouts import n_holdout, run_tag
+from supersig.holdouts import holdout_set, n_holdout, run_tag
 import argparse
 import copy
 import importlib
@@ -96,7 +96,7 @@ def main():
 
     N_CLS = 47 if DS == "dtd" else exp44.N_CLASSES[DS]
     n_hold = n_holdout(DS)
-    holdouts = set(range(N_CLS - n_hold, N_CLS))
+    holdouts = holdout_set(DS, N_CLS)
     seen = [c for c in range(N_CLS) if c not in holdouts]
     tag = f"{DS}_{BASE}_ft71{run_tag()}{exp70.seed_sfx(args)}"
     print(f"exp71 [{tag}] residual ft on exp-70 parents, runs={RUNS}, "
