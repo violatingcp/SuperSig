@@ -1254,6 +1254,16 @@ ratio across tau.  That is a different legality class and is exp 121.
 > **Exp 113 has been patched with `--save-embs`; the tau test proper is a GPU
 > re-run away and remains the deciding experiment.**
 
+> **TAU-AXIS TEST DONE 2026-08-25 (GPU box) — FALSIFIER FIRES; the selection
+> thread is CLOSED.**  Fresh C100 sweep with embeddings (basin replicates:
+> on-marginal 0.218→0.512–0.528 plateau, off flat).  On the decisive cell the
+> oracle is tau=1.0 and none of the four transductive criteria select it; the
+> predicted winner `t_np` picks 0.1 (its third failure as a selector).  The
+> control cell closes the loophole: `mmd` and `tail_mass` pick the same tau
+> whether or not a basin exists — constant preferences, not detection.  With
+> exps 115/120: the basin is invisible to every label-free rule constructed,
+> seen-only or transductive.  Permanently a loss-landscape finding.
+
 
 **Motivation.**  Exp 120 restricted selection to seen TRAINING classes.  But a
 deployed pipeline does have the unlabelled evaluation pool -- it just has no
@@ -1279,7 +1289,16 @@ embeddings; one sweep otherwise.  **The natural next run.**
 
 ### Exp 122 — What IS the basin geometry?
 
-> **SCRIPTED, not run** — needs exp 113 re-run with `--save-embs`.
+> **DONE 2026-08-25 (GPU box) — PREDICTION HOLDS, with the control cell
+> showing the alternative.**  Basin cell: anisotropy 6.4→2494.6 while the
+> between-class alignment with the top eigendirections FALLS (0.732→0.467 at
+> tau=0.3; endpoint d=−0.177) — structured anti-isotropy, exactly what the
+> tied-covariance whitened distance rewards, and why mahaT works at rms~0.5
+> where forcing unit width (exp 105) was decorative.  Control cell (no
+> marginal): anisotropy explodes to 4.8e5 with alignment saturating at 1.000 —
+> unstructured collapse.  The SIGReg marginal is what STRUCTURES the
+> anisotropy; "looser interaction" is not the whole story.  Caveat: align is
+> non-monotone on-cell (0.699 at tau=1.0); cleanest row is tau=0.3.
 
 **Motivation.**  We have the best single-loss C100 both-currencies space on
 record and no account of *why* it works beyond "a looser interaction lets the
@@ -1322,6 +1341,16 @@ whole story and there is nothing further to characterise.
 > heterogeneous datasets, dims and protocols, and pooled correlations across
 > such cells can invert within them (Simpson's paradox), so a per-dataset
 > replication is needed before this is load-bearing.
+
+> **PER-DATASET REPLICATION DONE 2026-08-25 (`--per-dataset`) — the Simpson
+> inversion is REAL and the taxonomy verdict softens.**  Within cifar100
+> (n=44) within-currency correlation DOMINATES (0.515 vs 0.280; bar +0.1
+> met); cifar10 and the transfer pool show the same positive sign below the
+> bar.  Dimensionality is rock-solid in every group (k80 = 3-4, Kaiser 2-3).
+> Refined statement: the battery spans ~3 empirical dimensions and the
+> currency labels align with them within homogeneous cells (clearly on C100,
+> weakly elsewhere); pooled correlations understate the alignment.  Caveat (i)
+> stands: 3 of 4 currencies audited.
 
 
 **Motivation.**  The paper's organising claim is that a discovery-ready space

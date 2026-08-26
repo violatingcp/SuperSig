@@ -1495,3 +1495,109 @@ epochs) x 3 seeds x {c100, c10}, effects as change low->high:
 - The script's printed alias caveat is kept with the archived tables;
   the headline terms (tau main, tau x lam) are large enough that
   de-aliasing by foldover would not change the ranking.
+
+Exp 120 (`120_seen_only_tuner.py`, 2026-08-25; the thread exp 115 left
+open): can ANY open-world-legal tuner find the temperature basin? --
+PREDICTION FALSIFIED; exp 115's verdict HARDENS.  Analysis-only over
+the exp-113 archive (no retraining), five seen-only panel criteria
+(rms->1, sw->1, slope->1, ece->0, sep max) vs an illegal
+probe-constrained oracle:
+
+  DECISIVE CELL cifar100+marginal (the basin cell, exps 110/113):
+    oracle: tau=3.0  (mahaT 0.510, perevt 0.043, probe 0.926)
+    ALL FIVE legal criteria pick tau=0.1
+            (mahaT 0.398, perevt 0.000, probe 0.882)
+  cifar10+marginal: oracle tau=3.0, no legal criterion finds it.
+  The two marginal-off cells have no basin; the criteria that "find"
+  their oracles (sw on c10, ece on c100) are matching a default, not
+  discovering anything.
+
+- The predicted winner (sw -> 1) fails like the rest.  Sharper: in
+  the basin cell tau=0.1 is the MOST faithful space by every panel
+  column (ece 0.077, sw 1.44, rms 0.590 nearest 1) and the WORST
+  detector -- seen-class fidelity and novelty calibration do not
+  merely dissociate, they point in opposite directions.
+- Consequence for the paper: the tau=1.0/3.0 recipe is a finding
+  about the loss landscape, NOT a deployable recipe -- it is
+  selectable only with novelty labels, by exactly the party that does
+  not need it.  Exp 115's caveat line is closed.
+- Reproduced here from the committed exp-113 npz archive; matches the
+  laptop run recorded in IMPROVEMENT_TESTS.md (including its
+  probe-constrained-oracle correction).  Next legality class up --
+  transductive criteria using the unlabelled pool -- is proposed as
+  exp 121, not run.
+
+Exp 113-embs re-run (2026-08-25, `--save-embs`, tags embs-on/off):
+fresh C100 tau sweep with archived embeddings for exps 121/122.
+Independent replication of the basin: on-marginal mahaT 0.218@0.05 ->
+0.512-0.528 plateau (tau 0.3-1.0) -> 0.471@3.0; off-marginal flat
+0.346-0.439.  Archive: logs/exp113/embs/ (30 runs).
+
+Exp 121 (`121_transductive_tuner.py --tau-archive`, 2026-08-25;
+IMPROVEMENT_TESTS #121, the tau-axis test the laptop run deferred):
+FALSIFIER FIRES -- the basin is invisible to transductive selection
+too.  Decisive cell cifar100_on (oracle tau=1.0, mahaT 0.528):
+
+  t_np      picks 0.1    (the predicted winner; third failure as a
+                          selector after exps 98 and 121-mechanism)
+  mmd       picks 0.3    lid_disp picks 0.05    tail_mass picks 3.0
+
+- The control cell (cifar100_off, no basin) is what closes the
+  argument: mmd picks 0.3 and tail_mass picks 3.0 THERE TOO -- these
+  criteria return the same tau whether or not a basin exists, so
+  their near-plateau landings on the basin cell are constant
+  preferences, not detection.
+- Combined with exp 120 (five seen-only criteria) and exp 115
+  (accuracy): the tau basin is invisible to EVERY label-free
+  selection rule constructed -- seen-only or transductive.  The
+  tau=1.0 recipe is permanently a loss-landscape finding, not a
+  deployable method; the paper should say exactly that and the
+  selection thread is CLOSED.
+
+Exp 122 (`122_basin_geometry.py`, 2026-08-25; IMPROVEMENT_TESTS
+#122): the basin geometry is STRUCTURED anisotropy -- prediction
+holds, and the control cell shows the alternative.
+
+  cifar100_on   tau 0.1->1.0: aniso 6.4 -> 2494.6 while align_topk
+                FALLS (0.732@0.05 -> 0.467@0.3; endpoint d=-0.177) --
+                the between-class signal moves INTO the low-variance
+                directions.  That is exactly the geometry a
+                tied-covariance whitened distance rewards, and why
+                mahaT works at rms~0.5 where unit width (exp 105) is
+                decorative.
+  cifar100_off  aniso explodes to 4.8e5 and align_topk saturates to
+                1.000: without the marginal, high tau is unstructured
+                collapse onto the between-class subspace.
+
+- Verdict: "looser interaction" is NOT the whole story -- the SIGReg
+  marginal is what STRUCTURES the anisotropy.  The best C100 space
+  works by an anti-isotropic mechanism the program's stated ideal
+  does not describe; the paper's geometry section should carry this.
+- Caveat: align_topk is non-monotone on-cell (0.699 at tau=1.0); the
+  cleanest basin row is tau=0.3.  Verdicts are endpoint-based per the
+  script's pre-stated measure.
+
+Exp 123 addendum (`123_currency_independence.py --per-dataset`,
+2026-08-25): the per-dataset Simpson control the laptop run asked for
+-- THE INVERSION IS REAL; the pooled taxonomy verdict softens.
+
+  group      n   within  between   k80  kaiser     (min-cov 0.35 | 0.2)
+  cifar100  44   0.515    0.280     3     3        (0.463/0.261 at 0.2)
+  other     40   0.423    0.366     3     2-3
+  cifar10   38   0.329    0.250     4     2-3
+
+- Pooled, within ~ between (0.34 vs 0.30): "labels do not carve the
+  space".  Within datasets the sign is POSITIVE in all three groups
+  and within-currency correlation DOMINATES (>+0.1) in cifar100 --
+  the taxonomy does carve the metric space inside the homogeneous
+  cell with the most spaces; pooling across datasets was washing it
+  out (datasets shift all metrics jointly).
+- The DIMENSIONALITY claim is rock-solid either way: 3 components for
+  80% variance in every group (k80 3-4, Kaiser 2-3), matching the
+  pooled scree and the predicted three factors.
+- Refined statement for the paper: the battery spans ~3 empirical
+  dimensions; the currency labels align with them within homogeneous
+  cells (clearly on C100, weakly elsewhere) and pooled correlations
+  understate that alignment.  Standing caveat unchanged:
+  discoverability (purity/margin) never clears coverage, so this
+  audits 3 of the 4 currencies.

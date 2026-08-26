@@ -73,10 +73,40 @@ def harvest():
             for sp, mm in acc.items()}
 
 
+DATASETS = ["cifar100", "cifar10", "aircraft", "cars", "flowers", "dtd",
+            "galaxy10", "food101"]          # cifar100 before cifar10
+
+
+def dataset_of(space_key):
+    for ds in DATASETS:
+        if ds in space_key:
+            return ds
+    return "other"
+
+
+def stats(C, keep):
+    """(within, between, k80, kaiser) for one correlation matrix."""
+    wi, bt = [], []
+    for i in range(len(keep)):
+        for j in range(i + 1, len(keep)):
+            (wi if CURRENCY[keep[i]] == CURRENCY[keep[j]] else bt).append(
+                abs(C[i, j]))
+    ev = np.clip(np.linalg.eigvalsh(C)[::-1], 0, None)
+    frac = ev / ev.sum()
+    k80 = int(np.searchsorted(np.cumsum(frac), 0.80) + 1)
+    return (float(np.mean(wi)), float(np.mean(bt)), k80,
+            int((ev > 1.0).sum()))
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--min-cov", type=float, default=0.5,
                     help="keep metrics present on >= this fraction of spaces")
+    ap.add_argument("--per-dataset", action="store_true",
+                    help="Simpson control: replicate the within/between "
+                         "contrast and scree INSIDE each dataset group")
+    ap.add_argument("--min-rows", type=int, default=10,
+                    help="per-dataset mode: minimum complete spaces per group")
     ap.add_argument("--out", default="logs/exp123")
     args = ap.parse_args()
 
@@ -127,6 +157,47 @@ def main():
                    scree=[float(x) for x in frac], k80=k80, kaiser=kaiser,
                    corr=C.tolist()),
               open(os.path.join(args.out, "results.json"), "w"), indent=1)
+
+    if args.per_dataset:
+        print("\n=== per-dataset replication (Simpson control) ===")
+        groups = collections.defaultdict(list)
+        for sp in rows:
+            groups[dataset_of(sp)].append(sp)
+        print(f"  {'dataset':<10}{'n':>5}{'within':>9}{'between':>9}"
+              f"{'k80':>5}{'kaiser':>7}")
+        per = {}
+        for ds in sorted(groups, key=lambda d: -len(groups[d])):
+            g = groups[ds]
+            if len(g) < args.min_rows:
+                print(f"  {ds:<10}{len(g):>5}   (below --min-rows, skipped)")
+                continue
+            Xg = np.array([[spaces[sp][m] for m in keep] for sp in g], float)
+            sd = Xg.std(0)
+            ok = sd > 1e-9                     # drop constant metrics in-group
+            kg = [m for m, o in zip(keep, ok) if o]
+            if len(kg) < 4 or len({CURRENCY[m] for m in kg}) < 2:
+                print(f"  {ds:<10}{len(g):>5}   (metrics degenerate, skipped)")
+                continue
+            Zg = (Xg[:, ok] - Xg[:, ok].mean(0)) / sd[ok]
+            wi_g, bt_g, k80_g, ka_g = stats(np.corrcoef(Zg.T), kg)
+            per[ds] = dict(n=len(g), within=wi_g, between=bt_g,
+                           k80=k80_g, kaiser=ka_g, metrics=kg)
+            print(f"  {ds:<10}{len(g):>5}{wi_g:>9.3f}{bt_g:>9.3f}"
+                  f"{k80_g:>5}{ka_g:>7}")
+        if per:
+            inv = [d for d, r in per.items() if r["within"] > r["between"]
+                   + 0.1]
+            print(f"\n  pooled said within ~ between; groups where within "
+                  f"DOMINATES (>+0.1): {inv if inv else 'NONE'}")
+            print("  -> pooled conclusion " +
+                  ("INVERTS within some datasets (Simpson): per-dataset "
+                   "taxonomy verdicts differ" if inv else
+                   "REPLICATES within datasets: no Simpson inversion; the "
+                   "taxonomy non-validation is not a pooling artifact"))
+            os.makedirs(args.out, exist_ok=True)
+            json.dump(per, open(os.path.join(args.out,
+                                             "per_dataset.json"), "w"),
+                      indent=1)
 
     print("\n=== verdict ===")
     n_cur = len({CURRENCY[m] for m in keep})
