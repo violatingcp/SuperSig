@@ -53,6 +53,7 @@ DEFAULT_NH = 10
 PER_DATASET_NH = {"galaxy10": 1}
 
 ENV_VAR = "SUPERSIG_NH"
+DRAW_VAR = "SUPERSIG_HOLDOUT_DRAW"
 
 
 def _env_nh():
@@ -81,28 +82,63 @@ def n_holdout(ds, nh=None):
     return PER_DATASET_NH.get(ds, DEFAULT_NH)
 
 
-def holdout_set(ds, n_cls, nh=None):
-    """The held-out class ids: the last `n_holdout(ds)` of `n_cls`.
+def _env_draw():
+    v = os.environ.get(DRAW_VAR, "").strip()
+    if not v:
+        return None
+    try:
+        return int(v)
+    except ValueError:
+        raise ValueError(f"{DRAW_VAR}={v!r} is not an integer")
 
-    Clamped to n_cls - 1 so at least one class is always seen.
+
+def holdout_set(ds, n_cls, nh=None, draw=None):
+    """The held-out class ids.
+
+    Default (draw=None): the LAST `n_holdout(ds)` classes -- the campaign rule,
+    reproduced exactly.  Clamped to n_cls - 1 so at least one class is seen.
+
+    With a `draw` index (or $SUPERSIG_HOLDOUT_DRAW), the holdouts are instead a
+    RANDOM subset chosen by a generator seeded on (ds, n_cls, k, draw).
+
+    WHY DRAWS EXIST.  Exp 118 found that draw-to-draw spread exceeds seed
+    spread -- WHICH class is held out matters more than the training seed
+    (probe sd ~0.019; mahaT 0.391-0.569 across draws vs 0.001-0.010 across
+    seeds).  That is tolerable when 10 classes are held out and the draw
+    averages over them, but under nh=1 the entire result rests on ONE class.
+    Single-holdout numbers therefore need an interval over draws, not just over
+    seeds.  Seeding on the dataset identity keeps draw d comparable across
+    arms and bases within a dataset, so comparisons stay paired.
     """
     k = min(n_holdout(ds, nh), int(n_cls) - 1)
-    return set(range(int(n_cls) - k, int(n_cls)))
+    d = draw if draw is not None else _env_draw()
+    if d is None:
+        return set(range(int(n_cls) - k, int(n_cls)))
+    import hashlib as _hl
+    import numpy as _np
+    # NOT hash(): Python randomizes string hashing per process (PYTHONHASHSEED),
+    # which would silently give draw d a DIFFERENT holdout class on every run.
+    key = f"{ds}|{int(n_cls)}|{int(k)}|{int(d)}".encode()
+    seed = int.from_bytes(_hl.blake2b(key, digest_size=4).digest(), "big")
+    rng = _np.random.default_rng(seed)
+    return set(int(c) for c in rng.choice(int(n_cls), size=k, replace=False))
 
 
-def seen_classes(ds, n_cls, nh=None):
-    h = holdout_set(ds, n_cls, nh)
+def seen_classes(ds, n_cls, nh=None, draw=None):
+    h = holdout_set(ds, n_cls, nh, draw)
     return [c for c in range(int(n_cls)) if c not in h]
 
 
-def run_tag(nh=None):
+def run_tag(nh=None, draw=None):
     """Filename suffix distinguishing a non-default holdout run.
 
     Empty when the campaign default is in force, so existing artifact names and
-    resume logic are byte-identical.  `"_h1"` under SUPERSIG_NH=1, etc.
+    resume logic are byte-identical.  `"_h1"` under SUPERSIG_NH=1, `"_h1_d3"`
+    with draw 3, `"_d3"` for a default-nh run of draw 3.
     """
     n = nh if nh is not None else _env_nh()
-    return "" if n is None else f"_h{int(n)}"
+    d = draw if draw is not None else _env_draw()
+    return ("" if n is None else f"_h{int(n)}") + ("" if d is None else f"_d{int(d)}")
 
 
 def regime(ds, n_cls=None, nh=None):
@@ -110,11 +146,11 @@ def regime(ds, n_cls=None, nh=None):
     return "single" if n_holdout(ds, nh) == 1 else "multi"
 
 
-def describe(ds, n_cls, nh=None):
-    h = sorted(holdout_set(ds, n_cls, nh))
+def describe(ds, n_cls, nh=None, draw=None):
+    h = sorted(holdout_set(ds, n_cls, nh, draw))
     return (f"{ds}: {len(h)} holdout(s) {h[0]}..{h[-1]} of {n_cls} "
             f"[{regime(ds, n_cls, nh)}-holdout regime]"
-            + (f", tag '{run_tag(nh)}'" if run_tag(nh) else ""))
+            + (f", tag '{run_tag(nh, draw)}'" if run_tag(nh, draw) else ""))
 
 
 def _selftest():

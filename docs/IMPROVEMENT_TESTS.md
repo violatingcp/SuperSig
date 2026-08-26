@@ -1,4 +1,4 @@
-# Proposed tests to improve performance — exps 81–123
+# Proposed tests to improve performance — exps 81–126
 
 Companion to [QUESTIONS.md](QUESTIONS.md) (whose "open items as of exp 58" list
 this supersedes).  Every entry follows the standard protocol in
@@ -1441,3 +1441,92 @@ class-structure-preserving redesign before any attempt.
 Standing item resolved 2026-08-21: `tests/test_calibration.py` HAS been
 executed on this machine — full suite green (103 passed) both at merge time
 and after; the identities it pins are verified.
+
+---
+
+## Tier 9 — the paper-facing runs (exps 124-126)
+
+Added 2026-08-26 after the paper restructure.  These are not exploratory: each
+one exists because a decision about the ICLR draft depends on it.  Unlike
+Tiers 1-8 these are **required for the paper to be honest**, not optional
+upside.
+
+Two mechanisms landed with this tier (`supersig/holdouts.py`, 34 tests):
+`SUPERSIG_NH` selects the holdout REGIME and `SUPERSIG_HOLDOUT_DRAW` selects
+WHICH classes are held out.  Both tag every artifact they write, so no run can
+overwrite another.  With both unset the campaign default is reproduced exactly.
+
+### Exp 124 — The leakage-free shortlist on a scratch trunk
+
+**Motivation.**  Every CIFAR cell built with `pretrain=ds` uses hub weights
+that already saw the HELD-OUT class (`supersig/models.py:80-82`) — backbone
+label leakage in exactly the cells used to demonstrate discovery.  Exp 67/68
+is the clean lineage but originally carried only one of the three shortlisted
+objectives.  `ssig` (= exp-70 `ss-ft`) and `nplmsd` (= `nplm-sup-ft`) were
+added 2026-08-25 and verified objective-identical to their fine-tune twins.
+
+**Protocol.**
+    python experiments/67_scratch_pretrain.py --arms supcon ssig nplmsd
+    python experiments/68_scratch_discovery.py --bases supcon,ssig,nplmsd
+CIFAR-100, 100-D, single holdout {4}, 200 ep, `pretrain=None`.
+
+**Prediction.**  Purities stay ~0.00-0.01, far under the 0.15 gate, and
+per-event stays dead — C100 at h1 is rate-floored (exp 109).  `ssig` beats
+`supcon` on probe, as `supcon_sigreg` does on 2/3 clean bases in exp 50 but
+NOT on hub-init trunks.  This is the SIGReg-earns-its-keep-on-honest-trunks
+claim, on the objective the paper actually shortlists.
+
+**Falsifier.**  `ssig` does NOT beat `supcon` on a clean trunk → the exp-50
+scratch-base result was an artifact of head-on-frozen-base training and the
+workhorse claim loses its leakage-free support.
+
+**Cost.**  2 x 200-epoch pretrains + one discovery pass.
+
+### Exp 125 — The single-holdout battery, with draws
+
+**Motivation.**  The paper adopts the REGIME SPLIT: single-holdout is the hard
+low-rate regime, multi-holdout the higher-rate regime where pooling unlocks the
+gate.  Single-holdout must be run for EVERY dataset to be the uniform backbone.
+Critically, exp 118 found draw-to-draw spread EXCEEDS seed spread (probe sd
+~0.019, mahaT 0.391-0.569 across draws vs 0.001-0.010 across seeds).  Under
+nh=1 the whole result rests on ONE class, so single-holdout numbers need an
+interval over DRAWS, not seeds.
+
+**Protocol.**  For each dataset, >= 3 draws (5 preferred):
+    for D in 0 1 2 3 4; do
+      SUPERSIG_NH=1 SUPERSIG_HOLDOUT_DRAW=$D python experiments/70_cars_ft_suite.py --dataset dtd --base dino
+    done
+then 71/72 (residual), 80 (SparKer), 100 (reach), 104 (panel).  Artifacts land
+tagged `_h1_d{D}`.  Report mean +- sd ACROSS DRAWS.
+
+**Prediction.**  Positive discovery survives on galaxy10 (rate 1/10) and dies on
+the label-rich cells (rate 1/196 on cars, 1/102 on flowers) — the rate floor
+generalizing beyond C100.  Draw sd will be the dominant uncertainty and larger
+than most arm-to-arm gaps in the single-holdout tables.
+
+**Falsifier.**  Label-rich single-holdout cells clear the purity gate → the
+rate floor is C100-specific and the regime split is the wrong framing.
+
+**Cost.**  High — this is the bulk of the remaining GPU budget.  Prioritize
+galaxy10 (cheapest, most informative) then dtd, then flowers/cars/aircraft.
+
+### Exp 126 — Multi-holdout, restricted and re-tabulated
+
+**Motivation.**  Multi-holdout is kept ONLY for the label-rich datasets, where
+10 classes is a small fraction of the label set: cars (196), flowers (102),
+aircraft (100), cifar100 (100), dtd (47).  Most of this data already exists at
+the campaign default; the work is re-tabulation into regime-separated tables
+plus draw intervals where they are missing.
+
+**Protocol.**  Mostly evaluation-only re-harvest of archived npz into the new
+table format.  Add draws (`SUPERSIG_HOLDOUT_DRAW`) where a headline number
+currently rests on one alphabetical draw.
+
+**Prediction.**  The ss-ft DTD purities (0.795/0.803/0.811) survive draw
+resampling with a wider interval; the exp-109 density-ratio result
+(0.358 -> 0.418) survives.
+
+**Falsifier.**  The DTD purities move outside their draw interval → the
+workhorse claim was a favourable alphabetical draw, exactly the exp-118 hazard.
+
+**Cost.**  Low if re-tabulation only; moderate with draws.

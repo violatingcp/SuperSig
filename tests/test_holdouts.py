@@ -17,7 +17,7 @@ import glob
 import pytest
 
 from supersig.holdouts import (n_holdout, holdout_set, seen_classes, run_tag,
-                               regime, describe, ENV_VAR)
+                               regime, describe, ENV_VAR, DRAW_VAR)
 
 # (dataset, n_classes, the holdout set the campaign used before this module)
 CAMPAIGN = [
@@ -138,3 +138,92 @@ def test_experiments_using_the_helper_also_import_it():
         if uses and "from supersig.holdouts import" not in s:
             bad.append(os.path.basename(fn))
     assert not bad, f"use helper without importing it: {bad}"
+
+
+# ---------------------------------------------------------------- draws
+
+
+@contextlib.contextmanager
+def draw_env(value):
+    old = os.environ.get(DRAW_VAR)
+    if value is None:
+        os.environ.pop(DRAW_VAR, None)
+    else:
+        os.environ[DRAW_VAR] = str(value)
+    try:
+        yield
+    finally:
+        os.environ.pop(DRAW_VAR, None)
+        if old is not None:
+            os.environ[DRAW_VAR] = old
+
+
+def test_draw_is_reproducible_across_processes():
+    """The bug this pins: hash() randomizes strings per process, so a draw
+    seeded with hash() silently picks a different class on every run."""
+    import subprocess, sys, os as _os
+    root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    code = ("import sys; sys.path.insert(0, %r);"
+            "from supersig.holdouts import holdout_set;"
+            "print(sorted(holdout_set('cifar100', 100, nh=1, draw=3)))" % root)
+    outs = set()
+    for hs in ("0", "1", "12345"):
+        e = dict(_os.environ, PYTHONHASHSEED=hs)
+        outs.add(subprocess.run([sys.executable, "-c", code], env=e,
+                                capture_output=True, text=True).stdout.strip())
+    assert len(outs) == 1, f"draw not reproducible across PYTHONHASHSEED: {outs}"
+
+
+def test_draws_differ_from_each_other_and_from_default():
+    with env(1):
+        default = holdout_set("cifar100", 100)
+        drawn = [frozenset(holdout_set("cifar100", 100, draw=d)) for d in range(8)]
+        assert len(set(drawn)) > 1, "all draws identical"
+        assert any(set(x) != default for x in drawn)
+
+
+def test_draw_respects_holdout_count_and_bounds():
+    for nh in (1, 5, 10):
+        with env(nh):
+            for d in range(5):
+                h = holdout_set("cifar100", 100, draw=d)
+                assert len(h) == nh
+                assert all(0 <= c < 100 for c in h)
+
+
+def test_draw_tag_is_distinct_so_draws_cannot_overwrite():
+    tags = set()
+    with env(1):
+        tags.add(run_tag())
+        for d in range(5):
+            tags.add(run_tag(draw=d))
+    assert len(tags) == 6, tags
+
+
+def test_draw_env_var_matches_explicit_argument():
+    with env(1):
+        explicit = holdout_set("dtd", 47, draw=2)
+        with draw_env(2):
+            assert holdout_set("dtd", 47) == explicit
+
+
+def test_default_unaffected_by_draw_var_being_unset():
+    with env(None), draw_env(None):
+        assert holdout_set("dtd", 47) == set(range(37, 47))
+        assert run_tag() == ""
+
+
+def test_draw_is_paired_across_arms_within_a_dataset():
+    """Draw d must give the same holdout for every arm/base, or comparisons
+    stop being paired.  It depends only on (ds, n_cls, k, d)."""
+    with env(1):
+        a = holdout_set("flowers", 102, draw=4)
+        b = holdout_set("flowers", 102, draw=4)
+        assert a == b
+
+
+@pytest.mark.parametrize("bad", ["abc", "1.5"])
+def test_invalid_draw_env_raises(bad):
+    with env(1), draw_env(bad):
+        with pytest.raises(ValueError):
+            holdout_set("dtd", 47)
