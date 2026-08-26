@@ -1526,3 +1526,53 @@ probe-constrained oracle:
   probe-constrained-oracle correction).  Next legality class up --
   transductive criteria using the unlabelled pool -- is proposed as
   exp 121, not run.
+
+Exp 113-embs re-run (2026-08-25, `--save-embs`, tags embs-on/off):
+fresh C100 tau sweep with archived embeddings for exps 121/122.
+Independent replication of the basin: on-marginal mahaT 0.218@0.05 ->
+0.512-0.528 plateau (tau 0.3-1.0) -> 0.471@3.0; off-marginal flat
+0.346-0.439.  Archive: logs/exp113/embs/ (30 runs).
+
+Exp 121 (`121_transductive_tuner.py --tau-archive`, 2026-08-25;
+IMPROVEMENT_TESTS #121, the tau-axis test the laptop run deferred):
+FALSIFIER FIRES -- the basin is invisible to transductive selection
+too.  Decisive cell cifar100_on (oracle tau=1.0, mahaT 0.528):
+
+  t_np      picks 0.1    (the predicted winner; third failure as a
+                          selector after exps 98 and 121-mechanism)
+  mmd       picks 0.3    lid_disp picks 0.05    tail_mass picks 3.0
+
+- The control cell (cifar100_off, no basin) is what closes the
+  argument: mmd picks 0.3 and tail_mass picks 3.0 THERE TOO -- these
+  criteria return the same tau whether or not a basin exists, so
+  their near-plateau landings on the basin cell are constant
+  preferences, not detection.
+- Combined with exp 120 (five seen-only criteria) and exp 115
+  (accuracy): the tau basin is invisible to EVERY label-free
+  selection rule constructed -- seen-only or transductive.  The
+  tau=1.0 recipe is permanently a loss-landscape finding, not a
+  deployable method; the paper should say exactly that and the
+  selection thread is CLOSED.
+
+Exp 122 (`122_basin_geometry.py`, 2026-08-25; IMPROVEMENT_TESTS
+#122): the basin geometry is STRUCTURED anisotropy -- prediction
+holds, and the control cell shows the alternative.
+
+  cifar100_on   tau 0.1->1.0: aniso 6.4 -> 2494.6 while align_topk
+                FALLS (0.732@0.05 -> 0.467@0.3; endpoint d=-0.177) --
+                the between-class signal moves INTO the low-variance
+                directions.  That is exactly the geometry a
+                tied-covariance whitened distance rewards, and why
+                mahaT works at rms~0.5 where unit width (exp 105) is
+                decorative.
+  cifar100_off  aniso explodes to 4.8e5 and align_topk saturates to
+                1.000: without the marginal, high tau is unstructured
+                collapse onto the between-class subspace.
+
+- Verdict: "looser interaction" is NOT the whole story -- the SIGReg
+  marginal is what STRUCTURES the anisotropy.  The best C100 space
+  works by an anti-isotropic mechanism the program's stated ideal
+  does not describe; the paper's geometry section should carry this.
+- Caveat: align_topk is non-monotone on-cell (0.699 at tau=1.0); the
+  cleanest basin row is tau=0.3.  Verdicts are endpoint-based per the
+  script's pre-stated measure.
