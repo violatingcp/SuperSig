@@ -61,13 +61,91 @@ MIScalibration (exps 81/83).  10 objectives -> 3.
 Everything else -> appendix (panel, SparKer protocol, reach/residual/per-dataset
 tables, gradient appendix, tau section, LID mechanism).
 
+## Provenance and holdout policy (decided 2026-08-25, PH)
+
+Two structural decisions, plus the collision they create.
+
+### 1. Switch the CIFAR cells to the leakage-free scratch lineage
+
+Every CIFAR cell built with `pretrain=ds` inherits hub weights that already saw
+the held-out class (`supersig/models.py:80-82`, self-flagged in code since
+exp 09 but stated in NO doc and NOT in the tex dataset caption at
+`discovery_metrics_iclr.tex:227`).  Discovery claims must not rest on it.
+Clean lineage = exps 67/68 (`pretrain=None`, random init).
+
+**Gap found:** exp 67 carried only ONE of the three shortlisted objectives.
+Its `supsig` is the repulse/proto recipe, not SupCon+SIGReg; its `nplmcw` is
+distance-NPLM + *classwise* SIGReg, not the plain arm.  Exp 50 `--scratch-base`
+numbers are heads on a label-free scratch base, not end-to-end scratch.
+**Fixed:** added `ssig` (= exp-70 `ss-ft`, ss_lam=5) and `nplmsd`
+(= exp-70 `nplm-sup-ft`) to exp 67; verified objective-identical to the exp-70
+step functions.  Exp 68 needs no change (`--bases` is generic).
+
+Expect an honest NEGATIVE result here: exp 68's scratch C100 purities are
+0.00-0.01, far under the 0.15 gate, and per-event power is dead at every
+fraction (SparKer only fires at f=0.05).  Report the scratch cell as the
+leakage-free control that shows C100 is genuinely hard, not as a showcase.
+
+### 2. Single holdout in the main draft, multi-holdout in the appendix
+
+Convention across the campaign: CIFAR = `{4}` (single); transfer = last 10
+classes, EXCEPT galaxy10 = last 1.
+
+**PH's belief that the multi-holdout regime reaches different conclusions is
+CONFIRMED**, and specifically on the discovery-loop axis (exps 89/109, the only
+direct same-dataset comparisons):
+- exp 109, frozen density-ratio pool on C100: h5/h10 clear the gate (best r1
+  purity **0.358**, r2 0.418, vs the 0.121 distance-grid ceiling), but **h1
+  stays at 0.03** — a *rate* floor (~1% class rate), not geometry, so no
+  pooling statistic rescues it.
+- the quantile-strictness conclusion **inverts**: strictest q is best at
+  h5/h10, worst at h1.
+- `logs/SUMMARY_TABLES.md:1163-1165` already forks the recipe on exactly this.
+- exp 89: "discovery hurts the probe" (-0.031..-0.038) is multi-holdout-only;
+  at h1 the probe delta is ~0.
+No experiment shows the *objective ranking* flipping between regimes.
+Caveat: `118_holdout_audit.py` (written to test holdout-draw stability) has
+**never been run** — no `logs/exp118*`.  Its reassurance is a prediction.
+
+### 3. THE COLLISION — resolve before drafting
+
+Taken literally, the two decisions delete the evidence for two pillars:
+
+| pillar | holdout count of its evidence | survives single-holdout main? |
+|---|---|---|
+| ss-ft (workhorse) | DTD 0.795/0.803/0.811 and flowers 0.62-0.66 are **10-class** | **NO — no headline number left** |
+| supervised distance-NPLM | galaxy10 = **1-class** | YES (and OOD-to-pretraining) |
+| plain SupCon | mixed: 9 multi + 3 single transfer cells; CIFAR single | partly |
+| frozen density-ratio construction | works at h5/h10, **fails at h1** | **NO** |
+
+**Proposed resolution (CC, needs PH sign-off):** do not frame it as
+main-vs-appendix by holdout count.  Frame it as a REGIME SPLIT in the main
+text — single-holdout is the hard, low-rate regime where only calibrated
+per-event scoring works (galaxy10, distance-NPLM); multi-class novelty is the
+higher-rate regime where pooling constructions unlock the gate (DTD/flowers
+ss-ft, C100 density-ratio).  This keeps both constructions in the main text,
+makes the rate floor a *result* rather than an omission, and is a stronger
+claim than either regime alone.  Appendix then holds the full per-regime tables.
+
 ## Naming hazard to fix first
 
 `ss-ft` = **SupCon + lam=5 SIGReg** in exps 70+ (`70_cars_ft_suite.py:88`), but
 `"ss"` in `docs/LOSSES.md` = **SimCLR + SIGReg** (unsupervised, exp 34).  Same
 abbreviation, two different algorithms.  Rename before writing.
 
+WORSE THAN LOGGED: exp-50's `supcon_sigreg` is supervised/cosine/softmax/sigreg
+at the HybridContrastiveLoss **default lam=1**, while `ss-ft` is **lam=5**.  So
+three distinct objectives share the "supcon+sigreg" family name at two different
+regularizer strengths.  Verified numerically (aux term 0.381 vs 0.066 on the
+same batch).  Do not pool exp-50 `supcon_sigreg` rows with exp-70 `ss-ft` rows.
+
 ## Open / next
 
+- GPU, leakage-free shortlist (NEW, highest priority — unblocks decision 1):
+  `python experiments/67_scratch_pretrain.py --arms supcon ssig nplmsd`
+  then `python experiments/68_scratch_discovery.py --bases supcon,ssig,nplmsd`
+  (2 x 200-epoch pretrains + one discovery pass, CIFAR-100, single holdout {4})
 - GPU: `113 --save-embs` -> `121 --tau-archive` + `122` (one run, two analyses)
-- PH to give reaction to the outline; then draft the 9pp version
+- Consider running `118_holdout_audit.py` — it is the only check on whether
+  holdout CHOICE (not count) moves rankings, and it has never been run.
+- PH to sign off on the regime-split resolution above; then draft the 9pp version
