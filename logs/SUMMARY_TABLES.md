@@ -1601,3 +1601,29 @@ Exp 123 addendum (`123_currency_independence.py --per-dataset`,
   understate that alignment.  Standing caveat unchanged:
   discoverability (purity/margin) never clears coverage, so this
   audits 3 of the 4 currencies.
+
+## Exp 124 -- leakage-free shortlist on scratch trunks (Tier 9 Block A)
+(cifar100, 100-D, holdout {4} [single-holdout regime], 200 ep,
+pretrain=None; exps 67+68, 2026-08-26)
+
+  arm      probe    acc     eucl    mahaT   | disc r1/r2 purity  perevt
+  supcon   0.9390   0.5451  0.2334  0.2792  | 0.000 / 0.001      dead
+  ssig     0.9273   0.5885  0.6201  0.6024  | 0.008 / 0.011      dead
+  nplmsd   0.8161   0.2317  0.4075  0.3445  | 0.008 / 0.002      0.010
+
+- THE WATCHED FALSIFIER FIRES: ssig does NOT beat supcon on probe on a
+  clean trunk (0.9273 vs 0.9390; exp-68's probe protocol gives a
+  0.9420 vs 0.9400 tie -- tie-to-worse across protocols, single
+  seed/draw).  The exp-50 "SIGReg beats SupCon on clean bases" probe
+  claim loses its leakage-free support and should be retracted from
+  the paper's shortlist argument.
+- WHAT SURVIVES LEAKAGE-FREE (new, and larger than the lost claim):
+  the calibration dissociation.  ssig's mahaT 0.602 vs supcon 0.279
+  (+0.32) and eucl 0.620 vs 0.233 on identical clean trunks -- SIGReg
+  earns its keep in the calibration currency, not the probe currency,
+  exactly the paper's central dissociation, now demonstrated where
+  backbone label leakage cannot explain it.
+- Rate floor confirmed on clean trunks: purities 0.000-0.011 (gate
+  0.15) and per-event dead, while DATASET-level detection stays alive
+  (post-ft SparKer power 0.88 [0.82,0.93], MMD 1.00 at f=0.05) --
+  the h1 regime kills pooling and per-event, not detection per se.
