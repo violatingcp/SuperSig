@@ -1576,3 +1576,28 @@ holds, and the control cell shows the alternative.
 - Caveat: align_topk is non-monotone on-cell (0.699 at tau=1.0); the
   cleanest basin row is tau=0.3.  Verdicts are endpoint-based per the
   script's pre-stated measure.
+
+Exp 123 addendum (`123_currency_independence.py --per-dataset`,
+2026-08-25): the per-dataset Simpson control the laptop run asked for
+-- THE INVERSION IS REAL; the pooled taxonomy verdict softens.
+
+  group      n   within  between   k80  kaiser     (min-cov 0.35 | 0.2)
+  cifar100  44   0.515    0.280     3     3        (0.463/0.261 at 0.2)
+  other     40   0.423    0.366     3     2-3
+  cifar10   38   0.329    0.250     4     2-3
+
+- Pooled, within ~ between (0.34 vs 0.30): "labels do not carve the
+  space".  Within datasets the sign is POSITIVE in all three groups
+  and within-currency correlation DOMINATES (>+0.1) in cifar100 --
+  the taxonomy does carve the metric space inside the homogeneous
+  cell with the most spaces; pooling across datasets was washing it
+  out (datasets shift all metrics jointly).
+- The DIMENSIONALITY claim is rock-solid either way: 3 components for
+  80% variance in every group (k80 3-4, Kaiser 2-3), matching the
+  pooled scree and the predicted three factors.
+- Refined statement for the paper: the battery spans ~3 empirical
+  dimensions; the currency labels align with them within homogeneous
+  cells (clearly on C100, weakly elsewhere) and pooled correlations
+  understate that alignment.  Standing caveat unchanged:
+  discoverability (purity/margin) never clears coverage, so this
+  audits 3 of the 4 currencies.
