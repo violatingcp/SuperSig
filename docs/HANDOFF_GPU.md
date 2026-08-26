@@ -58,7 +58,7 @@ destroyed the multi-holdout fine-tune checkpoints, whose `_seen` suffix means
 ### Sanity check before starting
 
 ```bash
-python -m pytest tests/ -q          # expect 155 passed
+python -m pytest tests/ -q          # expect 173 passed
 python supersig/holdouts.py         # prints the default vs SUPERSIG_NH=1 sets
 ```
 
@@ -199,6 +199,21 @@ whether our purity numbers are limited by the scorer or by an arbitrary cut.
 
 Report per scorer: the best usable cut (highest purity with n_novel >= 100),
 its headroom (purity/ceiling), and the cut-free AUC.
+
+Then exp 129 -- the label-free cut rule, which is what we would actually ship:
+
+```bash
+python experiments/129_legal_pool_cut.py --selftest                 # expect 7 OK
+python experiments/129_legal_pool_cut.py --embs <same npz> --holdouts 99
+```
+
+**And one cheap thing worth doing on every SparKer run (exp 130):** print
+`E_ref[e^f]`.  It is 1.0 by construction at the NP minimiser.  On synthetic
+data the fitted critic returned 60 to 1.1e6 and got WORSE with more steps,
+suggesting the optimisation does not converge (the hard clamp on `f` passes
+zero gradient, so a pegged reference point never gets corrected).  This was
+measured on extreme synthetic separation and MAY NOT hold on real embeddings --
+which is exactly why the number is worth reporting before anyone acts on it.
 
 ---
 

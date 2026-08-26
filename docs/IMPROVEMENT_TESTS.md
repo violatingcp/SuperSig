@@ -1,4 +1,4 @@
-# Proposed tests to improve performance — exps 81–128
+# Proposed tests to improve performance — exps 81–130
 
 Companion to [QUESTIONS.md](QUESTIONS.md) (whose "open items as of exp 58" list
 this supersedes).  Every entry follows the standard protocol in
@@ -1614,3 +1614,100 @@ alone; AUC separates scorer quality from cut choice but does not replace it.
 
 **Cost.**  Minutes, evaluation-only.  Run it on every cell that produces
 embeddings in exps 124/125.
+
+### Exp 129 — A label-free rule for the pool cut
+
+> **SCRIPT READY, RULE DERIVED AND VALIDATED (2026-08-26).**  `--selftest` green
+> (7 checks) + `tests/test_legal_pool_cut.py` (18).  Needs real embeddings.
+
+**Motivation.**  Exp 128 shows the cut matters and 0.95 is wrong, but `purity`
+needs novel labels, so sweeping it per cell is ORACLE TUNING.  The campaign was
+careful about exactly this for `tau` (exp 115; exps 120/121) and must not
+quietly oracle-tune `q`.  Exp 128 is therefore a diagnostic; this is the
+deliverable: ONE global, label-free rule, reported against the oracle.
+
+**Estimating the base rate without labels.**  The NP critic gives
+f = log(p_corpus/p_ref).  Three estimators, all validated to recover a known b
+to within 10% on an exact critic:
+`tv` = E_corpus[max(0, 1-1/r)], `mass` = P_corpus(r>2), `excess` = bump-hunt
+excess at the 0.99 reference quantile.
+
+**RULE A (purity target), rejected.**  q* = clip(b_hat / 0.30).  Hits 0.30 by
+construction -- and stops there.  Oracle reaches purity 1.00 at a 6x tighter
+cut.  Targeting a purity LEVEL is the wrong objective.
+
+**RULE B (detectability-limited), adopted.**  Purity = e_s*b/q rises
+monotonically as q shrinks, so the optimum is at the tight end and the binding
+constraint is whether a CLUSTER survives.  Estimate the survivor count
+label-free: under contamination the posterior that a corpus point is novel is
+`1 - 1/r`, so summing it over the pool estimates n_novel without labels.
+Then q* = the tightest cut whose ESTIMATED novel count still exceeds n_min.
+
+On an exact critic Rule B **matches the oracle exactly** (q=0.0056, purity
+1.000) at b = 0.01/0.02/0.05/0.10, versus 0.30 for Rule A and 0.20-1.00 for the
+inherited q=0.05.
+
+**Prediction.**  On real cells Rule B beats the inherited q=0.05 wherever the
+base rate differs from ~1.5%, and its oracle gap is dominated by critic quality
+rather than by the rule.
+
+**Falsifier.**  Rule B's oracle gap on real cells is large and comparable to
+Rule A's → the estimated novel count is too noisy on fitted critics, and q
+joins tau as a knob invisible to legal selection.  (Still a publishable
+finding, and the campaign's recurring one.)
+
+**Two implementation traps, both hit and both now pinned by test.**
+1. The reference-side form E_ref[max(0, r-1)] is algebraically equal to the
+   corpus-side TV but USELESS in Monte Carlo: when novelty is disjoint the
+   excess lives where p_ref ~ 0, so no reference sample lands there.  Measured
+   1.2e-5 against a true b of 0.01.  Always integrate against the sample that
+   COVERS the excess.
+2. The fitted critic is frequently far from its own calibration identity, so
+   ratios must be renormalised by E_ref[e^f] before use.  See exp 130.
+
+### Exp 130 — Is the NP critic converging at all?
+
+> **OPENED 2026-08-26 by an incidental measurement in exp 129.  Not yet run.**
+
+**Motivation.**  Exp 128 found signal efficiency of only 3-15%, i.e. the pool
+scorer leaves most novel points outside the pool, and concluded the deficit is
+scorer quality rather than the cut.  Exp 129 then measured the critic directly
+on a TRIVIALLY separable problem (a 1% mode at 8 sigma in 16-D, where a
+converged critic should reach AUC ~1.00):
+
+    M=16,  300 steps:  AUC 0.885,  E_ref[e^f] = 60
+    M=64,  300 steps:  AUC 0.882,  E_ref[e^f] = 4.7e3
+    M=64,  800 steps:  AUC 0.851,  E_ref[e^f] = 6.5e5
+    M=128, 800 steps:  AUC 0.913,  E_ref[e^f] = 1.1e6
+
+`E_ref[e^f]` is 1.0 by construction at the NP minimiser.  It is not merely off,
+it DIVERGES with more steps -- the optimisation is not converging.
+
+**Suspected mechanism.**  `f` is `.clamp(-F_CLAMP, F_CLAMP)` in both
+`supersig/sparker.py:65` and `discovery.np_pool_scores`.  A clamped value
+passes ZERO gradient, so a reference point pegged at +20 contributes e^20 to
+the loss with no corrective signal.  Secondary suspect: with M kernels
+initialised by uniform sampling of the corpus, a class at rate b gets an
+expected M*b kernels -- 0.16 at M=16, b=1% -- so the novel mode frequently has
+no kernel at all.
+
+**Protocol.**  (a) Reproduce on real embeddings, reporting `E_ref[e^f]`
+alongside every SparKer number.  (b) Ablate: soft clamp (tanh) vs hard clamp;
+kernel init on high-score points vs uniform; M scaling with 1/b.  (c) Re-run
+the affected power curves.
+
+**Prediction.**  A soft clamp plus score-weighted kernel init lifts signal
+efficiency materially, which by exp 128's algebra raises purity at fixed q --
+possibly enough to move the h1 regime.
+
+**Falsifier.**  Calibration on REAL embeddings is already ~1 and AUC is high →
+the divergence is an artifact of the extreme synthetic separation, and exp 128's
+low e_s has another cause.
+
+**IMPORTANT SCOPE CAVEAT.**  Everything above was measured on synthetic data
+with extreme (8 sigma) separation, which produces extreme ratios and may not
+represent real embeddings.  This is a flag to CHECK, not an established defect
+in the campaign's results.  Do not restate archived SparKer numbers on the
+strength of it until (a) is done.
+
+**Cost.**  (a) is minutes and should be added to every SparKer run immediately.
