@@ -1342,6 +1342,16 @@ whole story and there is nothing further to characterise.
 > such cells can invert within them (Simpson's paradox), so a per-dataset
 > replication is needed before this is load-bearing.
 
+> **PER-DATASET REPLICATION DONE 2026-08-25 (`--per-dataset`) — the Simpson
+> inversion is REAL and the taxonomy verdict softens.**  Within cifar100
+> (n=44) within-currency correlation DOMINATES (0.515 vs 0.280; bar +0.1
+> met); cifar10 and the transfer pool show the same positive sign below the
+> bar.  Dimensionality is rock-solid in every group (k80 = 3-4, Kaiser 2-3).
+> Refined statement: the battery spans ~3 empirical dimensions and the
+> currency labels align with them within homogeneous cells (clearly on C100,
+> weakly elsewhere); pooled correlations understate the alignment.  Caveat (i)
+> stands: 3 of 4 currencies audited.
+
 
 **Motivation.**  The paper's organising claim is that a discovery-ready space
 must be audited in four currencies.  We have never tested whether they are
