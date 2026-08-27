@@ -1,0 +1,36 @@
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+  galaxy10:dino: 6 spaces (tag '_h1_d5')
+arm                              top1      sd  n_seen   dim
+------------------------------------------------------------
+galaxy10:dino|simclr-ft        0.5954  0.0016       9   100
+galaxy10:dino|sigreg-ssl-ft    0.5693  0.0067       9   100
+galaxy10:dino|nplm-bil-ft      0.5072  0.0023       9   100
+galaxy10:dino|supcon-ft        0.6824  0.0028       9   100
+galaxy10:dino|ss-ft            0.6480  0.0032       9   100
+galaxy10:dino|nplm-sup-ft      0.5402  0.0136       9   100
+
+vs baseline 'galaxy10:dino|supcon-ft' (TIE unless the gap clears max(noise floor, sd_a+sd_b)):
+  galaxy10:dino|simclr-ft          -0.0870  (thresh 0.0170)  -> galaxy10:dino|supcon-ft
+  galaxy10:dino|sigreg-ssl-ft      -0.1131  (thresh 0.0170)  -> galaxy10:dino|supcon-ft
+  galaxy10:dino|nplm-bil-ft        -0.1752  (thresh 0.0170)  -> galaxy10:dino|supcon-ft
+  galaxy10:dino|ss-ft              -0.0345  (thresh 0.0170)  -> galaxy10:dino|supcon-ft
+  galaxy10:dino|nplm-sup-ft        -0.1422  (thresh 0.0170)  -> galaxy10:dino|supcon-ft
+
+wrote logs/exp132/probe_cells_galaxy10-dino_h1_d5.json
+
+REMINDER: report this as a NO-COST argument (does adding SIGReg to a
+supervised objective cost supervised accuracy?), not as a win over SSL
+baselines -- our objectives use labels and theirs do not.

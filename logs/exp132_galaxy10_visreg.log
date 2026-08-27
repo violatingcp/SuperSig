@@ -1,0 +1,36 @@
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+  galaxy10:visreg: 12 spaces (tag '')
+arm                              top1      sd  n_seen   dim
+------------------------------------------------------------
+galaxy10:visreg|simclr-ft      0.6118  0.0005       9   100
+galaxy10:visreg|sigreg-ssl-    0.5057  0.0055       9   100
+galaxy10:visreg|nplm-bil-ft    0.4802  0.0014       9   100
+galaxy10:visreg|supcon-ft      0.7755  0.0027       9   100
+galaxy10:visreg|ss-ft          0.7570  0.0017       9   100
+galaxy10:visreg|nplm-sup-ft    0.6359  0.0008       9   100
+galaxy10:visreg|supcon-ft-r    0.7527  0.0028       9   100
+galaxy10:visreg|supcon-ft-r    0.7765  0.0008       9   200
+galaxy10:visreg|ss-ft-res      0.7044  0.0008       9   100
+galaxy10:visreg|ss-ft-res-c    0.7564  0.0014       9   200
+galaxy10:visreg|supcon-ft-r    0.7767  0.0015       9   100
+galaxy10:visreg|supcon-ft-r    0.7771  0.0002       9   200
+
+vs baseline 'galaxy10:visreg|supcon-ft' (TIE unless the gap clears max(noise floor, sd_a+sd_b)):
+  galaxy10:visreg|simclr-ft        -0.1637  (thresh 0.0170)  -> galaxy10:visreg|supcon-ft
+  galaxy10:visreg|sigreg-ssl-ft    -0.2698  (thresh 0.0170)  -> galaxy10:visreg|supcon-ft
+  galaxy10:visreg|nplm-bil-ft      -0.2953  (thresh 0.0170)  -> galaxy10:visreg|supcon-ft
+  galaxy10:visreg|ss-ft            -0.0185  (thresh 0.0170)  -> galaxy10:visreg|supcon-ft
+  galaxy10:visreg|nplm-sup-ft      -0.1396  (thresh 0.0170)  -> galaxy10:visreg|supcon-ft
+  galaxy10:visreg|supcon-ft-res    -0.0228  (thresh 0.0170)  -> galaxy10:visreg|supcon-ft
+  galaxy10:visreg|supcon-ft-res-   +0.0010  (thresh 0.0170)  -> TIE
+  galaxy10:visreg|ss-ft-res        -0.0711  (thresh 0.0170)  -> galaxy10:visreg|supcon-ft
+  galaxy10:visreg|ss-ft-res-cat    -0.0191  (thresh 0.0170)  -> galaxy10:visreg|supcon-ft
+  galaxy10:visreg|supcon-ft-resn   +0.0012  (thresh 0.0170)  -> TIE
+  galaxy10:visreg|supcon-ft-resn   +0.0016  (thresh 0.0170)  -> TIE
+
+wrote logs/exp132/probe_cells_galaxy10-visreg.json
+
+REMINDER: report this as a NO-COST argument (does adding SIGReg to a
+supervised objective cost supervised accuracy?), not as a win over SSL
+baselines -- our objectives use labels and theirs do not.

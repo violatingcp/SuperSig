@@ -1,0 +1,48 @@
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+  galaxy10:dino: 10 spaces (tag '_h1_d3')
+arm                              top1      sd  n_seen   dim
+------------------------------------------------------------
+galaxy10:dino|simclr-ft        0.5968  0.0008       9   100
+galaxy10:dino|sigreg-ssl-ft    0.5791  0.0018       9   100
+galaxy10:dino|nplm-bil-ft      0.5180  0.0042       9   100
+galaxy10:dino|supcon-ft        0.6718  0.0018       9   100
+galaxy10:dino|ss-ft            0.6342  0.0003       9   100
+galaxy10:dino|nplm-sup-ft      0.5489  0.0072       9   100
+galaxy10:dino|supcon-ft-res    0.6011  0.0009       9   100
+galaxy10:dino|supcon-ft-res    0.6734  0.0015       9   200
+galaxy10:dino|ss-ft-res        0.5953  0.0017       9   100
+galaxy10:dino|ss-ft-res-cat    0.6333  0.0004       9   200
+
+vs baseline 'galaxy10:dino|supcon-ft' (TIE unless the gap clears max(noise floor, sd_a+sd_b)):
+  galaxy10:dino|simclr-ft          -0.0750  (thresh 0.0170)  -> galaxy10:dino|supcon-ft
+  galaxy10:dino|sigreg-ssl-ft      -0.0928  (thresh 0.0170)  -> galaxy10:dino|supcon-ft
+  galaxy10:dino|nplm-bil-ft        -0.1538  (thresh 0.0170)  -> galaxy10:dino|supcon-ft
+  galaxy10:dino|ss-ft              -0.0376  (thresh 0.0170)  -> galaxy10:dino|supcon-ft
+  galaxy10:dino|nplm-sup-ft        -0.1229  (thresh 0.0170)  -> galaxy10:dino|supcon-ft
+  galaxy10:dino|supcon-ft-res      -0.0707  (thresh 0.0170)  -> galaxy10:dino|supcon-ft
+  galaxy10:dino|supcon-ft-res-ca   +0.0016  (thresh 0.0170)  -> TIE
+  galaxy10:dino|ss-ft-res          -0.0765  (thresh 0.0170)  -> galaxy10:dino|supcon-ft
+  galaxy10:dino|ss-ft-res-cat      -0.0385  (thresh 0.0170)  -> galaxy10:dino|supcon-ft
+
+wrote logs/exp132/probe_cells_galaxy10-dino_h1_d3.json
+
+REMINDER: report this as a NO-COST argument (does adding SIGReg to a
+supervised objective cost supervised accuracy?), not as a win over SSL
+baselines -- our objectives use labels and theirs do not.

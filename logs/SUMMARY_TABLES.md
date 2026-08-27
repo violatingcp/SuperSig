@@ -1901,3 +1901,65 @@ with labels (exp 128); "base" = inherited q=0.05.  mean+-sd over seeds;
   gives 0.002-0.009.  Estimator quality is space- and draw-dependent
   (exp 125's lesson again), and the marginal-on 100-D spaces are where
   it works.  A same-space comparison at both dims is the open item.
+
+## Exp 132 -- supervised linear probe (the metric the campaign never ran)
+(plain nn.Linear on SEEN classes, standardised features, 40 ep, top-1 on the
+seen test split, 3 probe seeds; TIE unless gap > max(0.017, sd_a+sd_b).
+2026-08-27; logs/exp132/*.json.  Residual rows on the draws are partial
+(n=1-2) because exp 71 is still running on those draws.)
+
+galaxy10, 100-D, single holdout: archived draw {9} | mean+-sd over draws {2,6,5,4,3}
+
+  arm                     dino: d9    draws(5)          lejepa: d9  draws(5)          visreg: d9
+  supcon-ft               0.642       0.666+-0.011      0.781       0.790+-0.018      0.776
+  ss-ft                   0.597       0.628+-0.013      0.745       0.755+-0.024      0.757
+  nplm-sup-ft             0.474       0.525+-0.023      0.704       0.710+-0.029      0.636
+  simclr-ft               0.556       0.584+-0.010      0.617       0.631+-0.018      0.612
+  sigreg-ssl-ft           0.533       0.562+-0.011      0.543       0.582+-0.014      0.506
+  nplm-bil-ft             0.404       0.537+-0.028      0.579       0.614+-0.018      0.480
+  supcon-ft->res          0.595       0.609 (n=2)       0.706       --                0.753
+  supcon-ft->res-cat      0.641       0.663 (n=2)       0.775       --                0.777
+  supcon-ft->resnplm-cat  0.642       0.654 (n=1)       0.775       --                0.777
+  ss-ft->res-cat          0.599       0.624 (n=2)       0.743       --                0.756
+
+  PAIRED ss-ft minus supcon-ft, per draw:
+    dino    -0.038+-0.004   wins 0/5   [-.036 -.038 -.034 -.044 -.038]
+    lejepa  -0.034+-0.009   wins 0/5   [-.044 -.039 -.018 -.032 -.039]
+    visreg  -0.019 (archived draw only)
+
+cifar10 exp-54 bank (32-D, 9 seen): nplm_dist_sup_cw 0.896, nplm_sup_dist
+0.887 (TIE, gap 0.010), nplm_distance 0.727, nplm_bil_cw 0.607,
+nplm_bilinear 0.560, nplm_bil_sup_cw 0.533.
+
+cifar100 exp-113 bank (100-D, 99 seen; 3 train seeds x 3 probe seeds):
+  tau     0.05    0.1     0.3     1.0     3.0
+  off     0.625   0.623   0.562   0.413   0.310
+  on      0.614   0.624   0.564   0.474   0.509
+
+- THE FALSIFIER FIRES.  ss-ft (SupCon + SIGReg lam=5, the discovery
+  workhorse) LOSES supervised top-1 to plain supcon-ft by 0.034-0.038 on
+  galaxy10, on 10/10 paired draws across two bases, with every per-draw
+  gap above the 0.017 noise floor.  The "discovery costs nothing in
+  representation quality" framing cannot be used for ss-ft as a
+  standalone space.  nplm-sup-ft costs far more (-0.08 dino, -0.14
+  visreg); the SSL arms are context only.
+- WHAT RESCUES IT: the residual concat.  supcon-ft->res-cat and
+  ->resnplm-cat TIE supcon-ft on every base (dino 0.663/0.654 vs 0.666;
+  lejepa 0.775/0.775 vs 0.781; visreg 0.777/0.777 vs 0.776) while
+  carrying the calibrated residual half.  So the defensible no-cost
+  claim is a CONSTRUCTION claim -- "parent + residual concat keeps the
+  parent's supervised accuracy" -- not an objective claim.  The bare
+  residual child costs 0.02-0.08, as it should (it was trained to
+  discard what the parent encodes).
+- THE TAU BASIN COSTS SUPERVISED ACCURACY, A LOT.  On the C100 bank the
+  probe falls from 0.62 at tau<=0.1 to 0.41-0.47 at tau=1 and 0.31-0.51
+  at tau=3.  The marginal rescues 6-20 points at high tau (on vs off)
+  but never reaches the low-tau plateau.  Exps 120/121 said the basin is
+  unreachable by legal selection; this adds that it is not worth
+  reaching for a space anyone also wants to classify with.
+- Draw variance on THIS metric is small (sd 0.01-0.03) -- the paired
+  ss-ft/supcon gap is stable to +-0.004 on dino.  Supervised top-1 is
+  a draw-robust column, unlike purity/mahaT (exp 125).
+- Reminder from the script, kept verbatim: this is a no-cost argument
+  about adding SIGReg to a supervised objective, not a comparison against
+  SSL baselines (ours use labels; theirs do not).

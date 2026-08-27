@@ -1937,6 +1937,16 @@ exp 76.  Pinned by `test_head_emb_honours_the_holdout_draw_tag`.
 
 ### Exp 132 — A supervised linear probe (the metric we never ran)
 
+> **DONE 2026-08-27 — FALSIFIER FIRES.**  ss-ft loses supervised top-1 to
+> supcon-ft by 0.034-0.038 on galaxy10, 10/10 paired draws on dino+lejepa,
+> every gap above the 0.017 floor (visreg archived draw -0.019).  The no-cost
+> framing does not hold for ss-ft as a standalone space.  What DOES hold:
+> supcon-ft->res-cat / ->resnplm-cat TIE supcon-ft on all three bases (0.663/
+> 0.775/0.777 vs 0.666/0.781/0.776) -- the no-cost claim is a construction
+> claim (parent + residual concat), not an objective claim.  C100 bank: the
+> tau basin costs 0.15-0.31 top-1 (0.62 -> 0.41-0.51).  Tables in
+> `logs/SUMMARY_TABLES.md`; JSON `logs/exp132/`.
+
 > **CODE READY 2026-08-27.**  `--selftest` green (5 checks) +
 > `tests/test_supervised_probe.py` (10).  NEEDS exp-70 arm banks.
 

@@ -1,0 +1,36 @@
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+Fetching 37 files:   0%|          | 0/37 [00:00<?, ?it/s]Fetching 37 files: 100%|██████████| 37/37 [00:00<00:00, 30310.40it/s]
+Fetching 37 files:   0%|          | 0/37 [00:00<?, ?it/s]Fetching 37 files: 100%|██████████| 37/37 [00:00<00:00, 23878.94it/s]
+Fetching 37 files:   0%|          | 0/37 [00:00<?, ?it/s]Fetching 37 files: 100%|██████████| 37/37 [00:00<00:00, 26798.35it/s]
+Fetching 37 files:   0%|          | 0/37 [00:00<?, ?it/s]Fetching 37 files: 100%|██████████| 37/37 [00:00<00:00, 71647.85it/s]
+Fetching 37 files:   0%|          | 0/37 [00:00<?, ?it/s]Fetching 37 files: 100%|██████████| 37/37 [00:00<00:00, 24214.27it/s]
+Fetching 37 files:   0%|          | 0/37 [00:00<?, ?it/s]Fetching 37 files: 100%|██████████| 37/37 [00:00<00:00, 29247.88it/s]
+Fetching 37 files:   0%|          | 0/37 [00:00<?, ?it/s]Fetching 37 files: 100%|██████████| 37/37 [00:00<00:00, 28910.07it/s]
+Fetching 37 files:   0%|          | 0/37 [00:00<?, ?it/s]Fetching 37 files: 100%|██████████| 37/37 [00:00<00:00, 21854.56it/s]
+Fetching 37 files:   0%|          | 0/37 [00:00<?, ?it/s]Fetching 37 files: 100%|██████████| 37/37 [00:00<00:00, 23520.65it/s]
+Fetching 37 files:   0%|          | 0/37 [00:00<?, ?it/s]Fetching 37 files: 100%|██████████| 37/37 [00:00<00:00, 63368.41it/s]
+Fetching 37 files:   0%|          | 0/37 [00:00<?, ?it/s]Fetching 37 files: 100%|██████████| 37/37 [00:00<00:00, 20406.21it/s]
+Fetching 37 files:   0%|          | 0/37 [00:00<?, ?it/s]Fetching 37 files: 100%|██████████| 37/37 [00:00<00:00, 24723.47it/s]
+  galaxy10:lejepa: 6 spaces (tag '_h1_d0')
+arm                              top1      sd  n_seen   dim
+------------------------------------------------------------
+galaxy10:lejepa|simclr-ft      0.6044  0.0003       9   100
+galaxy10:lejepa|sigreg-ssl-    0.5644  0.0011       9   100
+galaxy10:lejepa|nplm-bil-ft    0.5922  0.0005       9   100
+galaxy10:lejepa|supcon-ft      0.7612  0.0003       9   100
+galaxy10:lejepa|ss-ft          0.7172  0.0005       9   100
+galaxy10:lejepa|nplm-sup-ft    0.6648  0.0081       9   100
+
+vs baseline 'galaxy10:lejepa|supcon-ft' (TIE unless the gap clears max(noise floor, sd_a+sd_b)):
+  galaxy10:lejepa|simclr-ft        -0.1568  (thresh 0.0170)  -> galaxy10:lejepa|supcon-ft
+  galaxy10:lejepa|sigreg-ssl-ft    -0.1968  (thresh 0.0170)  -> galaxy10:lejepa|supcon-ft
+  galaxy10:lejepa|nplm-bil-ft      -0.1690  (thresh 0.0170)  -> galaxy10:lejepa|supcon-ft
+  galaxy10:lejepa|ss-ft            -0.0440  (thresh 0.0170)  -> galaxy10:lejepa|supcon-ft
+  galaxy10:lejepa|nplm-sup-ft      -0.0965  (thresh 0.0170)  -> galaxy10:lejepa|supcon-ft
+
+wrote logs/exp132/probe_cells_galaxy10-lejepa_h1_d0.json
+
+REMINDER: report this as a NO-COST argument (does adding SIGReg to a
+supervised objective cost supervised accuracy?), not as a win over SSL
+baselines -- our objectives use labels and theirs do not.
