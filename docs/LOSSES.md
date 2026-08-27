@@ -114,3 +114,33 @@ Standard training: 20 epochs, Adam lr 1e-3, batch 256 two-view (balanced
 - **NPLM-ft** (exp 58 `run_discovery_nplm_ft`): supervised-NPLM + global
   sigreg on single-view balanced pseudo-labeled batches; anchors
   recomputed as centroids each round.
+
+---
+
+## CANONICAL NAMES (settled 2026-08-26) — read before writing anything
+
+Three distinct objectives have collided under "supcon+sigreg"-ish names, at two
+different regularizer strengths.  The code names are **not** renamed (archived
+npz keys, checkpoint filenames and exp-80 resume logic all depend on them);
+this table is the mapping to use in the paper.
+
+| paper name | code name(s) | objective | lam |
+|---|---|---|---|
+| **SimCLR+SIGReg** | `"ss"` (LOSSES.md, exp 34e), `simclr_sigreg` (exp 50) | instance / cosine / softmax / sigreg, tau 0.5 — **unsupervised** | 1 |
+| **SupCon+SIGReg (weak)** | `supcon_sigreg` (exp 50) | supervised / cosine / softmax / sigreg, tau 0.1 | **1** (the `HybridContrastiveLoss` default) |
+| **SupCon+SIGReg (strong)** | `ss-ft` (exp 70+, `70_cars_ft_suite.py:88`), `ssig` (exp 67) | same objective as the row above | **5** |
+
+Hazards this table exists to prevent:
+
+1. `"ss"` and `ss-ft` share an abbreviation and are **different algorithms** —
+   one unsupervised, one supervised.
+2. `supcon_sigreg` and `ss-ft` are the **same objective at different lam**
+   (verified numerically: aux term 0.066 vs 0.381 on a shared batch).  Their
+   rows must never be pooled; the paper's discovery workhorse is the lam=5
+   variant, and the exp-50 numbers are lam=1.
+3. `supsig` (exp 67) is **none of these** — it is the repulse/proto recipe
+   (`train_sigreg_hybrid`), not SupCon+SIGReg.
+
+The exp-67 scratch arms `ssig` / `nplmsd` were added specifically as the
+leakage-free twins of `ss-ft` / `nplm-sup-ft`, and were verified to compute
+numerically identical losses to their fine-tune counterparts.

@@ -145,6 +145,11 @@ if any experiment reintroduces the hardcoded rule.
 
 ## Naming hazard to fix first
 
+> **RESOLVED 2026-08-26** — canonical mapping table added to the end of
+> `docs/LOSSES.md`.  Code names unchanged (archived keys depend on them);
+> the paper uses SimCLR+SIGReg / SupCon+SIGReg (weak, lam=1) /
+> SupCon+SIGReg (strong, lam=5).
+
 `ss-ft` = **SupCon + lam=5 SIGReg** in exps 70+ (`70_cars_ft_suite.py:88`), but
 `"ss"` in `docs/LOSSES.md` = **SimCLR + SIGReg** (unsupervised, exp 34).  Same
 abbreviation, two different algorithms.  Rename before writing.
