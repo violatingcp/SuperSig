@@ -6,6 +6,7 @@ and the archived alphabetical draw as a reference column.
 """
 import re, sys, glob, os
 import numpy as np
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 ARMS = ["simclr-ft", "sigreg-ssl-ft", "nplm-bil-ft", "supcon-ft", "ss-ft",
         "nplm-sup-ft"]
@@ -60,6 +61,14 @@ for f, d in zip(files, dlist):
 
 ref = f"logs/exp70/results_{ds}_{base}_ft70.npz"
 refz = np.load(ref, allow_pickle=True) if os.path.exists(ref) else None
+# The archived file is the campaign default: single-holdout ONLY for galaxy10
+# (class 9); multi-holdout (10 classes) elsewhere.  Label it by regime so the
+# two are never read as the same comparison (handoff rule 1).
+from supersig.holdouts import holdout_set, n_holdout
+_ncls = {"galaxy10": 10, "dtd": 47, "flowers": 102, "cars": 196, "aircraft": 100}.get(ds, 10)
+_default = sorted(holdout_set(ds, _ncls, nh=None, draw=None))
+REF_LABEL = (f"archived d{{{_default[0]}}} [single]" if len(_default) == 1
+             else f"archived multi-holdout ({len(_default)} cls) [DIFFERENT REGIME]")
 
 print(f"## {ds} (exp 125; {base}, 100d, holdout 1 [single-holdout], "
       f"{len(files)} draws d{dlist}, 20 ep)\n")
@@ -85,5 +94,5 @@ for a in ARMS:
     ru = f"{np.nanmin(u):.3f}-{np.nanmax(u):.3f}"
     refs = ""
     if refz is not None:
-        refs = f"   archived d{{9}}: probe {float(refz[f'probe_{a}']):.3f} mahaT {float(refz[f'mahaT_{a}']):.3f}"
+        refs = f"   {REF_LABEL}: probe {float(refz[f'probe_{a}']):.3f} mahaT {float(refz[f'mahaT_{a}']):.3f}"
     print(f"  {a:14s} probe {rp}  mahaT {rm}  purity {ru}{refs}")
