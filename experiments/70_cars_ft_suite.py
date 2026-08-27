@@ -134,8 +134,13 @@ def seen_two_view_loader(corpus, seen_idx, args):
 
 
 def seed_sfx(args):
+    """Seed + embedding-dim suffix.  Empty at the campaign default (seed 0,
+    100-D) so every archived artifact name is unchanged.  The dim part exists
+    for exp 134a's width-matched control (--emb-dim 200): without it a 200-D
+    run would silently OVERWRITE the archived 100-D parents."""
     s = getattr(args, "seed", 0)
-    return f"_s{s}" if s else ""
+    d = getattr(args, "emb_dim", 100)
+    return (f"_s{s}" if s else "") + (f"_e{d}" if d != 100 else "")
 
 
 def trunk_banks(model, arm, args):

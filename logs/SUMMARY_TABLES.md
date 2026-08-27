@@ -1963,3 +1963,44 @@ cifar100 exp-113 bank (100-D, 99 seen; 3 train seeds x 3 probe seeds):
 - Reminder from the script, kept verbatim: this is a no-cost argument
   about adding SIGReg to a supervised objective, not a comparison against
   SSL baselines (ours use labels; theirs do not).
+
+## Exp 134 (B) -- is the residual's geometry loss a concat-scale artefact?  NO.
+(45 TRAINED parent/child pairs: {cars,flowers,dtd,aircraft,galaxy10} x
+{dino,lejepa,visreg} x {supcon-ft->res, ss-ft->res, supcon-ft->resnplm},
+campaign-default holdouts; combiners raw / standardize / unitnorm / whiten fit
+on train, applied to test; probe = 10-ep linear holdout-vs-rest AUC, eucl =
+min-centroid-distance AUC.  2026-08-27; logs/exp134/combine_<cells>.json)
+
+  child/parent RMS ratio: 0.50-6.3; only 6/45 pairs one-sided (<0.5 or >2),
+  all six on lejepa/visreg supcon-ft->res (ratio 2-6: the SIGReg child is
+  LARGER than the softmax parent, as the laptop note predicted).
+
+  raw concat vs its parent:        probe wins 41/45     eucl wins  7/45
+  standardised vs raw concat:      probe +0.028 (37/45) eucl +0.000 (16/45)
+  best-of-4 combiner vs parent:    eucl wins 9/45;  raw eucl - parent eucl = -0.058 mean
+
+  flagship cars:visreg           ratio   P raw  E raw  P std  E std | P par  E par | P chd  E chd
+    supcon-ft->res                0.67   0.818  0.705  0.845  0.670 | 0.728  0.715 | 0.733  0.569
+    supcon-ft->resnplm            0.74   0.859  0.747  0.862  0.749 | 0.728  0.715 | 0.848  0.728
+    ss-ft->res                    0.88   0.718  0.479  0.762  0.470 | 0.739  0.559 | 0.590  0.437
+
+- THE HYPOTHESIS IS RETRACTED ON TRAINED PAIRS, as the untrained CIFAR proxy
+  suggested: no combiner rescues eucl.  Standardising is a wash on distance
+  (+0.000 mean, 16/45 wins) and whitening hurts; the best of four combiners
+  beats the parent's eucl in only 9/45 pairs.  The residual concat's
+  geometry loss (7/45 eucl wins vs the parent, -0.058 mean) is a property of
+  the construction, not of raw concatenation.  Question (B) is closed.
+- Where the scale IS one-sided (6 pairs, ratio 2-6), standardising helps the
+  probe by +0.04-0.10 and eucl by +0.03-0.12 (aircraft/lejepa +0.12,
+  galaxy10/lejepa +0.11) -- but still not above the parent's eucl.  A
+  per-half standardisation is a cheap, safe default for the concat; it is
+  not a repair.
+- The probe gain is robust: 41/45 raw, 43/45 standardised, on every dataset
+  and base.  The construction is a probe construction.
+- resnplm is the only child that carries geometry: child-only eucl matches
+  or beats the parent on 8/15 resnplm pairs (cars/visreg 0.728 vs 0.715,
+  aircraft/visreg 0.812 vs 0.731, galaxy10/dino 0.775 vs 0.666) while the
+  NT-Xent res child never does (0/15) and ss-ft->res is the weakest pair
+  everywhere.  Paper wording: "residual concat for the probe; the res-nplm
+  CHILD alone for calibration" -- consistent with exp 111.
+- galaxy10 draw pairs (exp 125 draws) pending the exp-71 chain.

@@ -1935,6 +1935,58 @@ draw and are labelled as such, so no archived number is wrong; but the exp-125
 downstream evaluations (80/100/104) MUST be run after this fix.  Same fix in
 exp 76.  Pinned by `test_head_emb_honours_the_holdout_draw_tag`.
 
+### Exp 134a — Is the residual gain a construction, or just width?
+
+> **CODE READY 2026-08-27.**  `134a_width_control.py` (comparison) +
+> exp 70 `--emb-dim 200` (the control; artifacts now tagged `_e200` via
+> `exp70.seed_sfx`, so it cannot overwrite the archived 100-D parents --
+> pinned by `tests/test_exp134ac.py`).  Queued behind Block I.
+
+**Motivation.**  Question (A) of exp 134: the concat is two full networks and
+the flagship cars/VISReg +0.148 has never met a same-width non-residual
+control; exp 85 already found a capacity effect on that cell.
+
+**Protocol.**  supcon-ft fine-tuned with a 200-D head (same trunk, corpus,
+epochs, recipe; no residual) on cars/visreg for seeds 0/1/2, plus galaxy10
+dino/lejepa seed 0.  Compare parent(100) / concat(100+100, res-nplm) /
+control(200) on probe, eucl, mahaT, paired by seed, exp-132 TIE guard.
+
+**Prediction.**  The control recovers a minority of the gain; concat beats it
+by more than the floor -> the construction is real.
+
+**Falsifier.**  control >= concat on probe -> the gain was width; the residual
+is a way of spending parameters and is dropped as a construction (the
+child-alone detector result is half-width and survives).
+
+### Exp 134c — Should the residual come AFTER discovery?
+
+> **CODE READY 2026-08-27.**  `134c_residual_after_discovery.py`, `--selftest`
+> green.  Queued behind 134a.
+
+**Motivation.**  Question (C) of exp 134: the residual removes what the anchor
+set explains; after discovery the anchor set is richer, so the child should
+carry more of what is genuinely unexplained.
+
+**Protocol.**  Per cell: load the exp-70 parent -> run exp 70's feature-space
+"natural discovery" on its head (2 rounds) -> relabel the corpus LABEL-FREE
+against the enlarged anchor set (seen keep labels; other images join only if
+their nearest anchor is a discovered one, under that anchor's index) -> train
+the exp-71 child (res / res-nplm) with r = z - anchor[y'] from the parent trunk
++ post-discovery head -> battery on parent-post / child / concat, beside the
+archived exp-71 (pre-discovery) rows.  Cells: galaxy10 x 3 bases, cars/visreg,
+dtd/dino (archived draw).  Reports discovery purity and the diagnostic
+pseudo-label purity so the falsifier can be read off.
+
+**Prediction.**  Child informativeness (probe, eucl) rises where round-1
+purity cleared the 0.15 gate and is unchanged where it did not.
+
+**Falsifier.**  Helps where purity ~0 -> the mechanism story is wrong.  Hurts
+where discovery worked -> the child is fitting anchors planted on the novel
+class and removing what the concat needed.
+
+**Cost.**  One feature-space discovery + one exp-71-scale child ft per (cell,
+objective).
+
 ### Exp 132 — A supervised linear probe (the metric we never ran)
 
 > **DONE 2026-08-27 — FALSIFIER FIRES.**  ss-ft loses supervised top-1 to
@@ -2006,6 +2058,15 @@ two supervised distance-NPLM arms tie each other (0.8964 vs 0.8865, gap 0.0099
 **Cost.**  Minutes per cell given banks; piggybacks on the Block B runs.
 
 ### Exp 134 — What is the residual construction actually doing?
+
+> **(B) DONE 2026-08-27 on 45 TRAINED pairs (all 15 transfer cells x 3) --
+> RETRACTED, question closed.**  Ratios 0.50-6.3, only 6/45 one-sided; no
+> combiner rescues eucl (standardise +0.000 mean, whiten hurts; best-of-4
+> beats the parent's eucl in 9/45).  The geometry loss is the construction's.
+> Probe gain robust (41/45).  Only the resnplm CHILD carries geometry
+> (child-only eucl >= parent on 8/15).  Per-half standardisation is a safe
+> default (+0.028 probe), not a repair.  (A) -> exp 134a, (C) -> exp 134c,
+> both queued.  `logs/SUMMARY_TABLES.md`.
 
 > **CODE READY 2026-08-27.**  `--selftest` green (4 checks) +
 > `tests/test_residual_audit.py` (10).  NEEDS parent/child banks.

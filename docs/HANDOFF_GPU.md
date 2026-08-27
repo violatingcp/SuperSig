@@ -260,6 +260,23 @@ prediction here is fine and expected to be possible: it retires the idea.
 draw-blind until 2026-08-27 (no `run_tag()` in the checkpoint name).  Exps
 80/100/104/111 on the `_h1_d*` cells only mean something from that commit on.
 
+## Block J — Exps 134a / 134c (after Block I)
+
+```bash
+# 134a: the width-matched control (tagged _e200, does not touch archived parents)
+for S in 0 1 2; do
+  python experiments/70_cars_ft_suite.py --dataset cars --base visreg --emb-dim 200 \
+      --arms supcon-ft --skip-discovery --seed $S
+done
+python experiments/134a_width_control.py --dataset cars --base visreg
+# 134c: residual AFTER discovery
+python experiments/134c_residual_after_discovery.py --dataset galaxy10 --base dino
+```
+
+Report 134a's paired verdict verbatim (it prints TIE when inside the floor)
+and 134c's summary table beside the archived exp-71 rows, with the discovery
+purity in the header.
+
 ## Block G — Exp 132: supervised linear probe (piggyback on Block B)
 
 The campaign has NO supervised linear probe -- the `probe` column everywhere is
