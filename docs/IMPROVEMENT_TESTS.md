@@ -1956,6 +1956,17 @@ exp 76.  Pinned by `test_head_emb_honours_the_holdout_draw_tag`.
 
 ### Exp 135 — Corpus-adaptive normalisation on every cell (exp 133's analogue)
 
+> **ARCHIVED CELLS DONE 2026-08-27 (90 paired A/B) — SPLIT VERDICT.**  Holds for
+> the DISTANCE pool (+0.020 r2 purity, 33/45 wins, 4 losses; galaxy10
+> +0.07..+0.10, dtd +0.05; probe/eucl unchanged) and FAILS for the density-
+> ratio pool (-0.004, 9 wins / 15 losses).  Falsifier clause 2 fires: it helps
+> where r1 ~ 0 (3/4 cells), so on the ViT it is the normaliser re-centring the
+> corpus, not "richer anchors compound".  Exp 133's mechanism reading is
+> restated for transfer cells.  SECONDARY: frozen-head np pooling itself posts
+> r1 purity 0.53-0.68 on galaxy10 (distance 0.01-0.52) and beats distance in
+> 34/45 cells -- the exp-109 construction transfers; needs draws before quoting.
+> galaxy10 draw cells pending.  `logs/SUMMARY_TABLES.md`, `logs/exp135/`.
+
 > **CODE READY 2026-08-27.**  `135_corpus_norm_everywhere.py`, `--selftest`
 > green + `tests/test_corpus_norm.py`.  Queued as Block K (evaluation-scale).
 

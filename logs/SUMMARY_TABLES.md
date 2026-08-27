@@ -2162,3 +2162,56 @@ Verdicts:
   a pre-discovery space; run discovery on it only above the gate.
 - ss-ft->res is the weakest residual on both bases (child eucl below
   parent, per-event flips sign on lejepa), matching exp 134(B).
+
+## Exp 135 -- corpus-adaptive normalisation on every transfer cell (Block K)
+(15 cells x {supcon-ft, ss-ft, nplm-sup-ft} x {dist, np} pool scorers = 90
+paired A/B; frozen head + CorpusNorm on its 768-D input, stats seeded from
+seen train features; A stats fixed, B stats adapt (bn_adapt=True) during the
+2 x 5-ep anchor fine-tune; campaign-default holdouts; 2026-08-27;
+logs/exp135/corpus_norm_<cell>.json.  d r2 = round-2 purity, B - A.)
+
+  scorer   d r2 (mean+-sd)   wins/losses/ties (|d|>0.005)   drift (rel)
+  dist     +0.020+-0.030     33 / 4 / 8                      0.03-0.33
+  np       -0.004+-0.020      9 / 15 / 21                    0.01-0.40
+  both     +0.008            42 / 19 / 29
+  probe B-A +0.002, eucl -0.003, per-event -0.001: benign everywhere.
+
+  largest gains (all distance pool): galaxy10 dino supcon +0.102, lejepa
+  supcon +0.097, lejepa nplm-sup +0.097, visreg supcon +0.076, lejepa ss-ft
+  +0.070, dtd dino supcon/ss-ft +0.049/+0.047, aircraft visreg nplm-sup
+  +0.039, aircraft dino supcon +0.036.  Largest losses (all np pool):
+  galaxy10 dino ss-ft -0.060, nplm-sup -0.054 (dist), flowers visreg
+  supcon -0.053, aircraft dino nplm-sup -0.049, dtd dino nplm-sup -0.043.
+
+- THE PREDICTION HOLDS FOR THE DISTANCE POOL AND FAILS FOR THE DENSITY-RATIO
+  POOL.  With distance pooling, adapting the normaliser lifts round-2
+  purity in 33/45 cells (4 losses), by +0.07..+0.10 on galaxy10 and
+  +0.05 on dtd/dino, with no probe/eucl cost.  With the np pool it is a
+  wash-to-harmful (9 wins, 15 losses).  So exp 133's CIFAR result -- which
+  used the SparKer/np pool -- does NOT transfer to the ViT as the same
+  mechanism: on the transfer trunks the adaptation helps the scorer that
+  is scale-blind (distance) and gives nothing to the one that is refit
+  every round (np).  Reading: corpus normalisation is a repair for
+  distance pooling, not a booster for density-ratio pooling.
+- THE FALSIFIER'S SECOND CLAUSE FIRES: B helps where round-1 purity is ~0.
+  The four cells with r1 < 0.05 (galaxy10 dino/lejepa, dist) gain +0.045
+  on average (3/4) -- the round-1 pool was junk, so "richer anchors
+  compound" cannot be what the gain is.  The normaliser is acting on its
+  own: re-centring the corpus each round moves the novel class out of the
+  seen distance shell.  Exp 133's mechanism reading is restated for the
+  transfer cells; it may still be right on CIFAR, where the pool was np
+  and did not have this signature.
+- SECONDARY, AND LARGER THAN THE HEADLINE: frozen-head density-ratio
+  pooling on the ViT cells (arm A, np) posts round-1 purities the campaign
+  has not seen at these cells: galaxy10 0.53-0.68 (distance 0.01-0.52),
+  aircraft 0.20-0.55 (0.09-0.41), cars 0.12-0.28 (0.05-0.20), dtd
+  0.51-0.74, flowers 0.35-0.60.  np beats distance at r1 in 34/45 cells;
+  the exceptions are dtd/flowers where distance is already 0.6-0.8.  The
+  exp-109 construction (freeze, pool by density ratio, iterate anchors)
+  transfers, and on galaxy10 it turns a 0.04 distance pool into a 0.6
+  pool on the SAME frozen space.  This needs its own draw-interval run
+  before it is quoted (the galaxy10 draws for exp 135 are in the queue).
+- Caveats: single seed; archived alphabetical draws (multi-holdout except
+  galaxy10); 5-ep head fine-tune only (anchors + norm stats).  Drift is
+  10-40% of |z| on galaxy10, 2-9% elsewhere -- the adaptation is large
+  exactly where it helps.
