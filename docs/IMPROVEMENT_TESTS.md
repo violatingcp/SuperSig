@@ -1998,6 +1998,17 @@ or the concat loses top-1 by more than 0.017 (no-cost fails on CIFAR).
 
 ### Exp 136 — The from-scratch CIFAR master grid (every metric, every space)
 
+> **TIER 1 DONE 2026-08-27 (cifar100 h4, all 8 objectives, full battery).**
+> Prediction (i) holds leakage-free across every currency: ssig ties supcon on
+> probe / supAUC / top-1 (0.597 vs 0.608) and wins eucl +0.39, mahaT +0.32,
+> per-event 0.07 vs 0, SpK@.02 0.22 vs 0.14, MMD 0.70 vs 0.50, Maha@.05 0.48
+> vs 0.00.  (ii) holds -- h1 stays gated (frozen np r1 <= 0.05) -- but the
+> legal cut REFUSES on all 8 clean spaces, siding with exp 131 over 129: the
+> estimator works on the tau-bank spaces specifically.  nplmsd top-1 0.25 is
+> the outlier (undecodable seen classes).  The exp-68 loop repairs supcon's
+> calibration and damages ssig's.  Tier 2 (cifar10) running; Tier 3 draws
+> queued.  `logs/SUMMARY_TABLES.md`, `logs/exp136/master_cifar100.json`.
+
 > **CODE READY 2026-08-27.**  `136_scratch_master.py` + `136_aggregate.py`,
 > exps 67/68 now tag non-default holdouts (`_h{N}`) and exp 68 saves purity +
 > post geometry.  Running as Block L (tiered; ~25 GPU-h on the shared card).

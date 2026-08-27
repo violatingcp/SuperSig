@@ -2554,3 +2554,73 @@ pre-discovery order.  pseudo = purity of the pseudo-labelled child corpus
   The exp-125 draws for galaxy10 would give the interval; not queued.
 - Bug fixed on the way: 134c's archived-row lookup (npz keys use '_' and
   '-' for ' ' and '->'); three cells were re-run after a syntax slip.
+
+## Exp 136 -- the from-scratch CIFAR-100 master battery, Tier 1 (Block L)
+(cifar100, 100-D, pretrain=None, holdout {4} [single-holdout, b=0.01], seed 0;
+all eight exp-67 objectives; probe/top1 x3 seeds; power at alpha .05 (SpK
+annealed, N_D 5000, 200 nulls / 50 toys); frozen pools = trunk frozen, 2 x
+2-ep anchor rounds; exp-68 loop = trunk trains, 2 x 5 ep.  2026-08-27;
+logs/exp136/master_cifar100.json, logs/exp68/scratch_discovery_cifar100.npz)
+
+PRE (frozen space)
+  arm      probe   top1   acc    supAUC eucl   mahaT  mahaPC lid    perevt  SpK@.01/.02/.05  Maha@.02/.05  MMD@.02/.05
+  supcon   0.940   0.608  0.545  0.974  0.233  0.279  0.487  0.740  0.000   0.08/0.14/1.00   0.04/0.00     0.50/1.00
+  ssig     0.937   0.597  0.588  0.976  0.620  0.602  0.631  0.734  0.070   0.20/0.22/1.00   0.06/0.48     0.70/1.00
+  nplmcw   0.898   0.507  0.463  0.946  0.525  0.411  0.553  0.678  0.030   0.06/0.20/1.00   0.06/0.08     0.58/1.00
+  supsig   0.823   0.360  0.346  0.930  0.340  0.320  0.432  0.537  0.000   0.08/0.14/1.00   0.02/0.00     0.38/1.00
+  nplmsd   0.820   0.254  0.232  0.913  0.408  0.345  0.348  0.542  0.050   0.08/0.18/0.90   0.04/0.00     0.52/1.00
+  simclr   0.799   0.292  0.242  0.859  0.443  0.385  0.453  0.570  0.010   0.02/0.06/1.00   0.02/0.02     0.18/0.82
+  visreg   0.797   0.239  0.190  0.844  0.499  0.382  0.434  0.534  0.030   0.02/0.04/0.86   0.06/0.00     0.08/0.68
+  nplm     0.757   0.223  0.181  0.836  0.413  0.361  0.447  0.635  0.010   0.04/0.00/1.00   0.02/0.00     0.12/0.94
+
+POOLS AND DISCOVERY (gate 0.15)
+  arm      frozen dist r1/r2   frozen np r1/r2   np+BN-adapt r2   legal cut          exp-68 loop: purity r1/r2  probe pre->post  post eucl/mahaT/perevt@.02
+  supcon   0.000/0.000         0.052/0.021       0.027            REFUSED (0.031)    0.000/0.002   0.940->0.930    0.372/0.396/0.000
+  ssig     0.008/0.010         0.007/0.018       0.018            REFUSED (0.018)    0.008/0.015   0.937->0.871    0.452/0.514/0.010
+  nplmcw   0.006/0.000         0.031/0.020       0.016            REFUSED (0.033)    0.006/0.002   0.898->0.937    0.438/0.382/0.020
+  supsig   0.009/0.005         0.024/0.037       0.040            REFUSED (0.021)    0.009/0.010   0.823->0.796    0.371/0.365/0.030
+  nplmsd   0.008/0.004         0.004/0.001       0.020            REFUSED (0.004)    0.008/0.003   0.820->0.857    0.349/0.310/0.010
+  simclr   0.004/0.002         0.024/0.014       0.005            REFUSED (0.017)    0.004/0.005   0.799->0.889    0.315/0.303/0.030
+  visreg   0.005/0.006         0.022/0.015       0.018            REFUSED (0.020)    0.005/0.002   0.797->0.893    0.343/0.293/0.010
+  nplm     0.009/0.009         0.022/0.014       0.016            REFUSED (0.014)    0.009/0.007   0.757->0.885    0.298/0.270/0.070
+
+- PREDICTION (i) HOLDS, LEAKAGE-FREE AND ACROSS ALL CURRENCIES: ssig ties
+  supcon on probe (0.937 vs 0.940), supAUC (0.976 vs 0.974) and supervised
+  top-1 (0.597 vs 0.608, under the floor), and beats it on every
+  calibration and detection column: eucl +0.39, mahaT +0.32, mahaPC +0.14,
+  per-event 0.07 vs 0.00, SparKer@.02 0.22 vs 0.14, MMD@.02 0.70 vs 0.50,
+  and Maha@.05 0.48 vs 0.00 -- the first C100 space on which the
+  parametric Mahalanobis test is not dead.  SIGReg lam=5 costs nothing
+  and buys the whole second currency.  The paper's shortlist claim is
+  now demonstrable on clean trunks (with the exp-124 caveat that the
+  PROBE part of the old claim -- ssig > supcon -- is a tie).
+- Supervised top-1 orders the arms cleanly: supcon 0.61 > ssig 0.60 >
+  nplmcw 0.51 > supsig 0.36 > simclr 0.29 > nplmsd 0.25 > visreg 0.24 >
+  nplm 0.22.  nplmsd's 0.25 (acc 0.23, supAUC 0.91) is the outlier: a
+  decent novelty probe (0.82) on a space that is nearly undecodable for
+  the seen classes -- its galaxy10 weakness (exp 132 -0.08..-0.14 top-1)
+  is the same defect.  Drop it from any "no-cost" sentence.
+- PREDICTION (ii) HOLDS (h1 C100 stays gated) BUT THE LEGAL CUT REFUSES ON
+  ALL EIGHT: frozen-np round-1 purity 0.004-0.052, distance 0.000-0.009,
+  and the base-rate estimator declines everywhere (b_hat far below 0.01).
+  This sides with exp 131 (32-D spaces: refused) against exp 129 (the
+  100-D tau bank: engaged, 0.39).  The estimator's success is therefore
+  specific to the exp-113 NPLM+marginal spaces, not to 100-D per se --
+  the same-space reconciliation is still the open item.  BN adaptation
+  moves r2 by <=+0.02 and clears nothing.
+- THE EXP-68 LOOP SPLITS BY TRUNK, WITH A SYMMETRY WORTH STATING: it is
+  probe-positive (+0.04..+0.13) for the five arms whose pre-probe is
+  <0.90 and probe-negative for the three above 0.93 (supcon -0.010,
+  ssig -0.066, nplmcw is the exception at +0.039).  On calibration it
+  REPAIRS supcon (eucl 0.233 -> 0.372, mahaT 0.279 -> 0.396) and DAMAGES
+  ssig (0.620 -> 0.452, 0.602 -> 0.514): the fine-tune pulls every space
+  toward the same middle geometry regardless of purity (0.000-0.015).
+  Under nh=1 on C100, run the loop on softmax trunks only if you want
+  calibration and on nothing if you want the probe.
+- Detection: MMD saturates at f=.05 on every arm; SparKer reaches 1.00 at
+  .05 on 6/8; at f=.02 ssig (0.22) and nplmcw (0.20) lead.  f95 for the
+  clean shortlist will sit at 0.02-0.05, i.e. the C100 reach the archive
+  quoted (0.029) is not a leakage artefact.
+- Caveats: seed 0, holdout {4}; Tier 3 draws {43,57,48} are queued for
+  the shortlist and will give the interval.  Residual/concat rows on
+  these trunks: exp 137 above.
