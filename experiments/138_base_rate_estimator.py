@@ -1,5 +1,5 @@
 """
-Experiment 136: fix the base-rate estimator -- the label-free cut's one broken part.
+Experiment 138: fix the base-rate estimator -- the label-free cut's one broken part.
 
 WHY.  Exp 129 established that the label-free pool cut works (beats the
 inherited q=0.05 in 29/30 cells, engages 30/30, clears the gate at h1 on C100
@@ -57,7 +57,7 @@ FOUR THINGS THIS SCRIPT DOES, all evaluation-only on archived score vectors.
     the scale-bias story and it reads off alpha per cell, feeding (3).
 
   >>> REAL-DATA RESULT 2026-08-27, six exp-54 CIFAR-10 spaces, b_true = 0.10.
-  >>> logs/exp136/brate_cifar10_exp54.json.  THREE OF THE FOUR IDEAS ABOVE FAIL
+  >>> logs/exp138/brate_cifar10_exp54.json.  THREE OF THE FOUR IDEAS ABOVE FAIL
   >>> ON REAL DATA; LOWERING n_min IS THE ONE THAT WORKS.
   >>>
   >>> (2) ESTIMATOR SWAP: NO HELP.  All three agree and all are 4-7x low --
@@ -102,8 +102,8 @@ FOUR THINGS THIS SCRIPT DOES, all evaluation-only on archived score vectors.
   >>> 10, keep it as an honest tuning constant with a reported sweep, and do
   >>> NOT claim it corrects a bias factor.
 
-    python experiments/136_base_rate_estimator.py --selftest
-    python experiments/136_base_rate_estimator.py --embs logs/exp54/embs_*.npz --holdouts 4
+    python experiments/138_base_rate_estimator.py --selftest
+    python experiments/138_base_rate_estimator.py --embs logs/exp54/embs_*.npz --holdouts 4
 """
 import os, sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -337,7 +337,7 @@ def main():
     ap.add_argument("--dataset", default="cifar10")
     ap.add_argument("--inject-rate", type=float, default=0.02)
     ap.add_argument("--seed", type=int, default=0)
-    ap.add_argument("--out", default="logs/exp136")
+    ap.add_argument("--out", default="logs/exp138")
     args = ap.parse_args()
 
     if args.selftest:

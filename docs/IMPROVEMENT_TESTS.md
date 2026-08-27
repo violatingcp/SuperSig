@@ -1,4 +1,4 @@
-# Proposed tests to improve performance — exps 81–136
+# Proposed tests to improve performance — exps 81–138
 
 Companion to [QUESTIONS.md](QUESTIONS.md) (whose "open items as of exp 58" list
 this supersedes).  Every entry follows the standard protocol in
@@ -2224,11 +2224,11 @@ cleared the gate, no-op where it did not.  Falsifier: it helps where purity was
 12/12"; it is **10/12**, and the 12/12 that does hold is against the discovery
 pipeline rather than the best known space.
 
-### Exp 136 — Fix the base-rate estimator
+### Exp 138 — Fix the base-rate estimator
 
 > **RUN 2026-08-27 on six real exp-54 CIFAR-10 spaces.
 > THREE OF FOUR PROPOSED FIXES FAIL; LOWERING `n_min` IS THE ONE THAT WORKS.**
-> `logs/exp136/brate_cifar10_exp54.json`, `tests/test_base_rate.py` (13).
+> `logs/exp138/brate_cifar10_exp54.json`, `tests/test_base_rate.py` (13).
 
 **Why.**  Exp 129 showed the label-free cut works but captures only 30-55% of
 oracle purity, and the whole gap is `b_hat` (2-4x low on C100, 7-15x on
