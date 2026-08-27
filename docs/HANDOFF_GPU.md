@@ -311,6 +311,14 @@ Artifacts at a non-default holdout are tagged `_h{N}`; holdout 4 keeps the
 archived names.  `logs/exp68/scratch_discovery_cifar100_3bases_archived.npz`
 is the pre-Block-L exp-68 file.
 
+## Block M — Exp 137 (scratch residuals) + exp 59 seeds
+
+```bash
+python experiments/137_scratch_residuals.py --dataset cifar100          # parents exist
+python experiments/137_scratch_residuals.py --dataset cifar10 --holdout 8
+python experiments/59_nplm_residual_concat.py --dataset cifar10 --seed 1   # writes *_s1.npz
+```
+
 ## Block G — Exp 132: supervised linear probe (piggyback on Block B)
 
 The campaign has NO supervised linear probe -- the `probe` column everywhere is

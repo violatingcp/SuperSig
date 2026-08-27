@@ -1962,6 +1962,31 @@ draw and are labelled as such, so no archived number is wrong; but the exp-125
 downstream evaluations (80/100/104) MUST be run after this fix.  Same fix in
 exp 76.  Pinned by `test_head_emb_honours_the_holdout_draw_tag`.
 
+### Exp 137 — Residual / concat constructions on the scratch trunks
+
+> **CODE READY 2026-08-27.**  `137_scratch_residuals.py`; exp 59 outputs are
+> now seed-tagged (`_s{seed}`).  Running as Block M alongside Block L.
+
+**Motivation.**  The residual concat holds the CIFAR probe records and the
+no-cost construction claim (exp 132), but every CIFAR residual was built on a
+hub parent that saw the held-out class.  Exp 136 covers standalone scratch
+spaces; this covers the constructions, and Block M also adds seeds 1/2 to the
+exp-59 CIFAR-10 champions (sup->res-nplm 0.984 etc. were single-seed).
+
+**Protocol.**  Parents {supcon, ssig, nplmsd} from exp 67 (holdout-tagged);
+children res / res-nplm by the exp-73 recipe (20 ep from a deepcopy); exp-73
+battery + exp-132 supervised top-1 on parent / residual / concat; banks into
+`logs/exp136/banks/`.  Cells: cifar100 h4 now, cifar10 h4 after Block L tier
+2, the six draw holdouts after Block L.
+
+**Prediction.**  Paired concat-over-parent probe gain reproduces on clean
+trunks (exp 75: +0.016 c10, +0.009 c100) and the concat ties the parent on
+top-1; res-nplm is the two-currency child on c100, plain res wins probe on
+c10.
+
+**Falsifier.**  The gain vanishes on clean trunks (the records rode leakage),
+or the concat loses top-1 by more than 0.017 (no-cost fails on CIFAR).
+
 ### Exp 136 — The from-scratch CIFAR master grid (every metric, every space)
 
 > **CODE READY 2026-08-27.**  `136_scratch_master.py` + `136_aggregate.py`,

@@ -116,7 +116,7 @@ def main():
     ap.add_argument("--skip-power", action="store_true")
     args = ap.parse_args()
     ds = args.dataset
-    dtag = ds
+    dtag = ds + (f"_s{args.seed}" if args.seed else "")   # seeds never overwrite the archive
     if args.dim_half != 16:
         dtag += f"_{2 * args.dim_half}d"
     if args.cw_lam is not None:
