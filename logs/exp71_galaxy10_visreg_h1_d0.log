@@ -4,3 +4,48 @@ exp71 [galaxy10_visreg_ft71_h1_d0] residual ft on exp-70 parents, runs=[('supcon
 
 ===== [galaxy10_visreg_ft71_h1_d0] supcon-ft->res =====
   [supcon-ft (parent)          ] probe=0.9492+-0.0006 acc=0.7442 eucl=0.7133 mahaT=0.6227 lid=0.4008 perevt=0.034
+  [supcon-ft-res] epoch 1/20  main=2.9744  aux=1.2836
+  [supcon-ft-res] epoch 5/20  main=2.5707  aux=0.6777
+  [supcon-ft-res] epoch 10/20  main=2.5103  aux=0.5703
+  [supcon-ft-res] epoch 15/20  main=2.4799  aux=0.5271
+  [supcon-ft-res] epoch 20/20  main=2.4703  aux=0.4951
+  extracted ft70_supcon-ft_res train: (1772, 768)
+  extracted ft70_supcon-ft_res test: (15964, 768)
+  [supcon-ft->res (residual)   ] probe=0.9606+-0.0002 acc=0.6412 eucl=0.4580 mahaT=0.6263 lid=0.4507 perevt=0.005
+  [supcon-ft->res (concat)     ] probe=0.9707+-0.0029 acc=0.7365 eucl=0.6147 mahaT=0.5812 lid=0.4034 perevt=0.021
+
+===== [galaxy10_visreg_ft71_h1_d0] ss-ft->res =====
+  [ss-ft (parent)              ] probe=0.9253+-0.0018 acc=0.7165 eucl=0.5824 mahaT=0.4820 lid=0.4936 perevt=0.015
+  [ss-ft-res] epoch 1/20  main=2.9087  aux=0.8436
+  [ss-ft-res] epoch 5/20  main=2.5524  aux=0.5577
+  [ss-ft-res] epoch 10/20  main=2.4852  aux=0.4972
+  [ss-ft-res] epoch 15/20  main=2.4517  aux=0.4777
+  [ss-ft-res] epoch 20/20  main=2.4390  aux=0.4462
+  extracted ft70_ss-ft_res train: (1772, 768)
+  extracted ft70_ss-ft_res test: (15964, 768)
+  [ss-ft->res (residual)       ] probe=0.9313+-0.0026 acc=0.6026 eucl=0.4868 mahaT=0.4155 lid=0.3908 perevt=0.028
+  [ss-ft->res (concat)         ] probe=0.9443+-0.0045 acc=0.7097 eucl=0.5358 mahaT=0.4100 lid=0.4737 perevt=0.034
+
+===== [galaxy10_visreg_ft71_h1_d0] supcon-ft->res-nplm =====
+  [supcon-ft-res-nplm] epoch 1/20  main=828577435234.0426  aux=0.3718
+  [supcon-ft-res-nplm] epoch 5/20  main=353901699485.9575  aux=0.3892
+  [supcon-ft-res-nplm] epoch 10/20  main=72428053125.5160  aux=0.3921
+  [supcon-ft-res-nplm] epoch 15/20  main=31772168760.3059  aux=0.4084
+  [supcon-ft-res-nplm] epoch 20/20  main=25049022776.0665  aux=0.4130
+  extracted ft70_supcon-ft_resnplm train: (1772, 768)
+  extracted ft70_supcon-ft_resnplm test: (15964, 768)
+  [supcon-ft->res-nplm (residual)] probe=0.9534+-0.0010 acc=0.7453 eucl=0.6789 mahaT=0.6623 lid=0.3278 perevt=0.018
+  [supcon-ft->res-nplm (concat)] probe=0.9634+-0.0023 acc=0.7501 eucl=0.7129 mahaT=0.6478 lid=0.3710 perevt=0.022
+
+===== EXP71 SUMMARY [galaxy10_visreg_ft71_h1_d0] =====
+  space                                    probe     acc    eucl   mahaT     lid  perevt
+  supcon-ft (parent)               0.9492+-0.0006  0.7442  0.7133  0.6227  0.4008   0.034
+  supcon-ft->res (residual)        0.9606+-0.0002  0.6412  0.4580  0.6263  0.4507   0.005
+  supcon-ft->res (concat)          0.9707+-0.0029  0.7365  0.6147  0.5812  0.4034   0.021
+  ss-ft (parent)                   0.9253+-0.0018  0.7165  0.5824  0.4820  0.4936   0.015
+  ss-ft->res (residual)            0.9313+-0.0026  0.6026  0.4868  0.4155  0.3908   0.028
+  ss-ft->res (concat)              0.9443+-0.0045  0.7097  0.5358  0.4100  0.4737   0.034
+  supcon-ft->res-nplm (residual)   0.9534+-0.0010  0.7453  0.6789  0.6623  0.3278   0.018
+  supcon-ft->res-nplm (concat)     0.9634+-0.0023  0.7501  0.7129  0.6478  0.3710   0.022
+saved /home/pharris/sigreg/SuperSig/plots/exp71_probe_galaxy10_visreg_ft71_h1_d0.png
+Done.
