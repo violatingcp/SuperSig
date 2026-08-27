@@ -2270,3 +2270,41 @@ Verdicts (visreg), and what changes across the three bases:
     dino    0.879+-0.026      0.131+-0.038 (nplm-sup)     0/5
     lejepa  0.892+-0.056      0.190+-0.137 (nplm-sup)     2/5
     visreg  0.906+-0.043      0.290+-0.067 (supcon)       5/5
+
+## Exp 135 addendum -- galaxy10 across draws (15 draw cells x 3 arms x 2 scorers)
+(same protocol; SUPERSIG_NH=1, draws {0,3,5,7,8}; mean+-sd across draws;
+logs/exp135/corpus_norm_galaxy10-<base>_h1_d<D>.json)
+
+  scorer  r1 purity, frozen head        >= gate     d r2 (corpus-norm - frozen)   wins/losses (45)
+  dist    0.122-0.261 per arm/base      26/45       -0.006+-0.051                 16 / 23
+  np      0.396-0.571 per arm/base      45/45       +0.001+-0.020                 15 / 21
+
+  per base (np, frozen head, r1):   dino 0.40-0.47   lejepa 0.51-0.57   visreg 0.54-0.57
+  per base (dist, frozen head, r1): dino 0.12-0.13   lejepa 0.22-0.23   visreg 0.17-0.26
+  probe frozen vs corpus-norm: identical to +-0.01 everywhere.
+
+- CORPUS-NORM'S GALAXY10 GAIN DOES NOT SURVIVE DRAWS.  The +0.07..+0.10
+  round-2 gains on the archived draw become -0.006+-0.051 (dist) and
+  +0.001+-0.020 (np) across five random classes, 16 wins / 23 losses.
+  Class 9 was, once more, the favourable case.  On the transfer cells
+  corpus-adaptive normalisation is a null result; keep it as an opt-in
+  with no claim attached.  (Exp 133's CIFAR result stands on its own
+  paired evidence and is not affected.)
+- THE ROBUST RESULT IS THE FROZEN-HEAD DENSITY-RATIO POOL.  With the head
+  frozen and the np scorer, round-1 purity clears the 0.15 gate on 45/45
+  draw cells -- every arm, every base, every held-out class -- at
+  0.40-0.57.  The exp-70/125 loop (head trains, distance pool) on the
+  SAME parents clears it on 0/5 (dino) .. 5/5 (visreg, one arm).  The
+  frozen-head np construction is the first galaxy10 discovery result in
+  the campaign that is base- AND draw-independent, and it also holds r2
+  (0.40-0.57, no collapse) where the distance pool collapses.
+  Interpretation: the round-2 collapse the exp-125 tables show is the
+  head fine-tune destroying the pool, not the anchors; freezing the head
+  and pooling by density ratio removes both failure modes at once.
+- Caveats: single seed per draw; the frozen-np arm's post-probe is the
+  pre-probe (the head does not move) so it is not a probe booster; it is
+  a POOL construction.  What it buys downstream (per-event, SparKer after
+  anchor iteration) is measured only at the archived draw here.
+- Paper: the galaxy10 single-holdout regime line becomes "the fine-tuning
+  loop is base-dependent (visreg only); frozen density-ratio pooling is
+  not (45/45)".  Draw-interval table above is citable as is.

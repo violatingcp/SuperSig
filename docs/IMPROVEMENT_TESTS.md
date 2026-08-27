@@ -1964,6 +1964,13 @@ exp 76.  Pinned by `test_head_emb_honours_the_holdout_draw_tag`.
 
 ### Exp 135 — Corpus-adaptive normalisation on every cell (exp 133's analogue)
 
+> **galaxy10 DRAWS DONE 2026-08-27 — the corpus-norm gain is FALSIFIED on
+> draws** (d r2 -0.006+-0.051 dist, +0.001 np; 16 wins / 23 losses): class 9
+> again.  Keep as opt-in, no claim.  **What survives is larger: frozen-head
+> density-ratio pooling clears the gate on 45/45 draw cells (r1 0.40-0.57,
+> every arm/base/class, no round-2 collapse)** where the head-training
+> distance loop manages 0/5 (dino) to 5/5 (visreg, one arm).  First galaxy10
+> discovery result that is base- and draw-independent.
 > **ARCHIVED CELLS DONE 2026-08-27 (90 paired A/B) — SPLIT VERDICT.**  Holds for
 > the DISTANCE pool (+0.020 r2 purity, 33/45 wins, 4 losses; galaxy10
 > +0.07..+0.10, dtd +0.05; probe/eucl unchanged) and FAILS for the density-
