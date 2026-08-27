@@ -1,4 +1,4 @@
-# Proposed tests to improve performance — exps 81–130
+# Proposed tests to improve performance — exps 81–131
 
 Companion to [QUESTIONS.md](QUESTIONS.md) (whose "open items as of exp 58" list
 this supersedes).  Every entry follows the standard protocol in
@@ -1773,3 +1773,65 @@ a convergence failure that does not exist.
 
 **Cost.**  (a) was minutes and is now done.
 
+### Exp 131 — Re-run cifar10 / cifar100 / galaxy10 with the label-free cut
+
+> **CODE READY 2026-08-26.**  `--selftest` green; `supersig/poolcut.py` +
+> `tests/test_poolcut.py` (11).  NEEDS THE GPU BOX.
+
+**Why these three cells must be re-run.**  Three changes since they were last
+measured, each touching the discovery loop:
+
+1. **The pool cut** (exps 128/129).  `tau_quantile=0.95` is inherited from exp
+   23 and the ceiling `purity <= min(1, b/q)` caps it at 0.20 when b=1%.
+   Replaced by the label-free rule in `supersig.poolcut`.
+2. **`kmax`** (exp 129).  `max(4, len(holdouts)+2)` uses the NUMBER OF NOVEL
+   CLASSES -- oracle knowledge.  Now derived from label-free novelty weights.
+3. **Freezing** (exp 130).  `requires_grad_(False)` did not stop BatchNorm
+   running statistics; the CIFAR trunk drifted by 1.29 in embedding units
+   (mean |z| 0.52) over 3 "frozen" rounds.  **This alone means archived frozen
+   CIFAR numbers will not reproduce**, independently of 1 and 2.
+
+**How it is wired.**  `run_discovery(..., cut_rule=)`: `"quantile"` is the
+DEFAULT and reproduces every archived result exactly; `"legal"` uses the new
+rule and requires `pool_score="np"`.  Nothing changes unless asked.
+
+**Protocol.**  Paired A/B on identical spaces and seeds, per cell and arm.
+Round-1 pool/purity/BIC is evaluation-only and runs from embeddings; the
+multi-round loop needs the backbones.
+
+    python experiments/131_legal_cut_discovery.py --selftest
+    python experiments/131_legal_cut_discovery.py --cells cifar10,cifar100
+    python experiments/131_legal_cut_discovery.py --cells galaxy10:dino,galaxy10:lejepa,galaxy10:visreg
+
+**Evidence so far (real exp-54 CIFAR-10, novel class subsampled).**  The rule
+engages where the scorer is strong and REFUSES where it is not:
+
+    space              b     AUC   n_hat       q    pool  purity  n_nov     ok
+    nplm_dist_sup_cw  0.10  0.766     717  0.0052    261   0.778    203   True
+    nplm_sup_dist     0.10  0.760     690  0.0051    253   0.719    182   True
+    nplm_bilinear     0.10  0.714      13  0.2000  10000   0.232   2315  False
+    nplm_sup_dist     0.01  0.707      56  0.0273   1239   0.090    111   True
+    nplm_dist_sup_cw  0.01  0.687      12  0.2000   9091   0.028    258  False
+    nplm_bilinear     0.01  0.638       0  0.2000   9091   0.019    171  False
+
+At b=0.10 the rule lifts purity 0.232 -> 0.778 on the best space.  At b=0.01 it
+mostly refuses, which is the honest answer.
+
+**Prediction.**  galaxy10 (b~0.10, single holdout, and the ONLY cell genuinely
+OOD to the ImageNet-1k backbones) behaves like the b=0.10 rows -- the rule
+engages and beats the inherited cut.  cifar100 (b~0.01) mostly refuses.
+
+**Falsifier.**  Purity is WORSE under `legal` in cells where `ok` is True ->
+the label-free cut is not usable and 0.95 should stand, with the ceiling
+reported as a limitation.
+
+**A DEFECT FOUND AND FIXED while building this.**  `w = [1-1/r]_+` is a
+positive part, so ANY spread in a fitted `f` manufactures novelty: pure-noise
+scores produced sum(w) = 665 of 8000 points, enough for the rule to fire on
+nothing.  A flat mean subtraction does NOT fix it (405 phantom points survived)
+because the top-ranked null points carry far above-average w.  The fix is a
+RANK-MATCHED null -- under H0 the top q of the corpus is distributed like the
+top q of the reference -- which cancels to ~0 under the null while preserving
+real signal.  Pinned by `tests/test_poolcut.py::test_refuses_pure_noise`.
+
+**Cost.**  Round-1 A/B is minutes per cell.  Full multi-round needs backbones.

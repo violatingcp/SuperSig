@@ -222,6 +222,28 @@ actually used at.
 
 ---
 
+## Block F — Exp 131: re-run cifar10 / cifar100 / galaxy10 (REQUESTED)
+
+These three cells must be re-run: the frozen-BN fix alone means archived frozen
+CIFAR numbers will not reproduce, and the pool cut and kmax both changed.
+
+```bash
+python experiments/131_legal_cut_discovery.py --selftest
+python experiments/131_legal_cut_discovery.py --cells cifar10,cifar100
+python experiments/131_legal_cut_discovery.py --cells galaxy10:dino,galaxy10:lejepa,galaxy10:visreg
+```
+
+`run_discovery` defaults are UNCHANGED (`cut_rule="quantile"`), so anything you
+re-run without the flag reproduces the archive.  Pass `cut_rule="legal"` with
+`pool_score="np"` for the new rule.
+
+**Report the `ok` flag.**  False means the rule refused -- the estimated
+novelty could not support a detectable cluster.  That is a RESULT ("this space
+cannot support discovery at this rate"), not a crash, and we expect it on the
+b~1% cells.
+
+---
+
 ## Reporting
 
 Append to `logs/SUMMARY_TABLES.md` in the house style (`docs/METRICS.md`

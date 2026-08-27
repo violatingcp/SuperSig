@@ -18,6 +18,7 @@ from sklearn.metrics import roc_auc_score
 from .config import DEVICE
 from .data import BalancedBatchSampler
 from .train import train_sigreg_hybrid, collect_embeddings
+from .poolcut import legal_pool, N_MIN as POOL_N_MIN
 
 
 class PseudoDataset(Dataset):
@@ -160,12 +161,31 @@ def run_discovery(backbone, means, *, base_ds, train_eval_loader, test_loader,
                   seen, holdouts, dataset_name, rep_weight, sigreg_weight,
                   n_slices, rounds=2, ft_epochs=5, tau_quantile=0.95,
                   kmax=None, merge_dist=3.0, exempt_repulsion=True,
-                  names=None, seed=0, pool_score="dist"):
+                  names=None, seed=0, pool_score="dist",
+                  cut_rule="quantile", n_min=None):
     """
     Iterated anchor discovery.  `means` holds the trained class anchors
     (n_classes rows); returns (extended_means, history) where history is one
     dict per round: pool, purity, khat, margin AUC, mean per-class anchor AUC.
+
+    cut_rule:
+      "quantile" (default)  the campaign rule -- pool = scores above the
+                            `tau_quantile` quantile of SEEN-labelled scores,
+                            kmax = max(4, len(holdouts)+2).  Reproduces every
+                            archived result exactly.
+      "legal"               exps 128/129 -- pool = the tightest cut still
+                            holding `n_min` ESTIMATED novel points, kmax from
+                            the same label-free weights.  Removes two
+                            un-derived constants, one of which
+                            (`len(holdouts)`) is oracle knowledge.  Requires
+                            pool_score="np": the weights need a density ratio,
+                            not a distance.
     """
+    if cut_rule not in ("quantile", "legal"):
+        raise ValueError(f"cut_rule={cut_rule!r} must be 'quantile' or 'legal'")
+    if cut_rule == "legal" and pool_score != "np":
+        raise ValueError("cut_rule='legal' needs pool_score='np': the novelty "
+                         "weights are defined from the density ratio")
     n_classes = means.size(0)
     cur_means = means.detach().clone()
     pooled = np.zeros(len(train_eval_loader.dataset), dtype=bool)
@@ -182,11 +202,18 @@ def run_discovery(backbone, means, *, base_ds, train_eval_loader, test_loader,
             s = np_pool_scores(z, is_seen_lab, seed=seed + r)
         else:
             s = torch.cdist(z, anchor_mat).min(1).values
-        tau = torch.quantile(s[torch.as_tensor(is_seen_lab, device=DEVICE)],
-                             tau_quantile)
-        pool = (s > tau).cpu().numpy()
+        if cut_rule == "legal":
+            pool, cut_info = legal_pool(s.cpu().numpy(), is_seen_lab,
+                                        n_min=n_min or POOL_N_MIN)
+            km = kmax or cut_info["kmax"]
+        else:
+            tau = torch.quantile(s[torch.as_tensor(is_seen_lab, device=DEVICE)],
+                                 tau_quantile)
+            pool = (s > tau).cpu().numpy()
+            cut_info = dict(ok=True, reason="quantile", q=float(pool.mean()),
+                            pool=int(pool.sum()))
+            km = kmax or max(4, len(holdouts) + 2)
         purity = (~is_seen_lab[pool]).mean() if pool.any() else float("nan")
-        km = kmax or max(4, len(holdouts) + 2)
         khat, centers, _ = bic_select(z[torch.as_tensor(pool, device=DEVICE)],
                                       kmax=km, seed=seed + r)
         cur_means = torch.cat([cur_means, centers.detach()], dim=0)
@@ -225,7 +252,8 @@ def run_discovery(backbone, means, *, base_ds, train_eval_loader, test_loader,
             j = int(np.argmax(counts))
             per_class[c] = roc_auc_score((te_lab == c).astype(int),
                                          (-d_each[:, j]).cpu().numpy())
-        history.append(dict(round=r, pool=int(pool.sum()), purity=float(purity),
+        history.append(dict(round=r, cut=cut_info,
+                            pool=int(pool.sum()), purity=float(purity),
                             khat=khat, n_anchors=int(disc.size(0)),
                             margin=float(margin),
                             per_class={int(c): float(a) for c, a in per_class.items()},
