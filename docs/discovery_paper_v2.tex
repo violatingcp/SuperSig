@@ -1,0 +1,417 @@
+% ---------------------------------------------------------------------------
+%  Embedded Spaces for Discovering New Classes
+%  ICLR submission version (target 9-10pp main text).
+%
+%  STATUS: Sections 1-3 drafted 2026-08-26 (intro + algorithms).  Results
+%  sections are DELIBERATELY not written -- exps 124/125/126/131 are pending on
+%  the GPU machine and every number in them would be provisional.  Placeholders
+%  below say exactly what each results section is waiting on.
+%
+%  The long-form technical report (discovery_metrics_iclr.tex, 41pp) stays as
+%  the companion; this is the submission.  Preamble emulates the ICLR style so
+%  it compiles with stock pdflatex; see that file for the same block.
+% ---------------------------------------------------------------------------
+\documentclass{article}
+
+% ------------------------- ICLR-EMULATION (begin) -------------------------
+\usepackage[letterpaper,textwidth=5.5in,textheight=9in,top=1in,left=1.5in]{geometry}
+\usepackage{times}
+\renewcommand{\ttdefault}{cmtt}
+\renewcommand{\baselinestretch}{1.0}
+\makeatletter
+\renewcommand\section{\@startsection{section}{1}{\z@}%
+  {-2.0ex \@plus -0.5ex \@minus -0.2ex}{1.2ex \@plus 0.2ex}%
+  {\large\bf\raggedright}}
+\renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
+  {-1.6ex \@plus -0.4ex \@minus -0.2ex}{0.9ex \@plus 0.2ex}%
+  {\normalsize\bf\raggedright}}
+\renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
+  {1.2ex \@plus 0.4ex \@minus 0.2ex}{-1em}{\normalsize\bf}}
+\makeatother
+% -------------------------- ICLR-EMULATION (end) --------------------------
+
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage[colorlinks=true,linkcolor=black,citecolor=black,urlcolor=blue]{hyperref}
+\usepackage{caption}
+\captionsetup{font=small,labelfont=bf}
+
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\R}{\mathcal{R}}
+\newcommand{\D}{\mathcal{D}}
+\newcommand{\pool}{\mathcal{P}}
+\newcommand{\nmin}{n_{\min}}
+
+\title{Embedded Spaces for Discovering New Classes}
+\author{P.~C.~Harris\\ Massachusetts Institute of Technology \\ \texttt{pcharris@mit.edu}}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+% TODO: write last, once Sections 4-6 have numbers.
+\end{abstract}
+
+% ===========================================================================
+\section{Introduction}
+% ===========================================================================
+
+A representation can encode a novel class perfectly and still be useless for
+finding it. This is not a hypothetical failure mode; it is the ordinary
+situation. Train a supervised contrastive encoder on a set of known classes,
+hold one class out, and a linear probe trained to separate the held-out class
+from the rest reaches an AUC of $0.94$. The same space, asked to flag novel
+examples without being told what to look for, scores exactly zero at the
+event level. The information is present and linearly accessible. It is simply
+not accessible to anyone who does not already have the answer.
+
+The gap between those two numbers is the subject of this paper. It is the gap
+between a representation being \emph{decodable} and being
+\emph{discoverable}, and it matters because scientific discovery lives
+entirely on the second side of it. A search for a new particle, a new galaxy
+morphology, or a new failure mode of a deployed model does not come with
+labels for the thing being searched for. What it has is a large corpus, a
+smaller reference sample of what is already understood, and a question: is
+there something here that the reference does not explain?
+
+Most of the representation-learning literature optimises for the first side.
+Linear probe accuracy, $k$-NN accuracy, and transfer benchmarks all measure
+how well a space supports a decision that someone else has already specified.
+They are the right metrics for that purpose. They are close to uninformative
+about whether a space will surface structure nobody has named yet, and --- as
+the two numbers above indicate --- they can be actively misleading, because
+the training objectives that maximise them are not the objectives that make
+distances mean anything in absolute terms.
+
+\paragraph{What we do.}
+We treat discovery as the target and work backwards. The pipeline we study is
+the standard open-world loop: score every point in a corpus against a
+reference of labelled examples, take the most anomalous ones as a
+\emph{pool}, cluster the pool to propose new class anchors, and adapt the
+representation to the proposal. Every stage of that loop is downstream of one
+quantity --- the fraction of the pool that is genuinely novel, which we call
+\emph{pool purity}. Purity is the only forward-looking metric in the
+pipeline. Every other measure describes a space you already have; purity
+predicts whether the next step will improve it or corrupt it. Below a
+threshold the loop does not merely fail to help: it clusters background,
+plants anchors on it, and fine-tunes the representation to make that
+structure sharper.
+
+\paragraph{Contributions.}
+\begin{enumerate}
+\item \textbf{An algebra for the pool, and a ceiling.} Writing $b$ for the
+  novel base rate, $q$ for the pool fraction, and $\varepsilon_s$ for the
+  fraction of novel points retained, pool purity is
+  $\Pi = \varepsilon_s b / q$, so the enrichment $\Pi/b$ is exactly
+  $\varepsilon_s/q$ and
+  $\Pi \le \min(1, b/q)$. The ceiling is a property of the cut alone. It says
+  that a pool threshold inherited without derivation --- as ours was --- can
+  cap achievable purity far below the gate no matter how good the
+  representation is, and it separates ``the space is bad'' from ``the cut is
+  bad'' for the first time.
+\item \textbf{A label-free rule for the cut.} Because purity requires the
+  novel labels, tuning the cut on purity is oracle tuning. We derive the
+  novel-count estimator that the Neyman--Pearson critic already provides, and
+  select the tightest cut that retains enough \emph{estimated} novel points to
+  remain clusterable. The rule uses only the corpus and the labelled
+  reference. On synthetic data with an exact critic it recovers the oracle cut
+  exactly; on real embeddings it raises pool purity from $0.232$ to $0.778$
+  where the scorer is strong, and refuses --- reporting that it has refused
+  --- where it is not.
+\item \textbf{A regime split, stated as a condition rather than a caveat.}
+  Single-class novelty at a rate of $\sim$1\% and multi-class novelty at
+  $\sim$10\% are different problems with different answers: which pooling
+  statistic wins, whether stricter thresholds help or hurt, and whether the
+  gate is reachable at all invert between them. We report them separately
+  throughout.
+\item \textbf{A reduced set of objectives.} From a design cube of ten
+  contrastive objectives we identify the few that earn a place for discovery
+  specifically, and show that the ranking by discovery is not the ranking by
+  probe.
+\end{enumerate}
+
+\paragraph{What this paper is not.}
+We do not claim that a regulariser which makes embedded distance behave like a
+log-likelihood thereby improves discovery; we tested that directly and it does
+not hold (Section~\ref{sec:limits}). We do not claim the pipeline works
+everywhere. A substantial part of what follows is a characterisation of where
+it does not, and why --- in several cases the obstruction is the novel-class
+rate rather than anything about the representation, which is a limit no
+encoder can move.
+
+% ===========================================================================
+\section{Setup: discovery as a two-sample problem}
+% ===========================================================================
+
+\paragraph{The open-world protocol.}
+We are given a corpus $\D$ of $N$ embedded points, of which an unknown
+fraction $b$ belong to classes never seen in training, and a reference
+$\R \subset \D$ of points carrying known class labels. No label for any novel
+class is available at any point --- not for choosing hyperparameters, not for
+setting thresholds. We state this explicitly because the constraint is easy to
+violate accidentally, and because a method that quietly violates it reports
+numbers that cannot be reproduced in the situation it claims to address.
+
+\paragraph{The loop.}
+One round proceeds as follows. Score every point by an anomaly score $s(x)$;
+threshold to obtain a pool $\pool$; cluster $\pool$ and append the resulting
+centroids to the anchor set; pseudo-label every pooled point by its nearest
+discovered anchor; and adapt the representation (or, in the frozen variant of
+Section~\ref{sec:constructions}, only the anchors) to the enlarged anchor set.
+The round repeats with the updated anchors.
+
+\paragraph{Pool purity, and why it gates everything.}
+Let $\Pi$ denote the fraction of $\pool$ that is truly novel. The pool feeds
+directly into a clustering step with no supervision downstream of it, so
+$\pool$ is the last point at which a mistake can still be corrected and
+nothing after it checks the work. At $\Pi \approx 0.01$ the clustering is not
+finding the novel class; it is partitioning background, and the subsequent
+fine-tune sharpens that partition. Empirically the probe drops by $0.031$ to
+$0.038$ wherever such pools form. Purity therefore behaves as a gate rather
+than a gradient: above roughly $0.15$ the loop compounds across rounds, and
+below it the loop is harmful. We report $\Pi$ as the primary metric and treat
+the gate as a precondition for running the pipeline at all.
+
+% ===========================================================================
+\section{Algorithms}
+\label{sec:algorithms}
+% ===========================================================================
+
+This section describes the objectives that produce the embedding, the
+statistic that scores it, and the rule that turns that statistic into a pool.
+The three are usually treated as separate literatures; a contribution of this
+work is that the middle one --- the Neyman--Pearson density ratio --- is the
+same object in all three roles, which is what makes the last one derivable
+rather than tuned.
+
+\subsection{Objectives}
+
+We work within a design cube spanning
+$\{$instance, supervised$\}$ positives $\times$
+$\{$cosine, bilinear, distance$\}$ critics $\times$
+$\{$softmax, NPLM$\}$ estimators $\times$
+$\{$none, SIGReg, class-wise SIGReg$\}$ marginals, which contains SimCLR,
+SupCon, LeJEPA/VISReg and the density-ratio objectives as corners. Of the ten
+arms we ran, three earn a place for discovery.
+
+\paragraph{SupCon\,+\,SIGReg (strong).}
+Supervised positives, cosine critic, softmax estimator, and a sliced
+isotropic-Gaussian regulariser at weight $\lambda = 5$. This is the discovery
+workhorse: it produces the highest pool purities we measure. Two points of
+care. First, $\lambda$ matters and is not a formality --- the same objective
+at the library default $\lambda = 1$ is a different algorithm and its numbers
+must not be pooled with these (Appendix~\ref{sec:naming}). Second, we make no
+claim that SIGReg helps \emph{because} it renders distance a log-likelihood;
+that mechanism is tested and rejected in Section~\ref{sec:limits}. SIGReg
+earns its place empirically, and structurally: under an isotropic marginal
+Euclidean distance is Mahalanobis distance, which is what licenses the
+unit-variance clustering criterion used downstream.
+
+\paragraph{Supervised distance-NPLM.}
+Supervised positives, distance critic, and the NPLM estimator
+\begin{equation}
+\label{eq:nplm}
+\mathcal{L}[g] \;=\; \E_{\R}\!\left[e^{g} - 1\right] \;-\; \E_{+}\!\left[g\right],
+\end{equation}
+whose minimiser is the \emph{absolute} log density ratio, fixed by the
+calibration $\E_{\R}[e^{g^\star}] = 1$ with no free additive constant. Unlike
+a softmax-normalised critic, this makes a single embedded distance a statement
+about relative likelihood rather than a statement only about rank. It is the
+strongest arm in the low-class-count regime and the most robust across
+pretraining backbones.
+
+\paragraph{SupCon (plain).}
+Supervised positives, cosine critic, softmax estimator, no marginal. Retained
+as the baseline and as the parent for the residual construction. It is the
+best space in the paper by linear probe and by semantic agreement, and one of
+the weakest by every calibration measure --- which is the dissociation this
+paper is organised around, in a single arm.
+
+We drop plain SimCLR, LeJEPA/SIGReg-SSL, instance NPLM-bilinear and instance
+NPLM-distance to a single ablation row: none reaches the Pareto front for
+discovery, and the bilinear critic in particular carries roughly three times
+the seed variance of the distance critic.
+
+\subsection{The Neyman--Pearson statistic, in three roles}
+\label{sec:np}
+
+Let $\R$ be the reference and $\D$ the corpus, with $w = N_\D / N_\R$. The
+empirical NP objective
+\begin{equation}
+\label{eq:np}
+\mathcal{L}[f] \;=\; w \sum_{x \in \R}\!\left(e^{f(x)} - 1\right) \;-\; \sum_{x \in \D} f(x)
+\end{equation}
+has minimiser $f^\star(x) = \log\!\big(p_\D(x)/p_\R(x)\big)$, obtained by
+setting the functional derivative $p_\R e^{f} - p_\D$ to zero, and therefore
+satisfies
+\begin{equation}
+\label{eq:calib}
+\E_{\R}\!\left[e^{f^\star}\right] = \int p_\R \cdot \frac{p_\D}{p_\R} = 1 .
+\end{equation}
+Equation~\ref{eq:np} is Equation~\ref{eq:nplm} with pairs replaced by events.
+The same functional appears as a contrastive \emph{loss} over pairs, as a
+two-sample \emph{test statistic} $t_{NP} = -2\mathcal{L}$ distributed as a
+Wilks log-likelihood ratio, and --- below --- as a \emph{pool scorer}. We
+parameterise $f$ as a small kernel ensemble with learnable centres and
+amplitudes and anneal the bandwidth from the median pairwise distance
+downwards; a fixed bandwidth is calibrated only for one embedding scale and
+goes blind when the geometry is rescaled.
+
+Equation~\ref{eq:calib} is also a free diagnostic, and we report it. A fitted
+critic need not satisfy it, and a value far from $1$ means the numbers built
+from that fit are unreliable. Measured on trained spaces it is $0.997$ to
+$1.019$ in-sample; out-of-sample it ranges to $2.7$, reflecting mild
+overfitting of the reference subsample.
+
+\paragraph{Why the ratio and not the distance.}
+Distance-based pooling asks which points are far from everything. The density
+ratio asks which points are over-represented relative to what the reference
+explains. These come apart, and the difference is decisive: a novel class is
+not a scatter of far-flung outliers but a \emph{dense clump} sitting where the
+reference has no mass. On a $100$-class benchmark the extreme distance tail is
+owned by background outliers, and tightening the distance threshold makes
+purity \emph{worse} ($0.036 \to 0.002$), whereas tightening the ratio
+threshold makes it better ($0.232 \to 0.358$). Same space, same rate, opposite
+response.
+
+\subsection{Choosing the pool: an algebra and a rule}
+\label{sec:cut}
+
+\paragraph{The algebra.}
+Let $q = |\pool|/N$ and let $\varepsilon_s, \varepsilon_b$ be the fractions of
+novel and background points retained. Then
+$q = \varepsilon_s b + \varepsilon_b (1-b)$ and
+\begin{equation}
+\label{eq:purity}
+\Pi \;=\; \frac{\varepsilon_s\, b}{q},
+\qquad
+E \;\equiv\; \frac{\Pi}{b} \;=\; \frac{\varepsilon_s}{q},
+\qquad
+\Pi \;\le\; \min\!\Big(1,\ \frac{b}{q}\Big).
+\end{equation}
+Three consequences. The enrichment is exactly the lift at operating point $q$.
+Purity increases monotonically as $q$ shrinks, so there is no interior optimum
+and targeting a purity \emph{level} is the wrong objective. And the ceiling
+$\min(1, b/q)$ is a property of the cut alone: at $q = 0.05$ and $b = 0.01$ no
+scorer, however good, can exceed $\Pi = 0.20$. A threshold chosen without
+reference to $b$ can therefore cap purity near the gate independently of the
+representation --- and the widely used ``$95$th percentile of the reference''
+is such a threshold.
+
+\paragraph{The rule.}
+Purity cannot be used to choose $q$, since computing it requires the novel
+labels. The critic supplies the missing quantity. Under the contamination
+model $p_\D = (1-b) p_\R + b\, p_S$, with $r = e^{f}$, the posterior that a
+corpus point is novel is $1 - (1-b)/r$; dropping the unknown $b$ and taking
+the positive part gives the label-free weight
+\begin{equation}
+\label{eq:weights}
+w(x) \;=\; \left[\,1 - \frac{1}{r(x)}\,\right]_{+},
+\qquad
+\E_\D[w] \;=\; \mathrm{TV}(p_\D, p_\R) \;=\; b\,\mathrm{TV}(p_S, p_\R) \;\le\; b ,
+\end{equation}
+so $\sum_{x \in S} w(x)$ estimates how many novel points a subset $S$
+contains, exactly when the novel class is disjoint from the reference and
+biased \emph{downward} under overlap --- a safe direction, since it tightens
+the cut. Since purity rises as $q$ falls, the binding constraint is not purity
+but whether a cluster survives, and that is what we target: ordering the
+corpus by $f$ and writing $\widehat{N}(k)$ for the null-corrected sum of
+$w$ over the top $k$ points,
+\begin{equation}
+\label{eq:rule}
+k^\star \;=\; \min\big\{\,k : \widehat{N}(k) \ge \nmin \,\big\},
+\qquad
+q^\star = k^\star / N ,
+\qquad
+k_{\max} = \Big\lfloor \widehat{N}(N)\,/\,\nmin \Big\rfloor .
+\end{equation}
+The same weights bound the clustering search range, replacing a bound that in
+the original pipeline was set from the number of held-out classes --- a
+quantity an open-world method does not have.
+
+\paragraph{The null correction, which is not optional.}
+Equation~\ref{eq:weights} is a positive part, so \emph{any} spread in a fitted
+$f$ manufactures apparent novelty. On pure-noise scores with no novel class at
+all, the raw sum returns $665$ ``novel'' points out of $8000$ --- enough for
+the rule to fire on nothing and hand the loop a pool of pure background.
+Subtracting the mean weight of the reference does not repair this, because
+top-ranked null points carry far above-average weight and their tail survives
+subtraction. We instead subtract a \emph{rank-matched} null: under the null
+hypothesis the top $q$ of the corpus is distributed as the top $q$ of the
+reference, so
+$\widehat{N}(k) = \sum_{i \le k} w(x_{(i)}) - k \cdot \overline{w}_{\R}^{(q)}$,
+with $\overline{w}_{\R}^{(q)}$ the mean weight of the top-$q$ fraction of the
+reference. This cancels to zero under the null while preserving a real excess.
+When $\widehat{N}(N) < \nmin$ the rule declines to pool and reports that it has
+declined; that refusal is an output of the method, and we report it as one.
+
+\paragraph{Constants.}
+$\nmin$ and the clipping range on $q$ are set once, globally, from a sweep on
+held-out embeddings rather than inherited: purity falls monotonically as
+$\nmin$ grows, so it is set as small as the clustering will bear.
+
+% ===========================================================================
+\section{Constructions}
+\label{sec:constructions}
+% ===========================================================================
+% TODO. Two subsections, both already established and not waiting on new runs,
+% but written after the results tables so the numbers can be quoted inline:
+%   (a) residual decomposition + concatenation;
+%   (b) frozen-space discovery -- freeze the encoder, iterate only the anchors
+%       against a density-ratio pool.  The gain lives in the anchors, not the
+%       representation update; unfreezing costs probe and, with distance
+%       pooling, collapses round 2.
+%   NOTE: re-verify the frozen numbers first -- the BatchNorm fix means the
+%   archived frozen CIFAR results no longer reproduce (exp 130/131).
+
+% ===========================================================================
+\section{Experiments}
+% ===========================================================================
+% WAITING ON: exps 124 (leakage-free scratch shortlist), 125 (single-holdout
+% battery with draws), 126 (restricted multi-holdout), 131 (cifar10/cifar100/
+% galaxy10 re-run under the new pool cut).  Do not draft prose around
+% provisional numbers.
+%
+% Table plan, split by regime and never pooled:
+%   T1 single-holdout, all datasets, mean +- sd ACROSS DRAWS (not seeds --
+%      draw spread exceeds seed spread, so seed-only intervals understate).
+%   T2 multi-holdout, label-rich datasets only.
+%   T3 pool-cut ablation: inherited q=0.05 vs the rule of Sec 3.3, with the
+%      ceiling min(1, b/q) shown alongside so the reader can see headroom.
+%
+% Dataset ordering is by distance from pretraining, not alphabetical:
+% galaxy10 (never seen by the backbone) -> DTD (task-novel) -> cars/flowers/
+% aircraft (fine-grained in-domain) -> CIFAR (from-scratch lineage; the
+% hub-pretrained cells saw the held-out class and are an ablation only).
+
+% ===========================================================================
+\section{When it does not work}
+\label{sec:limits}
+% ===========================================================================
+% TODO, but the content is already settled and should not be softened:
+%   - The rate floor. At b ~ 1% the gate is out of reach for the pipeline as
+%     built. Note honestly that the CEILING is 0.20 there, not 0.03, so this
+%     is a signal-efficiency limit and a clustering-detectability limit, NOT
+%     an information-theoretic one.
+%   - SIGReg does not help by making distance a log-likelihood. Forcing unit
+%     width is decorative; seen-class fidelity anti-correlates with novelty
+%     calibration. State the defensible claim instead.
+%   - The temperature basin is unreachable by any label-free or transductive
+%     selection: a landscape finding, not a recipe.
+%   - Repairing an identity is not the same as improving a space (five
+%     independent confirmations).
+%   - Optimising the representation THROUGH a fitted NP kernel destroys the
+%     separation it measures: the NP loss transfers as a form, not as an
+%     optimisation target.
+
+\appendix
+\section{Objective naming}
+\label{sec:naming}
+% TODO: reproduce the canonical mapping from docs/LOSSES.md. Three objectives
+% collide under similar names at two regularizer strengths; their numbers must
+% not be pooled.
+
+\end{document}

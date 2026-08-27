@@ -1,4 +1,4 @@
-# Proposed tests to improve performance — exps 81–131
+# Proposed tests to improve performance — exps 81–132
 
 Companion to [QUESTIONS.md](QUESTIONS.md) (whose "open items as of exp 58" list
 this supersedes).  Every entry follows the standard protocol in
@@ -1866,3 +1866,63 @@ top q of the reference -- which cancels to ~0 under the null while preserving
 real signal.  Pinned by `tests/test_poolcut.py::test_refuses_pure_noise`.
 
 **Cost.**  Round-1 A/B is minutes per cell.  Full multi-round needs backbones.
+
+### Exp 132 — A supervised linear probe (the metric we never ran)
+
+> **CODE READY 2026-08-27.**  `--selftest` green (5 checks) +
+> `tests/test_supervised_probe.py` (10).  NEEDS exp-70 arm banks.
+
+**The problem it fixes.**  The paper wants to argue that discovery capability
+costs nothing in representation quality.  The campaign cannot currently support
+that, because **the `probe` column in every existing table is NOT a supervised
+probe** — `exp29.linear_probe_novelty` is a HOLDOUT-VS-REST AUC
+(`docs/METRICS.md:14`), i.e. a novelty metric.  Quoting it as evidence of
+supervised quality would be wrong and is the first thing a referee catches.
+The supervised evidence that exists is `acc` (nearest-centroid) and the
+exp-62/63 closed-set numbers.
+
+**Protocol.**  A plain `nn.Linear` trained on SEEN classes only, top-1 on the
+seen-class test split, identical budget across arms, >= 3 seeds.  Features are
+standardised: the arms differ in embedding SCALE by design (calibrated
+objectives fix unit class width, softmax ones do not) and an unstandardised
+probe would partly measure scale.  Two variants — the 768-D trunk (did the
+fine-tune damage the backbone?) and the low-D head output (is the space we
+claim about decodable?).
+
+**Three traps the design avoids, all confirmed in the record:**
+1. *Supervised vs SSL.*  Our workhorse uses labels and the LeJEPA-style arm
+   does not, so beating it on a probe is unfair in our favour.  Frame as
+   ss-ft vs supcon-ft (does SIGReg COST anything), with SSL arms for context.
+2. *Published numbers.*  We have never compared to a published LeJEPA result
+   and must not start: our LeJEPA backbone is a **community reproduction**
+   (`OK-AI/lejepa-vitb16-pretrain-in1k`, card 72.0 IN-1k, explicitly below the
+   official release, `40_dtd_bases.py:11-15`), `PAPER_DTD["lejepa"] = None`,
+   and there is no ImageNet evaluation anywhere in the campaign.
+3. *Full fine-tuning.*  Exp 62 aircraft closed-set top-1: plain CE-ft reaches
+   **75.8-76.6** while ss-ft reaches **49.0-54.5**.  A broad "competitive at
+   classification" claim dies on that table.  The defensible claim is about
+   the frozen-trunk/head regime, where exp 63 shows supcon_sigreg heads
+   beating CE heads (nearest-centroid 0.638 > CE's own 0.625 on LeJEPA-ft).
+
+**A TIE guard, because this is where results get manufactured.**  The gaps the
+paper would like to cite (supcon_sigreg vs supcon: 0.008 on scr-simclr, 0.016
+on scr-visreg) sit UNDER the campaign's own noise floor (0.017 seed exp 52,
+0.019 draw exp 118), single-seed.  The script declares a winner only when the
+gap clears `max(floor, sd_a + sd_b)` and prints TIE otherwise.  Those two
+comparisons are ties, and the paper must say so.
+
+**Prediction.**  ss-ft ties supcon-ft on supervised top-1 (the no-cost claim)
+while winning decisively on purity.  On `acc` the supervised arms already beat
+the LeJEPA-style arm on all four DINO exp-70 cells (cars .330 vs .083, flowers
+.940 vs .800, dtd .782 vs .635, galaxy10 .558 vs .408) — the probe should
+agree, but that is context, not the headline.
+
+**Falsifier.**  ss-ft loses supervised top-1 to supcon-ft by more than the
+noise floor -> discovery capability DOES cost representation quality, and the
+paper must say so and drop the no-cost framing.
+
+**Demonstrated** on the exp-54 CIFAR-10 banks (evaluation-only, seconds): the
+two supervised distance-NPLM arms tie each other (0.8964 vs 0.8865, gap 0.0099
+< 0.017) and beat every instance-NPLM arm by 0.17-0.36.
+
+**Cost.**  Minutes per cell given banks; piggybacks on the Block B runs.

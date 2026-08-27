@@ -244,6 +244,28 @@ b~1% cells.
 
 ---
 
+## Block G — Exp 132: supervised linear probe (piggyback on Block B)
+
+The campaign has NO supervised linear probe -- the `probe` column everywhere is
+holdout-vs-rest novelty AUC.  This adds the missing metric so the paper can
+make its "discovery costs nothing" argument honestly.
+
+```bash
+python experiments/132_supervised_probe.py --selftest        # expect 5 OK
+python experiments/132_supervised_probe.py --glob 'logs/expNN/embs_*.npz' \
+    --holdouts <h> --seeds 3 --baseline supcon-ft
+```
+
+Needs npz with `tr`/`tr_lab`/`te`/`te_lab`.  **If Block B runs can dump train
+AND test embeddings, this and exp 128/129 all come for free.**
+
+Report top-1 mean +- sd over >= 3 seeds.  The script prints TIE when a gap is
+under the noise floor -- **report the TIE**, do not round it into a win.  The
+comparison that matters is ss-ft vs supcon-ft (does SIGReg cost supervised
+accuracy?), NOT our arms vs the SSL arms: ours use labels and theirs do not.
+
+---
+
 ## Reporting
 
 Append to `logs/SUMMARY_TABLES.md` in the house style (`docs/METRICS.md`
