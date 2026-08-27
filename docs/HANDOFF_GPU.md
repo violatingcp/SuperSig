@@ -266,6 +266,38 @@ accuracy?), NOT our arms vs the SSL arms: ours use labels and theirs do not.
 
 ---
 
+## Block H — Exp 134: what the residual is actually doing
+
+The residual is a candidate for main results, but the evidence audit found it
+wins the novelty probe 30/30 while LOSING eucl 14/15 and mahaT 11/15, and never
+improving purity.  Three questions:
+
+**(B) first — it is nearly free.**  Load a real TRAINED parent/child pair and
+print the RMS-norm ratio:
+
+```bash
+python experiments/134_residual_audit.py --parent <parent.npz> --child <child.npz> --holdouts <h>
+```
+
+If the ratio is near 1, question (B) is closed and you can skip the combiner
+scan.  If it is far from 1, the scan (raw / standardize / unitnorm / whiten)
+says whether the archived geometry losses are a combination artefact.
+
+Partial result already in from an UNTRAINED proxy on CIFAR
+(`logs/exp134/untrained_residual_cifar10.json`): the ratio does predict
+sensitivity, but standardising does NOT rescue eucl -- so expect the geometry
+trade-off to be real.  Note the trained child is predicted to be LARGER than
+its parent (SIGReg lam=5 -> unit per-dim variance), i.e. on the opposite side of
+ratio 1 from the proxy.
+
+**(A) and (C) need training:** (A) a width-matched non-residual control against
+the 2-way concat on cars/VISReg -- the flagship +0.148 has never had one, and
+exp 85 already showed a capacity effect on that cell.  (C) build the residual
+AFTER discovery instead of before, so it removes what the enlarged anchor set
+explains.
+
+---
+
 ## Reporting
 
 Append to `logs/SUMMARY_TABLES.md` in the house style (`docs/METRICS.md`

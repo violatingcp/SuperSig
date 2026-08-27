@@ -53,9 +53,39 @@ an artefact of the combination rule rather than a property of the construction.
   arms: raw concat (as archived) | per-half standardised | per-half unit-norm
         | whitened.  Report probe AND eucl/mahaT AND purity for each.
 
-If standardising recovers the geometry, the residual is substantially better
-than the archive says and the paper's framing changes.  If it does not, the
-trade-off is real and we report it as such.
+  >>> PARTIAL RESULT 2026-08-27, real exp-54 CIFAR-10 spaces, untrained
+  >>> residual r(x) = x - nearest seen centroid (the LINEAR part of the
+  >>> construction; no child network was trained).
+  >>> logs/exp134/untrained_residual_cifar10.json
+  >>>
+  >>> CONFIRMED: the RMS ratio predicts whether the combiner matters at all.
+  >>>   At ratio 0.945 (nplm_bilinear) every combiner agrees to 3 decimals.
+  >>>   At ratio 0.156-0.194 the combiner moves the probe by up to 0.13.
+  >>>
+  >>> NOT CONFIRMED -- and this retracts the strong form of the hypothesis:
+  >>>   standardising does NOT rescue eucl.  It sometimes HURTS it
+  >>>   (nplm_dist_sup_cw 0.7871 raw -> 0.7092 standardised) and whitening
+  >>>   hurts it everywhere (0.6737 / 0.6034 / 0.4193).  On this evidence the
+  >>>   geometry trade-off is REAL, not a scale artefact, and the residual's
+  >>>   story stays probe-centric.
+  >>>
+  >>>   space (ratio)        parent      raw   stand.  whiten   [probe]
+  >>>   nplm_sup_dist  .156  0.7894   0.8340   0.8781  0.9151
+  >>>   nplm_dist_sup  .194  0.8861   0.9091   0.9202  0.9187
+  >>>   nplm_bilinear  .945  0.8551   0.8562   0.8541  0.8532
+  >>>
+  >>> INCIDENTAL AND WORTH FOLLOWING UP: the UNTRAINED linear residual already
+  >>> lifts the probe 0.7894 -> 0.9151.  Some of the residual construction's
+  >>> value may not require training the child at all.
+  >>>
+  >>> STILL OPEN.  The archived 14/15 eucl losses are TRAINED children on
+  >>> TRANSFER cells; this proxy is an untrained residual on CIFAR NPLM spaces.
+  >>> Also note the trained child is predicted to be LARGER than its parent,
+  >>> not smaller: SIGReg(lam=5) drives unit per-dim variance, i.e. RMS =
+  >>> sqrt(d), which on these spaces is 1.6x-3.8x the parent's RMS.  So the
+  >>> real pairs may sit on the opposite side of ratio 1 from this proxy.
+  >>> FIRST THING TO RUN: the child/parent RMS ratio on a real trained pair.
+  >>> If it is near 1, question (B) is closed and only (A) and (C) matter.
 
 -------------------------------------------------------------------------
 (C) SHOULD THE RESIDUAL COME AFTER DISCOVERY RATHER THAN BEFORE?

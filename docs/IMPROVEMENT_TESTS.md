@@ -1945,6 +1945,26 @@ parent->discovery->child->concat | both.  Prediction: helps where purity
 cleared the gate, no-op where it did not.  Falsifier: it helps where purity was
 ~0, so the mechanism story is wrong.
 
+> **(B) PARTIALLY RUN 2026-08-27** on real exp-54 CIFAR-10 spaces using the
+> UNTRAINED linear residual (`logs/exp134/untrained_residual_cifar10.json`).
+> **The ratio-predicts-sensitivity mechanism is CONFIRMED** — at ratio 0.945
+> every combiner agrees to 3 decimals; at 0.156-0.194 the combiner moves the
+> probe by up to 0.13.  **The artefact explanation is NOT confirmed and the
+> strong form is retracted**: standardising does not rescue `eucl`, sometimes
+> hurts it (0.7871 raw -> 0.7092), and whitening hurts it everywhere.  On this
+> evidence the geometry trade-off is REAL and the residual stays probe-centric.
+>
+> Incidental, worth following up: the UNTRAINED linear residual already lifts
+> the probe 0.7894 -> 0.9151 on nplm_sup_dist.  Some of the construction's
+> value may not need the child trained at all.
+>
+> Still open, because the proxy differs from the archive in two ways: the 14/15
+> eucl losses are TRAINED children on TRANSFER cells, and the trained child is
+> predicted to be LARGER than its parent (SIGReg lam=5 drives unit per-dim
+> variance, RMS = sqrt(d) = 1.6x-3.8x the parent here) rather than smaller.
+> **First thing to run: the child/parent RMS ratio on a real trained pair.  If
+> it is near 1, (B) is closed and only (A) and (C) matter.**
+
 **Cost.**  (B) is evaluation-only given banks — minutes, do it first.  (A) and
 (C) need training.
 
