@@ -1698,6 +1698,15 @@ independent direction.
 
 ### Exp 129 — A label-free rule for the pool cut
 
+> **DONE 2026-08-27 on the 30-cell C100 bank — PREDICTION HOLDS.**  Rule B
+> beats the inherited q=0.05 in 29/30 cells (2-4x), engages 30/30, and
+> tau=0.05-on clears the 0.15 gate LABEL-FREE at h1 on 3/3 seeds (0.39+-0.17,
+> 171 novel points) -- first legal single-holdout C100 pool above the gate.
+> Oracle gap +0.29 is the base-rate estimator (b_hat 2-4x low -> cut 2-5x too
+> wide), not the critic.  The `detect` variant's oracle match is a grid-floor
+> artefact (true n_novel 24 < n_min while n_hat says 81) -- do not quote.
+> Tables in `logs/SUMMARY_TABLES.md`; JSON `logs/exp129/legal_cut.json`.
+
 > **SCRIPT READY, RULE DERIVED AND VALIDATED (2026-08-26).**  `--selftest` green
 > (7 checks) + `tests/test_legal_pool_cut.py` (18).  Needs real embeddings.
 

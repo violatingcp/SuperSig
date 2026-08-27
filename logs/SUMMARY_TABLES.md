@@ -1856,3 +1856,48 @@ mean+-sd over 3 seeds; 2026-08-27; logs/exp128/cutscan.json)
   (b_hat 0.0001-0.005) while the oracle here says purity 0.3-0.6 is
   available at the same rate.  The gap is entirely the base-rate
   estimator; closing it is now the highest-value item on C100 h1.
+
+## Exp 129 -- the label-free pool cut on the C100 bank (Tier 9 Block E, pair of exp 128)
+(same 30 cells as exp 128: cifar100 100-D, tau x marginal x 3 seeds, holdout
+{99} [single-holdout], b=0.01; np scorer; estimator=tv, n_min=30.  P = round-1
+purity.  "rule" = Rule B on the ESTIMATED novel count; "oracle" = best cut
+with labels (exp 128); "base" = inherited q=0.05.  mean+-sd over seeds;
+2026-08-27; logs/exp129/legal_cut.json)
+
+  tau  marg   b_hat (true .01)  P_oracle       P_rule         P_base     n_nov_rule  ok
+  0.05 off    0.0024+-.0014     0.269+-.130    0.214+-.142    0.072       56+-5      3/3
+  0.05 on     0.0035+-.0020     0.737+-.031    0.387+-.174    0.100      171+-64     3/3
+  0.1  off    0.0056+-.0027     0.307+-.096    0.133+-.064    0.074      102+-20     3/3
+  0.1  on     0.0060+-.0028     0.463+-.087    0.215+-.096    0.109      171+-33     3/3
+  0.3  off    0.0033+-.0010     0.347+-.135    0.148+-.026    0.057       81+-29     3/3
+  0.3  on     0.0049+-.0013     0.513+-.061    0.193+-.012    0.102      159+-44     3/3
+  1.0  off    0.0049+-.0019     0.503+-.106    0.144+-.071    0.054      104+-30     3/3
+  1.0  on     0.0091+-.0044     0.566+-.312    0.153+-.072    0.086      183+-42     3/3
+  3.0  off    0.0051+-.0027     0.547+-.094    0.251+-.057    0.122      190+-61     3/3
+  3.0  on     0.0053+-.0009     0.653+-.139    0.198+-.035    0.099      173+-40     3/3
+
+- PREDICTION HOLDS: the legal rule beats the inherited q=0.05 in 29/30
+  cells, by 2-4x (P_rule 0.13-0.39 vs P_base 0.05-0.12), engaging on
+  30/30.  HEADLINE: tau=0.05-on clears the 0.15 gate LABEL-FREE at h1 on
+  3/3 seeds (0.387+-0.174, 171 novel points in the pool) -- the first
+  legal, single-holdout, 1%-rate discovery pool above the gate on C100
+  in the campaign.  4/10 configurations clear it on the seed mean.
+- THE ORACLE GAP IS LARGE (mean +0.29; rule captures 30-55% of oracle
+  purity) AND IT IS THE BASE-RATE ESTIMATOR, not the critic: b_hat is
+  2-4x low on every cell (0.002-0.009 vs 0.010), so the rule's cut lands
+  2-5x wider than the oracle's (q_rule 0.007-0.03 vs q_orc 0.002-0.005)
+  on the SAME scores.  The falsifier ("gap comparable to Rule A's, q
+  invisible to legal selection") does not fire -- but q is only
+  half-visible: the rule finds the right neighbourhood, not the optimum.
+- CAUTION on the `detect` variant in the JSON: P_detect == P_oracle in
+  every cell only because both sit at the grid floor q=0.002, where the
+  TRUE novel count (~24) is below n_min=30 while the estimate says ~81.
+  The estimated count overshoots at the tightest cut (purity_hat 0.81 vs
+  true 0.24), so `detect_ok=True` there is not trustworthy.  Do not
+  quote P_detect.
+- Reconciling with exp 131 (which REFUSED on every cifar100 space):
+  different bank.  131 used the 32-D exp-80 spaces (holdout {4}), where
+  b_hat collapsed to 0.0001-0.005; here the 100-D tau bank (holdout {99})
+  gives 0.002-0.009.  Estimator quality is space- and draw-dependent
+  (exp 125's lesson again), and the marginal-on 100-D spaces are where
+  it works.  A same-space comparison at both dims is the open item.
