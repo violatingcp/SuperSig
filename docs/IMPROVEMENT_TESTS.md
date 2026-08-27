@@ -1615,6 +1615,56 @@ alone; AUC separates scorer quality from cut choice but does not replace it.
 **Cost.**  Minutes, evaluation-only.  Run it on every cell that produces
 embeddings in exps 124/125.
 
+#### Exp 129 addendum — n_min swept, kmax made label-free (2026-08-26, REAL data)
+
+Run on three real exp-54 CIFAR-10 spaces with the novel class subsampled to
+b in {0.01, 0.02, 0.05, 0.10} (real geometry, realistic rates).
+`logs/exp129/n_min_sweep_real.json`.
+
+**n_min: smaller is better, confirmed.**  Purity falls monotonically as n_min
+grows.  On `nplm_dist_sup_cw` at b=0.10: purity **0.830** at n_min=20 vs 0.696
+at n_min=500.  Default set to **30**.
+
+**Q_MIN was binding and is lowered 0.002 -> 0.0005.**  At every n_min <= 75 the
+rule wanted a tighter cut than the clip allowed.  Pushing further shows a
+plateau, so the tight end is safe but not unboundedly profitable:
+
+    q       0.0002  0.0005  0.001  0.002  0.005  0.010  0.020  0.050
+    purity   1.000   0.800  0.840  0.830  0.788  0.716  0.648  0.565
+    recall   0.002   0.004  0.008  0.017  0.039  0.072  0.130  0.283
+
+**kmax is now label-free**: `k_max = clip(floor(sum(w)/n_min), 2, 64)` from the
+same novelty weights that drive the cut, replacing
+`max(4, len(holdouts) + 2)` (`discovery.py:189`), which uses the NUMBER OF
+NOVEL CLASSES -- oracle knowledge.
+
+**FINDING 1 — the oracle leak is inert at single holdout.**  BIC returns
+khat=1 in essentially every row, at every kmax from 2 to 63.  With one novel
+class that is the CORRECT answer, so kmax cannot matter at h1; the leak only
+has teeth in the multi-holdout regime.  It also means the clustering step is a
+no-op on single-holdout pools -- the "cluster" is the pool.
+
+**FINDING 2 — b_hat is badly biased downward on real data, and this is the
+binding limitation.**  TV(p_D,p_R) = b * TV(p_S,p_R), and real novel classes
+overlap the seen manifold heavily, so:
+
+    space              AUC    b_true   b_hat
+    nplm_dist_sup_cw  0.766     0.10   0.0255     (4x low)
+    nplm_bilinear     0.714     0.10   0.0003   (300x low)
+    nplm_bilinear     0.534     0.01   0.0001   (100x low)
+
+On spaces where the critic separates well the rule engages and works.  On weak
+spaces b_hat collapses, N_hat never reaches n_min, and q saturates at Q_MAX --
+the rule degenerates to a wide pool and its `ok` flag is False.  That flag is
+doing its job and MUST be reported: a False there means "this space cannot
+support discovery", which is information, not a crash.
+
+**Consequence for the paper.**  The label-free cut is viable where the scorer
+is strong (purity 0.83 at b=0.10 on real embeddings, far above the 0.15 gate)
+and correctly refuses where it is not.  But the quantity limiting it is scorer
+quality, exactly as exp 128 predicted -- the same conclusion from a second,
+independent direction.
+
 ### Exp 129 — A label-free rule for the pool cut
 
 > **SCRIPT READY, RULE DERIVED AND VALIDATED (2026-08-26).**  `--selftest` green

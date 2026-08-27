@@ -110,3 +110,37 @@ def test_reference_side_tv_would_have_been_useless():
     good = exp129.estimate_b(f, ~is_novel, "tv")
     assert naive < 0.1 * 0.01
     assert good == pytest.approx(0.01, rel=0.1)
+
+
+# ------------------------------------------------------- label-free kmax
+
+
+def test_label_free_kmax_scales_with_estimated_novelty():
+    """k_max must come from the ESTIMATED novel mass, never from
+    len(holdouts) -- which is oracle knowledge (discovery.py:189)."""
+    w_small = np.full(1000, 0.05)      # ~50 estimated novel points
+    w_big = np.full(1000, 0.9)         # ~900
+    assert exp129.label_free_kmax(w_small, 30) < exp129.label_free_kmax(w_big, 30)
+
+
+def test_label_free_kmax_respects_floor_and_cap():
+    assert exp129.label_free_kmax(np.zeros(100), 30) == 2
+    assert exp129.label_free_kmax(np.ones(10 ** 6), 30) <= 64
+
+
+def test_label_free_kmax_uses_no_labels():
+    """Signature check: it takes weights and n_min only."""
+    import inspect
+    p = list(inspect.signature(exp129.label_free_kmax).parameters)
+    assert p[:2] == ["w", "n_min"]
+    assert not any("hold" in x or "label" in x or "novel" in x for x in p)
+
+
+def test_smaller_n_min_gives_higher_purity():
+    """The sweep's headline, on synthetic: purity rises as the cut tightens,
+    so n_min should be as small as the clustering can bear."""
+    z, is_novel, f = _case(0.05)
+    rows = exp129.sweep_n_min(z, f, is_novel, ~is_novel, QS, [30, 100, 300],
+                              seed=0)
+    pur = [r["purity"] for r in rows]
+    assert pur[0] >= pur[-1], pur

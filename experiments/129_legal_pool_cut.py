@@ -78,9 +78,16 @@ _spec = importlib.util.spec_from_file_location(
 exp128 = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(exp128)
 
-P_TARGET = 0.30
-Q_MIN, Q_MAX = 0.002, 0.20
-N_MIN = exp128.N_MIN
+P_TARGET = 0.30      # sanity floor only -- NOT the objective (see RULE A/B)
+# Q_MIN lowered from 0.002 after the exp-129 real-data sweep, where 0.002 was
+# BINDING: the rule wanted a tighter cut than the clip allowed at every
+# n_min <= 75.  Purity keeps improving down to q ~ 0.001 and then plateaus.
+Q_MIN, Q_MAX = 0.0005, 0.20
+# N_MIN swept on real exp-54 embeddings (logs/exp129/n_min_sweep_real.json).
+# Smaller is better -- purity falls monotonically as n_min grows (0.830 at 20
+# vs 0.696 at 500 on nplm_dist_sup_cw, b=0.10) -- with the floor set by the
+# clustering, not by the cut.  30 keeps a little margin over 20.
+N_MIN = 30
 
 
 # ------------------------------------------------- label-free base-rate estimators
@@ -218,6 +225,75 @@ def rule_q_detect(f_corpus, f_ref, qs, n_min=N_MIN, p_target=P_TARGET,
     ok = p_hat >= 0.5 * p_target                   # sanity floor on est. purity
     return q, ok, "ok" if ok else f"est purity {p_hat:.3f} low", \
         dict(n_hat=n_hat, purity_hat=p_hat, n_hat_total=total)
+
+
+def label_free_kmax(w, n_min, k_floor=2, k_cap=64):
+    """BIC search range, WITHOUT using the number of novel classes.
+
+    `discovery.run_discovery` sets `km = max(4, len(holdouts) + 2)` -- the count
+    of novel classes, which is oracle knowledge in an open world (km=4 at h1,
+    km=12 at h10).  The same novelty weights that drive the cut also bound how
+    many DETECTABLE components the estimated novelty could support:
+
+        k_max = clip( floor( sum(w) / n_min ), k_floor, k_cap )
+
+    n_min defines what "detectable" means; k_max just asks how many detectable
+    things could fit.  No labels.
+    """
+    return int(np.clip(int(np.floor(float(np.sum(w)) / max(n_min, 1))),
+                       k_floor, k_cap))
+
+
+def bic_recovery(z, sel, is_novel, kmax, seed=0):
+    """Run the campaign's BIC k-means on a pool; report the most-novel cluster.
+
+    This is the question the purity gate is a PROXY for, asked directly.
+    """
+    from supersig.discovery import bic_select
+    Z = torch.as_tensor(z[sel], dtype=torch.float32)
+    if len(Z) < max(4, kmax):
+        return dict(khat=0, best_purity=0.0, best_n=0, recall=0.0)
+    khat, centers, _ = bic_select(Z, kmax=kmax, seed=seed)
+    a = torch.cdist(Z, centers).argmin(1).numpy()
+    nov = is_novel[sel]
+    best = (0.0, 0, 0.0)
+    for j in range(centers.shape[0]):
+        m = a == j
+        if m.sum() == 0:
+            continue
+        pur = float(nov[m].mean())
+        if pur > best[0]:
+            best = (pur, int(m.sum()),
+                    float(nov[m].sum()) / max(int(is_novel.sum()), 1))
+    return dict(khat=int(khat), best_purity=best[0], best_n=best[1],
+                recall=best[2])
+
+
+def sweep_n_min(z, scores, is_novel, is_seen_lab, qs, n_mins,
+                seed=0, use_label_free_kmax=True, oracle_kmax=None):
+    """For each candidate n_min: apply Rule B, cluster, and ask whether BIC
+    actually recovered a majority-novel component.
+
+    The smallest n_min that still recovers IS the answer -- purity rises as the
+    cut tightens, so we want n_min as small as the clustering can bear.
+    """
+    w = novelty_weights(scores, scores[is_seen_lab])
+    n = len(scores)
+    out = []
+    for nm in n_mins:
+        q, ok, why, diag = rule_q_detect(scores, scores[is_seen_lab], qs,
+                                         n_min=nm)
+        k = max(1, int(round(q * n)))
+        sel = np.zeros(n, dtype=bool)
+        sel[np.argsort(-scores)[:k]] = True
+        km = (label_free_kmax(w, nm) if use_label_free_kmax
+              else (oracle_kmax or 4))
+        rec = bic_recovery(z, sel, is_novel, km, seed)
+        out.append(dict(n_min=nm, q=q, ok=ok, pool=k,
+                        purity=float(is_novel[sel].mean()),
+                        n_novel=int(is_novel[sel].sum()),
+                        kmax=km, **rec))
+    return out
 
 
 # ------------------------------------------------------------------ evaluation
