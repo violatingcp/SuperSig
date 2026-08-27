@@ -2004,3 +2004,45 @@ min-centroid-distance AUC.  2026-08-27; logs/exp134/combine_<cells>.json)
   everywhere.  Paper wording: "residual concat for the probe; the res-nplm
   CHILD alone for calibration" -- consistent with exp 111.
 - galaxy10 draw pairs (exp 125 draws) pending the exp-71 chain.
+
+## Exp 133 -- BatchNorm adaptation: construction or leak?  A CONSTRUCTION.
+(paired A/B on the CACHED exp-89 C100 spaces exp 127 built; same seed,
+loader order and critic; only difference: 21 BatchNorm2d layers' running
+stats frozen (A) or adapting to the discovery corpus (B) during the 5-ep
+anchor fine-tune.  drift = |z_post - z_pre| on the test set vs mean |z|.
+2026-08-27; logs/exp133/bn_ab.json)
+
+  cfg          frozen r1/r2      bn-adapt r1/r2    r2 delta   drift mean/max (|z|)   probe post A/B
+  h1:q0.95     0.050 / 0.030     0.050 / 0.033     +0.003     2.99 / 12.4  (9.7)     0.959 / 0.960
+  h1:q0.99     0.050 / 0.014     0.050 / 0.035     +0.021     2.96 / 11.6  (9.7)     0.959 / 0.961
+  h5:q0.95     0.098 / 0.123     0.098 / 0.162     +0.039     2.51 /  9.7  (9.4)     0.876 / 0.883
+  h5:q0.99     0.141 / 0.184     0.141 / 0.191     +0.007     2.47 /  9.7  (9.4)     0.876 / 0.882
+  h10:q0.95    0.214 / 0.230     0.214 / 0.271     +0.041     2.21 / 10.0  (9.0)     0.797 / 0.799
+  h10:q0.99    0.268 / 0.237     0.268 / 0.299     +0.062     2.16 / 10.2  (9.0)     0.797 / 0.799
+
+- PREDICTION HOLDS.  Round 1 is identical by construction (the first pool
+  precedes any fine-tune), so the A/B is entirely round 2 -- and there BN
+  adaptation raises purity in 6/6 cells (+0.003..+0.062) and RESTORES the
+  round-2 rise at h10:q0.99 (frozen 0.268 -> 0.237 falls; adapting 0.268
+  -> 0.299 rises).  The "richer anchors compound" signature of exp 109 was
+  BN adaptation, not the anchor update.
+- IT IS NOT A SMALL EFFECT: mean test-set drift 2.2-3.0 against |z| ~9-10
+  (max 10-12), i.e. the "frozen" space moved by ~25-30% of its norm per
+  loop.  Exp 130's 1.29 was a lower bound from a shorter run.  The probe
+  is unharmed (+0.002..+0.007), so the adaptation is benign for the seen
+  classes.
+- APPORTIONING EXP 127: round 1 does not see BN, so the archived r1 drop
+  (0.358 -> 0.268) is ENTIRELY the exp-89 space retrain (pitfall 6), not
+  the freeze; the round-2 collapse (0.418 -> 0.237) is the freeze, and BN
+  adaptation recovers about half of it on this space (0.299).  Both
+  archived numbers were therefore real for the space they were measured
+  on; neither is the number for "frozen".
+- FOR THE PAPER: two constructions, stated separately.  (i) "frozen-space
+  density-ratio pooling": r1 0.268 at h10, no round-2 gain.  (ii)
+  "corpus-adaptive normalisation" (weights frozen, BN stats adapting to
+  the discovery corpus; no labels used): r2 0.299 at h10, +0.04..+0.06
+  over frozen, rises across rounds.  (ii) is an explicit opt-in
+  (`set_train_mode(bn_adapt=True)`), CIFAR/ResNet only -- the ViT transfer
+  trunks have no BN, so it does not exist there.  Falsifier for (ii) going
+  forward: it must not help where round-1 purity is ~0 (h1 here: +0.003
+  and +0.021, borderline -- the h1:q0.99 gain is on a 500-point pool).

@@ -1889,6 +1889,15 @@ real signal.  Pinned by `tests/test_poolcut.py::test_refuses_pure_noise`.
 
 ### Exp 133 — BatchNorm adaptation: a construction or a leak?
 
+> **DONE 2026-08-27 — PREDICTION HOLDS: A CONSTRUCTION.**  Paired on the cached
+> exp-89 spaces, BN adaptation raises round-2 purity in 6/6 cells (+0.003..
+> +0.062) and restores the round-2 rise at h10:q0.99 (frozen 0.268 -> 0.237;
+> adapting 0.268 -> 0.299), with test-set drift ~25-30% of |z| and no probe
+> cost.  Apportioning exp 127: the r1 drop (0.358 -> 0.268) is the space
+> retrain, the r2 collapse is the freeze.  Paper: state "frozen pooling"
+> (0.268, flat) and "corpus-adaptive normalisation" (0.299, rising; CIFAR
+> ResNet only, explicit opt-in) as two constructions.  `logs/SUMMARY_TABLES.md`.
+
 > **CODE READY 2026-08-27.**  `133_bn_adaptation_ab.py`, `--selftest` green +
 > `tests/test_bn_adapt_switch.py`.  Queued on the GPU box behind exp 132.
 
