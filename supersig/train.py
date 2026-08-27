@@ -41,7 +41,7 @@ def train_supervised(model, loader, epochs, lr=1e-3):
 # --------------------------------------------------------------------------- #
 def train_sigreg_ssl(backbone, two_view_loader, epochs, lr=1e-3, lam=1.0):
     opt = torch.optim.Adam(backbone.parameters(), lr=lr)
-    backbone.train()
+    set_train_mode(backbone)
     for ep in range(epochs):
         inv_run, reg_run, n = 0.0, 0.0, 0
         for v1, v2 in two_view_loader:
@@ -76,7 +76,7 @@ def train_sigreg_classwise(backbone, loader, epochs, means,
         means.requires_grad_(False)
     opt = torch.optim.Adam(params, lr=lr)
     means0 = means.detach().clone()          # reference for drift diagnostic
-    backbone.train()
+    set_train_mode(backbone)
     for ep in range(epochs):
         reg_run, aux_run, n = 0.0, 0.0, 0
         for x, y in loader:
@@ -109,7 +109,7 @@ def train_sigreg_classwise(backbone, loader, epochs, means,
 # --------------------------------------------------------------------------- #
 def train_supcon(backbone, loader, epochs, temp=0.1, lr=1e-3):
     opt = torch.optim.Adam(backbone.parameters(), lr=lr)
-    backbone.train()
+    set_train_mode(backbone)
     for ep in range(epochs):
         run, n = 0.0, 0
         for v1, v2, y in loader:
@@ -123,6 +123,32 @@ def train_supcon(backbone, loader, epochs, temp=0.1, lr=1e-3):
             n += v1.size(0)
         print(f"  [supcon] epoch {ep+1}/{epochs}  loss={run/n:.4f}")
 
+
+def backbone_is_frozen(backbone):
+    """True when no backbone parameter takes gradients."""
+    return not any(p.requires_grad for p in backbone.parameters())
+
+
+def set_train_mode(backbone):
+    """train() normally; eval() when the backbone is fully frozen.
+
+    WHY.  `requires_grad_(False)` stops the WEIGHTS updating but does NOT stop
+    BatchNorm running statistics from updating -- `.train()` mode keeps
+    accumulating them, and `collect_embeddings` (which calls `.eval()`) then
+    reads the drifted stats.  So a "frozen" backbone with BN silently produced
+    DIFFERENT embeddings each round.
+
+    That is not hypothetical: the CIFAR ResNet-20 trunk has 21 BatchNorm2d
+    layers with track_running_stats=True, so the frozen-space discovery runs
+    (exps 86/92b/109) were really "weights frozen, BN still adapting" on CIFAR.
+    The transfer trunk is a ViT (LayerNorm, no running stats), which is why the
+    frozen transfer results were exact and the CIFAR one was not.
+
+    Calling this instead of `backbone.train()` makes "frozen" mean frozen.  It
+    is a no-op unless every parameter has requires_grad=False, so unfrozen
+    training is unaffected.
+    """
+    backbone.eval() if backbone_is_frozen(backbone) else backbone.train()
 
 def train_sigreg_hybrid(backbone, loader, epochs, means, mode="repulse",
                         disc="supcon", alpha=1.0, temp=0.1, lr=1e-3, margin=3.0,
@@ -147,13 +173,15 @@ def train_sigreg_hybrid(backbone, loader, epochs, means, mode="repulse",
     all other classes stay at sigma=1 (calibration preserved).
     """
     means.requires_grad_(True)
-    params = list(backbone.parameters()) + [means]
+    # Frozen backbone params carry no grad; excluding them keeps Adam's state
+    # (and its param_groups) honest about what is actually being optimized.
+    params = [p for p in backbone.parameters() if p.requires_grad] + [means]
     head = None
     if disc == "ce":
         head = torch.nn.Linear(means.size(1), means.size(0)).to(DEVICE)
         params += list(head.parameters())
     opt = torch.optim.Adam(params, lr=lr)
-    backbone.train()
+    set_train_mode(backbone)
     for ep in range(epochs):
         class_sigma = None
         if disc_sigma_end is not None and disc_sigma_from is not None:
@@ -218,7 +246,7 @@ def train_sigreg_residual_ssl(backbone, two_view_labeled_loader, epochs, means,
     """
     means = means.detach()
     opt = torch.optim.Adam(backbone.parameters(), lr=lr)
-    backbone.train()
+    set_train_mode(backbone)
     tag = "sigreg-residual-cw" if classwise else "sigreg-residual"
     for ep in range(epochs):
         inv_run, reg_run, n = 0.0, 0.0, 0
@@ -250,7 +278,7 @@ def train_dual_visreg(backbone, loader, epochs, loss_fn, lr=1e-3):
     instance already on DEVICE.
     """
     opt = torch.optim.Adam(backbone.parameters(), lr=lr)
-    backbone.train()
+    set_train_mode(backbone)
     for ep in range(epochs):
         runs = {"total": 0.0, "global": 0.0, "local": 0.0}
         n = 0
@@ -284,7 +312,7 @@ def train_sigreg_hybrid_aug(backbone, two_view_labeled_loader, epochs, means,
     """
     means.requires_grad_(True)
     opt = torch.optim.Adam(list(backbone.parameters()) + [means], lr=lr)
-    backbone.train()
+    set_train_mode(backbone)
     for ep in range(epochs):
         reg_run, disc_run, inv_run, n = 0.0, 0.0, 0.0, 0
         for v1, v2, y in two_view_labeled_loader:
@@ -313,7 +341,7 @@ def train_sigreg_hybrid_aug(backbone, two_view_labeled_loader, epochs, means,
 def train_simclr(backbone, loader, epochs, temp=0.5, lr=1e-3):
     """Unsupervised SimCLR (NT-Xent): positives are only the other augmented view."""
     opt = torch.optim.Adam(backbone.parameters(), lr=lr)
-    backbone.train()
+    set_train_mode(backbone)
     for ep in range(epochs):
         run, n = 0.0, 0
         for v1, v2 in loader:
@@ -338,7 +366,7 @@ def train_simclr_sigreg(backbone, loader, epochs, temp=0.5, lr=1e-3, lam=1.0,
     calibrated Gaussian geometry instead of on the unit sphere.
     """
     opt = torch.optim.Adam(backbone.parameters(), lr=lr)
-    backbone.train()
+    set_train_mode(backbone)
     for ep in range(epochs):
         con_run, reg_run, n = 0.0, 0.0, 0
         for v1, v2 in loader:
@@ -366,7 +394,7 @@ def train_supcon_sigreg(backbone, two_view_labeled_loader, epochs, temp=0.1,
     on the RAW embeddings.
     """
     opt = torch.optim.Adam(backbone.parameters(), lr=lr)
-    backbone.train()
+    set_train_mode(backbone)
     for ep in range(epochs):
         con_run, reg_run, n = 0.0, 0.0, 0
         for v1, v2, y in two_view_labeled_loader:
@@ -397,7 +425,7 @@ def train_simclr_residual(backbone, two_view_labeled_loader, epochs, means,
     """
     means = means.detach()
     opt = torch.optim.Adam(backbone.parameters(), lr=lr)
-    backbone.train()
+    set_train_mode(backbone)
     for ep in range(epochs):
         run, reg_run, n = 0.0, 0.0, 0
         for v1, v2, y in two_view_labeled_loader:
@@ -431,7 +459,7 @@ def train_supcon_sigreg_residual(backbone, two_view_labeled_loader, epochs,
     """
     means = means.detach()
     opt = torch.optim.Adam(backbone.parameters(), lr=lr)
-    backbone.train()
+    set_train_mode(backbone)
     for ep in range(epochs):
         run, reg_run, n = 0.0, 0.0, 0
         for v1, v2, y in two_view_labeled_loader:
@@ -454,7 +482,7 @@ def train_supcon_sigreg_residual(backbone, two_view_labeled_loader, epochs,
 def train_supcon_plain(backbone, loader, epochs, temp=0.1, lr=1e-3):
     """SupCon on single un-augmented views: positives are same-class samples only."""
     opt = torch.optim.Adam(backbone.parameters(), lr=lr)
-    backbone.train()
+    set_train_mode(backbone)
     for ep in range(epochs):
         run, n = 0.0, 0
         for x, y in loader:

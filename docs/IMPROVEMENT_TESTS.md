@@ -1,4 +1,4 @@
-# Proposed tests to improve performance — exps 81–126
+# Proposed tests to improve performance — exps 81–131
 
 Companion to [QUESTIONS.md](QUESTIONS.md) (whose "open items as of exp 58" list
 this supersedes).  Every entry follows the standard protocol in
@@ -1530,3 +1530,308 @@ resampling with a wider interval; the exp-109 density-ratio result
 workhorse claim was a favourable alphabetical draw, exactly the exp-118 hazard.
 
 **Cost.**  Low if re-tabulation only; moderate with draws.
+
+### Exp 127 — Re-run the frozen density-ratio pool with BN actually frozen
+
+**Motivation.**  Exps 86/92b/109 froze backbone WEIGHTS but not BatchNorm
+running statistics, so on the CIFAR trunk the "frozen" space still drifted (up
+to 1.29 in embedding units against mean |z| 0.52 over 3 rounds).  The transfer
+cells use a LayerNorm ViT and were exact; only CIFAR is affected.  Fixed
+2026-08-26 (`supersig.train.set_train_mode`).
+
+The exp-109 headline — C100 purity 0.121 -> 0.358, round 2 rising to 0.418 —
+is the evidence for the second of the paper's two constructions, and it was
+produced under the leaky freeze.
+
+**Protocol.**  Re-run `109_c100_density_pool.py` unchanged; the fix is in the
+trainer.  Compare against the archived `logs/exp109/` numbers.
+
+**Prediction.**  The result survives.  The mechanism (critic refit + pool
+growth + anchor updates) does not depend on BN drift, and the transfer cells
+showed the same round-2-rises signature with an exactly frozen ViT.
+
+**Falsifier.**  Purity no longer clears the gate, or round 2 stops rising →
+part of the exp-109 gain came from the space quietly moving, and the
+"frozen density-ratio pool" construction needs restating.
+
+**Cost.**  Low — evaluation-only, no retraining (the space is frozen).
+
+### Exp 128 — Where should the pool cut actually sit?
+
+> **SCRIPT READY, ALGEBRA VALIDATED (2026-08-26).**  `128_pool_cut_optimization.py`,
+> evaluation-only, `--selftest` green (8 checks) + `tests/test_pool_cut.py` (9).
+> Needs embeddings from a real cell to produce results.
+
+**Motivation.**  `tau_quantile=0.95` has been the pool cut since exp 23 and was
+never derived.  Exp 112 lists it as "swept exp 89 (distance only)"; exp 109
+tried only {0.95, 0.99} for the density scorer.  Three values on a grid that
+skips the whole 0.95-0.99 interval where the h10 optimum evidently lives.
+
+**The algebra.**  With b = base rate, q = pool/N, e_s = signal efficiency:
+
+    purity = e_s*b/q,    E = purity/b = e_s/q,    purity <= min(1, b/q)
+
+At q=0.05, b=0.01 the CEILING is 0.20 (20x) while measured density-ratio purity
+at h1 is 0.030 (E=3.0, e_s=0.15).  **This corrects the "rate floor" framing**:
+h1 is not information-theoretically blocked, it is SIGNAL-EFFICIENCY blocked,
+and the cut is a free parameter sitting far from its own ceiling.  The earlier
+"base rate >= 4%" rule silently treated E~3.5 as a property of the problem
+rather than of one arbitrary cut.
+
+Second constraint: `n_novel = purity*q*N >= n_min` for BIC to find a component.
+h10/q0.99 leaves ~179 novel points; h1/q0.99 leaves ~15.  That is why
+tightening helped at h10 (0.232->0.358) and did nothing at h1 (0.030->0.029).
+Objective: maximize purity(q) s.t. n_novel(q) >= n_min.
+
+**Protocol.**  Feed archived embeddings (`113 --save-embs` format: `tr`,
+`tr_lab`) and sweep q over a dense log+linear grid for all three scorers
+(dist/lid/np), reporting purity, ceiling, headroom, E, e_s, n_novel, the
+campaign's own tau_q cuts for reference, and (with `--bic`) whether BIC
+actually recovers a majority-novel cluster.  Also reports each scorer's
+cut-free novel-vs-seen AUC.
+
+**Prediction.**  (a) The optimum for `np` is tighter than 0.95 on every
+multi-class cell.  (b) Headroom (purity/ceiling) is well below 1 everywhere,
+i.e. the deficit is scorer efficiency, not the cut.  (c) On h1 no q satisfies
+both constraints, so the floor is real but for the n_min reason, not the
+enrichment reason.
+
+**Falsifier.**  Headroom is already ~1 at q=0.05 → the scorers are at their
+ceiling and only the cut was ever wrong; the "improve the scorer" program is
+misdirected.
+
+**Validated synthetically already.**  On a hard synthetic bank (novel class
+adjacent to a seen class, heavy-tailed background) the tool reproduces the
+exp-89/exp-109 inversion from first principles: `dist` has AUC 0.954 yet purity
+**0.000** at tight cuts (tail owned by background outliers, tightening HURTS:
+0.117 -> 0.000), while `np` at AUC 0.9998 improves monotonically under
+tightening (0.168 -> 0.669) with a best usable cut of purity 0.99.
+
+**A caution the synthetic exposed.**  A scorer can have HIGH AUC and still pool
+badly, because AUC is blind to tail structure -- pinned by
+`test_high_auc_can_still_pool_badly`.  So report the operating curve, not AUC
+alone; AUC separates scorer quality from cut choice but does not replace it.
+
+**Cost.**  Minutes, evaluation-only.  Run it on every cell that produces
+embeddings in exps 124/125.
+
+#### Exp 129 addendum — n_min swept, kmax made label-free (2026-08-26, REAL data)
+
+Run on three real exp-54 CIFAR-10 spaces with the novel class subsampled to
+b in {0.01, 0.02, 0.05, 0.10} (real geometry, realistic rates).
+`logs/exp129/n_min_sweep_real.json`.
+
+**n_min: smaller is better, confirmed.**  Purity falls monotonically as n_min
+grows.  On `nplm_dist_sup_cw` at b=0.10: purity **0.830** at n_min=20 vs 0.696
+at n_min=500.  Default set to **30**.
+
+**Q_MIN was binding and is lowered 0.002 -> 0.0005.**  At every n_min <= 75 the
+rule wanted a tighter cut than the clip allowed.  Pushing further shows a
+plateau, so the tight end is safe but not unboundedly profitable:
+
+    q       0.0002  0.0005  0.001  0.002  0.005  0.010  0.020  0.050
+    purity   1.000   0.800  0.840  0.830  0.788  0.716  0.648  0.565
+    recall   0.002   0.004  0.008  0.017  0.039  0.072  0.130  0.283
+
+**kmax is now label-free**: `k_max = clip(floor(sum(w)/n_min), 2, 64)` from the
+same novelty weights that drive the cut, replacing
+`max(4, len(holdouts) + 2)` (`discovery.py:189`), which uses the NUMBER OF
+NOVEL CLASSES -- oracle knowledge.
+
+**FINDING 1 — the oracle leak is inert at single holdout.**  BIC returns
+khat=1 in essentially every row, at every kmax from 2 to 63.  With one novel
+class that is the CORRECT answer, so kmax cannot matter at h1; the leak only
+has teeth in the multi-holdout regime.  It also means the clustering step is a
+no-op on single-holdout pools -- the "cluster" is the pool.
+
+**FINDING 2 — b_hat is badly biased downward on real data, and this is the
+binding limitation.**  TV(p_D,p_R) = b * TV(p_S,p_R), and real novel classes
+overlap the seen manifold heavily, so:
+
+    space              AUC    b_true   b_hat
+    nplm_dist_sup_cw  0.766     0.10   0.0255     (4x low)
+    nplm_bilinear     0.714     0.10   0.0003   (300x low)
+    nplm_bilinear     0.534     0.01   0.0001   (100x low)
+
+On spaces where the critic separates well the rule engages and works.  On weak
+spaces b_hat collapses, N_hat never reaches n_min, and q saturates at Q_MAX --
+the rule degenerates to a wide pool and its `ok` flag is False.  That flag is
+doing its job and MUST be reported: a False there means "this space cannot
+support discovery", which is information, not a crash.
+
+**Consequence for the paper.**  The label-free cut is viable where the scorer
+is strong (purity 0.83 at b=0.10 on real embeddings, far above the 0.15 gate)
+and correctly refuses where it is not.  But the quantity limiting it is scorer
+quality, exactly as exp 128 predicted -- the same conclusion from a second,
+independent direction.
+
+### Exp 129 — A label-free rule for the pool cut
+
+> **SCRIPT READY, RULE DERIVED AND VALIDATED (2026-08-26).**  `--selftest` green
+> (7 checks) + `tests/test_legal_pool_cut.py` (18).  Needs real embeddings.
+
+**Motivation.**  Exp 128 shows the cut matters and 0.95 is wrong, but `purity`
+needs novel labels, so sweeping it per cell is ORACLE TUNING.  The campaign was
+careful about exactly this for `tau` (exp 115; exps 120/121) and must not
+quietly oracle-tune `q`.  Exp 128 is therefore a diagnostic; this is the
+deliverable: ONE global, label-free rule, reported against the oracle.
+
+**Estimating the base rate without labels.**  The NP critic gives
+f = log(p_corpus/p_ref).  Three estimators, all validated to recover a known b
+to within 10% on an exact critic:
+`tv` = E_corpus[max(0, 1-1/r)], `mass` = P_corpus(r>2), `excess` = bump-hunt
+excess at the 0.99 reference quantile.
+
+**RULE A (purity target), rejected.**  q* = clip(b_hat / 0.30).  Hits 0.30 by
+construction -- and stops there.  Oracle reaches purity 1.00 at a 6x tighter
+cut.  Targeting a purity LEVEL is the wrong objective.
+
+**RULE B (detectability-limited), adopted.**  Purity = e_s*b/q rises
+monotonically as q shrinks, so the optimum is at the tight end and the binding
+constraint is whether a CLUSTER survives.  Estimate the survivor count
+label-free: under contamination the posterior that a corpus point is novel is
+`1 - 1/r`, so summing it over the pool estimates n_novel without labels.
+Then q* = the tightest cut whose ESTIMATED novel count still exceeds n_min.
+
+On an exact critic Rule B **matches the oracle exactly** (q=0.0056, purity
+1.000) at b = 0.01/0.02/0.05/0.10, versus 0.30 for Rule A and 0.20-1.00 for the
+inherited q=0.05.
+
+**Prediction.**  On real cells Rule B beats the inherited q=0.05 wherever the
+base rate differs from ~1.5%, and its oracle gap is dominated by critic quality
+rather than by the rule.
+
+**Falsifier.**  Rule B's oracle gap on real cells is large and comparable to
+Rule A's → the estimated novel count is too noisy on fitted critics, and q
+joins tau as a knob invisible to legal selection.  (Still a publishable
+finding, and the campaign's recurring one.)
+
+**Two implementation traps, both hit and both now pinned by test.**
+1. The reference-side form E_ref[max(0, r-1)] is algebraically equal to the
+   corpus-side TV but USELESS in Monte Carlo: when novelty is disjoint the
+   excess lives where p_ref ~ 0, so no reference sample lands there.  Measured
+   1.2e-5 against a true b of 0.01.  Always integrate against the sample that
+   COVERS the excess.
+2. The fitted critic is frequently far from its own calibration identity, so
+   ratios must be renormalised by E_ref[e^f] before use.  See exp 130.
+
+### Exp 130 — Is the NP critic converging at all?
+
+> **STEP (a) DONE 2026-08-26 — HYPOTHESIS FALSIFIED, and the measurement that
+> opened it was MY ERROR.**  The critic converges.  In-sample calibration on
+> six real exp-54 CIFAR-10 spaces is **0.997-1.019** (ideal 1.000).  No
+> archived SparKer number is in question.
+
+**What I got wrong.**  Exp 129 reported `E_ref[e^f]` of 60 / 4.7e3 / 6.5e5 /
+1.1e6 and concluded the optimisation was diverging.  It was not.  Those were
+OUT-OF-SAMPLE values -- E[e^f] over ALL seen points -- while the identity the
+NP minimiser enforces is over the reference points USED IN THE FIT (the
+`max_ref=4000` subsample).  Measured properly, in-sample calibration is 1.000
+at every capacity setting, including the ones I called divergent.  The AUCs I
+reported (0.885/0.882/0.851/0.913) reproduce exactly; only the calibration
+column was wrong.
+
+The proposed mechanism was also wrong: `f` never approaches the +-20 clamp.
+Max |f| is 5.7-11.6 on real embeddings and ~13 on synthetic, **0.00% of points
+at the clamp** in every case.  The zero-gradient-at-clamp story is unsupported.
+
+**What is actually there (smaller, real).**  In-sample ~ 1 with out-of-sample
+> 1 is textbook OVERFITTING of the critic to its reference subsample -- the
+fitted ratio has a tail the 4000 reference points never covered.  It grows with
+capacity, as overfitting should:
+
+    M=16,  300 steps:  calib_in 1.000   calib_out 60
+    M=64,  300 steps:  calib_in 0.999   calib_out 4.7e3
+    M=64,  800 steps:  calib_in 0.998   calib_out 6.5e5   (synthetic, b=1%)
+
+On REAL embeddings the same effect is mild -- calib_out 1.000-2.706 across six
+spaces, worst for `nplm_distance` (2.71), best for `nplm_bilinear` (1.000):
+
+    space              calib_in  calib_out   AUC
+    nplm_bil_cw           0.998      1.005  0.679
+    nplm_bil_sup_cw       1.002      1.059  0.699
+    nplm_bilinear         0.998      1.000  0.714
+    nplm_dist_sup_cw      0.997      1.047  0.766
+    nplm_distance         1.006      2.706  0.746
+    nplm_sup_dist         1.019      1.353  0.760
+
+**Instrumentation landed.**  `np_pool_scores(..., return_calib=True)` returns
+`dict(calib_in, calib_out)`; `sparker.np_test_stats(..., return_calib=True)`
+and `sparker.np_calibration(D, R)` return the in-sample value.  Report
+`calib_out` alongside SparKer numbers: it is the one that can drift, and it is
+the one the scores are actually used at.
+
+**What this means for exp 128.**  The 3-15% signal efficiency is NOT explained
+by a broken critic.  Real novel-vs-seen AUC is 0.68-0.77 -- the critic is
+working and the task is simply hard.  Remaining candidates for the low e_s:
+kernel init (M kernels sampled uniformly give a rate-b class an expected M*b
+kernels; still untested) and genuine class overlap.
+
+**Steps (b)/(c) remain open** but are no longer urgent, and should be motivated
+by the overfitting finding (reference subsample size, capacity) rather than by
+a convergence failure that does not exist.
+
+**Cost.**  (a) was minutes and is now done.
+
+### Exp 131 — Re-run cifar10 / cifar100 / galaxy10 with the label-free cut
+
+> **CODE READY 2026-08-26.**  `--selftest` green; `supersig/poolcut.py` +
+> `tests/test_poolcut.py` (11).  NEEDS THE GPU BOX.
+
+**Why these three cells must be re-run.**  Three changes since they were last
+measured, each touching the discovery loop:
+
+1. **The pool cut** (exps 128/129).  `tau_quantile=0.95` is inherited from exp
+   23 and the ceiling `purity <= min(1, b/q)` caps it at 0.20 when b=1%.
+   Replaced by the label-free rule in `supersig.poolcut`.
+2. **`kmax`** (exp 129).  `max(4, len(holdouts)+2)` uses the NUMBER OF NOVEL
+   CLASSES -- oracle knowledge.  Now derived from label-free novelty weights.
+3. **Freezing** (exp 130).  `requires_grad_(False)` did not stop BatchNorm
+   running statistics; the CIFAR trunk drifted by 1.29 in embedding units
+   (mean |z| 0.52) over 3 "frozen" rounds.  **This alone means archived frozen
+   CIFAR numbers will not reproduce**, independently of 1 and 2.
+
+**How it is wired.**  `run_discovery(..., cut_rule=)`: `"quantile"` is the
+DEFAULT and reproduces every archived result exactly; `"legal"` uses the new
+rule and requires `pool_score="np"`.  Nothing changes unless asked.
+
+**Protocol.**  Paired A/B on identical spaces and seeds, per cell and arm.
+Round-1 pool/purity/BIC is evaluation-only and runs from embeddings; the
+multi-round loop needs the backbones.
+
+    python experiments/131_legal_cut_discovery.py --selftest
+    python experiments/131_legal_cut_discovery.py --cells cifar10,cifar100
+    python experiments/131_legal_cut_discovery.py --cells galaxy10:dino,galaxy10:lejepa,galaxy10:visreg
+
+**Evidence so far (real exp-54 CIFAR-10, novel class subsampled).**  The rule
+engages where the scorer is strong and REFUSES where it is not:
+
+    space              b     AUC   n_hat       q    pool  purity  n_nov     ok
+    nplm_dist_sup_cw  0.10  0.766     717  0.0052    261   0.778    203   True
+    nplm_sup_dist     0.10  0.760     690  0.0051    253   0.719    182   True
+    nplm_bilinear     0.10  0.714      13  0.2000  10000   0.232   2315  False
+    nplm_sup_dist     0.01  0.707      56  0.0273   1239   0.090    111   True
+    nplm_dist_sup_cw  0.01  0.687      12  0.2000   9091   0.028    258  False
+    nplm_bilinear     0.01  0.638       0  0.2000   9091   0.019    171  False
+
+At b=0.10 the rule lifts purity 0.232 -> 0.778 on the best space.  At b=0.01 it
+mostly refuses, which is the honest answer.
+
+**Prediction.**  galaxy10 (b~0.10, single holdout, and the ONLY cell genuinely
+OOD to the ImageNet-1k backbones) behaves like the b=0.10 rows -- the rule
+engages and beats the inherited cut.  cifar100 (b~0.01) mostly refuses.
+
+**Falsifier.**  Purity is WORSE under `legal` in cells where `ok` is True ->
+the label-free cut is not usable and 0.95 should stand, with the ceiling
+reported as a limitation.
+
+**A DEFECT FOUND AND FIXED while building this.**  `w = [1-1/r]_+` is a
+positive part, so ANY spread in a fitted `f` manufactures novelty: pure-noise
+scores produced sum(w) = 665 of 8000 points, enough for the rule to fire on
+nothing.  A flat mean subtraction does NOT fix it (405 phantom points survived)
+because the top-ranked null points carry far above-average w.  The fix is a
+RANK-MATCHED null -- under H0 the top q of the corpus is distributed like the
+top q of the reference -- which cancels to ~0 under the null while preserving
+real signal.  Pinned by `tests/test_poolcut.py::test_refuses_pure_noise`.
+
+**Cost.**  Round-1 A/B is minutes per cell.  Full multi-round needs backbones.

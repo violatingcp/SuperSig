@@ -18,6 +18,7 @@ from sklearn.metrics import roc_auc_score
 from .config import DEVICE
 from .data import BalancedBatchSampler
 from .train import train_sigreg_hybrid, collect_embeddings
+from .poolcut import legal_pool, N_MIN as POOL_N_MIN
 
 
 class PseudoDataset(Dataset):
@@ -109,7 +110,7 @@ def lid_pool_scores(z, is_seen_lab, k=20, max_ref=4000, seed=0):
 
 
 def np_pool_scores(z, is_seen_lab, M=16, steps=300, sigma_ratio=10.0,
-                   lr=0.05, max_ref=4000, seed=0):
+                   lr=0.05, max_ref=4000, seed=0, return_calib=False):
     """Neyman-Pearson pool scores (exp-92/93): fit the SparKer NP critic f
     on (full train corpus z vs seen-labeled reference) and score every
     point by its estimated log density ratio.  Higher = more novel."""
@@ -140,19 +141,51 @@ def np_pool_scores(z, is_seen_lab, M=16, steps=300, sigma_ratio=10.0,
         loss = w * (torch.exp(f(ref, sigma)) - 1).sum() - f(z, sigma).sum()
         opt.zero_grad(); loss.backward(); opt.step()
     with torch.no_grad():
-        return f(z, sigma).detach()
+        out = f(z, sigma).detach()
+        if return_calib:
+            # E_ref[e^f] == 1 at the NP minimiser.  TWO versions, and they
+            # answer different questions (exp 130):
+            #   in  -- over the reference points actually used in the fit.
+            #          Departure from 1 means the OPTIMISATION did not converge.
+            #   out -- over every seen point.  Departure from 1 with in ~ 1
+            #          means the critic OVERFITS the reference subsample; the
+            #          ratio has a tail the fitted reference never covered.
+            seen = z[torch.as_tensor(is_seen_lab, device=z.device)]
+            return out, dict(
+                calib_in=float(torch.exp(f(ref, sigma)).mean()),
+                calib_out=float(torch.exp(f(seen, sigma)).mean()))
+    return out
 
 
 def run_discovery(backbone, means, *, base_ds, train_eval_loader, test_loader,
                   seen, holdouts, dataset_name, rep_weight, sigreg_weight,
                   n_slices, rounds=2, ft_epochs=5, tau_quantile=0.95,
                   kmax=None, merge_dist=3.0, exempt_repulsion=True,
-                  names=None, seed=0, pool_score="dist"):
+                  names=None, seed=0, pool_score="dist",
+                  cut_rule="quantile", n_min=None):
     """
     Iterated anchor discovery.  `means` holds the trained class anchors
     (n_classes rows); returns (extended_means, history) where history is one
     dict per round: pool, purity, khat, margin AUC, mean per-class anchor AUC.
+
+    cut_rule:
+      "quantile" (default)  the campaign rule -- pool = scores above the
+                            `tau_quantile` quantile of SEEN-labelled scores,
+                            kmax = max(4, len(holdouts)+2).  Reproduces every
+                            archived result exactly.
+      "legal"               exps 128/129 -- pool = the tightest cut still
+                            holding `n_min` ESTIMATED novel points, kmax from
+                            the same label-free weights.  Removes two
+                            un-derived constants, one of which
+                            (`len(holdouts)`) is oracle knowledge.  Requires
+                            pool_score="np": the weights need a density ratio,
+                            not a distance.
     """
+    if cut_rule not in ("quantile", "legal"):
+        raise ValueError(f"cut_rule={cut_rule!r} must be 'quantile' or 'legal'")
+    if cut_rule == "legal" and pool_score != "np":
+        raise ValueError("cut_rule='legal' needs pool_score='np': the novelty "
+                         "weights are defined from the density ratio")
     n_classes = means.size(0)
     cur_means = means.detach().clone()
     pooled = np.zeros(len(train_eval_loader.dataset), dtype=bool)
@@ -169,11 +202,18 @@ def run_discovery(backbone, means, *, base_ds, train_eval_loader, test_loader,
             s = np_pool_scores(z, is_seen_lab, seed=seed + r)
         else:
             s = torch.cdist(z, anchor_mat).min(1).values
-        tau = torch.quantile(s[torch.as_tensor(is_seen_lab, device=DEVICE)],
-                             tau_quantile)
-        pool = (s > tau).cpu().numpy()
+        if cut_rule == "legal":
+            pool, cut_info = legal_pool(s.cpu().numpy(), is_seen_lab,
+                                        n_min=n_min or POOL_N_MIN)
+            km = kmax or cut_info["kmax"]
+        else:
+            tau = torch.quantile(s[torch.as_tensor(is_seen_lab, device=DEVICE)],
+                                 tau_quantile)
+            pool = (s > tau).cpu().numpy()
+            cut_info = dict(ok=True, reason="quantile", q=float(pool.mean()),
+                            pool=int(pool.sum()))
+            km = kmax or max(4, len(holdouts) + 2)
         purity = (~is_seen_lab[pool]).mean() if pool.any() else float("nan")
-        km = kmax or max(4, len(holdouts) + 2)
         khat, centers, _ = bic_select(z[torch.as_tensor(pool, device=DEVICE)],
                                       kmax=km, seed=seed + r)
         cur_means = torch.cat([cur_means, centers.detach()], dim=0)
@@ -212,7 +252,8 @@ def run_discovery(backbone, means, *, base_ds, train_eval_loader, test_loader,
             j = int(np.argmax(counts))
             per_class[c] = roc_auc_score((te_lab == c).astype(int),
                                          (-d_each[:, j]).cpu().numpy())
-        history.append(dict(round=r, pool=int(pool.sum()), purity=float(purity),
+        history.append(dict(round=r, cut=cut_info,
+                            pool=int(pool.sum()), purity=float(purity),
                             khat=khat, n_anchors=int(disc.size(0)),
                             margin=float(margin),
                             per_class={int(c): float(a) for c, a in per_class.items()},

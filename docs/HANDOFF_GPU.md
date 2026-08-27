@@ -12,7 +12,7 @@ results to `logs/SUMMARY_TABLES.md` in the house style (`docs/METRICS.md`).**
 ## 0. Read first (5 minutes, prevents every known footgun)
 
 1. `supersig/holdouts.py` — the two env vars that control holdouts.
-2. `docs/METRICS.md` "Known pitfalls checklist" — all 9.
+2. `docs/METRICS.md` "Known pitfalls checklist" — all 10.
 3. This section.
 
 ### The two environment variables
@@ -29,7 +29,7 @@ This matters: before this mechanism existed, a single-holdout run would have
 destroyed the multi-holdout fine-tune checkpoints, whose `_seen` suffix means
 "trained excluding the holdouts" — contents differ, filename did not.
 
-### Four rules
+### Five rules
 
 1. **Never pool single- and multi-holdout numbers in one table.**  They reach
    different conclusions (exps 89/109: the purity gate is reachable at h5/h10
@@ -46,11 +46,19 @@ destroyed the multi-holdout fine-tune checkpoints, whose `_seen` suffix means
    - `"ss"` (`docs/LOSSES.md`) = **SimCLR** + SIGReg, unsupervised
    `ssig` in exp 67 is lam=5, i.e. the `ss-ft` twin.
 4. **`--quick` numbers are pipeline checks, never results.**
+5. **Frozen-space runs changed on 2026-08-26.**  "Frozen" now really means
+   frozen: `supersig.train.set_train_mode` puts a fully-frozen backbone in
+   eval() so BatchNorm running statistics stop drifting.  Before the fix the
+   CIFAR ResNet-20 trunk moved embeddings by up to 1.29 (mean |z| 0.52) over 3
+   "frozen" rounds.  Consequence: **archived frozen CIFAR numbers (exps
+   86/92b/109) will not reproduce exactly.**  If you re-run any of them, report
+   the new number and note the change rather than treating a mismatch as a bug.
+   Transfer cells (ViT/LayerNorm) are unaffected and should reproduce.
 
 ### Sanity check before starting
 
 ```bash
-python -m pytest tests/ -q          # expect 137 passed
+python -m pytest tests/ -q          # expect 173 passed
 python supersig/holdouts.py         # prints the default vs SUPERSIG_NH=1 sets
 ```
 
@@ -158,11 +166,81 @@ the hazard exp 118 identified.
 
 Lower priority; run only if A-C finish.
 
+First, the cheap re-validation (exp 127): re-run the frozen density-ratio
+pool now that BN is actually frozen, and compare to archived `logs/exp109/`.
+It is evaluation-only and it re-validates the paper's second construction.
+
 ```bash
+python experiments/109_c100_density_pool.py
+
 python experiments/113_tau_generality.py --save-embs
 python experiments/121_transductive_tuner.py --tau-archive logs/exp113/embs --cell cifar100_on
 python experiments/122_basin_geometry.py --cell cifar100_on
 ```
+
+---
+
+## Block E — Exp 128: the pool cut (run on every cell that yields embeddings)
+
+Evaluation-only, minutes.  `tau_quantile=0.95` was inherited from exp 23 and
+never derived; this sweeps it densely against the analytic ceiling
+`purity <= min(1, b/q)`.
+
+```bash
+python experiments/128_pool_cut_optimization.py --selftest        # expect 8 OK
+python experiments/128_pool_cut_optimization.py \
+    --embs logs/exp113/embs/cifar100_on.npz --holdouts 99 --bic
+```
+
+It needs an npz with `tr` / `tr_lab`, which is what `113 --save-embs` writes.
+**If any run in Blocks A/B can cheaply dump its train embeddings in that
+format, do so** -- this analysis is free once the bank exists and it tells us
+whether our purity numbers are limited by the scorer or by an arbitrary cut.
+
+Report per scorer: the best usable cut (highest purity with n_novel >= 100),
+its headroom (purity/ceiling), and the cut-free AUC.
+
+Then exp 129 -- the label-free cut rule, which is what we would actually ship:
+
+```bash
+python experiments/129_legal_pool_cut.py --selftest                 # expect 7 OK
+python experiments/129_legal_pool_cut.py --embs <same npz> --holdouts 99
+```
+
+**Exp 130 step (a) is DONE and came back clean** -- the NP critic converges.
+In-sample calibration `E_ref[e^f]` is 0.997-1.019 on six real exp-54 CIFAR-10
+spaces (ideal 1.000), and no point anywhere reaches the +-20 clamp.  An earlier
+worry that the critic was diverging was my measurement error (out-of-sample vs
+in-sample); it is retracted in `IMPROVEMENT_TESTS.md`.  **No archived SparKer
+number is in question.**
+
+Still worth printing on real runs: `np_pool_scores(..., return_calib=True)`
+now returns `dict(calib_in, calib_out)`.  `calib_out` (over all seen points,
+not just the fitted reference subsample) is the one that can drift -- it ranges
+1.000-2.706 across the six spaces -- and it is the value the scores are
+actually used at.
+
+---
+
+## Block F — Exp 131: re-run cifar10 / cifar100 / galaxy10 (REQUESTED)
+
+These three cells must be re-run: the frozen-BN fix alone means archived frozen
+CIFAR numbers will not reproduce, and the pool cut and kmax both changed.
+
+```bash
+python experiments/131_legal_cut_discovery.py --selftest
+python experiments/131_legal_cut_discovery.py --cells cifar10,cifar100
+python experiments/131_legal_cut_discovery.py --cells galaxy10:dino,galaxy10:lejepa,galaxy10:visreg
+```
+
+`run_discovery` defaults are UNCHANGED (`cut_rule="quantile"`), so anything you
+re-run without the flag reproduces the archive.  Pass `cut_rule="legal"` with
+`pool_score="np"` for the new rule.
+
+**Report the `ok` flag.**  False means the rule refused -- the estimated
+novelty could not support a detectable cluster.  That is a RESULT ("this space
+cannot support discovery at this rate"), not a crash, and we expect it on the
+b~1% cells.
 
 ---
 
