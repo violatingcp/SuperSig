@@ -1578,6 +1578,17 @@ part of the exp-109 gain came from the space quietly moving, and the
 
 ### Exp 128 — Where should the pool cut actually sit?
 
+> **DONE 2026-08-27 on the 30-cell C100 bank (tau x marginal x 3 seeds, h1,
+> b=0.01).**  (a) HOLDS: np optimum q* = 0.004-0.04, far tighter than 0.05.
+> (c) FALSIFIED in the good direction: with the SIGReg marginal ON, np clears
+> the gate AT h1 with >= 100 novel points on 5/5 tau settings (0.31-0.58;
+> tau0.05-on 0.58+-0.08 at q=0.0036).  The "rate floor" was distance + q0.95,
+> not the cell.  (b) HOLDS where it matters: dist never exceeds purity 0.05 at
+> any cut; lid dead.  UNPREDICTED: the marginal helps np and hurts dist -- a
+> fourth instance of the dissociation.  Exp 131's C100 refusals are therefore
+> an ESTIMATOR failure (b_hat 100x low), not a space failure.  Tables in
+> `logs/SUMMARY_TABLES.md`, JSON `logs/exp128/cutscan.json`.
+
 > **SCRIPT READY, ALGEBRA VALIDATED (2026-08-26).**  `128_pool_cut_optimization.py`,
 > evaluation-only, `--selftest` green (8 checks) + `tests/test_pool_cut.py` (9).
 > Needs embeddings from a real cell to produce results.

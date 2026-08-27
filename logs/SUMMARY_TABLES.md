@@ -1803,3 +1803,56 @@ Archive = logs/exp109/results_preBNfix_archived.npz, BN still adapting.)
   block: 0.121 -> 0.27 at h10 (q0.99), round-2 gain not reproduced under
   an exact freeze".  The transfer-cell version of the claim (ViT,
   LayerNorm) was never affected.
+
+## Exp 128 -- pool-cut sweep vs the analytic ceiling, C100 bank (Tier 9 Block E)
+(exp-113 embedding bank: cifar100 100-D, tau x marginal{on,off} x 3 seeds,
+holdout {99} [single-holdout], b=0.01, N=50000; scorers dist/lid/np; dense
+q grid; "usable" = purity-max cut with n_novel >= 100; ORACLE cut -- purity
+needs labels, this is the diagnostic; exp 129 is the legal version.
+mean+-sd over 3 seeds; 2026-08-27; logs/exp128/cutscan.json)
+
+  tau  marg  scorer   AUC          usable  best q          best purity     purity@q0.95
+  0.05 off   dist     0.706+-.028  3/3     0.130+-.036     0.025+-.004     0.023
+  0.05 off   np       0.721+-.030  3/3     0.020+-.009     0.135+-.070     0.070
+  0.05 on    dist     0.465+-.024  0/3     --              --              0.005
+  0.05 on    np       0.792+-.038  3/3     0.0036+-.0004   0.580+-.084     0.093
+  0.1  off   dist     0.717+-.021  3/3     0.057+-.017     0.039+-.010     0.038
+  0.1  off   np       0.739+-.001  3/3     0.023+-.010     0.131+-.071     0.071
+  0.1  on    dist     0.650+-.021  3/3     0.087+-.021     0.027+-.007     0.029
+  0.1  on    np       0.818+-.033  3/3     0.0074+-.0010   0.306+-.058     0.103
+  0.3  off   np       0.774+-.010  3/3     0.026+-.017     0.128+-.078     0.055
+  0.3  on    np       0.776+-.103  3/3     0.0078+-.0028   0.312+-.098     0.095
+  1.0  off   np       0.586+-.108  3/3     0.037+-.038     0.155+-.099     0.052
+  1.0  on    np       0.762+-.038  3/3     0.013+-.012     0.433+-.342     0.081
+  3.0  off   np       0.845+-.064  3/3     0.0065+-.0020   0.391+-.109     0.113
+  3.0  on    np       0.765+-.094  3/3     0.0055+-.0018   0.466+-.207     0.093
+  (dist at tau>=0.3: best purity 0.022-0.047 everywhere; lid: AUC 0.38-0.64,
+   usable in 7/30 cells, purity <= 0.019 -- dead on C100 h1.)
+
+- PREDICTION (a) HOLDS: the np optimum is far tighter than q=0.05 --
+  q* = 0.004-0.04 on every cell.  The inherited cut leaves 3-6x purity on
+  the table for np (0.07-0.11 at q0.95 vs 0.13-0.58 at q*).
+- PREDICTION (c) FALSIFIED, in the good direction: h1 on C100 is NOT
+  n_min-blocked.  With the marginal ON, np clears the 0.15 gate at h1 with
+  >= 100 novel points in the pool on 5/5 tau settings (0.31-0.58), and
+  tau=0.05-on reaches 0.58+-0.08 at q=0.0036 -- a 58x enrichment at the
+  1% base rate.  The "rate floor" verdict (exps 89/109/124) was a
+  property of the distance scorer plus the q=0.95 cut, not of the cell.
+- PREDICTION (b) HOLDS in the form that matters: headroom 0.20-0.32 for
+  dist everywhere (ceiling-bound by b/q at wide cuts) and 0.22-0.58 for
+  np; no scorer is at its ceiling, and dist NEVER exceeds purity 0.05 at
+  any cut -- the deficit is scorer quality, not the cut.  The
+  improve-the-scorer program is correctly aimed.
+- UNPREDICTED: the SIGReg marginal is what makes density-ratio pooling
+  work at h1.  np with marginal on beats marginal off at every tau
+  (0.58 vs 0.14; 0.31 vs 0.13; 0.31 vs 0.13; 0.43 vs 0.16) while dist
+  goes the OTHER way at tau<=0.1 (on 0.47-0.65 AUC vs off 0.71-0.72).
+  The marginal hurts the distance scorer and helps the density-ratio
+  scorer: a fourth, independent instance of the paper's dissociation.
+- Seed spread is large on the best cells (1.0-on 0.43+-0.34; 3.0-on
+  0.47+-0.21): the tight cuts sit on ~100-200 points and one seed's
+  critic can miss.  Quote the tau=0.05/0.1-on cells (sd 0.06-0.08).
+- Bridge to exp 131: the legal rule REFUSED every cifar100 space there
+  (b_hat 0.0001-0.005) while the oracle here says purity 0.3-0.6 is
+  available at the same rate.  The gap is entirely the base-rate
+  estimator; closing it is now the highest-value item on C100 h1.
