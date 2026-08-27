@@ -1944,6 +1944,33 @@ draw and are labelled as such, so no archived number is wrong; but the exp-125
 downstream evaluations (80/100/104) MUST be run after this fix.  Same fix in
 exp 76.  Pinned by `test_head_emb_honours_the_holdout_draw_tag`.
 
+### Exp 135 — Corpus-adaptive normalisation on every cell (exp 133's analogue)
+
+> **CODE READY 2026-08-27.**  `135_corpus_norm_everywhere.py`, `--selftest`
+> green + `tests/test_corpus_norm.py`.  Queued as Block K (evaluation-scale).
+
+**Motivation.**  Exp 133 showed BN adaptation -- re-standardising frozen
+features with discovery-corpus statistics, no labels -- is a real construction
+(round-2 purity +0.04..+0.06 on C100).  It existed only on the CIFAR ResNet;
+the transfer trunks are LayerNorm ViTs with no running statistics, so "BN
+adaptation for everything" needs an analogue.
+
+**Protocol.**  Feature-space discovery on the exp-70 banks with
+`CorpusNorm(head) = BatchNorm1d(768, affine=False, momentum=None) -> head`,
+statistics seeded from the seen train features, head frozen.  A `frozen`
+(stats fixed; = freeze-both) vs B `corpus-norm` (stats adapt during the anchor
+fine-tune; `bn_adapt=True`), both pool scorers, 2 rounds x 5 ep, arms
+{supcon-ft, ss-ft, nplm-sup-ft}; archived unfrozen exp-70 post-probe as
+context.  All 15 transfer cells + the galaxy10 draws.  Reports purity r1/r2,
+post battery, test-set drift.
+
+**Prediction.**  B >= A on round-2 purity where round-1 clears the gate, drift
+10-30% of |z|, no probe cost; no change where round-1 purity ~0.
+
+**Falsifier.**  B < A where discovery worked -> ResNet/BN peculiarity, does not
+transfer.  B helps where purity ~0 -> the gain is the normaliser acting alone,
+and exp 133's "richer anchors compound" reading must be restated.
+
 ### Exp 134a — Is the residual gain a construction, or just width?
 
 > **CODE READY 2026-08-27.**  `134a_width_control.py` (comparison) +

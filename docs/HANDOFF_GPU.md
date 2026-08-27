@@ -277,6 +277,18 @@ Report 134a's paired verdict verbatim (it prints TIE when inside the floor)
 and 134c's summary table beside the archived exp-71 rows, with the discovery
 purity in the header.
 
+## Block K — Exp 135: corpus-adaptive normalisation everywhere
+
+```bash
+python experiments/135_corpus_norm_everywhere.py --selftest
+python experiments/135_corpus_norm_everywhere.py --cells galaxy10:dino,galaxy10:lejepa,galaxy10:visreg
+SUPERSIG_NH=1 SUPERSIG_HOLDOUT_DRAW=3 python experiments/135_corpus_norm_everywhere.py --cells galaxy10:dino
+```
+
+Paired table per cell/arm/scorer: frozen vs corpus-norm round-2 purity, post
+probe, drift.  Report the falsifier cells (helps at purity ~0) as loudly as
+the wins.
+
 ## Block G — Exp 132: supervised linear probe (piggyback on Block B)
 
 The campaign has NO supervised linear probe -- the `probe` column everywhere is
