@@ -289,6 +289,28 @@ Paired table per cell/arm/scorer: frozen vs corpus-norm round-2 purity, post
 probe, drift.  Report the falsifier cells (helps at purity ~0) as loudly as
 the wins.
 
+## Block L — Exp 136: the from-scratch CIFAR master grid
+
+```bash
+python experiments/136_scratch_master.py --selftest
+# tier 1 (checkpoints exist)
+python experiments/68_scratch_discovery.py --dataset cifar100            # all 8 bases
+python experiments/136_scratch_master.py --dataset cifar100
+# tier 2
+python experiments/67_scratch_pretrain.py --dataset cifar10 --resume     # all 8 arms
+python experiments/68_scratch_discovery.py --dataset cifar10
+python experiments/136_scratch_master.py --dataset cifar10
+# tier 3: draws (holdout = the class, from holdouts.py draws 0/1/2)
+python experiments/67_scratch_pretrain.py --dataset cifar10 --holdout 8 --arms supcon ssig nplmsd nplmcw
+python experiments/68_scratch_discovery.py --dataset cifar10 --holdout 8 --bases supcon,ssig,nplmsd,nplmcw
+python experiments/136_scratch_master.py --dataset cifar10 --holdout 8 --arms supcon ssig nplmsd nplmcw
+python experiments/136_aggregate.py cifar10
+```
+
+Artifacts at a non-default holdout are tagged `_h{N}`; holdout 4 keeps the
+archived names.  `logs/exp68/scratch_discovery_cifar100_3bases_archived.npz`
+is the pre-Block-L exp-68 file.
+
 ## Block G — Exp 132: supervised linear probe (piggyback on Block B)
 
 The campaign has NO supervised linear probe -- the `probe` column everywhere is

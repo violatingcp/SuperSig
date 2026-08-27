@@ -1962,6 +1962,43 @@ draw and are labelled as such, so no archived number is wrong; but the exp-125
 downstream evaluations (80/100/104) MUST be run after this fix.  Same fix in
 exp 76.  Pinned by `test_head_emb_honours_the_holdout_draw_tag`.
 
+### Exp 136 — The from-scratch CIFAR master grid (every metric, every space)
+
+> **CODE READY 2026-08-27.**  `136_scratch_master.py` + `136_aggregate.py`,
+> exps 67/68 now tag non-default holdouts (`_h{N}`) and exp 68 saves purity +
+> post geometry.  Running as Block L (tiered; ~25 GPU-h on the shared card).
+
+**Motivation.**  Every CIFAR record in the paper is hub-pretrained (pitfall
+9) and single-holdout at one alphabetical class (pitfall of exp 118/125).  The
+scratch lineage (exps 67/68) is leakage-free but carried a light battery, on
+cifar100 only, at holdout {4}, for 3 supervised bases.  The paper needs the
+full grid: both datasets, all eight objectives of the cube, every currency,
+with draw intervals.
+
+**Protocol.**  Per (dataset, holdout, arm): exp-67 checkpoint -> banks ->
+pre battery (probe x3, supervised top-1 x3, acc/supAUC/eucl/mahaT/mahaPC/lid,
+per-event, SparKer/Maha/MMD power at the CIFAR fractions), frozen-trunk pools
+(dist and np, BN frozen and adapting), legal-cut round 1, merged with exp 68's
+discovery loop (probe post, purity r1/r2, post geometry, post power).
+Tier 1: cifar100 h4 (8 arms, checkpoints exist).  Tier 2: cifar10 h4 (8 arms
+pretrained fresh).  Tier 3: draws for the shortlist {supcon, ssig, nplmsd,
+nplmcw}: cifar10 holdouts {8,9,7}, cifar100 {43,57,48} (draws 0/1/2 of
+`holdouts.py`).  Report mean +- sd across holdouts per dataset.
+
+**Predictions.**  (i) The C100 exp-124 dissociation (ssig loses probe to
+supcon, wins calibration by +0.3 mahaT) reproduces on C10 and across draws.
+(ii) Frozen np pooling clears the gate at C10 (b=0.10) on every arm and draw,
+as on galaxy10 (exp 135), and stays below it at C100 h1 under the inherited
+cut while the legal cut engages on the marginal-carrying arms (exp 129).
+(iii) Draw sd exceeds seed sd on mahaT/purity (exp 118) but not on top-1.
+
+**Falsifiers.**  ssig beats supcon on a clean probe (the retracted claim
+revives); frozen np fails the gate at C10 on random draws (the galaxy10 result
+was ViT-specific); C10 supervised top-1 shows a SIGReg cost larger than the
+0.035 seen on galaxy10 (exp 132).
+
+**Cost.**  Tier 1 ~2 h, Tier 2 ~7 h, Tier 3 ~16 h.
+
 ### Exp 135 — Corpus-adaptive normalisation on every cell (exp 133's analogue)
 
 > **galaxy10 DRAWS DONE 2026-08-27 — the corpus-norm gain is FALSIFIED on
