@@ -1,4 +1,4 @@
-# Proposed tests to improve performance — exps 81–132
+# Proposed tests to improve performance — exps 81–134
 
 Companion to [QUESTIONS.md](QUESTIONS.md) (whose "open items as of exp 58" list
 this supersedes).  Every entry follows the standard protocol in
@@ -1895,3 +1895,59 @@ two supervised distance-NPLM arms tie each other (0.8964 vs 0.8865, gap 0.0099
 < 0.017) and beat every instance-NPLM arm by 0.17-0.36.
 
 **Cost.**  Minutes per cell given banks; piggybacks on the Block B runs.
+
+### Exp 134 — What is the residual construction actually doing?
+
+> **CODE READY 2026-08-27.**  `--selftest` green (4 checks) +
+> `tests/test_residual_audit.py` (10).  NEEDS parent/child banks.
+> (133 is taken by work on the other machine.)
+
+Three questions that must be settled before the residual can carry a results
+section.  The motivating pattern is suspiciously specific: the concat wins the
+novelty probe in **30/30** cells but LOSES `eucl` in **14/15** and `mahaT` in
+**11/15** against its own parent, and never improves purity.
+
+**(A) Construction or width?**  The concat is two full networks — double the
+parameters.  The flagship +0.148±0.004 (cars/VISReg) has never been compared to
+a same-width NON-residual control.  Exp 85 already fired a related falsifier:
+width-matched, "the single residual matches/beats the 3-way (+0.051 vs +0.048)"
+on that very cell.  Arms: parent (1x) | residual concat (2x) | width-matched
+non-residual control (2x).
+
+**(B) Is the geometry loss a SCALE ARTEFACT?**  The halves are joined by a raw
+`np.concatenate` with no normalisation, and they have no reason to share a
+scale — the parent is a scale-free softmax space, the child carries a SIGReg
+marginal pinning unit variance.  A linear probe is scale-robust (weights absorb
+the mismatch); Euclidean distance is not.  Demonstrated, novelty living ONLY in
+the child half:
+
+    space                  probe    eucl
+    parent alone          0.9493  0.4983
+    child alone           1.0000  1.0000
+    concat, child x0.05   0.9927  0.5143   <- probe sees it, distance does not
+    concat, child x0.2    1.0000  0.7313
+    concat, child x1      1.0000  1.0000
+    standardised          1.0000  1.0000
+    unitnorm              1.0000  1.0000
+    whiten                1.0000  0.9660
+
+That is exactly the archived pattern.  **If standardising recovers the geometry
+on real halves, "the residual only helps the probe" is an artefact of the
+combination rule and the paper's framing changes.**  First thing to compute is
+the child/parent RMS-norm ratio — one number that predicts whether this matters.
+
+**(C) Should the residual come AFTER discovery?**  Every residual is built on
+the PRE-discovery parent (discovery then runs on the concat).  The reverse has
+never been tried, and there is a mechanism: the residual removes what the
+ANCHOR SET explains, and after discovery the anchor set is strictly richer, so
+the child would carry more genuinely-unexplained variance.  Orders: archived |
+parent->discovery->child->concat | both.  Prediction: helps where purity
+cleared the gate, no-op where it did not.  Falsifier: it helps where purity was
+~0, so the mechanism story is wrong.
+
+**Cost.**  (B) is evaluation-only given banks — minutes, do it first.  (A) and
+(C) need training.
+
+**Doc error fixed alongside:** PAPER_PLAN claimed "universal residual parent
+12/12"; it is **10/12**, and the 12/12 that does hold is against the discovery
+pipeline rather than the best known space.
