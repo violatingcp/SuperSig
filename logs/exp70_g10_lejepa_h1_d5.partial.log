@@ -1,0 +1,68 @@
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+exp70 [galaxy10_lejepa_ft70_h1_d5] end-to-end ft suite, arms=['simclr-ft', 'sigreg-ssl-ft', 'nplm-bil-ft', 'supcon-ft', 'ss-ft', 'nplm-sup-ft'], ft_epochs=20, emb=100, holdouts 5-5 EXCLUDED from ft
+  ft corpus: 1568/1772 train images (holdout classes removed)
+
+===== [simclr-ft] (unsupervised) =====
+Fetching 37 files:   0%|          | 0/37 [00:00<?, ?it/s]Fetching 37 files: 100%|██████████| 37/37 [00:00<00:00, 37869.51it/s]
+  [simclr-ft] epoch 1/20  main=2.9622  aux=0.0000
+  [simclr-ft] epoch 5/20  main=2.5102  aux=0.0000
+  [simclr-ft] epoch 10/20  main=2.4415  aux=0.0000
+  [simclr-ft] epoch 15/20  main=2.4020  aux=0.0000
+  [simclr-ft] epoch 20/20  main=2.3927  aux=0.0000
+  extracted ft70_simclr-ft train: (1772, 768)
+  extracted ft70_simclr-ft test: (15964, 768)
+  [simclr-ft     ] probe=0.7792+-0.0020 acc=0.5233 supAUC=0.8837 eucl=0.4633 mahaT=0.5243 mahaPC=0.5499 lid=0.6058
+
+===== [sigreg-ssl-ft] (unsupervised) =====
+Fetching 37 files:   0%|          | 0/37 [00:00<?, ?it/s]Fetching 37 files: 100%|██████████| 37/37 [00:00<00:00, 25947.04it/s]
+  [sigreg-ssl-ft] epoch 1/20  main=0.0739  aux=0.4025
+  [sigreg-ssl-ft] epoch 5/20  main=0.0362  aux=0.2034
+  [sigreg-ssl-ft] epoch 10/20  main=0.0316  aux=0.1709
+  [sigreg-ssl-ft] epoch 15/20  main=0.0317  aux=0.1370
+  [sigreg-ssl-ft] epoch 20/20  main=0.0316  aux=0.1380
+  extracted ft70_sigreg-ssl-ft train: (1772, 768)
+  extracted ft70_sigreg-ssl-ft test: (15964, 768)
+  [sigreg-ssl-ft ] probe=0.8436+-0.0062 acc=0.4719 supAUC=0.8604 eucl=0.4328 mahaT=0.5589 mahaPC=0.5290 lid=0.5419
+
+===== [nplm-bil-ft] (unsupervised) =====
+Fetching 37 files:   0%|          | 0/37 [00:00<?, ?it/s]Fetching 37 files: 100%|██████████| 37/37 [00:00<00:00, 25201.24it/s]
+  [nplm-bil-ft] epoch 1/20  main=-0.4371  aux=0.8154
+  [nplm-bil-ft] epoch 5/20  main=-1.3135  aux=0.7219
+  [nplm-bil-ft] epoch 10/20  main=-1.7882  aux=0.6863
+  [nplm-bil-ft] epoch 15/20  main=-2.5588  aux=0.6420
+  [nplm-bil-ft] epoch 20/20  main=-2.6981  aux=0.6287
+  extracted ft70_nplm-bil-ft train: (1772, 768)
+  extracted ft70_nplm-bil-ft test: (15964, 768)
+  [nplm-bil-ft   ] probe=0.7849+-0.0044 acc=0.5260 supAUC=0.8778 eucl=0.5115 mahaT=0.5708 mahaPC=0.5521 lid=0.5803
+
+===== [supcon-ft] (supervised) =====
+Fetching 37 files:   0%|          | 0/37 [00:00<?, ?it/s]Fetching 37 files: 100%|██████████| 37/37 [00:00<00:00, 21241.34it/s]
+  [supcon-ft] epoch 1/20  main=3.6368  aux=0.0000
+  [supcon-ft] epoch 5/20  main=3.0482  aux=0.0000
+  [supcon-ft] epoch 10/20  main=2.7513  aux=0.0000
+  [supcon-ft] epoch 15/20  main=2.5480  aux=0.0000
+  [supcon-ft] epoch 20/20  main=2.4742  aux=0.0000
+  extracted ft70_supcon-ft train: (1772, 768)
+  extracted ft70_supcon-ft test: (15964, 768)
+  [supcon-ft     ] probe=0.8245+-0.0042 acc=0.7663 supAUC=0.9632 eucl=0.4772 mahaT=0.5743 mahaPC=0.6319 lid=0.6637
+
+===== [ss-ft] (supervised) =====
+Fetching 37 files:   0%|          | 0/37 [00:00<?, ?it/s]Fetching 37 files: 100%|██████████| 37/37 [00:00<00:00, 41516.65it/s]
+  [ss-ft] epoch 1/20  main=4.0150  aux=3.0379
+  [ss-ft] epoch 5/20  main=3.7260  aux=1.3283
+  [ss-ft] epoch 10/20  main=3.3118  aux=0.9950
+  [ss-ft] epoch 15/20  main=2.9658  aux=0.8759
+  [ss-ft] epoch 20/20  main=2.9154  aux=0.8689
+  extracted ft70_ss-ft train: (1772, 768)
+  extracted ft70_ss-ft test: (15964, 768)
+  [ss-ft         ] probe=0.7770+-0.0064 acc=0.7380 supAUC=0.9490 eucl=0.4828 mahaT=0.5070 mahaPC=0.5195 lid=0.6134
+
+===== [nplm-sup-ft] (supervised) =====
+Fetching 37 files:   0%|          | 0/37 [00:00<?, ?it/s]Fetching 37 files: 100%|██████████| 37/37 [00:00<00:00, 19503.49it/s]
+  [nplm-sup-ft] epoch 1/20  main=-0.2110  aux=0.8204
+  [nplm-sup-ft] epoch 5/20  main=-0.3786  aux=0.7794
+  [nplm-sup-ft] epoch 10/20  main=-0.4684  aux=0.7493
+  [nplm-sup-ft] epoch 15/20  main=-0.5210  aux=0.7294
+  [nplm-sup-ft] epoch 20/20  main=-0.5707  aux=0.7223
+  extracted ft70_nplm-sup-ft train: (1772, 768)

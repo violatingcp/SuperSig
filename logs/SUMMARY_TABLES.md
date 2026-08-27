@@ -1687,3 +1687,88 @@ Both arms score the SAME NP-critic scores; only the cut differs.
   backbones (the exp-131 protocol's second half) still needs the GPU.
 - Script fix: consecutive --cells runs overwrote one JSON; output is now
   logs/exp131/legal_cut_<cells>.json.
+
+## Exp 125 -- galaxy10 single-holdout battery across draws (Tier 9 Block B, 2026-08-26)
+(exp 70 e2e ft suite; 100-D; SUPERSIG_NH=1; draws {0,3,5,7,8} = held-out classes {2,6,5,4,3};
+20 ft ep; mean +- sd ACROSS DRAWS, n=5.  Archived reference = the alphabetical draw, class {9}.)
+Regenerate: python experiments/125_aggregate_draws.py galaxy10 <base>
+
+## galaxy10 (exp 125; dino, 100d, holdout 1 [single-holdout], 5 draws d[0, 3, 5, 7, 8], 20 ep)
+
+| arm | probe | probe post | acc | eucl | mahaT | mahaT post | perevt | perevt post@.02 | purity r1 | purity r2 | SpK@.05 | SpK@.05 post | MMD@.05 | MMD@.05 post |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| simclr-ft | 0.790+-0.064 | 0.837+-0.057 | 0.449+-0.007 | 0.460+-0.125 | 0.476+-0.111 | 0.496+-0.101 | 0.049+-0.046 | 0.045+-0.043 | 0.104+-0.089 | 0.094+-0.108 | 0.124+-0.061 | 0.156+-0.082 | 0.420+-0.236 | 0.344+-0.292 |
+| sigreg-ssl-ft | 0.801+-0.084 | 0.844+-0.042 | 0.440+-0.008 | 0.477+-0.069 | 0.508+-0.093 | 0.498+-0.057 | 0.045+-0.029 | 0.039+-0.023 | 0.100+-0.088 | 0.096+-0.065 | 0.140+-0.119 | 0.176+-0.175 | 0.424+-0.301 | 0.492+-0.285 |
+| nplm-bil-ft | 0.684+-0.134 | 0.808+-0.038 | 0.380+-0.035 | 0.483+-0.063 | 0.450+-0.120 | 0.462+-0.119 | 0.045+-0.036 | 0.066+-0.084 | 0.104+-0.080 | 0.104+-0.124 | 0.192+-0.088 | 0.172+-0.150 | 0.208+-0.185 | 0.272+-0.176 |
+| supcon-ft | 0.879+-0.026 | 0.864+-0.029 | 0.616+-0.013 | 0.526+-0.145 | 0.500+-0.135 | 0.500+-0.133 | 0.063+-0.092 | 0.086+-0.088 | 0.103+-0.138 | 0.126+-0.109 | 0.188+-0.161 | 0.204+-0.134 | 0.628+-0.139 | 0.628+-0.168 |
+| ss-ft | 0.804+-0.064 | 0.852+-0.042 | 0.588+-0.015 | 0.499+-0.104 | 0.482+-0.114 | 0.471+-0.087 | 0.040+-0.038 | 0.040+-0.029 | 0.092+-0.074 | 0.069+-0.047 | 0.108+-0.069 | 0.136+-0.073 | 0.648+-0.161 | 0.664+-0.129 |
+| nplm-sup-ft | 0.775+-0.097 | 0.758+-0.132 | 0.442+-0.024 | 0.585+-0.123 | 0.556+-0.129 | 0.518+-0.069 | 0.105+-0.121 | 0.080+-0.053 | 0.131+-0.038 | 0.137+-0.113 | 0.252+-0.169 | 0.196+-0.085 | 0.580+-0.108 | 0.656+-0.122 |
+
+per-draw spread (probe / mahaT / purity r1), draws [0, 3, 5, 7, 8]
+  simclr-ft      probe 0.693-0.879  mahaT 0.310-0.594  purity 0.000-0.216   archived d{9}: probe 0.868 mahaT 0.729
+  sigreg-ssl-ft  probe 0.648-0.905  mahaT 0.373-0.630  purity 0.022-0.269   archived d{9}: probe 0.914 mahaT 0.764
+  nplm-bil-ft    probe 0.500-0.801  mahaT 0.283-0.589  purity 0.000-0.175   archived d{9}: probe 0.839 mahaT 0.712
+  supcon-ft      probe 0.841-0.916  mahaT 0.294-0.654  purity 0.000-0.347   archived d{9}: probe 0.938 mahaT 0.786
+  ss-ft          probe 0.694-0.895  mahaT 0.328-0.586  purity 0.000-0.184   archived d{9}: probe 0.872 mahaT 0.691
+  nplm-sup-ft    probe 0.594-0.886  mahaT 0.422-0.789  purity 0.060-0.174   archived d{9}: probe 0.878 mahaT 0.824
+
+## galaxy10 (exp 125; lejepa, 100d, holdout 1 [single-holdout], 5 draws d[0, 3, 5, 7, 8], 20 ep)
+
+| arm | probe | probe post | acc | eucl | mahaT | mahaT post | perevt | perevt post@.02 | purity r1 | purity r2 | SpK@.05 | SpK@.05 post | MMD@.05 | MMD@.05 post |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| simclr-ft | 0.829+-0.066 | 0.830+-0.101 | 0.521+-0.009 | 0.488+-0.086 | 0.574+-0.107 | 0.610+-0.054 | 0.050+-0.039 | 0.097+-0.125 | 0.112+-0.100 | 0.139+-0.214 | 0.056+-0.048 | 0.252+-0.165 | 0.260+-0.111 | 0.512+-0.238 |
+| sigreg-ssl-ft | 0.836+-0.060 | 0.863+-0.049 | 0.460+-0.015 | 0.519+-0.134 | 0.596+-0.118 | 0.599+-0.115 | 0.065+-0.070 | 0.102+-0.125 | 0.123+-0.168 | 0.128+-0.178 | 0.132+-0.122 | 0.152+-0.127 | 0.428+-0.233 | 0.444+-0.279 |
+| nplm-bil-ft | 0.808+-0.091 | 0.828+-0.101 | 0.533+-0.024 | 0.581+-0.065 | 0.611+-0.097 | 0.599+-0.086 | 0.075+-0.028 | 0.063+-0.023 | 0.102+-0.051 | 0.089+-0.067 | 0.252+-0.111 | 0.316+-0.229 | 0.392+-0.146 | 0.572+-0.180 |
+| supcon-ft | 0.892+-0.056 | 0.920+-0.051 | 0.753+-0.018 | 0.591+-0.080 | 0.711+-0.115 | 0.726+-0.115 | 0.047+-0.027 | 0.048+-0.040 | 0.132+-0.085 | 0.172+-0.249 | 0.536+-0.318 | 0.676+-0.373 | 0.820+-0.199 | 0.680+-0.360 |
+| ss-ft | 0.762+-0.181 | 0.876+-0.064 | 0.696+-0.030 | 0.633+-0.148 | 0.665+-0.163 | 0.674+-0.143 | 0.134+-0.119 | 0.144+-0.110 | 0.182+-0.200 | 0.076+-0.063 | 0.528+-0.426 | 0.524+-0.401 | 0.620+-0.213 | 0.728+-0.193 |
+| nplm-sup-ft | 0.787+-0.073 | 0.815+-0.107 | 0.627+-0.053 | 0.591+-0.133 | 0.613+-0.174 | 0.601+-0.149 | 0.132+-0.095 | 0.033+-0.021 | 0.190+-0.137 | 0.010+-0.014 | 0.580+-0.291 | 0.692+-0.376 | 0.676+-0.269 | 0.736+-0.211 |
+
+per-draw spread (probe / mahaT / purity r1), draws [0, 3, 5, 7, 8]
+  simclr-ft      probe 0.758-0.944  mahaT 0.425-0.746  purity 0.000-0.262   archived d{9}: probe 0.902 mahaT 0.685
+  sigreg-ssl-ft  probe 0.744-0.929  mahaT 0.403-0.749  purity 0.000-0.449   archived d{9}: probe 0.927 mahaT 0.774
+  nplm-bil-ft    probe 0.672-0.942  mahaT 0.456-0.749  purity 0.037-0.156   archived d{9}: probe 0.892 mahaT 0.620
+  supcon-ft      probe 0.825-0.963  mahaT 0.574-0.913  purity 0.033-0.240   archived d{9}: probe 0.919 mahaT 0.722
+  ss-ft          probe 0.436-0.977  mahaT 0.480-0.901  purity 0.054-0.580   archived d{9}: probe 0.803 mahaT 0.751
+  nplm-sup-ft    probe 0.688-0.902  mahaT 0.430-0.900  purity 0.048-0.428   archived d{9}: probe 0.899 mahaT 0.860
+
+Verdicts (dino + lejepa; visreg pending):
+
+- THE EXP-125 PREDICTION ("discovery survives on galaxy10") DOES NOT HOLD
+  ON RANDOM DRAWS.  Round-1 purity means are 0.09-0.13 (dino) and
+  0.10-0.19 (lejepa), i.e. below the 0.15 gate for every dino arm and for
+  4/6 lejepa arms, with per-draw ranges reaching 0.000.  Only two arms
+  clear it on average, both lejepa: ss-ft 0.182+-0.200 and nplm-sup-ft
+  0.190+-0.137 -- and their sd is as large as the mean.
+- THE ARCHIVED DRAW WAS THE FAVOURABLE ONE -- the exp-118 hazard, now on
+  the paper's most load-bearing cell.  Class 9 gave nplm-sup-ft purity
+  0.459 (dino) / 0.497 (lejepa); across five random classes the same arm
+  posts 0.060-0.174 / 0.048-0.428.  On mahaT the archived value sits
+  ABOVE the random-draw range for 5/6 dino arms (e.g. supcon-ft 0.786 vs
+  0.294-0.654; nplm-sup-ft 0.824 vs 0.422-0.789) and at the top of it for
+  lejepa.  The PAPER_PLAN "few-class calibration: galaxy10 purity
+  0.46-0.50, per-event 0.35->0.50" line rests on one class and must be
+  restated as a draw interval or dropped.
+- DRAW SD SWAMPS ARM GAPS, as the handoff anticipated: probe sd 0.03-0.18
+  and mahaT sd 0.09-0.17 per arm, against arm-to-arm probe gaps of
+  <=0.10.  Under nh=1 on galaxy10 every arm comparison except
+  supcon-ft's probe lead (0.879+-0.026 dino, 0.892+-0.056 lejepa, best on
+  4/5 and 3/5 draws) is a TIE.  Report as ties.
+- What survives: (i) supcon-ft keeps the probe and acc lead on both
+  bases; (ii) nplm-sup-ft keeps the best pre-discovery calibration
+  (eucl 0.585/0.591, per-event 0.105/0.132 -- vs supcon 0.063/0.047) on
+  both bases, though with the widest spread; (iii) lejepa > dino on
+  every calibration column and on SparKer (supcon-ft SpK@.05 0.54 vs
+  0.19), consistent with exp 70; (iv) discovery is probe-positive on
+  average for 5/6 arms per base (+0.01..+0.12) but purity does not
+  improve r1->r2 anywhere, and nplm-sup-ft's r2 purity collapses to
+  0.01-0.03 on both bases.
+- Per-draw structure: class 4 (d7) and class 3 (d8) are the hard
+  classes on dino -- purity 0.00-0.02 for every arm except nplm-sup-ft
+  (0.130/0.141); class 2 (d0) and class 6 (d3) are the easy ones.  So
+  "does galaxy10 support discovery" has no single answer; it depends on
+  WHICH galaxy morphology is novel, which is exactly what the
+  single-holdout regime cannot average over.
+- Caveats: one seed per draw (draw sd > seed sd per exp 118, so this is
+  the right interval, but a 3-seed x 5-draw grid would separate the
+  two); the archived d{9} column is single-seed too.  Fine-tunes and
+  plots for every draw are in checkpoints/ and plots/ tagged _h1_d{D}.

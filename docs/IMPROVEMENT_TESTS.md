@@ -1484,6 +1484,16 @@ workhorse claim loses its leakage-free support.
 
 ### Exp 125 — The single-holdout battery, with draws
 
+> **galaxy10 dino + lejepa DONE 2026-08-26 (5 draws each) — PREDICTION
+> FALSIFIED ON RANDOM DRAWS.**  "Discovery survives on galaxy10" was a class-9
+> result: round-1 purity across held-out classes {2,3,4,5,6} is 0.09-0.13
+> (dino, every arm below the 0.15 gate) and 0.10-0.19 (lejepa); the archived
+> nplm-sup-ft 0.46/0.50 becomes 0.13+-0.04 / 0.19+-0.14.  Archived mahaT sits
+> above the random-draw range for 5/6 dino arms.  Draw sd (probe 0.03-0.18,
+> mahaT 0.09-0.17) exceeds every arm gap except supcon-ft's probe lead -> report
+> arm comparisons as ties.  Tables + verdicts in `logs/SUMMARY_TABLES.md`;
+> aggregator `experiments/125_aggregate_draws.py`.  visreg and dtd pending.
+
 **Motivation.**  The paper adopts the REGIME SPLIT: single-holdout is the hard
 low-rate regime, multi-holdout the higher-rate regime where pooling unlocks the
 gate.  Single-holdout must be run for EVERY dataset to be the uniform backbone.
