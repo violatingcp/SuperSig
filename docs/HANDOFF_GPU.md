@@ -207,13 +207,18 @@ python experiments/129_legal_pool_cut.py --selftest                 # expect 7 O
 python experiments/129_legal_pool_cut.py --embs <same npz> --holdouts 99
 ```
 
-**And one cheap thing worth doing on every SparKer run (exp 130):** print
-`E_ref[e^f]`.  It is 1.0 by construction at the NP minimiser.  On synthetic
-data the fitted critic returned 60 to 1.1e6 and got WORSE with more steps,
-suggesting the optimisation does not converge (the hard clamp on `f` passes
-zero gradient, so a pegged reference point never gets corrected).  This was
-measured on extreme synthetic separation and MAY NOT hold on real embeddings --
-which is exactly why the number is worth reporting before anyone acts on it.
+**Exp 130 step (a) is DONE and came back clean** -- the NP critic converges.
+In-sample calibration `E_ref[e^f]` is 0.997-1.019 on six real exp-54 CIFAR-10
+spaces (ideal 1.000), and no point anywhere reaches the +-20 clamp.  An earlier
+worry that the critic was diverging was my measurement error (out-of-sample vs
+in-sample); it is retracted in `IMPROVEMENT_TESTS.md`.  **No archived SparKer
+number is in question.**
+
+Still worth printing on real runs: `np_pool_scores(..., return_calib=True)`
+now returns `dict(calib_in, calib_out)`.  `calib_out` (over all seen points,
+not just the fitted reference subsample) is the one that can drift -- it ranges
+1.000-2.706 across the six spaces -- and it is the value the scores are
+actually used at.
 
 ---
 

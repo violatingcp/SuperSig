@@ -109,7 +109,7 @@ def lid_pool_scores(z, is_seen_lab, k=20, max_ref=4000, seed=0):
 
 
 def np_pool_scores(z, is_seen_lab, M=16, steps=300, sigma_ratio=10.0,
-                   lr=0.05, max_ref=4000, seed=0):
+                   lr=0.05, max_ref=4000, seed=0, return_calib=False):
     """Neyman-Pearson pool scores (exp-92/93): fit the SparKer NP critic f
     on (full train corpus z vs seen-labeled reference) and score every
     point by its estimated log density ratio.  Higher = more novel."""
@@ -140,7 +140,20 @@ def np_pool_scores(z, is_seen_lab, M=16, steps=300, sigma_ratio=10.0,
         loss = w * (torch.exp(f(ref, sigma)) - 1).sum() - f(z, sigma).sum()
         opt.zero_grad(); loss.backward(); opt.step()
     with torch.no_grad():
-        return f(z, sigma).detach()
+        out = f(z, sigma).detach()
+        if return_calib:
+            # E_ref[e^f] == 1 at the NP minimiser.  TWO versions, and they
+            # answer different questions (exp 130):
+            #   in  -- over the reference points actually used in the fit.
+            #          Departure from 1 means the OPTIMISATION did not converge.
+            #   out -- over every seen point.  Departure from 1 with in ~ 1
+            #          means the critic OVERFITS the reference subsample; the
+            #          ratio has a tail the fitted reference never covered.
+            seen = z[torch.as_tensor(is_seen_lab, device=z.device)]
+            return out, dict(
+                calib_in=float(torch.exp(f(ref, sigma)).mean()),
+                calib_out=float(torch.exp(f(seen, sigma)).mean()))
+    return out
 
 
 def run_discovery(backbone, means, *, base_ds, train_eval_loader, test_loader,

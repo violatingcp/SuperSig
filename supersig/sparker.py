@@ -33,7 +33,8 @@ def median_pairwise(X, n=1024, seed=0):
 
 
 def np_test_stats(D, R, M=16, steps=300, sigma0=None, sigma_ratio=10.0,
-                  n_checkpoints=3, lr=0.05, seed=0, mu_init=None):
+                  n_checkpoints=3, lr=0.05, seed=0, mu_init=None,
+                  return_calib=False):
     """
     Train the kernel ensemble on the NP loss for one data-vs-reference pair.
 
@@ -76,7 +77,20 @@ def np_test_stats(D, R, M=16, steps=300, sigma0=None, sigma_ratio=10.0,
                 tnp = -2.0 * (w * (torch.exp(f(R, sigma)) - 1).sum()
                               - f(D, sigma).sum())
             ts.append(float(tnp))
+    if return_calib:
+        with torch.no_grad():
+            calib = float(torch.exp(f(R, sigma)).mean())
+        return ts, calib
     return ts
+
+
+def np_calibration(D, R, **kw):
+    """E_ref[e^f] for a fitted critic.  EXACTLY 1.0 at the NP minimiser
+    (E_R[e^{f*}] = int p_R * p_D/p_R = 1), so any departure measures how far
+    the fit is from converged -- and every t_NP built from that fit inherits
+    the error.  Cheap: one extra forward pass.  See exp 130."""
+    _, c = np_test_stats(D, R, return_calib=True, **kw)
+    return c
 
 
 def krr_term(R, sigmas):

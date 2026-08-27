@@ -1667,47 +1667,59 @@ finding, and the campaign's recurring one.)
 
 ### Exp 130 — Is the NP critic converging at all?
 
-> **OPENED 2026-08-26 by an incidental measurement in exp 129.  Not yet run.**
+> **STEP (a) DONE 2026-08-26 — HYPOTHESIS FALSIFIED, and the measurement that
+> opened it was MY ERROR.**  The critic converges.  In-sample calibration on
+> six real exp-54 CIFAR-10 spaces is **0.997-1.019** (ideal 1.000).  No
+> archived SparKer number is in question.
 
-**Motivation.**  Exp 128 found signal efficiency of only 3-15%, i.e. the pool
-scorer leaves most novel points outside the pool, and concluded the deficit is
-scorer quality rather than the cut.  Exp 129 then measured the critic directly
-on a TRIVIALLY separable problem (a 1% mode at 8 sigma in 16-D, where a
-converged critic should reach AUC ~1.00):
+**What I got wrong.**  Exp 129 reported `E_ref[e^f]` of 60 / 4.7e3 / 6.5e5 /
+1.1e6 and concluded the optimisation was diverging.  It was not.  Those were
+OUT-OF-SAMPLE values -- E[e^f] over ALL seen points -- while the identity the
+NP minimiser enforces is over the reference points USED IN THE FIT (the
+`max_ref=4000` subsample).  Measured properly, in-sample calibration is 1.000
+at every capacity setting, including the ones I called divergent.  The AUCs I
+reported (0.885/0.882/0.851/0.913) reproduce exactly; only the calibration
+column was wrong.
 
-    M=16,  300 steps:  AUC 0.885,  E_ref[e^f] = 60
-    M=64,  300 steps:  AUC 0.882,  E_ref[e^f] = 4.7e3
-    M=64,  800 steps:  AUC 0.851,  E_ref[e^f] = 6.5e5
-    M=128, 800 steps:  AUC 0.913,  E_ref[e^f] = 1.1e6
+The proposed mechanism was also wrong: `f` never approaches the +-20 clamp.
+Max |f| is 5.7-11.6 on real embeddings and ~13 on synthetic, **0.00% of points
+at the clamp** in every case.  The zero-gradient-at-clamp story is unsupported.
 
-`E_ref[e^f]` is 1.0 by construction at the NP minimiser.  It is not merely off,
-it DIVERGES with more steps -- the optimisation is not converging.
+**What is actually there (smaller, real).**  In-sample ~ 1 with out-of-sample
+> 1 is textbook OVERFITTING of the critic to its reference subsample -- the
+fitted ratio has a tail the 4000 reference points never covered.  It grows with
+capacity, as overfitting should:
 
-**Suspected mechanism.**  `f` is `.clamp(-F_CLAMP, F_CLAMP)` in both
-`supersig/sparker.py:65` and `discovery.np_pool_scores`.  A clamped value
-passes ZERO gradient, so a reference point pegged at +20 contributes e^20 to
-the loss with no corrective signal.  Secondary suspect: with M kernels
-initialised by uniform sampling of the corpus, a class at rate b gets an
-expected M*b kernels -- 0.16 at M=16, b=1% -- so the novel mode frequently has
-no kernel at all.
+    M=16,  300 steps:  calib_in 1.000   calib_out 60
+    M=64,  300 steps:  calib_in 0.999   calib_out 4.7e3
+    M=64,  800 steps:  calib_in 0.998   calib_out 6.5e5   (synthetic, b=1%)
 
-**Protocol.**  (a) Reproduce on real embeddings, reporting `E_ref[e^f]`
-alongside every SparKer number.  (b) Ablate: soft clamp (tanh) vs hard clamp;
-kernel init on high-score points vs uniform; M scaling with 1/b.  (c) Re-run
-the affected power curves.
+On REAL embeddings the same effect is mild -- calib_out 1.000-2.706 across six
+spaces, worst for `nplm_distance` (2.71), best for `nplm_bilinear` (1.000):
 
-**Prediction.**  A soft clamp plus score-weighted kernel init lifts signal
-efficiency materially, which by exp 128's algebra raises purity at fixed q --
-possibly enough to move the h1 regime.
+    space              calib_in  calib_out   AUC
+    nplm_bil_cw           0.998      1.005  0.679
+    nplm_bil_sup_cw       1.002      1.059  0.699
+    nplm_bilinear         0.998      1.000  0.714
+    nplm_dist_sup_cw      0.997      1.047  0.766
+    nplm_distance         1.006      2.706  0.746
+    nplm_sup_dist         1.019      1.353  0.760
 
-**Falsifier.**  Calibration on REAL embeddings is already ~1 and AUC is high →
-the divergence is an artifact of the extreme synthetic separation, and exp 128's
-low e_s has another cause.
+**Instrumentation landed.**  `np_pool_scores(..., return_calib=True)` returns
+`dict(calib_in, calib_out)`; `sparker.np_test_stats(..., return_calib=True)`
+and `sparker.np_calibration(D, R)` return the in-sample value.  Report
+`calib_out` alongside SparKer numbers: it is the one that can drift, and it is
+the one the scores are actually used at.
 
-**IMPORTANT SCOPE CAVEAT.**  Everything above was measured on synthetic data
-with extreme (8 sigma) separation, which produces extreme ratios and may not
-represent real embeddings.  This is a flag to CHECK, not an established defect
-in the campaign's results.  Do not restate archived SparKer numbers on the
-strength of it until (a) is done.
+**What this means for exp 128.**  The 3-15% signal efficiency is NOT explained
+by a broken critic.  Real novel-vs-seen AUC is 0.68-0.77 -- the critic is
+working and the task is simply hard.  Remaining candidates for the low e_s:
+kernel init (M kernels sampled uniformly give a rate-b class an expected M*b
+kernels; still untested) and genuine class overlap.
 
-**Cost.**  (a) is minutes and should be added to every SparKer run immediately.
+**Steps (b)/(c) remain open** but are no longer urgent, and should be motivated
+by the overfitting finding (reference subsample size, capacity) rather than by
+a convergence failure that does not exist.
+
+**Cost.**  (a) was minutes and is now done.
+
