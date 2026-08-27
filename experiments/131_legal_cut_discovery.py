@@ -221,9 +221,13 @@ def main():
             print(f"    delta purity (legal - quantile): {d:+.4f}", flush=True)
             results[key] = dict(base_rate=rep, arms=arms, delta_purity=float(d))
 
-    with open(os.path.join(args.out, f"legal_cut{run_tag()}.json"), "w") as fh:
+    # One file per --cells invocation: without the cell tag, consecutive
+    # single-cell runs silently overwrote each other (found 2026-08-26).
+    tag = "_".join(c.replace(":", "-") for c in args.cells.split(","))
+    out_path = os.path.join(args.out, f"legal_cut_{tag}{run_tag()}.json")
+    with open(out_path, "w") as fh:
         json.dump(results, fh, indent=1, default=float)
-    print(f"\nwrote {args.out}/legal_cut{run_tag()}.json")
+    print(f"\nwrote {out_path}")
 
 
 if __name__ == "__main__":

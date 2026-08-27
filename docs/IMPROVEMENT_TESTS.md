@@ -1775,6 +1775,17 @@ a convergence failure that does not exist.
 
 ### Exp 131 — Re-run cifar10 / cifar100 / galaxy10 with the label-free cut
 
+> **ROUND-1 DONE 2026-08-26 — PREDICTION HOLDS WHERE THE RULE ENGAGES; the
+> falsifier does not fire.**  cifar10 (b=0.10): legal beats inherited on 4/4
+> engaged spaces, +0.17..+0.30 (resnplm-cat 0.586 -> 0.888, res-cat 0.515 ->
+> 0.806).  galaxy10 lejepa/visreg: 11/12 engage at purity 0.83-1.00.  cifar100
+> (b=0.01): refuses on all 5, as predicted.  UNPREDICTED: two false refusals at
+> b=0.10 -- cifar10 supcon (critic calib_out 57, overfit) and ALL SIX galaxy10
+> DINO spaces (calib 1.000 but b_hat 7-15x low) -- so `ok=False` diagnoses the
+> critic, not the space.  Cost of purity is recall: pools shrink 10-25x
+> (n_nov 3189 -> 269).  Multi-round with backbones not yet run.  Tables in
+> `logs/SUMMARY_TABLES.md`; JSON in `logs/exp131/`.
+
 > **CODE READY 2026-08-26.**  `--selftest` green; `supersig/poolcut.py` +
 > `tests/test_poolcut.py` (11).  NEEDS THE GPU BOX.
 

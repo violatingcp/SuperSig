@@ -1627,3 +1627,63 @@ pretrain=None; exps 67+68, 2026-08-26)
   0.15) and per-event dead, while DATASET-level detection stays alive
   (post-ft SparKer power 0.88 [0.82,0.93], MMD 1.00 at f=0.05) --
   the h1 regime kills pooling and per-event, not detection per se.
+
+## Exp 131 -- label-free pool cut, round-1 A/B on archived spaces
+(cifar10 32-D holdout {4} b=0.10; cifar100 32-D holdout {4} b=0.01;
+galaxy10 100-D holdout {9} [single-holdout, campaign default draw] b=0.106;
+evaluation-only from the exp-80 space banks, seed 0, n_min=30; 2026-08-26)
+
+A = inherited cut (q0.95 of seen scores, kmax=max(4,nh+2));  B = legal rule
+(tightest cut holding >= n_min ESTIMATED novel points, kmax label-free).
+Both arms score the SAME NP-critic scores; only the cut differs.
+
+  cifar10          b_hat  calib_out |  A: q     purity n_nov |  B: q     purity n_nov  ok
+  supcon           0.001    57.2    |  0.105   0.573  3014  |  0.200   0.421  4211   REFUSED
+  res              0.006     1.2    |  0.070   0.353  1228  |  0.003   0.646    93   ok
+  resnplm          0.028     1.05   |  0.069   0.347  1198  |  0.008   0.517   198   ok
+  res-cat          0.017     1.05   |  0.093   0.515  2384  |  0.003   0.806   116   ok
+  resnplm-cat      0.070     1.11   |  0.109   0.586  3189  |  0.006   0.888   269   ok
+
+  cifar100: B REFUSES on all 5 spaces (estimated novelty 0-14 < n_min);
+  A purities 0.003-0.056.  b_hat 0.0001-0.005 vs b_true 0.01.
+
+  galaxy10         dino (6 spaces)        lejepa (6)              visreg (6)
+  A purity         0.588-0.626            0.619-0.664             0.588-0.661
+  B purity         REFUSED x6             0.878-1.000 (6/6 ok)    0.827-1.000 (5/6 ok)
+  B pool size      --                     41-74                   41-57
+  b_hat            0.007-0.015            0.019-0.058             0.016-0.062
+
+- PREDICTION HOLDS where the rule engages, and it engages where predicted:
+  on cifar10 (b=0.10) B beats A on 4/4 engaged spaces by +0.17..+0.30
+  (record round-1 purities: resnplm-cat 0.888, res-cat 0.806 -- vs the
+  0.34-0.36 archived exp-55 pool purities); on galaxy10 lejepa/visreg
+  11/12 spaces engage at purity 0.83-1.00 (+0.23..+0.38).  cifar100
+  (b=0.01) refuses everywhere, as predicted.  The falsifier (B worse where
+  ok=True) does not fire in any of the 16 engaged cells.
+- THE PRICE IS RECALL.  B pools 144-383 points on cifar10 against A's
+  3400-5400: n_nov drops 10-25x (e.g. resnplm-cat 3189 -> 269).  The rule
+  buys purity by discarding ~90% of the novel class.  Downstream, the
+  discovered anchor is estimated from ~100-270 points, not ~3000; whether
+  the fine-tune tolerates that is the multi-round question, NOT answered
+  here (round-1 only).
+- UNPREDICTED: b_hat is the binding failure, and it fails by SPACE, not by
+  rate.  Two refusals at b=0.10 are false refusals: (i) cifar10 supcon --
+  the critic's calib_out is 57 (every other space 1.0-1.2), i.e. the
+  density ratio is badly overfit on the SupCon geometry, b_hat 0.001 vs
+  0.10; (ii) galaxy10 DINO, all six spaces -- calib is perfect (1.000)
+  yet b_hat is 0.007-0.015, 7-15x low, while the same six constructions
+  on lejepa/visreg estimate 0.02-0.06.  The dino galaxy10 spaces hold
+  the novelty (A purity 0.59-0.63, same as the other bases) but the NP
+  critic does not see it as a density-ratio excess.  So the `ok` flag is
+  honest about the CRITIC, not about the space.
+- Regime reading: on the b~0.10 cells the inherited q=0.95 sits at
+  purity 0.35-0.66 against a ceiling of 1.0 -- the exp-128 headroom
+  claim holds on real data.  On b=0.01 the ceiling at q=0.05 is 0.20 and
+  A reaches 0.003-0.056; B cannot tighten because the estimated novel
+  count never reaches 30.  Same conclusion as exp 129 from a third cell.
+- Caveats: round-1, evaluation-only, single seed, one draw per cell
+  (galaxy10 is the alphabetical {9} draw, not the exp-125 draw set);
+  BN-freeze fix irrelevant here (no fine-tune step).  Multi-round with
+  backbones (the exp-131 protocol's second half) still needs the GPU.
+- Script fix: consecutive --cells runs overwrote one JSON; output is now
+  logs/exp131/legal_cut_<cells>.json.

@@ -1,0 +1,40 @@
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+Using cache found in /home/pharris/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+Using cache found in /home/pharris/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+Using cache found in /home/pharris/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+
+######## cifar10: 5 spaces, holdouts=[4] ########
+
+  --- supcon ---
+    b_true=0.1000  b_hat=0.0010  n_hat=49  calib_in=1.058  calib_out=57.245
+    quantile  q=0.1053 pool=  5264 purity=0.5726 n_nov= 3014 kmax=  4 khat=4 clus_pur=0.601 ok=True
+    legal     q=0.2000 pool= 10000 purity=0.4211 n_nov= 4211 kmax=  2 khat=2 clus_pur=0.445 ok=False  <- estimated novelty 15.1 < n_min=30
+    delta purity (legal - quantile): -0.1515
+
+  --- res ---
+    b_true=0.1000  b_hat=0.0062  n_hat=311  calib_in=0.992  calib_out=1.215
+    quantile  q=0.0696 pool=  3478 purity=0.3531 n_nov= 1228 kmax=  4 khat=4 clus_pur=0.482 ok=True
+    legal     q=0.0029 pool=   144 purity=0.6458 n_nov=   93 kmax= 10 khat=3 clus_pur=0.838 ok=True
+    delta purity (legal - quantile): +0.2928
+
+  --- resnplm ---
+    b_true=0.1000  b_hat=0.0278  n_hat=1392  calib_in=1.008  calib_out=1.054
+    quantile  q=0.0690 pool=  3448 purity=0.3474 n_nov= 1198 kmax=  4 khat=2 clus_pur=0.479 ok=True
+    legal     q=0.0077 pool=   383 purity=0.5170 n_nov=  198 kmax= 43 khat=1 clus_pur=0.517 ok=True
+    delta purity (legal - quantile): +0.1695
+
+  --- res-cat ---
+    b_true=0.1000  b_hat=0.0169  n_hat=846  calib_in=0.994  calib_out=1.046
+    quantile  q=0.0927 pool=  4634 purity=0.5145 n_nov= 2384 kmax=  4 khat=4 clus_pur=0.666 ok=True
+    legal     q=0.0029 pool=   144 purity=0.8056 n_nov=  116 kmax= 27 khat=2 clus_pur=0.889 ok=True
+    delta purity (legal - quantile): +0.2911
+
+  --- resnplm-cat ---
+    b_true=0.1000  b_hat=0.0699  n_hat=3493  calib_in=1.044  calib_out=1.114
+    quantile  q=0.1088 pool=  5439 purity=0.5863 n_nov= 3189 kmax=  4 khat=4 clus_pur=0.634 ok=True
+    legal     q=0.0061 pool=   303 purity=0.8878 n_nov=  269 kmax= 64 khat=1 clus_pur=0.888 ok=True
+    delta purity (legal - quantile): +0.3015
+
+wrote logs/exp131/legal_cut_cifar10.json
+EXP131_C10_EXIT_0
