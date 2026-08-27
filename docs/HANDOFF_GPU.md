@@ -319,6 +319,13 @@ python experiments/137_scratch_residuals.py --dataset cifar10 --holdout 8
 python experiments/59_nplm_residual_concat.py --dataset cifar10 --seed 1   # writes *_s1.npz
 ```
 
+## Block N — exp 59 seeds on the CIFAR-100 champions
+
+```bash
+python experiments/59_nplm_residual_concat.py --dataset cifar100 --dim-half 50 --cw-lam 5 --seed 1   # -> *_s1_100d_cwlam5.npz
+python experiments/59_nplm_residual_concat.py --dataset cifar100 --seed 1                            # -> *_s1.npz (16+16)
+```
+
 ## Block G — Exp 132: supervised linear probe (piggyback on Block B)
 
 The campaign has NO supervised linear probe -- the `probe` column everywhere is
