@@ -1543,6 +1543,16 @@ workhorse claim was a favourable alphabetical draw, exactly the exp-118 hazard.
 
 ### Exp 127 — Re-run the frozen density-ratio pool with BN actually frozen
 
+> **DONE 2026-08-27 — FALSIFIER HALF-FIRES.**  The gate is still cleared at
+> h10 (r1 0.268 / 0.214 at q0.99 / q0.95, vs distance 0.002 / 0.036), so the
+> construction stands -- but the headline drops 0.358 -> 0.268 and the
+> round-2 rise is NOT reproduced at h10 (0.418 -> 0.237); h5 falls below the
+> gate on round 1 (0.198 -> 0.141).  Part of the archived exp-109 gain was BN
+> drift.  Confound: 109 rebuilds the exp-89 space (pre-probe 0.954 -> 0.959),
+> so retraining noise is mixed in; a same-checkpoint BN-train/eval A/B would
+> isolate it.  Tables in `logs/SUMMARY_TABLES.md`; archive kept as
+> `logs/exp109/results_preBNfix_archived.npz`.
+
 **Motivation.**  Exps 86/92b/109 froze backbone WEIGHTS but not BatchNorm
 running statistics, so on the CIFAR trunk the "frozen" space still drifted (up
 to 1.29 in embedding units against mean |z| 0.52 over 3 rounds).  The transfer

@@ -26,7 +26,9 @@ classes*, **pool purity is the binding constraint** (the purity gate).
 - residual decomposition + concat — 12/12, every dataset record; the res-nplm
   CHILD alone is the best detector measured anywhere (cars/visreg f95 0.049)
 - frozen-space discovery with density-ratio (SparKer) pooling — broke the
-  C100 geometry block (purity 0.121 -> 0.358, r2 0.418); made aircraft
+  C100 geometry block (purity 0.121 -> 0.358, r2 0.418; **exp 127, BN
+  actually frozen: 0.268 r1, round-2 rise not reproduced — quote 0.27,
+  not 0.36**); made aircraft
   discovery strictly non-negative (record 0.8634 retained WITH per-event 0.523)
 
 **Drop to a one-line ablation (4):** plain SimCLR, LeJEPA/sigreg-SSL,

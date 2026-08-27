@@ -1772,3 +1772,34 @@ Verdicts (dino + lejepa; visreg pending):
   the right interval, but a 3-seed x 5-draw grid would separate the
   two); the archived d{9} column is single-seed too.  Fine-tunes and
   plots for every draw are in checkpoints/ and plots/ tagged _h1_d{D}.
+
+## Exp 127 -- exp 109 re-run with BatchNorm actually frozen (Tier 9 Block D)
+(C100 100-D, sparker-frozen density-ratio pool on the rebuilt exp-89
+supcon->res-nplm space, h1/h5/h10 x q{0.95,0.99}, seed 0; 2026-08-27.
+Archive = logs/exp109/results_preBNfix_archived.npz, BN still adapting.)
+
+  cfg         purity r1 / r2  (archived)   ->  (BN frozen)      gate 0.15
+  h1:q0.95      0.030 / 0.034              0.050 / 0.030        no
+  h1:q0.99      0.029 / 0.020              0.050 / 0.014        no
+  h5:q0.95      0.148 / 0.169              0.098 / 0.123        no  (was r2 yes)
+  h5:q0.99      0.198 / 0.234              0.141 / 0.184        r2 only (was yes)
+  h10:q0.95     0.232 / 0.265              0.214 / 0.230        yes
+  h10:q0.99     0.358 / 0.418              0.268 / 0.237        yes, r1 only
+  distance ref (exp 89) r1: h1 0.000, h5 0.015/0.002, h10 0.036/0.002
+
+- THE FALSIFIER HALF-FIRES.  The construction survives (h10 clears the
+  gate at both quantiles, 6-7x the distance ceiling), but the HEADLINE
+  is 0.268 not 0.358, and the "round 2 rises" signature -- the evidence
+  that the critic refit + anchor update compounds -- is GONE at h10
+  (0.268 -> 0.237) and reduced at h5.  Part of the archived exp-109
+  gain was the space quietly moving under BN drift.
+- h5 no longer clears the gate on round 1 (0.141) -- the regime line
+  "reachable at h5/h10" becomes "reachable at h10; marginal at h5".
+- Confound to state: 109 REBUILDS the exp-89 space (pre-probe 0.9539
+  archived vs 0.9587 now; cuDNN nondeterminism, pitfall 6), so the
+  delta mixes retraining noise with the BN fix.  A seed-paired A/B
+  (same checkpoint, BN train vs eval) would isolate it; not run.
+- Paper wording: "frozen density-ratio pooling breaks the C100 geometry
+  block: 0.121 -> 0.27 at h10 (q0.99), round-2 gain not reproduced under
+  an exact freeze".  The transfer-cell version of the claim (ViT,
+  LayerNorm) was never affected.
