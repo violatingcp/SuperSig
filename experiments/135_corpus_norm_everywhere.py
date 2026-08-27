@@ -279,7 +279,11 @@ def main():
               f"{q[1] - p[1]:>+8.3f}{r['post']['probe']:>8.3f}/{cn['post']['probe']:<7.3f}"
               f"{cn['drift']['rel']:>7.3f}")
     src = args.cells.replace(":", "-").replace(",", "_")
-    out_path = os.path.join(args.out, f"corpus_norm_{src}{tag}.json")
+    # The seed goes in the filename or a multi-seed sweep silently overwrites
+    # itself (exp 139).  seed 0 keeps the archived name, so nothing already
+    # written is orphaned.
+    stag = "" if args.seed == 0 else f"_s{args.seed}"
+    out_path = os.path.join(args.out, f"corpus_norm_{src}{tag}{stag}.json")
     with open(out_path, "w") as fh:
         json.dump(results, fh, indent=1, default=float)
     print(f"\nwrote {out_path}\nEXP135 DONE.")

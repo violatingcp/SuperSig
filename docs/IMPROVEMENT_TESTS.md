@@ -1,4 +1,4 @@
-# Proposed tests to improve performance — exps 81–138
+# Proposed tests to improve performance — exps 81–139
 
 Companion to [QUESTIONS.md](QUESTIONS.md) (whose "open items as of exp 58" list
 this supersedes).  Every entry follows the standard protocol in
@@ -2281,3 +2281,54 @@ algebraic correction.  Do not claim it cancels a bias factor.
 next candidate is undoing the `TV(p_S, p_R)` shrink directly, or a donor
 ensemble for (3).  Worth noting the fix would be worth a lot: oracle 0.58 vs
 legal 0.387 at h1 on C100.
+
+### Exp 139 — Harden the frozen-head density-ratio pooling result
+
+> **HARNESS READY 2026-08-27.**  `--selftest` green (7 checks) +
+> `tests/test_frozen_np_hardening.py` (10).  NEEDS THE GPU BOX for the seed
+> grid; the aggregation already runs on the archived seed-0 data.
+
+**What is being hardened.**  Exp 135 arm A — head frozen, pool scored by the NP
+density ratio, no fine-tune — is the paper's headline: the only base- AND
+draw-independent discovery result in the campaign.  On the archived data the
+aggregator confirms **54/54 cells above the 0.15 gate** (the 45 draw cells plus
+the 9 archived-draw cells), 95% CI **[0.934, 1.000]**, min 0.179, median 0.583,
+mean 0.528.  The exp-70/125 fine-tuning loop on the SAME parents clears it on
+0/5 (dino) to 5/5 (visreg only).
+
+**The gap: one seed per draw.**  The head is frozen so there is no training
+randomness, but the seed still controls the NP critic fit and the BIC k-means,
+and exp 128 saw seed spread reach ±0.34 on tight cuts.  Exp 118's "draw beats
+seed" was measured on the FINE-TUNING loop and does not automatically transfer
+to a frozen pool whose only stochastic part is the critic.
+
+**Protocol.**  `--plan` emits the 45-run grid (3 cells × 5 draws × 3 seeds)
+calling exp 135 unchanged; `--aggregate` does the statistics.  Exp 135's output
+filename is now seed-tagged (seed 0 keeps the archived name), **without which a
+multi-seed sweep would have silently overwritten itself.**
+
+**Three statistics, and one bug they caught.**
+1. Variance decomposition separating *seed* (reproducible on the same class)
+   from *draw* (transfers to another class).  **It must run within (cell, arm)
+   strata**: grouping by draw alone makes the within-draw replicates different
+   arms and bases, so the number reported as seed variance is really arm/base
+   variance.  That error was live during development and produced
+   `sd_seed 0.0715`; stratified, the seed term is correctly reported as
+   **UNMEASURED** on seed-0-only data.  Pinned by
+   `test_stratification_keeps_arm_offset_out_of_the_seed_term`.
+2. **Clopper-Pearson on the gate proportion.**  "45/45" is a point estimate on
+   45 Bernoulli trials; its 95% lower bound is **0.921**, and 54/54 gives
+   **0.934**.  That bound is what belongs in the paper — a bare 45/45 invites
+   the reviewer to compute it and find it weaker than it looked.
+3. Paired frozen-vs-loop contrast per (draw, seed), since both arms see the
+   identical held-out class.
+
+**Prediction.**  Seed variance is small next to the measured draw sd (0.171),
+so the result survives and the interval stays draw-dominated.
+
+**Falsifier.**  Any (draw, seed) cell falls below the gate → the claim becomes
+"k/N with an interval", materially weaker, and must be written that way.  Also:
+if seed variance turns out comparable to draw variance, **every single-seed
+purity in the campaign inherits that caveat.**
+
+**Cost.**  45 evaluation-scale runs (banks cached, head frozen).
