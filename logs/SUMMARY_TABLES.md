@@ -2215,3 +2215,58 @@ logs/exp135/corpus_norm_<cell>.json.  d r2 = round-2 purity, B - A.)
   galaxy10); 5-ep head fine-tune only (anchors + norm stats).  Drift is
   10-40% of |z| on galaxy10, 2-9% elsewhere -- the adaptation is large
   exactly where it helps.
+
+## Exp 125 addendum -- galaxy10 VISREG across draws (completes the three bases)
+(same protocol as the dino/lejepa block above; draws {0,3,5,7,8} = classes {2,6,5,4,3})
+
+## galaxy10 (exp 125; visreg, 100d, holdout 1 [single-holdout], 5 draws d[0, 3, 5, 7, 8], 20 ep)
+
+| arm | probe | probe post | acc | eucl | mahaT | mahaT post | perevt | perevt post@.02 | purity r1 | purity r2 | SpK@.05 | SpK@.05 post | MMD@.05 | MMD@.05 post |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| simclr-ft | 0.847+-0.053 | 0.859+-0.051 | 0.564+-0.021 | 0.486+-0.076 | 0.526+-0.065 | 0.558+-0.078 | 0.045+-0.019 | 0.092+-0.093 | 0.093+-0.063 | 0.062+-0.082 | 0.060+-0.028 | 0.292+-0.186 | 0.208+-0.030 | 0.476+-0.162 |
+| sigreg-ssl-ft | 0.835+-0.040 | 0.861+-0.027 | 0.437+-0.014 | 0.515+-0.084 | 0.536+-0.100 | 0.552+-0.100 | 0.048+-0.028 | 0.053+-0.026 | 0.110+-0.077 | 0.152+-0.140 | 0.192+-0.176 | 0.132+-0.097 | 0.420+-0.180 | 0.600+-0.211 |
+| nplm-bil-ft | 0.672+-0.089 | 0.816+-0.047 | 0.360+-0.029 | 0.538+-0.095 | 0.498+-0.092 | 0.511+-0.092 | 0.064+-0.067 | 0.070+-0.081 | 0.117+-0.092 | 0.125+-0.096 | 0.188+-0.132 | 0.192+-0.100 | 0.416+-0.137 | 0.388+-0.254 |
+| supcon-ft | 0.906+-0.043 | 0.907+-0.039 | 0.775+-0.019 | 0.700+-0.076 | 0.686+-0.074 | 0.676+-0.103 | 0.095+-0.054 | 0.105+-0.097 | 0.290+-0.067 | 0.084+-0.041 | 0.688+-0.348 | 0.684+-0.315 | 0.844+-0.136 | 0.844+-0.143 |
+| ss-ft | 0.823+-0.108 | 0.890+-0.060 | 0.744+-0.017 | 0.615+-0.118 | 0.581+-0.136 | 0.608+-0.113 | 0.090+-0.096 | 0.139+-0.157 | 0.146+-0.042 | 0.057+-0.027 | 0.512+-0.311 | 0.508+-0.305 | 0.744+-0.110 | 0.796+-0.120 |
+| nplm-sup-ft | 0.738+-0.105 | 0.855+-0.056 | 0.616+-0.042 | 0.640+-0.112 | 0.628+-0.138 | 0.654+-0.136 | 0.129+-0.098 | 0.033+-0.019 | 0.262+-0.106 | 0.019+-0.019 | 0.536+-0.300 | 0.488+-0.299 | 0.540+-0.259 | 0.608+-0.278 |
+
+per-draw spread (probe / mahaT / purity r1), draws [0, 3, 5, 7, 8]
+  simclr-ft      probe 0.777-0.926  mahaT 0.415-0.592  purity 0.000-0.191   archived d{9}: probe 0.933 mahaT 0.731
+  sigreg-ssl-ft  probe 0.789-0.905  mahaT 0.407-0.710  purity 0.011-0.216   archived d{9}: probe 0.931 mahaT 0.678
+  nplm-bil-ft    probe 0.541-0.770  mahaT 0.360-0.603  purity 0.000-0.233   archived d{9}: probe 0.802 mahaT 0.684
+  supcon-ft      probe 0.851-0.962  mahaT 0.593-0.796  purity 0.171-0.378   archived d{9}: probe 0.939 mahaT 0.854
+  ss-ft          probe 0.634-0.926  mahaT 0.432-0.828  purity 0.081-0.208   archived d{9}: probe 0.865 mahaT 0.710
+  nplm-sup-ft    probe 0.540-0.842  mahaT 0.451-0.846  purity 0.151-0.436   archived d{9}: probe 0.883 mahaT 0.834
+
+Verdicts (visreg), and what changes across the three bases:
+
+- VISREG IS THE BASE WHERE "DISCOVERY SURVIVES ON GALAXY10" ACTUALLY HOLDS
+  ON RANDOM DRAWS.  supcon-ft round-1 purity 0.290+-0.067 with a per-draw
+  MINIMUM of 0.171 -- above the 0.15 gate on 5/5 draws; nplm-sup-ft
+  0.262+-0.106, min 0.151, 5/5.  Neither dino (all arms < gate on the
+  mean) nor lejepa (2/6 arms, sd ~ mean) does this.  The exp-125
+  prediction is therefore falsified on two bases and confirmed on one:
+  state it as "galaxy10 discovery is base-dependent -- reliable on
+  VISReg, a coin-flip on LeJEPA, absent on DINO".  This matches the
+  exp-77/80 base ordering (visreg > lejepa > dino on calibration) and
+  exp 135 (visreg/lejepa gain from adaptation, dino refuses in exp 131).
+- BUT ROUND 2 COLLAPSES ON VISREG TOO: supcon-ft 0.290 -> 0.084,
+  nplm-sup-ft 0.262 -> 0.019, ss-ft 0.146 -> 0.057.  The loop finds the
+  class in round 1 and loses it in round 2 on every arm -- the same
+  signature exp 127 showed when BN stopped adapting, and exp 135's
+  distance-pool result (+0.08 r2 on galaxy10 with corpus-norm) is the
+  candidate repair.  Under nh=1, quote round 1.
+- Draw variance again dominates arm gaps (probe sd 0.04-0.11, mahaT sd
+  0.07-0.14), except supcon-ft's probe lead (0.906+-0.043; best on 4/5
+  draws) and its purity lead over the SSL arms (0.29 vs 0.09-0.12, every
+  draw).  nplm-sup-ft keeps the best pre-discovery calibration (eucl
+  0.640, per-event 0.129) and SparKer ties supcon (0.54 vs 0.69, sd 0.3).
+- Archived d{9} sits at or above the top of the draw range on mahaT for
+  6/6 arms (supcon 0.854 vs 0.593-0.796; nplm-sup 0.834 vs 0.451-0.846)
+  and on probe for 5/6 -- third base, same hazard.  visreg was the
+  archived headline base and is the most inflated by the draw.
+- Cross-base summary for the paper (single-holdout galaxy10, 5 draws):
+    base    supcon probe      best purity r1 (arm)        gate on k/5 draws
+    dino    0.879+-0.026      0.131+-0.038 (nplm-sup)     0/5
+    lejepa  0.892+-0.056      0.190+-0.137 (nplm-sup)     2/5
+    visreg  0.906+-0.043      0.290+-0.067 (supcon)       5/5

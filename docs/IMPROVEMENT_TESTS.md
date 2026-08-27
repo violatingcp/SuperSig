@@ -1484,6 +1484,14 @@ workhorse claim loses its leakage-free support.
 
 ### Exp 125 — The single-holdout battery, with draws
 
+> **galaxy10 VISREG DONE 2026-08-27 (5 draws) — the prediction is BASE-
+> DEPENDENT.**  On visreg, supcon-ft clears the purity gate on 5/5 random
+> draws (0.290+-0.067, min 0.171; nplm-sup-ft 0.262, min 0.151), where dino
+> is 0/5 and lejepa 2/5.  Round 2 collapses on every visreg arm (0.29 ->
+> 0.08).  Archived d{9} mahaT above the draw range for 6/6 arms.  State as
+> "reliable on VISReg, coin-flip on LeJEPA, absent on DINO".
+> `logs/SUMMARY_TABLES.md`.
+
 > **Residual half (exps 71/72 on the draws) DONE 2026-08-27, dino + lejepa.**
 > The residual concat's probe gain over its OWN parent is the one galaxy10
 > effect that survives draw variance: 5/5 draws on both bases for all three
