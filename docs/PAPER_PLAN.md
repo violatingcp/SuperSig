@@ -20,11 +20,18 @@ classes*, **pool purity is the binding constraint** (the purity gate).
 |---|---|---|
 | discovery workhorse | **SupCon + strong SIGReg (lam=5)** | program's 3 highest purities: DTD 0.795/0.803/0.811; flowers 0.62-0.66; dominates the flowers pre-battery outright |
 | few-class calibration | **supervised distance-NPLM** | galaxy10 purity 0.46-0.50, per-event 0.35->0.50 (supcon 0.02); most base-robust arm (spread 0.009 vs 0.076) |
-| parent + baseline | **plain SupCon** | universal residual parent 12/12; best semantics; only universally safe discovery pipeline (12/12) |
+| parent + baseline | **plain SupCon** | residual parent in **10/12** (NOT 12/12 — ss-ft parents win flowers/lejepa and dtd/lejepa, `AIRCRAFT_MASTER_TABLE.md:368-372`); best semantics; only universally safe discovery pipeline (12/12) |
 
 **Constructions to keep (2):**
-- residual decomposition + concat — 12/12, every dataset record; the res-nplm
-  CHILD alone is the best detector measured anywhere (cars/visreg f95 0.049)
+- residual decomposition + concat — 12/12 **against the discovery pipeline**,
+  not against the best known space (dtd/visreg residual 0.847 still loses to
+  simclr-ft 0.854).  Probe 30/30 with SupCon parents, but it LOSES eucl 14/15
+  and mahaT 11/15, and never improves purity — the purity records belong to
+  NON-residual ss-ft (DTD 0.795-0.811 vs residual 0.135-0.292).  Only 1 of 5
+  multi-seed residual effects clears the noise floor (cars/visreg +0.148±0.004;
+  the CIFAR ones are +0.006-0.016 against a 0.017 floor).  The res-nplm CHILD
+  alone is the best transfer detector measured (cars/visreg f95 0.049), beating
+  its own concat, at half the width.  See exp 134 before promoting any of it.
 - frozen-space discovery with density-ratio (SparKer) pooling — broke the
   C100 geometry block (purity 0.121 -> 0.358, r2 0.418; **exp 127, BN
   actually frozen: 0.268 r1, round-2 rise not reproduced — quote 0.27,
