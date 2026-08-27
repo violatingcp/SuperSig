@@ -2377,3 +2377,32 @@ Verdicts (visreg) and the three-base residual summary:
     dino    +0.023 (5)          +0.011 (5)       -0.005 (2)       -0.001 (2)
     lejepa  +0.053 (5)          +0.039 (5)       -0.013 (3)       +0.039 (5)
     visreg  +0.041 (5)          +0.017 (5)       +0.025 (4)       +0.021 (2)
+
+## Exp 134 (B) addendum -- galaxy10 draw pairs (45 trained pairs across draws {0,3,5,7,8})
+(mean+-sd over 5 draws per construction/base; logs/exp134/combine_galaxy10-<base>_h1_d<D>.json)
+
+  pair                       ratio        P raw-par     E raw-par     E std-raw     E best-par    E child-par
+  dino    supcon->res        1.05+-.02    +.030+-.012   -.030+-.043   -.006+-.005   -.028+-.042   -.049+-.077
+  dino    supcon->resnplm    0.90+-.02    +.015+-.010   +.012+-.021   -.005+-.014   +.017+-.024   +.026+-.082
+  dino    ss->res            1.22+-.02    +.071+-.050   -.005+-.036   -.005+-.008   +.000+-.028   -.007+-.062
+  lejepa  supcon->res        3.10+-.32    +.055+-.031   +.039+-.064   +.012+-.026   +.061+-.060   +.031+-.067
+  lejepa  supcon->resnplm    0.97+-.07    +.037+-.021   +.053+-.067   -.006+-.014   +.058+-.065   +.005+-.104
+  lejepa  ss->res            1.20+-.04    +.107+-.099   -.006+-.105   +.009+-.023   +.016+-.086   -.112+-.248
+  visreg  supcon->res        1.00+-.01    +.041+-.020   -.053+-.044   +.001+-.010   -.048+-.047   -.172+-.099
+  visreg  supcon->resnplm    0.96+-.02    +.019+-.007   +.009+-.023   +.003+-.004   +.012+-.023   -.015+-.035
+  visreg  ss->res            1.12+-.02    +.086+-.081   -.039+-.067   -.004+-.013   -.029+-.058   -.117+-.146
+  all 45: raw probe > parent 45/45; raw eucl > parent 22/45; standardise vs raw:
+  probe +0.012 (28 wins), eucl +0.000 (21 wins); best-of-4 combiner eucl > parent 23/45.
+
+- Same verdict as the archived cells, now draw-resampled: no combiner
+  changes eucl (standardise +0.000+-0.02 on every construction) and the
+  RMS ratio is stable across draws (sd 0.01-0.07; the lejepa supcon->res
+  child is the one large-ratio case, 3.1+-0.3).  The geometry outcome is
+  decided by the construction and the base, not by how the halves are
+  joined.  Question (B) stays closed.
+- The draw table also re-states the construction rule from the residual
+  half of exp 125: supcon->resnplm is the only child with eucl >= parent
+  on all three bases (+0.012 / +0.053 / +0.009) and its child-alone eucl
+  is within noise of the parent; plain res loses eucl on dino/visreg and
+  wins only on lejepa (the large-ratio base); ss->res never carries
+  geometry.
