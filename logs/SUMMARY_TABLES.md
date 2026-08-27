@@ -2448,3 +2448,55 @@ TIE guard = max(0.017, sd_a+sd_b).  2026-08-27; logs/exp134/width_control_*.json
   to 0.02); galaxy10 dino single seed, archived draw {9}; the galaxy10
   concat here is supcon->res (not res-nplm).  A res-nplm concat vs 200-D
   control on galaxy10, and both on the exp-125 draws, would close it.
+
+## Exp 137 -- residual / concat constructions on the SCRATCH C100 trunks (Block M)
+(cifar100, 100(+100)-D, pretrain=None, holdout {4} [single-holdout], exp-73
+recipe: 20-ep children from a deepcopy of the exp-67 parent; probe x3 seeds;
+top1 = exp-132 supervised linear probe x3; 2026-08-27; logs/exp137/residuals_cifar100.json)
+
+  space                      probe           top1    acc    eucl   mahaT  lid    perevt
+  supcon (parent)            0.940+-.001     0.608   0.545  0.233  0.279  0.740  0.000
+  supcon->res concat         0.942+-.001     0.604   0.479  0.521  0.331  0.650  0.030
+  supcon->res-nplm concat    0.948+-.000     0.602   0.550  0.227  0.267  0.731  0.000
+  ssig (parent)              0.937+-.007     0.597   0.589  0.620  0.602  0.734  0.070
+  ssig->res concat           0.949+-.002     0.595   0.575  0.648  0.545  0.729  0.080
+  ssig->res-nplm concat      0.904+-.017     0.595   0.591  0.575  0.580  0.739  0.040
+  nplmsd (parent)            0.820+-.003     0.254   0.232  0.408  0.345  0.542  0.050
+  nplmsd->res concat         0.867+-.007     0.365   0.236  0.521  0.419  0.562  0.010
+  nplmsd->res-nplm concat    0.849+-.004     0.391   0.349  0.516  0.462  0.588  0.040
+  (residual children alone: supcon->res eucl 0.607 / per-event 0.05 -- the
+   best-calibrated clean supervised space, as the hub exp 73 found; probe 0.87)
+
+  paired concat - parent     probe     top1      eucl      mahaT
+  supcon->res                +0.002    -0.004    +0.288    +0.052
+  supcon->res-nplm           +0.007    -0.006    -0.007    -0.013
+  ssig->res                  +0.012    -0.002    +0.028    -0.057
+  ssig->res-nplm             -0.033    -0.002    -0.046    -0.023
+  nplmsd->res                +0.047    +0.111    +0.114    +0.074
+  nplmsd->res-nplm           +0.029    +0.137    +0.108    +0.118
+
+- THE PROBE GAIN IS A TIE ON CLEAN SUPCON TRUNKS: +0.002 (res) / +0.007
+  (res-nplm), both under the 0.017 floor.  The hub numbers were already
+  small (exp 75: +0.006 / +0.009 at 100-D), so this is consistent rather
+  than a reversal, but the falsifier's first clause ("the gain vanishes on
+  clean trunks") is met for the probe on the paper's parent.  ssig->res is
+  the only supervised concat with a probe gain near the floor (+0.012),
+  and the C100 clean probe record is now ssig->res concat 0.949 -- above
+  the supcon parent 0.940 and the clean standalone best.
+- THE NO-COST CLAIM HOLDS ON CLEAN C100 -- for the objective AND the
+  construction.  ssig ties supcon on supervised top-1 (0.597 vs 0.608,
+  -0.011 < floor), unlike galaxy10 (-0.035, exp 132); and every supcon /
+  ssig concat is within 0.006 of its parent's top-1.  State it as
+  "no supervised-accuracy cost on CIFAR-100; a 0.035 cost on galaxy10".
+- WHAT THE RESIDUAL BUYS ON CLEAN TRUNKS IS CALIBRATION, ON THE PLAIN-RES
+  OBJECTIVE ONLY: supcon->res concat eucl 0.233 -> 0.521 (+0.29), mahaT
+  +0.05, per-event 0 -> 0.03, at zero probe/top-1 cost -- the hub exp-73
+  pattern reproduced (0.338 -> 0.575).  res-nplm leaves geometry flat on
+  supcon and HURTS ssig (-0.046 eucl, -0.033 probe: the SIGReg parent
+  already carries the calibration, and the NPLM child has nothing left to
+  explain -- the exp-59 "residual-on-NPLM-trunk" failure mode, now seen
+  from the parent side).
+- nplmsd is the construction's real beneficiary: +0.03..+0.05 probe,
+  +0.11..+0.14 top-1, +0.11 eucl -- a weak parent is repaired by either
+  child, the exp-75 "discovery compensates weak parents" reading again.
+- Caveats: single seed, holdout {4}; draws and cifar10 queued.

@@ -1964,6 +1964,15 @@ exp 76.  Pinned by `test_head_emb_honours_the_holdout_draw_tag`.
 
 ### Exp 137 — Residual / concat constructions on the scratch trunks
 
+> **cifar100 h4 DONE 2026-08-27.**  Probe gain over a clean supcon parent is a
+> TIE (+0.002 res / +0.007 res-nplm, < 0.017) -- falsifier clause 1 met for the
+> probe; ssig->res +0.012 sets the clean C100 probe record (0.949).  NO-COST
+> HOLDS on clean C100: ssig ties supcon on top-1 (0.597 vs 0.608) and every
+> concat is within 0.006 of its parent.  What survives is calibration: plain
+> res on supcon eucl +0.29 / mahaT +0.05 at zero cost; res-nplm flat on supcon
+> and harmful on ssig.  nplmsd is repaired by either child (+0.11 top-1).
+> Draws + cifar10 queued.  `logs/SUMMARY_TABLES.md`, `logs/exp137/`.
+
 > **CODE READY 2026-08-27.**  `137_scratch_residuals.py`; exp 59 outputs are
 > now seed-tagged (`_s{seed}`).  Running as Block M alongside Block L.
 
