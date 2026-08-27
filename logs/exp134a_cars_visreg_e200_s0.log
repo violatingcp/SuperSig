@@ -1,0 +1,81 @@
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+exp70 [cars_visreg_ft70_e200] end-to-end ft suite, arms=['supcon-ft'], ft_epochs=20, emb=200, holdouts 186-195 EXCLUDED from ft
+  ft corpus: 7712/8144 train images (holdout classes removed)
+
+===== [supcon-ft] (supervised) =====
+  [supcon-ft] epoch 1/20  main=1.0017  aux=0.0000
+  [supcon-ft] epoch 5/20  main=0.7055  aux=0.0000
+  [supcon-ft] epoch 10/20  main=0.5998  aux=0.0000
+  [supcon-ft] epoch 15/20  main=0.5768  aux=0.0000
+  [supcon-ft] epoch 20/20  main=0.5275  aux=0.0000
+  extracted ft70_supcon-ft train: (8144, 768)
+  extracted ft70_supcon-ft test: (8041, 768)
+  [supcon-ft     ] probe=0.7381+-0.0184 acc=0.5380 supAUC=0.9882 eucl=0.6662 mahaT=0.5709 mahaPC=0.7222 lid=0.6916
+
+===== PRE table =====
+  arm                        probe     acc  supAUC    eucl   mahaT  mahaPC
+  supcon-ft          0.7381+-0.0184  0.5380  0.9882  0.6662  0.5709  0.7222
+
+===== gaussianity (seen classes, test set) =====
+  metric                         supcon-ft
+  eig min (class cov)               -0.000
+  eig max (class cov)               55.115
+  eig cond worst            55115419484160.0
+  class RMS min                      0.680
+  class RMS mean                     0.921
+  class RMS max                      1.016
+  max |corr| (worst class)           0.921
+  SW ratio mean                       1.09
+  SW ratio worst                      1.50
+  |skew| mean                        0.298
+  |ex-kurt| mean                     0.578
+  centroid dist min                   3.50
+  centroid dist mean                 20.90
+  separation (min d/RMS)              3.80
+
+===== PRE power batteries =====
+  [supcon-ft] per-event pre power=0.162
+  [supcon-ft] sparker (annealed)
+    pre-spk f=0.003: power=0.100 [0.058,0.162] (5/50)
+    pre-spk f=0.01: power=0.140 [0.090,0.207] (7/50)
+    pre-spk f=0.02: power=0.060 [0.028,0.115] (3/50)
+    pre-spk f=0.05: power=0.520 [0.440,0.599] (26/50)
+    pre-spk f=0.1: power=1.000 [0.964,1.000] (50/50)
+  [supcon-ft] maha
+    pre-maha f=0.003: power=0.080 [0.042,0.138] (4/50)
+    pre-maha f=0.01: power=0.040 [0.014,0.090] (2/50)
+    pre-maha f=0.02: power=0.260 [0.194,0.336] (13/50)
+    pre-maha f=0.05: power=0.680 [0.601,0.751] (34/50)
+    pre-maha f=0.1: power=0.980 [0.936,0.997] (49/50)
+  [supcon-ft] mmd
+    pre-mmd f=0.003: power=0.080 [0.042,0.138] (4/50)
+    pre-mmd f=0.01: power=0.060 [0.028,0.115] (3/50)
+    pre-mmd f=0.02: power=0.020 [0.003,0.064] (1/50)
+    pre-mmd f=0.05: power=0.240 [0.177,0.315] (12/50)
+    pre-mmd f=0.1: power=0.960 [0.910,0.986] (48/50)
+
+===== EXP70 PEREVENT PRE POWER =====
+  arm                 0.003     0.01     0.02     0.05      0.1
+  supcon-ft           0.162    0.162    0.162    0.162    0.162
+  saved /home/pharris/sigreg/SuperSig/plots/exp70_perevent_power_pre_cars_visreg_ft70_e200.png
+
+===== EXP70 SPARKER PRE POWER =====
+  arm                 0.003     0.01     0.02     0.05      0.1
+  supcon-ft           0.100    0.140    0.060    0.520    1.000
+  saved /home/pharris/sigreg/SuperSig/plots/exp70_sparker_power_pre_cars_visreg_ft70_e200.png
+
+===== EXP70 MAHA PRE POWER =====
+  arm                 0.003     0.01     0.02     0.05      0.1
+  supcon-ft           0.080    0.040    0.260    0.680    0.980
+  saved /home/pharris/sigreg/SuperSig/plots/exp70_maha_power_pre_cars_visreg_ft70_e200.png
+
+===== EXP70 MMD PRE POWER =====
+  arm                 0.003     0.01     0.02     0.05      0.1
+  supcon-ft           0.080    0.060    0.020    0.240    0.960
+  saved /home/pharris/sigreg/SuperSig/plots/exp70_mmd_power_pre_cars_visreg_ft70_e200.png
+
+===== EXP70 SUMMARY [cars_visreg_ft70_e200] =====
+  [supcon-ft     ] probe=0.7381+-0.0184 acc=0.5380 eucl=0.6662 mahaT=0.5709
+saved /home/pharris/sigreg/SuperSig/plots/exp70_probe_cars_visreg_ft70_e200.png
+Done.

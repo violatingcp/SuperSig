@@ -77,29 +77,27 @@ def main():
             "eucl": (f"eucl_{args.parent}", f"{args.concat}_(concat)__eucl"),
             "mahaT": (f"mahaT_{args.parent}", f"{args.concat}_(concat)__mahaT")}
 
-    def files70(dim):
-        """exp-70 result files of this cell at one head width, keyed by seed."""
+    # Exact-tag matching: the suffix after ft70{tag} may ONLY be a seed and/or
+    # a dim marker.  A loose glob also matched the _h1_d* draw files of the
+    # same cell, which silently paired a draw parent with an archived control.
+    def files(exp, dim):
+        pat = re.compile(rf"^results_{re.escape(ds)}_{re.escape(base)}_{exp}"
+                         rf"{re.escape(tag)}(?:_s(\d+))?(?:_e(\d+))?\.npz$")
         out = {}
-        for f in sorted(glob.glob(f"logs/exp70/results_{ds}_{base}_ft70{tag}*.npz")):
-            b = os.path.basename(f)
-            if "_quick" in b:
+        for f in sorted(glob.glob(f"logs/exp{exp[2:]}/results_{ds}_{base}_{exp}{tag}*.npz")):
+            m = pat.match(os.path.basename(f))
+            if not m:
                 continue
-            md = re.search(r"_e(\d+)", b)
-            if (int(md.group(1)) if md else 100) != dim:
+            if (int(m.group(2)) if m.group(2) else 100) != dim:
                 continue
-            ms = re.search(r"_s(\d+)", b)
-            out[int(ms.group(1)) if ms else 0] = f
+            out[int(m.group(1)) if m.group(1) else 0] = f
         return out
 
+    def files70(dim):
+        return files("ft70", dim)
+
     def files71():
-        out = {}
-        for f in sorted(glob.glob(f"logs/exp71/results_{ds}_{base}_ft71{tag}*.npz")):
-            b = os.path.basename(f)
-            if "_quick" in b or re.search(r"_e\d+", b):
-                continue
-            ms = re.search(r"_s(\d+)", b)
-            out[int(ms.group(1)) if ms else 0] = f
-        return out
+        return files("ft71", 100)
 
     def read(fmap, key):
         vals = {}

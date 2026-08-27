@@ -1,0 +1,82 @@
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+exp70 [galaxy10_dino_ft70_e200] end-to-end ft suite, arms=['supcon-ft'], ft_epochs=20, emb=200, holdouts 9-9 EXCLUDED from ft
+  ft corpus: 1585/1772 train images (holdout classes removed)
+
+===== [supcon-ft] (supervised) =====
+  [supcon-ft] epoch 1/20  main=3.7461  aux=0.0000
+  [supcon-ft] epoch 5/20  main=3.5481  aux=0.0000
+  [supcon-ft] epoch 10/20  main=3.4709  aux=0.0000
+  [supcon-ft] epoch 15/20  main=3.3781  aux=0.0000
+  [supcon-ft] epoch 20/20  main=3.3133  aux=0.0000
+  extracted ft70_supcon-ft train: (1772, 768)
+  extracted ft70_supcon-ft test: (15964, 768)
+  [supcon-ft     ] probe=0.9442+-0.0033 acc=0.5969 supAUC=0.9017 eucl=0.6516 mahaT=0.7768 mahaPC=0.7332 lid=0.4353
+
+===== PRE table =====
+  arm                        probe     acc  supAUC    eucl   mahaT  mahaPC
+  supcon-ft          0.9442+-0.0033  0.5969  0.9017  0.6516  0.7768  0.7332
+
+===== gaussianity (seen classes, test set) =====
+  metric                         supcon-ft
+  eig min (class cov)               -0.000
+  eig max (class cov)               56.214
+  eig cond worst            56214335520768.0
+  class RMS min                      0.376
+  class RMS mean                     0.560
+  class RMS max                      0.739
+  max |corr| (worst class)           0.976
+  SW ratio mean                      21.07
+  SW ratio worst                     37.48
+  |skew| mean                        0.483
+  |ex-kurt| mean                     0.990
+  centroid dist min                   4.14
+  centroid dist mean                 11.80
+  separation (min d/RMS)              7.38
+
+===== PRE power batteries =====
+  [supcon-ft] per-event pre power=0.003
+  [supcon-ft] sparker (annealed)
+    pre-spk f=0.003: power=0.000 [0.000,0.036] (0/50)
+    pre-spk f=0.01: power=0.020 [0.003,0.064] (1/50)
+    pre-spk f=0.02: power=0.020 [0.003,0.064] (1/50)
+    pre-spk f=0.05: power=0.000 [0.000,0.036] (0/50)
+    pre-spk f=0.1: power=0.820 [0.749,0.876] (41/50)
+  [supcon-ft] maha
+    pre-maha f=0.003: power=0.040 [0.014,0.090] (2/50)
+    pre-maha f=0.01: power=0.100 [0.058,0.162] (5/50)
+    pre-maha f=0.02: power=0.300 [0.231,0.378] (15/50)
+    pre-maha f=0.05: power=0.560 [0.480,0.638] (28/50)
+    pre-maha f=0.1: power=0.980 [0.936,0.997] (49/50)
+  [supcon-ft] mmd
+    pre-mmd f=0.003: power=0.140 [0.090,0.207] (7/50)
+    pre-mmd f=0.01: power=0.100 [0.058,0.162] (5/50)
+    pre-mmd f=0.02: power=0.180 [0.124,0.251] (9/50)
+    pre-mmd f=0.05: power=0.920 [0.862,0.958] (46/50)
+    pre-mmd f=0.1: power=1.000 [0.964,1.000] (50/50)
+
+===== EXP70 PEREVENT PRE POWER =====
+  arm                 0.003     0.01     0.02     0.05      0.1
+  supcon-ft           0.003    0.003    0.003    0.003    0.003
+  saved /home/pharris/sigreg/SuperSig/plots/exp70_perevent_power_pre_galaxy10_dino_ft70_e200.png
+
+===== EXP70 SPARKER PRE POWER =====
+  arm                 0.003     0.01     0.02     0.05      0.1
+  supcon-ft           0.000    0.020    0.020    0.000    0.820
+  saved /home/pharris/sigreg/SuperSig/plots/exp70_sparker_power_pre_galaxy10_dino_ft70_e200.png
+
+===== EXP70 MAHA PRE POWER =====
+  arm                 0.003     0.01     0.02     0.05      0.1
+  supcon-ft           0.040    0.100    0.300    0.560    0.980
+  saved /home/pharris/sigreg/SuperSig/plots/exp70_maha_power_pre_galaxy10_dino_ft70_e200.png
+
+===== EXP70 MMD PRE POWER =====
+  arm                 0.003     0.01     0.02     0.05      0.1
+  supcon-ft           0.140    0.100    0.180    0.920    1.000
+  saved /home/pharris/sigreg/SuperSig/plots/exp70_mmd_power_pre_galaxy10_dino_ft70_e200.png
+
+===== EXP70 SUMMARY [galaxy10_dino_ft70_e200] =====
+  [supcon-ft     ] probe=0.9442+-0.0033 acc=0.5969 eucl=0.6516 mahaT=0.7768
+saved /home/pharris/sigreg/SuperSig/plots/exp70_probe_galaxy10_dino_ft70_e200.png
+Done.

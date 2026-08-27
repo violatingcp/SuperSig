@@ -1,0 +1,17 @@
+exp134a [cars:visreg] width-matched control (supcon-ft @ 200-D) vs residual concat (supcon-ft-res-nplm, 100+100)
+
+  metric arm        seeds        mean+-sd   per-seed
+  probe  parent         1    0.7067+-0.0000   s0=0.7067
+  probe  concat         1    0.8545+-0.0000   s0=0.8545
+  probe  control        3    0.7266+-0.0139   s0=0.7381 s1=0.7346 s2=0.7071
+  -> probe: concat - control = +0.1164+-0.0000 over 1 paired seeds (thresh 0.017) => concat
+  eucl   parent         1    0.7149+-0.0000   s0=0.7149
+  eucl   concat         1    0.7466+-0.0000   s0=0.7466
+  eucl   control        3    0.6752+-0.0090   s0=0.6662 s1=0.6719 s2=0.6875
+  -> eucl: concat - control = +0.0805+-0.0000 over 1 paired seeds (thresh 0.017) => concat
+  mahaT  parent         1    0.6609+-0.0000   s0=0.6609
+  mahaT  concat         1    0.6779+-0.0000   s0=0.6779
+  mahaT  control        3    0.5913+-0.0184   s0=0.5709 s1=0.5875 s2=0.6155
+  -> mahaT: concat - control = +0.1070+-0.0000 over 1 paired seeds (thresh 0.018) => concat
+
+  VERDICT: PREDICTION HOLDS -- the residual gain exceeds a same-width control.

@@ -2406,3 +2406,45 @@ Verdicts (visreg) and the three-base residual summary:
   is within noise of the parent; plain res loses eucl on dino/visreg and
   wins only on lejepa (the large-ratio base); ss->res never carries
   geometry.
+
+## Exp 134a -- is the residual gain a construction, or just width?  (Block J)
+(control = supcon-ft fine-tuned with a 200-D head, same trunk/corpus/recipe,
+NO residual, artifacts tagged _e200; concat = 100+100 residual concat from
+exp 71; parent = 100-D supcon-ft.  cars/visreg: control x3 seeds vs the
+archived single-seed parent/concat (exp-75's 3-seed values in brackets);
+galaxy10: archived draw {9}, lejepa parent/concat x3 seeds from exp 75.
+TIE guard = max(0.017, sd_a+sd_b).  2026-08-27; logs/exp134/width_control_*.json)
+
+  cell            metric   parent(100)   control(200)      concat(100+100)   concat-control  verdict
+  cars:visreg     probe    0.707 [0.686+-.016]  0.727+-0.014   0.855 [0.833+-.017]   +0.116   concat
+                  eucl     0.715          0.675+-0.009      0.747             +0.081   concat
+                  mahaT    0.661          0.591+-0.018      0.678             +0.107   concat
+  galaxy10:dino   probe    0.938          0.944             0.955             +0.011   TIE
+                  eucl     0.666          0.652             0.560             -0.092   control
+                  mahaT    0.786          0.777             0.762             -0.014   TIE
+  galaxy10:lejepa probe    0.910+-0.007   0.917             0.971+-0.004      +0.058   concat
+                  eucl     0.690+-0.036   0.734             0.372+-0.063      -0.446   control
+                  mahaT    0.741+-0.022   0.799             0.661+-0.027      -0.174   control
+
+- THE FLAGSHIP SURVIVES ITS CONTROL.  On cars/visreg a same-width
+  non-residual head recovers +0.02 of the residual concat's +0.148 probe
+  gain (control 0.727+-0.014 vs parent 0.707) and LOSES geometry (eucl
+  0.675 vs parent 0.715; mahaT 0.591 vs 0.661) where the res-nplm concat
+  gains it (0.747 / 0.678).  Concat beats control by +0.116 probe, +0.081
+  eucl, +0.107 mahaT, every gap 5-6x the floor.  Width explains about
+  one seventh of the flagship number; the construction is real.
+- ON GALAXY10 THE PROBE GAIN IS REAL ON LEJEPA (+0.058 over the control,
+  3.4x the floor) AND A TIE ON DINO (+0.011): the dino residual probe
+  gain (+0.023 paired in exp 125) is not distinguishable from capacity.
+- WIDTH IS THE BETTER GEOMETRY MOVE ON GALAXY10.  The 200-D control
+  matches the parent on eucl/mahaT on dino and BEATS it on lejepa (eucl
+  0.734 vs 0.690, mahaT 0.799 vs 0.741), while the plain-res concat
+  loses eucl heavily on both (-0.09 / -0.45 vs control).  So for a
+  single-objective calibrated space, doubling the head is a cheaper
+  route than the plain residual; the residual's case is the probe (and
+  the res-nplm child's calibration, which is a different construction
+  and was not width-controlled here).
+- Caveats: cars parent/concat single seed (exp 75's 3-seed means agree
+  to 0.02); galaxy10 dino single seed, archived draw {9}; the galaxy10
+  concat here is supcon->res (not res-nplm).  A res-nplm concat vs 200-D
+  control on galaxy10, and both on the exp-125 draws, would close it.

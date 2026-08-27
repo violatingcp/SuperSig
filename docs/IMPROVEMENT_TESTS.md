@@ -2009,6 +2009,16 @@ and exp 133's "richer anchors compound" reading must be restated.
 
 ### Exp 134a — Is the residual gain a construction, or just width?
 
+> **DONE 2026-08-27 — PREDICTION HOLDS ON THE FLAGSHIP, TIE ON GALAXY10/DINO.**
+> cars/visreg: a 200-D non-residual control recovers +0.02 of the +0.148
+> residual gain and loses geometry; concat beats control by +0.116 probe /
+> +0.081 eucl / +0.107 mahaT.  galaxy10: concat > control on probe for lejepa
+> (+0.058) but a TIE on dino (+0.011), and the 200-D control is the BETTER
+> geometry space on both (eucl 0.65/0.73 vs concat 0.56/0.37).  Width buys
+> calibration cheaply; the residual buys the probe.  Loader fix: exact-tag
+> file matching (a loose glob had paired draw parents with archived controls).
+> `logs/SUMMARY_TABLES.md`, `logs/exp134/width_control_*.json`.
+
 > **CODE READY 2026-08-27.**  `134a_width_control.py` (comparison) +
 > exp 70 `--emb-dim 200` (the control; artifacts now tagged `_e200` via
 > `exp70.seed_sfx`, so it cannot overwrite the archived 100-D parents --

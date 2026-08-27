@@ -1,0 +1,17 @@
+exp134a [galaxy10:dino] width-matched control (supcon-ft @ 200-D) vs residual concat (supcon-ft-res, 100+100)
+
+  metric arm        seeds        mean+-sd   per-seed
+  probe  parent         1    0.9377+-0.0000   s0=0.9377
+  probe  concat         1    0.9549+-0.0000   s0=0.9549
+  probe  control        1    0.9442+-0.0000   s0=0.9442
+  -> probe: concat - control = +0.0107+-0.0000 over 1 paired seeds (thresh 0.017) => TIE
+  eucl   parent         1    0.6657+-0.0000   s0=0.6657
+  eucl   concat         1    0.5595+-0.0000   s0=0.5595
+  eucl   control        1    0.6516+-0.0000   s0=0.6516
+  -> eucl: concat - control = -0.0921+-0.0000 over 1 paired seeds (thresh 0.017) => control
+  mahaT  parent         1    0.7864+-0.0000   s0=0.7864
+  mahaT  concat         1    0.7624+-0.0000   s0=0.7624
+  mahaT  control        1    0.7768+-0.0000   s0=0.7768
+  -> mahaT: concat - control = -0.0144+-0.0000 over 1 paired seeds (thresh 0.017) => TIE
+
+  VERDICT: TIE -- the concat and the width control are inside the noise floor; the residual gain is not distinguishable from capacity.

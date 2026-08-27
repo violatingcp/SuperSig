@@ -1,0 +1,17 @@
+exp134a [galaxy10:lejepa] width-matched control (supcon-ft @ 200-D) vs residual concat (supcon-ft-res, 100+100)
+
+  metric arm        seeds        mean+-sd   per-seed
+  probe  parent         3    0.9097+-0.0068   s0=0.9185 s1=0.9019 s2=0.9086
+  probe  concat         3    0.9706+-0.0042   s0=0.9746 s1=0.9648 s2=0.9725
+  probe  control        1    0.9169+-0.0000   s0=0.9169
+  -> probe: concat - control = +0.0578+-0.0000 over 1 paired seeds (thresh 0.017) => concat
+  eucl   parent         3    0.6901+-0.0361   s0=0.6465 s1=0.6890 s2=0.7348
+  eucl   concat         3    0.3721+-0.0632   s0=0.2883 s1=0.3868 s2=0.4411
+  eucl   control        1    0.7341+-0.0000   s0=0.7341
+  -> eucl: concat - control = -0.4458+-0.0000 over 1 paired seeds (thresh 0.063) => control
+  mahaT  parent         3    0.7413+-0.0219   s0=0.7218 s1=0.7301 s2=0.7719
+  mahaT  concat         3    0.6614+-0.0265   s0=0.6250 s1=0.6873 s2=0.6720
+  mahaT  control        1    0.7991+-0.0000   s0=0.7991
+  -> mahaT: concat - control = -0.1741+-0.0000 over 1 paired seeds (thresh 0.026) => control
+
+  VERDICT: PREDICTION HOLDS -- the residual gain exceeds a same-width control.
