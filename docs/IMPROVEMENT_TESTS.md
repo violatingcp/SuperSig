@@ -1,4 +1,4 @@
-# Proposed tests to improve performance — exps 81–134
+# Proposed tests to improve performance — exps 81–136
 
 Companion to [QUESTIONS.md](QUESTIONS.md) (whose "open items as of exp 58" list
 this supersedes).  Every entry follows the standard protocol in
@@ -2223,3 +2223,61 @@ cleared the gate, no-op where it did not.  Falsifier: it helps where purity was
 **Doc error fixed alongside:** PAPER_PLAN claimed "universal residual parent
 12/12"; it is **10/12**, and the 12/12 that does hold is against the discovery
 pipeline rather than the best known space.
+
+### Exp 136 — Fix the base-rate estimator
+
+> **RUN 2026-08-27 on six real exp-54 CIFAR-10 spaces.
+> THREE OF FOUR PROPOSED FIXES FAIL; LOWERING `n_min` IS THE ONE THAT WORKS.**
+> `logs/exp136/brate_cifar10_exp54.json`, `tests/test_base_rate.py` (13).
+
+**Why.**  Exp 129 showed the label-free cut works but captures only 30-55% of
+oracle purity, and the whole gap is `b_hat` (2-4x low on C100, 7-15x on
+galaxy10 DINO despite calib_out = 1.000).
+
+**(2) Estimator swap — NO HELP.**  All three agree and all are 4-7x low:
+tv 0.016-0.026, mass 0.016-0.024, excess 0.015, against b_true = 0.10.  The
+bias is not specific to `tv`.  The synthetic ordering also reversed: under
+heavy overlap `tv` degrades MORE gracefully than mass/excess (0.0063 vs 0.0000
+and 0.0011 at overlap 0.9) — the opposite of the prediction.
+
+**(1) Scale-invariant knee — FAILS ON REAL DATA.**  Perfect on synthetic
+(k=402 against 400 true novel, unmoved by 16x weight scaling) but on trained
+spaces it picks a much wider cut and loses purity:
+
+    space             knee q / purity     n_min=30 q / purity
+    nplm_dist_sup_cw  0.0559 / 0.549      0.0052 / 0.778
+    nplm_distance     0.0249 / 0.633      0.0039 / 0.856
+    nplm_sup_dist     0.0439 / 0.617      0.0051 / 0.719
+
+The elbow is sharp only when the novel mode is cleanly separated; with real
+overlap `N_hat(k)` grows smoothly and the max-deviation point drifts out.
+**Scale-invariance is worthless if the shape carries no knee.**
+
+**(3) Injection calibration — UNSTABLE.**  alpha = 1.268 / 0.073 / 1.300 across
+three spaces.  The donor seen class is not exchangeable with the true novel
+class, so alpha measures the donor as much as the estimator.  Would need a
+donor ensemble and a reported spread.
+
+**(4) `n_min` — THE FIX, and it was PH's suggestion.**  Purity rises
+monotonically as `n_min` falls, on every space:
+
+    n_min           5     10     20     30     50    100    200
+    dist_sup_cw   .833   .846   .807   .778   .743   .715   .665
+    distance      .900   .875   .879   .856   .820   .795   .784
+    sup_dist      .686   .695   .716   .719   .704   .711   .678
+
+`n_min=10` buys +0.05-0.06 purity over the default of 30 while leaving 107-112
+real novel points pooled.  **`supersig/poolcut.py` N_MIN lowered 30 -> 10.**
+
+**AND THE SCALE-BIAS MODEL IS WRONG.**  `implied_alpha` is NOT constant across
+the sweep (0.071 -> 0.381 on dist_sup_cw); it climbs steadily.  So `b_hat` is
+not off by a single factor — the underestimate grows as the cut widens, which
+is what a per-point weight bias concentrated in the OVERLAP region looks like.
+That explains why the scale-invariant criterion buys nothing, and it means
+lowering `n_min` is an **honest tuning constant with a reported sweep**, not an
+algebraic correction.  Do not claim it cancels a bias factor.
+
+**Still open.**  The estimator remains 4-7x low and nothing here fixes it.  The
+next candidate is undoing the `TV(p_S, p_R)` shrink directly, or a donor
+ensemble for (3).  Worth noting the fix would be worth a lot: oracle 0.58 vs
+legal 0.387 at h1 on C100.
