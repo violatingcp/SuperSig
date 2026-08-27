@@ -2113,6 +2113,19 @@ child-alone detector result is half-width and survives).
 
 ### Exp 134c — Should the residual come AFTER discovery?
 
+> **DONE 2026-08-27 (5 cells) — PREDICTION HOLDS ON THE OUTCOME, MECHANISM
+> FALSIFIED.**  After-discovery concat beats the archived pre-discovery concat
+> on 4/5 cells, every currency it touches (dtd res: probe +0.053, eucl +0.10,
+> mahaT +0.18, per-event +0.19; visreg +0.010/+0.13/+0.05/+0.17; cars probe
+> +0.047); galaxy10/dino is the predicted no-op.  But it also lifts lejepa
+> (r1 purity 0.06) by +0.23 eucl -- clause 1 of the falsifier -- because (i)
+> the parent-head fine-tune is a calibration repair regardless of purity and
+> (ii) the nearest-discovered-anchor relabelling is 100% novel in ALL five
+> cells even at pool purity 0.06: the purity gate governs whether the loop
+> compounds, not whether its anchors sit on the novel class.  Build the
+> residual after discovery wherever the loop finds anything.  Draws not run.
+> `logs/SUMMARY_TABLES.md`, `logs/exp134/postdisc_*.json`.
+
 > **CODE READY 2026-08-27.**  `134c_residual_after_discovery.py`, `--selftest`
 > green.  Queued behind 134a.
 

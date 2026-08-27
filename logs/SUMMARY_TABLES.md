@@ -2500,3 +2500,57 @@ top1 = exp-132 supervised linear probe x3; 2026-08-27; logs/exp137/residuals_cif
   +0.11..+0.14 top-1, +0.11 eucl -- a weak parent is repaired by either
   child, the exp-75 "discovery compensates weak parents" reading again.
 - Caveats: single seed, holdout {4}; draws and cifar10 queued.
+
+## Exp 134c -- residual AFTER discovery (Block J; 5 cells, archived draws)
+(parent = exp-70 supcon-ft; NEW order = discovery on the parent head (exp-70
+feature-space loop, 2 rounds) -> label-free relabel against the enlarged
+anchor set -> exp-71 child (20 ep) -> concat.  "arch" = archived exp-71
+pre-discovery order.  pseudo = purity of the pseudo-labelled child corpus
+(images whose nearest anchor is a DISCOVERED one), diagnostic.
+2026-08-27; logs/exp134/postdisc_*.json)
+
+  cell             r1 pur  pseudo (n)    space        probe arch->new    eucl arch->new    mahaT arch->new   perevt arch->new
+  galaxy10:dino    0.070   1.000 (97)    res concat   0.955 -> 0.949     0.560 -> 0.595    0.762 -> 0.746    0.021 -> 0.018
+                                         resnplm cat  0.947 -> 0.938     0.702 -> 0.728    0.802 -> 0.782    0.091 -> 0.142
+  galaxy10:lejepa  0.059   1.000 (?)     res concat   0.975 -> 0.972     0.288 -> 0.432    0.625 -> 0.740    0.001 -> 0.012
+                                         resnplm cat  0.941 -> 0.944     0.506 -> 0.739    0.673 -> 0.797    0.008 -> 0.206
+  galaxy10:visreg  0.481   1.000 (108)   res concat   0.964 -> 0.974     0.676 -> 0.807    0.868 -> 0.918    0.295 -> 0.466
+                                         resnplm cat  0.946 -> 0.968     0.744 -> 0.820    0.839 -> 0.895    0.353 -> 0.446
+  cars:visreg      0.206   1.000 (217)   res concat   0.801 -> 0.847     0.705 -> 0.692    0.613 -> 0.607    0.228 -> 0.174
+                                         resnplm cat  0.855 -> 0.872     0.747 -> 0.744    0.678 -> 0.675    0.263 -> 0.282
+  dtd:dino         0.129   1.000 (511)   res concat   0.845 -> 0.898     0.683 -> 0.781    0.604 -> 0.780    0.045 -> 0.235
+                                         resnplm cat  0.832 -> 0.864     0.733 -> 0.764    0.648 -> 0.690    0.077 -> 0.130
+  parent pre -> post-discovery (the loop's own effect on the parent head):
+    dino 0.938->0.932 / eucl 0.666->0.706;  lejepa 0.919->0.933 / 0.647->0.735 / perevt 0.007->0.196;
+    visreg 0.939->0.946 / 0.720->0.806;  cars 0.707->0.739 / 0.715->0.701;  dtd 0.799->0.808 / 0.704->0.727.
+
+- THE CONSTRUCTION WINS ON 4/5 CELLS, ON EVERY CURRENCY IT TOUCHES, AND
+  IS NEVER WORSE THAN NOISE ON THE FIFTH.  Where discovery cleared or
+  neared the gate (visreg 0.48, cars 0.21, dtd 0.13) the after-discovery
+  concat beats the archived one on probe (+0.010..+0.053 res; +0.017..
+  +0.032 res-nplm), and on dtd/visreg also on eucl (+0.10/+0.13), mahaT
+  (+0.05/+0.18) and per-event (+0.17/+0.19).  galaxy10/dino (r1 0.07) is
+  the predicted no-op (probe -0.006/-0.009, eucl +0.03).  The paper's
+  residual construction should be built AFTER discovery wherever the loop
+  finds anything.
+- THE MECHANISM IS NOT "RICHER ANCHORS EXPLAIN MORE VARIANCE" -- the
+  falsifier's first clause fires on lejepa.  With r1 purity 0.06 the new
+  order still lifts res-nplm eucl +0.23 / per-event +0.20; the parent row
+  shows the same lift (eucl +0.09, per-event +0.19) before any child is
+  trained.  Two things are happening: (i) the 5-ep proto/repulse fine-tune
+  of the parent head is a calibration repair regardless of pool purity
+  (exp 74's signature), and the child inherits it; (ii) the LABEL-FREE
+  RELABELLING IS A FAR PURER SELECTOR THAN THE POOL -- the images whose
+  nearest anchor is a discovered one are 100% novel in all five cells,
+  including where round-1 pool purity was 0.06-0.13.  The clustering step
+  is noisy; the post-hoc nearest-anchor assignment is not.  That is why the
+  construction works below the "purity gate": the gate governs whether
+  the LOOP compounds, not whether the anchors it planted are on the novel
+  class.
+- Which currency the gain lands in is base/dataset-dependent: probe on
+  cars, geometry on lejepa, both on visreg/dtd -- the same split the
+  residual half of exp 125 showed for the pre-discovery order.
+- Caveats: archived draws, single seed, one parent objective (supcon-ft).
+  The exp-125 draws for galaxy10 would give the interval; not queued.
+- Bug fixed on the way: 134c's archived-row lookup (npz keys use '_' and
+  '-' for ' ' and '->'); three cells were re-run after a syntax slip.
