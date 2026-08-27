@@ -2046,3 +2046,119 @@ anchor fine-tune.  drift = |z_post - z_pre| on the test set vs mean |z|.
   trunks have no BN, so it does not exist there.  Falsifier for (ii) going
   forward: it must not help where round-1 purity is ~0 (h1 here: +0.003
   and +0.021, borderline -- the h1:q0.99 gain is on a 500-point pool).
+
+## Exp 125 -- galaxy10 RESIDUAL spaces across draws (exps 71/72 on the exp-125 parents)
+(dino + lejepa, 100(+100)-D, single holdout, draws {0,3,5,7,8}; visreg pending.
+Regenerate: python experiments/125_aggregate_residual_draws.py galaxy10 <base>)
+
+## galaxy10 residual spaces (exp 125/71; dino, 100(+100)d, holdout 1 [single-holdout], 5 draws d[0, 3, 5, 7, 8], 20 ep)
+
+| space | probe | acc | eucl | mahaT | perevt | archived d{9} probe |
+|---|---|---|---|---|---|---|
+| supcon-ft (parent) | 0.879+-0.026 | 0.616+-0.013 | 0.526+-0.145 | 0.500+-0.135 | 0.063+-0.092 | 0.938 |
+| supcon-ft-res (residual) | 0.891+-0.025 | 0.526+-0.011 | 0.478+-0.107 | 0.467+-0.139 | 0.055+-0.048 | 0.952 |
+| supcon-ft-res (concat) | 0.903+-0.027 | 0.594+-0.010 | 0.497+-0.122 | 0.488+-0.138 | 0.059+-0.078 | 0.955 |
+| supcon-ft-res-nplm (residual) | 0.862+-0.027 | 0.598+-0.011 | 0.553+-0.115 | 0.504+-0.111 | 0.067+-0.066 | 0.925 |
+| supcon-ft-res-nplm (concat) | 0.890+-0.023 | 0.619+-0.012 | 0.538+-0.140 | 0.494+-0.134 | 0.062+-0.088 | 0.947 |
+| ss-ft (parent) | 0.804+-0.064 | 0.588+-0.015 | 0.499+-0.104 | 0.482+-0.114 | 0.040+-0.038 | 0.872 |
+| ss-ft-res (residual) | 0.852+-0.033 | 0.522+-0.014 | 0.493+-0.084 | 0.487+-0.101 | 0.056+-0.042 | 0.923 |
+| ss-ft-res (concat) | 0.869+-0.026 | 0.568+-0.013 | 0.494+-0.089 | 0.486+-0.116 | 0.052+-0.040 | 0.930 |
+
+PAIRED per-draw deltas (concat - its parent), draws [0, 3, 5, 7, 8]
+  supcon-ft-res_(concat)       probe   +0.023+-0.007  wins 5/5  +0.013 +0.030 +0.018 +0.033 +0.023
+  supcon-ft-res_(concat)       eucl    -0.030+-0.043  wins 1/5  +0.043 -0.016 -0.048 -0.088 -0.039
+  supcon-ft-res_(concat)       mahaT   -0.012+-0.020  wins 3/5  -0.045 +0.001 +0.001 -0.024 +0.008
+  supcon-ft-res_(concat)       perevt  -0.004+-0.016  wins 2/5  +0.011 +0.004 -0.035 +0.000 +0.000
+  supcon-ft-res-nplm_(concat)  probe   +0.011+-0.008  wins 5/5  +0.007 +0.025 +0.010 +0.000 +0.010
+  supcon-ft-res-nplm_(concat)  eucl    +0.012+-0.021  wins 3/5  +0.014 -0.005 -0.016 +0.044 +0.021
+  supcon-ft-res-nplm_(concat)  mahaT   -0.005+-0.015  wins 2/5  -0.024 -0.014 -0.011 +0.015 +0.008
+  supcon-ft-res-nplm_(concat)  perevt  -0.001+-0.004  wins 2/5  +0.000 +0.001 -0.010 +0.003 +0.000
+  ss-ft-res_(concat)           probe   +0.065+-0.047  wins 5/5  +0.020 +0.056 +0.033 +0.154 +0.062
+  ss-ft-res_(concat)           eucl    -0.005+-0.036  wins 3/5  +0.044 -0.008 +0.005 -0.067 +0.001
+  ss-ft-res_(concat)           mahaT   +0.004+-0.014  wins 3/5  +0.024 +0.010 +0.004 -0.002 -0.018
+  ss-ft-res_(concat)           perevt  +0.012+-0.014  wins 5/5  +0.038 +0.012 +0.005 +0.003 +0.001
+
+exp 72 discovery on the winner concat (5 draws):
+  probe_pre        0.903+-0.027   per-draw 0.930 0.891 0.859 0.932 0.902
+  probe_post       0.886+-0.024   per-draw 0.923 0.868 0.854 0.902 0.881
+  eucl_pre         0.497+-0.122   per-draw 0.394 0.587 0.636 0.552 0.315
+  eucl_post        0.506+-0.135   per-draw 0.372 0.615 0.645 0.583 0.315
+  maha_pre         0.488+-0.138   per-draw 0.347 0.582 0.655 0.554 0.302
+  maha_post        0.470+-0.146   per-draw 0.345 0.609 0.636 0.497 0.262
+  purity_r1        0.109+-0.116   per-draw 0.073 0.167 0.307 0.000 0.000
+  purity_r2        0.106+-0.126   per-draw 0.000 0.245 0.275 0.011 0.000
+  perevt_post@.05  0.065+-0.074   per-draw 0.007 0.087 0.202 0.010 0.020
+  spk_post@.05     0.204+-0.129   per-draw 0.320 0.340 0.060 0.260 0.040
+
+## galaxy10 residual spaces (exp 125/71; lejepa, 100(+100)d, holdout 1 [single-holdout], 5 draws d[0, 3, 5, 7, 8], 20 ep)
+
+| space | probe | acc | eucl | mahaT | perevt | archived d{9} probe |
+|---|---|---|---|---|---|---|
+| supcon-ft (parent) | 0.892+-0.056 | 0.753+-0.018 | 0.591+-0.080 | 0.711+-0.115 | 0.047+-0.027 | 0.919 |
+| supcon-ft-res (residual) | 0.910+-0.045 | 0.638+-0.018 | 0.623+-0.058 | 0.643+-0.090 | 0.114+-0.057 | 0.960 |
+| supcon-ft-res (concat) | 0.945+-0.033 | 0.668+-0.016 | 0.630+-0.059 | 0.709+-0.079 | 0.124+-0.059 | 0.975 |
+| supcon-ft-res-nplm (residual) | 0.887+-0.049 | 0.702+-0.025 | 0.596+-0.119 | 0.598+-0.105 | 0.083+-0.066 | 0.916 |
+| supcon-ft-res-nplm (concat) | 0.931+-0.045 | 0.760+-0.022 | 0.644+-0.080 | 0.699+-0.089 | 0.086+-0.061 | 0.941 |
+| ss-ft (parent) | 0.762+-0.181 | 0.696+-0.030 | 0.633+-0.148 | 0.665+-0.163 | 0.134+-0.119 | 0.803 |
+| ss-ft-res (residual) | 0.854+-0.075 | 0.611+-0.010 | 0.521+-0.123 | 0.589+-0.132 | 0.061+-0.060 | 0.854 |
+| ss-ft-res (concat) | 0.855+-0.094 | 0.706+-0.020 | 0.627+-0.068 | 0.692+-0.118 | 0.093+-0.047 | 0.879 |
+
+PAIRED per-draw deltas (concat - its parent), draws [0, 3, 5, 7, 8]
+  supcon-ft-res_(concat)       probe   +0.053+-0.030  wins 5/5  +0.019 +0.045 +0.069 +0.103 +0.029
+  supcon-ft-res_(concat)       eucl    +0.039+-0.064  wins 4/5  -0.062 +0.127 +0.084 +0.025 +0.020
+  supcon-ft-res_(concat)       mahaT   -0.002+-0.101  wins 3/5  -0.182 -0.004 +0.011 +0.035 +0.130
+  supcon-ft-res_(concat)       perevt  +0.077+-0.037  wins 5/5  +0.099 +0.101 +0.047 +0.116 +0.020
+  supcon-ft-res-nplm_(concat)  probe   +0.039+-0.025  wins 5/5  +0.018 +0.034 +0.030 +0.088 +0.025
+  supcon-ft-res-nplm_(concat)  eucl    +0.053+-0.067  wins 4/5  -0.070 +0.102 +0.037 +0.116 +0.080
+  supcon-ft-res-nplm_(concat)  mahaT   -0.013+-0.038  wins 3/5  -0.085 +0.006 +0.009 +0.022 -0.014
+  supcon-ft-res-nplm_(concat)  perevt  +0.039+-0.040  wins 5/5  +0.001 +0.067 +0.020 +0.103 +0.004
+  ss-ft-res_(concat)           probe   +0.093+-0.093  wins 5/5  +0.006 +0.078 +0.046 +0.273 +0.062
+  ss-ft-res_(concat)           eucl    -0.006+-0.105  wins 2/5  -0.153 +0.157 +0.057 -0.053 -0.038
+  ss-ft-res_(concat)           mahaT   +0.027+-0.055  wins 3/5  -0.055 +0.091 +0.033 -0.013 +0.080
+  ss-ft-res_(concat)           perevt  -0.042+-0.119  wins 3/5  -0.273 +0.069 +0.003 +0.003 -0.011
+
+exp 72 discovery on the winner concat (5 draws):
+  probe_pre        0.945+-0.033   per-draw 0.982 0.929 0.894 0.943 0.978
+  probe_post       0.936+-0.034   per-draw 0.986 0.923 0.887 0.924 0.963
+  eucl_pre         0.630+-0.059   per-draw 0.648 0.711 0.561 0.667 0.564
+  eucl_post        0.628+-0.084   per-draw 0.659 0.701 0.470 0.690 0.617
+  maha_pre         0.709+-0.079   per-draw 0.730 0.653 0.586 0.787 0.789
+  maha_post        0.743+-0.085   per-draw 0.859 0.677 0.619 0.796 0.763
+  purity_r1        0.161+-0.121   per-draw 0.339 0.273 0.060 0.044 0.092
+  purity_r2        0.023+-0.020   per-draw 0.038 0.012 0.000 0.054 0.013
+  perevt_post@.05  0.117+-0.062   per-draw 0.147 0.203 0.038 0.143 0.056
+  spk_post@.05     0.604+-0.259   per-draw 1.000 0.560 0.220 0.740 0.500
+
+Verdicts:
+
+- THE RESIDUAL CONCAT'S PROBE GAIN IS THE ONE EFFECT ON GALAXY10 THAT
+  SURVIVES DRAW VARIANCE.  Paired by draw, supcon-ft->res concat beats its
+  parent on 5/5 draws on BOTH bases (dino +0.023+-0.007, lejepa
+  +0.053+-0.030); res-nplm concat 5/5 (+0.011, +0.039); ss-ft->res concat
+  5/5 (+0.065, +0.093).  Every paired sd is far below the unpaired draw sd
+  (0.026-0.056) -- pairing constructions on the same held-out class
+  rescues a comparison that the unpaired exp-125 tables must call a tie.
+  Rule for the paper: CONSTRUCTION comparisons (child vs its own parent)
+  are paired by draw and decisive; ARM comparisons (supcon vs nplm) are
+  not, and stay ties.
+- ON LEJEPA THE RESIDUAL CONCAT WINS BOTH CURRENCIES: supcon-ft->res
+  concat eucl +0.039 (4/5) and per-event +0.077 (5/5) over the parent, on
+  top of the probe.  On dino it is probe-only (eucl -0.030, 1/5) -- the
+  base decides whether the child carries geometry, consistent with exp
+  134(B) (lejepa children are the large-ratio ones) and exp 80.
+- mahaT is a tie for every construction on both bases (paired sd 0.02-
+  0.10, mean within +-0.03).
+- THE ARCHIVED d{9} RESIDUAL RECORDS ARE AGAIN THE TOP OF THE RANGE:
+  0.955 (dino) / 0.975 (lejepa) vs draw means 0.903 / 0.945.  Same hazard
+  as the parents; the residual DELTA is robust, the absolute record is a
+  favourable class.
+- DISCOVERY ON THE RESIDUAL CONCAT (exp 72) DOES NOT CLEAR THE GATE AND
+  IS PROBE-NEGATIVE ON AVERAGE: r1 purity 0.109+-0.116 (dino) / 0.161+-
+  0.121 (lejepa), r2 collapses on lejepa (0.16 -> 0.02); probe -0.017 /
+  -0.009.  Calibration is flat (eucl +0.01/-0.00, mahaT -0.02/+0.03).
+  Where r1 clears the gate (dino d5 0.31, lejepa d0/d3 0.34/0.27) the
+  post per-event is the highest (0.20, 0.15, 0.20) -- the purity-gate
+  reading of exp 72/74 holds per draw.  Under nh=1 the residual concat is
+  a pre-discovery space; run discovery on it only above the gate.
+- ss-ft->res is the weakest residual on both bases (child eucl below
+  parent, per-event flips sign on lejepa), matching exp 134(B).

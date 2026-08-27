@@ -1,0 +1,53 @@
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+exp71 [galaxy10_dino_ft71_h1_d8] residual ft on exp-70 parents, runs=[('supcon-ft', 'res'), ('ss-ft', 'res'), ('supcon-ft', 'res-nplm')], epochs=20
+
+===== [galaxy10_dino_ft71_h1_d8] supcon-ft->res =====
+  [supcon-ft (parent)          ] probe=0.8797+-0.0055 acc=0.6161 eucl=0.3534 mahaT=0.2938 lid=0.6001 perevt=0.000
+  [supcon-ft-res] epoch 1/20  main=3.0059  aux=1.2795
+  [supcon-ft-res] epoch 5/20  main=2.7320  aux=0.6896
+  [supcon-ft-res] epoch 10/20  main=2.6708  aux=0.5661
+  [supcon-ft-res] epoch 15/20  main=2.6250  aux=0.5236
+  [supcon-ft-res] epoch 20/20  main=2.6160  aux=0.4667
+  extracted ft70_supcon-ft_res train: (1772, 768)
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+  extracted ft70_supcon-ft_res test: (15964, 768)
+  [supcon-ft->res (residual)   ] probe=0.8965+-0.0025 acc=0.5374 eucl=0.2991 mahaT=0.2750 lid=0.5112 perevt=0.006
+  [supcon-ft->res (concat)     ] probe=0.9023+-0.0048 acc=0.6006 eucl=0.3147 mahaT=0.3018 lid=0.5513 perevt=0.000
+
+===== [galaxy10_dino_ft71_h1_d8] ss-ft->res =====
+  [ss-ft (parent)              ] probe=0.8173+-0.0096 acc=0.5938 eucl=0.3421 mahaT=0.3281 lid=0.5281 perevt=0.005
+  [ss-ft-res] epoch 1/20  main=3.0788  aux=0.8427
+  [ss-ft-res] epoch 5/20  main=2.7719  aux=0.6192
+  [ss-ft-res] epoch 10/20  main=2.7056  aux=0.5616
+  [ss-ft-res] epoch 15/20  main=2.6563  aux=0.4905
+  [ss-ft-res] epoch 20/20  main=2.6522  aux=0.4663
+  extracted ft70_ss-ft_res train: (1772, 768)
+  extracted ft70_ss-ft_res test: (15964, 768)
+  [ss-ft->res (residual)       ] probe=0.8591+-0.0044 acc=0.5400 eucl=0.3499 mahaT=0.3082 lid=0.5389 perevt=0.005
+  [ss-ft->res (concat)         ] probe=0.8796+-0.0015 acc=0.5791 eucl=0.3428 mahaT=0.3103 lid=0.5578 perevt=0.005
+
+===== [galaxy10_dino_ft71_h1_d8] supcon-ft->res-nplm =====
+  [supcon-ft-res-nplm] epoch 1/20  main=546306771152.9796  aux=0.2753
+  [supcon-ft-res-nplm] epoch 5/20  main=71325676840.1633  aux=0.3812
+  [supcon-ft-res-nplm] epoch 10/20  main=52221015522.5102  aux=0.3861
+  [supcon-ft-res-nplm] epoch 15/20  main=33998091151.2258  aux=0.3883
+  [supcon-ft-res-nplm] epoch 20/20  main=27178706553.1607  aux=0.3814
+  extracted ft70_supcon-ft_resnplm train: (1772, 768)
+  extracted ft70_supcon-ft_resnplm test: (15964, 768)
+  [supcon-ft->res-nplm (residual)] probe=0.8539+-0.0035 acc=0.5979 eucl=0.4347 mahaT=0.3584 lid=0.5560 perevt=0.005
+  [supcon-ft->res-nplm (concat)] probe=0.8901+-0.0052 acc=0.6182 eucl=0.3742 mahaT=0.3021 lid=0.5958 perevt=0.000
+
+===== EXP71 SUMMARY [galaxy10_dino_ft71_h1_d8] =====
+  space                                    probe     acc    eucl   mahaT     lid  perevt
+  supcon-ft (parent)               0.8797+-0.0055  0.6161  0.3534  0.2938  0.6001   0.000
+  supcon-ft->res (residual)        0.8965+-0.0025  0.5374  0.2991  0.2750  0.5112   0.006
+  supcon-ft->res (concat)          0.9023+-0.0048  0.6006  0.3147  0.3018  0.5513   0.000
+  ss-ft (parent)                   0.8173+-0.0096  0.5938  0.3421  0.3281  0.5281   0.005
+  ss-ft->res (residual)            0.8591+-0.0044  0.5400  0.3499  0.3082  0.5389   0.005
+  ss-ft->res (concat)              0.8796+-0.0015  0.5791  0.3428  0.3103  0.5578   0.005
+  supcon-ft->res-nplm (residual)   0.8539+-0.0035  0.5979  0.4347  0.3584  0.5560   0.005
+  supcon-ft->res-nplm (concat)     0.8901+-0.0052  0.6182  0.3742  0.3021  0.5958   0.000
+saved /home/pharris/sigreg/SuperSig/plots/exp71_probe_galaxy10_dino_ft71_h1_d8.png
+Done.

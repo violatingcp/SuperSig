@@ -1484,6 +1484,16 @@ workhorse claim loses its leakage-free support.
 
 ### Exp 125 — The single-holdout battery, with draws
 
+> **Residual half (exps 71/72 on the draws) DONE 2026-08-27, dino + lejepa.**
+> The residual concat's probe gain over its OWN parent is the one galaxy10
+> effect that survives draw variance: 5/5 draws on both bases for all three
+> constructions (supcon->res +0.023/+0.053, res-nplm +0.011/+0.039, ss->res
+> +0.065/+0.093; paired sd 0.007-0.09 vs unpaired 0.03-0.06).  On lejepa it
+> also wins eucl (4/5) and per-event (5/5).  Archived residual records
+> (0.955/0.975) are the top of the draw range.  Discovery on the concat stays
+> below the gate on average and is probe-negative.  `logs/SUMMARY_TABLES.md`;
+> aggregator `experiments/125_aggregate_residual_draws.py`.
+
 > **galaxy10 dino + lejepa DONE 2026-08-26 (5 draws each) — PREDICTION
 > FALSIFIED ON RANDOM DRAWS.**  "Discovery survives on galaxy10" was a class-9
 > result: round-1 purity across held-out classes {2,3,4,5,6} is 0.09-0.13

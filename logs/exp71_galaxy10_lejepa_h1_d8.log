@@ -1,0 +1,53 @@
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+exp71 [galaxy10_lejepa_ft71_h1_d8] residual ft on exp-70 parents, runs=[('supcon-ft', 'res'), ('ss-ft', 'res'), ('supcon-ft', 'res-nplm')], epochs=20
+
+===== [galaxy10_lejepa_ft71_h1_d8] supcon-ft->res =====
+Fetching 37 files:   0%|          | 0/37 [00:00<?, ?it/s]Fetching 37 files: 100%|██████████| 37/37 [00:00<00:00, 335181.96it/s]
+  [supcon-ft (parent)          ] probe=0.9484+-0.0007 acc=0.7455 eucl=0.5433 mahaT=0.6597 lid=0.5253 perevt=0.028
+  [supcon-ft-res] epoch 1/20  main=2.9340  aux=1.5956
+  [supcon-ft-res] epoch 5/20  main=2.6229  aux=0.7268
+  [supcon-ft-res] epoch 10/20  main=2.5418  aux=0.6217
+  [supcon-ft-res] epoch 15/20  main=2.5034  aux=0.5390
+  [supcon-ft-res] epoch 20/20  main=2.4832  aux=0.5149
+  extracted ft70_supcon-ft_res train: (1772, 768)
+  extracted ft70_supcon-ft_res test: (15964, 768)
+  [supcon-ft->res (residual)   ] probe=0.9539+-0.0016 acc=0.6396 eucl=0.5487 mahaT=0.7535 lid=0.6828 perevt=0.048
+  [supcon-ft->res (concat)     ] probe=0.9776+-0.0009 acc=0.6612 eucl=0.5638 mahaT=0.7894 lid=0.6860 perevt=0.048
+
+===== [galaxy10_lejepa_ft71_h1_d8] ss-ft->res =====
+Fetching 37 files:   0%|          | 0/37 [00:00<?, ?it/s]Fetching 37 files: 100%|██████████| 37/37 [00:00<00:00, 21148.71it/s]
+  [ss-ft (parent)              ] probe=0.8648+-0.0085 acc=0.6992 eucl=0.6055 mahaT=0.6415 lid=0.6660 perevt=0.043
+  [ss-ft-res] epoch 1/20  main=2.9012  aux=0.9623
+  [ss-ft-res] epoch 5/20  main=2.5796  aux=0.5998
+  [ss-ft-res] epoch 10/20  main=2.5054  aux=0.5166
+  [ss-ft-res] epoch 15/20  main=2.4731  aux=0.4961
+  [ss-ft-res] epoch 20/20  main=2.4602  aux=0.4628
+  extracted ft70_ss-ft_res train: (1772, 768)
+  extracted ft70_ss-ft_res test: (15964, 768)
+  [ss-ft->res (residual)       ] probe=0.9268+-0.0044 acc=0.6098 eucl=0.4507 mahaT=0.6794 lid=0.6638 perevt=0.010
+  [ss-ft->res (concat)         ] probe=0.9269+-0.0021 acc=0.6999 eucl=0.5676 mahaT=0.7215 lid=0.6877 perevt=0.032
+
+===== [galaxy10_lejepa_ft71_h1_d8] supcon-ft->res-nplm =====
+  [supcon-ft-res-nplm] epoch 1/20  main=16826062.8522  aux=0.7377
+  [supcon-ft-res-nplm] epoch 5/20  main=-1.1565  aux=0.6904
+  [supcon-ft-res-nplm] epoch 10/20  main=-1.5136  aux=0.6747
+  [supcon-ft-res-nplm] epoch 15/20  main=-1.8243  aux=0.6660
+  [supcon-ft-res-nplm] epoch 20/20  main=-1.9040  aux=0.6624
+  extracted ft70_supcon-ft_resnplm train: (1772, 768)
+  extracted ft70_supcon-ft_resnplm test: (15964, 768)
+  [supcon-ft->res-nplm (residual)] probe=0.8896+-0.0030 acc=0.6702 eucl=0.4289 mahaT=0.4685 lid=0.5950 perevt=0.001
+  [supcon-ft->res-nplm (concat)] probe=0.9731+-0.0011 acc=0.7455 eucl=0.6230 mahaT=0.6456 lid=0.5400 perevt=0.032
+
+===== EXP71 SUMMARY [galaxy10_lejepa_ft71_h1_d8] =====
+  space                                    probe     acc    eucl   mahaT     lid  perevt
+  supcon-ft (parent)               0.9484+-0.0007  0.7455  0.5433  0.6597  0.5253   0.028
+  supcon-ft->res (residual)        0.9539+-0.0016  0.6396  0.5487  0.7535  0.6828   0.048
+  supcon-ft->res (concat)          0.9776+-0.0009  0.6612  0.5638  0.7894  0.6860   0.048
+  ss-ft (parent)                   0.8648+-0.0085  0.6992  0.6055  0.6415  0.6660   0.043
+  ss-ft->res (residual)            0.9268+-0.0044  0.6098  0.4507  0.6794  0.6638   0.010
+  ss-ft->res (concat)              0.9269+-0.0021  0.6999  0.5676  0.7215  0.6877   0.032
+  supcon-ft->res-nplm (residual)   0.8896+-0.0030  0.6702  0.4289  0.4685  0.5950   0.001
+  supcon-ft->res-nplm (concat)     0.9731+-0.0011  0.7455  0.6230  0.6456  0.5400   0.032
+saved /home/pharris/sigreg/SuperSig/plots/exp71_probe_galaxy10_lejepa_ft71_h1_d8.png
+Done.
