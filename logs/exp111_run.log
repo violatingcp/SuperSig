@@ -1,0 +1,46 @@
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+
+######## [cars:visreg] child-only deployment (supcon-ft->resnplm) ########
+  child flags 490 events: recall=0.256 precision=0.222 (concat: 0.263/0.227);  109 true-novel to explain
+      true Toyota 4Runner SUV 2012      -> Chevrolet Tahoe Hybrid SUV 2012, Isuzu Ascender SUV 2008, GMC Canyon Extended Cab 2012
+      true Toyota 4Runner SUV 2012      -> Chevrolet Tahoe Hybrid SUV 2012, Chevrolet TrailBlazer SS 2009, Land Rover Range Rover SUV 2012
+      true Toyota 4Runner SUV 2012      -> Dodge Caliber Wagon 2012, Chevrolet Malibu Hybrid Sedan 2010, Dodge Magnum Wagon 2008
+      true Toyota 4Runner SUV 2012      -> Jeep Liberty SUV 2012, Land Rover Range Rover SUV 2012, Land Rover LR2 SUV 2012
+      true Volkswagen Golf Hatchback 1991 -> Plymouth Neon Coupe 1999, Geo Metro Convertible 1993, Audi 100 Wagon 1994
+  detect: perevt child=0.256 concat=0.263  f95 child=0.049 concat=0.063
+  explain agree@1/@5 (n_scorable=4): parent=0.000/0.000  child=0.000/0.000  concat=0.000/0.250
+  explain overlap-with-concat (top1 / top5-Jaccard): parent=0.734/0.734  child=0.615/0.678
+
+######## [aircraft:visreg] child-only deployment (supcon-ft->resnplm) ########
+  child flags 287 events: recall=0.411 precision=0.477 (concat: 0.363/0.446);  137 true-novel to explain
+      true Model B200                   -> Metroliner, Gulfstream IV, Beechcraft 1900
+      true Model B200                   -> Gulfstream IV, Cessna 560, Cessna 525
+      true Model B200                   -> Cessna 560, Cessna 525, Beechcraft 1900
+      true Model B200                   -> Cessna 560, Cessna 525, BAE-125
+      true Model B200                   -> Beechcraft 1900, Metroliner, Cessna 560
+  detect: perevt child=0.411 concat=0.363  f95 child=0.063 concat=0.072
+  explain agree@1/@5 (n_scorable=15): parent=0.133/0.600  child=0.000/0.600  concat=0.067/0.600
+  explain overlap-with-concat (top1 / top5-Jaccard): parent=0.818/0.808  child=0.737/0.750
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+
+######## [cars:dino] child-only deployment (supcon-ft->resnplm) ########
+  child flags 442 events: recall=0.143 precision=0.138 (concat: 0.148/0.142);  61 true-novel to explain
+      true Volkswagen Golf Hatchback 1991 -> Plymouth Neon Coupe 1999, Audi 100 Sedan 1994, Audi 100 Wagon 1994
+      true Volkswagen Golf Hatchback 1991 -> Ford Ranger SuperCab 2011, GMC Canyon Extended Cab 2012, Jeep Patriot SUV 2012
+      true Volkswagen Golf Hatchback 1991 -> Audi 100 Wagon 1994, Daewoo Nubira Wagon 2002, Audi V8 Sedan 1994
+      true Volkswagen Golf Hatchback 1991 -> Ford F-150 Regular Cab 2007, Ford Ranger SuperCab 2011, Dodge Dakota Club Cab 2007
+      true Volkswagen Golf Hatchback 1991 -> Audi 100 Sedan 1994, Audi V8 Sedan 1994, Plymouth Neon Coupe 1999
+  detect: perevt child=0.143 concat=0.148  f95 child=0.063 concat=0.079
+  explain agree@1/@5 (n_scorable=0): parent=nan/nan  child=nan/nan  concat=nan/nan
+  explain overlap-with-concat (top1 / top5-Jaccard): parent=0.852/0.764  child=0.689/0.711
+
+===== EXP111 SUMMARY (detect with child, explain with parent) =====
+  cell               pe ch/cat  a@1 par/cat  ovl1 par/ch   j5 par/ch    width
+  cars:visreg      0.256/0.263  0.000/0.000  0.734/0.615 0.734/0.678  100v200
+  aircraft:visreg  0.411/0.363  0.133/0.067  0.818/0.737 0.808/0.750  100v200
+  cars:dino        0.143/0.148    nan/nan  0.852/0.689 0.764/0.711  100v200
+EXP111 DONE.

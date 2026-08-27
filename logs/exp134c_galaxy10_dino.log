@@ -1,0 +1,60 @@
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+exp134c [galaxy10_dino_ft134c] residual AFTER discovery; parent=supcon-ft objs=res,res-nplm holdouts=[9]
+  [parent (pre)                      ] probe=0.9377+-0.0006 acc=0.6102 eucl=0.6657 mahaT=0.7864 lid=0.4021 perevt=0.021
+
+----- discovery on the parent head -----
+  [sigreg+proto] epoch 1/5  sigreg=0.4716  proto=5.0900  min_dist=3.81  mean_dist=13.70
+  [sigreg+proto] epoch 2/5  sigreg=0.4901  proto=4.8552  min_dist=3.87  mean_dist=13.73
+  [sigreg+proto] epoch 3/5  sigreg=0.4896  proto=3.2794  min_dist=3.93  mean_dist=13.76
+  [sigreg+proto] epoch 4/5  sigreg=0.5715  proto=2.7227  min_dist=3.99  mean_dist=13.79
+  [sigreg+proto] epoch 5/5  sigreg=0.5469  proto=2.3011  min_dist=4.05  mean_dist=13.82
+  round 1: pool=86 purity=0.070 k-hat=4 anchors=4  margin=0.8154  mean-anchor=0.8464  9=0.846
+  [sigreg+proto] epoch 1/5  sigreg=0.5852  proto=4.5299  min_dist=4.10  mean_dist=13.47
+  [sigreg+proto] epoch 2/5  sigreg=0.5673  proto=3.4868  min_dist=4.15  mean_dist=13.50
+  [sigreg+proto] epoch 3/5  sigreg=0.5206  proto=2.9447  min_dist=4.19  mean_dist=13.53
+  [sigreg+proto] epoch 4/5  sigreg=0.5434  proto=2.7271  min_dist=4.24  mean_dist=13.56
+  [sigreg+proto] epoch 5/5  sigreg=0.5393  proto=2.3762  min_dist=4.29  mean_dist=13.59
+  round 2: pool=100 purity=0.200 k-hat=3 anchors=7  margin=0.8146  mean-anchor=0.9133  9=0.913
+  round 1: pool=86 purity=0.070 anchors=4 margin=0.8154
+  round 2: pool=100 purity=0.200 anchors=7 margin=0.8146
+  [parent (post-discovery)           ] probe=0.9317+-0.0017 acc=0.5938 eucl=0.7062 mahaT=0.7726 lid=0.3737 perevt=0.037
+  child corpus: 1585 seen + 64 pseudo-labelled under 7 discovered anchors (pseudo-label purity 1.000; diagnostic only)
+
+===== [galaxy10_dino_ft134c] supcon-ft->res (post-discovery) =====
+  [supcon-ft-res-postdisc] epoch 1/20  main=2.9152  aux=1.0848
+  [supcon-ft-res-postdisc] epoch 5/20  main=2.7036  aux=0.6661
+  [supcon-ft-res-postdisc] epoch 10/20  main=2.6609  aux=0.5850
+  [supcon-ft-res-postdisc] epoch 15/20  main=2.6383  aux=0.5619
+  [supcon-ft-res-postdisc] epoch 20/20  main=2.6272  aux=0.5109
+  extracted ft70_supcon-ft_res_postdisc train: (1772, 768)
+  extracted ft70_supcon-ft_res_postdisc test: (15964, 768)
+  [supcon-ft->res (post-discovery) residual] probe=0.9455+-0.0023 acc=0.4582 eucl=0.5225 mahaT=0.6755 lid=0.4690 perevt=0.014
+  [supcon-ft->res (post-discovery) concat] probe=0.9489+-0.0035 acc=0.5232 eucl=0.5947 mahaT=0.7456 lid=0.4587 perevt=0.018
+
+===== [galaxy10_dino_ft134c] supcon-ft->res-nplm (post-discovery) =====
+  [supcon-ft-res-nplm-postdisc] epoch 1/20  main=665338626851.1372  aux=0.3159
+  [supcon-ft-res-nplm-postdisc] epoch 5/20  main=88908552442.9804  aux=0.3354
+  [supcon-ft-res-nplm-postdisc] epoch 10/20  main=72753995482.9804  aux=0.3522
+  [supcon-ft-res-nplm-postdisc] epoch 15/20  main=69444060240.3137  aux=0.3593
+  [supcon-ft-res-nplm-postdisc] epoch 20/20  main=36639295828.3922  aux=0.3546
+  extracted ft70_supcon-ft_resnplm_postdisc train: (1772, 768)
+  extracted ft70_supcon-ft_resnplm_postdisc test: (15964, 768)
+  [supcon-ft->res-nplm (post-discovery) residual] probe=0.9233+-0.0015 acc=0.5807 eucl=0.7558 mahaT=0.7674 lid=0.2655 perevt=0.299
+  [supcon-ft->res-nplm (post-discovery) concat] probe=0.9384+-0.0009 acc=0.6014 eucl=0.7281 mahaT=0.7819 lid=0.3355 perevt=0.142
+
+===== EXP134c SUMMARY [galaxy10_dino_ft134c]  (discovery r1 purity 0.070, gate 0.15) =====
+  space                                          probe    eucl   mahaT  perevt
+  parent (pre)                                  0.9377  0.6657  0.7864   0.021
+  parent (post-discovery)                       0.9317  0.7062  0.7726   0.037
+  supcon-ft->res (post-discovery) residual      0.9455  0.5225  0.6755   0.014
+  supcon-ft->res (post-discovery) concat        0.9489  0.5947  0.7456   0.018
+  supcon-ft->res-nplm (post-discovery) residual  0.9233  0.7558  0.7674   0.299
+  supcon-ft->res-nplm (post-discovery) concat   0.9384  0.7281  0.7819   0.142
+  [archived exp71] supcon-ft (parent)           0.9377  0.6657  0.7864   0.021
+  [archived exp71] supcon-ft->res (residual)       nan     nan     nan     nan
+  [archived exp71] supcon-ft->res (concat)         nan     nan     nan     nan
+  [archived exp71] supcon-ft->res-nplm (residual)     nan     nan     nan     nan
+  [archived exp71] supcon-ft->res-nplm (concat)     nan     nan     nan     nan
+EXP134c DONE.

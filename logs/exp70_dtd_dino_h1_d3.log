@@ -1,0 +1,62 @@
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+exp70 [dtd_dino_ft70_h1_d3] end-to-end ft suite, arms=['simclr-ft', 'sigreg-ssl-ft', 'nplm-bil-ft', 'supcon-ft', 'ss-ft', 'nplm-sup-ft'], ft_epochs=20, emb=100, holdouts 38-38 EXCLUDED from ft
+  ft corpus: 3680/3760 train images (holdout classes removed)
+
+===== [simclr-ft] (unsupervised) =====
+  [simclr-ft] epoch 1/20  main=2.5042  aux=0.0000
+  [simclr-ft] epoch 5/20  main=2.3777  aux=0.0000
+  [simclr-ft] epoch 10/20  main=2.3530  aux=0.0000
+  [simclr-ft] epoch 15/20  main=2.3361  aux=0.0000
+  [simclr-ft] epoch 20/20  main=2.3360  aux=0.0000
+  extracted ft70_simclr-ft train: (3760, 768)
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+  extracted ft70_simclr-ft test: (1880, 768)
+  [simclr-ft     ] probe=0.9571+-0.0036 acc=0.6332 supAUC=0.9532 eucl=0.7023 mahaT=0.6980 mahaPC=0.8131 lid=0.7890
+
+===== [sigreg-ssl-ft] (unsupervised) =====
+  [sigreg-ssl-ft] epoch 1/20  main=0.0782  aux=0.1442
+  [sigreg-ssl-ft] epoch 5/20  main=0.0432  aux=0.1075
+  [sigreg-ssl-ft] epoch 10/20  main=0.0351  aux=0.0987
+  [sigreg-ssl-ft] epoch 15/20  main=0.0313  aux=0.0946
+  [sigreg-ssl-ft] epoch 20/20  main=0.0293  aux=0.0925
+  extracted ft70_sigreg-ssl-ft train: (3760, 768)
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+  extracted ft70_sigreg-ssl-ft test: (1880, 768)
+  [sigreg-ssl-ft ] probe=0.9271+-0.0039 acc=0.6168 supAUC=0.9647 eucl=0.6418 mahaT=0.6539 mahaPC=0.7587 lid=0.7511
+
+===== [nplm-bil-ft] (unsupervised) =====
+  [nplm-bil-ft] epoch 1/20  main=4841406789.7376  aux=0.4799
+  [nplm-bil-ft] epoch 5/20  main=189.0714  aux=0.5648
+  [nplm-bil-ft] epoch 10/20  main=286726166.5928  aux=0.6825
+  [nplm-bil-ft] epoch 15/20  main=374719747.6915  aux=0.6948
+  [nplm-bil-ft] epoch 20/20  main=53839138.6378  aux=0.6929
+  extracted ft70_nplm-bil-ft train: (3760, 768)
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+  extracted ft70_nplm-bil-ft test: (1880, 768)
+  [nplm-bil-ft   ] probe=0.7329+-0.0068 acc=0.2804 supAUC=0.8234 eucl=0.4827 mahaT=0.5041 mahaPC=0.4883 lid=0.5419
+
+===== [supcon-ft] (supervised) =====
+  [supcon-ft] epoch 1/20  main=1.6291  aux=0.0000
+  [supcon-ft] epoch 5/20  main=1.1562  aux=0.0000
+  [supcon-ft] epoch 10/20  main=0.9401  aux=0.0000
+  [supcon-ft] epoch 15/20  main=0.8155  aux=0.0000
+  [supcon-ft] epoch 20/20  main=0.8083  aux=0.0000
+  extracted ft70_supcon-ft train: (3760, 768)
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+  extracted ft70_supcon-ft test: (1880, 768)
+  [supcon-ft     ] probe=0.9187+-0.0034 acc=0.7402 supAUC=0.9767 eucl=0.7911 mahaT=0.7174 mahaPC=0.6542 lid=0.7200
+
+===== [ss-ft] (supervised) =====
+  [ss-ft] epoch 1/20  main=1.7677  aux=0.8596
+  [ss-ft] epoch 5/20  main=1.2571  aux=0.5599
+  [ss-ft] epoch 10/20  main=0.9555  aux=0.4974
+  [ss-ft] epoch 15/20  main=0.8555  aux=0.4745
+  [ss-ft] epoch 20/20  main=0.8168  aux=0.4693
+  extracted ft70_ss-ft train: (3760, 768)
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+  extracted ft70_ss-ft test: (1880, 768)
+  [ss-ft         ] probe=0.8467+-0.0155 acc=0.7533 supAUC=0.9818 eucl=0.8179 mahaT=0.8018 mahaPC=0.7303 lid=0.7411
+
+===== [nplm-sup-ft] (supervised) =====

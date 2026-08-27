@@ -1,0 +1,105 @@
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+exp67 [cifar100] FROM-SCRATCH pretraining, dim=100, epochs=200, holdout=[4] excluded, arms=['supcon', 'ssig', 'nplmsd']
+
+===== pretraining from scratch: supcon =====
+Using cache found in /home/pharris/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+  resuming /home/pharris/sigreg/SuperSig/checkpoints/scratch_supcon_cifar100_100d.pt at epoch 200
+  CIFAR two-view embedding-train images (no {4}): 49500
+  saved /home/pharris/sigreg/SuperSig/checkpoints/scratch_supcon_cifar100_100d.pt
+  [supcon  ] probe=0.9390 acc=0.5451 eucl=0.2334 mahaT=0.2792
+
+===== pretraining from scratch: ssig =====
+Using cache found in /home/pharris/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+  CIFAR two-view embedding-train images (no {4}): 49500
+  [ssig] epoch 1/200  main=6.3292  aux=2.1505
+  [ssig] epoch 5/200  main=5.8321  aux=0.4539
+  [ssig] epoch 10/200  main=5.3616  aux=0.2417
+  [ssig] epoch 15/200  main=5.0698  aux=0.1920
+  [ssig] epoch 20/200  main=4.8529  aux=0.1771
+  [ssig] epoch 25/200  main=4.6941  aux=0.1672
+  [ssig] epoch 30/200  main=4.5631  aux=0.1706
+  [ssig] epoch 35/200  main=4.4605  aux=0.1603
+  [ssig] epoch 40/200  main=4.3751  aux=0.1553
+  [ssig] epoch 45/200  main=4.2989  aux=0.1583
+  [ssig] epoch 50/200  main=4.2438  aux=0.1505
+  [ssig] epoch 55/200  main=4.1877  aux=0.1497
+  [ssig] epoch 60/200  main=4.1308  aux=0.1469
+  [ssig] epoch 65/200  main=4.0786  aux=0.1459
+  [ssig] epoch 70/200  main=4.0385  aux=0.1396
+  [ssig] epoch 75/200  main=3.9967  aux=0.1413
+  [ssig] epoch 80/200  main=3.9644  aux=0.1385
+  [ssig] epoch 85/200  main=3.9322  aux=0.1388
+  [ssig] epoch 90/200  main=3.8959  aux=0.1371
+  [ssig] epoch 95/200  main=3.8739  aux=0.1342
+  [ssig] epoch 100/200  main=3.8382  aux=0.1369
+  [ssig] epoch 105/200  main=3.8249  aux=0.1339
+  [ssig] epoch 110/200  main=3.7990  aux=0.1349
+  [ssig] epoch 115/200  main=3.7654  aux=0.1357
+  [ssig] epoch 120/200  main=3.7594  aux=0.1339
+  [ssig] epoch 125/200  main=3.7296  aux=0.1335
+  [ssig] epoch 130/200  main=3.7134  aux=0.1342
+  [ssig] epoch 135/200  main=3.6970  aux=0.1360
+  [ssig] epoch 140/200  main=3.6854  aux=0.1319
+  [ssig] epoch 145/200  main=3.6568  aux=0.1313
+  [ssig] epoch 150/200  main=3.6412  aux=0.1327
+  [ssig] epoch 155/200  main=3.6413  aux=0.1314
+  [ssig] epoch 160/200  main=3.6103  aux=0.1316
+  [ssig] epoch 165/200  main=3.6066  aux=0.1298
+  [ssig] epoch 170/200  main=3.5965  aux=0.1316
+  [ssig] epoch 175/200  main=3.5673  aux=0.1307
+  [ssig] epoch 180/200  main=3.5670  aux=0.1303
+  [ssig] epoch 185/200  main=3.5365  aux=0.1318
+  [ssig] epoch 190/200  main=3.5412  aux=0.1306
+  [ssig] epoch 195/200  main=3.5347  aux=0.1308
+  [ssig] epoch 200/200  main=3.5341  aux=0.1287
+  saved /home/pharris/sigreg/SuperSig/checkpoints/scratch_ssig_cifar100_100d.pt
+  [ssig    ] probe=0.9273 acc=0.5885 eucl=0.6201 mahaT=0.6024
+
+===== pretraining from scratch: nplmsd =====
+Using cache found in /home/pharris/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+  CIFAR two-view embedding-train images (no {4}): 49500
+  [nplmsd] epoch 1/200  main=-0.0336  aux=0.8774
+  [nplmsd] epoch 5/200  main=-0.1072  aux=0.8516
+  [nplmsd] epoch 10/200  main=-0.1703  aux=0.8289
+  [nplmsd] epoch 15/200  main=-0.2079  aux=0.8197
+  [nplmsd] epoch 20/200  main=-0.2393  aux=0.8098
+  [nplmsd] epoch 25/200  main=-0.2629  aux=0.8021
+  [nplmsd] epoch 30/200  main=-0.2829  aux=0.7949
+  [nplmsd] epoch 35/200  main=-0.2980  aux=0.7918
+  [nplmsd] epoch 40/200  main=-0.3139  aux=0.7873
+  [nplmsd] epoch 45/200  main=-0.3247  aux=0.7843
+  [nplmsd] epoch 50/200  main=-0.3399  aux=0.7801
+  [nplmsd] epoch 55/200  main=-0.3452  aux=0.7747
+  [nplmsd] epoch 60/200  main=-0.3551  aux=0.7748
+  [nplmsd] epoch 65/200  main=-0.3643  aux=0.7699
+  [nplmsd] epoch 70/200  main=-0.3705  aux=0.7687
+  [nplmsd] epoch 75/200  main=-0.3764  aux=0.7661
+  [nplmsd] epoch 80/200  main=-0.3860  aux=0.7641
+  [nplmsd] epoch 85/200  main=-0.3909  aux=0.7620
+  [nplmsd] epoch 90/200  main=-0.3972  aux=0.7594
+  [nplmsd] epoch 95/200  main=-0.3977  aux=0.7594
+  [nplmsd] epoch 100/200  main=-0.4040  aux=0.7576
+  [nplmsd] epoch 105/200  main=-0.4098  aux=0.7571
+  [nplmsd] epoch 110/200  main=-0.4146  aux=0.7545
+  [nplmsd] epoch 115/200  main=-0.4173  aux=0.7519
+  [nplmsd] epoch 120/200  main=-0.4205  aux=0.7510
+  [nplmsd] epoch 125/200  main=-0.4259  aux=0.7504
+  [nplmsd] epoch 130/200  main=-0.4348  aux=0.7493
+  [nplmsd] epoch 135/200  main=-0.4346  aux=0.7473
+  [nplmsd] epoch 140/200  main=-0.4360  aux=0.7458
+  [nplmsd] epoch 145/200  main=-0.4372  aux=0.7462
+  [nplmsd] epoch 150/200  main=-0.4409  aux=0.7432
+  [nplmsd] epoch 155/200  main=-0.4414  aux=0.7436
+  [nplmsd] epoch 160/200  main=-0.4468  aux=0.7423
+  [nplmsd] epoch 165/200  main=-0.4457  aux=0.7444
+  [nplmsd] epoch 170/200  main=-0.4525  aux=0.7413
+  [nplmsd] epoch 175/200  main=-0.4533  aux=0.7395
+  [nplmsd] epoch 180/200  main=-0.4527  aux=0.7395
+  [nplmsd] epoch 185/200  main=-0.4578  aux=0.7391
+  [nplmsd] epoch 190/200  main=-0.4610  aux=0.7367
+  [nplmsd] epoch 195/200  main=-0.4643  aux=0.7341
+  [nplmsd] epoch 200/200  main=-0.4641  aux=0.7335
+  saved /home/pharris/sigreg/SuperSig/checkpoints/scratch_nplmsd_cifar100_100d.pt
+  [nplmsd  ] probe=0.8161 acc=0.2317 eucl=0.4075 mahaT=0.3445
+Done.
