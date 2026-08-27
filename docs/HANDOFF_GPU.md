@@ -244,6 +244,22 @@ b~1% cells.
 
 ---
 
+## Block H — Exp 133: BN adaptation A/B (after exp 132)
+
+Paired on the cached exp-89 spaces exp 127 built; evaluation-scale.
+
+```bash
+python experiments/133_bn_adaptation_ab.py --selftest
+python experiments/133_bn_adaptation_ab.py            # do NOT pass --refresh
+```
+
+Report the paired table (frozen vs bn-adapt purity r1/r2, drift).  A False
+prediction here is fine and expected to be possible: it retires the idea.
+
+**Loader fix that gates Block B's downstream evals:** `exp77.head_emb` was
+draw-blind until 2026-08-27 (no `run_tag()` in the checkpoint name).  Exps
+80/100/104/111 on the `_h1_d*` cells only mean something from that commit on.
+
 ## Block G — Exp 132: supervised linear probe (piggyback on Block B)
 
 The campaign has NO supervised linear probe -- the `probe` column everywhere is

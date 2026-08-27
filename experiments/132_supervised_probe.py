@@ -210,6 +210,11 @@ def main():
     ap.add_argument("--epochs", type=int, default=40)
     ap.add_argument("--lr", type=float, default=1e-2)
     ap.add_argument("--no-standardize", action="store_true")
+    ap.add_argument("--cells", default="",
+                    help="comma list ds:base -- probes every exp-70/71 space "
+                         "of the cell via exp77.transfer_cell (honours "
+                         "SUPERSIG_NH / SUPERSIG_HOLDOUT_DRAW)")
+    ap.add_argument("--emb-dim", type=int, default=100)
     ap.add_argument("--baseline", default="",
                     help="arm name to compare everything against (e.g. supcon)")
     ap.add_argument("--out", default="logs/exp132")
@@ -220,31 +225,53 @@ def main():
         return
 
     files = list(args.embs) + sorted(glob.glob(args.glob))
-    if not files:
-        ap.error("need --embs / --glob (or --selftest)")
+    if not files and not args.cells:
+        ap.error("need --embs / --glob / --cells (or --selftest)")
 
-    os.makedirs(args.out, exist_ok=True)
-    rows = {}
-    print(f"{'arm':28s}{'top1':>9s}{'sd':>8s}{'n_seen':>8s}{'dim':>6s}")
-    print("-" * 60)
+    # (name, tr, tr_lab, te, te_lab, dataset) for every space to probe
+    spaces = []
     for fn in files:
         d = np.load(fn, allow_pickle=True)
         need = {"tr", "tr_lab", "te", "te_lab"}
         if not need.issubset(set(d.files)):
             print(f"  !! {os.path.basename(fn)}: missing {need - set(d.files)}")
             continue
-        tr, tr_lab = np.asarray(d["tr"]), np.asarray(d["tr_lab"])
-        te, te_lab = np.asarray(d["te"]), np.asarray(d["te_lab"])
+        arm = os.path.basename(fn).replace("embs_", "").replace(".npz", "")
+        spaces.append((arm, np.asarray(d["tr"]), np.asarray(d["tr_lab"]),
+                       np.asarray(d["te"]), np.asarray(d["te_lab"]),
+                       args.dataset))
+    if args.cells:
+        import importlib
+        from supersig.holdouts import holdout_set
+        exp77 = importlib.import_module("77_space_similarity")
+        a77 = argparse.Namespace(emb_dim=args.emb_dim, dim=args.emb_dim,
+                                 arms=None, quick=False)
+        for cell in args.cells.split(","):
+            ds, base = cell.split(":")
+            got = exp77.transfer_cell(a77, ds, base, prefix=f"{cell}|")
+            got.pop(f"{cell}|frozen", None)
+            for name, (Xtr, ytr, Xte, yte) in got.items():
+                spaces.append((name, Xtr, ytr, Xte, yte, ds))
+            print(f"  {cell}: {len(got)} spaces (tag '{run_tag()}')")
+
+    os.makedirs(args.out, exist_ok=True)
+    rows = {}
+    print(f"{'arm':28s}{'top1':>9s}{'sd':>8s}{'n_seen':>8s}{'dim':>6s}")
+    print("-" * 60)
+    for arm, tr, tr_lab, te, te_lab, ds in spaces:
         n_cls = int(max(tr_lab.max(), te_lab.max())) + 1
-        hold = (set(int(x) for x in args.holdouts.split(",") if x != "")
-                if args.holdouts
-                else set(range(n_cls - n_holdout(args.dataset), n_cls)))
+        if args.holdouts:
+            hold = set(int(x) for x in args.holdouts.split(",") if x != "")
+        elif "|" in arm:                    # a --cells space: use the env draw
+            from supersig.holdouts import holdout_set
+            hold = set(holdout_set(ds, n_cls))
+        else:
+            hold = set(range(n_cls - n_holdout(ds), n_cls))
         seen = [c for c in range(n_cls) if c not in hold]
         m, sd, vals = probe_multiseed(tr, tr_lab, te, te_lab, seen,
                                       seeds=args.seeds, epochs=args.epochs,
                                       lr=args.lr,
                                       standardize=not args.no_standardize)
-        arm = os.path.basename(fn).replace("embs_", "").replace(".npz", "")
         rows[arm] = dict(top1=m, sd=sd, vals=vals, n_seen=len(seen),
                          dim=int(tr.shape[1]), holdouts=sorted(hold))
         print(f"{arm[:27]:28s}{m:>9.4f}{sd:>8.4f}{len(seen):>8d}"
@@ -262,9 +289,14 @@ def main():
             print(f"  {arm[:30]:32s} {gap:+.4f}  (thresh {thr:.4f})  -> {tag}")
             rows[arm]["vs_baseline"] = dict(gap=gap, thresh=thr, winner=w)
 
-    with open(os.path.join(args.out, f"probe{run_tag()}.json"), "w") as fh:
+    # one file per invocation target, so consecutive runs never overwrite
+    src = ("cells_" + args.cells.replace(":", "-").replace(",", "_")
+           if args.cells else
+           "embs_" + os.path.basename(os.path.dirname(files[0]) or "bank"))
+    out_path = os.path.join(args.out, f"probe_{src}{run_tag()}.json")
+    with open(out_path, "w") as fh:
         json.dump(rows, fh, indent=1, default=float)
-    print(f"\nwrote {args.out}/probe{run_tag()}.json")
+    print(f"\nwrote {out_path}")
     print("\nREMINDER: report this as a NO-COST argument (does adding SIGReg to "
           "a\nsupervised objective cost supervised accuracy?), not as a win "
           "over SSL\nbaselines -- our objectives use labels and theirs do not.")

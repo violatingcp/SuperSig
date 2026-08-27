@@ -253,8 +253,8 @@ def transfer_spaces(args, DS, BASE):
         yield f"frozen-{BASE} (768d)", X.numpy(), y, True
     emb = {}
     for arm in ARMS_70:
-        bp = os.path.join(DATA_DIR, f"tf_feats_{DS}_{BASE}_ft70_{arm}.pt")
-        cp = os.path.join(CKPT_DIR, f"{DS}_ft_{BASE}_{arm}_seen.pt")
+        bp = os.path.join(DATA_DIR, f"tf_feats_{DS}_{BASE}_ft70_{arm}{run_tag()}.pt")
+        cp = os.path.join(CKPT_DIR, f"{DS}_ft_{BASE}_{arm}_seen{run_tag()}.pt")
         if not (os.path.exists(bp) and os.path.exists(cp)):
             continue
         X, y = bank(bp)
@@ -266,8 +266,9 @@ def transfer_spaces(args, DS, BASE):
         yield arm, H, y, arm == "supcon-ft"
     for parent, obj in CHILDREN_71:
         bp = os.path.join(DATA_DIR,
-                          f"tf_feats_{DS}_{BASE}_ft70_{parent}_{obj}.pt")
-        cp = os.path.join(CKPT_DIR, f"{DS}_ft_{BASE}_{parent}_{obj}_seen.pt")
+                          f"tf_feats_{DS}_{BASE}_ft70_{parent}_{obj}{run_tag()}.pt")
+        cp = os.path.join(CKPT_DIR,
+                          f"{DS}_ft_{BASE}_{parent}_{obj}_seen{run_tag()}.pt")
         if not (os.path.exists(bp) and os.path.exists(cp)
                 and parent in emb):
             continue

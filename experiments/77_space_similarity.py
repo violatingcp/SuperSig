@@ -59,8 +59,12 @@ CHILDREN_71 = [("supcon-ft", "res"), ("ss-ft", "res"),
 # ---------------------------------------------------------------- loading
 
 def head_emb(DS, BASE, arm, emb_dim, split):
-    bp = os.path.join(DATA_DIR, f"tf_feats_{DS}_{BASE}_ft70_{arm}.pt")
-    cp = os.path.join(CKPT_DIR, f"{DS}_ft_{BASE}_{arm}_seen.pt")
+    # run_tag() so SUPERSIG_NH / SUPERSIG_HOLDOUT_DRAW select the matching
+    # exp-70/71 artifacts.  Until 2026-08-27 this loader was draw-blind: every
+    # consumer (exps 80/100/102/103/111/131) silently scored the campaign-
+    # default (alphabetical-holdout) spaces whatever the env said.
+    bp = os.path.join(DATA_DIR, f"tf_feats_{DS}_{BASE}_ft70_{arm}{run_tag()}.pt")
+    cp = os.path.join(CKPT_DIR, f"{DS}_ft_{BASE}_{arm}_seen{run_tag()}.pt")
     if not (os.path.exists(bp) and os.path.exists(cp)):
         return None
     X, y = torch.load(bp)[split]

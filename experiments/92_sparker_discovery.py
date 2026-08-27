@@ -78,7 +78,8 @@ def fit_sparker(D, R, M=16, steps=300, sigma_ratio=10.0, lr=0.05, seed=0):
 def sparker_discovery(backbone, means, *, base_ds, train_eval_loader,
                       test_loader, seen, holdouts, rep_weight, sigreg_weight,
                       n_slices, rounds=2, ft_epochs=5, tau_quantile=0.95,
-                      M=16, steps=300, merge_dist=3.0, seed=0):
+                      M=16, steps=300, merge_dist=3.0, seed=0,
+                      bn_adapt=False):
     """The exp-24 discovery loop with the anchor-proposal step swapped for
     SparKer density-ratio centres (module docstring)."""
     n_classes = means.size(0)
@@ -133,7 +134,7 @@ def sparker_discovery(backbone, means, *, base_ds, train_eval_loader,
                             mode="repulse", disc="proto", alpha=1.0,
                             rep_weight=rep_weight,
                             sigreg_weight=sigreg_weight, n_slices=n_slices,
-                            rep_exempt_from=n_classes)
+                            rep_exempt_from=n_classes, bn_adapt=bn_adapt)
         cur_means = cur_means.detach()
 
         from sklearn.metrics import roc_auc_score

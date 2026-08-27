@@ -1,4 +1,4 @@
-# Proposed tests to improve performance — exps 81–132
+# Proposed tests to improve performance — exps 81–133
 
 Companion to [QUESTIONS.md](QUESTIONS.md) (whose "open items as of exp 58" list
 this supersedes).  Every entry follows the standard protocol in
@@ -1886,6 +1886,54 @@ top q of the reference -- which cancels to ~0 under the null while preserving
 real signal.  Pinned by `tests/test_poolcut.py::test_refuses_pure_noise`.
 
 **Cost.**  Round-1 A/B is minutes per cell.  Full multi-round needs backbones.
+
+### Exp 133 — BatchNorm adaptation: a construction or a leak?
+
+> **CODE READY 2026-08-27.**  `133_bn_adaptation_ab.py`, `--selftest` green +
+> `tests/test_bn_adapt_switch.py`.  Queued on the GPU box behind exp 132.
+
+**Motivation.**  Exp 127 re-ran exp 109 with BatchNorm actually frozen and the
+headline moved (h10 purity 0.358 -> 0.268; the round-2 rise 0.418 -> 0.237
+vanished).  But exp 109 REBUILDS the exp-89 space, so two things changed at
+once and exp 127 cannot apportion the loss between BN drift and retrain noise.
+What the drift *was* is the interesting part: a frozen trunk with BN in train
+mode is running unsupervised test-time normalisation adaptation on the
+fine-tune loader, which in discovery contains the pooled novel points.  No
+labels are used, so it is legitimate -- but it is a DIFFERENT construction
+from "freeze the encoder, iterate the anchors", and it ran silently, on the
+CIFAR ResNet only (the ViT transfer trunks are LayerNorm).
+
+**Protocol.**  `supersig.train.set_train_mode(backbone, bn_adapt=False)` is
+now the explicit switch (plumbed through `train_sigreg_hybrid`,
+`run_discovery`, `exp92.sparker_discovery`; default off everywhere).  Paired
+A/B on ONE cached checkpoint per holdout size (`checkpoints/exp89_c100_h*`,
+the spaces exp 127 built): A frozen, B weights-frozen + BN adapting; same seed,
+loader order, critic.  h{1,5,10} x q{0.95,0.99}.  Report purity r1/r2, margin,
+post probe, and test-set embedding drift |z_post - z_pre| (max, mean) against
+mean |z| -- the direct "did the space move" measurement.
+
+**Prediction.**  B reproduces the archived exp-109 signature on the same space
+where A does not: higher r1 purity at h10 and a round-2 rise, with drift of
+order the 1.29 exp 130 measured; A drifts ~0.  Then BN adaptation is a real
+construction -- "corpus-adaptive normalisation helps the density-ratio pool"
+-- and enters the paper under its own name with its own falsifier, never as
+the default.
+
+**Falsifier.**  B ~ A (gap inside ~0.03 seed noise) -> the archived 0.358 was
+retrain variance, not adaptation; drop the idea, quote exp 127.  B < A ->
+adaptation is harmful and the archived numbers were lucky.
+
+**Cost.**  Evaluation-scale: spaces cached; 12 two-round frozen loops (~2x the
+discovery half of exp 109).
+
+**Also fixed on the way (2026-08-27).**  `exp77.head_emb` -- the checkpoint
+loader behind exps 80/100/102/103/111/131/132 -- was DRAW-BLIND: it built
+`{ds}_ft_{base}_{arm}_seen.pt` with no `run_tag()`, so under `SUPERSIG_NH` /
+`SUPERSIG_HOLDOUT_DRAW` every one of those scripts silently scored the
+alphabetical-holdout spaces.  Exp 131's galaxy10 cells were run at the default
+draw and are labelled as such, so no archived number is wrong; but the exp-125
+downstream evaluations (80/100/104) MUST be run after this fix.  Same fix in
+exp 76.  Pinned by `test_head_emb_honours_the_holdout_draw_tag`.
 
 ### Exp 132 — A supervised linear probe (the metric we never ran)
 

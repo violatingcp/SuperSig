@@ -162,7 +162,7 @@ def run_discovery(backbone, means, *, base_ds, train_eval_loader, test_loader,
                   n_slices, rounds=2, ft_epochs=5, tau_quantile=0.95,
                   kmax=None, merge_dist=3.0, exempt_repulsion=True,
                   names=None, seed=0, pool_score="dist",
-                  cut_rule="quantile", n_min=None):
+                  cut_rule="quantile", n_min=None, bn_adapt=False):
     """
     Iterated anchor discovery.  `means` holds the trained class anchors
     (n_classes rows); returns (extended_means, history) where history is one
@@ -236,7 +236,8 @@ def run_discovery(backbone, means, *, base_ds, train_eval_loader, test_loader,
                             mode="repulse", disc="proto", alpha=1.0,
                             rep_weight=rep_weight, sigreg_weight=sigreg_weight,
                             n_slices=n_slices,
-                            rep_exempt_from=n_classes if exempt_repulsion else None)
+                            rep_exempt_from=n_classes if exempt_repulsion else None,
+                            bn_adapt=bn_adapt)
         cur_means = cur_means.detach()
 
         te_embs, te_lab = collect_embeddings(backbone, test_loader)

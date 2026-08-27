@@ -129,8 +129,15 @@ def backbone_is_frozen(backbone):
     return not any(p.requires_grad for p in backbone.parameters())
 
 
-def set_train_mode(backbone):
+def set_train_mode(backbone, bn_adapt=False):
     """train() normally; eval() when the backbone is fully frozen.
+
+    `bn_adapt=True` is the EXPLICIT opt-in for the pre-2026-08-26 behaviour on
+    a frozen trunk: weights fixed, BatchNorm running statistics still adapting
+    to whatever corpus the fine-tune loader shows them (which, in discovery,
+    contains the novel class).  That is unsupervised test-time normalisation
+    adaptation -- legitimate, but a DIFFERENT construction from "frozen", so it
+    is never the default.  Exp 133 is the paired A/B.
 
     WHY.  `requires_grad_(False)` stops the WEIGHTS updating but does NOT stop
     BatchNorm running statistics from updating -- `.train()` mode keeps
@@ -148,13 +155,16 @@ def set_train_mode(backbone):
     is a no-op unless every parameter has requires_grad=False, so unfrozen
     training is unaffected.
     """
-    backbone.eval() if backbone_is_frozen(backbone) else backbone.train()
+    if backbone_is_frozen(backbone) and not bn_adapt:
+        backbone.eval()
+    else:
+        backbone.train()
 
 def train_sigreg_hybrid(backbone, loader, epochs, means, mode="repulse",
                         disc="supcon", alpha=1.0, temp=0.1, lr=1e-3, margin=3.0,
                         rep_weight=REP_WEIGHT, sigreg_weight=1.0, n_slices=64,
                         rep_exempt_from=None, disc_sigma_end=None,
-                        disc_sigma_from=None):
+                        disc_sigma_from=None, bn_adapt=False):
     """
     Classwise SIGReg + mean-geometry regularizer + a discriminative term.
 
@@ -181,7 +191,7 @@ def train_sigreg_hybrid(backbone, loader, epochs, means, mode="repulse",
         head = torch.nn.Linear(means.size(1), means.size(0)).to(DEVICE)
         params += list(head.parameters())
     opt = torch.optim.Adam(params, lr=lr)
-    set_train_mode(backbone)
+    set_train_mode(backbone, bn_adapt=bn_adapt)
     for ep in range(epochs):
         class_sigma = None
         if disc_sigma_end is not None and disc_sigma_from is not None:

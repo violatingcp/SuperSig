@@ -171,3 +171,10 @@ Artifact conventions (a future session should follow these exactly):
    pinned by `tests/test_frozen_backbone.py`.  **Frozen CIFAR results archived
    before that date (exps 86/92b/109) were produced with BN still adapting and
    will not reproduce exactly on re-run.**
+11. `exp77.head_emb` (the space loader behind exps 80/100/102/103/111/131/132)
+   was draw-blind until 2026-08-27: no `run_tag()` in the checkpoint / feature
+   bank name, so under `SUPERSIG_NH` / `SUPERSIG_HOLDOUT_DRAW` it silently
+   loaded the alphabetical-holdout spaces.  Fixed (also in exp 76); pinned by
+   `tests/test_bn_adapt_switch.py::test_head_emb_honours_the_holdout_draw_tag`.
+   Any `_h1_d*` downstream evaluation dated before the fix scored the wrong
+   space.
