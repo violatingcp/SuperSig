@@ -1,5 +1,10 @@
 # CIFAR-10 master table
 
+> Exp-59 SEED UPDATE (3 seeds, 2026-08-28): sup->res-nplm post 0.983+-0.000,
+> eucl 0.834+-0.002, per-event post 0.55+-0.04, SpK/Maha/MMD post 0.96/0.85/
+> 0.88; supcon+nplm pre 0.954+-0.002, discovery loss -0.024+-0.008 (3/3).
+> All C10 champion records are seed-stable; SIGReg trunks' pre-probe sd 0.01.
+>
 > Exp-73 addendum (exp-71 residual-ft recipe, 32+32-D, holdout 4):
 > supcon->res concat probe 0.9536 (ties the pre-discovery concat record
 > 0.954), supcon->res-nplm concat 0.9465 with the best acc (0.877);

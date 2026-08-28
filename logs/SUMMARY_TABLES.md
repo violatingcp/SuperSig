@@ -2624,3 +2624,35 @@ POOLS AND DISCOVERY (gate 0.15)
 - Caveats: seed 0, holdout {4}; Tier 3 draws {43,57,48} are queued for
   the shortlist and will give the interval.  Residual/concat rows on
   these trunks: exp 137 above.
+
+## Exp 59 champions on CIFAR-10, 3 seeds (Block M; seeds 0 archived, 1, 2 new)
+(16+16 concats, holdout {4}, hub trunk; power at alpha .05, f=.02, annealed
+SparKer; mean+-sd over seeds; 2026-08-28; logs/exp59/nplm_residual_concat_cifar10{,_s1,_s2}.npz)
+
+| space | probe pre -> post | acc | eucl | mahaT | perevt pre -> post | SpK@.02 pre -> post | Maha@.02 post | MMD@.02 post |
+|---|---|---|---|---|---|---|---|---|
+| sup->res-nplm | 0.930+-.010 -> **0.983+-.000** | 0.909 | **0.834+-.002** | 0.759+-.009 | 0.269 -> **0.549+-.043** | 0.77 -> 0.96 | 0.85 | 0.88 |
+| sup+nplm | 0.926+-.010 -> 0.979+-.001 | 0.887 | 0.794+-.007 | 0.729+-.036 | 0.244 -> 0.441 | 0.57 -> 0.86 | 0.83 | 0.79 |
+| supcon+nplm | **0.954+-.002** -> 0.930+-.008 | 0.880 | 0.766 | 0.723 | 0.007 -> 0.160 | 0.34 -> 0.25 | 0.67 | 0.13 |
+| nplmsup+nplm | 0.888+-.008 -> 0.917+-.004 | 0.864 | 0.686 | 0.752+-.020 | 0.135 -> 0.152 | 0.11 -> 0.11 | 0.53 | 0.13 |
+| nplmsup->res | 0.871+-.012 -> 0.879+-.014 | 0.696 | 0.448 | 0.621+-.037 | 0.020 -> 0.062 | 0.06 -> 0.10 | 0.30 | 0.13 |
+
+- THE C10 CHAMPION IS SEED-STABLE TO THE THIRD DECIMAL: sup->res-nplm
+  post-probe 0.983+-0.000, eucl 0.834+-0.002, per-event post 0.55+-0.04,
+  SparKer post 0.96+-0.06, Maha/MMD post 0.85/0.88.  Every record the
+  paper quotes for CIFAR-10 (post-probe 0.984, eucl 0.834, the full
+  post-discovery power suite) reproduces on three seeds.  supcon+nplm's
+  pre-discovery probe record (0.954+-0.002) likewise.
+- Where the seeds move: the SIGReg trunks' PRE-probe (sd 0.010) and
+  mahaT (sd 0.01-0.04) -- and discovery erases the pre-probe variance
+  (post sd 0.000-0.001).  supcon+nplm's discovery LOSS is stable
+  (-0.024+-0.008, 3/3 seeds) and so is its MMD collapse (0.13 post):
+  deploy SupCon concats discovery-free, on all three seeds.
+- The exp-58 currency split reproduces at the seed level: the proto ft
+  that gives 0.983 probe also gives the best power suite on sup->res-nplm
+  (all >= 0.85), so on C10 this one construction holds both currencies
+  post-discovery.  (Exp 58's split was between ft OBJECTIVES on the
+  standalone NPLM arms; the residual concat does not face it.)
+- Honest citation: sup->res-nplm 0.983+-0.000 (3 seeds); supcon+nplm
+  0.954+-0.002 (3 seeds).  Caveats unchanged: hub trunk (leakage), one
+  holdout.  The clean-trunk analogue is exp 137 on cifar10 (queued).
