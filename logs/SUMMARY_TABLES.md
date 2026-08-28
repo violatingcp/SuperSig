@@ -2720,3 +2720,30 @@ cells + the 9 archived-draw cells = 144; variance decomposition stratified by
 - Pairing (frozen np vs the exp-70 loop on the same draw): the loop's
   round-1 purity on the same parents is 0.00-0.35 (exp 125); frozen np is
   above it on every (cell, draw), by +0.2..+0.5.
+
+## Exp 59 champions on CIFAR-100, 100-D (50+50) classwise-lam5, 3 seeds (Block N)
+(holdout {4}, hub trunk; power at alpha .05, f=.02; mean+-sd over seeds 0 (archived), 1, 2;
+2026-08-28; logs/exp59/nplm_residual_concat_cifar100{,_s1,_s2}_100d_cwlam5.npz)
+
+| space | probe pre -> post | acc | eucl | mahaT | perevt post | SpK@.02 pre -> post | MMD@.02 post |
+|---|---|---|---|---|---|---|---|
+| supcon+nplm | **0.954+-.008** -> **0.951+-.005** | 0.582 | 0.375+-.044 | 0.403+-.079 | 0.020 | 0.33 -> 0.33 | **0.80+-.06** |
+| nplmsup+nplm | 0.931+-.008 -> 0.938+-.004 | 0.525 | 0.502+-.112 | 0.434+-.093 | 0.027 | 0.25 -> 0.30 | **0.81+-.09** |
+| sup->res-nplm | 0.929+-.003 -> 0.925+-.010 | 0.596 | 0.516+-.018 | 0.385+-.024 | 0.050 | 0.31 -> 0.31 | 0.44+-.14 |
+| sup+nplm | 0.928+-.007 -> 0.926+-.007 | 0.550 | 0.525+-.016 | 0.416+-.076 | 0.087+-.029 | 0.39 -> 0.23 | 0.34+-.10 |
+| nplmsup->res | 0.913+-.008 -> 0.926+-.007 | 0.191 | 0.437+-.004 | 0.341+-.024 | 0.040 | 0.05 -> 0.15 | 0.30+-.15 |
+
+- THE C100 CONCAT PROBE RECORD HOLDS ON SEEDS: supcon+nplm 0.954+-0.008
+  pre, 0.951+-0.005 post -- but the archived "discovery is probe-POSITIVE
+  for 4/5 arms" reading softens: on seeds the loop is neutral for
+  supcon+nplm (-0.003), sup->res-nplm (-0.004) and sup+nplm (-0.002), and
+  positive only for the two NPLM-supervised-trunk concats (+0.007,
+  +0.013).  Same rule as everywhere: discovery response tracks the trunk.
+- Two archived numbers were high draws: nplmsup+nplm's MMD post 0.94 is
+  0.81+-0.09, and supcon+nplm's post 0.9467 is 0.951+-0.005 (fine, the
+  archived value was slightly LOW).  The C100 MMD record stays with the
+  NPLM concats (0.80-0.81) vs 0.34-0.44 for the sup-recipe residuals.
+- mahaT is again the seed-sensitive column (sd 0.02-0.11) and never
+  exceeds 0.43 here: the pre-basin C100 ceiling, on seeds.  Per-event
+  stays dead (<= 0.09).
+- The 16+16 configuration's seeds 1/2 are still running (Block N).
