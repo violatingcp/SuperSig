@@ -586,14 +586,36 @@ estimator, not the representation, is what fails to reach it.
 % ===========================================================================
 
 This appendix reports the campaign in more detail than the main text, and
-reports it \emph{as it stands} rather than waiting for completion. Several
-studies are unfinished; they are listed anyway, because a reader deciding
-whether to believe the main claims should be able to see the whole surface
-that was searched and not only the parts that resolved.
+reports it \emph{as it stands} rather than waiting for completion. All tables
+in this paper are generated from the archived result files by a single script,
+and each carries a machine-written coverage line stating what is present and
+what is missing. Blanks are shown as ``--''.
 
-All tables in this paper are generated from the archived result files by a
-single script, and each carries a machine-written coverage line stating what
-is present and what is missing. Blanks are shown as ``--''.
+\paragraph{galaxy10, and the procedure that clears the gate.}
+galaxy10 carries more weight than any other dataset here, because no backbone
+we use has seen it: DINO, LeJEPA and VISReg were all pretrained on natural
+images, and galaxy morphology is genuinely out of that distribution. It is
+also, for the same reason, the hardest cell in the study.
+
+Table~\ref{tab:galaxy} reports it under both discovery procedures on the same
+holdout draws. Under natural discovery --- a distance pool with the encoder
+fine-tuned --- round-1 pool purity sits at $0.09$--$0.29$ across every
+objective and backbone, with sds that are frequently as large as the means:
+almost nothing clears the $0.15$ gate, and no objective clears it reliably.
+Under the frozen-anchor density-ratio pool, the same objectives on the same
+draws reach $0.39$--$0.58$.
+
+That is a factor of three to five from changing the procedure and nothing
+else. It is the sharpest evidence in the paper for a claim we make throughout:
+failures that present as properties of the representation are frequently
+properties of the pipeline wrapped around it. On galaxy10 specifically, the
+ordering of objectives under natural discovery is close to noise --- the sds
+overlap almost completely --- and the ordering under the frozen pool is both
+tighter and higher. We would not have found this by improving the encoder.
+
+Note the coverage line: the frozen-pool arm of the study covers the three
+supervised objectives only, so nine of the eighteen cells in that half are
+absent rather than negative.
 
 \paragraph{Constructions on the leakage-free trunks.}
 Table~\ref{tab:residuals} gives every construction on the from-scratch
@@ -613,14 +635,6 @@ the probe for \texttt{supcon+nplm} ($0.954 \to 0.930$) in all three seeds,
 which is the seeded version of a pattern we observe throughout: the loop
 repairs weak spaces and damages strong ones.
 
-\paragraph{Study inventory.}
-Table~\ref{tab:inventory} lists every numbered study in the repository and
-whether its results are present. A checkmark is a statement about data on
-disk, not a claim of completeness. We include the studies with no results for
-the same reason we include the negative ones: the shortlist in the main text
-is the surviving remainder of this list, and that is only meaningful if the
-list is visible.
-
 \paragraph{Known gaps.} At the time of writing: the $2\times2$ of
 Table~\ref{tab:2x2} is single-seed throughout, and its one large interaction
 rests on a single cell; the multi-holdout regime is run only on the
@@ -629,9 +643,9 @@ Section~\ref{sec:constructions} is quoted from re-verified runs after a
 BatchNorm fix invalidated the earlier archive, so its older numbers do not
 reproduce and are not used.
 
+\input{tables/galaxy}
 \input{tables/residuals}
 \input{tables/seeds}
-\input{tables/inventory}
 
 % ===========================================================================
 \section{Objective naming}
