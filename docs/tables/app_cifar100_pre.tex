@@ -1,0 +1,21 @@
+% STATUS: 8/8 objectives; CIFAR-100 from random init, 100-D, holdout class 4 (single holdout, $b=0.01$), seed 0; probe and top-1 over 3 probe restarts.
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{lcccccccccc}
+\toprule
+objective & probe & top-1 & acc & supAUC & eucl & mahaT & mahaPC & lid & per-ev & probe sd \\
+\midrule
+SupCon & 0.940 & 0.608 & 0.545 & 0.974 & 0.233 & 0.279 & 0.487 & 0.740 & 0.00 & 0.001 \\
+\textbf{SupCon+SIGReg ($\lambda{=}5$)} & 0.937 & 0.597 & 0.588 & 0.976 & 0.620 & 0.602 & 0.631 & 0.734 & 0.07 & 0.007 \\
+NPLM-dist.+classwise SIGReg & 0.898 & 0.507 & 0.463 & 0.946 & 0.525 & 0.411 & 0.553 & 0.678 & 0.03 & 0.000 \\
+SupCon+SIGReg (repulse) & 0.823 & 0.360 & 0.346 & 0.930 & 0.340 & 0.320 & 0.432 & 0.537 & 0.00 & 0.008 \\
+NPLM-dist. (sup.) & 0.820 & 0.254 & 0.232 & 0.913 & 0.408 & 0.345 & 0.348 & 0.542 & 0.05 & 0.003 \\
+SimCLR & 0.799 & 0.292 & 0.242 & 0.859 & 0.443 & 0.385 & 0.453 & 0.570 & 0.01 & 0.012 \\
+VISReg/LeJEPA & 0.797 & 0.239 & 0.190 & 0.844 & 0.499 & 0.382 & 0.434 & 0.534 & 0.03 & 0.004 \\
+NPLM (unsup.) & 0.757 & 0.223 & 0.181 & 0.836 & 0.413 & 0.361 & 0.447 & 0.635 & 0.01 & 0.003 \\
+\bottomrule
+\end{tabular}
+\caption{\textbf{CIFAR-100 leakage-free lineage: the frozen-space battery.} probe = holdout-vs-rest linear AUC; top-1 = supervised linear probe on seen classes; acc = nearest-centroid; supAUC = macro OvR AUC of the proto posterior; eucl / mahaT / mahaPC = novelty AUC of min-centroid distance, tied and per-class Mahalanobis; lid = local-intrinsic-dimension AUC; per-ev = per-event power at $\alpha{=}0.05$. \emph{Coverage:} 8/8 objectives; CIFAR-100 from random init, 100-D, holdout class 4 (single holdout, $b=0.01$), seed 0; probe and top-1 over 3 probe restarts.}
+\label{tab:app_cifar100_pre}
+\end{table}

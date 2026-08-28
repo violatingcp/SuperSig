@@ -110,8 +110,9 @@ def t_objectives():
         r"(random init; the encoder never saw the held-out class). "
         r"Probe and top-1 measure \emph{decodability}; Euclidean AUC, tied "
         r"Mahalanobis and per-event power at $\alpha{=}0.05$ measure "
-        r"\emph{discoverability}. Adding SIGReg is a probe tie and a top-1 "
-        r"loss, and wins every discoverability column.",
+        r"\emph{discoverability}. Adding SIGReg is a tie on probe and top-1 "
+        r"and wins every discoverability column -- at 100 classes; see "
+        r"Table~\ref{tab:app_cifar10_pre} for the few-class lineage.",
         "tab:objectives", status,
         "llcccccc",
         r"objective & sup. & probe & top-1 & acc & eucl & mahaT & per-ev \\")

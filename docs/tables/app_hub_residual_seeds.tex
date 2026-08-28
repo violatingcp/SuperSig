@@ -1,0 +1,21 @@
+% STATUS: exp 75, both CIFAR datasets, 5 seeds; hub-pretrained trunk (saw the held-out class).
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{lcccc}
+\toprule
+space & probe & acc & eucl & mahaT \\
+\midrule
+\multicolumn{5}{l}{\emph{cifar10, 32d, 5 paired seeds}} \\
+\quad parent & 0.939$\pm$0.002 & 0.869$\pm$0.007 & 0.722$\pm$0.019 & 0.667$\pm$0.026 \\
+\quad res\_concat & 0.955$\pm$0.002 & 0.856$\pm$0.004 & 0.567$\pm$0.020 & 0.541$\pm$0.026 \\
+\quad res-nplm\_concat & 0.945$\pm$0.002 & 0.873$\pm$0.007 & 0.717$\pm$0.023 & 0.593$\pm$0.026 \\
+\multicolumn{5}{l}{\emph{cifar100, 100d, 5 paired seeds}} \\
+\quad parent & 0.947$\pm$0.010 & 0.574$\pm$0.005 & 0.385$\pm$0.033 & 0.374$\pm$0.021 \\
+\quad res\_concat & 0.952$\pm$0.008 & 0.534$\pm$0.004 & 0.607$\pm$0.020 & 0.494$\pm$0.013 \\
+\quad res-nplm\_concat & 0.955$\pm$0.006 & 0.576$\pm$0.003 & 0.339$\pm$0.035 & 0.307$\pm$0.014 \\
+\bottomrule
+\end{tabular}
+\caption{\textbf{Hub-lineage residual concats, 5 paired seeds (exp 75; ablation lineage).} \emph{Coverage:} exp 75, both CIFAR datasets, 5 seeds; hub-pretrained trunk (saw the held-out class).}
+\label{tab:app_hub_residual_seeds}
+\end{table}

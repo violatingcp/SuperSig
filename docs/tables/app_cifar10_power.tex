@@ -1,0 +1,23 @@
+% STATUS: 8/8 objectives; annealed-$\sigma$ SparKer, parametric Mahalanobis and MMD two-sample power at $\alpha{=}0.05$, $N_D{=}5000$, 200 null / 50 signal toys; fractions 0.01, 0.02, 0.1.
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{lccccccccc}
+\toprule
+& \multicolumn{3}{c}{SparKer} & \multicolumn{3}{c}{Mahalanobis} & \multicolumn{3}{c}{MMD} \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-7}\cmidrule(lr){8-10}
+objective & $0.01$ & $0.02$ & $0.1$ & $0.01$ & $0.02$ & $0.1$ & $0.01$ & $0.02$ & $0.1$ \\
+\midrule
+SupCon & 0.48 & 0.88 & 1.00 & 0.16 & 0.14 & 0.84 & 0.32 & 0.84 & 1.00 \\
+\textbf{SupCon+SIGReg ($\lambda{=}5$)} & 0.06 & 0.16 & 1.00 & 0.00 & 0.00 & 0.00 & 0.18 & 0.46 & 1.00 \\
+NPLM-dist.+classwise SIGReg & 0.12 & 0.38 & 1.00 & 0.10 & 0.20 & 0.94 & 0.18 & 0.48 & 1.00 \\
+SupCon+SIGReg (repulse) & 0.08 & 0.36 & 1.00 & 0.24 & 0.56 & 1.00 & 0.08 & 0.28 & 1.00 \\
+NPLM-dist. (sup.) & 0.14 & 0.16 & 1.00 & 0.10 & 0.22 & 0.92 & 0.08 & 0.16 & 1.00 \\
+SimCLR & 0.10 & 0.22 & 1.00 & 0.02 & 0.00 & 0.00 & 0.22 & 0.44 & 1.00 \\
+VISReg/LeJEPA & 0.04 & 0.04 & 1.00 & 0.06 & 0.12 & 0.36 & 0.04 & 0.08 & 1.00 \\
+NPLM (unsup.) & 0.06 & 0.04 & 0.88 & 0.00 & 0.02 & 0.02 & 0.04 & 0.02 & 0.92 \\
+\bottomrule
+\end{tabular}
+\caption{\textbf{CIFAR-10 leakage-free lineage: dataset-level detection power} on the frozen space, before any discovery. Signal fraction $f$ of held-out images injected into a seen-class test sample. \emph{Coverage:} 8/8 objectives; annealed-$\sigma$ SparKer, parametric Mahalanobis and MMD two-sample power at $\alpha{=}0.05$, $N_D{=}5000$, 200 null / 50 signal toys; fractions 0.01, 0.02, 0.1.}
+\label{tab:app_cifar10_power}
+\end{table}

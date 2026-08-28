@@ -1,0 +1,31 @@
+% STATUS: 3 parents $\times$ 4 constructions on the from-scratch CIFAR-10 trunks; seed 0, holdout 4.
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{lccccccc}
+\toprule
+space & probe & top-1 & acc & eucl & mahaT & lid & per-ev \\
+\midrule
+\multicolumn{8}{l}{\emph{parent: }SupCon} \\
+\quad (parent) & 0.905 & 0.896 & 0.741 & 0.514 & 0.552 & 0.703 & 0.00 \\
+\quad res (residual) & 0.902 & 0.879 & 0.864 & 0.650 & 0.602 & 0.622 & 0.02 \\
+\quad res (concat) & 0.939 & 0.899 & 0.815 & 0.571 & 0.567 & 0.678 & 0.00 \\
+\quad res-nplm (residual) & 0.892 & 0.889 & 0.872 & 0.659 & 0.664 & 0.421 & 0.05 \\
+\quad res-nplm (concat) & 0.916 & 0.902 & 0.847 & 0.576 & 0.585 & 0.635 & 0.00 \\
+\multicolumn{8}{l}{\emph{parent: }\textbf{SupCon+SIGReg ($\lambda{=}5$)}} \\
+\quad (parent) & 0.884 & 0.897 & 0.894 & 0.439 & 0.454 & 0.518 & 0.01 \\
+\quad res (residual) & 0.878 & 0.662 & 0.583 & 0.380 & 0.377 & 0.551 & 0.01 \\
+\quad res (concat) & 0.932 & 0.896 & 0.889 & 0.407 & 0.383 & 0.513 & 0.02 \\
+\quad res-nplm (residual) & 0.888 & 0.885 & 0.872 & 0.758 & 0.617 & 0.566 & 0.12 \\
+\quad res-nplm (concat) & 0.919 & 0.897 & 0.896 & 0.571 & 0.544 & 0.529 & 0.05 \\
+\multicolumn{8}{l}{\emph{parent: }NPLM-dist. (sup.)} \\
+\quad (parent) & 0.719 & 0.827 & 0.799 & 0.692 & 0.659 & 0.376 & 0.12 \\
+\quad res (residual) & 0.851 & 0.683 & 0.606 & 0.371 & 0.356 & 0.552 & 0.02 \\
+\quad res (concat) & 0.876 & 0.835 & 0.648 & 0.378 & 0.459 & 0.595 & 0.02 \\
+\quad res-nplm (residual) & 0.817 & 0.754 & 0.560 & 0.480 & 0.426 & 0.653 & 0.02 \\
+\quad res-nplm (concat) & 0.842 & 0.832 & 0.799 & 0.610 & 0.543 & 0.576 & 0.03 \\
+\bottomrule
+\end{tabular}
+\caption{\textbf{CIFAR-10 leakage-free lineage: every residual construction}, with the supervised top-1 that the main text's no-cost claim rests on. \emph{Coverage:} 3 parents $\times$ 4 constructions on the from-scratch CIFAR-10 trunks; seed 0, holdout 4.}
+\label{tab:app_cifar10_residuals}
+\end{table}

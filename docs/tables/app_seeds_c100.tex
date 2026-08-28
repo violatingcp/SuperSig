@@ -1,0 +1,18 @@
+% STATUS: CIFAR-100, 100-D (50+50) classwise-$\lambda$5 configuration, 3 seeds; hub-pretrained trunk (ablation lineage).
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{lccccccc}
+\toprule
+space & probe pre & probe post & eucl & mahaT & SpK post & MMD post & $n$ \\
+\midrule
+nplmsup+nplm & 0.931$\pm$0.008 & 0.938$\pm$0.004 & 0.502$\pm$0.112 & 0.434$\pm$0.093 & 0.300$\pm$0.075 & 0.807$\pm$0.094 & 3 \\
+nplmsup->res & 0.913$\pm$0.008 & 0.926$\pm$0.007 & 0.437$\pm$0.004 & 0.341$\pm$0.024 & 0.147$\pm$0.038 & 0.300$\pm$0.145 & 3 \\
+sup+nplm & 0.928$\pm$0.007 & 0.926$\pm$0.007 & 0.525$\pm$0.016 & 0.416$\pm$0.076 & 0.227$\pm$0.159 & 0.340$\pm$0.102 & 3 \\
+sup->res-nplm & 0.929$\pm$0.003 & 0.925$\pm$0.010 & 0.516$\pm$0.018 & 0.385$\pm$0.024 & 0.313$\pm$0.232 & 0.440$\pm$0.142 & 3 \\
+supcon+nplm & 0.954$\pm$0.008 & 0.951$\pm$0.005 & 0.375$\pm$0.044 & 0.403$\pm$0.079 & 0.333$\pm$0.050 & 0.800$\pm$0.059 & 3 \\
+\bottomrule
+\end{tabular}
+\caption{\textbf{Multi-seed CIFAR-100 champions (hub lineage).} Power columns at $f{=}0.02$, post-discovery. \emph{Coverage:} CIFAR-100, 100-D (50+50) classwise-$\lambda$5 configuration, 3 seeds; hub-pretrained trunk (ablation lineage).}
+\label{tab:app_seeds_c100}
+\end{table}

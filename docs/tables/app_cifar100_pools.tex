@@ -1,0 +1,21 @@
+% STATUS: 8/8 objectives; frozen pools = trunk frozen (BN in eval unless `BN adapt'), $2\times2$-epoch anchor rounds; legal cut at $n_{\min}=10$ and $30$ (`ref.' = the rule declined); loop = exp-68 fine-tuning loop, distance pool, $2\times5$ epochs. Gate $=0.15$.
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{lcccccccccc}
+\toprule
+objective & dist r1 & np r1 & np r2 & np+BN r2 & legal$_{10}$ & legal$_{30}$ & loop r1 & loop probe & post eucl & post mahaT \\
+\midrule
+SupCon & 0.000 & 0.052 & 0.021 & 0.027 & ref. & ref. & 0.000 & 0.939$\to$0.930 & 0.372 & 0.396 \\
+\textbf{SupCon+SIGReg ($\lambda{=}5$)} & 0.008 & 0.007 & 0.018 & 0.018 & ref. & ref. & 0.008 & 0.938$\to$0.871 & 0.452 & 0.514 \\
+NPLM-dist.+classwise SIGReg & 0.006 & 0.031 & 0.020 & 0.016 & 0.048 & ref. & 0.006 & 0.899$\to$0.937 & 0.438 & 0.382 \\
+SupCon+SIGReg (repulse) & 0.009 & 0.024 & 0.037 & 0.040 & ref. & ref. & 0.009 & 0.838$\to$0.796 & 0.371 & 0.365 \\
+NPLM-dist. (sup.) & 0.008 & 0.004 & 0.001 & 0.020 & ref. & ref. & 0.008 & 0.819$\to$0.857 & 0.349 & 0.310 \\
+SimCLR & 0.004 & 0.024 & 0.014 & 0.005 & ref. & ref. & 0.004 & 0.819$\to$0.889 & 0.315 & 0.303 \\
+VISReg/LeJEPA & 0.005 & 0.022 & 0.015 & 0.018 & ref. & ref. & 0.005 & 0.808$\to$0.893 & 0.343 & 0.293 \\
+NPLM (unsup.) & 0.009 & 0.022 & 0.014 & 0.016 & ref. & ref. & 0.009 & 0.757$\to$0.885 & 0.298 & 0.270 \\
+\bottomrule
+\end{tabular}
+\caption{\textbf{CIFAR-100 leakage-free lineage: pools and discovery.} Round-1 purity of the frozen distance and density-ratio (np) pools, the np pool's round 2 with BN frozen and adapting, the label-free cut, and the fine-tuning loop's purity, probe and post geometry. \emph{Coverage:} 8/8 objectives; frozen pools = trunk frozen (BN in eval unless `BN adapt'), $2\times2$-epoch anchor rounds; legal cut at $n_{\min}=10$ and $30$ (`ref.' = the rule declined); loop = exp-68 fine-tuning loop, distance pool, $2\times5$ epochs. Gate $=0.15$.}
+\label{tab:app_cifar100_pools}
+\end{table}
