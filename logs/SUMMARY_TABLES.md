@@ -2860,3 +2860,102 @@ probe x3, top1 = exp-132 probe x3; 2026-08-28; logs/exp137/residuals_cifar10.jso
   geometry that was its only strength (eucl -0.08..-0.31).  A weak
   parent is repaired on the currency it lacks and loses the one it had.
 - Caveats: seed 0, holdout {4}; draws queued (Block M after Tier 3).
+
+## Exp 125 -- DTD single-holdout battery across draws, all three bases (Block B complete)
+(exp 70; 100-D; SUPERSIG_NH=1; draws {0,1,3,4,5} = held-out classes {8,46,38,15,16}
+(47 classes, b~0.02); 20 ep; mean +- sd across draws.  The archived DTD numbers
+are MULTI-holdout (10 classes) and sit in a different regime; never pooled.)
+
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+## dtd (exp 125; dino, 100d, holdout 1 [single-holdout], 5 draws d[0, 1, 3, 4, 5], 20 ep)
+
+| arm | probe | probe post | acc | eucl | mahaT | mahaT post | perevt | perevt post@.02 | purity r1 | purity r2 | SpK@.05 | SpK@.05 post | MMD@.05 | MMD@.05 post |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| simclr-ft | 0.940+-0.039 | 0.906+-0.040 | 0.631+-0.004 | 0.550+-0.100 | 0.564+-0.111 | 0.554+-0.130 | 0.040+-0.080 | 0.140+-0.093 | 0.005+-0.010 | 0.003+-0.006 | 0.844+-0.194 | 0.924+-0.098 | 0.720+-0.173 | 0.832+-0.111 |
+| sigreg-ssl-ft | 0.890+-0.070 | 0.834+-0.076 | 0.624+-0.010 | 0.627+-0.103 | 0.606+-0.090 | 0.591+-0.072 | 0.050+-0.042 | 0.195+-0.105 | 0.003+-0.002 | 0.000+-0.000 | 0.860+-0.180 | 0.932+-0.075 | 0.828+-0.175 | 0.900+-0.061 |
+| nplm-bil-ft | 0.728+-0.113 | 0.879+-0.040 | 0.340+-0.073 | 0.513+-0.075 | 0.502+-0.081 | 0.607+-0.116 | 0.020+-0.019 | 0.105+-0.118 | 0.004+-0.005 | 0.000+-0.000 | 0.768+-0.208 | 0.980+-0.025 | 0.440+-0.307 | 0.716+-0.242 |
+| supcon-ft | 0.883+-0.040 | 0.892+-0.070 | 0.739+-0.004 | 0.732+-0.045 | 0.628+-0.077 | 0.688+-0.057 | 0.020+-0.010 | 0.165+-0.131 | 0.028+-0.012 | 0.023+-0.011 | 0.856+-0.130 | 0.888+-0.121 | 0.840+-0.108 | 0.732+-0.122 |
+| ss-ft | 0.787+-0.036 | 0.702+-0.056 | 0.762+-0.005 | 0.792+-0.019 | 0.732+-0.054 | 0.687+-0.053 | 0.230+-0.053 | 0.420+-0.095 | 0.219+-0.014 | 0.027+-0.021 | 0.800+-0.119 | 0.888+-0.116 | 0.920+-0.070 | 0.860+-0.079 |
+| nplm-sup-ft | 0.749+-0.102 | 0.861+-0.044 | 0.445+-0.018 | 0.632+-0.066 | 0.635+-0.079 | 0.651+-0.103 | 0.055+-0.043 | 0.140+-0.133 | 0.051+-0.027 | 0.001+-0.002 | 0.724+-0.293 | 0.920+-0.067 | 0.736+-0.075 | 0.700+-0.342 |
+
+per-draw spread (probe / mahaT / purity r1), draws [0, 1, 3, 4, 5]
+  simclr-ft      probe 0.866-0.985  mahaT 0.415-0.698  purity 0.000-0.026   archived multi-holdout (10 cls) [DIFFERENT REGIME]: probe 0.808 mahaT 0.506
+  sigreg-ssl-ft  probe 0.775-0.984  mahaT 0.476-0.718  purity 0.000-0.005   archived multi-holdout (10 cls) [DIFFERENT REGIME]: probe 0.803 mahaT 0.577
+  nplm-bil-ft    probe 0.551-0.897  mahaT 0.407-0.650  purity 0.000-0.011   archived multi-holdout (10 cls) [DIFFERENT REGIME]: probe 0.681 mahaT 0.479
+  supcon-ft      probe 0.809-0.919  mahaT 0.543-0.723  purity 0.011-0.042   archived multi-holdout (10 cls) [DIFFERENT REGIME]: probe 0.799 mahaT 0.646
+  ss-ft          probe 0.732-0.847  mahaT 0.646-0.802  purity 0.193-0.233   archived multi-holdout (10 cls) [DIFFERENT REGIME]: probe 0.782 mahaT 0.742
+  nplm-sup-ft    probe 0.586-0.859  mahaT 0.550-0.776  purity 0.021-0.102   archived multi-holdout (10 cls) [DIFFERENT REGIME]: probe 0.586 mahaT 0.615
+
+## dtd (exp 125; lejepa, 100d, holdout 1 [single-holdout], 5 draws d[0, 1, 3, 4, 5], 20 ep)
+
+| arm | probe | probe post | acc | eucl | mahaT | mahaT post | perevt | perevt post@.02 | purity r1 | purity r2 | SpK@.05 | SpK@.05 post | MMD@.05 | MMD@.05 post |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| simclr-ft | 0.938+-0.037 | 0.912+-0.045 | 0.618+-0.006 | 0.563+-0.111 | 0.588+-0.113 | 0.705+-0.126 | 0.030+-0.048 | 0.110+-0.102 | 0.002+-0.002 | 0.004+-0.004 | 0.944+-0.078 | 0.960+-0.062 | 0.608+-0.303 | 0.840+-0.151 |
+| sigreg-ssl-ft | 0.909+-0.057 | 0.888+-0.039 | 0.605+-0.006 | 0.656+-0.072 | 0.674+-0.108 | 0.699+-0.081 | 0.085+-0.066 | 0.215+-0.078 | 0.021+-0.019 | 0.020+-0.018 | 0.936+-0.082 | 0.888+-0.123 | 0.848+-0.188 | 0.936+-0.050 |
+| nplm-bil-ft | 0.798+-0.077 | 0.873+-0.063 | 0.463+-0.071 | 0.583+-0.050 | 0.648+-0.034 | 0.667+-0.041 | 0.055+-0.010 | 0.145+-0.139 | 0.033+-0.016 | 0.011+-0.016 | 0.952+-0.077 | 0.924+-0.116 | 0.652+-0.244 | 0.644+-0.318 |
+| supcon-ft | 0.659+-0.144 | 0.758+-0.069 | 0.728+-0.004 | 0.722+-0.070 | 0.712+-0.084 | 0.760+-0.100 | 0.110+-0.162 | 0.310+-0.273 | 0.073+-0.077 | 0.001+-0.002 | 0.824+-0.079 | 0.896+-0.118 | 0.728+-0.169 | 0.960+-0.052 |
+| ss-ft | 0.803+-0.059 | 0.692+-0.123 | 0.763+-0.005 | 0.787+-0.024 | 0.780+-0.027 | 0.780+-0.035 | 0.245+-0.073 | 0.410+-0.181 | 0.225+-0.006 | 0.062+-0.033 | 0.984+-0.023 | 0.972+-0.047 | 0.960+-0.051 | 0.960+-0.049 |
+| nplm-sup-ft | 0.708+-0.097 | 0.648+-0.158 | 0.614+-0.010 | 0.811+-0.056 | 0.804+-0.035 | 0.784+-0.077 | 0.195+-0.093 | 0.410+-0.195 | 0.215+-0.024 | 0.001+-0.002 | 0.760+-0.207 | 0.980+-0.040 | 0.740+-0.176 | 0.860+-0.111 |
+
+per-draw spread (probe / mahaT / purity r1), draws [0, 1, 3, 4, 5]
+  simclr-ft      probe 0.877-0.985  mahaT 0.437-0.717  purity 0.000-0.005   archived multi-holdout (10 cls) [DIFFERENT REGIME]: probe 0.817 mahaT 0.580
+  sigreg-ssl-ft  probe 0.808-0.956  mahaT 0.513-0.800  purity 0.000-0.056   archived multi-holdout (10 cls) [DIFFERENT REGIME]: probe 0.809 mahaT 0.714
+  nplm-bil-ft    probe 0.664-0.898  mahaT 0.605-0.698  purity 0.016-0.061   archived multi-holdout (10 cls) [DIFFERENT REGIME]: probe 0.746 mahaT 0.637
+  supcon-ft      probe 0.457-0.835  mahaT 0.615-0.811  purity 0.011-0.186   archived multi-holdout (10 cls) [DIFFERENT REGIME]: probe 0.755 mahaT 0.732
+  ss-ft          probe 0.725-0.896  mahaT 0.737-0.818  purity 0.217-0.233   archived multi-holdout (10 cls) [DIFFERENT REGIME]: probe 0.787 mahaT 0.786
+  nplm-sup-ft    probe 0.543-0.832  mahaT 0.762-0.854  purity 0.189-0.261   archived multi-holdout (10 cls) [DIFFERENT REGIME]: probe 0.581 mahaT 0.754
+
+## dtd (exp 125; visreg, 100d, holdout 1 [single-holdout], 5 draws d[0, 1, 3, 4, 5], 20 ep)
+
+| arm | probe | probe post | acc | eucl | mahaT | mahaT post | perevt | perevt post@.02 | purity r1 | purity r2 | SpK@.05 | SpK@.05 post | MMD@.05 | MMD@.05 post |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| simclr-ft | 0.899+-0.088 | 0.904+-0.077 | 0.606+-0.003 | 0.515+-0.135 | 0.523+-0.122 | 0.592+-0.104 | 0.070+-0.073 | 0.140+-0.072 | 0.023+-0.032 | 0.011+-0.011 | 0.944+-0.069 | 0.988+-0.016 | 0.588+-0.347 | 0.664+-0.322 |
+| sigreg-ssl-ft | 0.923+-0.053 | 0.911+-0.049 | 0.610+-0.004 | 0.664+-0.117 | 0.664+-0.129 | 0.666+-0.116 | 0.130+-0.087 | 0.210+-0.149 | 0.023+-0.024 | 0.017+-0.028 | 0.932+-0.084 | 0.968+-0.055 | 0.852+-0.184 | 0.920+-0.083 |
+| nplm-bil-ft | 0.791+-0.093 | 0.854+-0.052 | 0.458+-0.103 | 0.567+-0.111 | 0.576+-0.153 | 0.601+-0.162 | 0.040+-0.025 | 0.025+-0.022 | 0.012+-0.006 | 0.003+-0.004 | 0.856+-0.144 | 0.928+-0.078 | 0.548+-0.325 | 0.696+-0.254 |
+| supcon-ft | 0.774+-0.101 | 0.781+-0.100 | 0.762+-0.005 | 0.781+-0.052 | 0.730+-0.088 | 0.757+-0.054 | 0.175+-0.142 | 0.320+-0.178 | 0.184+-0.031 | 0.025+-0.022 | 0.952+-0.078 | 0.940+-0.054 | 0.856+-0.121 | 0.864+-0.103 |
+| ss-ft | 0.867+-0.028 | 0.737+-0.114 | 0.788+-0.007 | 0.802+-0.049 | 0.782+-0.054 | 0.751+-0.032 | 0.285+-0.066 | 0.400+-0.084 | 0.241+-0.025 | 0.042+-0.022 | 0.876+-0.130 | 0.908+-0.106 | 0.960+-0.046 | 0.960+-0.025 |
+| nplm-sup-ft | 0.702+-0.121 | 0.656+-0.083 | 0.584+-0.010 | 0.747+-0.055 | 0.757+-0.034 | 0.784+-0.061 | 0.130+-0.048 | 0.220+-0.132 | 0.163+-0.054 | 0.001+-0.002 | 0.424+-0.262 | 0.944+-0.069 | 0.628+-0.246 | 0.684+-0.238 |
+
+per-draw spread (probe / mahaT / purity r1), draws [0, 1, 3, 4, 5]
+  simclr-ft      probe 0.742-0.976  mahaT 0.343-0.688  purity 0.000-0.080   archived multi-holdout (10 cls) [DIFFERENT REGIME]: probe 0.854 mahaT 0.517
+  sigreg-ssl-ft  probe 0.823-0.972  mahaT 0.502-0.817  purity 0.000-0.061   archived multi-holdout (10 cls) [DIFFERENT REGIME]: probe 0.808 mahaT 0.727
+  nplm-bil-ft    probe 0.638-0.883  mahaT 0.448-0.871  purity 0.005-0.021   archived multi-holdout (10 cls) [DIFFERENT REGIME]: probe 0.778 mahaT 0.629
+  supcon-ft      probe 0.601-0.883  mahaT 0.638-0.840  purity 0.136-0.230   archived multi-holdout (10 cls) [DIFFERENT REGIME]: probe 0.750 mahaT 0.765
+  ss-ft          probe 0.827-0.902  mahaT 0.700-0.846  purity 0.200-0.267   archived multi-holdout (10 cls) [DIFFERENT REGIME]: probe 0.784 mahaT 0.807
+  nplm-sup-ft    probe 0.527-0.834  mahaT 0.699-0.801  purity 0.061-0.217   archived multi-holdout (10 cls) [DIFFERENT REGIME]: probe 0.569 mahaT 0.743
+
+Verdicts (dtd, single-holdout, 15 draw cells):
+
+- SS-FT (SupCon + SIGReg lam=5) CLEARS THE PURITY GATE ON 15/15 DRAW
+  CELLS ACROSS ALL THREE BASES: 0.219+-0.014 (dino, min 0.193), 0.225+-
+  0.006 (lejepa, min 0.217), 0.241+-0.025 (visreg, min 0.200).  It is the
+  only arm that does so on every base; nplm-sup-ft clears it on lejepa
+  (5/5, 0.215+-0.024) and on 3/5 visreg draws but 0/5 on dino; supcon-ft
+  only on visreg (4/5, 0.184+-0.031).  The paper's "discovery workhorse"
+  claim is base- and draw-robust on DTD in the single-holdout regime --
+  at ~0.22 purity, a quarter of the multi-holdout 0.80 the archive
+  quotes.  State both regimes with their own numbers.
+- ss-ft also owns calibration on DTD: eucl 0.79-0.80 and mahaT 0.73-0.78
+  on every base (best or tied), per-event 0.23-0.29 pre -> 0.40-0.42
+  post.  nplm-sup-ft matches it on lejepa (eucl 0.81, mahaT 0.80).
+- PROBE AND DISCOVERY DISSOCIATE INSIDE THE DATASET, AND THE SIGN FLIPS
+  WITH THE BASE: on dino supcon-ft leads the probe (0.883 vs ss-ft
+  0.787); on lejepa it collapses (0.659+-0.144, one draw at 0.457) and
+  the SSL arms lead (simclr-ft 0.938, sigreg-ssl 0.909); on visreg
+  sigreg-ssl-ft leads (0.923).  Discovery LOWERS ss-ft's probe on every
+  base (-0.085, -0.111, -0.130) while raising nplm-bil-ft's (+0.15,
+  +0.08, +0.06) -- the loop repairs weak probes and damages strong ones,
+  here on the arm with the purest pools.
+- Round 2 collapses for every arm on every base (r2 <= 0.06), as on
+  galaxy10: the trunk fine-tune destroys the pool after one round.  Quote
+  round 1; the frozen-np construction (exps 135/139) is the fix and has
+  not yet been run on DTD draws.
+- Draw variance: probe sd 0.03-0.14 (largest on supcon-ft/lejepa),
+  mahaT sd 0.03-0.15, purity sd 0.006-0.03 for the gate-clearing arms.
+  Purity is the best-conditioned column, probe the worst -- the same
+  finding as galaxy10, and the reason the paper's stability section
+  leads with purity.
+- SparKer @.05 is 0.72-0.98 on all supervised arms and both SSL arms on
+  every base except nplm-sup-ft/visreg (0.42): dataset-level detection
+  on DTD is not the bottleneck; pooling is.

@@ -1484,6 +1484,13 @@ workhorse claim loses its leakage-free support.
 
 ### Exp 125 — The single-holdout battery, with draws
 
+> **DTD DONE 2026-08-28 (3 bases x 5 draws, Block B complete).**  ss-ft clears
+> the purity gate on 15/15 draw cells (0.22-0.24, min 0.19) -- the only arm
+> that does on every base; nplm-sup-ft 5/5 on lejepa only, supcon-ft 4/5 on
+> visreg only.  Single-holdout DTD purity is ~0.22, a quarter of the archived
+> multi-holdout 0.80.  Round 2 collapses everywhere; probe/discovery
+> dissociate with base-dependent sign.  `logs/SUMMARY_TABLES.md`.
+
 > **galaxy10 VISREG DONE 2026-08-27 (5 draws) — the prediction is BASE-
 > DEPENDENT.**  On visreg, supcon-ft clears the purity gate on 5/5 random
 > draws (0.290+-0.067, min 0.171; nplm-sup-ft 0.262, min 0.151), where dino
