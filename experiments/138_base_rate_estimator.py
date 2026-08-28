@@ -379,7 +379,11 @@ def main():
             kp = float(is_nov[np.argsort(-f)[:k]].mean())
             print(f"  KNEE cut: k={k} q={k/len(f):.4f} purity={kp:.4f} "
                   f"n_nov={int(is_nov[np.argsort(-f)[:k]].sum())}")
-        print(f"  n_min=30 rule: q={binfo['q']:.4f} "
+        # NOT n_min=30: legal_pool() is called with no n_min, so this is the
+        # poolcut default, N_MIN=10 (lowered from 30 after this experiment).
+        # The old "n_min=30" label survived the constant change and made the
+        # column read as a stricter rule than the one actually applied.
+        print(f"  n_min={poolcut.N_MIN} rule: q={binfo['q']:.4f} "
               f"purity={float(is_nov[base].mean()):.4f} ok={binfo['ok']}")
         print(f"  {'n_min':>6s}{'q':>9s}{'purity':>8s}{'n_nov':>7s}{'impl a':>9s}")
         for r in rows:
@@ -387,7 +391,11 @@ def main():
                   f"{r['n_novel']:>7d}{r['implied_alpha']:>9.3f}")
         res[nm] = dict(b_true=b_true, estimators=ests, injection_alpha=alpha,
                        injection_detail=inj, knee=dict(k=k, **kinfo),
-                       n_min_scan=rows, rule_n30=binfo)
+                       n_min_scan=rows, rule_default=binfo,
+                       rule_n_min=poolcut.N_MIN,
+                       # kept so already-archived JSONs stay readable under
+                       # their original key; the name is a misnomer (see above)
+                       rule_n30=binfo)
 
     with open(os.path.join(args.out, f"brate{run_tag()}.json"), "w") as fh:
         json.dump(res, fh, indent=1, default=float)

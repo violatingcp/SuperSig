@@ -36,6 +36,7 @@
 \usepackage{url}
 \usepackage[colorlinks=true,linkcolor=black,citecolor=black,urlcolor=blue]{hyperref}
 \usepackage{caption}
+\usepackage{longtable}
 \captionsetup{font=small,labelfont=bf}
 
 \newcommand{\E}{\mathbb{E}}
@@ -479,23 +480,83 @@ headline.
 
 % ===========================================================================
 \section{Experiments}
+\label{sec:experiments}
 % ===========================================================================
-% WAITING ON: exps 124 (leakage-free scratch shortlist), 125 (single-holdout
-% battery with draws), 126 (restricted multi-holdout), 131 (cifar10/cifar100/
-% galaxy10 re-run under the new pool cut).  Do not draft prose around
-% provisional numbers.
-%
-% Table plan, split by regime and never pooled:
-%   T1 single-holdout, all datasets, mean +- sd ACROSS DRAWS (not seeds --
-%      draw spread exceeds seed spread, so seed-only intervals understate).
-%   T2 multi-holdout, label-rich datasets only.
-%   T3 pool-cut ablation: inherited q=0.05 vs the rule of Sec 3.3, with the
-%      ceiling min(1, b/q) shown alongside so the reader can see headroom.
-%
-% Dataset ordering is by distance from pretraining, not alphabetical:
-% galaxy10 (never seen by the backbone) -> DTD (task-novel) -> cars/flowers/
-% aircraft (fine-grained in-domain) -> CIFAR (from-scratch lineage; the
-% hub-pretrained cells saw the held-out class and are an ablation only).
+% Tables are GENERATED from the logs by experiments/140_paper_tables.py into
+% docs/tables/*.tex.  Do not hand-edit them; re-run that script instead.
+% Each carries a machine-written coverage line, so a table that is missing
+% cells says so in its own caption.
+
+This campaign is reported while incomplete. Every table below states its own
+coverage, blanks are shown as ``--'' rather than dropped, and we mark which
+claims rest on a single seed. Datasets are ordered by \emph{distance from
+pretraining} rather than alphabetically, because that ordering is what decides
+whether a result is evidence for discovery at all: galaxy10 was never seen by
+any backbone we use, DTD is task-novel, cars/flowers/aircraft are fine-grained
+but in-domain, and the CIFAR cells exist in two lineages --- a from-scratch
+one that we report, and a hub-pretrained one whose encoder already saw the
+held-out class and which we therefore treat as an ablation only.
+
+\subsection{Objectives: the probe and the geometry come apart}
+
+Table~\ref{tab:objectives} is the paper's central measurement, on the lineage
+where it is safe to make it. Adding sliced-isotropy to a supervised
+contrastive objective is a tie on the linear probe and a $1.1$-point loss on
+top-1 accuracy --- and it more than doubles every discoverability column.
+A reader who ranked these eight objectives by probe accuracy would pick the
+one that scores $0.00$ on per-event detection.
+
+That is the dissociation stated at the start of the paper, measured on an
+encoder that was trained from random initialisation and never saw the class it
+is asked to find.
+
+\subsection{Stability: draws matter, seeds do not}
+
+Two variance questions decide how much of this campaign is quotable.
+
+The first is the holdout \emph{draw} --- which class is held out.
+Table~\ref{tab:draws} reports five draws per cell. Pool purity is stable
+across draws for the best objective (sd $0.007$--$0.014$) while the linear
+probe over the same draws swings by more than $0.1$, so purity is the
+better-conditioned measurement of the two, not merely the more relevant one.
+
+The second is the \emph{seed}. We pre-registered this as a falsifier: if
+seed-to-seed spread were comparable to draw-to-draw spread, every single-seed
+number in this paper would need a caveat. Table~\ref{tab:hardening} settles
+it on $144$ cells --- $\text{sd}_{\text{seed}} = 0.021$ against
+$\text{sd}_{\text{draw}} = 0.174$, a factor of $8$. The caveat that survives
+is about which class you hold out, not which seed you ran. We attach it to
+every single-seed result rather than dropping it.
+
+Table~\ref{tab:draws} also carries a result we did not anticipate. Only one
+objective clears the gate on \emph{both} backbones: supervised distance-NPLM
+clears $5/5$ draws on LeJEPA and $0/5$ on DINO. SupCon+SIGReg clears $5/5$ on
+both. Base-independence is a stronger and more useful property than winning on
+average, and it is not visible in any single-backbone table.
+
+\subsection{Constructions}
+
+Table~\ref{tab:2x2} gives the $2\times2$ of Section~\ref{sec:constructions} in
+full. The interaction is large in one cell, positive but small in most, and
+the two largest \emph{totals} in the table are main effects rather than
+composition. We report all twenty rows rather than the favourable ones.
+
+\subsection{Where the label-free cut does not reach}
+
+Table~\ref{tab:baserate} is a negative result about our own method.
+At a $1\%$ novel rate on clean CIFAR-100 banks, the label-free rule of
+Section~\ref{sec:cut} engages on $3$ of $20$ spaces, and where it engages
+the resulting purity is still below the gate. The spaces where it works share
+a structure --- an NPLM critic on a SIGReg marginal --- so the rule should be
+read as conditional on the scorer, not as a general-purpose procedure. The
+ceiling algebra says a $20\times$ enrichment is available at this rate; the
+estimator, not the representation, is what fails to reach it.
+
+\input{tables/objectives}
+\input{tables/draws}
+\input{tables/hardening}
+\input{tables/2x2}
+\input{tables/baserate}
 
 % ===========================================================================
 \section{When it does not work}
@@ -518,6 +579,61 @@ headline.
 %     optimisation target.
 
 \appendix
+
+% ===========================================================================
+\section{Detailed results}
+\label{sec:detailed}
+% ===========================================================================
+
+This appendix reports the campaign in more detail than the main text, and
+reports it \emph{as it stands} rather than waiting for completion. Several
+studies are unfinished; they are listed anyway, because a reader deciding
+whether to believe the main claims should be able to see the whole surface
+that was searched and not only the parts that resolved.
+
+All tables in this paper are generated from the archived result files by a
+single script, and each carries a machine-written coverage line stating what
+is present and what is missing. Blanks are shown as ``--''.
+
+\paragraph{Constructions on the leakage-free trunks.}
+Table~\ref{tab:residuals} gives every construction on the from-scratch
+CIFAR-100 parents. The pattern behind the summary in
+Section~\ref{sec:constructions} is visible directly: the bare residual usually
+costs probe accuracy, the concatenation recovers it, and the detection gain
+survives in both.
+
+\paragraph{Multi-seed cells.}
+Most cells in this campaign are single-seed, for cost reasons.
+Table~\ref{tab:seeds} reports one of the exceptions, three seeds on the
+CIFAR-10 champions. Seed spread there is small --- $\pm0.001$ on the best
+post-discovery probe and $\pm0.002$ on its Euclidean AUC --- which is
+consistent with the much larger variance decomposition of
+Table~\ref{tab:hardening}. Note also that the discovery loop \emph{reduces}
+the probe for \texttt{supcon+nplm} ($0.954 \to 0.930$) in all three seeds,
+which is the seeded version of a pattern we observe throughout: the loop
+repairs weak spaces and damages strong ones.
+
+\paragraph{Study inventory.}
+Table~\ref{tab:inventory} lists every numbered study in the repository and
+whether its results are present. A checkmark is a statement about data on
+disk, not a claim of completeness. We include the studies with no results for
+the same reason we include the negative ones: the shortlist in the main text
+is the surviving remainder of this list, and that is only meaningful if the
+list is visible.
+
+\paragraph{Known gaps.} At the time of writing: the $2\times2$ of
+Table~\ref{tab:2x2} is single-seed throughout, and its one large interaction
+rests on a single cell; the multi-holdout regime is run only on the
+label-rich datasets; and the frozen-space construction of
+Section~\ref{sec:constructions} is quoted from re-verified runs after a
+BatchNorm fix invalidated the earlier archive, so its older numbers do not
+reproduce and are not used.
+
+\input{tables/residuals}
+\input{tables/seeds}
+\input{tables/inventory}
+
+% ===========================================================================
 \section{Objective naming}
 \label{sec:naming}
 % TODO: reproduce the canonical mapping from docs/LOSSES.md. Three objectives

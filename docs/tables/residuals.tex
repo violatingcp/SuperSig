@@ -1,0 +1,31 @@
+% STATUS: 3 parents $\times$ 4 constructions on the from-scratch CIFAR-100 trunks; one seed per cell.
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{lccccc}
+\toprule
+space & probe & $\Delta$ & eucl & $\Delta$ & per-ev \\
+\midrule
+\multicolumn{6}{l}{\emph{parent: }SupCon} \\
+\quad (parent) & 0.940 & -- & 0.233 & -- & 0.00 \\
+\quad res (residual) & 0.869 & -0.071 & 0.607 & +0.374 & 0.05 \\
+\quad res (concat) & 0.942 & +0.002 & 0.521 & +0.288 & 0.03 \\
+\quad res-nplm (residual) & 0.882 & -0.058 & 0.291 & +0.057 & 0.00 \\
+\quad res-nplm (concat) & 0.947 & +0.007 & 0.227 & -0.006 & 0.00 \\
+\multicolumn{6}{l}{\emph{parent: }\textbf{SupCon+SIGReg ($\lambda{=}5$)}} \\
+\quad (parent) & 0.937 & -- & 0.620 & -- & 0.07 \\
+\quad res (residual) & 0.860 & -0.077 & 0.604 & -0.017 & 0.08 \\
+\quad res (concat) & 0.949 & +0.012 & 0.648 & +0.028 & 0.08 \\
+\quad res-nplm (residual) & 0.900 & -0.037 & 0.464 & -0.156 & 0.01 \\
+\quad res-nplm (concat) & 0.904 & -0.033 & 0.575 & -0.046 & 0.04 \\
+\multicolumn{6}{l}{\emph{parent: }NPLM-dist. (sup.)} \\
+\quad (parent) & 0.820 & -- & 0.408 & -- & 0.05 \\
+\quad res (residual) & 0.834 & +0.014 & 0.524 & +0.116 & 0.01 \\
+\quad res (concat) & 0.867 & +0.047 & 0.521 & +0.114 & 0.01 \\
+\quad res-nplm (residual) & 0.827 & +0.006 & 0.527 & +0.119 & 0.06 \\
+\quad res-nplm (concat) & 0.849 & +0.029 & 0.516 & +0.108 & 0.04 \\
+\bottomrule
+\end{tabular}
+\caption{\textbf{All constructions on the leakage-free CIFAR-100 trunks.} $\Delta$ columns are against that parent. The bare residual generally loses probe accuracy and the concatenation recovers it; the detection gain is large and nearly free. \emph{Coverage:} 3 parents $\times$ 4 constructions on the from-scratch CIFAR-100 trunks; one seed per cell.}
+\label{tab:residuals}
+\end{table}
