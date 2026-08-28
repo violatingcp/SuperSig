@@ -2656,3 +2656,34 @@ SparKer; mean+-sd over seeds; 2026-08-28; logs/exp59/nplm_residual_concat_cifar1
 - Honest citation: sup->res-nplm 0.983+-0.000 (3 seeds); supcon+nplm
   0.954+-0.002 (3 seeds).  Caveats unchanged: hub trunk (leakage), one
   holdout.  The clean-trunk analogue is exp 137 on cifar10 (queued).
+
+## Exp 138 on the CLEAN cifar100 banks (Block O; 20 spaces: 8 exp-136 arms + 12 exp-137 residual/concat spaces; b=0.01)
+(estimator ratio = b_hat / b_true; "rule" = legal cut at n_min=30; 2026-08-28; logs/exp138/)
+
+  space                 tv     mass   excess   knee purity (n_nov)   rule
+  supcon / ssig / simclr / visreg / nplm / supsig      0.01-0.2x  0.01-0.1x  0.00-0.01x   0.00-0.02 (0-3)   REFUSED
+  nplmsd                1.04x* 0.07x  0.00x    0.019 (166)          REFUSED (q at Q_MAX)
+  nplmcw                1.04x  0.49x  0.03x    0.041 (136)          ok, purity 0.046
+  supcon->res-nplm concat / residual         --        --      --     --                   ok, purity 0.101 / 0.050
+  ssig/nplmsd residual + concat spaces (10)   0.07-0.43x  0.04-0.36x  <=0.01x   0.00-0.02   REFUSED (10/10)
+  (*nplmsd's tv=0.92x is with a pool that saturates at Q_MAX -- the estimate is
+   right for the wrong reason: it counts spread, not novelty.)
+
+- ON CLEAN C100 AT 1% THE ESTIMATOR IS OFF BY 5-100x ON 17/20 SPACES, ALL
+  THREE ESTIMATORS AGREE, AND THE KNEE FINDS NOTHING (0-16 novel points in
+  its cut).  The three spaces where the rule engages are exactly the
+  NPLM-critic-under-SIGReg spaces: nplmcw (b_hat 1.04x, purity 0.046),
+  supcon->res-nplm concat (0.101, the best legal purity on clean C100)
+  and its residual child (0.050) -- gate 0.15 not reached.  This settles
+  the 129-vs-131 discrepancy: the label-free cut engages where the space
+  was trained with a bilinear/distance NPLM critic under a SIGReg
+  marginal (the tau bank, nplmcw, the res-nplm child) and nowhere else at
+  this rate.  exp 129's h1 result is real
+  but objective-specific; the paper must say "label-free at 1% on
+  NPLM+marginal spaces", not "on C100".
+- Exp 138's own conclusion (the bias is not a uniform scale; n_min is a
+  tuning constant) holds here too: the ratio spans two decades across
+  spaces of the same dataset, so no global correction exists.
+- Practical reading for the paper's regime section: at b~1% on a generic
+  clean space the pool cannot be set label-free; the oracle-cut purities
+  of exp 128 (0.3-0.6) are an upper bound the estimator does not reach.
