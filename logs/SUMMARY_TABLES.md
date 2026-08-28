@@ -2687,3 +2687,36 @@ SparKer; mean+-sd over seeds; 2026-08-28; logs/exp59/nplm_residual_concat_cifar1
 - Practical reading for the paper's regime section: at b~1% on a generic
   clean space the pool cannot be set label-free; the oracle-cut purities
   of exp 128 (0.3-0.6) are an upper bound the estimator does not reach.
+
+## Exp 139 -- hardening the frozen-head density-ratio headline (Block O)
+(exp 135 arm A, np scorer, head frozen; galaxy10 x {dino, lejepa, visreg} x
+{supcon-ft, ss-ft, nplm-sup-ft} x draws {0,3,5,7,8} x seeds {0,1,2} = 135
+cells + the 9 archived-draw cells = 144; variance decomposition stratified by
+(cell, arm); Clopper-Pearson 95%.  2026-08-28; logs/exp139/hardening.json)
+
+  round-1 purity: 143/144 above the 0.15 gate, 95% CI [0.962, 1.000],
+                  median 0.580, mean 0.516, min 0.103
+  sd_seed = 0.021   sd_draw = 0.174   -> DRAW DOMINATES (8x)
+  round 2: identical (143/144, mean 0.517) -- no round-2 collapse anywhere
+
+  cell/arm (mean +- sd over draws x seeds; worst cell)
+    dino    supcon 0.465+-.158 (min .216)   ss-ft 0.459+-.143 (.202)   nplm-sup 0.393+-.147 (.103)
+    lejepa  supcon 0.575+-.185 (.223)       ss-ft 0.516+-.186 (.202)   nplm-sup 0.569+-.179 (.230)
+    visreg  supcon 0.574+-.180 (.216)       ss-ft 0.554+-.169 (.202)   nplm-sup 0.543+-.185 (.171)
+
+- PREDICTION HOLDS: seed variance (0.021) is an eighth of draw variance
+  (0.174).  The critic's ranking is stable; the held-out class is what
+  moves the number.  Exp 118's "draw > seed" transfers from the
+  fine-tuning loop to the frozen pool.  Every single-seed purity in the
+  campaign keeps its draw-interval caveat and needs no seed caveat.
+- THE FALSIFIER FIRES ONCE, AND THE HEADLINE IS RESTATED ACCORDINGLY:
+  one cell (galaxy10/dino, nplm-sup-ft, one draw x seed) lands at 0.103.
+  "45/45" becomes "143/144, 95% CI [0.962, 1.000]" -- which is the
+  stronger statement anyway (three times the trials, a lower bound of
+  0.96).  The paper quotes the proportion with its interval, never the
+  bare count.
+- The base ordering survives seeds: lejepa ~ visreg (0.52-0.58) > dino
+  (0.39-0.47), and nplm-sup-ft on dino is the weakest cell everywhere.
+- Pairing (frozen np vs the exp-70 loop on the same draw): the loop's
+  round-1 purity on the same parents is 0.00-0.35 (exp 125); frozen np is
+  above it on every (cell, draw), by +0.2..+0.5.

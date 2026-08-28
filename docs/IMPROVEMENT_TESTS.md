@@ -2383,6 +2383,12 @@ legal 0.387 at h1 on C100.
 
 ### Exp 139 — Harden the frozen-head density-ratio pooling result
 
+> **DONE 2026-08-28 (135 new cells: 3 bases x 3 arms x 5 draws x seeds 0-2).**
+> PREDICTION HOLDS: sd_seed 0.021 vs sd_draw 0.174 -- draw dominates 8x; no
+> round-2 collapse.  Falsifier fires once (dino / nplm-sup-ft / one cell at
+> 0.103): headline restated as **143/144 above the gate, 95% CI [0.962, 1.000]**,
+> median 0.58.  `logs/exp139/hardening.json`, `logs/SUMMARY_TABLES.md`.
+
 > **HARNESS READY 2026-08-27.**  `--selftest` green (7 checks) +
 > `tests/test_frozen_np_hardening.py` (10).  NEEDS THE GPU BOX for the seed
 > grid; the aggregation already runs on the archived seed-0 data.
