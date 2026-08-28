@@ -341,6 +341,19 @@ Tier 1 was already on disk.  Exp 136 now records BOTH (`legal_cut` = n_min 10,
 `legal_cut_n30`) and `--legal-only` re-evaluates an existing master JSON from
 its banks; Tier 1 has been re-evaluated.  Exps 129/131/135 numbers are n_min=30.
 
+## Block P — frozen-np on flowers / cars / aircraft (zero-training construction)
+
+Single-holdout parents for these datasets were never fine-tuned (Block B
+stopped after galaxy10 + dtd).  The frozen-np construction does not need them:
+exp 135 `--arms frozen` pools the PRETRAINED trunk's 768-D features (identity
+head, anchors = seen centroids) by density ratio, so every draw is evaluation-
+scale.  Run at the multi-holdout default and at SUPERSIG_NH=1 draws 0-4.
+
+```bash
+python experiments/135_corpus_norm_everywhere.py --cells cars:dino --arms frozen
+SUPERSIG_NH=1 SUPERSIG_HOLDOUT_DRAW=2 python experiments/135_corpus_norm_everywhere.py --cells cars:dino --arms frozen
+```
+
 ## Block G — Exp 132: supervised linear probe (piggyback on Block B)
 
 The campaign has NO supervised linear probe -- the `probe` column everywhere is

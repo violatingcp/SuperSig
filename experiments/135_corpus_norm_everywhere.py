@@ -183,15 +183,25 @@ def main():
         print(f"\n######## {cell}{tag}: holdouts={sorted(holdouts)[:4]}"
               f"{'...' if len(holdouts) > 4 else ''} ########", flush=True)
         for arm in args.arms:
-            ck = os.path.join(CKPT_DIR, f"{ds}_ft_{base}_{arm}_seen{tag}.pt")
-            bp = os.path.join(DATA_DIR, f"tf_feats_{ds}_{base}_ft70_{arm}{tag}.pt")
-            if not (os.path.exists(ck) and os.path.exists(bp)):
-                print(f"  [{arm}] missing {'ckpt' if not os.path.exists(ck) else 'bank'}, skip")
-                continue
-            mod = exp43.FineTuneModel(base, args.emb_dim)
-            mod.load_state_dict(torch.load(ck, map_location=DEVICE))
-            head0 = copy.deepcopy(mod.head).float().to(DEVICE)
-            del mod
+            if arm == "frozen":
+                # The pretrained trunk itself, no fine-tune, identity head on
+                # the 768-D features: the zero-training construction.  The
+                # bank is holdout-independent, so every draw is free.
+                bp = os.path.join(DATA_DIR, (f"dtd_feats_{base}_vitb16.pt" if ds == "dtd"
+                                             else f"tf_feats_{ds}_{base}_vitb16.pt"))
+                if not os.path.exists(bp):
+                    print(f"  [frozen] missing bank {bp}, skip"); continue
+                head0 = nn.Identity().to(DEVICE)
+            else:
+                ck = os.path.join(CKPT_DIR, f"{ds}_ft_{base}_{arm}_seen{tag}.pt")
+                bp = os.path.join(DATA_DIR, f"tf_feats_{ds}_{base}_ft70_{arm}{tag}.pt")
+                if not (os.path.exists(ck) and os.path.exists(bp)):
+                    print(f"  [{arm}] missing {'ckpt' if not os.path.exists(ck) else 'bank'}, skip")
+                    continue
+                mod = exp43.FineTuneModel(base, args.emb_dim)
+                mod.load_state_dict(torch.load(ck, map_location=DEVICE))
+                head0 = copy.deepcopy(mod.head).float().to(DEVICE)
+                del mod
             for p in head0.parameters():
                 p.requires_grad_(False)
             b = torch.load(bp)
@@ -270,15 +280,15 @@ def main():
     for key, r in results.items():
         if r["variant"] != "frozen":
             continue
-        cn = results.get(key.replace("|frozen", "|corpus-norm"))
+        cn = results.get(f"{r['cell']}|{r['arm']}|{r['scorer']}|corpus-norm")
         if not cn:
             continue
         p = r["purity"] + [float("nan")] * (2 - len(r["purity"]))
         q = cn["purity"] + [float("nan")] * (2 - len(cn["purity"]))
-        print(f"  {key.replace('|frozen', ''):<40}{p[0]:>7.3f}{p[1]:>8.3f}{q[1]:>8.3f}"
+        print(f"  {r['cell']}|{r['arm']}|{r['scorer']}"[:40].ljust(40)+f"{p[0]:>7.3f}{p[1]:>8.3f}{q[1]:>8.3f}"
               f"{q[1] - p[1]:>+8.3f}{r['post']['probe']:>8.3f}/{cn['post']['probe']:<7.3f}"
               f"{cn['drift']['rel']:>7.3f}")
-    src = args.cells.replace(":", "-").replace(",", "_")
+    src = args.cells.replace(":", "-").replace(",", "_") + ("_frozen" if args.arms == ["frozen"] else "")
     # The seed goes in the filename or a multi-seed sweep silently overwrites
     # itself (exp 139).  seed 0 keeps the archived name, so nothing already
     # written is orphaned.
