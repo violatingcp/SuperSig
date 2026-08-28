@@ -39,8 +39,17 @@ CONSTANTS, and how they were set (exp 129 sweep on real exp-54 CIFAR-10
 embeddings with the novel class subsampled to realistic rates,
 logs/exp129/n_min_sweep_real.json):
 
-  N_MIN = 30    purity falls monotonically as n_min grows (0.830 at 20 vs
-                0.696 at 500 on nplm_dist_sup_cw at b=0.10); 30 keeps margin.
+  N_MIN = 10    purity falls monotonically as n_min grows.  Lowered from 30
+                after exp 138 measured the sweep on six real trained spaces:
+                n_min      5     10     20     30     50    100    200
+                purity  .833  .846   .807   .778   .743   .715   .665  (one space)
+                n_min=10 buys +0.05-0.06 purity over 30 while leaving 107-112
+                real novel points pooled.  THIS IS AN HONEST TUNING CONSTANT,
+                not a bias correction: exp 138 showed the underestimate in
+                b_hat is NOT a uniform scale (implied alpha climbs 0.071->0.381
+                across the sweep), so lowering n_min does not "cancel" a known
+                factor -- it is simply the operating point that measures best.
+                Report the sweep alongside any purity number.
   Q_MIN = 5e-4  0.002 was BINDING at every n_min <= 75.  Purity still improves
                 down to q ~ 0.001 and then plateaus, while recall collapses to
                 well under 1%, so there is no gain in going tighter.
@@ -57,7 +66,7 @@ a result, not a crash.
 """
 import numpy as np
 
-N_MIN = 30
+N_MIN = 10
 Q_MIN, Q_MAX = 5e-4, 0.20
 K_FLOOR, K_CAP = 2, 64
 
