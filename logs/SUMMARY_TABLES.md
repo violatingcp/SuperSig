@@ -2959,3 +2959,48 @@ Verdicts (dtd, single-holdout, 15 draw cells):
 - SparKer @.05 is 0.72-0.98 on all supervised arms and both SSL arms on
   every base except nplm-sup-ft/visreg (0.42): dataset-level detection
   on DTD is not the bottleneck; pooling is.
+
+## Block P -- frozen-np on the PRETRAINED trunk, flowers / cars / aircraft (exp 135 --arms frozen)
+(no fine-tune at all: ViT-B/16 features, identity head, anchors = seen-class
+centroids, density-ratio (np) or distance pool, 2 x 2-ep anchor rounds; multi
+= campaign default (10 classes out); single = SUPERSIG_NH=1 draws 0-4, mean+-sd;
+BN-adapt arm omitted (no BN; drift ~0 everywhere).  2026-08-28;
+logs/exp135/corpus_norm_<ds>-<base>_frozen*.json)
+
+  dataset   b(single)  base    single np r1     >=gate   single dist r1   multi np r1/r2   multi dist r1
+  flowers   1/102      dino    0.158+-0.006     5/5      0.098+-0.041     0.495 / 0.446    0.562
+                       lejepa  0.177+-0.039     4/5      0.052+-0.025     0.506 / 0.521    0.338
+                       visreg  0.159+-0.016     3/5      0.046+-0.038     0.483 / 0.575    0.303
+  aircraft  1/100      dino    0.016+-0.010     0/5      0.029+-0.018     0.157 / 0.437    0.176
+                       lejepa  0.010+-0.007     0/5      0.014+-0.013     0.088 / 0.180    0.123
+                       visreg  0.010+-0.008     0/5      0.015+-0.012     0.125 / 0.208    0.138
+  cars      1/196      dino    0.009+-0.008     0/5      0.003+-0.004     0.104 / 0.085    0.070
+                       lejepa  0.007+-0.008     0/5      0.004+-0.002     0.074 / 0.104    0.054
+                       visreg  0.010+-0.006     0/5      0.004+-0.004     0.079 / 0.119    0.068
+  (galaxy10 and dtd on the same construction: pending, same table when done)
+
+- THE RATE IS NECESSARY, NOT SUFFICIENT.  flowers and aircraft have the
+  same single-holdout rate (1/102 vs 1/100) and differ by 10x: flowers
+  sits AT the gate on every base (0.16-0.18; 12/15 draws >= 0.15) while
+  aircraft is dead (0.01-0.03; 0/15).  The pretrained trunk separates a
+  flower species it has never been told about; it does not separate an
+  aircraft variant.  cars (1/196) is dead at both regimes (single 0.003-
+  0.010, multi 0.07-0.12).  Paper: the regime boundary is set by the
+  base rate AND by how far the novel class sits from the seen manifold
+  in the pretrained space -- exp 78/107's on-/off-manifold split
+  (flowers LID-strong, cars/aircraft LID-weak) predicts this ordering.
+- The density-ratio pool beats distance by 2-3x at single holdout on
+  flowers (0.16 vs 0.05-0.10) and is indistinguishable from it where
+  both are dead; at multi-holdout distance wins round 1 on flowers/dino
+  (0.56 vs 0.50) but np is the only scorer whose round 2 RISES (aircraft
+  dino 0.16 -> 0.44, lejepa 0.09 -> 0.18, visreg 0.13 -> 0.21) --
+  the anchors-only iteration compounds on np and decays on distance,
+  the same signature as exps 109/133/135.
+- Multi-holdout aircraft/dino at 0.157 -> 0.437 (np, r2) is the only
+  aircraft cell above the gate; the campaign's archived aircraft
+  purities (0.32-0.53, exp 72) needed a fine-tuned residual concat.
+- These are zero-training numbers: they bound what the exp-70 fine-tune
+  buys.  On flowers the fine-tuned parents (exp 70, multi-holdout) reach
+  purity 0.62-0.66 vs the raw trunk's 0.48-0.56 here; on cars 0.12-0.28
+  vs 0.07-0.12.  The fine-tune roughly doubles purity where the raw
+  trunk already has some and does not rescue a dead cell.

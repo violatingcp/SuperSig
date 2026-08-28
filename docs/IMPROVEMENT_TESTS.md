@@ -2071,6 +2071,13 @@ was ViT-specific); C10 supervised top-1 shows a SIGReg cost larger than the
 
 ### Exp 135 — Corpus-adaptive normalisation on every cell (exp 133's analogue)
 
+> **Block P DONE 2026-08-28 (frozen-np on the PRETRAINED trunk, no fine-tune;
+> flowers / cars / aircraft x 3 bases x {multi, 5 single draws}).**  Rate is
+> necessary, not sufficient: flowers (1/102) sits at the gate on 12/15 single
+> draws (0.16-0.18 np) while aircraft (1/100) is dead (0.01-0.03, 0/15) and cars
+> (1/196) is dead at both regimes.  np beats distance 2-3x at single holdout on
+> flowers; np's round 2 rises where distance's decays.  `logs/SUMMARY_TABLES.md`.
+
 > **galaxy10 DRAWS DONE 2026-08-27 — the corpus-norm gain is FALSIFIED on
 > draws** (d r2 -0.006+-0.051 dist, +0.001 np; 16 wins / 23 losses): class 9
 > again.  Keep as opt-in, no claim.  **What survives is larger: frozen-head
