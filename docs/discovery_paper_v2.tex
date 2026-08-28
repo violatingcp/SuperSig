@@ -798,8 +798,15 @@ supervised objectives only, so nine of the eighteen cells in that half are
 absent rather than negative.
 
 The per-dataset appendices that follow (\ref{sec:app_cifar}--\ref{sec:app_dtd})
-put every measurement in one place; this section keeps the cross-cutting
-tables.
+put every measurement in one place. Each opens with a \emph{summary grid}:
+one row per (objective, construction) with construction in \{plain,
+$+$residual concat, $+$NPLM-residual concat\}, and one column pair per metric
+for the space \emph{before} and \emph{after} the discovery loop --- part (A)
+the probe and per-event geometry, part (B) the dataset-level SparKer,
+Mahalanobis and MMD power at $f{=}0.02$. A dash is a cell that was never
+measured, so the grids are also the coverage map of the campaign. The detail
+tables that follow each grid carry the remaining columns (accuracy, LID,
+pools, draws). This section keeps the cross-cutting tables.
 
 \paragraph{Constructions on the leakage-free trunks.}
 Table~\ref{tab:residuals} gives every construction on the from-scratch
@@ -841,7 +848,7 @@ so its older numbers do not reproduce and are not used.
 \input{tables/app_width}
 \input{tables/app_postdisc}
 \input{tables/app_frozen_np}
-\input{tables/inventory}
+%\input{tables/inventory}
 
 
 % ===========================================================================
@@ -857,29 +864,50 @@ class in ten ($b = 0.10$); CIFAR-100 one in a hundred ($b = 0.01$). Every
 number is seed $0$ at one holdout; the draw-resampled shortlist is
 running at the time of writing. Reading the two datasets side by side is the
 point: the objective ranking, the discoverability of the frozen space, and the
-response to the loop all flip between them.
+response to the loop all flip between them. In the grids, ``post'' for a
+plain space is the fine-tuning loop of exp 68 (encoder trains, distance pool,
+two rounds); discovery on the scratch residual concats has not been run.
 
-\paragraph{CIFAR-10.}
+\subsection{CIFAR-10, leakage-free}
+{\footnotesize
+\input{tables/grid_cifar10_scratch_a}
+\input{tables/grid_cifar10_scratch_b}
+}
 \input{tables/app_cifar10_pre}
 \input{tables/app_cifar10_power}
 \input{tables/app_cifar10_pools}
 \input{tables/app_cifar10_residuals}
 
-\paragraph{CIFAR-100.}
+\subsection{CIFAR-100, leakage-free}
+{\footnotesize
+\input{tables/grid_cifar100_scratch_a}
+\input{tables/grid_cifar100_scratch_b}
+}
 \input{tables/app_cifar100_pre}
 \input{tables/app_cifar100_power}
 \input{tables/app_cifar100_pools}
 \input{tables/app_cifar100_residuals}
 
-\paragraph{Hub-pretrained lineage (ablation only).} The hub-pretrained CIFAR
-cells --- every number in our earlier technical report --- use an encoder that
-saw the held-out class. We keep them as an ablation: the multi-seed champions
-of Tables~\ref{tab:seeds} and~\ref{tab:app_seeds_c100}, and the five-seed
-residual concats of Table~\ref{tab:app_hub_residual_seeds}. Their probe
-records ($0.983 \pm 0.000$ post-discovery on CIFAR-10; $0.951 \pm 0.005$
-on CIFAR-100) reproduce across seeds; their leakage-free counterparts are
-$0.950$ (NPLM-dist.+classwise SIGReg under the loop) and $0.949$
+\subsection{CIFAR-10 and CIFAR-100, hub-pretrained (ablation only)}
+The hub-pretrained CIFAR cells --- every number in our earlier technical
+report --- use an encoder that saw the held-out class. We keep them as an
+ablation, and the grids below make their coverage explicit: standalone arms
+(exps 50/53) have pre-discovery geometry and power, and post-discovery probe
+and power from the proto fine-tune (exp 55) or the NPLM fine-tune (exp 58),
+but their post-discovery \emph{geometry} was never recorded; the $16{+}16$
+concats (exp 59) and the residual fine-tunes (exps 73/74) carry both. The
+multi-seed champions are Tables~\ref{tab:seeds} and~\ref{tab:app_seeds_c100},
+the five-seed residual concats Table~\ref{tab:app_hub_residual_seeds}. Their
+probe records ($0.983 \pm 0.000$ post-discovery on CIFAR-10; $0.951 \pm
+0.005$ on CIFAR-100) reproduce across seeds; their leakage-free counterparts
+are $0.950$ (NPLM-dist.+classwise SIGReg under the loop) and $0.949$
 (SupCon+SIGReg residual concat).
+{\footnotesize
+\input{tables/grid_cifar10_hub_a}
+\input{tables/grid_cifar10_hub_b}
+\input{tables/grid_cifar100_hub_a}
+\input{tables/grid_cifar100_hub_b}
+}
 
 % ===========================================================================
 \section{galaxy10: every measurement, across holdout draws}
@@ -896,6 +924,30 @@ constructions on the same draws; Table~\ref{tab:hardening} the frozen
 density-ratio pool over draws and seeds; Table~\ref{tab:app_top1_galaxy}
 the supervised top-1 that fixes the cost of SIGReg on this dataset.
 
+The summary grids below give every (objective, construction) $\times$
+(pre, post) cell per backbone as mean $\pm$ sd across the five draws. The
+residual concats are built on the SupCon and SupCon+SIGReg parents; discovery
+on a residual concat (exp 72) was run on the SupCon$+$res concat only, so the
+other concats' post columns are dashes. The after-discovery construction of
+Section~\ref{sec:constructions} (exp 134c) is a different pipeline order and
+is tabulated in Table~\ref{tab:app_postdisc}.
+
+\subsection{galaxy10 / DINO}
+{\footnotesize
+\input{tables/grid_galaxy10_dino_a}
+\input{tables/grid_galaxy10_dino_b}
+}
+\subsection{galaxy10 / LeJEPA}
+{\footnotesize
+\input{tables/grid_galaxy10_lejepa_a}
+\input{tables/grid_galaxy10_lejepa_b}
+}
+\subsection{galaxy10 / VISReg}
+{\footnotesize
+\input{tables/grid_galaxy10_visreg_a}
+\input{tables/grid_galaxy10_visreg_b}
+}
+\subsection{galaxy10: supporting tables}
 \input{tables/app_galaxy10_draws}
 \input{tables/app_galaxy10_residual_draws}
 \input{tables/app_top1_galaxy}

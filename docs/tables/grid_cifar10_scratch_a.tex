@@ -1,0 +1,53 @@
+% STATUS: 8/8 objectives, from random init, 100-D, holdout 4 (single holdout, $b=0.10$), seed 0. `post' = the exp-68 fine-tuning loop (distance pool, 2 rounds). Residual concats: parents SupCon / SupCon+SIGReg / NPLM-dist.\ only (exp 137); discovery on scratch concats not run.
+\begin{center}
+\small
+\begin{longtable}{lcccccccc}
+\caption{\textbf{CIFAR-10, leakage-free lineage: every (objective, construction) $\times$ (pre, post).} (A) Probe and per-event geometry. \emph{Coverage:} 8/8 objectives, from random init, 100-D, holdout 4 (single holdout, $b=0.10$), seed 0. `post' = the exp-68 fine-tuning loop (distance pool, 2 rounds). Residual concats: parents SupCon / SupCon+SIGReg / NPLM-dist.\ only (exp 137); discovery on scratch concats not run.}\label{tab:grid_cifar10_scratch_a}\\
+\toprule
+space & \multicolumn{2}{c}{probe} & \multicolumn{2}{c}{eucl} & \multicolumn{2}{c}{mahaT} & \multicolumn{2}{c}{per-event} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}\cmidrule(lr){8-9}
+& pre & post & pre & post & pre & post & pre & post \\
+\midrule
+\endfirsthead
+\toprule
+space & \multicolumn{2}{c}{probe} & \multicolumn{2}{c}{eucl} & \multicolumn{2}{c}{mahaT} & \multicolumn{2}{c}{per-event} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}\cmidrule(lr){8-9}
+& pre & post & pre & post & pre & post & pre & post \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\multicolumn{9}{l}{\emph{SupCon}} \\
+\quad plain & 0.905 & 0.901 & 0.514 & 0.695 & 0.552 & 0.510 & 0.000 & 0.003 \\
+\quad +res concat & 0.939 & -- & 0.571 & -- & 0.567 & -- & 0.001 & -- \\
+\quad +res-nplm concat & 0.916 & -- & 0.576 & -- & 0.585 & -- & 0.000 & -- \\
+\multicolumn{9}{l}{\emph{SupCon+SIGReg ($\lambda$5)}} \\
+\quad plain & 0.884 & 0.898 & 0.439 & 0.708 & 0.454 & 0.403 & 0.013 & 0.233 \\
+\quad +res concat & 0.932 & -- & 0.407 & -- & 0.383 & -- & 0.016 & -- \\
+\quad +res-nplm concat & 0.919 & -- & 0.571 & -- & 0.544 & -- & 0.054 & -- \\
+\multicolumn{9}{l}{\emph{NPLM-dist.+cw SIGReg}} \\
+\quad plain & 0.921 & 0.950 & 0.729 & 0.789 & 0.559 & 0.626 & 0.194 & 0.377 \\
+\quad +res concat & -- & -- & -- & -- & -- & -- & -- & -- \\
+\quad +res-nplm concat & -- & -- & -- & -- & -- & -- & -- & -- \\
+\multicolumn{9}{l}{\emph{SupCon+SIGReg (repulse)}} \\
+\quad plain & 0.871 & 0.876 & 0.667 & 0.669 & 0.582 & 0.576 & 0.121 & 0.219 \\
+\quad +res concat & -- & -- & -- & -- & -- & -- & -- & -- \\
+\quad +res-nplm concat & -- & -- & -- & -- & -- & -- & -- & -- \\
+\multicolumn{9}{l}{\emph{NPLM-dist. (sup.)}} \\
+\quad plain & 0.719 & 0.908 & 0.692 & 0.582 & 0.659 & 0.515 & 0.123 & 0.097 \\
+\quad +res concat & 0.876 & -- & 0.378 & -- & 0.459 & -- & 0.017 & -- \\
+\quad +res-nplm concat & 0.842 & -- & 0.610 & -- & 0.543 & -- & 0.030 & -- \\
+\multicolumn{9}{l}{\emph{SimCLR}} \\
+\quad plain & 0.808 & 0.903 & 0.227 & 0.467 & 0.224 & 0.340 & 0.003 & 0.019 \\
+\quad +res concat & -- & -- & -- & -- & -- & -- & -- & -- \\
+\quad +res-nplm concat & -- & -- & -- & -- & -- & -- & -- & -- \\
+\multicolumn{9}{l}{\emph{VISReg/LeJEPA}} \\
+\quad plain & 0.832 & 0.881 & 0.395 & 0.449 & 0.377 & 0.367 & 0.010 & 0.035 \\
+\quad +res concat & -- & -- & -- & -- & -- & -- & -- & -- \\
+\quad +res-nplm concat & -- & -- & -- & -- & -- & -- & -- & -- \\
+\multicolumn{9}{l}{\emph{NPLM (unsup.)}} \\
+\quad plain & 0.799 & 0.843 & 0.472 & 0.547 & 0.468 & 0.507 & 0.052 & 0.106 \\
+\quad +res concat & -- & -- & -- & -- & -- & -- & -- & -- \\
+\quad +res-nplm concat & -- & -- & -- & -- & -- & -- & -- & -- \\
+\end{longtable}
+\end{center}

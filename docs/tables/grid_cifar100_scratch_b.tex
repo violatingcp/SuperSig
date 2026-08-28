@@ -1,0 +1,53 @@
+% STATUS: 8/8 objectives, from random init, 100-D, holdout 4 (single holdout, $b=0.01$), seed 0. `post' = the exp-68 fine-tuning loop (distance pool, 2 rounds). Residual concats: parents SupCon / SupCon+SIGReg / NPLM-dist.\ only (exp 137); discovery on scratch concats not run.
+\begin{center}
+\small
+\begin{longtable}{lcccccc}
+\caption{\textbf{CIFAR-100, leakage-free lineage: every (objective, construction) $\times$ (pre, post).} (B) Dataset-level power at $f=0.02$, $\alpha=0.05$. \emph{Coverage:} 8/8 objectives, from random init, 100-D, holdout 4 (single holdout, $b=0.01$), seed 0. `post' = the exp-68 fine-tuning loop (distance pool, 2 rounds). Residual concats: parents SupCon / SupCon+SIGReg / NPLM-dist.\ only (exp 137); discovery on scratch concats not run.}\label{tab:grid_cifar100_scratch_b}\\
+\toprule
+space & \multicolumn{2}{c}{SparKer} & \multicolumn{2}{c}{Mahalanobis} & \multicolumn{2}{c}{MMD} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
+& pre & post & pre & post & pre & post \\
+\midrule
+\endfirsthead
+\toprule
+space & \multicolumn{2}{c}{SparKer} & \multicolumn{2}{c}{Mahalanobis} & \multicolumn{2}{c}{MMD} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
+& pre & post & pre & post & pre & post \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\multicolumn{7}{l}{\emph{SupCon}} \\
+\quad plain & 0.14 & 0.02 & 0.04 & 0.00 & 0.50 & 0.86 \\
+\quad +res concat & -- & -- & -- & -- & -- & -- \\
+\quad +res-nplm concat & -- & -- & -- & -- & -- & -- \\
+\multicolumn{7}{l}{\emph{SupCon+SIGReg ($\lambda$5)}} \\
+\quad plain & 0.22 & 0.08 & 0.06 & 0.06 & 0.70 & 0.94 \\
+\quad +res concat & -- & -- & -- & -- & -- & -- \\
+\quad +res-nplm concat & -- & -- & -- & -- & -- & -- \\
+\multicolumn{7}{l}{\emph{NPLM-dist.+cw SIGReg}} \\
+\quad plain & 0.20 & 0.06 & 0.06 & 0.00 & 0.58 & 0.42 \\
+\quad +res concat & -- & -- & -- & -- & -- & -- \\
+\quad +res-nplm concat & -- & -- & -- & -- & -- & -- \\
+\multicolumn{7}{l}{\emph{SupCon+SIGReg (repulse)}} \\
+\quad plain & 0.14 & 0.12 & 0.02 & 0.02 & 0.38 & 0.44 \\
+\quad +res concat & -- & -- & -- & -- & -- & -- \\
+\quad +res-nplm concat & -- & -- & -- & -- & -- & -- \\
+\multicolumn{7}{l}{\emph{NPLM-dist. (sup.)}} \\
+\quad plain & 0.18 & 0.12 & 0.04 & 0.00 & 0.52 & 0.82 \\
+\quad +res concat & -- & -- & -- & -- & -- & -- \\
+\quad +res-nplm concat & -- & -- & -- & -- & -- & -- \\
+\multicolumn{7}{l}{\emph{SimCLR}} \\
+\quad plain & 0.06 & 0.04 & 0.02 & 0.00 & 0.18 & 0.70 \\
+\quad +res concat & -- & -- & -- & -- & -- & -- \\
+\quad +res-nplm concat & -- & -- & -- & -- & -- & -- \\
+\multicolumn{7}{l}{\emph{VISReg/LeJEPA}} \\
+\quad plain & 0.04 & 0.10 & 0.06 & 0.00 & 0.08 & 0.58 \\
+\quad +res concat & -- & -- & -- & -- & -- & -- \\
+\quad +res-nplm concat & -- & -- & -- & -- & -- & -- \\
+\multicolumn{7}{l}{\emph{NPLM (unsup.)}} \\
+\quad plain & 0.00 & 0.02 & 0.02 & 0.00 & 0.12 & 0.32 \\
+\quad +res concat & -- & -- & -- & -- & -- & -- \\
+\quad +res-nplm concat & -- & -- & -- & -- & -- & -- \\
+\end{longtable}
+\end{center}

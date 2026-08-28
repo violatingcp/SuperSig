@@ -1,0 +1,47 @@
+% STATUS: 11 standalone arms; hub-pretrained trunk (the encoder saw the held-out class -- ablation lineage); holdout 4, seed 0; post geometry for standalone arms was never measured (exp 55 recorded probe and power only).
+\begin{center}
+\small
+\begin{longtable}{lcccccccc}
+\caption{\textbf{CIFAR-100, hub-pretrained lineage (ablation): every (space, construction) $\times$ (pre, post).} (A) Probe and per-event geometry. \emph{Coverage:} 11 standalone arms; hub-pretrained trunk (the encoder saw the held-out class -- ablation lineage); holdout 4, seed 0; post geometry for standalone arms was never measured (exp 55 recorded probe and power only).}\label{tab:grid_cifar100_hub_a}\\
+\toprule
+space & \multicolumn{2}{c}{probe} & \multicolumn{2}{c}{eucl} & \multicolumn{2}{c}{mahaT} & \multicolumn{2}{c}{per-event} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}\cmidrule(lr){8-9}
+& pre & post & pre & post & pre & post & pre & post \\
+\midrule
+\endfirsthead
+\toprule
+space & \multicolumn{2}{c}{probe} & \multicolumn{2}{c}{eucl} & \multicolumn{2}{c}{mahaT} & \multicolumn{2}{c}{per-event} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}\cmidrule(lr){8-9}
+& pre & post & pre & post & pre & post & pre & post \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\multicolumn{9}{l}{\emph{Standalone objectives, 32-D (exps 50/53; post = exp 55 proto fine-tune)}} \\
+\quad SupCon & 0.942 & -- & 0.332 & -- & 0.341 & -- & 0.000 & -- \\
+\quad SupCon+SIGReg ($\lambda$1) & 0.883 & -- & 0.436 & -- & 0.443 & -- & 0.000 & -- \\
+\quad NPLM-dist. (sup.) & 0.803 & 0.837 & 0.369 & -- & 0.269 & -- & 0.020 & 0.010 \\
+\quad NPLM-dist.+cw SIGReg & 0.886 & 0.886 & 0.452 & -- & 0.372 & -- & 0.020 & 0.020 \\
+\quad NPLM-bilinear & 0.935 & 0.891 & 0.532 & -- & 0.484 & -- & 0.070 & 0.050 \\
+\quad NPLM-bil.+cw SIGReg & 0.872 & -- & 0.458 & -- & 0.388 & -- & 0.030 & -- \\
+\quad NPLM-bil.(sup.)+cw SIGReg & 0.925 & -- & 0.377 & -- & 0.316 & -- & 0.010 & -- \\
+\quad NPLM-dist. (unsup.) & 0.737 & -- & 0.477 & -- & 0.409 & -- & 0.010 & -- \\
+\quad SimCLR & 0.854 & -- & 0.395 & -- & 0.336 & -- & 0.010 & -- \\
+\quad SimCLR+SIGReg & 0.863 & -- & 0.519 & -- & 0.458 & -- & 0.040 & -- \\
+\quad LeJEPA & 0.868 & -- & 0.473 & -- & 0.403 & -- & 0.010 & -- \\
+\multicolumn{9}{l}{\emph{Concatenated / residual spaces, 16+16 (exp 59; post = discovery on the concat)}} \\
+\quad sup->res-nplm & 0.798 & 0.800 & 0.490 & -- & 0.325 & -- & 0.000 & 0.020 \\
+\quad nplmsup->res & 0.845 & 0.866 & 0.516 & -- & 0.417 & -- & 0.010 & 0.000 \\
+\quad supcon+nplm & 0.942 & 0.932 & 0.436 & -- & 0.415 & -- & 0.000 & 0.000 \\
+\quad sup+nplm & 0.896 & 0.860 & 0.567 & -- & 0.417 & -- & 0.020 & 0.090 \\
+\quad nplmsup+nplm & 0.896 & 0.900 & 0.526 & -- & 0.489 & -- & 0.030 & 0.000 \\
+\multicolumn{9}{l}{\emph{Residual fine-tune, 100+100 (exps 73/74/80)}} \\
+\quad SupCon parent & 0.958 & -- & 0.338 & -- & 0.347 & -- & 0.000 & -- \\
+\quad\quad +res concat & 0.959 & 0.957 & 0.575 & 0.562 & 0.440 & 0.483 & 0.020 & 0.030 \\
+\quad\quad +res-nplm concat & 0.957 & 0.950 & 0.296 & 0.530 & 0.312 & 0.455 & 0.000 & 0.020 \\
+\quad\quad res child alone & 0.839 & -- & 0.650 & -- & 0.558 & -- & 0.080 & -- \\
+\quad\quad res-nplm child alone & 0.910 & -- & 0.317 & -- & 0.318 & -- & 0.000 & -- \\
+\quad SupCon+SIGReg ($\lambda$1) parent & 0.945 & -- & 0.388 & -- & 0.381 & -- & 0.000 & -- \\
+\quad\quad +res concat & 0.942 & -- & 0.568 & -- & 0.479 & -- & 0.040 & -- \\
+\end{longtable}
+\end{center}
