@@ -47,7 +47,9 @@ PRETTY = {
 
 
 def esc(s):
-    return str(s).replace("_", r"\_").replace("&", r"\&")
+    # `->` is not a text-mode glyph in OT1 (it prints as `-¿`); typeset it.
+    return (str(s).replace("_", r"\_").replace("&", r"\&")
+            .replace("->", r"$\to$"))
 
 
 def fnum(x, p=3, dash="--"):
