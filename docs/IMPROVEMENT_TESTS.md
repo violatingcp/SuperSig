@@ -1998,6 +1998,14 @@ or the concat loses top-1 by more than 0.017 (no-cost fails on CIFAR).
 
 ### Exp 136 — The from-scratch CIFAR master grid (every metric, every space)
 
+> **TIER 2 DONE 2026-08-28 (cifar10 h4, all 8 objectives).**  Prediction (i)
+> FAILS on C10: ssig loses to supcon on probe (0.884 vs 0.905) AND calibration
+> (mahaT 0.454 vs 0.552) while tying top-1 -- the dissociation is many-class
+> only.  Clean C10 champion is nplmcw: probe 0.921 -> 0.950 under the loop,
+> top-1 0.898, eucl 0.729, per-event 0.19, both currencies on one trunk.
+> (ii) holds and is not ViT-specific: frozen np clears the gate 8/8 (0.26-
+> 0.55), legal cut engages 8/8 at n_min=10 with purity 0.38-0.85.  (iii)
+> holds: SIGReg costs no top-1 on clean C10 (+0.001).  Tier 3 draws queued.
 > **n_min note 2026-08-28:** Tier 1's legal column re-evaluated at both n_min=30
 > (as run) and the new default 10: at 10 only nplmcw engages (purity 0.048, still
 > far below the gate); all other clean C100 spaces refuse at both.  Verdict

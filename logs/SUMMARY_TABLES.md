@@ -2747,3 +2747,70 @@ cells + the 9 archived-draw cells = 144; variance decomposition stratified by
   exceeds 0.43 here: the pre-basin C100 ceiling, on seeds.  Per-event
   stays dead (<= 0.09).
 - The 16+16 configuration's seeds 1/2 are still running (Block N).
+
+## Exp 136 -- the from-scratch CIFAR-10 master battery, Tier 2 (Block L)
+(cifar10, 100-D, pretrain=None, holdout {4} [single-holdout, b=0.10], seed 0;
+all eight exp-67 objectives; same battery as the cifar100 Tier-1 block;
+C10 fractions .001/.003/.01/.02/.03/.1; 2026-08-28; logs/exp136/master_cifar10.json,
+logs/exp68/scratch_discovery_cifar10.npz)
+
+PRE (frozen space)
+  arm      probe   top1   acc    supAUC eucl   mahaT  mahaPC lid    perevt  SpK@.01/.02/.1   Maha@.02/.1   MMD@.02/.1
+  nplmcw   0.921   0.898  0.896  0.989  0.729  0.559  0.589  0.248  0.194   0.12/0.38/1.00   0.20/0.94     0.48/1.00
+  supcon   0.905   0.896  0.741  0.915  0.514  0.552  0.646  0.703  0.000   0.48/0.88/1.00   0.14/0.84     0.84/1.00
+  ssig     0.884   0.897  0.894  0.989  0.439  0.454  0.390  0.518  0.013   0.06/0.16/1.00   0.00/0.00     0.46/1.00
+  supsig   0.871   0.802  0.803  0.963  0.667  0.582  0.649  0.616  0.121   0.08/0.36/1.00   0.56/1.00     0.28/1.00
+  visreg   0.832   0.697  0.638  0.922  0.395  0.377  0.515  0.621  0.010   0.04/0.04/1.00   0.12/0.36     0.08/1.00
+  simclr   0.808   0.691  0.638  0.919  0.227  0.224  0.353  0.574  0.003   0.10/0.22/1.00   0.00/0.00     0.44/1.00
+  nplm     0.799   0.485  0.435  0.824  0.472  0.468  0.473  0.484  0.052   0.06/0.04/0.88   0.02/0.02     0.02/0.92
+  nplmsd   0.719   0.827  0.799  0.969  0.692  0.659  0.646  0.376  0.123   0.14/0.16/1.00   0.22/0.92     0.16/1.00
+
+POOLS AND DISCOVERY (gate 0.15)
+  arm      frozen dist r1/r2  frozen np r1/r2  np+BN r2  legal n10 (purity, n_nov)  legal n30        exp-68 loop: purity r1/r2  probe pre->post  post eucl/mahaT  perevt/SpK/MMD@.02 post
+  nplmcw   0.461/0.000        0.485/0.539      0.480     ok 0.757 (106)             ok 0.777 (185)   0.461/0.060   0.922->0.950    0.789/0.626      0.38/0.44/0.48
+  supcon   0.000/0.000        0.547/0.550      0.571     ok 0.731 (228)             ok 0.722 (518)   0.000/0.007   0.904->0.901    0.695/0.510      0.00/0.14/0.42
+  ssig     0.029/0.058        0.396/0.385      0.441     ok 0.812 (26)              ok 0.738 (96)    0.029/0.287   0.884->0.898    0.708/0.403      0.23/0.50/0.24
+  supsig   0.450/0.193        0.354/0.297      0.370     ok 0.380 (281)             REF 0.308        0.450/0.108   0.873->0.876    0.669/0.576      0.22/0.58/0.36
+  nplmsd   0.285/0.009        0.392/0.271      0.448     ok 0.429 (133)             ok 0.442 (269)   0.285/0.051   0.737->0.908    0.582/0.515      0.10/0.02/0.06
+  simclr   0.011/0.002        0.443/0.475      0.434     ok 0.848 (56)              ok 0.871 (88)    0.011/0.055   0.804->0.903    0.467/0.340      0.02/0.02/0.12
+  visreg   0.017/0.019        0.345/0.290      0.253     ok 0.645 (40)              ok 0.583 (60)    0.017/0.043   0.838->0.881    0.449/0.367      0.04/0.04/0.00
+  nplm     0.091/0.104        0.264/0.323      0.285     ok 0.376 (35)              ok 0.408 (122)   0.091/0.111   0.799->0.843    0.547/0.507      0.11/0.08/0.00
+
+- PREDICTION (i) FAILS ON CIFAR-10: THE C100 DISSOCIATION DOES NOT
+  REPRODUCE.  ssig loses to supcon on the probe (0.884 vs 0.905, above
+  the floor) AND on calibration (eucl 0.439 vs 0.514, mahaT 0.454 vs
+  0.552, Maha power 0.00), while tying it on top-1 (0.897 vs 0.896).  On
+  a clean few-class trunk the global SIGReg marginal at lam=5 buys
+  nothing: SupCon's own geometry is already the better one.  The
+  dissociation is a many-class phenomenon (C100: +0.32 mahaT, galaxy10
+  per-event) -- state it as such.
+- THE CLEAN C10 CHAMPION IS nplmcw (supervised distance-NPLM + classwise
+  SIGReg): best probe (0.921 -> 0.950 under the loop), top-1 tied with
+  supcon (0.898), best eucl (0.729), per-event 0.194 (supcon 0.000),
+  Maha@.1 0.94, and the best post-discovery battery (per-event 0.38, eucl
+  0.79, mahaT 0.63).  It holds both currencies on one clean trunk -- the
+  hub-lineage "sup nplm +cw" record (0.977 post) now has its leakage-free
+  counterpart at 0.950.  Together with C100 (nplmcw +0.039 under the
+  loop, the only supervised arm that gained) it is the arm to promote
+  in the CIFAR shortlist.
+- PREDICTION (ii) HOLDS, AND IS NOT VIT-SPECIFIC: with the trunk frozen
+  the density-ratio pool clears the gate on 8/8 clean C10 arms (r1
+  0.26-0.55, no round-2 collapse) where the distance pool clears it on
+  3/8; and the label-free cut engages on 8/8 at n_min=10 with purity
+  0.38-0.85 (simclr 0.85, ssig 0.81, nplmcw 0.76, supcon 0.73) -- 5-10x
+  the gate -- vs 7/8 at n_min=30.  At b=0.10 on a ResNet the whole
+  frozen-np construction transfers from galaxy10 with room to spare.
+- PREDICTION (iii) HOLDS: no supervised-accuracy cost for SIGReg on clean
+  C10 (ssig - supcon = +0.001).  The galaxy10 -0.035 is the odd one out.
+  nplmsd is decodable here (top-1 0.83; C100 was 0.25) but has the worst
+  probe (0.72) and the best mahaT (0.66): the standalone dissociation
+  arm on C10, at a large probe price.
+- The exp-68 loop (trunk trains, distance pool) is probe-positive on 6/8
+  (nplmsd +0.17, simclr +0.10, visreg +0.04, nplm +0.04, nplmcw +0.03,
+  ssig +0.01), neutral on supcon and supsig; its round-1 purity clears
+  the gate for nplmcw (0.46), supsig (0.45) and nplmsd (0.29) only --
+  the arms with a marginal -- and collapses at round 2 for all three.
+- supcon is again the best raw dataset-level detector (SpK 0.48/0.88 at
+  .01/.02, MMD 0.84) -- the hub f95=0.019 result was not leakage.
+- Caveats: seed 0, holdout {4}; Tier 3 draws {8,9,7} queued for the
+  shortlist; residuals on these trunks = exp 137 cifar10 (Block M, next).

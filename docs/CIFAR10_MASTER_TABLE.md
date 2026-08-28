@@ -1,5 +1,11 @@
 # CIFAR-10 master table
 
+> LEAKAGE-FREE LINEAGE (exp 136 Tier 2, 2026-08-28; scratch ResNet-20, 100-D,
+> holdout 4): the C100 dissociation does NOT reproduce on C10 (ssig < supcon
+> on probe and mahaT); clean champion is nplmcw (probe 0.921 -> 0.950, top-1
+> 0.898, eucl 0.729, per-event 0.19).  Frozen-np pool 8/8 above the gate;
+> legal cut 8/8 at purity 0.38-0.85.  Full table: logs/SUMMARY_TABLES.md.
+>
 > Exp-59 SEED UPDATE (3 seeds, 2026-08-28): sup->res-nplm post 0.983+-0.000,
 > eucl 0.834+-0.002, per-event post 0.55+-0.04, SpK/Maha/MMD post 0.96/0.85/
 > 0.88; supcon+nplm pre 0.954+-0.002, discovery loss -0.024+-0.008 (3/3).
