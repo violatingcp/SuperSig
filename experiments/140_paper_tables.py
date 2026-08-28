@@ -56,28 +56,36 @@ def fnum(x, p=3, dash="--"):
     return f"{x:.{p}f}"
 
 
-def _wrap(body, caption, label, status, colspec, header, long=False):
+def _wrap(body, caption, label, status, colspec, header, long=False,
+          wide=False, size=None):
     """`long=True` emits a longtable, which breaks across pages -- required
     for any table with more rows than fit on one (a plain `table` silently
-    overflows the page instead of breaking)."""
+    overflows the page instead of breaking).  `wide=True` rotates the table
+    into a landscape page (pdflscape) and drops to \scriptsize with a tight
+    column gap -- for the grids that overflow the 5.5in text width.  `size`
+    overrides the font size command (e.g. r"\footnotesize")."""
+    sz = size or (r"\footnotesize" if wide else r"\small")
+    setup = [sz] + ([r"\setlength{\tabcolsep}{3pt}"] if wide else [])
+    pre = [r"\begin{landscape}"] if wide else []
+    post = [r"\end{landscape}"] if wide else []
     if long:
         return "\n".join([
-            f"% STATUS: {status}",
-            r"\begin{center}", r"\small",
+            f"% STATUS: {status}"] + pre + [
+            r"\begin{center}"] + setup + [
             rf"\begin{{longtable}}{{{colspec}}}",
             rf"\caption{{{caption} \emph{{Coverage:}} {status}}}"
             rf"\label{{{label}}}\\",
             r"\toprule", header, r"\midrule", r"\endfirsthead",
             r"\toprule", header, r"\midrule", r"\endhead",
             r"\bottomrule", r"\endfoot",
-            body, r"\end{longtable}", r"\end{center}", ""])
+            body, r"\end{longtable}", r"\end{center}"] + post + [""])
     return "\n".join([
-        f"% STATUS: {status}",
-        r"\begin{table}[t]", r"\centering", r"\small",
+        f"% STATUS: {status}"] + pre + [
+        r"\begin{table}[t]" if not wide else r"\begin{table}[p]", r"\centering"] + setup + [
         rf"\begin{{tabular}}{{{colspec}}}", r"\toprule",
         header, r"\midrule", body, r"\bottomrule", r"\end{tabular}",
         rf"\caption{{{caption} \emph{{Coverage:}} {status}}}",
-        rf"\label{{{label}}}", r"\end{table}", ""])
+        rf"\label{{{label}}}", r"\end{table}"] + post + [""])
 
 
 # --------------------------------------------------------------- table 1 ---
@@ -261,7 +269,7 @@ def t_2x2():
         "tab:2x2", status,
         "lllccccccc",
         r"cell & ctor & variant & $A$ & $B$ & $C$ & $D$ & disc & ctor & "
-        r"$\Delta_{\text{int}}$ \\")
+        r"$\Delta_{\text{int}}$ \\", size=r"\footnotesize")
 
 
 # --------------------------------------------------------------- table 5 ---
@@ -468,7 +476,7 @@ def t_galaxy():
         r"& \multicolumn{3}{c}{natural discovery} & "
         r"\multicolumn{3}{c}{frozen-anchor pool} \\"
         "\n" r"\cmidrule(lr){2-4}\cmidrule(lr){5-7}" "\n"
-        r"objective & DINO & LeJEPA & VISReg & DINO & LeJEPA & VISReg \\")
+        r"objective & DINO & LeJEPA & VISReg & DINO & LeJEPA & VISReg \\", wide=True)
 
 
 def t_inventory():

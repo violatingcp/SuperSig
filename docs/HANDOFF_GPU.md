@@ -354,6 +354,20 @@ python experiments/135_corpus_norm_everywhere.py --cells cars:dino --arms frozen
 SUPERSIG_NH=1 SUPERSIG_HOLDOUT_DRAW=2 python experiments/135_corpus_norm_everywhere.py --cells cars:dino --arms frozen
 ```
 
+## Compiling the paper on this box
+
+TinyTeX is installed in `~/.TinyTeX` (2026-08-28).  Regenerate tables, then:
+
+```bash
+export PATH=$HOME/.TinyTeX/bin/x86_64-linux:$PATH
+python experiments/140_paper_tables.py && python experiments/141_appendix_tables.py && python experiments/142_grid_tables.py
+cd docs && pdflatex -interaction=nonstopmode discovery_paper_v2.tex && pdflatex -interaction=nonstopmode discovery_paper_v2.tex
+grep -c "Overfull \\hbox" discovery_paper_v2.log     # 0 as of 2026-08-28
+```
+
+Wide tables are rotated by `_wrap(..., wide=True)` (pdflscape) at
+`\footnotesize`; pass `size=` to override.
+
 ## Block G — Exp 132: supervised linear probe (piggyback on Block B)
 
 The campaign has NO supervised linear probe -- the `probe` column everywhere is

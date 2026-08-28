@@ -1,7 +1,9 @@
 % STATUS: 8/8 objectives; CIFAR-100 from random init, 100-D, holdout class 4 (single holdout, $b=0.01$), seed 0; probe and top-1 over 3 probe restarts.
-\begin{table}[t]
+\begin{landscape}
+\begin{table}[p]
 \centering
-\small
+\footnotesize
+\setlength{\tabcolsep}{3pt}
 \begin{tabular}{lcccccccccc}
 \toprule
 objective & probe & top-1 & acc & supAUC & eucl & mahaT & mahaPC & lid & per-ev & probe sd \\
@@ -19,3 +21,4 @@ NPLM (unsup.) & 0.757 & 0.223 & 0.181 & 0.836 & 0.413 & 0.361 & 0.447 & 0.635 & 
 \caption{\textbf{CIFAR-100 leakage-free lineage: the frozen-space battery.} probe = holdout-vs-rest linear AUC; top-1 = supervised linear probe on seen classes; acc = nearest-centroid; supAUC = macro OvR AUC of the proto posterior; eucl / mahaT / mahaPC = novelty AUC of min-centroid distance, tied and per-class Mahalanobis; lid = local-intrinsic-dimension AUC; per-ev = per-event power at $\alpha{=}0.05$. \emph{Coverage:} 8/8 objectives; CIFAR-100 from random init, 100-D, holdout class 4 (single holdout, $b=0.01$), seed 0; probe and top-1 over 3 probe restarts.}
 \label{tab:app_cifar100_pre}
 \end{table}
+\end{landscape}

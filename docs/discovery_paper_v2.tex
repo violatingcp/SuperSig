@@ -37,6 +37,7 @@
 \usepackage[colorlinks=true,linkcolor=black,citecolor=black,urlcolor=blue]{hyperref}
 \usepackage{caption}
 \usepackage{longtable}
+\usepackage{pdflscape}
 \captionsetup{font=small,labelfont=bf}
 
 \newcommand{\E}{\mathbb{E}}
@@ -252,10 +253,10 @@ rather than tuned.
 \subsection{Objectives}
 
 We work within a design cube spanning
-$\{$instance, supervised$\}$ positives $\times$
-$\{$cosine, bilinear, distance$\}$ critics $\times$
-$\{$softmax, NPLM$\}$ estimators $\times$
-$\{$none, SIGReg, class-wise SIGReg$\}$ marginals, which contains SimCLR,
+\{instance, supervised\} positives $\times$
+\{cosine, bilinear, distance\} critics $\times$
+\{softmax, NPLM\} estimators $\times$
+\{none, SIGReg, class-wise SIGReg\} marginals, which contains SimCLR,
 SupCon, LeJEPA/VISReg and the density-ratio objectives as corners. Of the ten
 arms we ran, three earn a place for discovery.
 
@@ -869,20 +870,16 @@ plain space is the fine-tuning loop of exp 68 (encoder trains, distance pool,
 two rounds); discovery on the scratch residual concats has not been run.
 
 \subsection{CIFAR-10, leakage-free}
-{\footnotesize
 \input{tables/grid_cifar10_scratch_a}
 \input{tables/grid_cifar10_scratch_b}
-}
 \input{tables/app_cifar10_pre}
 \input{tables/app_cifar10_power}
 \input{tables/app_cifar10_pools}
 \input{tables/app_cifar10_residuals}
 
 \subsection{CIFAR-100, leakage-free}
-{\footnotesize
 \input{tables/grid_cifar100_scratch_a}
 \input{tables/grid_cifar100_scratch_b}
-}
 \input{tables/app_cifar100_pre}
 \input{tables/app_cifar100_power}
 \input{tables/app_cifar100_pools}
@@ -902,12 +899,10 @@ probe records ($0.983 \pm 0.000$ post-discovery on CIFAR-10; $0.951 \pm
 0.005$ on CIFAR-100) reproduce across seeds; their leakage-free counterparts
 are $0.950$ (NPLM-dist.+classwise SIGReg under the loop) and $0.949$
 (SupCon+SIGReg residual concat).
-{\footnotesize
 \input{tables/grid_cifar10_hub_a}
 \input{tables/grid_cifar10_hub_b}
 \input{tables/grid_cifar100_hub_a}
 \input{tables/grid_cifar100_hub_b}
-}
 
 % ===========================================================================
 \section{galaxy10: every measurement, across holdout draws}
@@ -933,20 +928,14 @@ Section~\ref{sec:constructions} (exp 134c) is a different pipeline order and
 is tabulated in Table~\ref{tab:app_postdisc}.
 
 \subsection{galaxy10 / DINO}
-{\footnotesize
 \input{tables/grid_galaxy10_dino_a}
 \input{tables/grid_galaxy10_dino_b}
-}
 \subsection{galaxy10 / LeJEPA}
-{\footnotesize
 \input{tables/grid_galaxy10_lejepa_a}
 \input{tables/grid_galaxy10_lejepa_b}
-}
 \subsection{galaxy10 / VISReg}
-{\footnotesize
 \input{tables/grid_galaxy10_visreg_a}
 \input{tables/grid_galaxy10_visreg_b}
-}
 \subsection{galaxy10: supporting tables}
 \input{tables/app_galaxy10_draws}
 \input{tables/app_galaxy10_residual_draws}
@@ -959,7 +948,7 @@ is tabulated in Table~\ref{tab:app_postdisc}.
 
 DTD is task-novel to the backbones (textures) and is the dataset on which the
 discovery workhorse was chosen. Single holdout is one texture class of $47$
-($b \approx 0.02$), resampled over classes $\{8, 46, 38, 15, 16\}$;
+($b \approx 0.02$), resampled over classes 8, 46, 38, 15 and 16;
 Table~\ref{tab:app_dtd_draws} gives all three backbones. The multi-holdout
 regime ($10$ classes held out, $b \approx 0.2$) is the one the earlier report
 quoted, and its purities ($0.80$) are not comparable with these ($0.22$).
@@ -973,8 +962,8 @@ quoted, and its purities ($0.80$) are not comparable with these ($0.22$).
 Three objectives collide under similar names at two regulariser strengths,
 and their numbers must not be pooled.
 
-\begin{center}\small
-\begin{tabular}{llll}
+\begin{center}\footnotesize\setlength{\tabcolsep}{4pt}
+\begin{tabular}{llp{1.9in}c}
 \toprule
 paper name & code name(s) & objective & $\lambda$ \\
 \midrule

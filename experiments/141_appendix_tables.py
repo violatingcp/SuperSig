@@ -69,7 +69,7 @@ def t_scratch_pre(ds):
                  r"distance, tied and per-class Mahalanobis; lid = local-intrinsic-dimension "
                  r"AUC; per-ev = per-event power at $\alpha{=}0.05$.",
                  f"tab:app_{ds}_pre", status, "lcccccccccc",
-                 r"objective & probe & top-1 & acc & supAUC & eucl & mahaT & mahaPC & lid & per-ev & probe sd \\")
+                 r"objective & probe & top-1 & acc & supAUC & eucl & mahaT & mahaPC & lid & per-ev & probe sd \\", wide=True)
 
 
 def t_scratch_power(ds):
@@ -137,7 +137,7 @@ def t_scratch_pools(ds):
                  r"purity, probe and post geometry.",
                  f"tab:app_{ds}_pools", status, "lcccccccccc",
                  r"objective & dist r1 & np r1 & np r2 & np+BN r2 & legal$_{10}$ & legal$_{30}$ & "
-                 r"loop r1 & loop probe & post eucl & post mahaT \\")
+                 r"loop r1 & loop probe & post eucl & post mahaT \\", wide=True)
 
 
 def t_residuals_ds(ds):
@@ -227,7 +227,7 @@ def t_transfer_draws(ds, draws):
                  r"clearing the gate.",
                  f"tab:app_{ds}_draws", status, "lcccccccc",
                  r"objective & probe & probe post & acc & eucl & mahaT & per-ev & purity r1 & $\ge$gate \\",
-                 long=True)
+                 long=True, wide=True)
 
 
 def t_galaxy_residual_draws():
@@ -262,7 +262,7 @@ def t_galaxy_residual_draws():
                  r"effect that survives draw variance.",
                  "tab:app_galaxy10_residual_draws", status, "lcccccc",
                  r"space & probe & acc & eucl & mahaT & per-ev & concat$-$parent (wins) \\",
-                 long=True)
+                 long=True, wide=True)
 
 
 # ------------------------------------------------- construction audits ---
@@ -288,7 +288,7 @@ def t_width_control():
                  r"same-width non-residual head recovers little of the flagship probe gain and "
                  r"loses geometry on cars/VISReg; on galaxy10 the probe gain is a tie on DINO.",
                  "tab:app_width", status, "llccccc",
-                 r"cell & metric & parent (100) & control (200) & concat (100+100) & concat$-$control & verdict \\")
+                 r"cell & metric & parent (100) & control (200) & concat (100+100) & concat$-$control & verdict \\", size=r"\footnotesize")
 
 
 def t_postdisc():
@@ -316,7 +316,7 @@ def t_postdisc():
                  r"the pool purity is far below the gate.",
                  "tab:app_postdisc", status, "lcccccccc",
                  r"concat & probe (pre) & probe (post) & eucl (pre) & eucl (post) & mahaT (pre) & mahaT (post) & per-ev (pre) & per-ev (post) \\",
-                 long=True)
+                 long=True, wide=True)
 
 
 def t_seeds_c100():
@@ -343,7 +343,7 @@ def t_seeds_c100():
     return _wrap("\n".join(rows),
                  r"\textbf{Multi-seed CIFAR-100 champions (hub lineage).} Power columns at $f{=}0.02$, post-discovery.",
                  "tab:app_seeds_c100", status, "lccccccc",
-                 r"space & probe pre & probe post & eucl & mahaT & SpK post & MMD post & $n$ \\")
+                 r"space & probe pre & probe post & eucl & mahaT & SpK post & MMD post & $n$ \\", wide=True)
 
 
 def t_top1_galaxy():
@@ -373,7 +373,7 @@ def t_top1_galaxy():
                  r"\textbf{Supervised top-1 (exp 132) on galaxy10: archived draw and the draw interval.} "
                  r"SupCon+SIGReg costs $0.035$ against SupCon on every draw; the residual concats tie the parent.",
                  "tab:app_top1_galaxy", status, "lccc",
-                 r"space & top-1 (archived) & top-1 (draws) & $n$ \\", long=True)
+                 r"space & top-1 (archived) & top-1 (draws) & $n$ \\", long=True, size=r"\footnotesize")
 
 
 def t_frozen_np_datasets():
@@ -415,7 +415,7 @@ def t_frozen_np_datasets():
                  "\n" r"\cmidrule(lr){2-7}\cmidrule(lr){8-13}" "\n"
                  r"& \multicolumn{3}{c}{dist} & \multicolumn{3}{c}{np} & \multicolumn{3}{c}{dist} & \multicolumn{3}{c}{np} \\"
                  "\n" r"cell & r1 & r2 & $\ge$g & r1 & r2 & $\ge$g & r1 & r2 & $\ge$g & r1 & r2 & $\ge$g \\",
-                 long=True)
+                 long=True, wide=True)
 
 
 def t_hub_residual_seeds():

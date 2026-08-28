@@ -99,7 +99,7 @@ def group(title, ncolA=9, ncolB=7):
 
 def emit(name, rowsA, rowsB, caption, status):
     A = _wrap("\n".join(rowsA), caption + " (A) Probe and per-event geometry.", f"tab:grid_{name}_a",
-              status, "lcccccccc", HEAD_A, long=True)
+              status, "lcccccccc", HEAD_A, long=True, wide=True)
     B = _wrap("\n".join(rowsB), caption + f" (B) Dataset-level power at $f={F}$, $\\alpha=0.05$.",
               f"tab:grid_{name}_b", status, "lcccccc", HEAD_B, long=True)
     return A, B
