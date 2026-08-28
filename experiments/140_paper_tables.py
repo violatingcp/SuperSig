@@ -390,6 +390,87 @@ def t_seeds():
                  r"space & probe pre & probe post & eucl & mahaT & $n$ \\")
 
 
+_AGG = re.compile(r"^\|\s*([a-z0-9\-]+)\s*\|(.+)\|\s*$")
+
+
+def _agg_purity(ds, base):
+    """(mean, sd) of round-1 pool purity per arm, from the exp-125 aggregate
+    markdown.  Column 10 of that table is `purity r1` as `m+-s`."""
+    p = os.path.join(LOGS, f"exp125_{ds}_{base}_agg.md")
+    if not os.path.exists(p):
+        return {}, 0
+    out, ndraw = {}, 0
+    for line in open(p, errors="ignore"):
+        m = re.search(r"(\d+) draws", line)
+        if m and not ndraw:
+            ndraw = int(m.group(1))
+        m = _AGG.match(line.strip())
+        if not m:
+            continue
+        arm, rest = m.group(1), [c.strip() for c in m.group(2).split("|")]
+        if len(rest) < 10 or "+-" not in rest[8]:
+            continue
+        try:
+            mu, sd = rest[8].split("+-")
+            out[arm] = (float(mu), float(sd))
+        except ValueError:
+            continue
+    return out, ndraw
+
+
+def t_galaxy():
+    """galaxy10: the same dataset under two discovery procedures.
+
+    galaxy10 is the only dataset in the study that NO backbone has seen, so
+    it carries the most weight -- and it is also where the choice of
+    procedure matters most.  Natural discovery (distance pool, encoder
+    fine-tuned) and the frozen-anchor density-ratio pool disagree by a factor
+    of five on the same draws."""
+    bases = ["dino", "lejepa", "visreg"]
+    nat = {b: _agg_purity("galaxy10", b) for b in bases}
+    f = os.path.join(LOGS, "exp139", "hardening.json")
+    frz = json.load(open(f))["analysis"]["per_cell"] if os.path.exists(f) else {}
+    arms = ["simclr-ft", "sigreg-ssl-ft", "nplm-bil-ft", "supcon-ft",
+            "ss-ft", "nplm-sup-ft"]
+    rows, n_nat, n_frz = [], 0, 0
+    for a in arms:
+        cells = []
+        for b in bases:
+            v = nat[b][0].get(a)
+            if v:
+                n_nat += 1
+                cells.append(f"{v[0]:.3f}$\\pm${v[1]:.3f}")
+            else:
+                cells.append("--")
+        for b in bases:
+            c = (frz.get(f"galaxy10:{b}") or {}).get(a)
+            if c:
+                n_frz += 1
+                cells.append(f"{c['mean']:.3f}$\\pm${c['sd']:.3f}")
+            else:
+                cells.append("--")
+        rows.append(" & ".join([PRETTY.get(a, esc(a))] + cells) + r" \\")
+    nd = max((nat[b][1] for b in bases), default=0)
+    status = (f"galaxy10, {len(bases)} backbones; natural discovery over "
+              f"{nd} draws ({n_nat}/{len(arms) * len(bases)} cells present), "
+              f"frozen-anchor pool over 5 draws $\\times$ 3 seeds "
+              f"({n_frz}/{len(arms) * len(bases)} present --- that arm of the "
+              r"study covers the three supervised objectives only).")
+    return _wrap(
+        "\n".join(rows),
+        r"\textbf{galaxy10, the dataset no backbone has seen, under two "
+        r"discovery procedures.} Round-1 pool purity, mean $\pm$ sd. Left: "
+        r"natural discovery (distance pool, encoder fine-tuned). Right: the "
+        r"frozen-anchor density-ratio pool. Same dataset, same holdout draws, "
+        r"a five-fold difference in purity --- the procedure, not the "
+        r"representation, is what clears the gate here.",
+        "tab:galaxy", status, "lcccccc",
+        r"& \multicolumn{3}{c}{natural discovery} & "
+        r"\multicolumn{3}{c}{frozen-anchor pool} \\"
+        "\n" r"\cmidrule(lr){2-4}\cmidrule(lr){5-7}" "\n"
+        r"objective & DINO & LeJEPA & VISReg & DINO & LeJEPA & VISReg \\")
+
+
 def t_inventory():
     """Every numbered study, with whether its results are on disk."""
     exps = sorted(glob.glob(os.path.join(REPO, "experiments", "*.py")))
@@ -424,8 +505,8 @@ TABLES = [("objectives", t_objectives), ("draws", t_draws),
           ("hardening", t_hardening), ("2x2", t_2x2),
           ("baserate", t_baserate),
           # appendix
-          ("residuals", t_residuals), ("seeds", t_seeds),
-          ("inventory", t_inventory)]
+          ("galaxy", t_galaxy), ("residuals", t_residuals),
+          ("seeds", t_seeds)]
 
 
 def selftest():

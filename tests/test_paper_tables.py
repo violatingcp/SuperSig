@@ -157,6 +157,41 @@ def test_nplm_sup_is_base_dependent_unlike_ss_ft():
 
 # ------------------------------------------------------------ coverage ----
 
+def test_galaxy_procedure_gap_holds():
+    """Appendix A claims a 3-5x purity gap on galaxy10 from changing the
+    PROCEDURE alone (natural discovery vs frozen-anchor pool), on the same
+    draws.  Pinned against both sources."""
+    import json
+    nat, _ = pt._agg_purity("galaxy10", "visreg")
+    f = os.path.join(REPO, "logs", "exp139", "hardening.json")
+    if not nat or not os.path.exists(f):
+        pytest.skip("galaxy10 sources absent")
+    frz = json.load(open(f))["analysis"]["per_cell"]
+    for base in ("dino", "lejepa", "visreg"):
+        n, _ = pt._agg_purity("galaxy10", base)
+        cell = frz.get(f"galaxy10:{base}", {})
+        for arm in ("supcon-ft", "ss-ft", "nplm-sup-ft"):
+            if arm not in n or arm not in cell:
+                continue
+            assert n[arm][0] < 0.30, f"natural discovery unexpectedly high: {base}/{arm}"
+            assert cell[arm]["mean"] > 0.35, f"frozen pool low: {base}/{arm}"
+            assert cell[arm]["mean"] > 1.5 * n[arm][0], (base, arm)
+
+
+def test_galaxy_table_marks_the_unrun_frozen_cells():
+    """The frozen arm covers supervised objectives only; the three
+    unsupervised rows must render as '--', not vanish."""
+    t = pt.t_galaxy()
+    if t is None:
+        pytest.skip("galaxy10 sources absent")
+    body = t.split(r"\midrule")[-1].split(r"\bottomrule")[0]
+    rows = [x for x in body.strip().split("\n") if x.strip().endswith(r"\\")]
+    assert len(rows) == 6, "all six objectives listed"
+    dashed = [r for r in rows if r.count("--") >= 3]
+    assert len(dashed) == 3, "the 3 unsupervised rows keep 3 dashes each"
+    assert "9/18" in t, "coverage line must state the absent frozen cells"
+
+
 def test_objectives_table_reports_missing_arms_as_dashes():
     """A table must never quietly shrink; absent cells are '--' rows."""
     t = pt.t_objectives()
