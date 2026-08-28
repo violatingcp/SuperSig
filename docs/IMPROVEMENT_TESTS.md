@@ -1998,6 +1998,10 @@ or the concat loses top-1 by more than 0.017 (no-cost fails on CIFAR).
 
 ### Exp 136 — The from-scratch CIFAR master grid (every metric, every space)
 
+> **n_min note 2026-08-28:** Tier 1's legal column re-evaluated at both n_min=30
+> (as run) and the new default 10: at 10 only nplmcw engages (purity 0.048, still
+> far below the gate); all other clean C100 spaces refuse at both.  Verdict
+> unchanged.  Tier 2/3 record both.
 > **TIER 1 DONE 2026-08-27 (cifar100 h4, all 8 objectives, full battery).**
 > Prediction (i) holds leakage-free across every currency: ssig ties supcon on
 > probe / supAUC / top-1 (0.597 vs 0.608) and wins eucl +0.39, mahaT +0.32,

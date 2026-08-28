@@ -326,6 +326,21 @@ python experiments/59_nplm_residual_concat.py --dataset cifar100 --dim-half 50 -
 python experiments/59_nplm_residual_concat.py --dataset cifar100 --seed 1                            # -> *_s1.npz (16+16)
 ```
 
+## Block O — exp 139 seed grid + exp 138 on the clean banks
+
+```bash
+# seeds 1 and 2 ONLY: seed 0 already exists and keeps the archived filename, so the
+# --plan line for seed 0 (np-only) would OVERWRITE the archived dist+np seed-0 file.
+SUPERSIG_NH=1 SUPERSIG_HOLDOUT_DRAW=3 python experiments/135_corpus_norm_everywhere.py --cells galaxy10:dino --scorers np --seed 1
+python experiments/139_frozen_np_hardening.py --aggregate
+python experiments/138_base_rate_estimator.py --glob 'logs/exp136/banks/embs_*_cifar100.npz' --holdouts 4 --dataset cifar100
+```
+
+**n_min consistency.**  `poolcut.N_MIN` moved 30 -> 10 (exp 138) while exp 136
+Tier 1 was already on disk.  Exp 136 now records BOTH (`legal_cut` = n_min 10,
+`legal_cut_n30`) and `--legal-only` re-evaluates an existing master JSON from
+its banks; Tier 1 has been re-evaluated.  Exps 129/131/135 numbers are n_min=30.
+
 ## Block G — Exp 132: supervised linear probe (piggyback on Block B)
 
 The campaign has NO supervised linear probe -- the `probe` column everywhere is

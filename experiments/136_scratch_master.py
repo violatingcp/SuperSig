@@ -100,6 +100,9 @@ def main():
     ap.add_argument("--skip-power", action="store_true")
     ap.add_argument("--quick", action="store_true")
     ap.add_argument("--refresh", action="store_true")
+    ap.add_argument("--legal-only", action="store_true",
+                    help="recompute only the legal-cut entries (both n_min) from "
+                         "the saved banks into an existing master JSON")
     ap.add_argument("--out", default="logs/exp136")
     args = ap.parse_args()
     if args.selftest:
@@ -135,6 +138,31 @@ def main():
     print(f"exp136 [{ds}{tag}] scratch master battery; holdout {hold}; "
           f"arms={args.arms}; exp68 {'merged' if d68 is not None else 'absent'}",
           flush=True)
+
+    if args.legal_only:
+        for arm in args.arms:
+            bp = os.path.join(args.out, "banks", f"embs_{arm}_{ds}{tag}.npz")
+            if arm not in results or not os.path.exists(bp):
+                print(f"  [{arm}] no cached result/bank, skip"); continue
+            b = np.load(bp)
+            tr, tr_lab = b["tr"], b["tr_lab"]
+            m = np.isin(tr_lab, seen)
+            f, cal = np_pool_scores(torch.as_tensor(tr, dtype=torch.float32, device=DEVICE),
+                                    m, seed=args.seed, return_calib=True)
+            f = f.cpu().numpy()
+            for nm, key in ((10, "legal_cut"), (30, "legal_cut_n30")):
+                mask, info = poolcut.legal_pool(f, m, n_min=nm)
+                results[arm][key] = dict(
+                    n_min=nm, ok=bool(info["ok"]), reason=info.get("reason", ""),
+                    q=float(mask.mean()), pool=int(mask.sum()),
+                    purity=float((~m)[mask].mean()) if mask.any() else 0.0,
+                    n_novel=int((~m)[mask].sum()), calib_in=cal["calib_in"],
+                    calib_out=cal["calib_out"])
+                print(f"  [{arm}] legal n_min={nm}: ok={info['ok']} purity="
+                      f"{results[arm][key]['purity']:.3f} n_novel={results[arm][key]['n_novel']}")
+        with open(out_path, "w") as fh:
+            json.dump(results, fh, indent=1, default=float)
+        print(f"wrote {out_path}"); return
 
     for arm in args.arms:
         if arm in results and not args.refresh:
@@ -223,15 +251,19 @@ def main():
         f, cal = np_pool_scores(torch.as_tensor(tr, dtype=torch.float32, device=DEVICE),
                                 m, seed=args.seed, return_calib=True)
         f = f.cpu().numpy()
-        mask, info = poolcut.legal_pool(f, m)
-        r["legal_cut"] = dict(ok=bool(info["ok"]), reason=info.get("reason", ""),
-                              q=float(mask.mean()), pool=int(mask.sum()),
-                              purity=float((~m)[mask].mean()) if mask.any() else 0.0,
-                              n_novel=int((~m)[mask].sum()), calib_in=cal["calib_in"],
-                              calib_out=cal["calib_out"])
-        print(f"  legal cut: ok={info['ok']} q={mask.mean():.4f} purity="
-              f"{r['legal_cut']['purity']:.3f} n_novel={r['legal_cut']['n_novel']} "
-              f"calib_out={cal['calib_out']:.2f}", flush=True)
+        # Both operating points are recorded: n_min=30 (exps 129/131/135 and
+        # Tier 1 as first run) and n_min=10 (poolcut default since exp 138).
+        # `legal_cut` is the n_min=10 entry; `legal_cut_n30` the old one.
+        for nm, key in ((10, "legal_cut"), (30, "legal_cut_n30")):
+            mask, info = poolcut.legal_pool(f, m, n_min=nm)
+            r[key] = dict(n_min=nm, ok=bool(info["ok"]), reason=info.get("reason", ""),
+                          q=float(mask.mean()), pool=int(mask.sum()),
+                          purity=float((~m)[mask].mean()) if mask.any() else 0.0,
+                          n_novel=int((~m)[mask].sum()), calib_in=cal["calib_in"],
+                          calib_out=cal["calib_out"])
+            print(f"  legal cut n_min={nm}: ok={info['ok']} q={mask.mean():.4f} purity="
+                  f"{r[key]['purity']:.3f} n_novel={r[key]['n_novel']} "
+                  f"calib_out={cal['calib_out']:.2f}", flush=True)
 
         # ---- exp 68 merge --------------------------------------------------
         if d68 is not None and f"probe_{arm}" in d68.files:
