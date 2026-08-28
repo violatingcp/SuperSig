@@ -36,6 +36,7 @@
 \usepackage{url}
 \usepackage[colorlinks=true,linkcolor=black,citecolor=black,urlcolor=blue]{hyperref}
 \usepackage{caption}
+\usepackage{longtable}
 \captionsetup{font=small,labelfont=bf}
 
 \newcommand{\E}{\mathbb{E}}
@@ -130,7 +131,31 @@ structure sharper.
 \item \textbf{A reduced set of objectives.} From a design cube of ten
   contrastive objectives we identify the few that earn a place for discovery
   specifically, and show that the ranking by discovery is not the ranking by
-  probe.
+  probe. On a from-scratch CIFAR-100 lineage, adding sliced-isotropy to a
+  supervised contrastive objective is a tie on the linear probe
+  ($0.937$ vs.\ $0.940$) and costs $1.1$ points of top-1, while raising every
+  detection column --- Euclidean AUC $0.233 \to 0.620$, tied-Mahalanobis
+  $0.279 \to 0.602$. One point of accuracy buys a $2.7\times$ improvement in
+  the geometry discovery actually runs on.
+\item \textbf{Two constructions, and a decomposition of what they buy.} We
+  study a residual decomposition --- train a second encoder on what the
+  anchors fail to explain, then concatenate --- and frozen-space discovery,
+  in which only the anchors move. Because both can be composed with the
+  discovery loop, we report them in a $2\times2$ ablation (construction
+  $\times$ discovery) rather than as a single delta, which separates a genuine
+  interaction from an additive stack. The composition is superadditive in
+  $12$ of $20$ cells but concentrated: the effect that takes per-event
+  detection from nominal to $6\times$ nominal lives in one cell, while the two
+  largest gains elsewhere turn out to be main effects of the construction and
+  of discovery separately (Section~\ref{sec:constructions}). We state this
+  narrowly because the decomposition is what makes it checkable.
+\item \textbf{A leakage-free lineage for the claims that need one.} Every
+  CIFAR cell built from hub-pretrained weights inherits an encoder that
+  already saw the held-out class, which makes it unusable as evidence for
+  discovery. We rebuild the CIFAR battery from random initialisation and
+  report the pretrained cells only as an ablation. Dataset ordering throughout
+  is by distance from pretraining rather than alphabetically, so the reader
+  can see which claims rest on a backbone that could have seen the answer.
 \end{enumerate}
 
 \paragraph{What this paper is not.}
@@ -357,35 +382,181 @@ $\nmin$ grows, so it is set as small as the clustering will bear.
 \section{Constructions}
 \label{sec:constructions}
 % ===========================================================================
-% TODO. Two subsections, both already established and not waiting on new runs,
-% but written after the results tables so the numbers can be quoted inline:
-%   (a) residual decomposition + concatenation;
-%   (b) frozen-space discovery -- freeze the encoder, iterate only the anchors
-%       against a density-ratio pool.  The gain lives in the anchors, not the
-%       representation update; unfreezing costs probe and, with distance
-%       pooling, collapses round 2.
-%   NOTE: re-verify the frozen numbers first -- the BatchNorm fix means the
-%   archived frozen CIFAR results no longer reproduce (exp 130/131).
+
+Both constructions in this section are defined \emph{relative to an anchor
+set}, which is what lets them compose with the discovery loop: discovery
+enlarges and corrects the anchors, so a construction defined against them is a
+different construction after discovery than before. That composition is the
+part of this work with no counterpart we are aware of, and it is also the part
+most easily overstated, so we measure it as an interaction rather than a
+delta.
+
+\subsection{The residual decomposition}
+
+Let $\mu_{y}$ be the anchor for class $y$ and $z$ an embedding. The residual
+$r = z - \mu_{y}$ is what the anchor set fails to explain about $z$. We train
+a second encoder on $r$ under the same objective family as the parent and
+either use it alone (\emph{residual}) or concatenate it with the parent
+(\emph{concat}).
+
+The motivation is that a supervised objective is free to discard any variation
+that does not separate the classes it was given, and novelty is precisely
+variation of that kind. The residual target makes that discarded structure the
+only thing the child can see.
+
+\paragraph{On its own, the residual buys detection at no accuracy cost.}
+On the from-scratch CIFAR-100 lineage, concatenating a residual onto a
+supervised contrastive parent moves Euclidean novelty AUC from $0.233$ to
+$0.521$ while the linear probe moves by $+0.0015$, a gain two orders of
+magnitude smaller than the detection gain and of the same order as the probe's
+own seed spread ($\sigma = 0.0008$). This is the pattern across cells: the
+pure residual usually
+\emph{loses} probe accuracy (four of six strong-parent cells, $-0.037$ to
+$-0.077$), and the concatenation recovers it. We therefore report concat as
+the construction and the bare residual as a diagnostic.
+
+\subsection{Composing with discovery: a \texorpdfstring{$2\times2$}{2x2}}
+
+Because the residual is defined against the anchors, it can be built before or
+after the discovery loop. Writing $A$ for the parent alone, $B$ for the parent
+after discovery, $C$ for the construction before discovery, and $D$ for both,
+the quantity of interest is not $D - A$ but the interaction
+\begin{equation}
+  \Delta_{\text{int}} \;=\; (D - C) - (B - A),
+  \label{eq:interaction}
+\end{equation}
+which is zero for an additive stack and positive only when the two
+ingredients do more together than apart. We report it for per-event power at a
+nominal false-positive rate $\alpha = 0.05$, because that metric is bounded
+below by $\alpha$: a parent at $A \approx \alpha$ has \emph{no} ability to
+flag an individual novel sample, so a positive interaction there is a
+threshold crossing rather than an improvement.
+
+\paragraph{The interaction is real, and it is narrow.}
+On DTD with a DINO backbone, the residual construction gives
+$A = 0.040$, $B = 0.068$, $C = 0.023$, $D = 0.253$. Discovery alone is worth
+$+0.028$; the construction alone is worth $-0.018$ --- it actively hurts ---
+and composed they reach $6\times$ nominal, an interaction of $+0.203$. The
+concatenation behaves the same way ($+0.163$). Neither ingredient does
+anything alone. This is the strongest evidence we have that discovery and
+representation construction are not independent improvements.
+
+\paragraph{Two apparent replications are not replications.}
+The same protocol on galaxy10 produces the two largest raw gains in the
+study, and the decomposition shows that neither is composition. With a DINO
+backbone the residual takes per-event power from $0.021$ to $0.299$, but
+$C = 0.281$ already: the construction does this \emph{by itself}, and the
+interaction is $+0.003$. With a LeJEPA backbone the gain from $0.007$ to
+$0.206$ is almost entirely the discovery main effect ($+0.190$), with an
+interaction of $+0.008$ --- and it occurs in a cell whose round-2 pool purity
+is exactly zero. That last case is worth stating plainly, because we had
+written it in advance as a falsifier: if the composition helps where purity is
+zero, then the mechanism we proposed for it --- that discovery supplies a
+richer and \emph{correct} anchor set, against which the residual becomes
+informative --- cannot be what is happening there.
+
+\paragraph{What we therefore claim.}
+Across five cells, two constructions, and two variants, $12$ of $20$
+interactions are positive, but most are small and the threshold crossings
+driven by interaction rather than by a main effect occur in a single cell with
+a single construction. We do not claim superadditivity as a general property.
+The claim the data supports is weaker and still useful: \emph{discovery and
+the residual are substitutes more often than complements.} Whichever of the
+two a cell is missing, one of them supplies it --- galaxy10/LeJEPA needed
+discovery, galaxy10/DINO needed the residual, DTD/DINO needed both --- and a
+practitioner who runs only one of them will, on most cells, capture most of
+the available gain. Every number in this subsection is a single seed; the
+interaction is a difference of differences and inherits the variance of both
+its terms, so we treat it as a finding to be replicated rather than a
+headline.
+
+\subsection{Frozen-space discovery}
+% TODO. Freeze the encoder, iterate only the anchors against a density-ratio
+% pool.  The gain lives in the anchors, not in the representation update;
+% unfreezing costs probe and, with distance pooling, collapses round 2.
+% NOTE: re-verify the frozen numbers first -- the BatchNorm fix means the
+% archived frozen CIFAR results no longer reproduce (exps 130/131), and
+% "frozen" must mean eval() mode, not merely requires_grad=False.
 
 % ===========================================================================
 \section{Experiments}
+\label{sec:experiments}
 % ===========================================================================
-% WAITING ON: exps 124 (leakage-free scratch shortlist), 125 (single-holdout
-% battery with draws), 126 (restricted multi-holdout), 131 (cifar10/cifar100/
-% galaxy10 re-run under the new pool cut).  Do not draft prose around
-% provisional numbers.
-%
-% Table plan, split by regime and never pooled:
-%   T1 single-holdout, all datasets, mean +- sd ACROSS DRAWS (not seeds --
-%      draw spread exceeds seed spread, so seed-only intervals understate).
-%   T2 multi-holdout, label-rich datasets only.
-%   T3 pool-cut ablation: inherited q=0.05 vs the rule of Sec 3.3, with the
-%      ceiling min(1, b/q) shown alongside so the reader can see headroom.
-%
-% Dataset ordering is by distance from pretraining, not alphabetical:
-% galaxy10 (never seen by the backbone) -> DTD (task-novel) -> cars/flowers/
-% aircraft (fine-grained in-domain) -> CIFAR (from-scratch lineage; the
-% hub-pretrained cells saw the held-out class and are an ablation only).
+% Tables are GENERATED from the logs by experiments/140_paper_tables.py into
+% docs/tables/*.tex.  Do not hand-edit them; re-run that script instead.
+% Each carries a machine-written coverage line, so a table that is missing
+% cells says so in its own caption.
+
+This campaign is reported while incomplete. Every table below states its own
+coverage, blanks are shown as ``--'' rather than dropped, and we mark which
+claims rest on a single seed. Datasets are ordered by \emph{distance from
+pretraining} rather than alphabetically, because that ordering is what decides
+whether a result is evidence for discovery at all: galaxy10 was never seen by
+any backbone we use, DTD is task-novel, cars/flowers/aircraft are fine-grained
+but in-domain, and the CIFAR cells exist in two lineages --- a from-scratch
+one that we report, and a hub-pretrained one whose encoder already saw the
+held-out class and which we therefore treat as an ablation only.
+
+\subsection{Objectives: the probe and the geometry come apart}
+
+Table~\ref{tab:objectives} is the paper's central measurement, on the lineage
+where it is safe to make it. Adding sliced-isotropy to a supervised
+contrastive objective is a tie on the linear probe and a $1.1$-point loss on
+top-1 accuracy --- and it more than doubles every discoverability column.
+A reader who ranked these eight objectives by probe accuracy would pick the
+one that scores $0.00$ on per-event detection.
+
+That is the dissociation stated at the start of the paper, measured on an
+encoder that was trained from random initialisation and never saw the class it
+is asked to find.
+
+\subsection{Stability: draws matter, seeds do not}
+
+Two variance questions decide how much of this campaign is quotable.
+
+The first is the holdout \emph{draw} --- which class is held out.
+Table~\ref{tab:draws} reports five draws per cell. Pool purity is stable
+across draws for the best objective (sd $0.007$--$0.014$) while the linear
+probe over the same draws swings by more than $0.1$, so purity is the
+better-conditioned measurement of the two, not merely the more relevant one.
+
+The second is the \emph{seed}. We pre-registered this as a falsifier: if
+seed-to-seed spread were comparable to draw-to-draw spread, every single-seed
+number in this paper would need a caveat. Table~\ref{tab:hardening} settles
+it on $144$ cells --- $\text{sd}_{\text{seed}} = 0.021$ against
+$\text{sd}_{\text{draw}} = 0.174$, a factor of $8$. The caveat that survives
+is about which class you hold out, not which seed you ran. We attach it to
+every single-seed result rather than dropping it.
+
+Table~\ref{tab:draws} also carries a result we did not anticipate. Only one
+objective clears the gate on \emph{both} backbones: supervised distance-NPLM
+clears $5/5$ draws on LeJEPA and $0/5$ on DINO. SupCon+SIGReg clears $5/5$ on
+both. Base-independence is a stronger and more useful property than winning on
+average, and it is not visible in any single-backbone table.
+
+\subsection{Constructions}
+
+Table~\ref{tab:2x2} gives the $2\times2$ of Section~\ref{sec:constructions} in
+full. The interaction is large in one cell, positive but small in most, and
+the two largest \emph{totals} in the table are main effects rather than
+composition. We report all twenty rows rather than the favourable ones.
+
+\subsection{Where the label-free cut does not reach}
+
+Table~\ref{tab:baserate} is a negative result about our own method.
+At a $1\%$ novel rate on clean CIFAR-100 banks, the label-free rule of
+Section~\ref{sec:cut} engages on $3$ of $20$ spaces, and where it engages
+the resulting purity is still below the gate. The spaces where it works share
+a structure --- an NPLM critic on a SIGReg marginal --- so the rule should be
+read as conditional on the scorer, not as a general-purpose procedure. The
+ceiling algebra says a $20\times$ enrichment is available at this rate; the
+estimator, not the representation, is what fails to reach it.
+
+\input{tables/objectives}
+\input{tables/draws}
+\input{tables/hardening}
+\input{tables/2x2}
+\input{tables/baserate}
 
 % ===========================================================================
 \section{When it does not work}
@@ -408,6 +579,61 @@ $\nmin$ grows, so it is set as small as the clustering will bear.
 %     optimisation target.
 
 \appendix
+
+% ===========================================================================
+\section{Detailed results}
+\label{sec:detailed}
+% ===========================================================================
+
+This appendix reports the campaign in more detail than the main text, and
+reports it \emph{as it stands} rather than waiting for completion. Several
+studies are unfinished; they are listed anyway, because a reader deciding
+whether to believe the main claims should be able to see the whole surface
+that was searched and not only the parts that resolved.
+
+All tables in this paper are generated from the archived result files by a
+single script, and each carries a machine-written coverage line stating what
+is present and what is missing. Blanks are shown as ``--''.
+
+\paragraph{Constructions on the leakage-free trunks.}
+Table~\ref{tab:residuals} gives every construction on the from-scratch
+CIFAR-100 parents. The pattern behind the summary in
+Section~\ref{sec:constructions} is visible directly: the bare residual usually
+costs probe accuracy, the concatenation recovers it, and the detection gain
+survives in both.
+
+\paragraph{Multi-seed cells.}
+Most cells in this campaign are single-seed, for cost reasons.
+Table~\ref{tab:seeds} reports one of the exceptions, three seeds on the
+CIFAR-10 champions. Seed spread there is small --- $\pm0.001$ on the best
+post-discovery probe and $\pm0.002$ on its Euclidean AUC --- which is
+consistent with the much larger variance decomposition of
+Table~\ref{tab:hardening}. Note also that the discovery loop \emph{reduces}
+the probe for \texttt{supcon+nplm} ($0.954 \to 0.930$) in all three seeds,
+which is the seeded version of a pattern we observe throughout: the loop
+repairs weak spaces and damages strong ones.
+
+\paragraph{Study inventory.}
+Table~\ref{tab:inventory} lists every numbered study in the repository and
+whether its results are present. A checkmark is a statement about data on
+disk, not a claim of completeness. We include the studies with no results for
+the same reason we include the negative ones: the shortlist in the main text
+is the surviving remainder of this list, and that is only meaningful if the
+list is visible.
+
+\paragraph{Known gaps.} At the time of writing: the $2\times2$ of
+Table~\ref{tab:2x2} is single-seed throughout, and its one large interaction
+rests on a single cell; the multi-holdout regime is run only on the
+label-rich datasets; and the frozen-space construction of
+Section~\ref{sec:constructions} is quoted from re-verified runs after a
+BatchNorm fix invalidated the earlier archive, so its older numbers do not
+reproduce and are not used.
+
+\input{tables/residuals}
+\input{tables/seeds}
+\input{tables/inventory}
+
+% ===========================================================================
 \section{Objective naming}
 \label{sec:naming}
 % TODO: reproduce the canonical mapping from docs/LOSSES.md. Three objectives
