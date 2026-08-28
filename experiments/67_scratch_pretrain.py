@@ -191,8 +191,11 @@ def main():
         np.random.seed(args.seed + 30 + i)
         net = CIFARResNetBackbone(args.dim, arch=cfg["arch"],
                                   pretrain=None).to(DEVICE)
+        # non-default holdouts are tagged so exp-136 draws never overwrite
+        # the archived holdout-4 checkpoints (name unchanged at holdout 4)
+        htag = "" if args.holdout == 4 else f"_h{args.holdout}"
         ckpt = os.path.join(CKPT_DIR,
-                            f"scratch_{arm}_{ds}_{args.dim}d"
+                            f"scratch_{arm}_{ds}_{args.dim}d{htag}"
                             f"{'_quick' if args.quick else ''}.pt")
         start_ep = 0
         if args.resume and os.path.exists(ckpt):

@@ -297,8 +297,10 @@ def main():
         for sp in d["spaces"]:
             sp = str(sp)
             if sp.startswith(args.parent):
-                arch[sp] = {m: float(d[f"{sp.replace(chr(32), chr(95))}__{m}"]) for m in
-                            ("probe", "eucl", "mahaT", "perevt") if f"{sp.replace(chr(32), chr(95))}__{m}" in d.files}
+                key71 = sp.replace(" ", "_").replace("->", "-")   # npz key form
+                arch[sp] = {m: float(d[f"{key71}__{m}"]) for m in
+                            ("probe", "eucl", "mahaT", "perevt")
+                            if f"{key71}__{m}" in d.files}
     print(f"\n===== EXP134c SUMMARY [{tag}]  (discovery r1 purity "
           f"{hist[0]['purity']:.3f}, gate 0.15) =====")
     print(f"  {'space':<44}{'probe':>8}{'eucl':>8}{'mahaT':>8}{'perevt':>8}")

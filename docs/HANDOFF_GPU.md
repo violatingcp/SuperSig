@@ -289,6 +289,43 @@ Paired table per cell/arm/scorer: frozen vs corpus-norm round-2 purity, post
 probe, drift.  Report the falsifier cells (helps at purity ~0) as loudly as
 the wins.
 
+## Block L — Exp 136: the from-scratch CIFAR master grid
+
+```bash
+python experiments/136_scratch_master.py --selftest
+# tier 1 (checkpoints exist)
+python experiments/68_scratch_discovery.py --dataset cifar100            # all 8 bases
+python experiments/136_scratch_master.py --dataset cifar100
+# tier 2
+python experiments/67_scratch_pretrain.py --dataset cifar10 --resume     # all 8 arms
+python experiments/68_scratch_discovery.py --dataset cifar10
+python experiments/136_scratch_master.py --dataset cifar10
+# tier 3: draws (holdout = the class, from holdouts.py draws 0/1/2)
+python experiments/67_scratch_pretrain.py --dataset cifar10 --holdout 8 --arms supcon ssig nplmsd nplmcw
+python experiments/68_scratch_discovery.py --dataset cifar10 --holdout 8 --bases supcon,ssig,nplmsd,nplmcw
+python experiments/136_scratch_master.py --dataset cifar10 --holdout 8 --arms supcon ssig nplmsd nplmcw
+python experiments/136_aggregate.py cifar10
+```
+
+Artifacts at a non-default holdout are tagged `_h{N}`; holdout 4 keeps the
+archived names.  `logs/exp68/scratch_discovery_cifar100_3bases_archived.npz`
+is the pre-Block-L exp-68 file.
+
+## Block M — Exp 137 (scratch residuals) + exp 59 seeds
+
+```bash
+python experiments/137_scratch_residuals.py --dataset cifar100          # parents exist
+python experiments/137_scratch_residuals.py --dataset cifar10 --holdout 8
+python experiments/59_nplm_residual_concat.py --dataset cifar10 --seed 1   # writes *_s1.npz
+```
+
+## Block N — exp 59 seeds on the CIFAR-100 champions
+
+```bash
+python experiments/59_nplm_residual_concat.py --dataset cifar100 --dim-half 50 --cw-lam 5 --seed 1   # -> *_s1_100d_cwlam5.npz
+python experiments/59_nplm_residual_concat.py --dataset cifar100 --seed 1                            # -> *_s1.npz (16+16)
+```
+
 ## Block G — Exp 132: supervised linear probe (piggyback on Block B)
 
 The campaign has NO supervised linear probe -- the `probe` column everywhere is

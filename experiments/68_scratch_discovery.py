@@ -53,7 +53,8 @@ def main():
     ap.add_argument("--n-d", type=int, default=5000)
     ap.add_argument("--kernels", type=int, default=16)
     ap.add_argument("--steps", type=int, default=300)
-    ap.add_argument("--bases", default="supcon,supsig,nplmcw")
+    ap.add_argument("--bases",
+                    default="simclr,visreg,nplm,supcon,supsig,nplmcw,ssig,nplmsd")
     args = ap.parse_args()
     ds = args.dataset
     bases = args.bases.split(",")
@@ -83,13 +84,14 @@ def main():
     def load_base(name):
         net = CIFARResNetBackbone(args.dim, arch=cfg["arch"],
                                   pretrain=None).to(DEVICE)
+        htag = "" if args.holdout == 4 else f"_h{args.holdout}"
         ck = torch.load(os.path.join("checkpoints",
-                                     f"scratch_{name}_{ds}_{args.dim}d.pt"),
+                                     f"scratch_{name}_{ds}_{args.dim}d{htag}.pt"),
                         map_location=DEVICE)
         net.load_state_dict(ck["state_dict"])
         return net, ck
 
-    nets, means_of, hist, probe = {}, {}, {}, {}
+    nets, means_of, hist, probe, geo_post = {}, {}, {}, {}, {}
     tr_lab = te_lab = None
     for name in bases:
         print(f"\n===== base: {name} =====")
@@ -115,6 +117,12 @@ def main():
             names=None, seed=args.seed)
         tr_post, _ = collect_embeddings(bb, train_eval_loader)
         te_post, _ = collect_embeddings(bb, test_loader)
+        m_post = np.isin(tr_lab, seen)
+        anch_post = torch.as_tensor(
+            exp28.class_centroids(tr_post[m_post], tr_lab[m_post], seen),
+            dtype=torch.float32, device=DEVICE)
+        geo_post[name] = exp29.evaluate_space(tr_post, tr_lab, te_post,
+                                              te_lab, anch_post, seen, holdouts)
         a_pre, _, _ = exp29.linear_probe_novelty(tr, tr_lab, te, te_lab,
                                                  holdouts)
         a_post, _, _ = exp29.linear_probe_novelty(tr_post, tr_lab, te_post,
@@ -217,9 +225,13 @@ def main():
                   f"anchors={h['n_anchors']}  margin={h['margin']:.4f}  "
                   f"mean-anchor={h['mean_pc']:.4f}")
     os.makedirs(os.path.join("logs", "exp68"), exist_ok=True)
-    np.savez(os.path.join("logs", "exp68", f"scratch_discovery_{ds}.npz"),
+    htag = "" if args.holdout == 4 else f"_h{args.holdout}"
+    np.savez(os.path.join("logs", "exp68", f"scratch_discovery_{ds}{htag}.npz"),
              fractions=np.array(fractions), bases=np.array(bases),
              **{f"probe_{n}": np.array(probe[n]) for n in bases},
+             **{f"purity_{n}": np.array([h["purity"] for h in hist[n]]) for n in bases},
+             **{f"post_{k}_{n}": np.array(geo_post[n][k]) for n in bases
+                for k in ("acc", "eucl", "maha_tied", "maha_pc", "lid")},
              **{f"{s}_{n}_post": np.array(post_power[s][n]) for s in STATS
                 for n in bases})
     print("Done.")

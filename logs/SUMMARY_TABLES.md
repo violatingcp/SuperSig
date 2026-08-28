@@ -2448,3 +2448,179 @@ TIE guard = max(0.017, sd_a+sd_b).  2026-08-27; logs/exp134/width_control_*.json
   to 0.02); galaxy10 dino single seed, archived draw {9}; the galaxy10
   concat here is supcon->res (not res-nplm).  A res-nplm concat vs 200-D
   control on galaxy10, and both on the exp-125 draws, would close it.
+
+## Exp 137 -- residual / concat constructions on the SCRATCH C100 trunks (Block M)
+(cifar100, 100(+100)-D, pretrain=None, holdout {4} [single-holdout], exp-73
+recipe: 20-ep children from a deepcopy of the exp-67 parent; probe x3 seeds;
+top1 = exp-132 supervised linear probe x3; 2026-08-27; logs/exp137/residuals_cifar100.json)
+
+  space                      probe           top1    acc    eucl   mahaT  lid    perevt
+  supcon (parent)            0.940+-.001     0.608   0.545  0.233  0.279  0.740  0.000
+  supcon->res concat         0.942+-.001     0.604   0.479  0.521  0.331  0.650  0.030
+  supcon->res-nplm concat    0.948+-.000     0.602   0.550  0.227  0.267  0.731  0.000
+  ssig (parent)              0.937+-.007     0.597   0.589  0.620  0.602  0.734  0.070
+  ssig->res concat           0.949+-.002     0.595   0.575  0.648  0.545  0.729  0.080
+  ssig->res-nplm concat      0.904+-.017     0.595   0.591  0.575  0.580  0.739  0.040
+  nplmsd (parent)            0.820+-.003     0.254   0.232  0.408  0.345  0.542  0.050
+  nplmsd->res concat         0.867+-.007     0.365   0.236  0.521  0.419  0.562  0.010
+  nplmsd->res-nplm concat    0.849+-.004     0.391   0.349  0.516  0.462  0.588  0.040
+  (residual children alone: supcon->res eucl 0.607 / per-event 0.05 -- the
+   best-calibrated clean supervised space, as the hub exp 73 found; probe 0.87)
+
+  paired concat - parent     probe     top1      eucl      mahaT
+  supcon->res                +0.002    -0.004    +0.288    +0.052
+  supcon->res-nplm           +0.007    -0.006    -0.007    -0.013
+  ssig->res                  +0.012    -0.002    +0.028    -0.057
+  ssig->res-nplm             -0.033    -0.002    -0.046    -0.023
+  nplmsd->res                +0.047    +0.111    +0.114    +0.074
+  nplmsd->res-nplm           +0.029    +0.137    +0.108    +0.118
+
+- THE PROBE GAIN IS A TIE ON CLEAN SUPCON TRUNKS: +0.002 (res) / +0.007
+  (res-nplm), both under the 0.017 floor.  The hub numbers were already
+  small (exp 75: +0.006 / +0.009 at 100-D), so this is consistent rather
+  than a reversal, but the falsifier's first clause ("the gain vanishes on
+  clean trunks") is met for the probe on the paper's parent.  ssig->res is
+  the only supervised concat with a probe gain near the floor (+0.012),
+  and the C100 clean probe record is now ssig->res concat 0.949 -- above
+  the supcon parent 0.940 and the clean standalone best.
+- THE NO-COST CLAIM HOLDS ON CLEAN C100 -- for the objective AND the
+  construction.  ssig ties supcon on supervised top-1 (0.597 vs 0.608,
+  -0.011 < floor), unlike galaxy10 (-0.035, exp 132); and every supcon /
+  ssig concat is within 0.006 of its parent's top-1.  State it as
+  "no supervised-accuracy cost on CIFAR-100; a 0.035 cost on galaxy10".
+- WHAT THE RESIDUAL BUYS ON CLEAN TRUNKS IS CALIBRATION, ON THE PLAIN-RES
+  OBJECTIVE ONLY: supcon->res concat eucl 0.233 -> 0.521 (+0.29), mahaT
+  +0.05, per-event 0 -> 0.03, at zero probe/top-1 cost -- the hub exp-73
+  pattern reproduced (0.338 -> 0.575).  res-nplm leaves geometry flat on
+  supcon and HURTS ssig (-0.046 eucl, -0.033 probe: the SIGReg parent
+  already carries the calibration, and the NPLM child has nothing left to
+  explain -- the exp-59 "residual-on-NPLM-trunk" failure mode, now seen
+  from the parent side).
+- nplmsd is the construction's real beneficiary: +0.03..+0.05 probe,
+  +0.11..+0.14 top-1, +0.11 eucl -- a weak parent is repaired by either
+  child, the exp-75 "discovery compensates weak parents" reading again.
+- Caveats: single seed, holdout {4}; draws and cifar10 queued.
+
+## Exp 134c -- residual AFTER discovery (Block J; 5 cells, archived draws)
+(parent = exp-70 supcon-ft; NEW order = discovery on the parent head (exp-70
+feature-space loop, 2 rounds) -> label-free relabel against the enlarged
+anchor set -> exp-71 child (20 ep) -> concat.  "arch" = archived exp-71
+pre-discovery order.  pseudo = purity of the pseudo-labelled child corpus
+(images whose nearest anchor is a DISCOVERED one), diagnostic.
+2026-08-27; logs/exp134/postdisc_*.json)
+
+  cell             r1 pur  pseudo (n)    space        probe arch->new    eucl arch->new    mahaT arch->new   perevt arch->new
+  galaxy10:dino    0.070   1.000 (97)    res concat   0.955 -> 0.949     0.560 -> 0.595    0.762 -> 0.746    0.021 -> 0.018
+                                         resnplm cat  0.947 -> 0.938     0.702 -> 0.728    0.802 -> 0.782    0.091 -> 0.142
+  galaxy10:lejepa  0.059   1.000 (?)     res concat   0.975 -> 0.972     0.288 -> 0.432    0.625 -> 0.740    0.001 -> 0.012
+                                         resnplm cat  0.941 -> 0.944     0.506 -> 0.739    0.673 -> 0.797    0.008 -> 0.206
+  galaxy10:visreg  0.481   1.000 (108)   res concat   0.964 -> 0.974     0.676 -> 0.807    0.868 -> 0.918    0.295 -> 0.466
+                                         resnplm cat  0.946 -> 0.968     0.744 -> 0.820    0.839 -> 0.895    0.353 -> 0.446
+  cars:visreg      0.206   1.000 (217)   res concat   0.801 -> 0.847     0.705 -> 0.692    0.613 -> 0.607    0.228 -> 0.174
+                                         resnplm cat  0.855 -> 0.872     0.747 -> 0.744    0.678 -> 0.675    0.263 -> 0.282
+  dtd:dino         0.129   1.000 (511)   res concat   0.845 -> 0.898     0.683 -> 0.781    0.604 -> 0.780    0.045 -> 0.235
+                                         resnplm cat  0.832 -> 0.864     0.733 -> 0.764    0.648 -> 0.690    0.077 -> 0.130
+  parent pre -> post-discovery (the loop's own effect on the parent head):
+    dino 0.938->0.932 / eucl 0.666->0.706;  lejepa 0.919->0.933 / 0.647->0.735 / perevt 0.007->0.196;
+    visreg 0.939->0.946 / 0.720->0.806;  cars 0.707->0.739 / 0.715->0.701;  dtd 0.799->0.808 / 0.704->0.727.
+
+- THE CONSTRUCTION WINS ON 4/5 CELLS, ON EVERY CURRENCY IT TOUCHES, AND
+  IS NEVER WORSE THAN NOISE ON THE FIFTH.  Where discovery cleared or
+  neared the gate (visreg 0.48, cars 0.21, dtd 0.13) the after-discovery
+  concat beats the archived one on probe (+0.010..+0.053 res; +0.017..
+  +0.032 res-nplm), and on dtd/visreg also on eucl (+0.10/+0.13), mahaT
+  (+0.05/+0.18) and per-event (+0.17/+0.19).  galaxy10/dino (r1 0.07) is
+  the predicted no-op (probe -0.006/-0.009, eucl +0.03).  The paper's
+  residual construction should be built AFTER discovery wherever the loop
+  finds anything.
+- THE MECHANISM IS NOT "RICHER ANCHORS EXPLAIN MORE VARIANCE" -- the
+  falsifier's first clause fires on lejepa.  With r1 purity 0.06 the new
+  order still lifts res-nplm eucl +0.23 / per-event +0.20; the parent row
+  shows the same lift (eucl +0.09, per-event +0.19) before any child is
+  trained.  Two things are happening: (i) the 5-ep proto/repulse fine-tune
+  of the parent head is a calibration repair regardless of pool purity
+  (exp 74's signature), and the child inherits it; (ii) the LABEL-FREE
+  RELABELLING IS A FAR PURER SELECTOR THAN THE POOL -- the images whose
+  nearest anchor is a discovered one are 100% novel in all five cells,
+  including where round-1 pool purity was 0.06-0.13.  The clustering step
+  is noisy; the post-hoc nearest-anchor assignment is not.  That is why the
+  construction works below the "purity gate": the gate governs whether
+  the LOOP compounds, not whether the anchors it planted are on the novel
+  class.
+- Which currency the gain lands in is base/dataset-dependent: probe on
+  cars, geometry on lejepa, both on visreg/dtd -- the same split the
+  residual half of exp 125 showed for the pre-discovery order.
+- Caveats: archived draws, single seed, one parent objective (supcon-ft).
+  The exp-125 draws for galaxy10 would give the interval; not queued.
+- Bug fixed on the way: 134c's archived-row lookup (npz keys use '_' and
+  '-' for ' ' and '->'); three cells were re-run after a syntax slip.
+
+## Exp 136 -- the from-scratch CIFAR-100 master battery, Tier 1 (Block L)
+(cifar100, 100-D, pretrain=None, holdout {4} [single-holdout, b=0.01], seed 0;
+all eight exp-67 objectives; probe/top1 x3 seeds; power at alpha .05 (SpK
+annealed, N_D 5000, 200 nulls / 50 toys); frozen pools = trunk frozen, 2 x
+2-ep anchor rounds; exp-68 loop = trunk trains, 2 x 5 ep.  2026-08-27;
+logs/exp136/master_cifar100.json, logs/exp68/scratch_discovery_cifar100.npz)
+
+PRE (frozen space)
+  arm      probe   top1   acc    supAUC eucl   mahaT  mahaPC lid    perevt  SpK@.01/.02/.05  Maha@.02/.05  MMD@.02/.05
+  supcon   0.940   0.608  0.545  0.974  0.233  0.279  0.487  0.740  0.000   0.08/0.14/1.00   0.04/0.00     0.50/1.00
+  ssig     0.937   0.597  0.588  0.976  0.620  0.602  0.631  0.734  0.070   0.20/0.22/1.00   0.06/0.48     0.70/1.00
+  nplmcw   0.898   0.507  0.463  0.946  0.525  0.411  0.553  0.678  0.030   0.06/0.20/1.00   0.06/0.08     0.58/1.00
+  supsig   0.823   0.360  0.346  0.930  0.340  0.320  0.432  0.537  0.000   0.08/0.14/1.00   0.02/0.00     0.38/1.00
+  nplmsd   0.820   0.254  0.232  0.913  0.408  0.345  0.348  0.542  0.050   0.08/0.18/0.90   0.04/0.00     0.52/1.00
+  simclr   0.799   0.292  0.242  0.859  0.443  0.385  0.453  0.570  0.010   0.02/0.06/1.00   0.02/0.02     0.18/0.82
+  visreg   0.797   0.239  0.190  0.844  0.499  0.382  0.434  0.534  0.030   0.02/0.04/0.86   0.06/0.00     0.08/0.68
+  nplm     0.757   0.223  0.181  0.836  0.413  0.361  0.447  0.635  0.010   0.04/0.00/1.00   0.02/0.00     0.12/0.94
+
+POOLS AND DISCOVERY (gate 0.15)
+  arm      frozen dist r1/r2   frozen np r1/r2   np+BN-adapt r2   legal cut          exp-68 loop: purity r1/r2  probe pre->post  post eucl/mahaT/perevt@.02
+  supcon   0.000/0.000         0.052/0.021       0.027            REFUSED (0.031)    0.000/0.002   0.940->0.930    0.372/0.396/0.000
+  ssig     0.008/0.010         0.007/0.018       0.018            REFUSED (0.018)    0.008/0.015   0.937->0.871    0.452/0.514/0.010
+  nplmcw   0.006/0.000         0.031/0.020       0.016            REFUSED (0.033)    0.006/0.002   0.898->0.937    0.438/0.382/0.020
+  supsig   0.009/0.005         0.024/0.037       0.040            REFUSED (0.021)    0.009/0.010   0.823->0.796    0.371/0.365/0.030
+  nplmsd   0.008/0.004         0.004/0.001       0.020            REFUSED (0.004)    0.008/0.003   0.820->0.857    0.349/0.310/0.010
+  simclr   0.004/0.002         0.024/0.014       0.005            REFUSED (0.017)    0.004/0.005   0.799->0.889    0.315/0.303/0.030
+  visreg   0.005/0.006         0.022/0.015       0.018            REFUSED (0.020)    0.005/0.002   0.797->0.893    0.343/0.293/0.010
+  nplm     0.009/0.009         0.022/0.014       0.016            REFUSED (0.014)    0.009/0.007   0.757->0.885    0.298/0.270/0.070
+
+- PREDICTION (i) HOLDS, LEAKAGE-FREE AND ACROSS ALL CURRENCIES: ssig ties
+  supcon on probe (0.937 vs 0.940), supAUC (0.976 vs 0.974) and supervised
+  top-1 (0.597 vs 0.608, under the floor), and beats it on every
+  calibration and detection column: eucl +0.39, mahaT +0.32, mahaPC +0.14,
+  per-event 0.07 vs 0.00, SparKer@.02 0.22 vs 0.14, MMD@.02 0.70 vs 0.50,
+  and Maha@.05 0.48 vs 0.00 -- the first C100 space on which the
+  parametric Mahalanobis test is not dead.  SIGReg lam=5 costs nothing
+  and buys the whole second currency.  The paper's shortlist claim is
+  now demonstrable on clean trunks (with the exp-124 caveat that the
+  PROBE part of the old claim -- ssig > supcon -- is a tie).
+- Supervised top-1 orders the arms cleanly: supcon 0.61 > ssig 0.60 >
+  nplmcw 0.51 > supsig 0.36 > simclr 0.29 > nplmsd 0.25 > visreg 0.24 >
+  nplm 0.22.  nplmsd's 0.25 (acc 0.23, supAUC 0.91) is the outlier: a
+  decent novelty probe (0.82) on a space that is nearly undecodable for
+  the seen classes -- its galaxy10 weakness (exp 132 -0.08..-0.14 top-1)
+  is the same defect.  Drop it from any "no-cost" sentence.
+- PREDICTION (ii) HOLDS (h1 C100 stays gated) BUT THE LEGAL CUT REFUSES ON
+  ALL EIGHT: frozen-np round-1 purity 0.004-0.052, distance 0.000-0.009,
+  and the base-rate estimator declines everywhere (b_hat far below 0.01).
+  This sides with exp 131 (32-D spaces: refused) against exp 129 (the
+  100-D tau bank: engaged, 0.39).  The estimator's success is therefore
+  specific to the exp-113 NPLM+marginal spaces, not to 100-D per se --
+  the same-space reconciliation is still the open item.  BN adaptation
+  moves r2 by <=+0.02 and clears nothing.
+- THE EXP-68 LOOP SPLITS BY TRUNK, WITH A SYMMETRY WORTH STATING: it is
+  probe-positive (+0.04..+0.13) for the five arms whose pre-probe is
+  <0.90 and probe-negative for the three above 0.93 (supcon -0.010,
+  ssig -0.066, nplmcw is the exception at +0.039).  On calibration it
+  REPAIRS supcon (eucl 0.233 -> 0.372, mahaT 0.279 -> 0.396) and DAMAGES
+  ssig (0.620 -> 0.452, 0.602 -> 0.514): the fine-tune pulls every space
+  toward the same middle geometry regardless of purity (0.000-0.015).
+  Under nh=1 on C100, run the loop on softmax trunks only if you want
+  calibration and on nothing if you want the probe.
+- Detection: MMD saturates at f=.05 on every arm; SparKer reaches 1.00 at
+  .05 on 6/8; at f=.02 ssig (0.22) and nplmcw (0.20) lead.  f95 for the
+  clean shortlist will sit at 0.02-0.05, i.e. the C100 reach the archive
+  quoted (0.029) is not a leakage artefact.
+- Caveats: seed 0, holdout {4}; Tier 3 draws {43,57,48} are queued for
+  the shortlist and will give the interval.  Residual/concat rows on
+  these trunks: exp 137 above.
