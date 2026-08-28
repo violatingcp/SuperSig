@@ -130,7 +130,31 @@ structure sharper.
 \item \textbf{A reduced set of objectives.} From a design cube of ten
   contrastive objectives we identify the few that earn a place for discovery
   specifically, and show that the ranking by discovery is not the ranking by
-  probe.
+  probe. On a from-scratch CIFAR-100 lineage, adding sliced-isotropy to a
+  supervised contrastive objective is a tie on the linear probe
+  ($0.937$ vs.\ $0.940$) and costs $1.1$ points of top-1, while raising every
+  detection column --- Euclidean AUC $0.233 \to 0.620$, tied-Mahalanobis
+  $0.279 \to 0.602$. One point of accuracy buys a $2.7\times$ improvement in
+  the geometry discovery actually runs on.
+\item \textbf{Two constructions, and a decomposition of what they buy.} We
+  study a residual decomposition --- train a second encoder on what the
+  anchors fail to explain, then concatenate --- and frozen-space discovery,
+  in which only the anchors move. Because both can be composed with the
+  discovery loop, we report them in a $2\times2$ ablation (construction
+  $\times$ discovery) rather than as a single delta, which separates a genuine
+  interaction from an additive stack. The composition is superadditive in
+  $12$ of $20$ cells but concentrated: the effect that takes per-event
+  detection from nominal to $6\times$ nominal lives in one cell, while the two
+  largest gains elsewhere turn out to be main effects of the construction and
+  of discovery separately (Section~\ref{sec:constructions}). We state this
+  narrowly because the decomposition is what makes it checkable.
+\item \textbf{A leakage-free lineage for the claims that need one.} Every
+  CIFAR cell built from hub-pretrained weights inherits an encoder that
+  already saw the held-out class, which makes it unusable as evidence for
+  discovery. We rebuild the CIFAR battery from random initialisation and
+  report the pretrained cells only as an ablation. Dataset ordering throughout
+  is by distance from pretraining rather than alphabetically, so the reader
+  can see which claims rest on a backbone that could have seen the answer.
 \end{enumerate}
 
 \paragraph{What this paper is not.}
@@ -357,15 +381,101 @@ $\nmin$ grows, so it is set as small as the clustering will bear.
 \section{Constructions}
 \label{sec:constructions}
 % ===========================================================================
-% TODO. Two subsections, both already established and not waiting on new runs,
-% but written after the results tables so the numbers can be quoted inline:
-%   (a) residual decomposition + concatenation;
-%   (b) frozen-space discovery -- freeze the encoder, iterate only the anchors
-%       against a density-ratio pool.  The gain lives in the anchors, not the
-%       representation update; unfreezing costs probe and, with distance
-%       pooling, collapses round 2.
-%   NOTE: re-verify the frozen numbers first -- the BatchNorm fix means the
-%   archived frozen CIFAR results no longer reproduce (exp 130/131).
+
+Both constructions in this section are defined \emph{relative to an anchor
+set}, which is what lets them compose with the discovery loop: discovery
+enlarges and corrects the anchors, so a construction defined against them is a
+different construction after discovery than before. That composition is the
+part of this work with no counterpart we are aware of, and it is also the part
+most easily overstated, so we measure it as an interaction rather than a
+delta.
+
+\subsection{The residual decomposition}
+
+Let $\mu_{y}$ be the anchor for class $y$ and $z$ an embedding. The residual
+$r = z - \mu_{y}$ is what the anchor set fails to explain about $z$. We train
+a second encoder on $r$ under the same objective family as the parent and
+either use it alone (\emph{residual}) or concatenate it with the parent
+(\emph{concat}).
+
+The motivation is that a supervised objective is free to discard any variation
+that does not separate the classes it was given, and novelty is precisely
+variation of that kind. The residual target makes that discarded structure the
+only thing the child can see.
+
+\paragraph{On its own, the residual buys detection at no accuracy cost.}
+On the from-scratch CIFAR-100 lineage, concatenating a residual onto a
+supervised contrastive parent moves Euclidean novelty AUC from $0.233$ to
+$0.521$ while the linear probe moves by $+0.0015$, a gain two orders of
+magnitude smaller than the detection gain and of the same order as the probe's
+own seed spread ($\sigma = 0.0008$). This is the pattern across cells: the
+pure residual usually
+\emph{loses} probe accuracy (four of six strong-parent cells, $-0.037$ to
+$-0.077$), and the concatenation recovers it. We therefore report concat as
+the construction and the bare residual as a diagnostic.
+
+\subsection{Composing with discovery: a \texorpdfstring{$2\times2$}{2x2}}
+
+Because the residual is defined against the anchors, it can be built before or
+after the discovery loop. Writing $A$ for the parent alone, $B$ for the parent
+after discovery, $C$ for the construction before discovery, and $D$ for both,
+the quantity of interest is not $D - A$ but the interaction
+\begin{equation}
+  \Delta_{\text{int}} \;=\; (D - C) - (B - A),
+  \label{eq:interaction}
+\end{equation}
+which is zero for an additive stack and positive only when the two
+ingredients do more together than apart. We report it for per-event power at a
+nominal false-positive rate $\alpha = 0.05$, because that metric is bounded
+below by $\alpha$: a parent at $A \approx \alpha$ has \emph{no} ability to
+flag an individual novel sample, so a positive interaction there is a
+threshold crossing rather than an improvement.
+
+\paragraph{The interaction is real, and it is narrow.}
+On DTD with a DINO backbone, the residual construction gives
+$A = 0.040$, $B = 0.068$, $C = 0.023$, $D = 0.253$. Discovery alone is worth
+$+0.028$; the construction alone is worth $-0.018$ --- it actively hurts ---
+and composed they reach $6\times$ nominal, an interaction of $+0.203$. The
+concatenation behaves the same way ($+0.163$). Neither ingredient does
+anything alone. This is the strongest evidence we have that discovery and
+representation construction are not independent improvements.
+
+\paragraph{Two apparent replications are not replications.}
+The same protocol on galaxy10 produces the two largest raw gains in the
+study, and the decomposition shows that neither is composition. With a DINO
+backbone the residual takes per-event power from $0.021$ to $0.299$, but
+$C = 0.281$ already: the construction does this \emph{by itself}, and the
+interaction is $+0.003$. With a LeJEPA backbone the gain from $0.007$ to
+$0.206$ is almost entirely the discovery main effect ($+0.190$), with an
+interaction of $+0.008$ --- and it occurs in a cell whose round-2 pool purity
+is exactly zero. That last case is worth stating plainly, because we had
+written it in advance as a falsifier: if the composition helps where purity is
+zero, then the mechanism we proposed for it --- that discovery supplies a
+richer and \emph{correct} anchor set, against which the residual becomes
+informative --- cannot be what is happening there.
+
+\paragraph{What we therefore claim.}
+Across five cells, two constructions, and two variants, $12$ of $20$
+interactions are positive, but most are small and the threshold crossings
+driven by interaction rather than by a main effect occur in a single cell with
+a single construction. We do not claim superadditivity as a general property.
+The claim the data supports is weaker and still useful: \emph{discovery and
+the residual are substitutes more often than complements.} Whichever of the
+two a cell is missing, one of them supplies it --- galaxy10/LeJEPA needed
+discovery, galaxy10/DINO needed the residual, DTD/DINO needed both --- and a
+practitioner who runs only one of them will, on most cells, capture most of
+the available gain. Every number in this subsection is a single seed; the
+interaction is a difference of differences and inherits the variance of both
+its terms, so we treat it as a finding to be replicated rather than a
+headline.
+
+\subsection{Frozen-space discovery}
+% TODO. Freeze the encoder, iterate only the anchors against a density-ratio
+% pool.  The gain lives in the anchors, not in the representation update;
+% unfreezing costs probe and, with distance pooling, collapses round 2.
+% NOTE: re-verify the frozen numbers first -- the BatchNorm fix means the
+% archived frozen CIFAR results no longer reproduce (exps 130/131), and
+% "frozen" must mean eval() mode, not merely requires_grad=False.
 
 % ===========================================================================
 \section{Experiments}
