@@ -1964,6 +1964,12 @@ exp 76.  Pinned by `test_head_emb_honours_the_holdout_draw_tag`.
 
 ### Exp 137 — Residual / concat constructions on the scratch trunks
 
+> **cifar10 h4 DONE 2026-08-28.**  On the clean C10 supcon parent the concat is a
+> REAL two-currency gain: probe +0.034 (res), eucl +0.056/+0.062, mahaT
+> +0.015/+0.033, top-1 tie -- larger than the hub +0.016 and unlike clean C100's
+> tie.  ssig->res-nplm concat: probe +0.035, eucl +0.132, mahaT +0.090; its
+> child alone is the best-calibrated clean C10 space (eucl 0.758, per-event
+> 0.121).  No-cost holds for every concat (top-1 within 0.008).
 > **cifar100 h4 DONE 2026-08-27.**  Probe gain over a clean supcon parent is a
 > TIE (+0.002 res / +0.007 res-nplm, < 0.017) -- falsifier clause 1 met for the
 > probe; ssig->res +0.012 sets the clean C100 probe record (0.949).  NO-COST

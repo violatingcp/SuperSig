@@ -2814,3 +2814,49 @@ POOLS AND DISCOVERY (gate 0.15)
   .01/.02, MMD 0.84) -- the hub f95=0.019 result was not leakage.
 - Caveats: seed 0, holdout {4}; Tier 3 draws {8,9,7} queued for the
   shortlist; residuals on these trunks = exp 137 cifar10 (Block M, next).
+
+## Exp 137 -- residual / concat constructions on the SCRATCH C10 trunks (Block M)
+(cifar10, 100(+100)-D, pretrain=None, holdout {4}, exp-73 recipe, 20-ep children;
+probe x3, top1 = exp-132 probe x3; 2026-08-28; logs/exp137/residuals_cifar10.json)
+
+  space                      probe           top1    acc    eucl   mahaT  lid    perevt
+  supcon (parent)            0.905+-.002     0.896   0.741  0.514  0.552  0.703  0.000
+  supcon->res concat         0.939+-.000     0.899   0.815  0.571  0.567  0.678  0.001
+  supcon->res-nplm concat    0.916+-.001     0.902   0.847  0.576  0.585  0.635  0.000
+  ssig (parent)              0.884+-.001     0.897   0.894  0.439  0.454  0.518  0.013
+  ssig->res concat           0.932+-.000     0.896   0.889  0.407  0.383  0.513  0.016
+  ssig->res-nplm concat      0.919+-.002     0.897   0.896  0.571  0.544  0.529  0.054
+  nplmsd (parent)            0.719+-.022     0.827   0.799  0.692  0.659  0.376  0.123
+  nplmsd->res concat         0.876+-.002     0.835   0.648  0.378  0.459  0.595  0.017
+  nplmsd->res-nplm concat    0.842+-.004     0.832   0.799  0.610  0.543  0.576  0.030
+  (children alone: ssig->res-nplm residual eucl 0.758 / mahaT 0.617 / per-event 0.121
+   -- the best-calibrated clean C10 supervised space; supcon->res-nplm residual
+   eucl 0.659 / per-event 0.050)
+
+  paired concat - parent     probe     top1      eucl      mahaT
+  supcon->res                +0.034    +0.002    +0.056    +0.015
+  supcon->res-nplm           +0.012    +0.005    +0.062    +0.033
+  ssig->res                  +0.048    -0.001    -0.032    -0.071
+  ssig->res-nplm             +0.035    +0.000    +0.132    +0.090
+  nplmsd->res                +0.156    +0.008    -0.314    -0.200
+  nplmsd->res-nplm           +0.122    +0.004    -0.082    -0.117
+
+- ON CLEAN C10 THE RESIDUAL CONCAT IS A REAL TWO-CURRENCY GAIN ON THE
+  SUPCON PARENT: probe +0.034 (res; 2x the floor -- unlike clean C100's
+  +0.002), eucl +0.056, mahaT +0.015, top-1 tie.  The hub-lineage +0.016
+  (exp 75) was not leakage; on a clean trunk it is larger.  The
+  few-class / many-class split shows up here as it did in exp 136: the
+  residual buys probe on C10 and calibration on C100.
+- ssig->res-nplm is the clean C10 two-currency construction: probe
+  +0.035, eucl +0.132, mahaT +0.090, top-1 tie, and its residual child
+  alone is the best-calibrated supervised C10 space (eucl 0.758,
+  per-event 0.121 -- 9x the parent's).  ssig->res wins probe (+0.048)
+  but pays in geometry (-0.032/-0.071), the exp-134(B) pattern.
+- NO-COST HOLDS ON CLEAN C10 FOR EVERY CONCAT: top-1 within +-0.008 of
+  the parent on 6/6.  The bare residual children of ssig/nplmsd lose
+  0.14-0.24 top-1 (they were trained to discard class structure) --
+  report concat, never the child, for accuracy.
+- nplmsd: the probe is repaired (+0.12..+0.16) at the cost of the
+  geometry that was its only strength (eucl -0.08..-0.31).  A weak
+  parent is repaired on the currency it lacks and loses the one it had.
+- Caveats: seed 0, holdout {4}; draws queued (Block M after Tier 3).
