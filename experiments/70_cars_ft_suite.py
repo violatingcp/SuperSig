@@ -124,10 +124,18 @@ class MaskedLabelSubset(torch.utils.data.Dataset):
 def full_two_view_loader(corpus, ytr_all, holdouts, args):
     """Two-view loader over the WHOLE train corpus for the GCD arms: seen
     images keep their label, held-out images carry -1."""
-    idx = list(range(len(ytr_all)))
-    lab = [-1 if int(y) in holdouts else int(y) for y in ytr_all]
-    print(f"  gcd corpus: all {len(idx)} train images, "
-          f"{sum(1 for l in lab if l < 0)} unlabelled (held-out classes, label -1)")
+    frac = getattr(args, "gcd_unl_frac", 1.0)
+    hold = [i for i, y in enumerate(ytr_all) if int(y) in holdouts]
+    if frac < 1.0:                     # dose-response: keep only a fraction of
+        rng = np.random.RandomState(0)  # the novel class in the unlabelled corpus
+        keep = set(rng.choice(hold, size=max(1, int(round(frac * len(hold)))),
+                              replace=False).tolist())
+        hold = sorted(keep)
+    seen = [i for i, y in enumerate(ytr_all) if int(y) not in holdouts]
+    idx = sorted(seen + hold)
+    lab = [-1 if int(ytr_all[i]) in holdouts else int(ytr_all[i]) for i in idx]
+    print(f"  gcd corpus: {len(idx)} train images, {len(hold)} unlabelled "
+          f"(held-out classes, label -1; frac {frac:g} of the held-out train images)")
     ds = exp43.TwoViewLabeledImages(MaskedLabelSubset(corpus, idx, lab))
     return DataLoader(ds, batch_size=args.batch_size, shuffle=True,
                       num_workers=8, persistent_workers=True, drop_last=True,
@@ -229,6 +237,9 @@ def main():
                     choices=["dino", "lejepa", "visreg"])
     ap.add_argument("--quick", action="store_true")
     ap.add_argument("--seed", type=int, default=0)
+    ap.add_argument("--gcd-unl-frac", type=float, default=1.0,
+                    help="exp 146b: fraction of the held-out TRAIN images the GCD arms "
+                         "see (unlabelled); 1.0 = whole class. Tags outputs _u{frac}.")
     ap.add_argument("--arms", nargs="+",
                     default=[a for a in COLORS if a not in GCD_ARMS],   # GCD arms opt-in
                     choices=list(COLORS))
@@ -275,6 +286,8 @@ def main():
     tag = f"{DS}_{BASE}_ft70{run_tag()}{seed_sfx(args)}"
     if all(a in GCD_ARMS for a in args.arms):
         tag += "_gcd"          # exp 146: separate npz/plots from the six-arm archives
+        if args.gcd_unl_frac < 1.0:
+            tag += f"_u{args.gcd_unl_frac:g}"
     print(f"exp70 [{tag}] end-to-end ft suite, arms={args.arms}, "
           f"ft_epochs={args.ft_epochs}, emb={args.emb_dim}, "
           f"holdouts {min(holdouts)}-{max(holdouts)} EXCLUDED from ft")

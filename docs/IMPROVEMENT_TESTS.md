@@ -2069,6 +2069,17 @@ or the concat loses top-1 by more than 0.017 (no-cost fails on CIFAR).
 > ViT bases and state the caveat that the six archived arms never saw D^u.
 > Pending: dtd draws (many-class, single holdout) and the multi-holdout
 > datasets, to see whether the effect survives more novel classes.
+>
+> **CAVEAT (PH, 2026-08-29): the GCD arms see the WHOLE novel class.**  The
+> loader is the full train corpus with held-out labels masked: galaxy10 d0 =
+> 264 of 1772 train images (15 %), d7 = 33 (1.9 %; the weak draw is the
+> smallest class), dtd = 80 of 3760 (2.1 %).  The battery's probe / mahaT /
+> power are on the TEST split (unseen images -> generalisation), but the
+> discovery-pool purity is on the train split, i.e. on the very images the
+> GCD arms trained on -- that row is inflated for the GCD arms and is not
+> comparable to the six archived arms.  The fair reading of the table above is
+> "saw 100 % of the novel class unlabelled" vs "saw 0 %".  The dose-response
+> is exp 146b.
 
 **Motivation.**  The GCD benchmark table was withdrawn (not like-for-like).
 The comparison that IS fair is to score GCD's representation loss on our
@@ -2095,6 +2106,40 @@ buys decodability and the marginal buys discoverability, additively.
 learning is the missing ingredient, and the paper's objective shortlist
 changes.  Or gcd-sigreg-ft loses calibration vs gcd-ft -> the marginal does
 not compose with an instance-level term on unlabelled data.
+
+### Exp 146b — Dose-response: how much of the novel class must the corpus contain?
+
+> **QUEUED 2026-08-29 as Block S3 (chainT9S3.sh, behind S2).**
+> `70_cars_ft_suite.py --arms gcd-ft gcd-sigreg-ft --gcd-unl-frac F`; outputs
+> tagged `_gcd_u{F}`; aggregate with `125_aggregate_draws.py` (add `--gcd`
+> and read the `_u` files -- TODO wire the frac into the aggregator).
+
+**Motivation.**  Exp 146's GCD arms trained with 100 % of the novel class in
+the unlabelled corpus; the power tests probe 0.3-10 % contamination.  A
+representation that only helps when the novel class is a sizeable, fully
+present fraction of the corpus is a different tool from one that helps at the
+contamination levels the paper is about.
+
+**Protocol.**  Keep a fixed random fraction F in {0.05, 0.2, 0.5} of the
+held-out TRAIN images in the GCD loader (the rest are dropped from training
+only; the discovery pool and the test-split battery are unchanged so the rows
+stay comparable to exp 146 at F = 1 and to the archived arms at F = 0).
+galaxy10/lejepa and dtd/dino, 5 draws each (the two strongest exp-146
+settings).  At F = 0.05 the galaxy10 corpus holds 2-13 novel images.
+
+**Prediction.**  Monotone in F; the calibration gain (mahaT, per-event) is
+mostly gone by F = 0.05 and half-present at F = 0.2 -- an instance-level term
+needs enough novel images to form a cluster.  The probe degrades more slowly
+(a handful of images already pulls the class into the seen geometry).
+
+**Falsifier.**  The gain is flat in F (present at F = 0.05): the effect is not
+"seeing the novel class" but the SimCLR term regularising the seen geometry
+-- in which case an unlabelled-corpus term with the novel class REMOVED
+would do the same, and the fair comparison is against ss-ft with SimCLR
+over the seen corpus (already in the archive: the gain would have to be a
+temperature / weighting effect, testable as a 147).  Or non-monotone /
+worse at F = 1: memorisation of a large novel cluster harms the test-split
+numbers.
 
 ### Exps 144/145 — The Generalized Category Discovery benchmark (GCD / UNO+ / SimGCD / RLCD)
 
