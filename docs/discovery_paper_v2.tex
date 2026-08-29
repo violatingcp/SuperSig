@@ -577,11 +577,22 @@ objectives ($0.26$--$0.55$) where the distance pool manages $3/8$
 encoder does not move --- and it removes the round-2 collapse that every
 fine-tuning run in Tables~\ref{tab:app_galaxy10_draws}
 and~\ref{tab:app_dtd_draws} shows: the collapse is the fine-tune destroying
-the pool, not the anchors. Where the base rate is low the construction is
-marginal rather than dead --- on flowers at $1/102$, pooling the pretrained
-trunk's features with no training at all sits at $0.16$--$0.18$, at the gate
-on $12$ of $15$ draws (Table~\ref{tab:app_frozen_np}) --- which is where the
-regime split of Section~\ref{sec:experiments} places its boundary.
+the pool, not the anchors. The construction does not even need the
+fine-tune: pooling the \emph{pretrained} trunk's features, with seen-class
+centroids as anchors and no training at all, clears the gate on $30/30$
+single-holdout draw cells on galaxy10 and DTD --- at $0.56$--$0.60$ on
+galaxy10, above the frozen fine-tuned head ($0.40$--$0.57$) and far above the
+fine-tuning loop ($0.13$--$0.29$), and at $0.26$ on DTD, above the fine-tuned
+workhorse ($0.22$--$0.24$). Fine-tuning on the seen classes buys the probe
+and the multi-holdout regime; it does not buy single-holdout
+discoverability, and on galaxy10 it costs some. Where the base rate is low
+the same construction is marginal rather than dead --- flowers at $1/102$
+sits at $0.16$--$0.18$, at the gate on $12$ of $15$ draws --- and where the
+novel class sits inside the seen manifold it is dead regardless of rate
+(aircraft at $1/100$: $0.01$; cars at $1/196$: $0.01$;
+Table~\ref{tab:app_frozen_np}). That ordering --- galaxy10, DTD, flowers,
+aircraft, cars --- is the regime boundary of Section~\ref{sec:experiments}
+stated on one construction.
 
 \paragraph{What ``frozen'' has to mean.} A trunk with BatchNorm keeps
 adapting its running statistics in training mode even with every weight

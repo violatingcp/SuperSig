@@ -2071,6 +2071,12 @@ was ViT-specific); C10 supervised top-1 shows a SIGReg cost larger than the
 
 ### Exp 135 — Corpus-adaptive normalisation on every cell (exp 133's analogue)
 
+> **Block P galaxy10/dtd rows 2026-08-28:** the zero-training construction clears
+> the gate on 30/30 single-holdout draw cells -- galaxy10 0.56-0.60 (above the
+> fine-tuned frozen head 0.40-0.57 and the loop 0.13-0.29), dtd 0.26 (above the
+> fine-tuned ss-ft 0.22-0.24).  Fine-tuning buys the probe and the multi-holdout
+> regime, not single-holdout discoverability.
+
 > **Block P DONE 2026-08-28 (frozen-np on the PRETRAINED trunk, no fine-tune;
 > flowers / cars / aircraft x 3 bases x {multi, 5 single draws}).**  Rate is
 > necessary, not sufficient: flowers (1/102) sits at the gate on 12/15 single

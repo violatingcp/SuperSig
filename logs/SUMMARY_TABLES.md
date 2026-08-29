@@ -3026,3 +3026,32 @@ logs/exp59/nplm_residual_concat_cifar100{,_s1,_s2}.npz; 2026-08-28)
   probe-neutral-to-negative for the sup-recipe concats (-0.006, -0.030)
   and positive only on NPLM-trunk concats (+0.027, +0.016), the same rule
   as the 100-D configuration.  mahaT never exceeds 0.51.
+
+## Block P addendum -- the same zero-training construction on galaxy10 and DTD
+(pretrained trunk, identity head, np pool, anchors only; single = 5 draws)
+
+  dataset   b(single)  base    single np r1     >=gate   multi np r1/r2   fine-tuned reference (single, 5 draws)
+  galaxy10  1/10       dino    0.598+-0.061     5/5      0.615 / 0.630    exp-70 loop 0.13 (nplm-sup); frozen exp-70 head + np 0.40-0.47 (exp 135)
+                       lejepa  0.591+-0.040     5/5      0.585 / 0.600    loop 0.19; frozen head + np 0.51-0.57
+                       visreg  0.556+-0.026     5/5      0.581 / 0.577    loop 0.29 (supcon); frozen head + np 0.54-0.57
+  dtd       1/47       dino    0.257+-0.016     5/5      0.611 / 0.624    exp-70 loop, ss-ft 0.219+-0.014 (the workhorse)
+                       lejepa  0.261+-0.014     5/5      0.507 / 0.507    ss-ft 0.225+-0.006
+                       visreg  0.267+-0.014     5/5      0.526 / 0.552    ss-ft 0.241+-0.025
+
+- ON THE TWO DATASETS WHERE DISCOVERY WORKS, NO TRAINING IS NEEDED.  The
+  raw ImageNet-SSL trunk with seen-class centroids and a density-ratio
+  pool clears the gate on 30/30 single-holdout draw cells, at 0.56-0.60
+  on galaxy10 (vs 0.13-0.29 for the exp-70 fine-tuning loop and 0.40-0.57
+  for the frozen fine-tuned head of exp 135) and at 0.26 on DTD (vs
+  0.22-0.24 for the fine-tuned SupCon+SIGReg workhorse).  Fine-tuning
+  the trunk on the seen classes REDUCES the raw trunk's discoverability
+  on galaxy10 and buys nothing on DTD; what the campaign's objectives buy
+  is the probe (0.90 -> 0.94 galaxy10) and the multi-holdout regime
+  (dtd multi 0.51-0.61 raw vs 0.80 fine-tuned ss-ft).
+- With the cars/aircraft/flowers rows above, the zero-training table is
+  the cleanest statement of the regime boundary in the campaign:
+  galaxy10 0.6, dtd 0.26, flowers 0.16, aircraft 0.01, cars 0.01 at
+  single holdout -- ordered by how far the novel class sits from the
+  seen manifold in the pretrained space, not by base rate alone.
+- Draw sd is small here (0.01-0.06): the raw-trunk construction is the
+  most draw-stable number in the campaign.
