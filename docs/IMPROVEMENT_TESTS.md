@@ -2089,11 +2089,16 @@ or the concat loses top-1 by more than 0.017 (no-cost fails on CIFAR).
 > | flowers/dino | ss-ft | 0.795 -> 0.788 | 0.940 | 0.883 | **0.60** | -- |
 > | flowers/dino | gcd-ft | **0.944** -> 0.871 | 0.906 | 0.908 | 0.13 | -- (probe@.02inj 0.900, mahaT 0.896) |
 > | flowers/dino | gcd-sigreg-ft | 0.906 -> 0.884 | 0.907 | **0.923** | 0.39 | -- (0.828, 0.904) |
+> | aircraft/dino, 10 holdouts | supcon-ft | 0.761 -> 0.780 | **0.457** | **0.659** | **0.32** | -- (0.815, 0.656) |
+> | aircraft/dino | ss-ft | 0.802 -> **0.818** | 0.418 | 0.604 | 0.12 | -- (0.823, 0.611) |
 > | aircraft/dino, 10 holdouts | gcd-ft | 0.787 -> 0.768 | 0.384 | 0.655 | 0.28 | -- (0.786, 0.661) |
 > | aircraft/dino | gcd-sigreg-ft | 0.799 -> 0.800 | 0.296 | 0.602 | 0.11 | -- (0.819, 0.579) |
 >
 > (aircraft supcon-ft / ss-ft reference rows: eval-only exp-70 pass on the
-> archived `_seen` checkpoints, `logs/exp70_aircraft_dino_ref.log`, pending.)
+> archived `_seen` checkpoints, `logs/exp70_aircraft_dino_ref.log`; the
+> npz now holds supcon-ft / ss-ft / nplm-sup-ft, the nplm-only file is kept as
+> `_nplm_only_archived`.)  Aircraft: same as cars -- the GCD arms tie or lose
+> on every currency and cost 0.07-0.16 acc.
 >
 > Reading across regimes.  **Single holdout, many classes (dtd)**: the
 > effect is as strong as on galaxy10 and now on DINO -- gcd-sigreg-ft is best
