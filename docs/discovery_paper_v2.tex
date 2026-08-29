@@ -53,7 +53,36 @@
 \maketitle
 
 \begin{abstract}
-% TODO: write last, once Sections 4-6 have numbers.
+A representation can encode a novel class perfectly and still be useless for
+finding it. On a supervised contrastive encoder trained with one class held
+out, a linear probe separates that class from the rest at an AUC of $0.94$,
+while the same space, asked to flag those examples without being told what to
+look for, flags none of them. Representation quality is routinely measured on
+the first side of this gap --- linear probes, $k$-NN, transfer --- and
+scientific discovery lives entirely on the second. We study the standard
+open-world loop (score a corpus against a labelled reference, pool the most
+anomalous points, cluster the pool into candidate class anchors, adapt the
+representation) and take as the primary metric the fraction of that pool which
+is genuinely novel, since every later stage is downstream of it. We contribute
+four things. First, an algebra for the pool: purity is
+$\Pi = \varepsilon_s b / q$ with a ceiling $\min(1, b/q)$ that depends on the
+pooling threshold alone, which separates ``the representation is bad'' from
+``the threshold is bad'' --- questions the literature does not currently
+distinguish. Second, a label-free rule for choosing that threshold, derived
+from the same Neyman--Pearson density ratio that scores the corpus; it recovers
+the oracle threshold exactly on synthetic data, and where the scorer is too
+weak to support a choice it declines to pool and reports the refusal as an
+output. Third, evidence that ranking training objectives by discoverability is
+not the same as ranking them by probe accuracy: adding a sliced-isotropy
+regulariser to a supervised contrastive objective is a tie on the linear probe
+and costs $1.1$ points of top-1 accuracy, while raising novelty-detection AUC
+from $0.233$ to $0.620$. Fourth, a $2\times2$ decomposition of representation
+construction against the discovery loop, which finds the two to be substitutes
+more often than complements. Throughout we separate the $\sim$$1\%$ and
+$\sim$$10\%$ novelty regimes, which invert several conclusions; we report
+where the pipeline fails as carefully as where it works; and we rebuild every
+CIFAR result from random initialisation, because a hub-pretrained backbone has
+already seen the class it is being asked to discover.
 \end{abstract}
 
 % ===========================================================================
@@ -64,10 +93,13 @@ A representation can encode a novel class perfectly and still be useless for
 finding it. This is not a hypothetical failure mode; it is the ordinary
 situation. Train a supervised contrastive encoder on a set of known classes,
 hold one class out, and a linear probe trained to separate the held-out class
-from the rest reaches an AUC of $0.94$. The same space, asked to flag novel
-examples without being told what to look for, scores exactly zero at the
-event level. The information is present and linearly accessible. It is simply
-not accessible to anyone who does not already have the answer.
+from the rest reaches an AUC of $0.94$. Now ask the same space a different
+question: given a \emph{single} image and no knowledge of what is being looked
+for, is this one novel? Run as a hypothesis test at a $5\%$ false-positive
+rate, that space flags none of them --- its detection rate on genuinely novel
+images is no better than the false-positive rate itself. The information is
+present, and linearly accessible. It is simply not accessible to anyone who
+does not already have the answer.
 
 The gap between those two numbers is the subject of this paper. It is the gap
 between a representation being \emph{decodable} and being
@@ -95,11 +127,12 @@ reference of labelled examples, take the most anomalous ones as a
 representation to the proposal. Every stage of that loop is downstream of one
 quantity --- the fraction of the pool that is genuinely novel, which we call
 \emph{pool purity}. Purity is the only forward-looking metric in the
-pipeline. Every other measure describes a space you already have; purity
-predicts whether the next step will improve it or corrupt it. Below a
-threshold the loop does not merely fail to help: it clusters background,
-plants anchors on it, and fine-tunes the representation to make that
-structure sharper.
+pipeline: every other measure describes a space you already have, whereas
+purity predicts whether the next step will improve that space or corrupt it.
+When purity is low the loop does not merely fail to help. It clusters
+background, plants anchors on that background, and then fine-tunes the
+representation to make the spurious structure sharper --- so a bad pool leaves
+the representation worse than not running the loop at all.
 
 \paragraph{Contributions.}
 \begin{enumerate}
@@ -187,6 +220,37 @@ centroids to the anchor set; pseudo-label every pooled point by its nearest
 discovered anchor; and adapt the representation (or, in the frozen variant of
 Section~\ref{sec:constructions}, only the anchors) to the enlarged anchor set.
 The round repeats with the updated anchors.
+
+\paragraph{What we measure, and what the numbers mean.}
+Because this paper compares two kinds of quality that are usually not
+distinguished, it is worth stating plainly what each number is before any of
+them appear.
+
+\emph{Decodability} measures how well a space supports a decision somebody has
+already specified. We report \textbf{linear probe AUC} (train a linear
+classifier to separate the held-out class from the rest, \emph{using the
+held-out labels}, and measure how well it does) and \textbf{top-1 accuracy} on
+the seen classes. A probe is an oracle measurement: it is allowed the answer.
+It says whether the information about the novel class survives in the
+representation at all, which is a genuine and useful thing to know --- and is
+not what a discovery pipeline can use.
+
+\emph{Discoverability} measures what the space supports \emph{without} the
+answer. \textbf{Euclidean AUC} ranks every corpus point by its distance to the
+nearest known-class anchor and asks how well that ranking separates novel from
+seen; \textbf{tied Mahalanobis} does the same with a shared covariance rather
+than raw distance. Both are ranking measures: they say a novel point tends to
+score higher than a seen one, but not by how much or where to put a threshold.
+\textbf{Per-event power} is the strictest question we ask. Fix a decision
+threshold that admits $\alpha = 5\%$ of \emph{reference} points, then report
+the fraction of genuinely novel points that exceed it. This is the power of a
+hypothesis test at size $\alpha$, applied one event at a time. It is bounded
+below by $\alpha$ in the sense that a space carrying no usable signal scores
+$\approx \alpha$; a value at or under $0.05$ therefore means the space cannot
+flag an individual novel example at all, and the interesting question is
+whether a method crosses that floor rather than by how much it improves.
+Finally, \textbf{pool purity} $\Pi$ is defined below and is the metric this
+paper treats as primary.
 
 \paragraph{Pool purity, and why everything is downstream of it.}
 Let $\Pi$ denote the fraction of $\pool$ that is truly novel. The pool feeds
@@ -489,6 +553,21 @@ headline.
 % docs/tables/*.tex.  Do not hand-edit them; re-run that script instead.
 % Each carries a machine-written coverage line, so a table that is missing
 % cells says so in its own caption.
+
+\paragraph{How to read the tables.}
+Four words recur and are worth fixing now. An \emph{objective} (or arm) is one
+training loss from the design cube of Section~\ref{sec:algorithms} --- SupCon,
+SupCon\,+\,SIGReg, and so on. A \emph{backbone} (or base) is the pretrained
+trunk the objective is fine-tuned on top of: DINO, LeJEPA or VISReg. A
+\emph{draw} is a choice of which class to hold out and treat as novel;
+re-drawing changes the problem, since some classes are far harder to find than
+others. A \emph{seed} is a re-run of the same training with different random
+initialisation and batch order, holding the draw fixed. A \emph{cell} is one
+(dataset, backbone) pair, inside which we compare objectives. Distinguishing
+draw from seed matters more than it may appear, and
+Section~\ref{sec:experiments} measures both: they turn out to differ by almost
+an order of magnitude, which determines how much of a single-run number can be
+believed.
 
 This campaign is reported while incomplete. Every table below states its own
 coverage, blanks are shown as ``--'' rather than dropped, and we mark which
