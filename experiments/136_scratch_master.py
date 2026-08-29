@@ -69,6 +69,35 @@ def htag(holdout):
     return "" if holdout == 4 else f"_h{holdout}"
 
 
+def exp68_purity_inj(ds, holdout):
+    """{arm: {f: round-1 purity}} from the exp-68 log's POST grid (discovery
+    from an injected sample).  Round lines precede the `[arm] per-event post
+    f=` line that names the arm, so round 1 is buffered until it arrives."""
+    import re
+    out, cur, r1 = {}, None, None
+    for fn in (os.path.join("logs", f"exp68_{ds}_h{holdout}.log"),
+               os.path.join("logs", "exp68", f"exp68_scratch_discovery_{ds}{htag(holdout)}.log")):
+        if os.path.exists(fn):
+            break
+    else:
+        return out
+    for line in open(fn, errors="ignore"):
+        m = re.match(r"===== POST grid, f=([\d.]+)", line)
+        if m:
+            cur, r1 = float(m.group(1)), None; continue
+        if cur is None:
+            continue
+        m = re.match(r"\s+round 1: pool=\d+ purity=([\d.]+)", line)
+        if m and r1 is None:
+            r1 = float(m.group(1)); continue
+        m = re.match(r"\s+\[(\S+)\] per-event post f=", line)
+        if m:
+            if r1 is not None:
+                out.setdefault(m.group(1), {})[cur] = r1
+            r1 = None
+    return out
+
+
 def _selftest():
     """The artifact tags must agree across 67/68/136 and be empty at the
     archived holdout so nothing existing is renamed."""
@@ -275,7 +304,15 @@ def main():
                       if f"post_{k}_{arm}" in d68.files},
                 post_power={s: [float(x) for x in d68[f"{s}_{arm}_post"]] for s in STATS
                             if f"{s}_{arm}_post" in d68.files},
-                fractions=[float(x) for x in d68["fractions"]])
+                fractions=[float(x) for x in d68["fractions"]],
+                # injected-sample pass (exp 68 >= 2026-08-29): per-fraction post
+                # geometry from the npz and POST-grid round-1 purity from the log.
+                # Absent keys stay absent -- the tables print `--`, never the
+                # whole-class natural-pass value.
+                postf={k: [float(x) for x in d68[f"postf_{k}_{arm}"]]
+                       for k in ("probe", "eucl", "mahaT", "mahaPC")
+                       if f"postf_{k}_{arm}" in d68.files},
+                purity_inj=exp68_purity_inj(ds, hold).get(arm, {}))
         results[arm] = r
         with open(out_path, "w") as fh:
             json.dump(results, fh, indent=1, default=float)

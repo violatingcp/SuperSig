@@ -1,24 +1,26 @@
-% STATUS: 8/8 objectives; frozen pools = trunk frozen (BN in eval unless `BN adapt'), $2\times2$-epoch anchor rounds; legal cut at $n_{\min}=10$ and $30$ (`ref.' = the rule declined); loop = exp-68 fine-tuning loop, distance pool, $2\times5$ epochs. Gate $=0.15$.
+% STATUS: 8/8 objectives; frozen pools = trunk frozen (BN in eval unless `BN adapt'), $2\times2$-epoch anchor rounds; legal cut at $n_{\min}=10$ and $30$ (`ref.' = the rule declined); loop = exp-68 fine-tuning loop, distance pool, $2\times5$ epochs. Injected-sample probe/mahaT present for 0/8 objectives (`--' = npz predates the per-fraction keys). Gate $=0.15$.
 \begin{landscape}
 \begin{table}[p]
 \centering
 \footnotesize
 \setlength{\tabcolsep}{3pt}
-\begin{tabular}{lcccccccccc}
+\begin{tabular}{lccccccccccc}
 \toprule
-objective & dist r1 & np r1 & np r2 & np+BN r2 & legal$_{10}$ & legal$_{30}$ & loop r1 & loop probe & post eucl & post mahaT \\
+& \multicolumn{4}{c}{frozen pools} & \multicolumn{2}{c}{legal cut} & \multicolumn{3}{c}{loop, 2\% injected} & \multicolumn{2}{c}{loop, whole class} \\
+\cmidrule(lr){2-5}\cmidrule(lr){6-7}\cmidrule(lr){8-10}\cmidrule(lr){11-12}
+objective & dist r1 & np r1 & np r2 & np+BN r2 & $n_{\min}{=}10$ & $n_{\min}{=}30$ & purity & probe & mahaT & purity & probe pre$\to$post \\
 \midrule
-SupCon & 0.000 & 0.052 & 0.021 & 0.027 & ref. & ref. & 0.000 & 0.939$\to$0.930 & 0.372 & 0.396 \\
-\textbf{SupCon+SIGReg ($\lambda{=}5$)} & 0.008 & 0.007 & 0.018 & 0.018 & ref. & ref. & 0.008 & 0.938$\to$0.871 & 0.452 & 0.514 \\
-NPLM-dist.+classwise SIGReg & 0.006 & 0.031 & 0.020 & 0.016 & 0.048 & ref. & 0.006 & 0.899$\to$0.937 & 0.438 & 0.382 \\
-SupCon+SIGReg (repulse) & 0.009 & 0.024 & 0.037 & 0.040 & ref. & ref. & 0.009 & 0.838$\to$0.796 & 0.371 & 0.365 \\
-NPLM-dist. (sup.) & 0.008 & 0.004 & 0.001 & 0.020 & ref. & ref. & 0.008 & 0.819$\to$0.857 & 0.349 & 0.310 \\
-SimCLR & 0.004 & 0.024 & 0.014 & 0.005 & ref. & ref. & 0.004 & 0.819$\to$0.889 & 0.315 & 0.303 \\
-VISReg/LeJEPA & 0.005 & 0.022 & 0.015 & 0.018 & ref. & ref. & 0.005 & 0.808$\to$0.893 & 0.343 & 0.293 \\
-NPLM (unsup.) & 0.009 & 0.022 & 0.014 & 0.016 & ref. & ref. & 0.009 & 0.757$\to$0.885 & 0.298 & 0.270 \\
+SupCon & 0.000 & 0.052 & 0.021 & 0.027 & ref. & ref. & 0.000 & -- & -- & 0.000 & 0.939$\to$0.930 \\
+\textbf{SupCon+SIGReg ($\lambda{=}5$)} & 0.008 & 0.007 & 0.018 & 0.018 & ref. & ref. & 0.008 & -- & -- & 0.008 & 0.938$\to$0.871 \\
+NPLM-dist.+classwise SIGReg & 0.006 & 0.031 & 0.020 & 0.016 & 0.048 & ref. & 0.006 & -- & -- & 0.006 & 0.899$\to$0.937 \\
+SupCon+SIGReg (repulse) & 0.009 & 0.024 & 0.037 & 0.040 & ref. & ref. & 0.009 & -- & -- & 0.009 & 0.838$\to$0.796 \\
+NPLM-dist. (sup.) & 0.008 & 0.004 & 0.001 & 0.020 & ref. & ref. & 0.008 & -- & -- & 0.008 & 0.819$\to$0.857 \\
+SimCLR & 0.004 & 0.024 & 0.014 & 0.005 & ref. & ref. & 0.004 & -- & -- & 0.004 & 0.819$\to$0.889 \\
+VISReg/LeJEPA & 0.005 & 0.022 & 0.015 & 0.018 & ref. & ref. & 0.005 & -- & -- & 0.005 & 0.808$\to$0.893 \\
+NPLM (unsup.) & 0.009 & 0.022 & 0.014 & 0.016 & ref. & ref. & 0.009 & -- & -- & 0.009 & 0.757$\to$0.885 \\
 \bottomrule
 \end{tabular}
-\caption{\textbf{CIFAR-100 leakage-free lineage: pools and discovery.} Round-1 purity of the frozen distance and density-ratio (np) pools, the np pool's round 2 with BN frozen and adapting, the label-free cut, and the fine-tuning loop's purity, probe and post geometry. \emph{Coverage:} 8/8 objectives; frozen pools = trunk frozen (BN in eval unless `BN adapt'), $2\times2$-epoch anchor rounds; legal cut at $n_{\min}=10$ and $30$ (`ref.' = the rule declined); loop = exp-68 fine-tuning loop, distance pool, $2\times5$ epochs. Gate $=0.15$.}
+\caption{\textbf{CIFAR-100 leakage-free lineage: pools and discovery.} Round-1 purity of the frozen distance and density-ratio (np) pools, the np pool's round 2 with BN frozen and adapting, the label-free cut, then the fine-tuning loop for \emph{discovery from a 2\% injected sample} of the held-out class (the paper's regime): round-1 purity, post probe and post tied Mahalanobis. The last two columns are the loop's natural pass, in which the whole held-out class is present in the unlabelled bank --- a different, easier regime, shown for reference only. \emph{Coverage:} 8/8 objectives; frozen pools = trunk frozen (BN in eval unless `BN adapt'), $2\times2$-epoch anchor rounds; legal cut at $n_{\min}=10$ and $30$ (`ref.' = the rule declined); loop = exp-68 fine-tuning loop, distance pool, $2\times5$ epochs. Injected-sample probe/mahaT present for 0/8 objectives (`--' = npz predates the per-fraction keys). Gate $=0.15$.}
 \label{tab:app_cifar100_pools}
 \end{table}
 \end{landscape}

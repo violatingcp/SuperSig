@@ -44,6 +44,52 @@ def _master(ds):
     return json.load(open(f)) if os.path.exists(f) else None
 
 
+_H = {"cifar10": 4, "cifar100": 4}      # the master JSONs are the holdout-4 cells
+
+
+def d68_injected(ds, tag="", f=None):
+    """Exp-68 INJECTED-sample pass, read from disk at table time (so Block S5
+    fills it in place without re-running exp 136): {arm: {"probe","eucl",
+    "mahaT","purity"}} at fraction f.  Values come from postf_* npz keys and
+    the POST-grid log lines; anything absent is simply missing -> `--`."""
+    f = t140.F_PAPER if f is None else f
+    out = {}
+    zp = os.path.join(LOGS, "exp68", f"scratch_discovery_{ds}{tag}.npz")
+    z = np.load(zp, allow_pickle=True) if os.path.exists(zp) else None
+    if z is not None and "fractions" in z.files:
+        fr = np.asarray(z["fractions"], dtype=float); i = int(np.argmin(np.abs(fr - f)))
+        if abs(fr[i] - f) < 1e-9:
+            for k in z.files:
+                m = re.match(r"postf_(probe|eucl|mahaT|mahaPC)_(.+)$", k)
+                if m:
+                    v = np.asarray(z[k], dtype=float).ravel()
+                    if i < v.size and np.isfinite(v[i]):
+                        out.setdefault(m.group(2), {})[m.group(1)] = float(v[i])
+    h = _H.get(ds, 4) if not tag else int(tag[2:])
+    for fn in (os.path.join(LOGS, f"exp68_{ds}_h{h}.log"),
+               os.path.join(LOGS, "exp68", f"exp68_scratch_discovery_{ds}{tag}.log")):
+        if os.path.exists(fn):
+            break
+    else:
+        return out
+    cur, r1 = None, None
+    for line in open(fn, errors="ignore"):
+        m = t140._POSTF.match(line)
+        if m:
+            cur, r1 = float(m.group(1)), None; continue
+        if cur is None:
+            continue
+        m = t140._PUR.match(line)
+        if m and r1 is None:
+            r1 = float(m.group(2)); continue
+        m = t140._ARMPOST.match(line)
+        if m:
+            if abs(cur - f) < 1e-9 and r1 is not None:
+                out.setdefault(m.group(1), {})["purity"] = r1
+            r1 = None
+    return out
+
+
 def t_scratch_pre(ds):
     m = _master(ds)
     if m is None:
@@ -105,39 +151,52 @@ def t_scratch_power(ds):
 
 
 def t_scratch_pools(ds):
+    """Loop columns are the paper regime (discovery from a 2% injected
+    sample, exp-68 POST grid); the natural pass (whole class present) is the
+    labelled pair on the right."""
     m = _master(ds)
     if m is None:
         return None
-    rows, n = [], 0
+    inj = d68_injected(ds)
+    rows, n, n_inj = [], 0, 0
     for a in ARMS_SCRATCH:
         if a not in m:
-            rows.append(f"{PRETTY.get(a, esc(a))} & " + " & ".join(["--"] * 10) + r" \\"); continue
+            rows.append(f"{PRETTY.get(a, esc(a))} & " + " & ".join(["--"] * 11) + r" \\"); continue
         r = m[a]; z = r["frozen"]; n += 1
         l10, l30 = r.get("legal_cut", {}), r.get("legal_cut_n30", {})
         d68 = r.get("discovery68") or {}
+        ij = inj.get(a, {})
+        n_inj += "probe" in ij
         L = lambda l: (fnum(l.get("purity")) if l.get("ok") else "ref.") if l else "--"
         rows.append(" & ".join([
             PRETTY.get(a, esc(a)),
             fnum(z["dist|frozen"]["purity"][0]), fnum(z["np|frozen"]["purity"][0]),
             fnum(z["np|frozen"]["purity"][1]), fnum(z["np|bn-adapt"]["purity"][1]),
             L(l10), L(l30),
+            fnum(ij.get("purity")), fnum(ij.get("probe")), fnum(ij.get("mahaT")),
             fnum((d68.get("purity") or [None])[0]) if d68 else "--",
-            (f"{fnum(d68['probe_pre'])}$\\to${fnum(d68['probe_post'])}" if d68 else "--"),
-            fnum(d68.get("post", {}).get("eucl")) if d68 else "--",
-            fnum(d68.get("post", {}).get("maha_tied")) if d68 else "--"]) + r" \\")
+            (f"{fnum(d68['probe_pre'])}$\\to${fnum(d68['probe_post'])}" if d68 else "--")]) + r" \\")
     tag = "CIFAR-10" if ds == "cifar10" else "CIFAR-100"
     status = (f"{n}/8 objectives; frozen pools = trunk frozen (BN in eval unless "
               r"`BN adapt'), $2\times2$-epoch anchor rounds; legal cut at $n_{\min}=10$ and $30$ "
               r"(`ref.' = the rule declined); loop = exp-68 fine-tuning loop, distance pool, "
-              r"$2\times5$ epochs. Gate $=0.15$.")
+              rf"$2\times5$ epochs. Injected-sample probe/mahaT present for {n_inj}/{n} objectives "
+              r"(`--' = npz predates the per-fraction keys). Gate $=0.15$.")
     return _wrap("\n".join(rows),
                  rf"\textbf{{{tag} leakage-free lineage: pools and discovery.}} Round-1 purity "
                  r"of the frozen distance and density-ratio (np) pools, the np pool's round 2 "
-                 r"with BN frozen and adapting, the label-free cut, and the fine-tuning loop's "
-                 r"purity, probe and post geometry.",
-                 f"tab:app_{ds}_pools", status, "lcccccccccc",
-                 r"objective & dist r1 & np r1 & np r2 & np+BN r2 & legal$_{10}$ & legal$_{30}$ & "
-                 r"loop r1 & loop probe & post eucl & post mahaT \\", wide=True)
+                 r"with BN frozen and adapting, the label-free cut, then the fine-tuning loop "
+                 r"for \emph{discovery from a 2\% injected sample} of the held-out class (the "
+                 r"paper's regime): round-1 purity, post probe and post tied Mahalanobis. The "
+                 r"last two columns are the loop's natural pass, in which the whole held-out "
+                 r"class is present in the unlabelled bank --- a different, easier regime, "
+                 r"shown for reference only.",
+                 f"tab:app_{ds}_pools", status, "lccccccccccc",
+                 r"& \multicolumn{4}{c}{frozen pools} & \multicolumn{2}{c}{legal cut} & "
+                 r"\multicolumn{3}{c}{loop, 2\% injected} & \multicolumn{2}{c}{loop, whole class} \\"
+                 "\n" r"\cmidrule(lr){2-5}\cmidrule(lr){6-7}\cmidrule(lr){8-10}\cmidrule(lr){11-12}" "\n"
+                 r"objective & dist r1 & np r1 & np r2 & np+BN r2 & $n_{\min}{=}10$ & $n_{\min}{=}30$ & "
+                 r"purity & probe & mahaT & purity & probe pre$\to$post \\", wide=True)
 
 
 def t_residuals_ds(ds):

@@ -27,6 +27,7 @@ import numpy as np
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 t140 = importlib.import_module("140_paper_tables")
+t141 = importlib.import_module("141_appendix_tables")
 REPO, LOGS, OUT = t140.REPO, t140.LOGS, t140.OUT
 esc, fnum, _wrap = t140.esc, t140.fnum, t140._wrap
 
@@ -122,7 +123,7 @@ def grid_scratch(ds):
     m = json.load(open(fm))
     r137 = json.load(open(os.path.join(LOGS, "exp137", f"residuals_{ds}.json"))) \
         if os.path.exists(os.path.join(LOGS, "exp137", f"residuals_{ds}.json")) else {}
-    RA, RB, n = [], [], 0
+    RA, RB, n, n_inj = [], [], 0, 0
     for a in ["supcon", "ssig", "nplmcw", "supsig", "nplmsd", "simclr", "visreg", "nplm"]:
         gA, gB = group(PRETTY[a]); RA.append(gA); RB.append(gB)
         r = m.get(a)
@@ -133,9 +134,12 @@ def grid_scratch(ds):
             pre_pow = lambda s: pw[s][fr.index(F)] if fr and F in fr and s in pw else None
             pp = d68.get("post_power", {}); fr68 = d68.get("fractions", [])
             post_pow = lambda s: pp[s][fr68.index(F)] if fr68 and F in fr68 and s in pp else None
-            mm = {"probe": (p["probe"], d68.get("probe_post")),
-                  "eucl": (p["eucl"], d68.get("post", {}).get("eucl")),
-                  "mahaT": (p["mahaT"], d68.get("post", {}).get("maha_tied")),
+            # post probe/eucl/mahaT from the INJECTED-sample pass (exp-68 postf_*
+            # at F, read from the npz on disk), never the whole-class natural pass
+            ij = t141.d68_injected(ds).get(a, {}); n_inj += "probe" in ij
+            mm = {"probe": (p["probe"], ij.get("probe")),
+                  "eucl": (p["eucl"], ij.get("eucl")),
+                  "mahaT": (p["mahaT"], ij.get("mahaT")),
                   "perevt": (p["perevt"], post_pow("perevent")),
                   "sparker": (pre_pow("sparker"), post_pow("sparker")),
                   "maha": (pre_pow("maha"), post_pow("maha")),
@@ -152,7 +156,9 @@ def grid_scratch(ds):
     tag = "CIFAR-10" if ds == "cifar10" else "CIFAR-100"
     b = "0.10" if ds == "cifar10" else "0.01"
     status = (f"{n}/8 objectives, from random init, 100-D, holdout 4 (single holdout, $b={b}$), seed 0. "
-              r"`post' = the exp-68 fine-tuning loop (distance pool, 2 rounds). Residual concats: parents "
+              f"`post' = the exp-68 fine-tuning loop (distance pool, 2 rounds), discovery from a {100 * F:.0f}\\% "
+              f"injected sample; per-fraction post geometry present for {n_inj}/{n} objectives (`--' otherwise; "
+              r"the whole-class natural pass is in the pools table). Residual concats: parents "
               r"SupCon / SupCon+SIGReg / NPLM-dist.\ only (exp 137); discovery on scratch concats not run.")
     return emit(f"{ds}_scratch", RA, RB,
                 rf"\textbf{{{tag}, leakage-free lineage: every (objective, construction) $\times$ (pre, post).}}",
