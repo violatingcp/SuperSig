@@ -1,0 +1,65 @@
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+exp144 [cars/dino] GCD protocol: known 98/196, train 8144
+
+  seed 0: |D^l|=2020 |D^u|=6124
+    [raw-dino     kmeans     ] All  12.2  Old  10.1  New  13.2
+    [raw-dino     ss-kmeans  ] All  12.4  Old  11.3  New  13.0
+    [raw-dino     np-anchors ] All  10.8  Old  14.0  New   9.2   (pool purity 0.700, k_hat 2, ok=False)
+    [raw-dino     np-seeded  ] All  13.0  Old  11.8  New  13.5
+    [head-supcon  kmeans     ] All  21.8  Old  28.4  New  18.5
+    [head-supcon  ss-kmeans  ] All  27.5  Old  45.2  New  18.7
+    [head-supcon  np-anchors ] All  21.0  Old  45.4  New   8.8   (pool purity 0.850, k_hat 1, ok=True)
+    [head-supcon  np-seeded  ] All  26.9  Old  43.8  New  18.6
+    [head-ssig    kmeans     ] All  20.2  Old  22.6  New  19.0
+    [head-ssig    ss-kmeans  ] All  21.1  Old  28.7  New  17.4
+    [head-ssig    np-anchors ] All  16.9  Old  26.2  New  12.2   (pool purity 0.917, k_hat 1, ok=True)
+    [head-ssig    np-seeded  ] All  21.2  Old  28.9  New  17.4
+
+  seed 1: |D^l|=2020 |D^u|=6124
+    [raw-dino     kmeans     ] All  12.4  Old  11.3  New  12.9
+    [raw-dino     ss-kmeans  ] All  12.1  Old   8.6  New  13.8
+    [raw-dino     np-anchors ] All  10.4  Old  11.9  New   9.6   (pool purity 0.659, k_hat 2, ok=False)
+    [raw-dino     np-seeded  ] All  12.1  Old   8.6  New  13.9
+    [head-supcon  kmeans     ] All  22.6  Old  27.6  New  20.2
+    [head-supcon  ss-kmeans  ] All  26.9  Old  44.4  New  18.3
+    [head-supcon  np-anchors ] All  21.0  Old  46.8  New   8.2   (pool purity 0.968, k_hat 1, ok=True)
+    [head-supcon  np-seeded  ] All  26.6  Old  43.9  New  18.0
+    [head-ssig    kmeans     ] All  17.9  Old  19.1  New  17.3
+    [head-ssig    ss-kmeans  ] All  19.8  Old  23.4  New  17.9
+    [head-ssig    np-anchors ] All  16.9  Old  24.7  New  13.1   (pool purity 0.938, k_hat 2, ok=True)
+    [head-ssig    np-seeded  ] All  20.2  Old  24.7  New  17.9
+
+  seed 2: |D^l|=2020 |D^u|=6124
+    [raw-dino     kmeans     ] All  12.8  Old  10.6  New  13.8
+    [raw-dino     ss-kmeans  ] All  12.2  Old  10.6  New  13.0
+    [raw-dino     np-anchors ] All  11.1  Old  17.0  New   8.2   (pool purity 0.708, k_hat 2, ok=False)
+    [raw-dino     np-seeded  ] All  12.5  Old  10.9  New  13.2
+    [head-supcon  kmeans     ] All  23.4  Old  29.5  New  20.4
+    [head-supcon  ss-kmeans  ] All  26.9  Old  44.7  New  18.1
+    [head-supcon  np-anchors ] All  20.1  Old  46.6  New   7.0   (pool purity 0.947, k_hat 1, ok=True)
+    [head-supcon  np-seeded  ] All  26.8  Old  45.1  New  17.7
+    [head-ssig    kmeans     ] All  20.5  Old  22.1  New  19.6
+    [head-ssig    ss-kmeans  ] All  22.1  Old  30.6  New  17.8
+    [head-ssig    np-anchors ] All  17.8  Old  29.5  New  12.0   (pool purity 1.000, k_hat 2, ok=True)
+    [head-ssig    np-seeded  ] All  21.8  Old  29.6  New  17.9
+
+===== EXP144 [cars] clustering ACC on D^u, All / Old / New (mean+-sd over 3 seeds) =====
+  raw-dino     kmeans       12.4+- 0.2   10.7+- 0.5   13.3+- 0.4
+  raw-dino     ss-kmeans    12.2+- 0.2   10.2+- 1.2   13.3+- 0.4
+  raw-dino     np-anchors   10.8+- 0.3   14.3+- 2.1    9.0+- 0.6
+  raw-dino     np-seeded    12.5+- 0.4   10.4+- 1.4   13.5+- 0.2
+  head-supcon  kmeans       22.6+- 0.6   28.5+- 0.8   19.7+- 0.8
+  head-supcon  ss-kmeans    27.1+- 0.3   44.8+- 0.3   18.3+- 0.3
+  head-supcon  np-anchors   20.7+- 0.4   46.2+- 0.6    8.0+- 0.7
+  head-supcon  np-seeded    26.8+- 0.2   44.3+- 0.6   18.1+- 0.4
+  head-ssig    kmeans       19.5+- 1.1   21.3+- 1.5   18.6+- 1.0
+  head-ssig    ss-kmeans    21.0+- 0.9   27.6+- 3.0   17.7+- 0.2
+  head-ssig    np-anchors   17.2+- 0.4   26.8+- 2.0   12.4+- 0.5
+  head-ssig    np-seeded    21.1+- 0.7   27.7+- 2.2   17.8+- 0.3
+  reference    k-means (paper)   12.8       10.6       13.8
+  reference    GCD               39.0       57.6       29.9
+  reference    UNO+              35.5       70.5       18.6
+  reference    SimGCD            53.8       71.9       45.0
+  reference    RLCD              64.9       79.3       58.0
+EXP144 DONE.
