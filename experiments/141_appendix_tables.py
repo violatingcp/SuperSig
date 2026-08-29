@@ -321,10 +321,26 @@ def t_postdisc():
 
 def t_seeds_c100():
     stem = os.path.join(LOGS, "exp59", "nplm_residual_concat_cifar100")
-    fs = [p for p in (f"{stem}_100d_cwlam5.npz", f"{stem}_s1_100d_cwlam5.npz", f"{stem}_s2_100d_cwlam5.npz")
-          if os.path.exists(p)]
-    if not fs:
+    cfgs = [("100-D (50+50), classwise-$\\lambda$5", [f"{stem}_100d_cwlam5.npz", f"{stem}_s1_100d_cwlam5.npz", f"{stem}_s2_100d_cwlam5.npz"]),
+            ("32-D (16+16)", [f"{stem}.npz", f"{stem}_s1.npz", f"{stem}_s2.npz"])]
+    rows_all, nf = [], 0
+    for title, cand in cfgs:
+        fs = [p for p in cand if os.path.exists(p)]
+        if not fs:
+            continue
+        nf += len(fs)
+        rows_all.append(r"\multicolumn{8}{l}{\emph{" + title + f", {len(fs)} seeds" + r"}} \\")
+        rows_all += _seed_rows(fs)
+    if not rows_all:
         return None
+    status = f"CIFAR-100, two exp-59 configurations, {nf} result files; hub-pretrained trunk (ablation lineage)."
+    return _wrap("\n".join(rows_all),
+                 r"\textbf{Multi-seed CIFAR-100 champions (hub lineage).} Power columns at $f{=}0.02$, post-discovery.",
+                 "tab:app_seeds_c100", status, "lccccccc",
+                 r"space & probe pre & probe post & eucl & mahaT & SpK post & MMD post & $n$ \\", wide=True)
+
+
+def _seed_rows(fs):
     per = {}
     for f in fs:
         d = np.load(f, allow_pickle=True)
@@ -337,13 +353,8 @@ def t_seeds_c100():
                 if key in d.files:
                     v = np.asarray(d[key]).ravel()
                     per.setdefault(a, {}).setdefault(lab, []).append(float(v[idx] if idx is not None and v.size > 1 else v[0]))
-    rows = [" & ".join([esc(sp)] + [msd(per[sp].get(m, [])) for m in ("probe_pre", "probe_post", "eucl", "mahaT", "spk_post", "mmd_post")]
-                       + [str(len(per[sp].get("eucl", [])))]) + r" \\" for sp in sorted(per)]
-    status = f"CIFAR-100, 100-D (50+50) classwise-$\\lambda$5 configuration, {len(fs)} seeds; hub-pretrained trunk (ablation lineage)."
-    return _wrap("\n".join(rows),
-                 r"\textbf{Multi-seed CIFAR-100 champions (hub lineage).} Power columns at $f{=}0.02$, post-discovery.",
-                 "tab:app_seeds_c100", status, "lccccccc",
-                 r"space & probe pre & probe post & eucl & mahaT & SpK post & MMD post & $n$ \\", wide=True)
+    return ["\\quad " + " & ".join([esc(sp)] + [msd(per[sp].get(m, [])) for m in ("probe_pre", "probe_post", "eucl", "mahaT", "spk_post", "mmd_post")]
+                             + [str(len(per[sp].get("eucl", [])))]) + r" \\" for sp in sorted(per)]
 
 
 def t_top1_galaxy():

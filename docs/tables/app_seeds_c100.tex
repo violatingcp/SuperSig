@@ -1,4 +1,4 @@
-% STATUS: CIFAR-100, 100-D (50+50) classwise-$\lambda$5 configuration, 3 seeds; hub-pretrained trunk (ablation lineage).
+% STATUS: CIFAR-100, two exp-59 configurations, 6 result files; hub-pretrained trunk (ablation lineage).
 \begin{landscape}
 \begin{table}[p]
 \centering
@@ -8,14 +8,21 @@
 \toprule
 space & probe pre & probe post & eucl & mahaT & SpK post & MMD post & $n$ \\
 \midrule
-nplmsup+nplm & 0.931$\pm$0.008 & 0.938$\pm$0.004 & 0.502$\pm$0.112 & 0.434$\pm$0.093 & 0.300$\pm$0.075 & 0.807$\pm$0.094 & 3 \\
-nplmsup$\to$res & 0.913$\pm$0.008 & 0.926$\pm$0.007 & 0.437$\pm$0.004 & 0.341$\pm$0.024 & 0.147$\pm$0.038 & 0.300$\pm$0.145 & 3 \\
-sup+nplm & 0.928$\pm$0.007 & 0.926$\pm$0.007 & 0.525$\pm$0.016 & 0.416$\pm$0.076 & 0.227$\pm$0.159 & 0.340$\pm$0.102 & 3 \\
-sup$\to$res-nplm & 0.929$\pm$0.003 & 0.925$\pm$0.010 & 0.516$\pm$0.018 & 0.385$\pm$0.024 & 0.313$\pm$0.232 & 0.440$\pm$0.142 & 3 \\
-supcon+nplm & 0.954$\pm$0.008 & 0.951$\pm$0.005 & 0.375$\pm$0.044 & 0.403$\pm$0.079 & 0.333$\pm$0.050 & 0.800$\pm$0.059 & 3 \\
+\multicolumn{8}{l}{\emph{100-D (50+50), classwise-$\lambda$5, 3 seeds}} \\
+\quad nplmsup+nplm & 0.931$\pm$0.008 & 0.938$\pm$0.004 & 0.502$\pm$0.112 & 0.434$\pm$0.093 & 0.300$\pm$0.075 & 0.807$\pm$0.094 & 3 \\
+\quad nplmsup$\to$res & 0.913$\pm$0.008 & 0.926$\pm$0.007 & 0.437$\pm$0.004 & 0.341$\pm$0.024 & 0.147$\pm$0.038 & 0.300$\pm$0.145 & 3 \\
+\quad sup+nplm & 0.928$\pm$0.007 & 0.926$\pm$0.007 & 0.525$\pm$0.016 & 0.416$\pm$0.076 & 0.227$\pm$0.159 & 0.340$\pm$0.102 & 3 \\
+\quad sup$\to$res-nplm & 0.929$\pm$0.003 & 0.925$\pm$0.010 & 0.516$\pm$0.018 & 0.385$\pm$0.024 & 0.313$\pm$0.232 & 0.440$\pm$0.142 & 3 \\
+\quad supcon+nplm & 0.954$\pm$0.008 & 0.951$\pm$0.005 & 0.375$\pm$0.044 & 0.403$\pm$0.079 & 0.333$\pm$0.050 & 0.800$\pm$0.059 & 3 \\
+\multicolumn{8}{l}{\emph{32-D (16+16), 3 seeds}} \\
+\quad nplmsup+nplm & 0.901$\pm$0.009 & 0.902$\pm$0.002 & 0.563$\pm$0.026 & 0.505$\pm$0.011 & 0.207$\pm$0.047 & 0.667$\pm$0.034 & 3 \\
+\quad nplmsup$\to$res & 0.839$\pm$0.006 & 0.866$\pm$0.009 & 0.480$\pm$0.026 & 0.402$\pm$0.011 & 0.173$\pm$0.034 & 0.500$\pm$0.188 & 3 \\
+\quad sup+nplm & 0.897$\pm$0.009 & 0.867$\pm$0.006 & 0.576$\pm$0.007 & 0.414$\pm$0.012 & 0.087$\pm$0.025 & 0.447$\pm$0.082 & 3 \\
+\quad sup$\to$res-nplm & 0.819$\pm$0.024 & 0.835$\pm$0.028 & 0.516$\pm$0.019 & 0.347$\pm$0.016 & 0.173$\pm$0.025 & 0.500$\pm$0.016 & 3 \\
+\quad supcon+nplm & 0.941$\pm$0.001 & 0.935$\pm$0.004 & 0.456$\pm$0.022 & 0.445$\pm$0.025 & 0.333$\pm$0.168 & 0.753$\pm$0.105 & 3 \\
 \bottomrule
 \end{tabular}
-\caption{\textbf{Multi-seed CIFAR-100 champions (hub lineage).} Power columns at $f{=}0.02$, post-discovery. \emph{Coverage:} CIFAR-100, 100-D (50+50) classwise-$\lambda$5 configuration, 3 seeds; hub-pretrained trunk (ablation lineage).}
+\caption{\textbf{Multi-seed CIFAR-100 champions (hub lineage).} Power columns at $f{=}0.02$, post-discovery. \emph{Coverage:} CIFAR-100, two exp-59 configurations, 6 result files; hub-pretrained trunk (ablation lineage).}
 \label{tab:app_seeds_c100}
 \end{table}
 \end{landscape}

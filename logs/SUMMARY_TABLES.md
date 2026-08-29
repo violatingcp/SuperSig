@@ -3004,3 +3004,25 @@ logs/exp135/corpus_norm_<ds>-<base>_frozen*.json)
   purity 0.62-0.66 vs the raw trunk's 0.48-0.56 here; on cars 0.12-0.28
   vs 0.07-0.12.  The fine-tune roughly doubles purity where the raw
   trunk already has some and does not rescue a dead cell.
+
+## Exp 59 on CIFAR-100, 16+16 configuration, 3 seeds (Block N complete)
+(hub trunk, holdout {4}; power at f=.02 post; mean+-sd over seeds 0/1/2;
+logs/exp59/nplm_residual_concat_cifar100{,_s1,_s2}.npz; 2026-08-28)
+
+| space | probe pre -> post | eucl | mahaT | SpK@.02 post | MMD@.02 post |
+|---|---|---|---|---|---|
+| supcon+nplm | 0.941+-.001 -> 0.935+-.004 | 0.456+-.022 | 0.445+-.025 | 0.33+-.17 | 0.75+-.11 |
+| nplmsup+nplm | 0.901+-.009 -> 0.902+-.002 | 0.563+-.026 | 0.505+-.011 | 0.21+-.05 | 0.67+-.03 |
+| sup+nplm | 0.897+-.009 -> 0.867+-.006 | 0.576+-.007 | 0.414+-.012 | 0.09+-.03 | 0.45+-.08 |
+| nplmsup->res | 0.839+-.006 -> 0.866+-.009 | 0.480+-.026 | 0.402+-.011 | 0.17+-.03 | 0.50+-.19 |
+| sup->res-nplm | 0.819+-.024 -> 0.835+-.028 | 0.516+-.019 | 0.347+-.016 | 0.17+-.03 | 0.50+-.02 |
+
+- The 16+16 C100 verdicts hold on seeds: supcon+nplm ties standalone
+  supcon's probe (0.941+-0.001 vs 0.940+-0.004, exp 61) with better
+  geometry (mahaT 0.445 vs 0.386) and the best MMD (0.75+-0.11 post;
+  the archived 0.90 was a high draw).  The NPLM residual does NOT
+  transfer at 16+16 (0.819+-0.024, vs 0.929 at 50+50 -- the exp-59
+  "partly dimensional" reading confirmed on seeds).  Discovery is
+  probe-neutral-to-negative for the sup-recipe concats (-0.006, -0.030)
+  and positive only on NPLM-trunk concats (+0.027, +0.016), the same rule
+  as the 100-D configuration.  mahaT never exceeds 0.51.
