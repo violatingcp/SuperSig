@@ -3103,3 +3103,38 @@ block 200 ep on D^l + D^u).  2026-08-29; logs/exp144/gcd_<ds>_dino.json)
   D^u for 200 epochs.  The fine-tuned tier (exp 145, Block R) fine-tunes
   our objectives on D^l only; the "+ unlabelled term" ablation is the
   referee's question and is not yet run.
+
+<!-- exp 146: GCD-loss arms, galaxy10 single-holdout draws (2026-08-29) -->
+## galaxy10 (exp 146; dino, 100d, holdout 1 [single-holdout], 5 draws d[0, 3, 5, 7, 8], 20 ep)
+
+| arm | probe | probe post | acc | eucl | mahaT | mahaT post | perevt | perevt post@.02 | purity r1 | purity r2 | SpK@.05 | SpK@.05 post | MMD@.05 | MMD@.05 post |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| gcd-ft | 0.821+-0.108 | 0.893+-0.025 | 0.632+-0.013 | 0.591+-0.124 | 0.542+-0.121 | 0.515+-0.143 | 0.067+-0.071 | 0.065+-0.056 | 0.148+-0.133 | 0.126+-0.134 | 0.180+-0.161 | 0.192+-0.145 | 0.744+-0.139 | 0.644+-0.168 |
+| gcd-sigreg-ft | 0.831+-0.054 | 0.858+-0.033 | 0.573+-0.015 | 0.632+-0.081 | 0.553+-0.091 | 0.570+-0.096 | 0.124+-0.082 | 0.136+-0.076 | 0.235+-0.169 | 0.164+-0.112 | 0.160+-0.162 | 0.148+-0.099 | 0.700+-0.157 | 0.624+-0.199 |
+
+per-draw spread (probe / mahaT / purity r1), draws [0, 3, 5, 7, 8]
+  gcd-ft         probe 0.622-0.940  mahaT 0.334-0.668  purity 0.000-0.310
+  gcd-sigreg-ft  probe 0.738-0.903  mahaT 0.385-0.637  purity 0.000-0.510
+
+## galaxy10 (exp 146; lejepa, 100d, holdout 1 [single-holdout], 5 draws d[0, 3, 5, 7, 8], 20 ep)
+
+| arm | probe | probe post | acc | eucl | mahaT | mahaT post | perevt | perevt post@.02 | purity r1 | purity r2 | SpK@.05 | SpK@.05 post | MMD@.05 | MMD@.05 post |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| gcd-ft | 0.899+-0.087 | 0.890+-0.085 | 0.752+-0.014 | 0.767+-0.088 | 0.853+-0.057 | 0.860+-0.057 | 0.304+-0.253 | 0.401+-0.256 | 0.398+-0.244 | 0.406+-0.217 | 0.992+-0.010 | 0.996+-0.008 | 0.904+-0.087 | 0.680+-0.329 |
+| gcd-sigreg-ft | 0.872+-0.074 | 0.898+-0.062 | 0.743+-0.016 | 0.856+-0.061 | 0.863+-0.064 | 0.852+-0.071 | 0.478+-0.218 | 0.409+-0.109 | 0.508+-0.230 | 0.222+-0.097 | 0.960+-0.062 | 0.832+-0.151 | 0.676+-0.177 | 0.660+-0.233 |
+
+per-draw spread (probe / mahaT / purity r1), draws [0, 3, 5, 7, 8]
+  gcd-ft         probe 0.739-0.981  mahaT 0.792-0.960  purity 0.033-0.743
+  gcd-sigreg-ft  probe 0.759-0.974  mahaT 0.793-0.968  purity 0.074-0.758
+
+## galaxy10 (exp 146; visreg, 100d, holdout 1 [single-holdout], 5 draws d[0, 3, 5, 7, 8], 20 ep)
+
+| arm | probe | probe post | acc | eucl | mahaT | mahaT post | perevt | perevt post@.02 | purity r1 | purity r2 | SpK@.05 | SpK@.05 post | MMD@.05 | MMD@.05 post |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| gcd-ft | 0.886+-0.135 | 0.918+-0.061 | 0.774+-0.015 | 0.838+-0.058 | 0.890+-0.047 | 0.879+-0.044 | 0.400+-0.241 | 0.320+-0.201 | 0.528+-0.204 | 0.069+-0.126 | 0.996+-0.008 | 0.992+-0.016 | 0.892+-0.065 | 0.880+-0.130 |
+| gcd-sigreg-ft | 0.852+-0.119 | 0.917+-0.043 | 0.751+-0.017 | 0.856+-0.066 | 0.847+-0.073 | 0.830+-0.080 | 0.484+-0.232 | 0.393+-0.153 | 0.509+-0.224 | 0.166+-0.108 | 0.924+-0.142 | 0.952+-0.030 | 0.748+-0.246 | 0.824+-0.132 |
+
+per-draw spread (probe / mahaT / purity r1), draws [0, 3, 5, 7, 8]
+  gcd-ft         probe 0.619-0.983  mahaT 0.843-0.963  purity 0.147-0.759
+  gcd-sigreg-ft  probe 0.628-0.963  mahaT 0.748-0.966  purity 0.094-0.753
+

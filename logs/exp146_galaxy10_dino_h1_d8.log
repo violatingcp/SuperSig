@@ -1,0 +1,338 @@
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+exp70 [galaxy10_dino_ft70_h1_d8] end-to-end ft suite, arms=['gcd-ft', 'gcd-sigreg-ft'], ft_epochs=20, emb=100, holdouts 3-3 EXCLUDED from ft
+  ft corpus: 1569/1772 train images (holdout classes removed)
+
+===== [gcd-ft] (supervised) =====
+  gcd corpus: all 1772 train images, 203 unlabelled (held-out classes, label -1)
+  [gcd-ft] epoch 1/20  main=3.5823  aux=0.0000
+  [gcd-ft] epoch 5/20  main=3.3526  aux=0.0000
+  [gcd-ft] epoch 10/20  main=3.2871  aux=0.0000
+  [gcd-ft] epoch 15/20  main=3.2082  aux=0.0000
+  [gcd-ft] epoch 20/20  main=3.1528  aux=0.0000
+  extracted ft70_gcd-ft train: (1772, 768)
+Using cache found in /home/pharris/.cache/torch/hub/facebookresearch_dino_main
+  extracted ft70_gcd-ft test: (15964, 768)
+  [gcd-ft        ] probe=0.8803+-0.0023 acc=0.6274 supAUC=0.9172 eucl=0.4132 mahaT=0.3339 mahaPC=0.4605 lid=0.5610
+
+===== [gcd-sigreg-ft] (supervised) =====
+  gcd corpus: all 1772 train images, 203 unlabelled (held-out classes, label -1)
+  [gcd-sigreg-ft] epoch 1/20  main=3.8748  aux=1.7591
+  [gcd-sigreg-ft] epoch 5/20  main=3.6136  aux=0.7723
+  [gcd-sigreg-ft] epoch 10/20  main=3.5344  aux=0.6614
+  [gcd-sigreg-ft] epoch 15/20  main=3.5038  aux=0.5695
+  [gcd-sigreg-ft] epoch 20/20  main=3.5145  aux=0.5090
+  extracted ft70_gcd-sigreg-ft train: (1772, 768)
+  extracted ft70_gcd-sigreg-ft test: (15964, 768)
+  [gcd-sigreg-ft ] probe=0.8558+-0.0032 acc=0.5779 supAUC=0.9006 eucl=0.5487 mahaT=0.3847 mahaPC=0.4650 lid=0.5250
+
+===== PRE table =====
+  arm                        probe     acc  supAUC    eucl   mahaT  mahaPC
+  gcd-ft             0.8803+-0.0023  0.6274  0.9172  0.4132  0.3339  0.4605
+  gcd-sigreg-ft      0.8558+-0.0032  0.5779  0.9006  0.5487  0.3847  0.4650
+
+===== gaussianity (seen classes, test set) =====
+  metric                            gcd-ft gcd-sigreg-ft
+  eig min (class cov)               -0.000        -0.000
+  eig max (class cov)               26.074        17.853
+  eig cond worst            6319590866944.07381686681600.0
+  class RMS min                      0.465         0.600
+  class RMS mean                     0.609         0.706
+  class RMS max                      0.737         0.809
+  max |corr| (worst class)           0.946         0.886
+  SW ratio mean                       9.93          7.04
+  SW ratio worst                     15.87         11.41
+  |skew| mean                        0.297         0.248
+  |ex-kurt| mean                     0.564         0.347
+  centroid dist min                   2.92          2.57
+  centroid dist mean                  9.26          7.72
+  separation (min d/RMS)              4.79          3.65
+
+===== PRE power batteries =====
+  [gcd-ft] per-event pre power=0.001
+  [gcd-ft] sparker (annealed)
+    pre-spk f=0.003: power=0.020 [0.003,0.064] (1/50)
+    pre-spk f=0.01: power=0.060 [0.028,0.115] (3/50)
+    pre-spk f=0.02: power=0.060 [0.028,0.115] (3/50)
+    pre-spk f=0.05: power=0.040 [0.014,0.090] (2/50)
+    pre-spk f=0.1: power=0.420 [0.343,0.500] (21/50)
+  [gcd-ft] maha
+    pre-maha f=0.003: power=0.060 [0.028,0.115] (3/50)
+    pre-maha f=0.01: power=0.000 [0.000,0.036] (0/50)
+    pre-maha f=0.02: power=0.000 [0.000,0.036] (0/50)
+    pre-maha f=0.05: power=0.000 [0.000,0.036] (0/50)
+    pre-maha f=0.1: power=0.000 [0.000,0.036] (0/50)
+  [gcd-ft] mmd
+    pre-mmd f=0.003: power=0.020 [0.003,0.064] (1/50)
+    pre-mmd f=0.01: power=0.040 [0.014,0.090] (2/50)
+    pre-mmd f=0.02: power=0.100 [0.058,0.162] (5/50)
+    pre-mmd f=0.05: power=0.640 [0.560,0.714] (32/50)
+    pre-mmd f=0.1: power=1.000 [0.964,1.000] (50/50)
+  [gcd-sigreg-ft] per-event pre power=0.038
+  [gcd-sigreg-ft] sparker (annealed)
+    pre-spk f=0.003: power=0.040 [0.014,0.090] (2/50)
+    pre-spk f=0.01: power=0.060 [0.028,0.115] (3/50)
+    pre-spk f=0.02: power=0.100 [0.058,0.162] (5/50)
+    pre-spk f=0.05: power=0.060 [0.028,0.115] (3/50)
+    pre-spk f=0.1: power=0.640 [0.560,0.714] (32/50)
+  [gcd-sigreg-ft] maha
+    pre-maha f=0.003: power=0.040 [0.014,0.090] (2/50)
+    pre-maha f=0.01: power=0.040 [0.014,0.090] (2/50)
+    pre-maha f=0.02: power=0.020 [0.003,0.064] (1/50)
+    pre-maha f=0.05: power=0.020 [0.003,0.064] (1/50)
+    pre-maha f=0.1: power=0.000 [0.000,0.036] (0/50)
+  [gcd-sigreg-ft] mmd
+    pre-mmd f=0.003: power=0.000 [0.000,0.036] (0/50)
+    pre-mmd f=0.01: power=0.020 [0.003,0.064] (1/50)
+    pre-mmd f=0.02: power=0.060 [0.028,0.115] (3/50)
+    pre-mmd f=0.05: power=0.500 [0.421,0.579] (25/50)
+    pre-mmd f=0.1: power=1.000 [0.964,1.000] (50/50)
+
+===== EXP70 PEREVENT PRE POWER =====
+  arm                 0.003     0.01     0.02     0.05      0.1
+  gcd-ft              0.001    0.001    0.001    0.001    0.001
+  gcd-sigreg-ft       0.038    0.038    0.038    0.038    0.038
+  saved /home/pharris/sigreg/SuperSig/plots/exp70_perevent_power_pre_galaxy10_dino_ft70_h1_d8.png
+
+===== EXP70 SPARKER PRE POWER =====
+  arm                 0.003     0.01     0.02     0.05      0.1
+  gcd-ft              0.020    0.060    0.060    0.040    0.420
+  gcd-sigreg-ft       0.040    0.060    0.100    0.060    0.640
+  saved /home/pharris/sigreg/SuperSig/plots/exp70_sparker_power_pre_galaxy10_dino_ft70_h1_d8.png
+
+===== EXP70 MAHA PRE POWER =====
+  arm                 0.003     0.01     0.02     0.05      0.1
+  gcd-ft              0.060    0.000    0.000    0.000    0.000
+  gcd-sigreg-ft       0.040    0.040    0.020    0.020    0.000
+  saved /home/pharris/sigreg/SuperSig/plots/exp70_maha_power_pre_galaxy10_dino_ft70_h1_d8.png
+
+===== EXP70 MMD PRE POWER =====
+  arm                 0.003     0.01     0.02     0.05      0.1
+  gcd-ft              0.020    0.040    0.100    0.640    1.000
+  gcd-sigreg-ft       0.000    0.020    0.060    0.500    1.000
+  saved /home/pharris/sigreg/SuperSig/plots/exp70_mmd_power_pre_galaxy10_dino_ft70_h1_d8.png
+
+----- natural discovery: gcd-ft -----
+  [sigreg+proto] epoch 1/5  sigreg=0.3895  proto=5.0830  min_dist=3.03  mean_dist=11.40
+  [sigreg+proto] epoch 2/5  sigreg=0.4820  proto=3.6377  min_dist=3.10  mean_dist=11.44
+  [sigreg+proto] epoch 3/5  sigreg=0.4834  proto=2.7986  min_dist=3.17  mean_dist=11.47
+  [sigreg+proto] epoch 4/5  sigreg=0.5256  proto=2.4227  min_dist=3.24  mean_dist=11.51
+  [sigreg+proto] epoch 5/5  sigreg=0.5198  proto=2.0052  min_dist=3.31  mean_dist=11.55
+  round 1: pool=79 purity=0.000 k-hat=3 anchors=3  margin=0.2177  mean-anchor=0.4481  3=0.448
+  [sigreg+proto] epoch 1/5  sigreg=0.4812  proto=3.1893  min_dist=3.37  mean_dist=11.52
+  [sigreg+proto] epoch 2/5  sigreg=0.4717  proto=2.3857  min_dist=3.43  mean_dist=11.55
+  [sigreg+proto] epoch 3/5  sigreg=0.4970  proto=2.0536  min_dist=3.48  mean_dist=11.59
+  [sigreg+proto] epoch 4/5  sigreg=0.4811  proto=1.9411  min_dist=3.54  mean_dist=11.62
+  [sigreg+proto] epoch 5/5  sigreg=0.4688  proto=1.8925  min_dist=3.59  mean_dist=11.65
+  round 2: pool=79 purity=0.000 k-hat=3 anchors=6  margin=0.2357  mean-anchor=0.4840  3=0.484
+  [gcd-ft] probe 0.8803 -> 0.8998  eucl 0.4132 -> 0.3733  mahaT 0.3339 -> 0.3087
+
+----- natural discovery: gcd-sigreg-ft -----
+  [sigreg+proto] epoch 1/5  sigreg=0.2796  proto=4.2138  min_dist=2.68  mean_dist=8.40
+  [sigreg+proto] epoch 2/5  sigreg=0.4258  proto=2.6577  min_dist=2.76  mean_dist=8.45
+  [sigreg+proto] epoch 3/5  sigreg=0.5052  proto=2.1211  min_dist=2.83  mean_dist=8.50
+  [sigreg+proto] epoch 4/5  sigreg=0.5058  proto=1.7962  min_dist=2.90  mean_dist=8.55
+  [sigreg+proto] epoch 5/5  sigreg=0.5031  proto=1.8676  min_dist=2.97  mean_dist=8.60
+  round 1: pool=91 purity=0.132 k-hat=4 anchors=4  margin=0.6045  mean-anchor=0.8057  3=0.806
+  [sigreg+proto] epoch 1/5  sigreg=0.4832  proto=2.3929  min_dist=3.03  mean_dist=8.71
+  [sigreg+proto] epoch 2/5  sigreg=0.5197  proto=1.8559  min_dist=3.09  mean_dist=8.75
+  [sigreg+proto] epoch 3/5  sigreg=0.5270  proto=1.7709  min_dist=3.15  mean_dist=8.79
+  [sigreg+proto] epoch 4/5  sigreg=0.5405  proto=1.4541  min_dist=3.21  mean_dist=8.83
+  [sigreg+proto] epoch 5/5  sigreg=0.5140  proto=1.3526  min_dist=3.26  mean_dist=8.87
+  round 2: pool=93 purity=0.151 k-hat=3 anchors=7  margin=0.6348  mean-anchor=0.5984  3=0.598
+  [gcd-sigreg-ft] probe 0.8558 -> 0.8503  eucl 0.5487 -> 0.4624  mahaT 0.3847 -> 0.3930
+
+===== POST grid, f=0.003 (5 injected) =====
+  [sigreg+proto] epoch 1/5  sigreg=0.4015  proto=4.6515  min_dist=3.03  mean_dist=11.40
+  [sigreg+proto] epoch 2/5  sigreg=0.4643  proto=3.0330  min_dist=3.10  mean_dist=11.44
+  [sigreg+proto] epoch 3/5  sigreg=0.4850  proto=2.6127  min_dist=3.17  mean_dist=11.48
+  [sigreg+proto] epoch 4/5  sigreg=0.5266  proto=2.3511  min_dist=3.24  mean_dist=11.52
+  [sigreg+proto] epoch 5/5  sigreg=0.5241  proto=2.2560  min_dist=3.31  mean_dist=11.56
+  round 1: pool=79 purity=0.000 k-hat=3 anchors=3  margin=0.2354  mean-anchor=0.4736  3=0.474
+  [sigreg+proto] epoch 1/5  sigreg=0.5011  proto=4.2010  min_dist=3.37  mean_dist=11.61
+  [sigreg+proto] epoch 2/5  sigreg=0.4954  proto=3.2954  min_dist=3.42  mean_dist=11.64
+  [sigreg+proto] epoch 3/5  sigreg=0.5128  proto=2.4078  min_dist=3.48  mean_dist=11.68
+  [sigreg+proto] epoch 4/5  sigreg=0.5517  proto=2.3886  min_dist=3.53  mean_dist=11.71
+  [sigreg+proto] epoch 5/5  sigreg=0.5303  proto=2.0970  min_dist=3.59  mean_dist=11.74
+  round 2: pool=79 purity=0.000 k-hat=3 anchors=6  margin=0.3195  mean-anchor=0.5599  3=0.560
+  [gcd-ft] per-event post f=0.003: power=0.003
+  [gcd-ft] sparker (post, annealed)
+    post-spk f=0.003: power=0.120 [0.074,0.184] (6/50)
+  [gcd-ft] maha (post)
+    post-maha f=0.003: power=0.080 [0.042,0.138] (4/50)
+  [gcd-ft] mmd (post)
+    post-mmd f=0.003: power=0.080 [0.042,0.138] (4/50)
+  [sigreg+proto] epoch 1/5  sigreg=0.3028  proto=4.3543  min_dist=2.68  mean_dist=8.50
+  [sigreg+proto] epoch 2/5  sigreg=0.4208  proto=2.9203  min_dist=2.76  mean_dist=8.55
+  [sigreg+proto] epoch 3/5  sigreg=0.4727  proto=2.5295  min_dist=2.83  mean_dist=8.59
+  [sigreg+proto] epoch 4/5  sigreg=0.4955  proto=2.0399  min_dist=2.90  mean_dist=8.64
+  [sigreg+proto] epoch 5/5  sigreg=0.5001  proto=1.8069  min_dist=2.97  mean_dist=8.69
+  round 1: pool=79 purity=0.000 k-hat=4 anchors=4  margin=0.5654  mean-anchor=0.4541  3=0.454
+  [sigreg+proto] epoch 1/5  sigreg=0.4880  proto=2.6194  min_dist=3.03  mean_dist=8.65
+  [sigreg+proto] epoch 2/5  sigreg=0.5535  proto=1.7777  min_dist=3.09  mean_dist=8.69
+  [sigreg+proto] epoch 3/5  sigreg=0.5545  proto=1.5859  min_dist=3.15  mean_dist=8.73
+  [sigreg+proto] epoch 4/5  sigreg=0.5377  proto=1.5564  min_dist=3.21  mean_dist=8.78
+  [sigreg+proto] epoch 5/5  sigreg=0.5411  proto=1.4732  min_dist=3.26  mean_dist=8.82
+  round 2: pool=80 purity=0.013 k-hat=2 anchors=6  margin=0.5629  mean-anchor=0.6012  3=0.601
+  [gcd-sigreg-ft] per-event post f=0.003: power=0.045
+  [gcd-sigreg-ft] sparker (post, annealed)
+    post-spk f=0.003: power=0.080 [0.042,0.138] (4/50)
+  [gcd-sigreg-ft] maha (post)
+    post-maha f=0.003: power=0.040 [0.014,0.090] (2/50)
+  [gcd-sigreg-ft] mmd (post)
+    post-mmd f=0.003: power=0.020 [0.003,0.064] (1/50)
+
+===== POST grid, f=0.01 (16 injected) =====
+  [sigreg+proto] epoch 1/5  sigreg=0.3895  proto=5.0830  min_dist=3.03  mean_dist=11.40
+  [sigreg+proto] epoch 2/5  sigreg=0.4820  proto=3.6377  min_dist=3.10  mean_dist=11.44
+  [sigreg+proto] epoch 3/5  sigreg=0.4834  proto=2.7986  min_dist=3.17  mean_dist=11.47
+  [sigreg+proto] epoch 4/5  sigreg=0.5256  proto=2.4227  min_dist=3.24  mean_dist=11.51
+  [sigreg+proto] epoch 5/5  sigreg=0.5198  proto=2.0052  min_dist=3.31  mean_dist=11.55
+  round 1: pool=79 purity=0.000 k-hat=3 anchors=3  margin=0.2177  mean-anchor=0.4481  3=0.448
+  [sigreg+proto] epoch 1/5  sigreg=0.4813  proto=3.1893  min_dist=3.37  mean_dist=11.52
+  [sigreg+proto] epoch 2/5  sigreg=0.4718  proto=2.3856  min_dist=3.43  mean_dist=11.55
+  [sigreg+proto] epoch 3/5  sigreg=0.4970  proto=2.0538  min_dist=3.48  mean_dist=11.59
+  [sigreg+proto] epoch 4/5  sigreg=0.4812  proto=1.9426  min_dist=3.54  mean_dist=11.62
+  [sigreg+proto] epoch 5/5  sigreg=0.4686  proto=1.8922  min_dist=3.59  mean_dist=11.65
+  round 2: pool=79 purity=0.000 k-hat=3 anchors=6  margin=0.2353  mean-anchor=0.4840  3=0.484
+  [gcd-ft] per-event post f=0.01: power=0.003
+  [gcd-ft] sparker (post, annealed)
+    post-spk f=0.01: power=0.100 [0.058,0.162] (5/50)
+  [gcd-ft] maha (post)
+    post-maha f=0.01: power=0.000 [0.000,0.036] (0/50)
+  [gcd-ft] mmd (post)
+    post-mmd f=0.01: power=0.020 [0.003,0.064] (1/50)
+  [sigreg+proto] epoch 1/5  sigreg=0.3129  proto=4.4833  min_dist=2.69  mean_dist=8.79
+  [sigreg+proto] epoch 2/5  sigreg=0.4106  proto=2.9105  min_dist=2.76  mean_dist=8.83
+  [sigreg+proto] epoch 3/5  sigreg=0.5007  proto=2.2867  min_dist=2.83  mean_dist=8.88
+  [sigreg+proto] epoch 4/5  sigreg=0.5268  proto=1.9623  min_dist=2.91  mean_dist=8.93
+  [sigreg+proto] epoch 5/5  sigreg=0.5112  proto=1.7340  min_dist=2.98  mean_dist=8.98
+  round 1: pool=82 purity=0.037 k-hat=4 anchors=4  margin=0.6970  mean-anchor=0.8095  3=0.810
+  [sigreg+proto] epoch 1/5  sigreg=0.4731  proto=2.6150  min_dist=3.04  mean_dist=9.00
+  [sigreg+proto] epoch 2/5  sigreg=0.4845  proto=1.7610  min_dist=3.10  mean_dist=9.04
+  [sigreg+proto] epoch 3/5  sigreg=0.5186  proto=1.7739  min_dist=3.16  mean_dist=9.08
+  [sigreg+proto] epoch 4/5  sigreg=0.5080  proto=1.5784  min_dist=3.21  mean_dist=9.12
+  [sigreg+proto] epoch 5/5  sigreg=0.5199  proto=1.5059  min_dist=3.27  mean_dist=9.16
+  round 2: pool=80 purity=0.013 k-hat=3 anchors=7  margin=0.6283  mean-anchor=0.5300  3=0.530
+  [gcd-sigreg-ft] per-event post f=0.01: power=0.043
+  [gcd-sigreg-ft] sparker (post, annealed)
+    post-spk f=0.01: power=0.020 [0.003,0.064] (1/50)
+  [gcd-sigreg-ft] maha (post)
+    post-maha f=0.01: power=0.040 [0.014,0.090] (2/50)
+  [gcd-sigreg-ft] mmd (post)
+    post-mmd f=0.01: power=0.020 [0.003,0.064] (1/50)
+
+===== POST grid, f=0.02 (32 injected) =====
+  [sigreg+proto] epoch 1/5  sigreg=0.4080  proto=4.6212  min_dist=3.03  mean_dist=11.40
+  [sigreg+proto] epoch 2/5  sigreg=0.5060  proto=3.3724  min_dist=3.10  mean_dist=11.44
+  [sigreg+proto] epoch 3/5  sigreg=0.5027  proto=2.9632  min_dist=3.17  mean_dist=11.47
+  [sigreg+proto] epoch 4/5  sigreg=0.5609  proto=2.8373  min_dist=3.24  mean_dist=11.51
+  [sigreg+proto] epoch 5/5  sigreg=0.5080  proto=2.3122  min_dist=3.31  mean_dist=11.55
+  round 1: pool=79 purity=0.000 k-hat=3 anchors=3  margin=0.2041  mean-anchor=0.4242  3=0.424
+  [sigreg+proto] epoch 1/5  sigreg=0.4803  proto=3.6550  min_dist=3.37  mean_dist=11.58
+  [sigreg+proto] epoch 2/5  sigreg=0.5071  proto=2.5878  min_dist=3.42  mean_dist=11.61
+  [sigreg+proto] epoch 3/5  sigreg=0.5275  proto=2.4116  min_dist=3.48  mean_dist=11.64
+  [sigreg+proto] epoch 4/5  sigreg=0.4988  proto=2.0979  min_dist=3.54  mean_dist=11.68
+  [sigreg+proto] epoch 5/5  sigreg=0.4980  proto=1.7450  min_dist=3.59  mean_dist=11.71
+  round 2: pool=79 purity=0.000 k-hat=3 anchors=6  margin=0.2525  mean-anchor=0.5738  3=0.574
+  [gcd-ft] per-event post f=0.02: power=0.002
+  [gcd-ft] sparker (post, annealed)
+    post-spk f=0.02: power=0.040 [0.014,0.090] (2/50)
+  [gcd-ft] maha (post)
+    post-maha f=0.02: power=0.000 [0.000,0.036] (0/50)
+  [gcd-ft] mmd (post)
+    post-mmd f=0.02: power=0.020 [0.003,0.064] (1/50)
+  [sigreg+proto] epoch 1/5  sigreg=0.2962  proto=3.7608  min_dist=2.68  mean_dist=8.50
+  [sigreg+proto] epoch 2/5  sigreg=0.4250  proto=2.6573  min_dist=2.76  mean_dist=8.55
+  [sigreg+proto] epoch 3/5  sigreg=0.4835  proto=2.1406  min_dist=2.83  mean_dist=8.59
+  [sigreg+proto] epoch 4/5  sigreg=0.5075  proto=1.9155  min_dist=2.90  mean_dist=8.64
+  [sigreg+proto] epoch 5/5  sigreg=0.5163  proto=1.7984  min_dist=2.97  mean_dist=8.69
+  round 1: pool=79 purity=0.000 k-hat=4 anchors=4  margin=0.5660  mean-anchor=0.4591  3=0.459
+  [sigreg+proto] epoch 1/5  sigreg=0.5181  proto=2.4458  min_dist=3.03  mean_dist=8.79
+  [sigreg+proto] epoch 2/5  sigreg=0.5274  proto=1.9405  min_dist=3.09  mean_dist=8.83
+  [sigreg+proto] epoch 3/5  sigreg=0.5558  proto=1.5225  min_dist=3.15  mean_dist=8.87
+  [sigreg+proto] epoch 4/5  sigreg=0.5482  proto=1.4469  min_dist=3.20  mean_dist=8.91
+  [sigreg+proto] epoch 5/5  sigreg=0.5561  proto=1.2899  min_dist=3.26  mean_dist=8.95
+  round 2: pool=79 purity=0.000 k-hat=3 anchors=7  margin=0.5536  mean-anchor=0.7142  3=0.714
+  [gcd-sigreg-ft] per-event post f=0.02: power=0.052
+  [gcd-sigreg-ft] sparker (post, annealed)
+    post-spk f=0.02: power=0.080 [0.042,0.138] (4/50)
+  [gcd-sigreg-ft] maha (post)
+    post-maha f=0.02: power=0.000 [0.000,0.036] (0/50)
+  [gcd-sigreg-ft] mmd (post)
+    post-mmd f=0.02: power=0.140 [0.090,0.207] (7/50)
+
+===== POST grid, f=0.05 (83 injected) =====
+  [sigreg+proto] epoch 1/5  sigreg=0.4182  proto=5.0010  min_dist=3.03  mean_dist=11.40
+  [sigreg+proto] epoch 2/5  sigreg=0.4901  proto=3.0849  min_dist=3.10  mean_dist=11.44
+  [sigreg+proto] epoch 3/5  sigreg=0.4864  proto=3.0049  min_dist=3.17  mean_dist=11.47
+  [sigreg+proto] epoch 4/5  sigreg=0.5285  proto=2.4607  min_dist=3.24  mean_dist=11.51
+  [sigreg+proto] epoch 5/5  sigreg=0.5163  proto=2.0690  min_dist=3.31  mean_dist=11.55
+  round 1: pool=79 purity=0.000 k-hat=3 anchors=3  margin=0.2123  mean-anchor=0.4580  3=0.458
+  [sigreg+proto] epoch 1/5  sigreg=0.4776  proto=3.7780  min_dist=3.37  mean_dist=11.46
+  [sigreg+proto] epoch 2/5  sigreg=0.4848  proto=2.8785  min_dist=3.42  mean_dist=11.49
+  [sigreg+proto] epoch 3/5  sigreg=0.4876  proto=2.2957  min_dist=3.48  mean_dist=11.53
+  [sigreg+proto] epoch 4/5  sigreg=0.4763  proto=2.2013  min_dist=3.54  mean_dist=11.56
+  [sigreg+proto] epoch 5/5  sigreg=0.4719  proto=1.8041  min_dist=3.59  mean_dist=11.59
+  round 2: pool=79 purity=0.000 k-hat=3 anchors=6  margin=0.2599  mean-anchor=0.4753  3=0.475
+  [gcd-ft] per-event post f=0.05: power=0.005
+  [gcd-ft] sparker (post, annealed)
+    post-spk f=0.05: power=0.020 [0.003,0.064] (1/50)
+  [gcd-ft] maha (post)
+    post-maha f=0.05: power=0.000 [0.000,0.036] (0/50)
+  [gcd-ft] mmd (post)
+    post-mmd f=0.05: power=0.420 [0.343,0.500] (21/50)
+  [sigreg+proto] epoch 1/5  sigreg=0.2999  proto=3.2946  min_dist=2.68  mean_dist=8.69
+  [sigreg+proto] epoch 2/5  sigreg=0.4257  proto=2.6006  min_dist=2.76  mean_dist=8.74
+  [sigreg+proto] epoch 3/5  sigreg=0.5128  proto=2.1439  min_dist=2.83  mean_dist=8.79
+  [sigreg+proto] epoch 4/5  sigreg=0.5396  proto=1.6549  min_dist=2.90  mean_dist=8.84
+  [sigreg+proto] epoch 5/5  sigreg=0.5407  proto=1.6224  min_dist=2.97  mean_dist=8.89
+  round 1: pool=85 purity=0.071 k-hat=4 anchors=4  margin=0.7167  mean-anchor=0.7637  3=0.764
+  [sigreg+proto] epoch 1/5  sigreg=0.5077  proto=2.5985  min_dist=3.03  mean_dist=8.82
+  [sigreg+proto] epoch 2/5  sigreg=0.5511  proto=1.8879  min_dist=3.09  mean_dist=8.86
+  [sigreg+proto] epoch 3/5  sigreg=0.5466  proto=1.6313  min_dist=3.15  mean_dist=8.90
+  [sigreg+proto] epoch 4/5  sigreg=0.5512  proto=1.4890  min_dist=3.21  mean_dist=8.94
+  [sigreg+proto] epoch 5/5  sigreg=0.5502  proto=1.4185  min_dist=3.27  mean_dist=8.98
+  round 2: pool=84 purity=0.060 k-hat=2 anchors=6  margin=0.6613  mean-anchor=0.5213  3=0.521
+  [gcd-sigreg-ft] per-event post f=0.05: power=0.053
+  [gcd-sigreg-ft] sparker (post, annealed)
+    post-spk f=0.05: power=0.060 [0.028,0.115] (3/50)
+  [gcd-sigreg-ft] maha (post)
+    post-maha f=0.05: power=0.020 [0.003,0.064] (1/50)
+  [gcd-sigreg-ft] mmd (post)
+    post-mmd f=0.05: power=0.260 [0.194,0.336] (13/50)
+
+===== EXP70 PEREVENT POST POWER =====
+  arm                 0.003     0.01     0.02     0.05
+  gcd-ft              0.003    0.003    0.002    0.005
+  gcd-sigreg-ft       0.045    0.043    0.052    0.053
+  saved /home/pharris/sigreg/SuperSig/plots/exp70_perevent_power_post_galaxy10_dino_ft70_h1_d8.png
+
+===== EXP70 SPARKER POST POWER =====
+  arm                 0.003     0.01     0.02     0.05
+  gcd-ft              0.120    0.100    0.040    0.020
+  gcd-sigreg-ft       0.080    0.020    0.080    0.060
+  saved /home/pharris/sigreg/SuperSig/plots/exp70_sparker_power_post_galaxy10_dino_ft70_h1_d8.png
+
+===== EXP70 MAHA POST POWER =====
+  arm                 0.003     0.01     0.02     0.05
+  gcd-ft              0.080    0.000    0.000    0.000
+  gcd-sigreg-ft       0.040    0.040    0.000    0.020
+  saved /home/pharris/sigreg/SuperSig/plots/exp70_maha_power_post_galaxy10_dino_ft70_h1_d8.png
+
+===== EXP70 MMD POST POWER =====
+  arm                 0.003     0.01     0.02     0.05
+  gcd-ft              0.080    0.020    0.020    0.420
+  gcd-sigreg-ft       0.020    0.020    0.140    0.260
+  saved /home/pharris/sigreg/SuperSig/plots/exp70_mmd_power_post_galaxy10_dino_ft70_h1_d8.png
+
+===== EXP70 SUMMARY [galaxy10_dino_ft70_h1_d8] =====
+  [gcd-ft        ] probe=0.8803+-0.0023 acc=0.6274 eucl=0.4132 mahaT=0.3339  || post: probe=0.8998 eucl=0.3733 mahaT=0.3087
+          round 1: purity=0.000 anchors=3  margin=0.2177
+          round 2: purity=0.000 anchors=6  margin=0.2357
+  [gcd-sigreg-ft ] probe=0.8558+-0.0032 acc=0.5779 eucl=0.5487 mahaT=0.3847  || post: probe=0.8503 eucl=0.4624 mahaT=0.3930
+          round 1: purity=0.132 anchors=4  margin=0.6045
+          round 2: purity=0.151 anchors=7  margin=0.6348
+saved /home/pharris/sigreg/SuperSig/plots/exp70_probe_galaxy10_dino_ft70_h1_d8.png
+Done.

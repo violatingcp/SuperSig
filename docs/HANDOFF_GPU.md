@@ -379,6 +379,13 @@ The GCD arms are opt-in (`--arms`); the default six are unchanged, so nothing
 archived is touched.  Their fine-tune corpus includes the held-out images with
 label -1.
 
+> **Status 2026-08-29:** galaxy10 x {dino,lejepa,visreg} x draws 0/3/5/7/8 DONE
+> (falsifier fires on lejepa/visreg -- see IMPROVEMENT_TESTS exp 146); dtd draws +
+> cars/aircraft/flowers running as `logs/chainT9S2.sh`.  GCD-only arm sets now
+> write `results_<tag>_gcd.npz` / `exp70_*_<tag>_gcd.png`; read them with
+> `125_aggregate_draws.py <ds> <base> --gcd`.  Never run `--arms gcd-*` with a
+> pre-2026-08-29 checkout of exp 70: it wrote into the six-arm archives.
+
 ## Block G — Exp 132: supervised linear probe (piggyback on Block B)
 
 The campaign has NO supervised linear probe -- the `probe` column everywhere is

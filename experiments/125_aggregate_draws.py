@@ -10,16 +10,26 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 ARMS = ["simclr-ft", "sigreg-ssl-ft", "nplm-bil-ft", "supcon-ft", "ss-ft",
         "nplm-sup-ft"]
-ds, base = sys.argv[1], sys.argv[2]
-draws = [int(x) for x in sys.argv[3:]] or None
-files = sorted(glob.glob(f"logs/exp70/results_{ds}_{base}_ft70_h1_d*.npz"))
+GCD = "--gcd" in sys.argv          # exp 146: the gcd-ft / gcd-sigreg-ft arm files
+argv = [a for a in sys.argv[1:] if a != "--gcd"]
+ds, base = argv[0], argv[1]
+draws = [int(x) for x in argv[2:]] or None
+SFX = "_gcd" if GCD else ""
+if GCD:
+    ARMS = ["gcd-ft", "gcd-sigreg-ft"]
+files = sorted(glob.glob(f"logs/exp70/results_{ds}_{base}_ft70_h1_d*{SFX}.npz"))
+if not GCD:
+    files = [f for f in files if not f.endswith("_gcd.npz")]
+DRE = re.compile(r"_d(\d+)" + SFX + r"\.npz")
 if draws is not None:
-    files = [f for f in files if int(re.search(r"_d(\d+)\.npz", f).group(1)) in draws]
-dlist = [int(re.search(r"_d(\d+)\.npz", f).group(1)) for f in files]
+    files = [f for f in files if int(DRE.search(f).group(1)) in draws]
+dlist = [int(DRE.search(f).group(1)) for f in files]
 
 
 def purity_from_log(d):
     fn = f"logs/exp70_{ds}_{base}_h1_d{d}.log"
+    if GCD:
+        fn = f"logs/exp146_{ds}_{base}_h1_d{d}.log"
     if not os.path.exists(fn):
         fn = f"logs/exp70_g10_{base}_h1_d{d}.log"
     out, arm = {}, None
@@ -60,7 +70,7 @@ for f, d in zip(files, dlist):
         add("pur2", pur.get(a, {}).get(2, np.nan))
 
 ref = f"logs/exp70/results_{ds}_{base}_ft70.npz"
-refz = np.load(ref, allow_pickle=True) if os.path.exists(ref) else None
+refz = np.load(ref, allow_pickle=True) if os.path.exists(ref) and not GCD else None
 # The archived file is the campaign default: single-holdout ONLY for galaxy10
 # (class 9); multi-holdout (10 classes) elsewhere.  Label it by regime so the
 # two are never read as the same comparison (handoff rule 1).
@@ -70,7 +80,7 @@ _default = sorted(holdout_set(ds, _ncls, nh=None, draw=None))
 REF_LABEL = (f"archived d{{{_default[0]}}} [single]" if len(_default) == 1
              else f"archived multi-holdout ({len(_default)} cls) [DIFFERENT REGIME]")
 
-print(f"## {ds} (exp 125; {base}, 100d, holdout 1 [single-holdout], "
+print(f"## {ds} (exp {146 if GCD else 125}; {base}, 100d, holdout 1 [single-holdout], "
       f"{len(files)} draws d{dlist}, 20 ep)\n")
 COLS = [("probe", "probe"), ("post_probe", "probe post"), ("acc", "acc"),
         ("eucl", "eucl"), ("mahaT", "mahaT"), ("post_mahaT", "mahaT post"),

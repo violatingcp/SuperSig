@@ -2011,9 +2011,64 @@ or the concat loses top-1 by more than 0.017 (no-cost fails on CIFAR).
 
 ### Exp 146 — GCD's representation loss as an arm in OUR battery
 
-> **CODE READY 2026-08-29.**  `70_cars_ft_suite.py --arms gcd-ft gcd-sigreg-ft`
-> (opt-in; `make_gcd_step`, masked full-corpus loader); `tests/test_gcd_arm.py`.
-> Queued as Block S.
+> **GALAXY10 DONE 2026-08-29 (3 bases x 5 single-holdout draws); dtd + cars /
+> aircraft / flowers running (chainT9S2).**  `70_cars_ft_suite.py --arms gcd-ft
+> gcd-sigreg-ft` (opt-in; `make_gcd_step`, masked full-corpus loader;
+> `tests/test_gcd_arm.py`).  Outputs carry a `_gcd` tag
+> (`logs/exp70/results_galaxy10_{base}_ft70_h1_d{D}_gcd.npz`,
+> `logs/exp146_*.log`); aggregate with `125_aggregate_draws.py galaxy10 <base>
+> --gcd`.  (The first pass wrote to the six-arm draw archives; those were
+> restored from git and the tag suffix added -- no archived number changed.)
+>
+> **THE FALSIFIER FIRES on the SIGReg-pretrained trunks.**  Mean +- sd over
+> draws 0/3/5/7/8, our two supervised references on the same draws:
+>
+> | base | arm | probe pre -> post | acc | mahaT | per-event | purity r1 | SpK@.05 |
+> |---|---|---|---|---|---|---|---|
+> | dino | supcon-ft | 0.879 -> 0.864 | 0.616 | 0.500+-0.135 | 0.063 | 0.103+-0.138 | 0.188 |
+> | dino | ss-ft | 0.804 -> 0.852 | 0.588 | 0.482 | 0.040 | 0.092 | 0.108 |
+> | dino | **gcd-ft** | 0.821 -> 0.893 | 0.632 | 0.542+-0.121 | 0.067 | 0.148+-0.133 | 0.180 |
+> | dino | **gcd-sigreg-ft** | 0.831 -> 0.858 | 0.573 | 0.553+-0.091 | 0.124 | 0.235+-0.169 | 0.160 |
+> | lejepa | supcon-ft | 0.892 -> 0.920 | 0.753 | 0.711+-0.115 | 0.047 | 0.132+-0.085 | 0.536 |
+> | lejepa | ss-ft | 0.762 -> 0.876 | 0.696 | 0.665 | 0.134 | 0.182 | 0.528 |
+> | lejepa | **gcd-ft** | 0.899 -> 0.890 | 0.752 | 0.853+-0.057 | 0.304 | 0.398+-0.244 | 0.992 |
+> | lejepa | **gcd-sigreg-ft** | 0.872 -> 0.898 | 0.743 | 0.863+-0.064 | 0.478 | 0.508+-0.230 | 0.960 |
+> | visreg | supcon-ft | 0.906 -> 0.907 | 0.775 | 0.686+-0.074 | 0.095 | 0.290+-0.067 | 0.688 |
+> | visreg | ss-ft | 0.823 -> 0.890 | 0.744 | 0.581 | 0.090 | 0.146 | 0.512 |
+> | visreg | **gcd-ft** | 0.886 -> 0.918 | 0.774 | 0.890+-0.047 | 0.400 | 0.528+-0.204 | 0.996 |
+> | visreg | **gcd-sigreg-ft** | 0.852 -> 0.917 | 0.751 | 0.847+-0.073 | 0.484 | 0.509+-0.224 | 0.924 |
+>
+> Reading.  (i) On the **prediction's first half -- probe -- gcd-ft does NOT
+> beat supcon-ft pre-discovery** (ties on lejepa/visreg, loses on dino, with one
+> weak draw, the same one on every base -- d7: dino 0.62, lejepa 0.74, visreg 0.62 -- so it is the holdout class, not the training); the
+> unlabelled SimCLR term does not by itself linearly organise the held-out
+> class.  Post-discovery it is the best or tied-best probe on every base.
+> (ii) **The prediction's second half is wrong in the opposite direction**: on
+> lejepa and visreg the GCD loss gives the best calibration (mahaT 0.85-0.89 vs
+> 0.69-0.71), the best pool purity (0.40-0.53 vs 0.13-0.29 -- roughly double
+> our best arm, with the draw spread of every arm overlapping), per-event
+> power 0.30-0.48 vs 0.05-0.13, and SparKer@5% ~0.99 vs 0.54-0.69.  On dino
+> the same direction, small effect (purity 0.15/0.24 vs 0.10; mahaT +0.05).
+> (iii) gcd-sigreg-ft neither loses calibration vs gcd-ft (ties within sd) nor
+> reliably adds to it: the marginal is redundant once the instance term already
+> ranges over the whole corpus (compare exp 136: it mattered when SupCon was
+> the only term).  On dino it is the better of the two for purity (0.24 vs
+> 0.15); on lejepa/visreg a coin flip.  Supervised acc costs ~0.02-0.06 for
+> the sigreg variant, as everywhere.
+>
+> **What this means.**  The ingredient our shortlist lacks is not a better
+> loss on the labelled set but *an instance-level term over the unlabelled
+> corpus* -- the held-out images pulled into the same geometry the seen classes
+> live in, before discovery ever runs.  That is exactly the regime the paper's
+> discovery loop targets (a corpus that contains the novel class), so this is
+> in-scope, not leakage: no label of the held-out class is used anywhere, and
+> the discovery/battery protocol is unchanged.  It interacts with the trunk:
+> the SIGReg-pretrained trunks (lejepa, visreg) convert the unlabelled term
+> into calibration + purity; DINO barely does.  Paper action: promote gcd-ft
+> (the "semi-supervised" construction) into the objective shortlist for the
+> ViT bases and state the caveat that the six archived arms never saw D^u.
+> Pending: dtd draws (many-class, single holdout) and the multi-holdout
+> datasets, to see whether the effect survives more novel classes.
 
 **Motivation.**  The GCD benchmark table was withdrawn (not like-for-like).
 The comparison that IS fair is to score GCD's representation loss on our

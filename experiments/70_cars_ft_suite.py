@@ -273,6 +273,8 @@ def main():
                rep_weight=REP_WEIGHT * 45.0 / (N_CLS * (N_CLS - 1) / 2))
     specs = arm_specs(args)
     tag = f"{DS}_{BASE}_ft70{run_tag()}{seed_sfx(args)}"
+    if all(a in GCD_ARMS for a in args.arms):
+        tag += "_gcd"          # exp 146: separate npz/plots from the six-arm archives
     print(f"exp70 [{tag}] end-to-end ft suite, arms={args.arms}, "
           f"ft_epochs={args.ft_epochs}, emb={args.emb_dim}, "
           f"holdouts {min(holdouts)}-{max(holdouts)} EXCLUDED from ft")
