@@ -2011,6 +2011,12 @@ or the concat loses top-1 by more than 0.017 (no-cost fails on CIFAR).
 
 ### Exps 144/145 — The Generalized Category Discovery benchmark (GCD / UNO+ / SimGCD / RLCD)
 
+> **WITHDRAWN FROM THE PAPER 2026-08-29 (decision: PH).**  Not a like-for-like
+> comparison -- the published methods fine-tune on labelled+unlabelled for 200
+> epochs and score a K-given partition; ours are labelled-only and optimise
+> detection.  Section and table removed from the draft; the frozen-tier numbers
+> stay in `logs/SUMMARY_TABLES.md` as a record; the fine-tuned tier (exp 145)
+> was stopped.  Another external comparison will be chosen.
 > **FROZEN TIER DONE 2026-08-29 (exp 144, 4 datasets x 3 seeds).**  Protocol
 > reproduced (our k-means row = the papers' within 0.5).  A SupCon head on D^l
 > doubles k-means on cars/aircraft (27.1 / 29.4 All) and destroys cifar10

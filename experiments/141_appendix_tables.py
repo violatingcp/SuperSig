@@ -555,7 +555,7 @@ TABLES = [
     ("app_width", t_width_control), ("app_postdisc", t_postdisc),
     ("app_seeds_c100", t_seeds_c100), ("app_top1_galaxy", t_top1_galaxy),
     ("app_frozen_np", t_frozen_np_datasets), ("app_hub_residual_seeds", t_hub_residual_seeds),
-    ("zero_training", t_zero_training), ("gcd", t_gcd_benchmark),
+    ("zero_training", t_zero_training),
 ]
 
 

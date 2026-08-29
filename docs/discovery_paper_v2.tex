@@ -722,39 +722,6 @@ the pretrained trunk before any training is done.
 
 \input{tables/zero_training}
 
-\subsection{Against the generalized-category-discovery benchmarks}
-\label{sec:gcd}
-
-The nearest established benchmark is generalized category discovery (GCD):
-DINO ViT-B/16, the first $N$ classes known with half of their images
-labelled, and clustering accuracy under a single Hungarian assignment over
-all $K$ classes on the unlabelled train set, with $K$ given. We ran our
-constructions under that protocol (Table~\ref{tab:gcd}); our $k$-means row
-reproduces the published one on all four datasets to within $0.5$ points, so
-the rest of the table is on the same footing.
-
-Two things it shows. First, our objectives buy this metric only where the
-known set is rich: a SupCon head trained on the labelled images alone
-doubles $k$-means on Cars and Aircraft (two-thirds of GCD's Old accuracy,
-matching UNO+ on New) and \emph{collapses} CIFAR-10 ($83.5 \to 61$) --- with
-five known classes and no unlabelled term, a supervised projection discards
-the structure the novel classes live in, which is precisely why GCD adds an
-unsupervised contrastive term on the unlabelled data. Our objectives never
-see the unlabelled set during representation learning; our discovery loop is
-what consumes it. Second, the density-ratio construction is the wrong tool
-for this metric, and the mismatch is informative: its pool is pure ($0.70$
-on Cars) but BIC returns two or three anchors where the benchmark wants up
-to $98$ novel clusters, so the $K$-free row posts the highest Old accuracy on
-CIFAR-100 ($70.9$, it protects the known classes) and the lowest New. Our
-pipeline locates novelty; the GCD metric scores partitioning it with $K$
-given. The fine-tuned rows (labelled data only, our exp-70 recipe) place the
-representation step of our objectives against theirs; the remaining
-asymmetry --- their 200 epochs on labelled and unlabelled data versus our 20
-on labelled --- is the ablation a reader should want next, and it is one
-term in the loss.
-
-\input{tables/gcd}
-
 \subsection{Where the label-free cut does not reach}
 
 Table~\ref{tab:baserate} is a negative result about our own method.
