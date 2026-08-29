@@ -18,9 +18,8 @@ SFX = "_gcd" if GCD else ""
 if GCD:
     ARMS = ["gcd-ft", "gcd-sigreg-ft"]
 files = sorted(glob.glob(f"logs/exp70/results_{ds}_{base}_ft70_h1_d*{SFX}.npz"))
-if not GCD:
-    files = [f for f in files if not f.endswith("_gcd.npz")]
 DRE = re.compile(r"_d(\d+)" + SFX + r"\.npz")
+files = [f for f in files if DRE.search(f)]    # drop _gcd / _gcd_u* variants
 if draws is not None:
     files = [f for f in files if int(DRE.search(f).group(1)) in draws]
 dlist = [int(DRE.search(f).group(1)) for f in files]
@@ -45,6 +44,32 @@ def purity_from_log(d):
     return out
 
 
+def purity_at_f_from_log(d):
+    """Pool purity (round 1 / round 2) from the POST grid, per injected
+    fraction f and arm -- the small-new-sample discovery regime.  Round lines
+    precede the '[arm] per-event post f=' line that names the arm."""
+    fn = f"logs/exp70_{ds}_{base}_h1_d{d}.log"
+    if GCD:
+        fn = f"logs/exp146_{ds}_{base}_h1_d{d}.log"
+    if not os.path.exists(fn):
+        fn = f"logs/exp70_g10_{base}_h1_d{d}.log"
+    out, f, rounds = {}, None, {}
+    for line in open(fn):
+        m = re.match(r"===== POST grid, f=([\d.]+)", line)
+        if m:
+            f = float(m.group(1)); rounds = {}
+            continue
+        if f is None:
+            continue
+        m = re.match(r"\s+round (\d): pool=\d+ purity=([\d.]+)", line)
+        if m:
+            rounds[int(m.group(1))] = float(m.group(2))
+        m = re.match(r"\s+\[(\S+)\] per-event post f=", line)
+        if m:
+            out.setdefault(m.group(1), {})[f] = rounds; rounds = {}
+    return out
+
+
 def fidx(fr, f):
     return int(np.argmin(np.abs(np.asarray(fr) - f)))
 
@@ -53,6 +78,7 @@ rows = {a: {} for a in ARMS}
 for f, d in zip(files, dlist):
     z = np.load(f, allow_pickle=True)
     pur = purity_from_log(d)
+    purf = purity_at_f_from_log(d)
     pre, post = z["pre_fractions"], z["post_fractions"]
     for a in ARMS:
         r = rows[a]
@@ -68,6 +94,11 @@ for f, d in zip(files, dlist):
         add("post_mmd05", z[f"mmd_{a}_post"][fidx(post, 0.05)])
         add("pur1", pur.get(a, {}).get(1, np.nan))
         add("pur2", pur.get(a, {}).get(2, np.nan))
+        for k in ("probe", "mahaT"):     # exp 70 >= 2026-08-29: per-f post metrics
+            key = f"postf_{k}_{a}"
+            add(f"postf_{k}02", z[key][fidx(post, 0.02)] if key in z else np.nan)
+        add("purf02", purf.get(a, {}).get(0.02, {}).get(1, np.nan))
+        add("purf05", purf.get(a, {}).get(0.05, {}).get(1, np.nan))
 
 ref = f"logs/exp70/results_{ds}_{base}_ft70.npz"
 refz = np.load(ref, allow_pickle=True) if os.path.exists(ref) and not GCD else None
@@ -86,6 +117,8 @@ COLS = [("probe", "probe"), ("post_probe", "probe post"), ("acc", "acc"),
         ("eucl", "eucl"), ("mahaT", "mahaT"), ("post_mahaT", "mahaT post"),
         ("perevt", "perevt"), ("post_perevt", "perevt post@.02"),
         ("pur1", "purity r1"), ("pur2", "purity r2"),
+        ("purf02", "purity@.02 inj"), ("purf05", "purity@.05 inj"),
+        ("postf_probe02", "probe post@.02"), ("postf_mahaT02", "mahaT post@.02"),
         ("spk05", "SpK@.05"), ("post_spk05", "SpK@.05 post"),
         ("mmd05", "MMD@.05"), ("post_mmd05", "MMD@.05 post")]
 hdr = "| arm | " + " | ".join(c for _, c in COLS) + " |"

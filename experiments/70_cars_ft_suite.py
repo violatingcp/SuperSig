@@ -430,6 +430,9 @@ def main():
     # ===== discovery: natural (probe/eucl/mahaT post) + post-power grid =====
     post_results, hist = {}, {}
     post_power = {s: {n: [] for n in args.arms} for s in STATS}
+    # per-injected-fraction post metrics (the small-new-sample discovery regime)
+    post_f = {n: {k: [] for k in ("probe", "eucl", "mahaT", "mahaPC", "purity1")}
+              for n in args.arms}
     if not args.skip_discovery:
         for arm in args.arms:
             print(f"\n----- natural discovery: {arm} -----")
@@ -511,6 +514,21 @@ def main():
                     te_post, tel_post = collect_embeddings(bb, test_loader)
                     tr_post, trl_post = collect_embeddings(bb,
                                                            train_eval_loader)
+                    mf = np.isin(trl_post, seen)
+                    anch_f = exp28.class_centroids(tr_post[mf], trl_post[mf],
+                                                   seen).detach().float().to(DEVICE)
+                    rpf = exp29.evaluate_space(tr_post, trl_post, te_post,
+                                               tel_post, anch_f, seen, holdouts)
+                    torch.manual_seed(1000)
+                    pf, _, _ = exp29.linear_probe_novelty(tr_post, trl_post,
+                                                          te_post, tel_post,
+                                                          holdouts)
+                    post_f[arm]["probe"].append(float(pf))
+                    post_f[arm]["eucl"].append(rpf["eucl"])
+                    post_f[arm]["mahaT"].append(rpf["maha_tied"])
+                    post_f[arm]["mahaPC"].append(rpf["maha_pc"])
+                    print(f"  [{arm}] post f={f}: probe={pf:.4f} eucl={rpf['eucl']:.4f} "
+                          f"mahaT={rpf['maha_tied']:.4f}")
                     zt = torch.as_tensor(te_post, dtype=torch.float32,
                                          device=DEVICE)
                     d_seen = torch.cdist(zt, cur_means[seen]).min(1).values
@@ -631,6 +649,8 @@ def main():
         **{f"post_{k}_{n}": np.array(post_results[n][k])
            for n in post_results
            for k in ("probe", "probe_sd", "acc", "eucl", "mahaT", "mahaPC")},
+        **{f"postf_{k}_{n}": np.array(post_f[n][k]) for n in args.arms
+           for k in ("probe", "eucl", "mahaT", "mahaPC") if post_f[n][k]},
         **{f"{s}_{n}_pre": np.array(pre_power[s][n]) for s in STATS
            for n in args.arms if n in pre_power[s]},
         **{f"{s}_{n}_post": np.array(post_power[s][n]) for s in STATS
