@@ -368,6 +368,17 @@ grep -c "Overfull \\hbox" discovery_paper_v2.log     # 0 as of 2026-08-28
 Wide tables are rotated by `_wrap(..., wide=True)` (pdflscape) at
 `\footnotesize`; pass `size=` to override.
 
+## Block S — Exp 146: GCD's loss as exp-70 arms
+
+```bash
+SUPERSIG_NH=1 SUPERSIG_HOLDOUT_DRAW=3 python experiments/70_cars_ft_suite.py --dataset galaxy10 --base dino --arms gcd-ft gcd-sigreg-ft
+python experiments/125_aggregate_draws.py galaxy10 dino     # gcd arms appear alongside the six
+```
+
+The GCD arms are opt-in (`--arms`); the default six are unchanged, so nothing
+archived is touched.  Their fine-tune corpus includes the held-out images with
+label -1.
+
 ## Block G — Exp 132: supervised linear probe (piggyback on Block B)
 
 The campaign has NO supervised linear probe -- the `probe` column everywhere is

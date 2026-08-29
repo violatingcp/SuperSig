@@ -2009,6 +2009,38 @@ c10.
 **Falsifier.**  The gain vanishes on clean trunks (the records rode leakage),
 or the concat loses top-1 by more than 0.017 (no-cost fails on CIFAR).
 
+### Exp 146 — GCD's representation loss as an arm in OUR battery
+
+> **CODE READY 2026-08-29.**  `70_cars_ft_suite.py --arms gcd-ft gcd-sigreg-ft`
+> (opt-in; `make_gcd_step`, masked full-corpus loader); `tests/test_gcd_arm.py`.
+> Queued as Block S.
+
+**Motivation.**  The GCD benchmark table was withdrawn (not like-for-like).
+The comparison that IS fair is to score GCD's representation loss on our
+currencies, under our protocol, next to our objectives: same trunk, same
+draws, same battery.  It is also the one exp-70 objective that sees the
+unlabelled corpus (SimCLR over every image incl. the held-out ones, SupCon on
+the labelled ones, 0.65 : 0.35 as in Vaze et al.), so it tests whether "use
+D^u during representation learning" is what our objectives are missing.
+
+**Arms.**  `gcd-ft` = GCD loss; `gcd-sigreg-ft` = GCD loss + global SIGReg
+lam=5 (the marginal isolated under GCD's own loss).
+
+**Protocol.**  Exp 70 unchanged otherwise: galaxy10 x 3 bases x 5 draws first
+(single holdout), then dtd/dino x 5 draws, then cars / aircraft / flowers at the
+multi-holdout default (dino).  Every exp-70 metric, exp-125 aggregation.
+
+**Prediction.**  gcd-ft beats supcon-ft on the probe (it has seen the novel
+images) and ties or loses on calibration and pool purity; gcd-sigreg-ft
+recovers the calibration (exp 136's C100 pattern) -- i.e. the unlabelled term
+buys decodability and the marginal buys discoverability, additively.
+
+**Falsifier.**  gcd-ft beats our best arm on POOL PURITY at single holdout
+(galaxy10 / dtd) -> seeing the unlabelled corpus during representation
+learning is the missing ingredient, and the paper's objective shortlist
+changes.  Or gcd-sigreg-ft loses calibration vs gcd-ft -> the marginal does
+not compose with an instance-level term on unlabelled data.
+
 ### Exps 144/145 — The Generalized Category Discovery benchmark (GCD / UNO+ / SimGCD / RLCD)
 
 > **WITHDRAWN FROM THE PAPER 2026-08-29 (decision: PH).**  Not a like-for-like

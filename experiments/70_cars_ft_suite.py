@@ -79,8 +79,65 @@ def make_supcon_step(lam_sigreg, n_slices):
     return step
 
 
+def make_gcd_step(lam_sigreg, n_slices, lam_sup=0.35):
+    """The GCD representation loss (Vaze et al. 2022): SimCLR (NT-Xent, temp
+    0.5, instance positives) over EVERY image in the batch -- held-out images
+    included, with their labels masked to -1 -- plus SupCon (temp 0.1) over
+    the labelled subset, weighted (1 - lam_sup) : lam_sup with lam_sup = 0.35
+    as in the paper.  `lam_sigreg` adds our global SIGReg marginal on top, so
+    "gcd-sigreg-ft" vs "gcd-ft" isolates the marginal under GCD's own loss.
+    This is the one exp-70 objective that SEES the unlabelled corpus."""
+    def step(model, v1, v2, y):
+        x = torch.cat([v1, v2]).to(DEVICE, non_blocking=True)
+        yy = torch.cat([y, y]).to(DEVICE)
+        z = model(x).float()
+        zn = F.normalize(z, dim=1)
+        inst = torch.arange(v1.size(0), device=DEVICE)
+        unsup = supcon_loss(zn, torch.cat([inst, inst]), temp=0.5)
+        lab = yy >= 0
+        sup = (supcon_loss(zn[lab], yy[lab], temp=0.1) if lab.sum() > 1
+               else torch.zeros((), device=DEVICE))
+        con = (1.0 - lam_sup) * unsup + lam_sup * sup
+        reg = (lam_sigreg * sigreg_loss(z, n_slices=n_slices) if lam_sigreg
+               else torch.zeros((), device=DEVICE))
+        return con, reg
+    return step
+
+
+GCD_ARMS = {"gcd-ft", "gcd-sigreg-ft"}
+
+
+class MaskedLabelSubset(torch.utils.data.Dataset):
+    """corpus[idx[i]] with label -1 where the class is held out (unlabelled)."""
+
+    def __init__(self, corpus, idx, labels_masked):
+        self.corpus, self.idx, self.lab = corpus, list(idx), list(labels_masked)
+
+    def __len__(self):
+        return len(self.idx)
+
+    def __getitem__(self, i):
+        img, _ = self.corpus[self.idx[i]]
+        return img, int(self.lab[i])
+
+
+def full_two_view_loader(corpus, ytr_all, holdouts, args):
+    """Two-view loader over the WHOLE train corpus for the GCD arms: seen
+    images keep their label, held-out images carry -1."""
+    idx = list(range(len(ytr_all)))
+    lab = [-1 if int(y) in holdouts else int(y) for y in ytr_all]
+    print(f"  gcd corpus: all {len(idx)} train images, "
+          f"{sum(1 for l in lab if l < 0)} unlabelled (held-out classes, label -1)")
+    ds = exp43.TwoViewLabeledImages(MaskedLabelSubset(corpus, idx, lab))
+    return DataLoader(ds, batch_size=args.batch_size, shuffle=True,
+                      num_workers=8, persistent_workers=True, drop_last=True,
+                      pin_memory=True)
+
+
 def arm_specs(args):
     return {
+        "gcd-ft": (True, make_gcd_step(0.0, args.n_slices)),
+        "gcd-sigreg-ft": (True, make_gcd_step(5.0, args.n_slices)),
         "simclr-ft": (False, exp49.simclr_step),
         "sigreg-ssl-ft": (False, exp49.sigreg_ssl_step),
         "nplm-bil-ft": (False, exp62.make_nplm_step(
@@ -94,7 +151,8 @@ def arm_specs(args):
 
 COLORS = {"simclr-ft": "#0072b2", "sigreg-ssl-ft": "#666666",
           "nplm-bil-ft": "#e51e1e", "supcon-ft": "#eda100",
-          "ss-ft": "#008300", "nplm-sup-ft": "#8c2d9e"}
+          "ss-ft": "#008300", "nplm-sup-ft": "#8c2d9e",
+          "gcd-ft": "#8b4513", "gcd-sigreg-ft": "#c71585"}
 
 
 def eval_split(split, transform):
@@ -171,7 +229,8 @@ def main():
                     choices=["dino", "lejepa", "visreg"])
     ap.add_argument("--quick", action="store_true")
     ap.add_argument("--seed", type=int, default=0)
-    ap.add_argument("--arms", nargs="+", default=list(COLORS),
+    ap.add_argument("--arms", nargs="+",
+                    default=[a for a in COLORS if a not in GCD_ARMS],   # GCD arms opt-in
                     choices=list(COLORS))
     ap.add_argument("--ft-epochs", type=int, default=None)
     ap.add_argument("--batch-size", type=int, default=32)
@@ -242,7 +301,9 @@ def main():
             print(f"  loading {ckpt}")
             model.load_state_dict(torch.load(ckpt, map_location=DEVICE))
         else:
-            loader = seen_two_view_loader(corpus, seen_idx_corpus, args)
+            loader = (full_two_view_loader(corpus, ytr_all, holdouts, args)
+                      if arm in GCD_ARMS else
+                      seen_two_view_loader(corpus, seen_idx_corpus, args))
             exp49.ft_loop(model, loader, args.ft_epochs, step, args, arm)
             torch.save(model.state_dict(), ckpt)
             del loader
