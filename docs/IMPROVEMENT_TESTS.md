@@ -2070,6 +2070,50 @@ or the concat loses top-1 by more than 0.017 (no-cost fails on CIFAR).
 > Pending: dtd draws (many-class, single holdout) and the multi-holdout
 > datasets, to see whether the effect survives more novel classes.
 >
+> **DTD + MULTI-HOLDOUT DONE 2026-08-29 (Block S2).**  Whole novel class in
+> the corpus; "@.02 inj" = discovery re-run from a 2 % injected sample (the
+> POST grid -- the paper's regime; purity from the logs, probe/mahaT from the
+> new `postf_*` keys where the run post-dates them).
+>
+> | setting | arm | probe pre -> post | acc | mahaT | per-event post@.02 | purity nat / @.02 inj |
+> |---|---|---|---|---|---|---|
+> | dtd/dino, 5 draws | supcon-ft | 0.883 -> 0.892 | 0.739 | 0.628 | 0.17 | 0.03 / 0.03 |
+> | dtd/dino | ss-ft | 0.787 -> 0.702 | 0.762 | 0.732 | 0.42 | 0.22 / 0.21 |
+> | dtd/dino | gcd-ft | **0.939** -> 0.878 | 0.732 | 0.782 | 0.41 | 0.12 / 0.11 |
+> | dtd/dino | **gcd-sigreg-ft** | 0.926 -> 0.875 | **0.764** | **0.900** | **0.56** | **0.25 / 0.23** |
+> | cars/dino, 10 holdouts | supcon-ft | 0.733 -> 0.767 | **0.462** | **0.564** | 0.18 | -- |
+> | cars/dino | ss-ft | 0.719 -> 0.747 | 0.330 | 0.547 | 0.21 | -- |
+> | cars/dino | gcd-ft | 0.730 -> 0.761 | 0.293 | 0.538 | 0.16 | -- |
+> | cars/dino | gcd-sigreg-ft | 0.714 -> 0.745 | 0.183 | 0.533 | 0.17 | -- |
+> | flowers/dino, 10 holdouts | supcon-ft | 0.708 -> 0.814 | **0.944** | 0.873 | 0.33 | -- |
+> | flowers/dino | ss-ft | 0.795 -> 0.788 | 0.940 | 0.883 | **0.60** | -- |
+> | flowers/dino | gcd-ft | **0.944** -> 0.871 | 0.906 | 0.908 | 0.13 | -- (probe@.02inj 0.900, mahaT 0.896) |
+> | flowers/dino | gcd-sigreg-ft | 0.906 -> 0.884 | 0.907 | **0.923** | 0.39 | -- (0.828, 0.904) |
+> | aircraft/dino, 10 holdouts | gcd-ft | 0.787 -> 0.768 | 0.384 | 0.655 | 0.28 | -- (0.786, 0.661) |
+> | aircraft/dino | gcd-sigreg-ft | 0.799 -> 0.800 | 0.296 | 0.602 | 0.11 | -- (0.819, 0.579) |
+>
+> (aircraft supcon-ft / ss-ft reference rows: eval-only exp-70 pass on the
+> archived `_seen` checkpoints, `logs/exp70_aircraft_dino_ref.log`, pending.)
+>
+> Reading across regimes.  **Single holdout, many classes (dtd)**: the
+> effect is as strong as on galaxy10 and now on DINO -- gcd-sigreg-ft is best
+> on calibration (0.90 vs 0.73), per-event (0.56 vs 0.42) and acc, and the
+> marginal clearly adds on top of the GCD loss (mahaT +0.12, per-event +0.15)
+> where it did not on 10-class galaxy10: the tau-basin "many-class only" line
+> reproduced under a different base loss.  **Multi-holdout (10 novel classes
+> at once)**: the effect is gone.  On cars the GCD arms tie supcon-ft on every
+> detection currency and lose 0.17-0.28 supervised acc; on flowers they win the
+> pre-discovery probe (0.94 vs 0.71 -- the unlabelled term does organise the
+> novel images) and mahaT (+0.04) but lose per-event (0.13/0.39 vs 0.60 ss-ft)
+> and 0.04 acc, and the discovery loop then LOWERS the GCD probe (0.94 -> 0.87)
+> where it raised supcon-ft's (0.71 -> 0.81) -- the loop's anchors compete with
+> a structure the instance term had already built.  So: the ingredient is
+> real for one novel class in a large labelled corpus, and does not scale to
+> ten unlabelled clusters on fine-grained data, where SupCon on the seen
+> classes plus our loop remains the better construction.  Whole-class
+> presence in training is a further caveat (below); the dose-response is
+> exp 146b.
+>
 > **CAVEAT (PH, 2026-08-29): the GCD arms see the WHOLE novel class.**  The
 > loader is the full train corpus with held-out labels masked: galaxy10 d0 =
 > 264 of 1772 train images (15 %), d7 = 33 (1.9 %; the weak draw is the

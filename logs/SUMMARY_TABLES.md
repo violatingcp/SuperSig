@@ -3138,3 +3138,15 @@ per-draw spread (probe / mahaT / purity r1), draws [0, 3, 5, 7, 8]
   gcd-ft         probe 0.619-0.983  mahaT 0.843-0.963  purity 0.147-0.759
   gcd-sigreg-ft  probe 0.628-0.963  mahaT 0.748-0.966  purity 0.094-0.753
 
+
+<!-- exp 146: GCD-loss arms, dtd draws (2026-08-29) -->
+## dtd (exp 146; dino, 100d, holdout 1 [single-holdout], 5 draws d[0, 1, 3, 4, 5], 20 ep)
+
+| arm | probe | probe post | acc | eucl | mahaT | mahaT post | perevt | perevt post@.02 | purity r1 | purity r2 | purity@.02 inj | purity@.05 inj | probe post@.02 | mahaT post@.02 | SpK@.05 | SpK@.05 post | MMD@.05 | MMD@.05 post |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| gcd-ft | 0.939+-0.041 | 0.878+-0.080 | 0.732+-0.005 | 0.782+-0.106 | 0.782+-0.117 | 0.791+-0.113 | 0.315+-0.275 | 0.405+-0.275 | 0.118+-0.073 | 0.102+-0.050 | 0.109+-0.068 | 0.118+-0.073 | nan+-nan | nan+-nan | 0.920+-0.114 | 0.864+-0.179 | 0.792+-0.142 | 0.796+-0.134 |
+| gcd-sigreg-ft | 0.926+-0.043 | 0.875+-0.081 | 0.764+-0.005 | 0.894+-0.077 | 0.900+-0.087 | 0.888+-0.088 | 0.615+-0.223 | 0.560+-0.204 | 0.245+-0.038 | 0.106+-0.056 | 0.234+-0.035 | 0.245+-0.038 | nan+-nan | nan+-nan | 0.980+-0.031 | 0.988+-0.024 | 0.856+-0.161 | 0.828+-0.240 |
+
+per-draw spread (probe / mahaT / purity r1), draws [0, 1, 3, 4, 5]
+  gcd-ft         probe 0.882-0.989  mahaT 0.665-0.951  purity 0.032-0.227
+  gcd-sigreg-ft  probe 0.846-0.965  mahaT 0.742-0.986  purity 0.189-0.290
