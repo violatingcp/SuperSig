@@ -11,10 +11,13 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 ARMS = ["simclr-ft", "sigreg-ssl-ft", "nplm-bil-ft", "supcon-ft", "ss-ft",
         "nplm-sup-ft"]
 GCD = "--gcd" in sys.argv          # exp 146: the gcd-ft / gcd-sigreg-ft arm files
+FRAC = None                        # exp 146b: --frac F reads the _gcd_u{F} files
 argv = [a for a in sys.argv[1:] if a != "--gcd"]
+if "--frac" in argv:
+    i = argv.index("--frac"); FRAC = float(argv[i + 1]); del argv[i:i + 2]; GCD = True
 ds, base = argv[0], argv[1]
 draws = [int(x) for x in argv[2:]] or None
-SFX = "_gcd" if GCD else ""
+SFX = ("_gcd" + (f"_u{FRAC:g}" if FRAC is not None else "")) if GCD else ""
 if GCD:
     ARMS = ["gcd-ft", "gcd-sigreg-ft"]
 files = sorted(glob.glob(f"logs/exp70/results_{ds}_{base}_ft70_h1_d*{SFX}.npz"))
@@ -29,6 +32,8 @@ def purity_from_log(d):
     fn = f"logs/exp70_{ds}_{base}_h1_d{d}.log"
     if GCD:
         fn = f"logs/exp146_{ds}_{base}_h1_d{d}.log"
+        if FRAC is not None:
+            fn = f"logs/exp146b_{ds}_{base}_h1_d{d}_u{FRAC:g}.log"
     if not os.path.exists(fn):
         fn = f"logs/exp70_g10_{base}_h1_d{d}.log"
     out, arm = {}, None
@@ -51,6 +56,8 @@ def purity_at_f_from_log(d):
     fn = f"logs/exp70_{ds}_{base}_h1_d{d}.log"
     if GCD:
         fn = f"logs/exp146_{ds}_{base}_h1_d{d}.log"
+        if FRAC is not None:
+            fn = f"logs/exp146b_{ds}_{base}_h1_d{d}_u{FRAC:g}.log"
     if not os.path.exists(fn):
         fn = f"logs/exp70_g10_{base}_h1_d{d}.log"
     out, f, rounds = {}, None, {}
@@ -111,7 +118,7 @@ _default = sorted(holdout_set(ds, _ncls, nh=None, draw=None))
 REF_LABEL = (f"archived d{{{_default[0]}}} [single]" if len(_default) == 1
              else f"archived multi-holdout ({len(_default)} cls) [DIFFERENT REGIME]")
 
-print(f"## {ds} (exp {146 if GCD else 125}; {base}, 100d, holdout 1 [single-holdout], "
+print(f"## {ds} (exp {'146b frac ' + str(FRAC) if FRAC is not None else (146 if GCD else 125)}; {base}, 100d, holdout 1 [single-holdout], "
       f"{len(files)} draws d{dlist}, 20 ep)\n")
 COLS = [("probe", "probe"), ("post_probe", "probe post"), ("acc", "acc"),
         ("eucl", "eucl"), ("mahaT", "mahaT"), ("post_mahaT", "mahaT post"),

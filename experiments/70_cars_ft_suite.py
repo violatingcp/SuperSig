@@ -206,7 +206,9 @@ def seed_sfx(args):
     run would silently OVERWRITE the archived 100-D parents."""
     s = getattr(args, "seed", 0)
     d = getattr(args, "emb_dim", 100)
-    return (f"_s{s}" if s else "") + (f"_e{d}" if d != 100 else "")
+    u = getattr(args, "gcd_unl_frac", 1.0)      # exp 146b: checkpoints, banks and
+    return ((f"_s{s}" if s else "") + (f"_e{d}" if d != 100 else "")   # npz per dose
+            + (f"_u{u:g}" if u < 1.0 else ""))
 
 
 def trunk_banks(model, arm, args):
@@ -286,8 +288,6 @@ def main():
     tag = f"{DS}_{BASE}_ft70{run_tag()}{seed_sfx(args)}"
     if all(a in GCD_ARMS for a in args.arms):
         tag += "_gcd"          # exp 146: separate npz/plots from the six-arm archives
-        if args.gcd_unl_frac < 1.0:
-            tag += f"_u{args.gcd_unl_frac:g}"
     print(f"exp70 [{tag}] end-to-end ft suite, arms={args.arms}, "
           f"ft_epochs={args.ft_epochs}, emb={args.emb_dim}, "
           f"holdouts {min(holdouts)}-{max(holdouts)} EXCLUDED from ft")

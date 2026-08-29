@@ -2,7 +2,7 @@
 # Block S3: exp 146b -- dose-response of the GCD arms in the fraction of the novel class
 # present (unlabelled) in the training corpus.  Waits for chainT9S2 to finish.
 cd /home/pharris/sigreg/SuperSig; P=/home/pharris/venv/bin/python; L=logs/chainT9S.log
-while pgrep -f "chainT9S[2].sh" >/dev/null; do sleep 300; done
+# (S2 finished)
 ok() { [ $1 -eq 0 ] && echo "$2_OK" >> $L || echo "$2_FAIL" >> $L; }
 ARMS="gcd-ft gcd-sigreg-ft"
 for F in 0.05 0.2 0.5; do
