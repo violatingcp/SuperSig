@@ -171,62 +171,73 @@ def t_draws():
             if v:
                 have += 1
                 cs += [fnum(np.mean(v)), fnum(np.std(v, ddof=1), 3),
-                       f"{sum(1 for x in v if x >= 0.15)}/{len(v)}"]
+                       fnum(min(v))]
             else:
                 cs += ["--", "--", "--"]
         rows.append(" & ".join([PRETTY.get(a, esc(a))] + cs) + r" \\")
     ndraw = max([len(v) for c in cells for v in data[c].values()] or [0])
     status = (f"DTD, {ndraw} holdout draws per base, single holdout; "
               f"{have}/{len(arms) * len(cells)} (arm, base) pairs present. "
-              r"Gate $=0.15$. Purity read from the run logs.")
+              r"Purity read from the run logs.")
     return _wrap(
         "\n".join(rows),
         r"\textbf{Pool purity is stable across holdout draws, and only one "
         r"objective is stable across \emph{backbones}.} Mean $\pm$ sd over "
-        r"draws, and the number of draws clearing the gate. "
-        r"SupCon+SIGReg clears $5/5$ on both backbones; supervised "
-        r"distance-NPLM clears $5/5$ on one and $0/5$ on the other.",
+        r"draws, with the worst draw. SupCon+SIGReg holds its purity on "
+        r"both backbones ($0.219$ and $0.225$); supervised distance-NPLM "
+        r"matches it on LeJEPA ($0.215$) and loses a factor of four on "
+        r"DINO ($0.051$).",
         "tab:draws", status,
         "lcccccc",
         r"& \multicolumn{3}{c}{DTD / DINO} & \multicolumn{3}{c}{DTD / LeJEPA} \\"
         "\n" r"\cmidrule(lr){2-4}\cmidrule(lr){5-7}" "\n"
-        r"objective & mean & sd & $\ge$gate & mean & sd & $\ge$gate \\")
+        r"objective & mean & sd & min & mean & sd & min \\")
 
 
 # --------------------------------------------------------------- table 3 ---
 def t_hardening():
-    """Frozen-NP headline: gate rate and the seed/draw variance split."""
+    """Frozen-NP headline: the seed/draw variance split.
+
+    NOTE: this reads ONLY the `*_variance` dicts.  The archived `*_gate`
+    dicts are byte-identical between r1 and r2 (exp 139 computed the
+    distribution summary once), so their min/median are not round-specific
+    and must not be tabulated per round.
+    """
     f = os.path.join(LOGS, "exp139", "hardening.json")
     if not os.path.exists(f):
         return None
     a = json.load(open(f))["analysis"]
-    rows = []
+    rows, n = [], None
     for rnd in ("r1", "r2"):
-        g, v = a.get(f"{rnd}_gate", {}), a.get(f"{rnd}_variance", {})
-        ci = g.get("ci") or [g.get("ci_lo"), g.get("ci_hi")]
+        v = a.get(f"{rnd}_variance", {})
+        if not v:
+            continue
+        n = a.get(f"{rnd}_gate", {}).get("n", n)
+        ss, sd = v.get("sd_within_seed"), v.get("sd_between_draw")
+        ratio = fnum(sd / ss, 1) + r"$\times$" if ss and sd else "--"
         rows.append(" & ".join([
-            rnd, f"{g.get('k', '--')}/{g.get('n', '--')}",
-            f"[{fnum(ci[0])}, {fnum(ci[1])}]",
-            fnum(g.get("min")), fnum(g.get("median")), fnum(g.get("mean")),
-            fnum(v.get("sd_seed")), fnum(v.get("sd_draw"))]) + r" \\")
-    v1 = a.get("r1_variance", {})
+            rnd, str(v.get("n_strata", "--")), fnum(v.get("grand_mean")),
+            fnum(ss), fnum(sd), ratio]) + r" \\")
+    if not rows:
+        return None
     status = (f"galaxy10, 3 backbones $\\times$ 3 objectives $\\times$ 5 draws "
-              f"$\\times$ 3 seeds ($+1$ archived) $= "
-              f"{a.get('r1_gate', {}).get('n', '?')}$ cells; variance "
-              f"stratified within (cell, objective), "
-              f"{v1.get('n_strata', '?')} strata, seed term measured.")
+              f"$\\times$ 3 seeds ($+1$ archived) $= {n}$ cells; variance "
+              f"stratified within (cell, objective). Round-level distribution "
+              f"summaries are not reported: the archive stores one summary for "
+              f"both rounds.")
     return _wrap(
         "\n".join(rows),
-        r"\textbf{The frozen-anchor result is reproducible, and the variance "
-        r"that matters is the holdout draw, not the seed.} Clopper--Pearson "
-        r"95\% interval on the fraction of cells above the $0.15$ gate. "
-        r"Seed-to-seed spread is $\sim$$1/8$ of draw-to-draw spread, so "
-        r"single-seed purities elsewhere in this paper carry a draw caveat "
-        r"and not a seed caveat.",
+        r"\textbf{The variance that matters is the holdout draw, not the "
+        r"seed.} One-way decomposition of frozen-anchor round-1 purity, "
+        r"stratified within (cell, objective) so the seed term is measured "
+        r"at fixed draw. Seed-to-seed spread is an eighth of draw-to-draw "
+        r"spread in both rounds, so the single-seed purities elsewhere in "
+        r"this paper carry a caveat about which class was held out and not "
+        r"about which seed was run.",
         "tab:hardening", status,
-        "lccccccc",
-        r"round & $\ge$gate & 95\% CI & min & median & mean & "
-        r"sd$_{\text{seed}}$ & sd$_{\text{draw}}$ \\")
+        "lccccc",
+        r"round & strata & mean $\Pi$ & sd$_{\text{seed}}$ & "
+        r"sd$_{\text{draw}}$ & ratio \\")
 
 
 # --------------------------------------------------------------- table 4 ---
@@ -308,7 +319,8 @@ def t_baserate():
         r"\textbf{The label-free cut is objective-specific, not universal.} "
         r"Ratio of estimated to true novel base rate at $b{=}0.01$; the rule "
         r"engages only where an NPLM critic sits on a SIGReg marginal, and "
-        r"even then the resulting purity stays below the gate. Reported as a "
+        r"even then the resulting purity is only $0.046$--$0.101$ (against a "
+        r"base rate of $0.01$). Reported as a "
         r"limit of the rule, not of the representations.",
         "tab:baserate", status,
         "lcccc",
@@ -472,8 +484,8 @@ def t_galaxy():
         r"discovery procedures.} Round-1 pool purity, mean $\pm$ sd. Left: "
         r"natural discovery (distance pool, encoder fine-tuned). Right: the "
         r"frozen-anchor density-ratio pool. Same dataset, same holdout draws, "
-        r"a five-fold difference in purity --- the procedure, not the "
-        r"representation, is what clears the gate here.",
+        r"a three- to five-fold difference in purity --- the procedure, not "
+        r"the representation, is what moves it.",
         "tab:galaxy", status, "lcccccc",
         r"& \multicolumn{3}{c}{natural discovery} & "
         r"\multicolumn{3}{c}{frozen-anchor pool} \\"

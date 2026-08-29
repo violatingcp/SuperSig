@@ -1,4 +1,4 @@
-% STATUS: DTD, 5 holdout draws per base, single holdout; 12/12 (arm, base) pairs present. Gate $=0.15$. Purity read from the run logs.
+% STATUS: DTD, 5 holdout draws per base, single holdout; 12/12 (arm, base) pairs present. Purity read from the run logs.
 \begin{table}[t]
 \centering
 \small
@@ -6,16 +6,16 @@
 \toprule
 & \multicolumn{3}{c}{DTD / DINO} & \multicolumn{3}{c}{DTD / LeJEPA} \\
 \cmidrule(lr){2-4}\cmidrule(lr){5-7}
-objective & mean & sd & $\ge$gate & mean & sd & $\ge$gate \\
+objective & mean & sd & min & mean & sd & min \\
 \midrule
-SimCLR & 0.005 & 0.012 & 0/5 & 0.002 & 0.003 & 0/5 \\
-SimCLR+SIGReg & 0.003 & 0.003 & 0/5 & 0.021 & 0.021 & 0/5 \\
-NPLM-bilinear & 0.004 & 0.006 & 0/5 & 0.033 & 0.018 & 0/5 \\
-SupCon & 0.028 & 0.014 & 0/5 & 0.073 & 0.086 & 1/5 \\
-\textbf{SupCon+SIGReg ($\lambda{=}5$)} & 0.219 & 0.016 & 5/5 & 0.225 & 0.007 & 5/5 \\
-NPLM-dist. (sup.) & 0.051 & 0.031 & 0/5 & 0.215 & 0.027 & 5/5 \\
+SimCLR & 0.005 & 0.012 & 0.000 & 0.002 & 0.003 & 0.000 \\
+SimCLR+SIGReg & 0.003 & 0.003 & 0.000 & 0.021 & 0.021 & 0.000 \\
+NPLM-bilinear & 0.004 & 0.006 & 0.000 & 0.033 & 0.018 & 0.016 \\
+SupCon & 0.028 & 0.014 & 0.011 & 0.073 & 0.086 & 0.011 \\
+\textbf{SupCon+SIGReg ($\lambda{=}5$)} & 0.219 & 0.016 & 0.193 & 0.225 & 0.007 & 0.217 \\
+NPLM-dist. (sup.) & 0.051 & 0.031 & 0.021 & 0.215 & 0.027 & 0.189 \\
 \bottomrule
 \end{tabular}
-\caption{\textbf{Pool purity is stable across holdout draws, and only one objective is stable across \emph{backbones}.} Mean $\pm$ sd over draws, and the number of draws clearing the gate. SupCon+SIGReg clears $5/5$ on both backbones; supervised distance-NPLM clears $5/5$ on one and $0/5$ on the other. \emph{Coverage:} DTD, 5 holdout draws per base, single holdout; 12/12 (arm, base) pairs present. Gate $=0.15$. Purity read from the run logs.}
+\caption{\textbf{Pool purity is stable across holdout draws, and only one objective is stable across \emph{backbones}.} Mean $\pm$ sd over draws, with the worst draw. SupCon+SIGReg holds its purity on both backbones ($0.219$ and $0.225$); supervised distance-NPLM matches it on LeJEPA ($0.215$) and loses a factor of four on DINO ($0.051$). \emph{Coverage:} DTD, 5 holdout draws per base, single holdout; 12/12 (arm, base) pairs present. Purity read from the run logs.}
 \label{tab:draws}
 \end{table}

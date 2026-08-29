@@ -1,15 +1,15 @@
-% STATUS: galaxy10, 3 backbones $\times$ 3 objectives $\times$ 5 draws $\times$ 3 seeds ($+1$ archived) $= 144$ cells; variance stratified within (cell, objective), 9 strata, seed term measured.
+% STATUS: galaxy10, 3 backbones $\times$ 3 objectives $\times$ 5 draws $\times$ 3 seeds ($+1$ archived) $= 144$ cells; variance stratified within (cell, objective). Round-level distribution summaries are not reported: the archive stores one summary for both rounds.
 \begin{table}[t]
 \centering
 \small
-\begin{tabular}{lccccccc}
+\begin{tabular}{lccccc}
 \toprule
-round & $\ge$gate & 95\% CI & min & median & mean & sd$_{\text{seed}}$ & sd$_{\text{draw}}$ \\
+round & strata & mean $\Pi$ & sd$_{\text{seed}}$ & sd$_{\text{draw}}$ & ratio \\
 \midrule
-r1 & 143/144 & [--, --] & 0.103 & 0.580 & -- & -- & -- \\
-r2 & 143/144 & [--, --] & 0.103 & 0.580 & -- & -- & -- \\
+r1 & 9 & 0.516 & 0.021 & 0.174 & 8.3$\times$ \\
+r2 & 9 & 0.517 & 0.020 & 0.175 & 8.9$\times$ \\
 \bottomrule
 \end{tabular}
-\caption{\textbf{The frozen-anchor result is reproducible, and the variance that matters is the holdout draw, not the seed.} Clopper--Pearson 95\% interval on the fraction of cells above the $0.15$ gate. Seed-to-seed spread is $\sim$$1/8$ of draw-to-draw spread, so single-seed purities elsewhere in this paper carry a draw caveat and not a seed caveat. \emph{Coverage:} galaxy10, 3 backbones $\times$ 3 objectives $\times$ 5 draws $\times$ 3 seeds ($+1$ archived) $= 144$ cells; variance stratified within (cell, objective), 9 strata, seed term measured.}
+\caption{\textbf{The variance that matters is the holdout draw, not the seed.} One-way decomposition of frozen-anchor round-1 purity, stratified within (cell, objective) so the seed term is measured at fixed draw. Seed-to-seed spread is an eighth of draw-to-draw spread in both rounds, so the single-seed purities elsewhere in this paper carry a caveat about which class was held out and not about which seed was run. \emph{Coverage:} galaxy10, 3 backbones $\times$ 3 objectives $\times$ 5 draws $\times$ 3 seeds ($+1$ archived) $= 144$ cells; variance stratified within (cell, objective). Round-level distribution summaries are not reported: the archive stores one summary for both rounds.}
 \label{tab:hardening}
 \end{table}
