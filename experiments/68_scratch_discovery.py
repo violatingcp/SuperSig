@@ -133,6 +133,9 @@ def main():
         torch.cuda.empty_cache()
 
     post_power = {s: {n: [] for n in bases} for s in STATS}
+    # per-injected-fraction post metrics (the small-new-sample discovery regime)
+    post_f = {n: {k: [] for k in ("probe", "eucl", "mahaT", "mahaPC", "purity1")}
+              for n in bases}
     for i_f, f in enumerate(fractions):
         n_inj = int(round(f * len(seen_idx) / (1.0 - f)))
         rng = np.random.default_rng(args.seed * 1000 + i_f)
@@ -154,6 +157,21 @@ def main():
                 ft_epochs=ft_ep, names=None, seed=args.seed)
             te_post, tel_post = collect_embeddings(bb, test_loader)
             tr_post, trl_post = collect_embeddings(bb, train_eval_loader)
+            mf = np.isin(trl_post, seen)
+            anch_f = torch.as_tensor(
+                exp28.class_centroids(tr_post[mf], trl_post[mf], seen),
+                dtype=torch.float32, device=DEVICE)
+            rpf = exp29.evaluate_space(tr_post, trl_post, te_post, tel_post,
+                                       anch_f, seen, holdouts)
+            torch.manual_seed(1000)
+            pf, _, _ = exp29.linear_probe_novelty(tr_post, trl_post, te_post,
+                                                  tel_post, holdouts)
+            post_f[name]["probe"].append(float(pf))
+            post_f[name]["eucl"].append(rpf["eucl"])
+            post_f[name]["mahaT"].append(rpf["maha_tied"])
+            post_f[name]["mahaPC"].append(rpf["maha_pc"])
+            print(f"  [{name}] post f={f}: probe={pf:.4f} eucl={rpf['eucl']:.4f} "
+                  f"mahaT={rpf['maha_tied']:.4f}")
             zt = torch.as_tensor(te_post, dtype=torch.float32, device=DEVICE)
             d_seen = torch.cdist(zt, cur_means[seen]).min(1).values
             d_disc = (torch.cdist(zt, cur_means[n_cls:]).min(1).values
@@ -233,7 +251,9 @@ def main():
              **{f"post_{k}_{n}": np.array(geo_post[n][k]) for n in bases
                 for k in ("acc", "eucl", "maha_tied", "maha_pc", "lid")},
              **{f"{s}_{n}_post": np.array(post_power[s][n]) for s in STATS
-                for n in bases})
+                for n in bases},
+             **{f"postf_{k}_{n}": np.array(post_f[n][k]) for n in bases
+                for k in ("probe", "eucl", "mahaT", "mahaPC") if post_f[n][k]})
     print("Done.")
 
 
