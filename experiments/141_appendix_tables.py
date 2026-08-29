@@ -495,6 +495,55 @@ def t_zero_training():
                  r"dataset & rate & backbone & purity & $\ge$gate & fine-tuned loop, best objective \\")
 
 
+def t_gcd_benchmark():
+    """Main-text comparison under the GCD protocol (exps 144/145)."""
+    rows, nfiles = [], 0
+    DS = [("cifar10", "CIFAR-10"), ("cifar100", "CIFAR-100"), ("cars", "Cars"), ("aircraft", "Aircraft")]
+    def cellstr(v):
+        return f"{v[0]:.1f}/{v[1]:.1f}/{v[2]:.1f}"
+    def mean_rows(res, space, method):
+        v = np.array([[res[s][space][method][k] for k in ("all", "old", "new")] for s in res
+                      if space in res[s] and method in res[s][space]])
+        return cellstr(v.mean(0)) if len(v) else "--"
+    data = {}
+    for ds, _ in DS:
+        f = os.path.join(LOGS, "exp144", f"gcd_{ds}_dino.json")
+        if os.path.exists(f):
+            data[ds] = json.load(open(f)); nfiles += 1
+        f2 = os.path.join(LOGS, "exp144", f"gcd_ft_{ds}_dino.json")
+        if os.path.exists(f2):
+            data[ds + "_ft"] = json.load(open(f2)); nfiles += 1
+    if not data:
+        return None
+    def line(label, key, space, method):
+        cells = []
+        for ds, _ in DS:
+            d = data.get(ds + key)
+            cells.append(mean_rows(d["results"], space, method) if d else "--")
+        rows.append(" & ".join([label] + cells) + r" \\")
+    rows.append(r"\multicolumn{5}{l}{\emph{frozen DINO trunk (ours, exp 144)}} \\")
+    line(r"\quad $k$-means, raw features", "", "raw-dino", "kmeans")
+    line(r"\quad ss-$k$-means, raw features", "", "raw-dino", "ss-kmeans")
+    line(r"\quad np-anchors, raw features ($K$ free)", "", "raw-dino", "np-anchors")
+    line(r"\quad ss-$k$-means, SupCon head", "", "head-supcon", "ss-kmeans")
+    line(r"\quad ss-$k$-means, SupCon+SIGReg head", "", "head-ssig", "ss-kmeans")
+    rows.append(r"\multicolumn{5}{l}{\emph{fine-tuned trunk, labelled data only (ours, exp 145)}} \\")
+    for arm, lab in (("supcon-ft", "SupCon"), ("ss-ft", "SupCon+SIGReg"), ("nplm-sup-ft", "NPLM-dist.")):
+        line(rf"\quad ss-$k$-means, {lab} trunk", "_ft", f"{arm} trunk", "ss-kmeans")
+    rows.append(r"\multicolumn{5}{l}{\emph{published, fine-tuned on labelled + unlabelled}} \\")
+    ref = {ds: data[ds]["reference"] for ds, _ in DS if ds in data}
+    for name in ("k-means (paper)", "GCD", "UNO+", "SimGCD", "RLCD"):
+        rows.append(" & ".join([r"\quad " + esc(name)] + [cellstr(ref[ds][name]) if ds in ref else "--" for ds, _ in DS]) + r" \\")
+    status = (f"{nfiles} result files; GCD protocol (first-$N$ known classes, 50\% labelled, Hungarian ACC on the "
+              r"unlabelled train set, $K$ known), DINO ViT-B/16, 3 split seeds (means shown).")
+    return _wrap("\n".join(rows),
+                 r"\textbf{Under the Generalized Category Discovery protocol.} Clustering accuracy All/Old/New. "
+                 r"Our frozen-trunk $k$-means row reproduces the published one; a head trained on labelled data "
+                 r"alone doubles it on the fine-grained sets and collapses novel structure on CIFAR-10.",
+                 "tab:gcd", status, "lcccc",
+                 r"method & CIFAR-10 & CIFAR-100 & Cars & Aircraft \\", wide=True)
+
+
 TABLES = [
     ("app_cifar10_pre", lambda: t_scratch_pre("cifar10")), ("app_cifar10_power", lambda: t_scratch_power("cifar10")),
     ("app_cifar10_pools", lambda: t_scratch_pools("cifar10")), ("app_cifar10_residuals", lambda: t_residuals_ds("cifar10")),
@@ -506,7 +555,7 @@ TABLES = [
     ("app_width", t_width_control), ("app_postdisc", t_postdisc),
     ("app_seeds_c100", t_seeds_c100), ("app_top1_galaxy", t_top1_galaxy),
     ("app_frozen_np", t_frozen_np_datasets), ("app_hub_residual_seeds", t_hub_residual_seeds),
-    ("zero_training", t_zero_training),
+    ("zero_training", t_zero_training), ("gcd", t_gcd_benchmark),
 ]
 
 

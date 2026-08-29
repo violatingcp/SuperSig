@@ -3055,3 +3055,51 @@ logs/exp59/nplm_residual_concat_cifar100{,_s1,_s2}.npz; 2026-08-28)
   seen manifold in the pretrained space, not by base rate alone.
 - Draw sd is small here (0.01-0.06): the raw-trunk construction is the
   most draw-stable number in the campaign.
+
+## Exp 144 -- the Generalized Category Discovery benchmark, frozen-trunk tier (Block Q)
+(GCD protocol: DINO ViT-B/16 [CLS] 768-D; known = first N classes, 50% of their
+train images labelled (D^l); ACC = one Hungarian over K classes on the
+unlabelled train set D^u, All/Old/New; K known; 3 split seeds, mean+-sd.
+Reference rows from Vaze et al. / SimGCD / RLCD (those fine-tune the last ViT
+block 200 ep on D^l + D^u).  2026-08-29; logs/exp144/gcd_<ds>_dino.json)
+
+  space / method                 cifar10 (5/10)        cifar100 (80/100)     cars (98/196)         aircraft (50/100)
+  raw DINO, k-means              83.5 / 86.1 / 82.2    51.9 / 52.4 / 50.8    12.4 / 10.7 / 13.3    16.0 /  8.9 / 19.5
+    paper's k-means row          83.6 / 85.7 / 82.5    52.0 / 52.2 / 50.8    12.8 / 10.6 / 13.8    16.0 / 14.4 / 16.8
+  raw DINO, ss-k-means           74.3 / 62.5 / 80.2    60.5 / 61.7 / 58.1    12.2 / 10.2 / 13.3    14.9 /  7.0 / 18.8
+  raw DINO, np-anchors (K free)  58.6 / 38.7 / 68.5    55.7 / 70.9 / 25.4    10.8 / 14.3 /  9.0    10.6 /  9.4 / 11.2
+  raw DINO, np-seeded k-means    77.8 / 68.9 / 82.2    60.8 / 62.6 / 57.2    12.5 / 10.4 / 13.5    14.8 /  6.5 / 19.0
+  +SupCon head, k-means          61.1 / 55.9 / 63.8    42.7 / 49.9 / 28.4    22.6 / 28.5 / 19.7    26.2 / 29.7 / 24.5
+  +SupCon head, ss-k-means       52.4 / 49.6 / 53.8    46.4 / 57.9 / 23.3    27.1 / 44.8 / 18.3    29.4 / 39.8 / 24.2
+  +SupCon+SIGReg(5) head, k-means 65.7 / 69.1 / 64.0   57.0 / 66.5 / 38.2    19.5 / 21.3 / 18.6    21.5 / 20.7 / 21.8
+  +SupCon+SIGReg(5) head, ss-km  59.1 / 61.0 / 58.2    56.1 / 66.7 / 34.7    21.0 / 27.6 / 17.7    24.0 / 25.6 / 23.2
+  GCD (paper)                    91.5 / 97.9 / 88.2    73.0 / 76.2 / 66.5    39.0 / 57.6 / 29.9    45.0 / 41.1 / 46.9
+  UNO+ (paper)                   68.6 / 98.3 / 53.8    69.5 / 80.6 / 47.2    35.5 / 70.5 / 18.6    40.3 / 56.4 / 32.2
+  SimGCD (paper)                 97.1 / 95.1 / 98.1    80.1 / 81.2 / 77.8    53.8 / 71.9 / 45.0    54.2 / 59.1 / 51.8
+  RLCD (paper)                   97.4 / 96.4 / 97.9    83.4 / 84.2 / 81.9    64.9 / 79.3 / 58.0    60.6 / 62.2 / 59.8
+
+- THE PROTOCOL IS REPRODUCED: our k-means row matches the papers' on all
+  four datasets to within 0.5 (All).  Everything else sits on the same
+  footing.
+- OUR OBJECTIVES BUY THE GCD METRIC ONLY WHERE THE KNOWN SET IS RICH.  A
+  SupCon head on D^l alone (frozen trunk, 30 ep) doubles k-means on cars
+  (27.1 All, Old 44.8) and aircraft (29.4 / 39.8) -- two-thirds of GCD's
+  Old, at UNO+'s New -- but DESTROYS cifar10 (83.5 -> 61) and hurts
+  cifar100 (51.9 -> 46.4): with 5 or 80 known classes and no unlabelled
+  term, the head collapses the novel structure.  That is the finding GCD
+  built its unsupervised term for; our exp-70 objectives never see D^u.
+- SIGReg lam=5 is the better head on CIFAR (65.7 / 57.0 vs 61.1 / 46.4)
+  and the worse one on cars/aircraft (21.0 / 24.0 vs 27.1 / 29.4) -- the
+  many-/few-class split of exp 136 shows up on this metric too, with the
+  sign set by the known-class count.
+- THE DENSITY-RATIO CONSTRUCTION IS THE WRONG TOOL FOR THIS METRIC, and
+  the mismatch is informative: its pool is pure (cars 0.70) but BIC returns
+  2-3 anchors where the benchmark wants 5-98 novel clusters, so the
+  K-free row (np-anchors) posts the highest OLD accuracy on cifar100
+  (70.9 vs ss-k-means 61.7) -- it protects the known classes -- and the
+  lowest New.  Seeded into k-means it is indistinguishable from
+  ss-k-means.  Our loop locates novelty; GCD-ACC scores partitioning it.
+- What remains asymmetric: GCD/SimGCD/RLCD fine-tune the trunk on D^l AND
+  D^u for 200 epochs.  The fine-tuned tier (exp 145, Block R) fine-tunes
+  our objectives on D^l only; the "+ unlabelled term" ablation is the
+  referee's question and is not yet run.

@@ -1,18 +1,12 @@
 #!/bin/bash
-# Residual battery on the exp-125 galaxy10 draws: exp 71 (res / res-nplm ft) + exp 72 (discovery on residual winners).
-# dino + lejepa parents exist; visreg draws wait for their exp-70 parent to land.
-cd /home/pharris/sigreg/SuperSig
-P=/home/pharris/venv/bin/python; L=logs/chainT9R.log
-run() { # base draw
-  export SUPERSIG_NH=1 SUPERSIG_HOLDOUT_DRAW=$2
-  $P experiments/71_residual_ft_grid.py --dataset galaxy10 --base $1 > logs/exp71_galaxy10_$1_h1_d$2.log 2>&1 \
-     && echo "R71_$1-D$2_OK" >> $L || echo "R71_$1-D$2_FAIL" >> $L
-  $P experiments/72_residual_discovery.py --cells galaxy10:$1 > logs/exp72_galaxy10_$1_h1_d$2.log 2>&1 \
-     && echo "R72_$1-D$2_OK" >> $L || echo "R72_$1-D$2_FAIL" >> $L
-}
-for B in dino lejepa; do for D in 0 3 5 7 8; do run $B $D; done; done
-for D in 0 3 5 7 8; do
-  until [ -f logs/exp70/results_galaxy10_visreg_ft70_h1_d$D.npz ]; do sleep 300; done
-  run visreg $D
+# Block R: exp 145 fine-tuned GCD tier -- aircraft then cars, 3 supervised arms, seed 0; seeds 1,2 afterwards.
+cd /home/pharris/sigreg/SuperSig; P=/home/pharris/venv/bin/python; L=logs/chainT9R.log
+ok() { [ $1 -eq 0 ] && echo "$2_OK" >> $L || echo "$2_FAIL" >> $L; }
+until grep -q BLOCK_Q_DONE logs/chainT9Q.log 2>/dev/null; do sleep 120; done
+for D in aircraft cars; do
+  $P experiments/145_gcd_finetune.py --dataset $D --seeds 0 > logs/exp145_${D}_s0.log 2>&1; ok $? R145_${D}-s0
 done
-echo RESIDUAL_G10_DONE >> $L
+for D in aircraft cars; do
+  $P experiments/145_gcd_finetune.py --dataset $D --seeds 0,1,2 > logs/exp145_${D}_s012.log 2>&1; ok $? R145_${D}-s012
+done
+echo BLOCK_R_DONE >> $L

@@ -2009,6 +2009,32 @@ c10.
 **Falsifier.**  The gain vanishes on clean trunks (the records rode leakage),
 or the concat loses top-1 by more than 0.017 (no-cost fails on CIFAR).
 
+### Exps 144/145 — The Generalized Category Discovery benchmark (GCD / UNO+ / SimGCD / RLCD)
+
+> **FROZEN TIER DONE 2026-08-29 (exp 144, 4 datasets x 3 seeds).**  Protocol
+> reproduced (our k-means row = the papers' within 0.5).  A SupCon head on D^l
+> doubles k-means on cars/aircraft (27.1 / 29.4 All) and destroys cifar10
+> (83.5 -> 61): with few known classes and no unlabelled term the head
+> collapses novel structure -- the finding GCD's unsupervised term exists for.
+> The density-ratio construction is the wrong tool for a K-way partition metric
+> (pure pool, 2-3 anchors).  Fine-tuned tier (exp 145) queued as Block R.
+> `logs/SUMMARY_TABLES.md`, `logs/exp144/`.
+
+**Protocol.**  DINO ViT-B/16 [CLS]; known = first N classes (cifar10 5/10,
+cifar100 80/100, cars 98/196, aircraft 50/100), 50% of known-class train
+images labelled; ACC = one Hungarian over K on the unlabelled train set,
+All/Old/New; K known.  Rows: k-means, semi-supervised k-means, our np-anchors
+(K free) and np-seeded k-means, on the raw trunk and on SupCon / SupCon+SIGReg
+heads trained on D^l; exp 145 adds the exp-70 fine-tuned trunks (D^l only).
+
+**Prediction (fine-tuned tier).**  supcon-ft reaches GCD-level Old on cars/
+aircraft and stays below it on New (no unlabelled term); ss-ft below supcon-ft
+on this decodability metric.  **Falsifier.**  supcon-ft below the frozen SupCon
+head -> the exp-70 fine-tune hurts the trunk's clusterability.
+
+**Open.**  The "+ unsupervised contrastive on D^u" ablation (one line in the
+step function) is the true head-to-head with GCD's representation step.
+
 ### Exp 136 — The from-scratch CIFAR master grid (every metric, every space)
 
 > **TIER 2 DONE 2026-08-28 (cifar10 h4, all 8 objectives).**  Prediction (i)
