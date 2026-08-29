@@ -46,6 +46,19 @@ PRETTY = {
 }
 
 
+CELL = {"cars_visreg": "cars / VISReg", "dtd_dino": "DTD / DINO",
+        "galaxy10_dino": "galaxy10 / DINO",
+        "galaxy10_lejepa": "galaxy10 / LeJEPA",
+        "galaxy10_visreg": "galaxy10 / VISReg"}
+CTOR = {"res": "SupCon", "res-nplm": "NPLM"}
+# how a construction reads in the residuals table (appendix)
+CHILD = {"res (residual)": "residual child (SupCon), bare",
+         "res (concat)": "residual child (SupCon), concat",
+         "res-nplm (residual)": "residual child (NPLM), bare",
+         "res-nplm (concat)": "residual child (NPLM), concat"}
+KIND = {"residual": "bare", "concat": "concat"}
+
+
 def esc(s):
     # `->` is not a text-mode glyph in OT1 (it prints as `-¿`); typeset it.
     return (str(s).replace("_", r"\_").replace("&", r"\&")
@@ -118,14 +131,22 @@ def t_objectives():
         "\n".join(rows),
         r"\textbf{Objectives on the leakage-free CIFAR-100 lineage} "
         r"(random init; the encoder never saw the held-out class). "
-        r"Probe and top-1 measure \emph{decodability}; Euclidean AUC, tied "
-        r"Mahalanobis and per-event power at $\alpha{=}0.05$ measure "
-        r"\emph{discoverability}. Adding SIGReg is a tie on probe and top-1 "
-        r"and wins every discoverability column -- at 100 classes; see "
-        r"Table~\ref{tab:app_cifar10_pre} for the few-class lineage.",
+        r"\emph{Decodable} columns: linear-probe AUC for the held-out class "
+        r"(trained \emph{with} its labels), top-1 accuracy on the seen classes, "
+        r"and nearest-anchor accuracy on the seen classes. "
+        r"\emph{Discoverable} columns: novelty-ranking AUC by Euclidean and "
+        r"by tied-Mahalanobis distance, and per-event detection power at a "
+        r"$5\%$ false-positive rate --- the last is $\approx0.05$ for a space "
+        r"carrying no usable signal, so $0.00$ means the space cannot flag an "
+        r"individual novel image at all. Adding SIGReg is a probe tie and a "
+        r"top-1 loss, and wins every discoverability column.",
         "tab:objectives", status,
         "llcccccc",
-        r"objective & sup. & probe & top-1 & acc & eucl & mahaT & per-ev \\")
+        r"& & \multicolumn{3}{c}{decodable} & "
+        r"\multicolumn{3}{c}{discoverable} \\"
+        "\n" r"\cmidrule(lr){3-5}\cmidrule(lr){6-8}" "\n"
+        r"objective & sup. & probe & top-1 & anchor & Eucl. & Maha. & "
+        r"per-event \\")
 
 
 # --------------------------------------------------------------- table 2 ---
@@ -258,11 +279,14 @@ def t_2x2():
             if r["missing"]:
                 n_missing += 1
                 rows.append(" & ".join(
-                    [esc(name), esc(r["obj"]), r["kind"]] + ["--"] * 7) + r" \\")
+                    [CELL.get(name, esc(name)),
+                     CTOR.get(r["obj"], esc(r["obj"])),
+                     KIND.get(r["kind"], r["kind"])] + ["--"] * 7) + r" \\")
                 continue
             rows.append(" & ".join([
-                esc(name), esc(r["obj"]), r["kind"],
-                fnum(r["A"]), fnum(r["B"]), fnum(r["C"]), fnum(r["D"]),
+                CELL.get(name, esc(name)),
+                CTOR.get(r["obj"], esc(r["obj"])),
+                KIND.get(r["kind"], r["kind"]), fnum(r["A"]), fnum(r["B"]), fnum(r["C"]), fnum(r["D"]),
                 f"{r['main_disc']:+.3f}", f"{r['main_ctor']:+.3f}",
                 rf"$\mathbf{{{r['interaction']:+.3f}}}$"
                 if r["interaction"] > 0.10 else f"{r['interaction']:+.3f}",
@@ -274,15 +298,22 @@ def t_2x2():
     return _wrap(
         "\n".join(rows),
         r"\textbf{Discovery $\times$ construction, per-event power at "
-        r"$\alpha{=}0.05$.} $A$ parent, $B$ $+$discovery, $C$ "
-        r"$+$construction, $D$ both; "
-        r"$\Delta_{\text{int}}=(D-C)-(B-A)$ is zero for an additive stack. "
-        r"Bold marks $\Delta_{\text{int}}>0.10$. The two largest \emph{totals} "
-        r"(galaxy10) are main effects, not interactions.",
+        r"$\alpha{=}0.05$.} Each row is one $2\times2$: $A$ is the parent "
+        r"space alone, $B$ the parent after the discovery loop, $C$ the "
+        r"construction built on the parent \emph{without} discovery, and $D$ "
+        r"both together. The two main effects are $B-A$ (discovery) and "
+        r"$C-A$ (construction). The residual child is trained under the loss in "
+        r"the second column and then either used alone (\emph{bare}) or "
+        r"concatenated with its parent (\emph{concat}). The interaction "
+        r"$\Delta_{\text{int}}=(D-C)-(B-A)$ is zero if the two simply add, "
+        r"and positive only if they do more together than apart. Bold marks "
+        r"$\Delta_{\text{int}}>0.10$. Note that the two largest \emph{totals} "
+        r"in the table (both galaxy10) have near-zero interaction: they are "
+        r"main effects, not composition.",
         "tab:2x2", status,
         "lllccccccc",
-        r"cell & ctor & variant & $A$ & $B$ & $C$ & $D$ & disc & ctor & "
-        r"$\Delta_{\text{int}}$ \\", size=r"\footnotesize")
+        r"cell & child loss & used as & $A$ & $B$ & $C$ & $D$ & "
+        r"$B{-}A$ & $C{-}A$ & $\Delta_{\text{int}}$ \\")
 
 
 # --------------------------------------------------------------- table 5 ---
@@ -347,7 +378,8 @@ def t_residuals():
         for k in [x for x in d if x.startswith(stem + "->")]:
             c = d[k]
             rows.append(" & ".join([
-                "\\quad " + esc(k.split("->", 1)[1]),
+                "\\quad " + CHILD.get(k.split("->", 1)[1],
+                                      esc(k.split("->", 1)[1])),
                 fnum(c.get("probe")), f"{c.get('probe', 0) - p.get('probe', 0):+.3f}",
                 fnum(c.get("eucl")), f"{c.get('eucl', 0) - p.get('eucl', 0):+.3f}",
                 fnum(c.get("perevt"), 2)]) + r" \\")
@@ -360,7 +392,8 @@ def t_residuals():
         r"generally loses probe accuracy and the concatenation recovers it; "
         r"the detection gain is large and nearly free.",
         "tab:residuals", status, "lccccc",
-        r"space & probe & $\Delta$ & eucl & $\Delta$ & per-ev \\")
+        r"construction & probe & $\Delta$ & Eucl.\ AUC & $\Delta$ & "
+        r"per-event \\")
 
 
 def t_seeds():
@@ -409,7 +442,8 @@ def t_seeds():
                  r"seeds. Seed spread here is small, consistent with "
                  r"Table~\ref{tab:hardening}.",
                  "tab:seeds", status, "lccccc",
-                 r"space & probe pre & probe post & eucl & mahaT & $n$ \\")
+                 r"space & probe (pre) & probe (post) & Eucl.\ AUC & Maha. & "
+        r"seeds \\")
 
 
 _AGG = re.compile(r"^\|\s*([a-z0-9\-]+)\s*\|(.+)\|\s*$")

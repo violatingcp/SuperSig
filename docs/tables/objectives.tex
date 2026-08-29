@@ -4,7 +4,9 @@
 \small
 \begin{tabular}{llcccccc}
 \toprule
-objective & sup. & probe & top-1 & acc & eucl & mahaT & per-ev \\
+& & \multicolumn{3}{c}{decodable} & \multicolumn{3}{c}{discoverable} \\
+\cmidrule(lr){3-5}\cmidrule(lr){6-8}
+objective & sup. & probe & top-1 & anchor & Eucl. & Maha. & per-event \\
 \midrule
 SimCLR & n & 0.799 & 0.292 & 0.242 & 0.443 & 0.385 & 0.01 \\
 VISReg/LeJEPA & n & 0.797 & 0.239 & 0.190 & 0.499 & 0.382 & 0.03 \\
@@ -16,6 +18,6 @@ NPLM-dist.+classwise SIGReg & y & 0.898 & 0.507 & 0.463 & 0.525 & 0.411 & 0.03 \
 NPLM-dist. (sup.) & y & 0.820 & 0.254 & 0.232 & 0.408 & 0.345 & 0.05 \\
 \bottomrule
 \end{tabular}
-\caption{\textbf{Objectives on the leakage-free CIFAR-100 lineage} (random init; the encoder never saw the held-out class). Probe and top-1 measure \emph{decodability}; Euclidean AUC, tied Mahalanobis and per-event power at $\alpha{=}0.05$ measure \emph{discoverability}. Adding SIGReg is a tie on probe and top-1 and wins every discoverability column -- at 100 classes; see Table~\ref{tab:app_cifar10_pre} for the few-class lineage. \emph{Coverage:} 8/8 objectives present; single holdout (class 4), one seed per cell, probe averaged over 3 probe restarts.}
+\caption{\textbf{Objectives on the leakage-free CIFAR-100 lineage} (random init; the encoder never saw the held-out class). \emph{Decodable} columns: linear-probe AUC for the held-out class (trained \emph{with} its labels), top-1 accuracy on the seen classes, and nearest-anchor accuracy on the seen classes. \emph{Discoverable} columns: novelty-ranking AUC by Euclidean and by tied-Mahalanobis distance, and per-event detection power at a $5\%$ false-positive rate --- the last is $\approx0.05$ for a space carrying no usable signal, so $0.00$ means the space cannot flag an individual novel image at all. Adding SIGReg is a probe tie and a top-1 loss, and wins every discoverability column. \emph{Coverage:} 8/8 objectives present; single holdout (class 4), one seed per cell, probe averaged over 3 probe restarts.}
 \label{tab:objectives}
 \end{table}
