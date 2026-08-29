@@ -133,26 +133,39 @@ def test_draw_purities_finds_arms_via_the_section_header():
             assert 0.0 <= v <= 1.0, (arm, d, v)
 
 
-def test_ss_ft_clears_the_gate_on_both_dtd_backbones():
-    """The base-independence claim in Section 6, pinned to the logs."""
+def test_ss_ft_is_base_independent_on_dtd():
+    """Section 6's base-independence claim, pinned to the logs.  Stated
+    WITHOUT a purity threshold: the paper reports no gate."""
+    worst = {}
     for base, expect in (("dino", 0.219), ("lejepa", 0.225)):
         got = pt._draw_purities("dtd", base)
         if not got or "ss-ft" not in got:
             pytest.skip(f"exp-70 dtd/{base} draw logs absent")
         v = list(got["ss-ft"].values())
         assert np.mean(v) == pytest.approx(expect, abs=2e-3)
-        assert all(x >= 0.15 for x in v), f"dtd/{base} ss-ft below gate: {v}"
+        worst[base] = min(v)
+    assert worst["dino"] == pytest.approx(0.193, abs=2e-3)
+    # the claim that replaced the gate count: the WORST ss-ft draw beats
+    # every other objective's mean on the same backbone.
+    for base in ("dino", "lejepa"):
+        got = pt._draw_purities("dtd", base)
+        for arm, per_draw in got.items():
+            if arm == "ss-ft":
+                continue
+            assert np.mean(list(per_draw.values())) < worst[base], (base, arm)
 
 
 def test_nplm_sup_is_base_dependent_unlike_ss_ft():
-    """The asymmetry is the point of the table; if it vanishes, the claim
-    in Section 6 must change."""
+    """The asymmetry is the point of the table: same objective, same data,
+    a factor of four between trunks."""
     d = pt._draw_purities("dtd", "dino").get("nplm-sup-ft", {})
     l = pt._draw_purities("dtd", "lejepa").get("nplm-sup-ft", {})
     if not d or not l:
         pytest.skip("exp-70 dtd draw logs absent")
-    assert sum(1 for v in d.values() if v >= 0.15) == 0, d
-    assert sum(1 for v in l.values() if v >= 0.15) == len(l), l
+    md, ml = np.mean(list(d.values())), np.mean(list(l.values()))
+    assert md == pytest.approx(0.051, abs=2e-3)
+    assert ml == pytest.approx(0.215, abs=2e-3)
+    assert ml > 3.5 * md, (md, ml)
 
 
 # ------------------------------------------------------------ coverage ----
@@ -173,7 +186,7 @@ def test_galaxy_procedure_gap_holds():
         for arm in ("supcon-ft", "ss-ft", "nplm-sup-ft"):
             if arm not in n or arm not in cell:
                 continue
-            assert n[arm][0] < 0.30, f"natural discovery unexpectedly high: {base}/{arm}"
+            assert n[arm][0] < 0.30, f"natural discovery unexpectedly high: {base}/{arm}"  # noqa: E501
             assert cell[arm]["mean"] > 0.35, f"frozen pool low: {base}/{arm}"
             assert cell[arm]["mean"] > 1.5 * n[arm][0], (base, arm)
 
@@ -200,3 +213,33 @@ def test_objectives_table_reports_missing_arms_as_dashes():
     body = t.split(r"\midrule")[1].split(r"\bottomrule")[0]
     assert len([x for x in body.strip().split("\n")
                 if x.strip().endswith(r"\\")]) == 8, "all 8 objectives listed"
+
+
+def test_no_table_mentions_a_purity_gate():
+    """The 0.15 gate was dropped entirely: it never gated a computation, only
+    a presentation.  If it reappears in a caption or a coverage line, the
+    paper is asserting a threshold it does not justify."""
+    for name, fn in pt.TABLES:
+        t = fn()
+        if t is None:
+            continue
+        assert "gate" not in t.lower(), f"{name} reintroduced the gate"
+        # only prose may not mention it -- "-0.150" is a legitimate datum.
+        prose = t.split(r"\caption")[-1] + t.split("\n")[0]
+        assert "0.15$" not in prose and "0.15 " not in prose, \
+            f"{name} reintroduced the 0.15 threshold in its prose"
+
+
+def test_hardening_table_is_per_round_not_duplicated():
+    """exp-139's archived *_gate dicts are byte-identical between r1 and r2,
+    so anything tabulated per round must come from *_variance, whose values
+    genuinely differ."""
+    t = pt.t_hardening()
+    if t is None:
+        pytest.skip("exp-139 archive absent")
+    body = t.split(r"\midrule")[-1].split(r"\bottomrule")[0]
+    rows = [x for x in body.strip().split("\n") if x.strip().endswith(r"\\")]
+    assert len(rows) == 2, rows
+    assert rows[0] != rows[1], "r1 and r2 rendered identically again"
+    assert "--" not in t.split(r"\midrule")[-1].split(r"\bottomrule")[0], \
+        "a column lost its key mapping and is rendering as a dash"

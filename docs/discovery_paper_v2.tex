@@ -110,9 +110,9 @@ structure sharper.
   $\varepsilon_s/q$ and
   $\Pi \le \min(1, b/q)$. The ceiling is a property of the cut alone. It says
   that a pool threshold inherited without derivation --- as ours was --- can
-  cap achievable purity far below the gate no matter how good the
-  representation is, and it separates ``the space is bad'' from ``the cut is
-  bad'' for the first time.
+  cap achievable purity at a level no representation can rescue, and it
+  separates ``the space is bad'' from ``the cut is bad'' for the first
+  time.
 \item \textbf{A label-free rule for the cut.} Because purity requires the
   novel labels, tuning the cut on purity is oracle tuning. We derive the
   novel-count estimator that the Neyman--Pearson critic already provides, and
@@ -125,8 +125,8 @@ structure sharper.
 \item \textbf{A regime split, stated as a condition rather than a caveat.}
   Single-class novelty at a rate of $\sim$1\% and multi-class novelty at
   $\sim$10\% are different problems with different answers: which pooling
-  statistic wins, whether stricter thresholds help or hurt, and whether the
-  gate is reachable at all invert between them. We report them separately
+  statistic wins, whether stricter thresholds help or hurt, and what purity
+  is attainable at all invert between them. We report them separately
   throughout.
 \item \textbf{A reduced set of objectives.} From a design cube of ten
   contrastive objectives we identify the few that earn a place for discovery
@@ -188,17 +188,20 @@ discovered anchor; and adapt the representation (or, in the frozen variant of
 Section~\ref{sec:constructions}, only the anchors) to the enlarged anchor set.
 The round repeats with the updated anchors.
 
-\paragraph{Pool purity, and why it gates everything.}
+\paragraph{Pool purity, and why everything is downstream of it.}
 Let $\Pi$ denote the fraction of $\pool$ that is truly novel. The pool feeds
 directly into a clustering step with no supervision downstream of it, so
 $\pool$ is the last point at which a mistake can still be corrected and
 nothing after it checks the work. At $\Pi \approx 0.01$ the clustering is not
 finding the novel class; it is partitioning background, and the subsequent
 fine-tune sharpens that partition. Empirically the probe drops by $0.031$ to
-$0.038$ wherever such pools form. Purity therefore behaves as a gate rather
-than a gradient: above roughly $0.15$ the loop compounds across rounds, and
-below it the loop is harmful. We report $\Pi$ as the primary metric and treat
-the gate as a precondition for running the pipeline at all.
+$0.038$ wherever such pools form. We therefore report $\Pi$ as the primary
+metric and compare spaces and procedures by it directly. We deliberately do
+\emph{not} impose a purity threshold: purity is monotone in the cut
+(Section~\ref{sec:cut}), so any fixed level is a statement about the operating
+point rather than about the space, and no experiment in this paper branches on
+one. Where a purity is low enough that the subsequent clustering is
+partitioning background, we say so and give the number.
 
 % ===========================================================================
 \section{Algorithms}
@@ -322,9 +325,9 @@ Purity increases monotonically as $q$ shrinks, so there is no interior optimum
 and targeting a purity \emph{level} is the wrong objective. And the ceiling
 $\min(1, b/q)$ is a property of the cut alone: at $q = 0.05$ and $b = 0.01$ no
 scorer, however good, can exceed $\Pi = 0.20$. A threshold chosen without
-reference to $b$ can therefore cap purity near the gate independently of the
-representation --- and the widely used ``$95$th percentile of the reference''
-is such a threshold.
+reference to $b$ therefore caps purity independently of the representation
+--- and the widely used ``$95$th percentile of the reference'' is such a
+threshold.
 
 \paragraph{The rule.}
 Purity cannot be used to choose $q$, since computing it requires the novel
@@ -529,9 +532,12 @@ is about which class you hold out, not which seed you ran. We attach it to
 every single-seed result rather than dropping it.
 
 Table~\ref{tab:draws} also carries a result we did not anticipate. Only one
-objective clears the gate on \emph{both} backbones: supervised distance-NPLM
-clears $5/5$ draws on LeJEPA and $0/5$ on DINO. SupCon+SIGReg clears $5/5$ on
-both. Base-independence is a stronger and more useful property than winning on
+objective holds its purity across \emph{both} backbones. SupCon+SIGReg reaches
+$0.219$ on DINO and $0.225$ on LeJEPA, and its worst single draw ($0.193$)
+still exceeds every other objective's mean. Supervised distance-NPLM matches it
+on LeJEPA ($0.215$) and loses a factor of four on DINO ($0.051$) --- the same
+objective, the same data, the same code, differing only in the pretrained
+trunk. Base-independence is a stronger and more useful property than winning on
 average, and it is not visible in any single-backbone table.
 
 \subsection{Constructions}
@@ -545,12 +551,13 @@ composition. We report all twenty rows rather than the favourable ones.
 
 Table~\ref{tab:baserate} is a negative result about our own method.
 At a $1\%$ novel rate on clean CIFAR-100 banks, the label-free rule of
-Section~\ref{sec:cut} engages on $3$ of $20$ spaces, and where it engages
-the resulting purity is still below the gate. The spaces where it works share
-a structure --- an NPLM critic on a SIGReg marginal --- so the rule should be
-read as conditional on the scorer, not as a general-purpose procedure. The
-ceiling algebra says a $20\times$ enrichment is available at this rate; the
-estimator, not the representation, is what fails to reach it.
+Section~\ref{sec:cut} engages on $3$ of $20$ spaces, and where it engages the
+resulting purity is $0.046$ to $0.101$ --- an enrichment of $5$ to $10$ over
+the $1\%$ base rate, but far short of what the same cut admits. The spaces
+where it works share a structure --- an NPLM critic on a SIGReg marginal --- so
+the rule should be read as conditional on the scorer, not as a general-purpose
+procedure. The ceiling algebra says a $20\times$ enrichment is available at
+this rate; the estimator, not the representation, is what fails to reach it.
 
 \input{tables/objectives}
 \input{tables/draws}
@@ -563,10 +570,10 @@ estimator, not the representation, is what fails to reach it.
 \label{sec:limits}
 % ===========================================================================
 % TODO, but the content is already settled and should not be softened:
-%   - The rate floor. At b ~ 1% the gate is out of reach for the pipeline as
-%     built. Note honestly that the CEILING is 0.20 there, not 0.03, so this
-%     is a signal-efficiency limit and a clustering-detectability limit, NOT
-%     an information-theoretic one.
+%   - The rate floor. At b ~ 1% the pipeline as built reaches purity 0.03-0.10
+%     where it engages at all. Note honestly that the CEILING is 0.20 there,
+%     so this is a signal-efficiency limit and a clustering-detectability
+%     limit, NOT an information-theoretic one.
 %   - SIGReg does not help by making distance a log-likelihood. Forcing unit
 %     width is decorative; seen-class fidelity anti-correlates with novelty
 %     calibration. State the defensible claim instead.
@@ -591,7 +598,7 @@ in this paper are generated from the archived result files by a single script,
 and each carries a machine-written coverage line stating what is present and
 what is missing. Blanks are shown as ``--''.
 
-\paragraph{galaxy10, and the procedure that clears the gate.}
+\paragraph{galaxy10, and how much of the difficulty is the procedure.}
 galaxy10 carries more weight than any other dataset here, because no backbone
 we use has seen it: DINO, LeJEPA and VISReg were all pretrained on natural
 images, and galaxy morphology is genuinely out of that distribution. It is
@@ -600,10 +607,10 @@ also, for the same reason, the hardest cell in the study.
 Table~\ref{tab:galaxy} reports it under both discovery procedures on the same
 holdout draws. Under natural discovery --- a distance pool with the encoder
 fine-tuned --- round-1 pool purity sits at $0.09$--$0.29$ across every
-objective and backbone, with sds that are frequently as large as the means:
-almost nothing clears the $0.15$ gate, and no objective clears it reliably.
-Under the frozen-anchor density-ratio pool, the same objectives on the same
-draws reach $0.39$--$0.58$.
+objective and backbone, with sds that are frequently as large as the means,
+so the objectives are not separated by this measurement at all. Under the
+frozen-anchor density-ratio pool, the same objectives on the same draws reach
+$0.39$--$0.58$.
 
 That is a factor of three to five from changing the procedure and nothing
 else. It is the sharpest evidence in the paper for a claim we make throughout:
