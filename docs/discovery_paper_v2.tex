@@ -71,7 +71,12 @@ holdout draws dominate seeds by a factor of eight, and that the construction
 which survives every backbone and every draw is the simplest one: freeze the
 encoder and iterate anchors against a density-ratio pool ($143/144$ galaxy10
 draw$\times$seed cells above the purity gate, where the fine-tuning loop on
-the same parents clears it on $0/5$ to $5/5$ draws by backbone). A residual
+the same parents clears it on $0/5$ to $5/5$ draws by backbone). Taken to
+its limit --- the pretrained trunk with no training at all --- the same
+construction clears the gate on every galaxy10 and DTD draw and beats every
+fine-tuned objective there, sits at the gate on flowers, and is dead on
+aircraft and cars; the ordering is by distance of the novel class from the
+seen manifold, not by base rate. A residual
 decomposition survives a width-matched control and composes with discovery
 as a substitute more often than a complement. We report where the method
 fails: at a $1\%$ novel rate the label-free cut declines on $17$ of $20$ clean
@@ -177,7 +182,10 @@ structure sharper.
   galaxy10 draw$\times$seed cells (95\% lower bound $0.96$), on $8/8$ clean
   CIFAR-10 objectives, and on every random draw of DTD, where the fine-tuning
   loop on the same parents clears it on $0/5$ to $5/5$ draws depending on the
-  backbone. Because both constructions can be composed with the discovery
+  backbone. It needs no training: the pretrained trunk alone, pooled by
+  density ratio, reaches $0.56$--$0.60$ purity on galaxy10 and $0.26$ on DTD
+  ($30/30$ draw cells), above every fine-tuned objective on both
+  (Table~\ref{tab:zero_training}). Because both constructions can be composed with the discovery
   loop, we report them in a $2\times2$ ablation (construction $\times$
   discovery) rather than as a single delta. The composition is superadditive
   in $12$ of $20$ cells but concentrated: the effect that takes per-event
@@ -691,6 +699,29 @@ full. The interaction is large in one cell, positive but small in most, and
 the two largest \emph{totals} in the table are main effects rather than
 composition. We report all twenty rows rather than the favourable ones.
 
+\subsection{The regime boundary, on one construction}
+
+Table~\ref{tab:zero_training} runs the zero-training construction of
+Section~\ref{sec:frozen} --- pretrained features, seen-class centroids,
+density-ratio pool --- on every transfer dataset at single holdout, five
+draws each. It orders the datasets more sharply than any fine-tuned table:
+galaxy10 ($0.56$--$0.60$) and DTD ($0.26$) clear the gate on all $30$ cells
+and beat the best fine-tuned objective on the same draws; flowers sits at the
+gate ($0.16$--$0.18$, $12/15$); aircraft and cars are dead ($0.01$). Flowers
+and aircraft have the same novel rate, so the rate is not what separates
+them: the pretrained trunk already places an unseen flower species away from
+the seen ones and an unseen aircraft variant among them. The base rate is
+necessary --- cars at $1/196$ is dead in both regimes --- but the boundary is
+set jointly by the rate and by where the novel class sits in the pretrained
+space, which is what the earlier on-/off-manifold split measured with local
+intrinsic dimension. Two consequences for practice: on the datasets where
+discovery works, fine-tuning on the seen classes is not what makes it work
+(on galaxy10 it lowers single-holdout purity from $0.60$ to $0.13$--$0.29$
+under the loop); and whether a new dataset is discoverable can be read off
+the pretrained trunk before any training is done.
+
+\input{tables/zero_training}
+
 \subsection{Where the label-free cut does not reach}
 
 Table~\ref{tab:baserate} is a negative result about our own method.
@@ -727,7 +758,9 @@ swapping the estimator, a scale-invariant knee criterion, and injection
 calibration --- all fail on real embeddings, because the bias is not a
 uniform scale (it grows as the cut widens). Lowering the clusterability
 constant is the one intervention that helps, and it is a tuning constant we
-report with its sweep rather than a correction.
+report with its sweep rather than a correction. And the floor is not purely
+a rate: at the same $1\%$, flowers is discoverable from the pretrained trunk
+and aircraft is not (Table~\ref{tab:zero_training}).
 
 \paragraph{SIGReg does not help by making distance a log-likelihood.}
 Forcing unit class-conditional width on demand is achievable and decorative:
@@ -846,8 +879,9 @@ Table~\ref{tab:2x2} is single-seed throughout, and its one large interaction
 rests on a single cell; the multi-holdout regime is run only on the
 label-rich datasets; the leakage-free CIFAR lineages are one holdout each
 (the draw-resampled shortlist is running); flowers, cars and aircraft have no
-single-holdout fine-tuned parents, so on those datasets only the
-training-free frozen pool of Table~\ref{tab:app_frozen_np} is reported; and
+single-holdout fine-tuned parents, so on those datasets the training-free
+construction of Tables~\ref{tab:zero_training} and~\ref{tab:app_frozen_np}
+is the only single-holdout evidence (it is also the strongest); and
 the frozen-space construction of Section~\ref{sec:frozen} is quoted from
 evaluation-mode runs after a BatchNorm fix invalidated the earlier archive,
 so its older numbers do not reproduce and are not used.

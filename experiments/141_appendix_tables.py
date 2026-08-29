@@ -448,6 +448,53 @@ def t_hub_residual_seeds():
                  "lcccc", r"space & probe & acc & eucl & mahaT \\")
 
 
+def t_zero_training():
+    """Main-text table: single-holdout purity of the zero-training construction
+    (pretrained trunk + np pool) per dataset x backbone, vs the fine-tuned
+    references where they exist."""
+    fs = sorted(glob.glob(os.path.join(LOGS, "exp135", "corpus_norm_*_frozen_h1_d*.json")))
+    if not fs:
+        return None
+    per = {}
+    for f in fs:
+        m = re.search(r"corpus_norm_(\w+?)-(\w+?)_frozen_h1_d\d+\.json", os.path.basename(f))
+        if not m:
+            continue
+        d = json.load(open(f))
+        for k, v in d.items():
+            if v["variant"] == "frozen" and v["scorer"] == "np":
+                per.setdefault((m.group(1), m.group(2)), []).append(v["purity"][0])
+    # fine-tuned references: exp-70 loop best arm (mean over draws) from the logs
+    ref = {}
+    for ds, draws in (("galaxy10", (0, 3, 5, 7, 8)), ("dtd", (0, 1, 3, 4, 5))):
+        for base in ("dino", "lejepa", "visreg"):
+            pur = _purities70(ds, base, draws)
+            best = max(((np.mean(list(v.values())), a) for a, v in pur.items() if v), default=None)
+            if best:
+                ref[(ds, base)] = best
+    rate = {"galaxy10": "1/10", "dtd": "1/47", "flowers": "1/102", "aircraft": "1/100", "cars": "1/196"}
+    rows = []
+    for ds in ("galaxy10", "dtd", "flowers", "aircraft", "cars"):
+        for i, base in enumerate(("dino", "lejepa", "visreg")):
+            v = per.get((ds, base), [])
+            r = ref.get((ds, base))
+            rows.append(" & ".join([
+                (esc(ds) if i == 0 else ""), (rate[ds] if i == 0 else ""), base,
+                msd(v), f"{sum(1 for x in v if x >= 0.15)}/{len(v)}" if v else "--",
+                (f"{r[0]:.3f} ({esc(r[1])})" if r else "--")]) + r" \\")
+    status = (f"{len(fs)} cells; pretrained ViT-B/16 features, identity head, anchors = seen-class centroids, "
+              r"density-ratio pool, anchors-only iteration, round 1; five single-holdout draws per (dataset, "
+              r"backbone); gate $=0.15$. Reference = the best objective of the exp-70 fine-tuning loop on the same draws.")
+    return _wrap("\n".join(rows),
+                 r"\textbf{The regime boundary on one construction that needs no training.} Round-1 pool "
+                 r"purity of the pretrained trunk pooled by density ratio, single holdout, mean $\pm$ sd over "
+                 r"five held-out classes. galaxy10 and DTD clear the gate on every cell and beat the best "
+                 r"fine-tuned objective; flowers sits at the gate; aircraft and cars are dead although "
+                 r"aircraft's rate equals flowers'.",
+                 "tab:zero_training", status, "lllccc",
+                 r"dataset & rate & backbone & purity & $\ge$gate & fine-tuned loop, best objective \\")
+
+
 TABLES = [
     ("app_cifar10_pre", lambda: t_scratch_pre("cifar10")), ("app_cifar10_power", lambda: t_scratch_power("cifar10")),
     ("app_cifar10_pools", lambda: t_scratch_pools("cifar10")), ("app_cifar10_residuals", lambda: t_residuals_ds("cifar10")),
@@ -459,6 +506,7 @@ TABLES = [
     ("app_width", t_width_control), ("app_postdisc", t_postdisc),
     ("app_seeds_c100", t_seeds_c100), ("app_top1_galaxy", t_top1_galaxy),
     ("app_frozen_np", t_frozen_np_datasets), ("app_hub_residual_seeds", t_hub_residual_seeds),
+    ("zero_training", t_zero_training),
 ]
 
 
