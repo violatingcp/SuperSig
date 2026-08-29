@@ -590,7 +590,8 @@ fine-tune: pooling the \emph{pretrained} trunk's features, with seen-class
 centroids as anchors and no training at all, clears the gate on $30/30$
 single-holdout draw cells on galaxy10 and DTD --- at $0.56$--$0.60$ on
 galaxy10, above the frozen fine-tuned head ($0.40$--$0.57$) and far above the
-fine-tuning loop ($0.13$--$0.29$), and at $0.26$ on DTD, above the fine-tuned
+fine-tuning loop ($0.13$--$0.29$; whole class present in the bank in every
+case), and at $0.26$ on DTD, above the fine-tuned
 workhorse ($0.22$--$0.24$). Fine-tuning on the seen classes buys the probe
 and the multi-holdout regime; it does not buy single-holdout
 discoverability, and on galaxy10 it costs some. Where the base rate is low
@@ -824,11 +825,16 @@ also, for the same reason, the hardest cell in the study.
 
 Table~\ref{tab:galaxy} reports it under both discovery procedures on the same
 holdout draws. Under natural discovery --- a distance pool with the encoder
-fine-tuned --- round-1 pool purity sits at $0.09$--$0.29$ across every
-objective and backbone, with sds that are frequently as large as the means:
-almost nothing clears the $0.15$ gate, and no objective clears it reliably.
-Under the frozen-anchor density-ratio pool, the same objectives on the same
-draws reach $0.39$--$0.58$.
+fine-tuned and the whole held-out class present in the bank --- round-1 pool
+purity sits at $0.09$--$0.29$ across every objective and backbone, with sds
+that are frequently as large as the means: almost nothing clears the $0.15$
+gate, and no objective clears it reliably. Under the frozen-anchor
+density-ratio pool, with the same whole-class bank, the same objectives on
+the same draws reach $0.39$--$0.58$. In the paper's own regime --- discovery
+from a $2\%$ injected sample of the held-out class, the left block of the
+table --- the loop's purity falls further, to $0.01$--$0.09$; the frozen
+pool has not yet been measured at injected fractions, so that column has no
+counterpart.
 
 That is a factor of three to five from changing the procedure and nothing
 else. It is the sharpest evidence in the paper for a claim we make throughout:

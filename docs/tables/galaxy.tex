@@ -1,24 +1,24 @@
-% STATUS: galaxy10, 3 backbones; natural discovery over 5 draws (18/18 cells present), frozen-anchor pool over 5 draws $\times$ 3 seeds (9/18 present --- that arm of the study covers the three supervised objectives only).
+% STATUS: galaxy10, 3 backbones; fine-tuning loop over 5 draws (18/18 cells present, injected and whole-class passes from the same runs), frozen-anchor pool over 5 draws $\times$ 3 seeds (9/18 present --- that arm of the study covers the three supervised objectives only).
 \begin{landscape}
 \begin{table}[p]
 \centering
 \footnotesize
 \setlength{\tabcolsep}{3pt}
-\begin{tabular}{lcccccc}
+\begin{tabular}{lccccccccc}
 \toprule
-& \multicolumn{3}{c}{natural discovery} & \multicolumn{3}{c}{frozen-anchor pool} \\
-\cmidrule(lr){2-4}\cmidrule(lr){5-7}
-objective & DINO & LeJEPA & VISReg & DINO & LeJEPA & VISReg \\
+& \multicolumn{3}{c}{loop, 2\% injected} & \multicolumn{3}{c}{loop, whole class present} & \multicolumn{3}{c}{frozen-anchor pool} \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-7}\cmidrule(lr){8-10}
+objective & DINO & LeJEPA & VISReg & DINO & LeJEPA & VISReg & DINO & LeJEPA & VISReg \\
 \midrule
-SimCLR & 0.104$\pm$0.089 & 0.112$\pm$0.100 & 0.093$\pm$0.063 & -- & -- & -- \\
-SimCLR+SIGReg & 0.100$\pm$0.088 & 0.123$\pm$0.168 & 0.110$\pm$0.077 & -- & -- & -- \\
-NPLM-bilinear & 0.104$\pm$0.080 & 0.102$\pm$0.051 & 0.117$\pm$0.092 & -- & -- & -- \\
-SupCon & 0.103$\pm$0.138 & 0.132$\pm$0.085 & 0.290$\pm$0.067 & 0.465$\pm$0.158 & 0.575$\pm$0.185 & 0.574$\pm$0.180 \\
-\textbf{SupCon+SIGReg ($\lambda{=}5$)} & 0.092$\pm$0.074 & 0.182$\pm$0.200 & 0.146$\pm$0.042 & 0.459$\pm$0.143 & 0.516$\pm$0.186 & 0.554$\pm$0.169 \\
-NPLM-dist. (sup.) & 0.131$\pm$0.038 & 0.190$\pm$0.137 & 0.262$\pm$0.106 & 0.393$\pm$0.147 & 0.569$\pm$0.179 & 0.543$\pm$0.185 \\
+SimCLR & 0.012$\pm$0.015 & 0.012$\pm$0.018 & 0.005$\pm$0.007 & 0.104$\pm$0.100 & 0.112$\pm$0.112 & 0.093$\pm$0.070 & -- & -- & -- \\
+SimCLR+SIGReg & 0.014$\pm$0.016 & 0.037$\pm$0.052 & 0.012$\pm$0.009 & 0.100$\pm$0.099 & 0.123$\pm$0.188 & 0.110$\pm$0.086 & -- & -- & -- \\
+NPLM-bilinear & 0.010$\pm$0.010 & 0.038$\pm$0.022 & 0.022$\pm$0.023 & 0.104$\pm$0.089 & 0.102$\pm$0.057 & 0.117$\pm$0.103 & -- & -- & -- \\
+SupCon & 0.017$\pm$0.023 & 0.034$\pm$0.009 & 0.091$\pm$0.049 & 0.103$\pm$0.154 & 0.132$\pm$0.095 & 0.290$\pm$0.075 & 0.465$\pm$0.158 & 0.575$\pm$0.185 & 0.574$\pm$0.180 \\
+\textbf{SupCon+SIGReg ($\lambda{=}5$)} & 0.017$\pm$0.014 & 0.043$\pm$0.052 & 0.053$\pm$0.058 & 0.092$\pm$0.083 & 0.182$\pm$0.223 & 0.146$\pm$0.047 & 0.459$\pm$0.143 & 0.516$\pm$0.186 & 0.554$\pm$0.169 \\
+NPLM-dist. (sup.) & 0.043$\pm$0.052 & 0.068$\pm$0.066 & 0.089$\pm$0.070 & 0.131$\pm$0.043 & 0.190$\pm$0.153 & 0.262$\pm$0.119 & 0.393$\pm$0.147 & 0.569$\pm$0.179 & 0.543$\pm$0.185 \\
 \bottomrule
 \end{tabular}
-\caption{\textbf{galaxy10, the dataset no backbone has seen, under two discovery procedures.} Round-1 pool purity, mean $\pm$ sd. Left: natural discovery (distance pool, encoder fine-tuned). Right: the frozen-anchor density-ratio pool. Same dataset, same holdout draws, a five-fold difference in purity --- the procedure, not the representation, is what clears the gate here. \emph{Coverage:} galaxy10, 3 backbones; natural discovery over 5 draws (18/18 cells present), frozen-anchor pool over 5 draws $\times$ 3 seeds (9/18 present --- that arm of the study covers the three supervised objectives only).}
+\caption{\textbf{galaxy10, the dataset no backbone has seen, under two discovery procedures.} Round-1 pool purity, mean $\pm$ sd over draws. Left: the fine-tuning loop's distance pool, discovery from a 2\% injected sample of the held-out class (the paper's regime). Middle: the same loop's natural pass with the whole held-out class present in the bank --- a different, easier regime, for reference. Right: the frozen-anchor density-ratio pool, also with the whole class present in the bank (its injected-sample counterpart is not yet measured), so the like-for-like comparison is middle vs right: same dataset, same draws, a factor of three to five in purity from the procedure alone. The left block shows how much harder the paper's own regime is for the loop. \emph{Coverage:} galaxy10, 3 backbones; fine-tuning loop over 5 draws (18/18 cells present, injected and whole-class passes from the same runs), frozen-anchor pool over 5 draws $\times$ 3 seeds (9/18 present --- that arm of the study covers the three supervised objectives only).}
 \label{tab:galaxy}
 \end{table}
 \end{landscape}

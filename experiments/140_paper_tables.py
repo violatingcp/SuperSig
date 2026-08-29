@@ -134,18 +134,44 @@ def t_objectives():
 # walked in order rather than pattern-matched line by line.
 _ARM = re.compile(r"^-+\s*natural discovery:\s*(\S+)\s*-+\s*$")
 _PUR = re.compile(r"^\s*round 1: pool=(\d+) purity=([\d.]+)")
+_POSTF = re.compile(r"^===== POST grid, f=([\d.]+)")
+_ARMPOST = re.compile(r"^\s+\[(\S+)\] per-event post f=")
+
+# TWO discovery passes live in every exp-70 log / npz, and they answer
+# different questions:
+#   natural pass  -- the pool is drawn from the full train bank, so the WHOLE
+#                    held-out class is present (keys post_probe_{arm},
+#                    post_mahaT_{arm}; "----- natural discovery: arm -----").
+#   POST grid     -- discovery re-run from a small INJECTED sample of the
+#                    held-out class at fraction f (keys postf_{metric}_{arm}
+#                    indexed by post_fractions; "===== POST grid, f=... =====").
+# The paper's regime is the second (a small new sample), at F_PAPER.  The
+# first is reported only as a clearly-labelled "whole class present" column.
+F_PAPER = 0.02
+DRAWS70 = {"galaxy10": (0, 3, 5, 7, 8), "dtd": (0, 1, 3, 4, 5)}
 
 
-def _draw_purities(ds, base, draws=(0, 1, 3, 4, 5)):
-    """round-1 pool purity per arm per draw, read from the exp-70 logs
-    (the npz files carry no purity field)."""
+def _log70(ds, base, d):
+    """exp-70 draw log; galaxy10 logs are named `g10`."""
+    for p in (os.path.join(LOGS, f"exp70_{ds}_{base}_h1_d{d}.log"),
+              os.path.join(LOGS, f"exp70_g10_{base}_h1_d{d}.log")):
+        if os.path.exists(p):
+            return p
+    return None
+
+
+def _draw_purities(ds, base, draws=None):
+    """NATURAL pass (whole class present): round-1 pool purity per arm per
+    draw, read from the exp-70 logs (the npz files carry no purity field)."""
     out = {}
-    for d in draws:
-        p = os.path.join(LOGS, f"exp70_{ds}_{base}_h1_d{d}.log")
-        if not os.path.exists(p):
+    for d in draws or DRAWS70.get(ds, (0, 1, 3, 4, 5)):
+        p = _log70(ds, base, d)
+        if p is None:
             continue
         arm = None
         for line in open(p, errors="ignore"):
+            if line.startswith("====="):
+                arm = None                      # the POST grid ends the pass
             m = _ARM.match(line.strip())
             if m:
                 arm = m.group(1)
@@ -157,40 +183,114 @@ def _draw_purities(ds, base, draws=(0, 1, 3, 4, 5)):
     return out
 
 
+def _draw_purities_f(ds, base, f=F_PAPER, draws=None):
+    """INJECTED-sample pass: round-1 pool purity per arm per draw from the
+    POST grid at fraction f.  In that block the round lines PRECEDE the
+    `[arm] per-event post f=` line that names the arm, so the round-1 value
+    is buffered until the arm line arrives (same walk as exp 125)."""
+    out = {}
+    for d in draws or DRAWS70.get(ds, (0, 1, 3, 4, 5)):
+        p = _log70(ds, base, d)
+        if p is None:
+            continue
+        cur, r1 = None, None
+        for line in open(p, errors="ignore"):
+            m = _POSTF.match(line)
+            if m:
+                cur, r1 = float(m.group(1)), None
+                continue
+            if cur is None:
+                continue
+            m = _PUR.match(line)
+            if m and r1 is None:
+                r1 = float(m.group(2))
+                continue
+            m = _ARMPOST.match(line)
+            if m:
+                if abs(cur - f) < 1e-9 and r1 is not None:
+                    out.setdefault(m.group(1), {}).setdefault(d, r1)
+                r1 = None
+    return out
+
+
+def _postf70(ds, base, metric, arm, f=F_PAPER, draws=None):
+    """INJECTED-sample post geometry: per-draw `postf_{metric}_{arm}` at
+    fraction f from the exp-70 npz.  Draws whose npz predates the key
+    (runs before 2026-08-29) are skipped, so an empty dict renders as `--`
+    -- never as the natural-pass value."""
+    out = {}
+    for d in draws or DRAWS70.get(ds, (0, 1, 3, 4, 5)):
+        p = os.path.join(LOGS, "exp70", f"results_{ds}_{base}_ft70_h1_d{d}.npz")
+        if not os.path.exists(p):
+            continue
+        z = np.load(p, allow_pickle=True)
+        key = f"postf_{metric}_{arm}"
+        if key not in z.files or "post_fractions" not in z.files:
+            continue
+        fr = np.asarray(z["post_fractions"], dtype=float)
+        i = int(np.argmin(np.abs(fr - f)))
+        v = np.asarray(z[key], dtype=float).ravel()
+        if abs(fr[i] - f) < 1e-9 and i < v.size and np.isfinite(v[i]):
+            out[d] = float(v[i])
+    return out
+
+
+def _msd(v, p=3):
+    v = [x for x in v if x is not None and np.isfinite(x)]
+    if not v:
+        return "--"
+    if len(v) == 1:
+        return fnum(v[0], p)
+    return f"{np.mean(v):.{p}f}$\\pm${np.std(v, ddof=1):.{p}f}"
+
+
 def t_draws():
-    """Single-holdout purity across holdout draws, both DTD bases."""
+    """Single-holdout purity across holdout draws, both DTD bases.  The
+    paper columns are discovery from a 2% injected sample; the natural pass
+    (whole class present) is the labelled third column per base."""
     cells = [("dtd", "dino"), ("dtd", "lejepa")]
-    data = {c: _draw_purities(*c) for c in cells}
+    inj = {c: _draw_purities_f(*c) for c in cells}
+    nat = {c: _draw_purities(*c) for c in cells}
     arms = ["simclr-ft", "sigreg-ssl-ft", "nplm-bil-ft", "supcon-ft",
             "ss-ft", "nplm-sup-ft"]
     rows, have = [], 0
     for a in arms:
         cs = []
         for c in cells:
-            v = list(data[c].get(a, {}).values())
+            v = list(inj[c].get(a, {}).values())
+            w = list(nat[c].get(a, {}).values())
             if v:
                 have += 1
-                cs += [fnum(np.mean(v)), fnum(np.std(v, ddof=1), 3),
-                       f"{sum(1 for x in v if x >= 0.15)}/{len(v)}"]
+                cs += [_msd(v), f"{sum(1 for x in v if x >= 0.15)}/{len(v)}"]
             else:
-                cs += ["--", "--", "--"]
+                cs += ["--", "--"]
+            cs.append(_msd(w))
         rows.append(" & ".join([PRETTY.get(a, esc(a))] + cs) + r" \\")
-    ndraw = max([len(v) for c in cells for v in data[c].values()] or [0])
+    ndraw = max([len(v) for c in cells for v in inj[c].values()] or [0])
     status = (f"DTD, {ndraw} holdout draws per base, single holdout; "
               f"{have}/{len(arms) * len(cells)} (arm, base) pairs present. "
-              r"Gate $=0.15$. Purity read from the run logs.")
+              r"Gate $=0.15$. Purity read from the run logs (POST grid at "
+              rf"$f={F_PAPER}$ and the natural pass).")
     return _wrap(
         "\n".join(rows),
         r"\textbf{Pool purity is stable across holdout draws, and only one "
-        r"objective is stable across \emph{backbones}.} Mean $\pm$ sd over "
-        r"draws, and the number of draws clearing the gate. "
+        r"objective is stable across \emph{backbones}.} Round-1 pool purity "
+        r"of discovery from a 2\% injected sample of the held-out class, "
+        r"mean $\pm$ sd over draws and the number of draws clearing the gate. "
+        r"The `whole' column is the natural pass, in which the whole "
+        r"held-out class is present in the unlabelled bank --- a different, "
+        r"easier regime, shown for reference only. "
         r"SupCon+SIGReg clears $5/5$ on both backbones; supervised "
         r"distance-NPLM clears $5/5$ on one and $0/5$ on the other.",
         "tab:draws", status,
         "lcccccc",
         r"& \multicolumn{3}{c}{DTD / DINO} & \multicolumn{3}{c}{DTD / LeJEPA} \\"
         "\n" r"\cmidrule(lr){2-4}\cmidrule(lr){5-7}" "\n"
-        r"objective & mean & sd & $\ge$gate & mean & sd & $\ge$gate \\")
+        r"& \multicolumn{2}{c}{2\% injected} & whole & "
+        r"\multicolumn{2}{c}{2\% injected} & whole \\"
+        "\n" r"\cmidrule(lr){2-3}\cmidrule(lr){5-6}" "\n"
+        r"objective & purity & $\ge$gate & purity & purity & $\ge$gate & purity \\",
+        size=r"\footnotesize")
 
 
 # --------------------------------------------------------------- table 3 ---
@@ -433,25 +533,27 @@ def t_galaxy():
 
     galaxy10 is the only dataset in the study that NO backbone has seen, so
     it carries the most weight -- and it is also where the choice of
-    procedure matters most.  Natural discovery (distance pool, encoder
-    fine-tuned) and the frozen-anchor density-ratio pool disagree by a factor
-    of five on the same draws."""
+    procedure matters most.  The fine-tuning loop's distance pool (paper
+    regime: discovery from a 2% injected sample; the natural pass with the
+    whole class present is shown alongside, labelled) and the frozen-anchor
+    density-ratio pool disagree by an order of magnitude on the same
+    draws."""
     bases = ["dino", "lejepa", "visreg"]
-    nat = {b: _agg_purity("galaxy10", b) for b in bases}
+    inj = {b: _draw_purities_f("galaxy10", b) for b in bases}
+    nat = {b: _draw_purities("galaxy10", b) for b in bases}
     f = os.path.join(LOGS, "exp139", "hardening.json")
     frz = json.load(open(f))["analysis"]["per_cell"] if os.path.exists(f) else {}
     arms = ["simclr-ft", "sigreg-ssl-ft", "nplm-bil-ft", "supcon-ft",
             "ss-ft", "nplm-sup-ft"]
-    rows, n_nat, n_frz = [], 0, 0
+    rows, n_inj, n_frz = [], 0, 0
     for a in arms:
         cells = []
         for b in bases:
-            v = nat[b][0].get(a)
-            if v:
-                n_nat += 1
-                cells.append(f"{v[0]:.3f}$\\pm${v[1]:.3f}")
-            else:
-                cells.append("--")
+            v = list(inj[b].get(a, {}).values())
+            n_inj += bool(v)
+            cells.append(_msd(v))
+        for b in bases:
+            cells.append(_msd(list(nat[b].get(a, {}).values())))
         for b in bases:
             c = (frz.get(f"galaxy10:{b}") or {}).get(a)
             if c:
@@ -460,25 +562,34 @@ def t_galaxy():
             else:
                 cells.append("--")
         rows.append(" & ".join([PRETTY.get(a, esc(a))] + cells) + r" \\")
-    nd = max((nat[b][1] for b in bases), default=0)
-    status = (f"galaxy10, {len(bases)} backbones; natural discovery over "
-              f"{nd} draws ({n_nat}/{len(arms) * len(bases)} cells present), "
+    nd = max([len(v) for b in bases for v in inj[b].values()] or [0])
+    status = (f"galaxy10, {len(bases)} backbones; fine-tuning loop over "
+              f"{nd} draws ({n_inj}/{len(arms) * len(bases)} cells present, "
+              f"injected and whole-class passes from the same runs), "
               f"frozen-anchor pool over 5 draws $\\times$ 3 seeds "
               f"({n_frz}/{len(arms) * len(bases)} present --- that arm of the "
               r"study covers the three supervised objectives only).")
     return _wrap(
         "\n".join(rows),
         r"\textbf{galaxy10, the dataset no backbone has seen, under two "
-        r"discovery procedures.} Round-1 pool purity, mean $\pm$ sd. Left: "
-        r"natural discovery (distance pool, encoder fine-tuned). Right: the "
-        r"frozen-anchor density-ratio pool. Same dataset, same holdout draws, "
-        r"a five-fold difference in purity --- the procedure, not the "
-        r"representation, is what clears the gate here.",
-        "tab:galaxy", status, "lcccccc",
-        r"& \multicolumn{3}{c}{natural discovery} & "
+        r"discovery procedures.} Round-1 pool purity, mean $\pm$ sd over "
+        r"draws. Left: the fine-tuning loop's distance pool, discovery from "
+        r"a 2\% injected sample of the held-out class (the paper's regime). "
+        r"Middle: the same loop's natural pass with the whole held-out class "
+        r"present in the bank --- a different, easier regime, for reference. "
+        r"Right: the frozen-anchor density-ratio pool, also with the whole "
+        r"class present in the bank (its injected-sample counterpart is not "
+        r"yet measured), so the like-for-like comparison is middle vs right: "
+        r"same dataset, same draws, a factor of three to five in purity from "
+        r"the procedure alone. The left block shows how much harder the "
+        r"paper's own regime is for the loop.",
+        "tab:galaxy", status, "lccccccccc",
+        r"& \multicolumn{3}{c}{loop, 2\% injected} & "
+        r"\multicolumn{3}{c}{loop, whole class present} & "
         r"\multicolumn{3}{c}{frozen-anchor pool} \\"
-        "\n" r"\cmidrule(lr){2-4}\cmidrule(lr){5-7}" "\n"
-        r"objective & DINO & LeJEPA & VISReg & DINO & LeJEPA & VISReg \\", wide=True)
+        "\n" r"\cmidrule(lr){2-4}\cmidrule(lr){5-7}\cmidrule(lr){8-10}" "\n"
+        r"objective & DINO & LeJEPA & VISReg & DINO & LeJEPA & VISReg & "
+        r"DINO & LeJEPA & VISReg \\", wide=True)
 
 
 def t_inventory():

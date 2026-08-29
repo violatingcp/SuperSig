@@ -1,10 +1,10 @@
-% STATUS: galaxy10 / dino, single holdout, 5 draws (classes 2,3,4,5,6), mean$\pm$sd across draws, one seed per draw; residual concats from exp 71 (5 draws), post-discovery on the SupCon+res concat only (exp 72, 5 draws); concat SparKer pre from the archived draw (exp 80).
+% STATUS: galaxy10 / dino, single holdout, 5 draws (classes 2,3,4,5,6), mean$\pm$sd across draws, one seed per draw; plain-arm post columns = discovery from a 2\% injected sample (per-fraction post geometry present in 0/5 draws, `--' otherwise; the whole-class natural pass is in Table~\ref{tab:app_galaxy10_draws}); residual concats from exp 71 (5 draws), post-discovery on the SupCon+res concat only (exp 72, 5 draws); concat SparKer pre from the archived draw (exp 80).
 \begin{landscape}
 \begin{center}
 \footnotesize
 \setlength{\tabcolsep}{3pt}
 \begin{longtable}{lcccccccc}
-\caption{\textbf{galaxy10 / dino: every (objective, construction) $\times$ (pre, post), across holdout draws.} (A) Probe and per-event geometry. \emph{Coverage:} galaxy10 / dino, single holdout, 5 draws (classes 2,3,4,5,6), mean$\pm$sd across draws, one seed per draw; residual concats from exp 71 (5 draws), post-discovery on the SupCon+res concat only (exp 72, 5 draws); concat SparKer pre from the archived draw (exp 80).}\label{tab:grid_galaxy10_dino_a}\\
+\caption{\textbf{galaxy10 / dino: every (objective, construction) $\times$ (pre, post), across holdout draws.} (A) Probe and per-event geometry. \emph{Coverage:} galaxy10 / dino, single holdout, 5 draws (classes 2,3,4,5,6), mean$\pm$sd across draws, one seed per draw; plain-arm post columns = discovery from a 2\% injected sample (per-fraction post geometry present in 0/5 draws, `--' otherwise; the whole-class natural pass is in Table~\ref{tab:app_galaxy10_draws}); residual concats from exp 71 (5 draws), post-discovery on the SupCon+res concat only (exp 72, 5 draws); concat SparKer pre from the archived draw (exp 80).}\label{tab:grid_galaxy10_dino_a}\\
 \toprule
 space & \multicolumn{2}{c}{probe} & \multicolumn{2}{c}{eucl} & \multicolumn{2}{c}{mahaT} & \multicolumn{2}{c}{per-event} \\
 \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}\cmidrule(lr){8-9}
@@ -20,21 +20,21 @@ space & \multicolumn{2}{c}{probe} & \multicolumn{2}{c}{eucl} & \multicolumn{2}{c
 \bottomrule
 \endfoot
 \multicolumn{9}{l}{\emph{SupCon}} \\
-\quad plain & 0.879$\pm$0.026 & 0.864$\pm$0.029 & 0.526$\pm$0.145 & 0.548$\pm$0.135 & 0.500$\pm$0.135 & 0.500$\pm$0.133 & 0.063$\pm$0.092 & 0.086$\pm$0.088 \\
+\quad plain & 0.879$\pm$0.026 & -- & 0.526$\pm$0.145 & -- & 0.500$\pm$0.135 & -- & 0.063$\pm$0.092 & 0.086$\pm$0.088 \\
 \quad +res concat & 0.903$\pm$0.027 & 0.886$\pm$0.024 & 0.497$\pm$0.122 & 0.506$\pm$0.135 & 0.488$\pm$0.138 & 0.470$\pm$0.146 & 0.059$\pm$0.078 & 0.063$\pm$0.077 \\
 \quad +res-nplm concat & 0.890$\pm$0.023 & -- & 0.538$\pm$0.140 & -- & 0.494$\pm$0.134 & -- & 0.062$\pm$0.088 & -- \\
 \multicolumn{9}{l}{\emph{SupCon+SIGReg ($\lambda$5)}} \\
-\quad plain & 0.804$\pm$0.064 & 0.852$\pm$0.042 & 0.499$\pm$0.104 & 0.517$\pm$0.089 & 0.482$\pm$0.114 & 0.471$\pm$0.087 & 0.040$\pm$0.038 & 0.040$\pm$0.029 \\
+\quad plain & 0.804$\pm$0.064 & -- & 0.499$\pm$0.104 & -- & 0.482$\pm$0.114 & -- & 0.040$\pm$0.038 & 0.040$\pm$0.029 \\
 \quad +res concat & 0.869$\pm$0.026 & -- & 0.494$\pm$0.089 & -- & 0.486$\pm$0.116 & -- & 0.052$\pm$0.040 & -- \\
 \quad +res-nplm concat & -- & -- & -- & -- & -- & -- & -- & -- \\
 \multicolumn{9}{l}{\emph{NPLM-dist. (sup.)}} \\
-\quad plain & 0.775$\pm$0.097 & 0.758$\pm$0.132 & 0.585$\pm$0.123 & 0.517$\pm$0.066 & 0.556$\pm$0.129 & 0.518$\pm$0.069 & 0.105$\pm$0.121 & 0.080$\pm$0.053 \\
+\quad plain & 0.775$\pm$0.097 & -- & 0.585$\pm$0.123 & -- & 0.556$\pm$0.129 & -- & 0.105$\pm$0.121 & 0.080$\pm$0.053 \\
 \multicolumn{9}{l}{\emph{SimCLR}} \\
-\quad plain & 0.790$\pm$0.064 & 0.837$\pm$0.057 & 0.460$\pm$0.125 & 0.504$\pm$0.107 & 0.476$\pm$0.111 & 0.496$\pm$0.101 & 0.049$\pm$0.046 & 0.045$\pm$0.043 \\
+\quad plain & 0.790$\pm$0.064 & -- & 0.460$\pm$0.125 & -- & 0.476$\pm$0.111 & -- & 0.049$\pm$0.046 & 0.045$\pm$0.043 \\
 \multicolumn{9}{l}{\emph{SimCLR+SIGReg}} \\
-\quad plain & 0.801$\pm$0.084 & 0.844$\pm$0.042 & 0.477$\pm$0.069 & 0.519$\pm$0.068 & 0.508$\pm$0.093 & 0.498$\pm$0.057 & 0.045$\pm$0.029 & 0.039$\pm$0.023 \\
+\quad plain & 0.801$\pm$0.084 & -- & 0.477$\pm$0.069 & -- & 0.508$\pm$0.093 & -- & 0.045$\pm$0.029 & 0.039$\pm$0.023 \\
 \multicolumn{9}{l}{\emph{NPLM-bilinear}} \\
-\quad plain & 0.684$\pm$0.134 & 0.808$\pm$0.038 & 0.483$\pm$0.063 & 0.496$\pm$0.072 & 0.450$\pm$0.120 & 0.462$\pm$0.119 & 0.045$\pm$0.036 & 0.066$\pm$0.084 \\
+\quad plain & 0.684$\pm$0.134 & -- & 0.483$\pm$0.063 & -- & 0.450$\pm$0.120 & -- & 0.045$\pm$0.036 & 0.066$\pm$0.084 \\
 \end{longtable}
 \end{center}
 \end{landscape}

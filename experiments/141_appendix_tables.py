@@ -195,38 +195,55 @@ def _purities70(ds, base, draws):
 
 
 def t_transfer_draws(ds, draws):
+    """Post-discovery columns are the paper regime (discovery from a 2%
+    injected sample: postf_* npz keys, POST-grid purity); the natural pass
+    (whole class present) is the labelled pair on the right."""
     bases = ["dino", "lejepa", "visreg"]
-    rows, have = [], 0
+    F = t140.F_PAPER
+    rows, have, n_postf = [], 0, 0
     for base in bases:
         files = {d: os.path.join(LOGS, "exp70", f"results_{ds}_{base}_ft70_h1_d{d}.npz") for d in draws}
         files = {d: f for d, f in files.items() if os.path.exists(f)}
         if not files:
             continue
         pur = _purities70(ds, base, draws)
+        purf = t140._draw_purities_f(ds, base, F, draws)
         Z = {d: np.load(f, allow_pickle=True) for d, f in files.items()}
-        rows.append(r"\multicolumn{9}{l}{\emph{" + esc(f"{ds} / {base}") + f", {len(files)} draws" + r"}} \\")
+        rows.append(r"\multicolumn{12}{l}{\emph{" + esc(f"{ds} / {base}") + f", {len(files)} draws" + r"}} \\")
         for a in ARMS_70:
             g = lambda k: [float(Z[d][k]) for d in Z if k in Z[d].files]
-            pv = [pur.get(a, {}).get(d) for d in Z]
-            pv = [x for x in pv if x is not None]
+            pv = [x for x in (pur.get(a, {}).get(d) for d in Z) if x is not None]
+            pf = [x for x in (purf.get(a, {}).get(d) for d in Z) if x is not None]
+            probe_f = list(t140._postf70(ds, base, "probe", a, F, draws).values())
+            mahaT_f = list(t140._postf70(ds, base, "mahaT", a, F, draws).values())
+            n_postf += bool(probe_f)
             have += 1
             rows.append(" & ".join([
-                "\\quad " + PRETTY.get(a, esc(a)), msd(g(f"probe_{a}")), msd(g(f"post_probe_{a}")),
-                msd(g(f"acc_{a}")), msd(g(f"eucl_{a}")), msd(g(f"mahaT_{a}")),
+                "\\quad " + PRETTY.get(a, esc(a)), msd(g(f"probe_{a}")), msd(g(f"acc_{a}")),
+                msd(g(f"eucl_{a}")), msd(g(f"mahaT_{a}")),
                 msd([float(np.asarray(Z[d][f"perevent_{a}_pre"]).ravel()[0]) for d in Z]),
-                msd(pv), f"{sum(1 for x in pv if x >= 0.15)}/{len(pv)}" if pv else "--"]) + r" \\")
+                msd(probe_f), msd(mahaT_f), msd(pf),
+                f"{sum(1 for x in pf if x >= 0.15)}/{len(pf)}" if pf else "--",
+                msd(g(f"post_probe_{a}")), msd(pv)]) + r" \\")
     if not rows:
         return None
     status = (f"{ds}, single holdout, draws {list(draws)} (distinct held-out classes), "
               f"{have} (arm, base) rows; mean $\\pm$ sd across draws, one seed per draw; "
-              r"purity read from the run logs; gate $=0.15$.")
+              f"injected-sample probe/mahaT present for {n_postf}/{have} rows "
+              r"(`--' = npz predates the per-fraction keys); purity read from the run logs; gate $=0.15$.")
     return _wrap("\n".join(rows),
                  rf"\textbf{{{esc(ds)}: the single-holdout battery across holdout draws, all "
-                 r"three backbones.} Pre-discovery probe, geometry and per-event power; "
-                 r"round-1 pool purity of the fine-tuning loop and the number of draws "
-                 r"clearing the gate.",
-                 f"tab:app_{ds}_draws", status, "lcccccccc",
-                 r"objective & probe & probe post & acc & eucl & mahaT & per-ev & purity r1 & $\ge$gate \\",
+                 r"three backbones.} Pre-discovery probe, geometry and per-event power, then the "
+                 r"fine-tuning loop's post-discovery probe, tied Mahalanobis, round-1 pool purity and "
+                 r"draws clearing the gate for \emph{discovery from a 2\% injected sample} of the "
+                 r"held-out class (the paper's regime). The last two columns are the natural pass, "
+                 r"in which the whole held-out class is present in the unlabelled bank --- a "
+                 r"different, easier regime, shown for reference only.",
+                 f"tab:app_{ds}_draws", status, "lccccccccccc",
+                 r"& \multicolumn{5}{c}{pre-discovery} & \multicolumn{4}{c}{post, 2\% injected} & "
+                 r"\multicolumn{2}{c}{post, whole class} \\"
+                 "\n" r"\cmidrule(lr){2-6}\cmidrule(lr){7-10}\cmidrule(lr){11-12}" "\n"
+                 r"objective & probe & acc & eucl & mahaT & per-ev & probe & mahaT & purity & $\ge$gate & probe & purity \\",
                  long=True, wide=True)
 
 
@@ -464,11 +481,12 @@ def t_zero_training():
         for k, v in d.items():
             if v["variant"] == "frozen" and v["scorer"] == "np":
                 per.setdefault((m.group(1), m.group(2)), []).append(v["purity"][0])
-    # fine-tuned references: exp-70 loop best arm (mean over draws) from the logs
+    # fine-tuned references: exp-70 loop best arm (mean over draws), from the
+    # POST-grid logs -- discovery from a 2% injected sample, the paper regime
     ref = {}
     for ds, draws in (("galaxy10", (0, 3, 5, 7, 8)), ("dtd", (0, 1, 3, 4, 5))):
         for base in ("dino", "lejepa", "visreg"):
-            pur = _purities70(ds, base, draws)
+            pur = t140._draw_purities_f(ds, base, t140.F_PAPER, draws)
             best = max(((np.mean(list(v.values())), a) for a, v in pur.items() if v), default=None)
             if best:
                 ref[(ds, base)] = best
@@ -484,7 +502,8 @@ def t_zero_training():
                 (f"{r[0]:.3f} ({esc(r[1])})" if r else "--")]) + r" \\")
     status = (f"{len(fs)} cells; pretrained ViT-B/16 features, identity head, anchors = seen-class centroids, "
               r"density-ratio pool, anchors-only iteration, round 1; five single-holdout draws per (dataset, "
-              r"backbone); gate $=0.15$. Reference = the best objective of the exp-70 fine-tuning loop on the same draws.")
+              r"backbone); gate $=0.15$. Reference = the best objective of the exp-70 fine-tuning loop on the same "
+              r"draws, discovery from a 2\% injected sample (paper regime, not the whole-class natural pass).")
     return _wrap("\n".join(rows),
                  r"\textbf{The regime boundary on one construction that needs no training.} Round-1 pool "
                  r"purity of the pretrained trunk pooled by density ratio, single holdout, mean $\pm$ sd over "

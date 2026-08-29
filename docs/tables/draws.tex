@@ -1,21 +1,23 @@
-% STATUS: DTD, 5 holdout draws per base, single holdout; 12/12 (arm, base) pairs present. Gate $=0.15$. Purity read from the run logs.
+% STATUS: DTD, 5 holdout draws per base, single holdout; 12/12 (arm, base) pairs present. Gate $=0.15$. Purity read from the run logs (POST grid at $f=0.02$ and the natural pass).
 \begin{table}[t]
 \centering
-\small
+\footnotesize
 \begin{tabular}{lcccccc}
 \toprule
 & \multicolumn{3}{c}{DTD / DINO} & \multicolumn{3}{c}{DTD / LeJEPA} \\
 \cmidrule(lr){2-4}\cmidrule(lr){5-7}
-objective & mean & sd & $\ge$gate & mean & sd & $\ge$gate \\
+& \multicolumn{2}{c}{2\% injected} & whole & \multicolumn{2}{c}{2\% injected} & whole \\
+\cmidrule(lr){2-3}\cmidrule(lr){5-6}
+objective & purity & $\ge$gate & purity & purity & $\ge$gate & purity \\
 \midrule
-SimCLR & 0.005 & 0.012 & 0/5 & 0.002 & 0.003 & 0/5 \\
-SimCLR+SIGReg & 0.003 & 0.003 & 0/5 & 0.021 & 0.021 & 0/5 \\
-NPLM-bilinear & 0.004 & 0.006 & 0/5 & 0.033 & 0.018 & 0/5 \\
-SupCon & 0.028 & 0.014 & 0/5 & 0.073 & 0.086 & 1/5 \\
-\textbf{SupCon+SIGReg ($\lambda{=}5$)} & 0.219 & 0.016 & 5/5 & 0.225 & 0.007 & 5/5 \\
-NPLM-dist. (sup.) & 0.051 & 0.031 & 0/5 & 0.215 & 0.027 & 5/5 \\
+SimCLR & 0.004$\pm$0.009 & 0/5 & 0.005$\pm$0.012 & 0.001$\pm$0.002 & 0/5 & 0.002$\pm$0.003 \\
+SimCLR+SIGReg & 0.003$\pm$0.003 & 0/5 & 0.003$\pm$0.003 & 0.020$\pm$0.021 & 0/5 & 0.021$\pm$0.021 \\
+NPLM-bilinear & 0.004$\pm$0.006 & 0/5 & 0.004$\pm$0.006 & 0.029$\pm$0.015 & 0/5 & 0.033$\pm$0.018 \\
+SupCon & 0.028$\pm$0.014 & 0/5 & 0.028$\pm$0.014 & 0.068$\pm$0.080 & 1/5 & 0.073$\pm$0.086 \\
+\textbf{SupCon+SIGReg ($\lambda{=}5$)} & 0.211$\pm$0.017 & 5/5 & 0.219$\pm$0.016 & 0.216$\pm$0.004 & 5/5 & 0.225$\pm$0.007 \\
+NPLM-dist. (sup.) & 0.049$\pm$0.030 & 0/5 & 0.051$\pm$0.031 & 0.208$\pm$0.028 & 5/5 & 0.215$\pm$0.027 \\
 \bottomrule
 \end{tabular}
-\caption{\textbf{Pool purity is stable across holdout draws, and only one objective is stable across \emph{backbones}.} Mean $\pm$ sd over draws, and the number of draws clearing the gate. SupCon+SIGReg clears $5/5$ on both backbones; supervised distance-NPLM clears $5/5$ on one and $0/5$ on the other. \emph{Coverage:} DTD, 5 holdout draws per base, single holdout; 12/12 (arm, base) pairs present. Gate $=0.15$. Purity read from the run logs.}
+\caption{\textbf{Pool purity is stable across holdout draws, and only one objective is stable across \emph{backbones}.} Round-1 pool purity of discovery from a 2\% injected sample of the held-out class, mean $\pm$ sd over draws and the number of draws clearing the gate. The `whole' column is the natural pass, in which the whole held-out class is present in the unlabelled bank --- a different, easier regime, shown for reference only. SupCon+SIGReg clears $5/5$ on both backbones; supervised distance-NPLM clears $5/5$ on one and $0/5$ on the other. \emph{Coverage:} DTD, 5 holdout draws per base, single holdout; 12/12 (arm, base) pairs present. Gate $=0.15$. Purity read from the run logs (POST grid at $f=0.02$ and the natural pass).}
 \label{tab:draws}
 \end{table}

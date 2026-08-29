@@ -53,7 +53,7 @@ def at(d, key, f=F, fr_default=(0.003, 0.01, 0.02, 0.05)):
         return float(v[0])
     if "fractions" in d.files:
         fr = [float(x) for x in d["fractions"]]
-    elif "post_fractions" in d.files and ("_post" in key or key.startswith("post_")):
+    elif "post_fractions" in d.files and ("_post" in key or key.startswith(("post_", "postf_"))):
         fr = [float(x) for x in d["post_fractions"]]
     elif "pre_fractions" in d.files:
         fr = [float(x) for x in d["pre_fractions"]]
@@ -255,9 +255,12 @@ def grid_galaxy(base):
     RA, RB = [], []
     for a, lab in G10_ARMS:
         gA, gB = group(lab); RA.append(gA); RB.append(gB)
-        mm = {"probe": (gl(Z70, f"probe_{a}"), gl(Z70, f"post_probe_{a}")),
-              "eucl": (gl(Z70, f"eucl_{a}"), gl(Z70, f"post_eucl_{a}")),
-              "mahaT": (gl(Z70, f"mahaT_{a}"), gl(Z70, f"post_mahaT_{a}")),
+        # post geometry from the INJECTED-sample pass (postf_* at F, the paper
+        # regime), never the natural whole-class pass (post_probe_* etc.);
+        # npz files predating the postf_* keys render as `--`.
+        mm = {"probe": (gl(Z70, f"probe_{a}"), gl(Z70, f"postf_probe_{a}")),
+              "eucl": (gl(Z70, f"eucl_{a}"), gl(Z70, f"postf_eucl_{a}")),
+              "mahaT": (gl(Z70, f"mahaT_{a}"), gl(Z70, f"postf_mahaT_{a}")),
               "perevt": ([float(np.asarray(z[f"perevent_{a}_pre"]).ravel()[0]) for z in Z70], gl(Z70, f"perevent_{a}_post")),
               "sparker": (gl(Z70, f"sparker_{a}_pre"), gl(Z70, f"sparker_{a}_post")),
               "maha": (gl(Z70, f"maha_{a}_pre"), gl(Z70, f"maha_{a}_post")),
@@ -279,8 +282,11 @@ def grid_galaxy(base):
                       "maha": (None, gl(post, f"{key}_post_maha")),
                       "mmd": (None, gl(post, f"{key}_post_mmd"))}
                 a1, b1 = row(lab2, mm); RA.append(a1); RB.append(b1)
+    n_pf = sum(1 for z in Z70 if any(k.startswith("postf_") for k in z.files))
     status = (f"galaxy10 / {base}, single holdout, {len(Z70)} draws (classes 2,3,4,5,6), mean$\\pm$sd across draws, "
-              f"one seed per draw; residual concats from exp 71 ({len(Z71)} draws), post-discovery on the "
+              f"one seed per draw; plain-arm post columns = discovery from a {100 * F:.0f}\\% injected sample "
+              f"(per-fraction post geometry present in {n_pf}/{len(Z70)} draws, `--' otherwise; the whole-class "
+              rf"natural pass is in Table~\ref{{tab:app_galaxy10_draws}}); residual concats from exp 71 ({len(Z71)} draws), post-discovery on the "
               f"SupCon+res concat only (exp 72, {len(Z72)} draws); concat SparKer pre from the archived draw (exp 80).")
     return emit(f"galaxy10_{base}", RA, RB,
                 rf"\textbf{{galaxy10 / {base}: every (objective, construction) $\times$ (pre, post), across holdout draws.}}",
