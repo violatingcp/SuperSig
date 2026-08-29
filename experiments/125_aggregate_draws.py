@@ -17,7 +17,7 @@ if "--frac" in argv:
     i = argv.index("--frac"); FRAC = float(argv[i + 1]); del argv[i:i + 2]; GCD = True
 ds, base = argv[0], argv[1]
 draws = [int(x) for x in argv[2:]] or None
-SFX = ("_gcd" + (f"_u{FRAC:g}" if FRAC is not None else "")) if GCD else ""
+SFX = ((f"_u{FRAC:g}" if FRAC is not None else "") + "_gcd") if GCD else ""
 if GCD:
     ARMS = ["gcd-ft", "gcd-sigreg-ft"]
 files = sorted(glob.glob(f"logs/exp70/results_{ds}_{base}_ft70_h1_d*{SFX}.npz"))
