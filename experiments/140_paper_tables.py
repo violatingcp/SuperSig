@@ -35,6 +35,7 @@ OUT = os.path.join(REPO, "docs", "tables")
 
 # paper-facing names for the code's arm keys (docs/LOSSES.md is canonical)
 PRETTY = {
+    "gcd-ft": "GCD loss", "gcd-sigreg-ft": "GCD loss+SIGReg ($\\lambda{=}5$)",
     "simclr": "SimCLR", "visreg": "VISReg/LeJEPA", "nplm": "NPLM (unsup.)",
     "supcon": "SupCon", "supsig": "SupCon+SIGReg (repulse)",
     "nplmcw": "NPLM-dist.+classwise SIGReg", "ssig": r"\textbf{SupCon+SIGReg ($\lambda{=}5$)}",
@@ -665,12 +666,127 @@ def t_inventory():
                  r"\# & study & results \\", long=True)
 
 
+# ------------------------------------------------------- GCD dose table ---
+GCD_DOSES = (0.05, 0.2, 0.5, 1.0)
+
+
+def _gcd_files(ds, base, F, d):
+    """(npz, log) for the exp-146/146b GCD arms at dose F (1.0 = exp 146)."""
+    sfx = "_gcd" if F >= 1.0 else f"_u{F:g}_gcd"
+    npz = os.path.join(LOGS, "exp70", f"results_{ds}_{base}_ft70_h1_d{d}{sfx}.npz")
+    log = (os.path.join(LOGS, f"exp146_{ds}_{base}_h1_d{d}.log") if F >= 1.0
+           else os.path.join(LOGS, f"exp146b_{ds}_{base}_h1_d{d}_u{F:g}.log"))
+    return npz, log
+
+
+def _purity_f_log(path, f=F_PAPER):
+    """Round-1 pool purity per arm from one log's POST grid at fraction f."""
+    out, cur, r1 = {}, None, None
+    if not os.path.exists(path):
+        return out
+    for line in open(path, errors="ignore"):
+        m = _POSTF.match(line)
+        if m:
+            cur = float(m.group(1)); r1 = None
+            continue
+        if cur is None:
+            continue
+        m = _PUR.match(line)
+        if m and r1 is None:
+            r1 = float(m.group(2))
+        m = _ARMPOST.match(line)
+        if m:
+            if abs(cur - f) < 1e-9 and r1 is not None:
+                out[m.group(1)] = r1
+            r1 = None
+    return out
+
+
+def _dose_rows(ds, base, arms_ref=("supcon-ft", "ss-ft")):
+    """Rows (label, arm, probe, mahaT, per-event post@f, purity@f) per dose."""
+    rows = []
+    draws = DRAWS70[ds]
+
+    def collect(npz_of, log_of, arm):
+        pr, ma, pe, pu = [], [], [], []
+        for d in draws:
+            npz, log = npz_of(d), log_of(d)
+            if not os.path.exists(npz):
+                continue
+            z = np.load(npz, allow_pickle=True)
+            if f"probe_{arm}" not in z.files:
+                continue
+            pr.append(float(z[f"probe_{arm}"])); ma.append(float(z[f"mahaT_{arm}"]))
+            fr = np.asarray(z["post_fractions"], dtype=float)
+            i = int(np.argmin(np.abs(fr - F_PAPER)))
+            v = np.asarray(z[f"perevent_{arm}_post"], dtype=float).ravel()
+            if i < v.size:
+                pe.append(float(v[i]))
+            u = _purity_f_log(log).get(arm)
+            if u is not None:
+                pu.append(u)
+        return pr, ma, pe, pu
+
+    for arm in arms_ref:
+        r = collect(lambda d: os.path.join(LOGS, "exp70", f"results_{ds}_{base}_ft70_h1_d{d}.npz"),
+                    lambda d: _log70(ds, base, d) or "", arm)
+        if r[0]:
+            rows.append(("0\\%", arm) + r)
+    for F in GCD_DOSES:
+        for arm in ("gcd-ft", "gcd-sigreg-ft"):
+            r = collect(lambda d, F=F: _gcd_files(ds, base, F, d)[0],
+                        lambda d, F=F: _gcd_files(ds, base, F, d)[1], arm)
+            if r[0]:
+                rows.append((f"{100 * F:g}\\%", arm) + r)
+    return rows
+
+
+def t_gcd_dose():
+    """Exp 146/146b: the GCD representation loss (SimCLR over the whole
+    corpus incl. the unlabelled novel images + SupCon on the labelled) as a
+    function of how much of the novel class the corpus contains."""
+    body, n = [], 0
+    for ds, base in (("galaxy10", "lejepa"), ("dtd", "dino")):
+        rows = _dose_rows(ds, base)
+        if not rows:
+            continue
+        body.append(r"\multicolumn{6}{l}{\emph{" + esc(f"{ds} / {base}") + r"}} \\")
+        for dose, arm, pr, ma, pe, pu in rows:
+            n += 1
+            body.append(" & ".join(["\\quad " + dose, PRETTY.get(arm, esc(arm)),
+                                    _msd(pr), _msd(ma), _msd(pe, 2), _msd(pu)]) + r" \\")
+    if not body:
+        return None
+    status = (f"{n} (dose, objective) rows; single holdout, 5 draws each, one seed; "
+              r"`0\%' rows are the archived labelled-only arms on the same draws; the GCD "
+              r"arms train on the whole corpus with the held-out images unlabelled, a random "
+              r"fraction of them kept per dose; per-event power and purity are the POST grid "
+              rf"at $f={F_PAPER}$ (discovery from a 2\% injected sample).")
+    return _wrap(
+        "\n".join(body),
+        r"\textbf{Seeing the unlabelled novel images during representation "
+        r"learning is a dose, not a switch.} GCD's representation loss "
+        r"(SimCLR over every image, held-out ones included with masked labels, "
+        r"plus SupCon on the labelled ones, $0.65{:}0.35$; `+SIGReg' adds our "
+        r"marginal at $\lambda{=}5$) scored on our battery as a function of the "
+        r"fraction of the held-out class present in the training corpus. The "
+        r"gain in calibration, per-event power and pool purity is monotone in "
+        r"the dose and absent at the contamination levels this paper is about "
+        r"($\le 5\%$); on DTD the plain GCD loss never leaves SupCon's "
+        r"neighbourhood below $100\%$ and it is the SIGReg marginal that "
+        r"carries the effect.",
+        "tab:gcd_dose", status, "llcccc",
+        r"novel class in corpus & objective & probe & mahaT & per-event & purity \\",
+        size=r"\small")
+
+
+
 TABLES = [("objectives", t_objectives), ("draws", t_draws),
           ("hardening", t_hardening), ("2x2", t_2x2),
           ("baserate", t_baserate),
           # appendix
           ("galaxy", t_galaxy), ("residuals", t_residuals),
-          ("seeds", t_seeds)]
+          ("seeds", t_seeds), ("gcd_dose", t_gcd_dose)]
 
 
 def selftest():

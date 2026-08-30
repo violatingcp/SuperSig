@@ -712,6 +712,26 @@ the class-wise-marginal distance-NPLM. Three datasets now agree on the shape:
 SIGReg earns the second currency where classes are many and near, and is
 neutral-to-harmful where they are few and separable.
 
+\paragraph{Seeing the unlabelled corpus is a dose, not a switch.} Every
+objective above trains on the labelled classes only. The generalised
+category discovery literature trains instead on the whole corpus, held-out
+images included, with an instance-level term on the unlabelled ones
+(Vaze et al., 2022); scored on our battery under our protocol, that loss is
+the best-calibrated and highest-purity space we have on galaxy10 with a
+SIGReg-pretrained trunk (tied Mahalanobis $0.85$ vs.\ $0.71$ for SupCon on
+LeJEPA, per-event power $0.40$ vs.\ $0.05$) --- but only when the corpus
+contains the whole novel class. Table~\ref{tab:gcd_dose} varies that
+fraction: the gain is monotone in the dose, crosses SupCon between $20\%$
+and $50\%$ presence on galaxy10, and is absent at the $\le 5\%$
+contamination this paper is about. On DTD the plain GCD loss never leaves
+SupCon's neighbourhood below full presence; the SIGReg marginal carries the
+effect there, and with four novel images in the corpus GCD+SIGReg is
+SupCon+SIGReg. At ten simultaneous novel classes (cars, aircraft, flowers)
+it ties or loses on every currency and costs $0.07$--$0.28$ in top-1. So the
+transductive term is the right construction when the whole novel class is
+available unlabelled, and changes nothing in the small-sample regime.
+\input{tables/gcd_dose}
+
 \subsection{Stability: draws matter, seeds do not}
 
 Two variance questions decide how much of this campaign is quotable.
