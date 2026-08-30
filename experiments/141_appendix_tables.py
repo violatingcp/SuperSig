@@ -181,7 +181,7 @@ def t_scratch_pools(ds):
               r"`BN adapt'), $2\times2$-epoch anchor rounds; legal cut at $n_{\min}=10$ and $30$ "
               r"(`ref.' = the rule declined); loop = exp-68 fine-tuning loop, distance pool, "
               rf"$2\times5$ epochs. Injected-sample probe/mahaT present for {n_inj}/{n} objectives "
-              r"(`--' = npz predates the per-fraction keys). Gate $=0.15$.")
+              r"(`--' = npz predates the per-fraction keys).")
     return _wrap("\n".join(rows),
                  rf"\textbf{{{tag} leakage-free lineage: pools and discovery.}} Round-1 purity "
                  r"of the frozen distance and density-ratio (np) pools, the np pool's round 2 "
@@ -282,19 +282,19 @@ def t_transfer_draws(ds, draws):
                 msd(g(f"eucl_{a}")), msd(g(f"mahaT_{a}")),
                 msd([float(np.asarray(Z[d][f"perevent_{a}_pre"]).ravel()[0]) for d in Z]),
                 msd(probe_f), msd(mahaT_f), msd(pf),
-                f"{sum(1 for x in pf if x >= 0.15)}/{len(pf)}" if pf else "--",
+                fnum(min(pf)) if pf else "--",
                 msd(g(f"post_probe_{a}")), msd(pv)]) + r" \\")
     if not rows:
         return None
     status = (f"{ds}, single holdout, draws {list(draws)} (distinct held-out classes), "
               f"{have} (arm, base) rows; mean $\\pm$ sd across draws, one seed per draw; "
               f"injected-sample probe/mahaT present for {n_postf}/{have} rows "
-              r"(`--' = npz predates the per-fraction keys); purity read from the run logs; gate $=0.15$.")
+              r"(`--' = npz predates the per-fraction keys); purity read from the run logs.")
     return _wrap("\n".join(rows),
                  rf"\textbf{{{esc(ds)}: the single-holdout battery across holdout draws, all "
                  r"three backbones.} Pre-discovery probe, geometry and per-event power, then the "
-                 r"fine-tuning loop's post-discovery probe, tied Mahalanobis, round-1 pool purity and "
-                 r"draws clearing the gate for \emph{discovery from a 2\% injected sample} of the "
+                 r"fine-tuning loop's post-discovery probe, tied Mahalanobis, round-1 pool purity (mean and "
+                 r"worst draw) for \emph{discovery from a 2\% injected sample} of the "
                  r"held-out class (the paper's regime). The last two columns are the natural pass, "
                  r"in which the whole held-out class is present in the unlabelled bank --- a "
                  r"different, easier regime, shown for reference only.",
@@ -302,7 +302,7 @@ def t_transfer_draws(ds, draws):
                  r"& \multicolumn{5}{c}{pre-discovery} & \multicolumn{4}{c}{post, 2\% injected} & "
                  r"\multicolumn{2}{c}{post, whole class} \\"
                  "\n" r"\cmidrule(lr){2-6}\cmidrule(lr){7-10}\cmidrule(lr){11-12}" "\n"
-                 r"objective & probe & acc & eucl & mahaT & per-ev & probe & mahaT & purity & $\ge$gate & probe & purity \\",
+                 r"objective & probe & acc & eucl & mahaT & per-ev & probe & mahaT & purity & min & probe & purity \\",
                  long=True, wide=True)
 
 
@@ -389,7 +389,7 @@ def t_postdisc():
     return _wrap("\n".join(rows),
                  r"\textbf{Residual built after discovery vs.\ before (exp 134c).} The "
                  r"pseudo-labelled child corpus is 100\% novel in every cell, including where "
-                 r"the pool purity is far below the gate.",
+                 r"the pool purity is very low.",
                  "tab:app_postdisc", status, "lcccccccc",
                  r"concat & probe (pre) & probe (post) & eucl (pre) & eucl (post) & mahaT (pre) & mahaT (post) & per-ev (pre) & per-ev (post) \\",
                  long=True, wide=True)
@@ -493,7 +493,7 @@ def t_frozen_np_datasets():
         return None
     n = len(fs)
     status = (f"{n} cell files (multi-holdout default draw, and single-holdout draws 0--4); pretrained "
-              r"ViT-B/16 features, identity head, anchors = seen centroids, no fine-tune; gate $=0.15$.")
+              r"ViT-B/16 features, identity head, anchors = seen centroids, no fine-tune.")
     return _wrap("\n".join(rows),
                  r"\textbf{Frozen-trunk pooling with no training at all}, on the pretrained backbone "
                  r"features: distance vs density-ratio pool, multi- vs single-holdout regime.",
@@ -557,20 +557,20 @@ def t_zero_training():
             r = ref.get((ds, base))
             rows.append(" & ".join([
                 (esc(ds) if i == 0 else ""), (rate[ds] if i == 0 else ""), base,
-                msd(v), f"{sum(1 for x in v if x >= 0.15)}/{len(v)}" if v else "--",
+                msd(v), fnum(min(v)) if v else "--",
                 (f"{r[0]:.3f} ({esc(r[1])})" if r else "--")]) + r" \\")
     status = (f"{len(fs)} cells; pretrained ViT-B/16 features, identity head, anchors = seen-class centroids, "
               r"density-ratio pool, anchors-only iteration, round 1; five single-holdout draws per (dataset, "
-              r"backbone); gate $=0.15$. Reference = the best objective of the exp-70 fine-tuning loop on the same "
+              r"backbone). Reference = the best objective of the exp-70 fine-tuning loop on the same "
               r"draws, discovery from a 2\% injected sample (paper regime, not the whole-class natural pass).")
     return _wrap("\n".join(rows),
                  r"\textbf{The regime boundary on one construction that needs no training.} Round-1 pool "
                  r"purity of the pretrained trunk pooled by density ratio, single holdout, mean $\pm$ sd over "
-                 r"five held-out classes. galaxy10 and DTD clear the gate on every cell and beat the best "
-                 r"fine-tuned objective; flowers sits at the gate; aircraft and cars are dead although "
+                 r"five held-out classes, with the worst draw. galaxy10 and DTD sit far above the best "
+                 r"fine-tuned objective on every draw; flowers is marginal; aircraft and cars are dead although "
                  r"aircraft's rate equals flowers'.",
                  "tab:zero_training", status, "lllccc",
-                 r"dataset & rate & backbone & purity & $\ge$gate & fine-tuned loop, best objective \\")
+                 r"dataset & rate & backbone & purity & min & fine-tuned loop, best objective \\")
 
 
 def t_gcd_benchmark():

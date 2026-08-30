@@ -55,32 +55,36 @@
 
 \begin{abstract}
 A representation can encode a novel class perfectly and still be useless for
-finding it: a supervised contrastive encoder reaches a holdout-vs-rest probe
-AUC of $0.94$ while scoring zero at event-level detection. We study
-open-world class discovery as a two-sample problem and ask what makes an
-embedding \emph{discoverable} rather than merely decodable. We give the pool
-an algebra --- purity is bounded by $\min(1, b/q)$, a property of the cut
-alone --- and derive a label-free cut from the Neyman--Pearson density ratio
-that already serves as the loss and the test statistic. Across a design cube
-of ten contrastive objectives, a leakage-free from-scratch CIFAR lineage, and
-three transfer datasets ordered by distance from pretraining, we find that
-the probe/discoverability dissociation is a many-class phenomenon (adding
-sliced-isotropy to SupCon is a probe and top-1 tie at $100$ classes and lifts
-Euclidean novelty AUC $0.23 \to 0.62$; at $10$ classes it buys nothing), that
-holdout draws dominate seeds by a factor of eight, and that the construction
-which survives every backbone and every draw is the simplest one: freeze the
-encoder and iterate anchors against a density-ratio pool ($143/144$ galaxy10
-draw$\times$seed cells above the purity gate, where the fine-tuning loop on
-the same parents clears it on $0/5$ to $5/5$ draws by backbone). Taken to
-its limit --- the pretrained trunk with no training at all --- the same
-construction clears the gate on every galaxy10 and DTD draw and beats every
-fine-tuned objective there, sits at the gate on flowers, and is dead on
-aircraft and cars; the ordering is by distance of the novel class from the
-seen manifold, not by base rate. A residual
-decomposition survives a width-matched control and composes with discovery
-as a substitute more often than a complement. We report where the method
-fails: at a $1\%$ novel rate the label-free cut declines on $17$ of $20$ clean
-spaces, and the limit is our estimator, not the representation.
+finding it. On a supervised contrastive encoder trained with one class held
+out, a linear probe separates that class from the rest at an AUC of $0.94$,
+while the same space, asked to flag those examples without being told what to
+look for, flags none of them. Representation quality is routinely measured on
+the first side of this gap --- linear probes, $k$-NN, transfer --- and
+scientific discovery lives entirely on the second. We study the standard
+open-world loop (score a corpus against a labelled reference, pool the most
+anomalous points, cluster the pool into candidate class anchors, adapt the
+representation) and take as the primary metric the fraction of that pool which
+is genuinely novel, since every later stage is downstream of it. We contribute
+four things. First, an algebra for the pool: purity is
+$\Pi = \varepsilon_s b / q$ with a ceiling $\min(1, b/q)$ that depends on the
+pooling threshold alone, which separates ``the representation is bad'' from
+``the threshold is bad'' --- questions the literature does not currently
+distinguish. Second, a label-free rule for choosing that threshold, derived
+from the same Neyman--Pearson density ratio that scores the corpus; it recovers
+the oracle threshold exactly on synthetic data, and where the scorer is too
+weak to support a choice it declines to pool and reports the refusal as an
+output. Third, evidence that ranking training objectives by discoverability is
+not the same as ranking them by probe accuracy: adding a sliced-isotropy
+regulariser to a supervised contrastive objective is a tie on the linear probe
+and costs $1.1$ points of top-1 accuracy, while raising novelty-detection AUC
+from $0.233$ to $0.620$. Fourth, a $2\times2$ decomposition of representation
+construction against the discovery loop, which finds the two to be substitutes
+more often than complements. Throughout we separate the $\sim$$1\%$ and
+$\sim$$10\%$ novelty regimes, which invert several conclusions; we report
+where the pipeline fails as carefully as where it works; and we rebuild every
+CIFAR result from random initialisation, because a hub-pretrained backbone has
+already seen the class it is being asked to discover.
+>>>>>>> worktree-discovery-metrics-paper
 \end{abstract}
 
 % ===========================================================================
@@ -91,10 +95,13 @@ A representation can encode a novel class perfectly and still be useless for
 finding it. This is not a hypothetical failure mode; it is the ordinary
 situation. Train a supervised contrastive encoder on a set of known classes,
 hold one class out, and a linear probe trained to separate the held-out class
-from the rest reaches an AUC of $0.94$. The same space, asked to flag novel
-examples without being told what to look for, scores exactly zero at the
-event level. The information is present and linearly accessible. It is simply
-not accessible to anyone who does not already have the answer.
+from the rest reaches an AUC of $0.94$. Now ask the same space a different
+question: given a \emph{single} image and no knowledge of what is being looked
+for, is this one novel? Run as a hypothesis test at a $5\%$ false-positive
+rate, that space flags none of them --- its detection rate on genuinely novel
+images is no better than the false-positive rate itself. The information is
+present, and linearly accessible. It is simply not accessible to anyone who
+does not already have the answer.
 
 The gap between those two numbers is the subject of this paper. It is the gap
 between a representation being \emph{decodable} and being
@@ -122,11 +129,12 @@ reference of labelled examples, take the most anomalous ones as a
 representation to the proposal. Every stage of that loop is downstream of one
 quantity --- the fraction of the pool that is genuinely novel, which we call
 \emph{pool purity}. Purity is the only forward-looking metric in the
-pipeline. Every other measure describes a space you already have; purity
-predicts whether the next step will improve it or corrupt it. Below a
-threshold the loop does not merely fail to help: it clusters background,
-plants anchors on it, and fine-tunes the representation to make that
-structure sharper.
+pipeline: every other measure describes a space you already have, whereas
+purity predicts whether the next step will improve that space or corrupt it.
+When purity is low the loop does not merely fail to help. It clusters
+background, plants anchors on that background, and then fine-tunes the
+representation to make the spurious structure sharper --- so a bad pool leaves
+the representation worse than not running the loop at all.
 
 \paragraph{Contributions.}
 \begin{enumerate}
@@ -137,9 +145,9 @@ structure sharper.
   $\varepsilon_s/q$ and
   $\Pi \le \min(1, b/q)$. The ceiling is a property of the cut alone. It says
   that a pool threshold inherited without derivation --- as ours was --- can
-  cap achievable purity far below the gate no matter how good the
-  representation is, and it separates ``the space is bad'' from ``the cut is
-  bad'' for the first time.
+  cap achievable purity at a level no representation can rescue, and it
+  separates ``the space is bad'' from ``the cut is bad'' for the first
+  time.
 \item \textbf{A label-free rule for the cut.} Because purity requires the
   novel labels, tuning the cut on purity is oracle tuning. We derive the
   novel-count estimator that the Neyman--Pearson critic already provides, and
@@ -152,8 +160,8 @@ structure sharper.
 \item \textbf{A regime split, stated as a condition rather than a caveat.}
   Single-class novelty at a rate of $\sim$1\% and multi-class novelty at
   $\sim$10\% are different problems with different answers: which pooling
-  statistic wins, whether stricter thresholds help or hurt, and whether the
-  gate is reachable at all invert between them. We report them separately
+  statistic wins, whether stricter thresholds help or hurt, and what purity
+  is attainable at all invert between them. We report them separately
   throughout.
 \item \textbf{A reduced set of objectives, and the regime in which they
   differ.} From a design cube of ten contrastive objectives we identify the
@@ -178,8 +186,8 @@ structure sharper.
   $+0.15$ probe gain and loses geometry), and on clean CIFAR-10 it is a
   two-currency gain over its parent. Frozen-space discovery with a
   density-ratio pool is the one construction in the campaign that is both
-  backbone- and holdout-independent: it clears the purity gate on $143/144$
-  galaxy10 draw$\times$seed cells (95\% lower bound $0.96$), on $8/8$ clean
+  backbone- and holdout-independent: round-1 purity is $0.40$--$0.57$ on $143/144$
+  galaxy10 draw$\times$seed cells (the one miss is at $0.10$), on $8/8$ clean
   CIFAR-10 objectives, and on every random draw of DTD, where the fine-tuning
   loop on the same parents clears it on $0/5$ to $5/5$ draws depending on the
   backbone. It needs no training: the pretrained trunk alone, pooled by
@@ -232,19 +240,51 @@ discovered anchor; and adapt the representation (or, in the frozen variant of
 Section~\ref{sec:constructions}, only the anchors) to the enlarged anchor set.
 The round repeats with the updated anchors.
 
-\paragraph{Pool purity, and why it gates everything.}
+\paragraph{What we measure, and what the numbers mean.}
+Because this paper compares two kinds of quality that are usually not
+distinguished, it is worth stating plainly what each number is before any of
+them appear.
+
+\emph{Decodability} measures how well a space supports a decision somebody has
+already specified. We report \textbf{linear probe AUC} (train a linear
+classifier to separate the held-out class from the rest, \emph{using the
+held-out labels}, and measure how well it does) and \textbf{top-1 accuracy} on
+the seen classes. A probe is an oracle measurement: it is allowed the answer.
+It says whether the information about the novel class survives in the
+representation at all, which is a genuine and useful thing to know --- and is
+not what a discovery pipeline can use.
+
+\emph{Discoverability} measures what the space supports \emph{without} the
+answer. \textbf{Euclidean AUC} ranks every corpus point by its distance to the
+nearest known-class anchor and asks how well that ranking separates novel from
+seen; \textbf{tied Mahalanobis} does the same with a shared covariance rather
+than raw distance. Both are ranking measures: they say a novel point tends to
+score higher than a seen one, but not by how much or where to put a threshold.
+\textbf{Per-event power} is the strictest question we ask. Fix a decision
+threshold that admits $\alpha = 5\%$ of \emph{reference} points, then report
+the fraction of genuinely novel points that exceed it. This is the power of a
+hypothesis test at size $\alpha$, applied one event at a time. It is bounded
+below by $\alpha$ in the sense that a space carrying no usable signal scores
+$\approx \alpha$; a value at or under $0.05$ therefore means the space cannot
+flag an individual novel example at all, and the interesting question is
+whether a method crosses that floor rather than by how much it improves.
+Finally, \textbf{pool purity} $\Pi$ is defined below and is the metric this
+paper treats as primary.
+
+\paragraph{Pool purity, and why everything is downstream of it.}
 Let $\Pi$ denote the fraction of $\pool$ that is truly novel. The pool feeds
 directly into a clustering step with no supervision downstream of it, so
 $\pool$ is the last point at which a mistake can still be corrected and
 nothing after it checks the work. At $\Pi \approx 0.01$ the clustering is not
 finding the novel class; it is partitioning background, and the subsequent
-fine-tune sharpens that partition. Empirically, in the multi-holdout regime,
-the probe drops by $0.031$ to $0.038$ wherever such pools form (under a
-single held-out class the same fine-tune is often probe-\emph{positive} on
-weak trunks, because it acts as a calibration repair; Section~\ref{sec:limits}). Purity therefore behaves as a gate rather
-than a gradient: above roughly $0.15$ the loop compounds across rounds, and
-below it the loop is harmful. We report $\Pi$ as the primary metric and treat
-the gate as a precondition for running the pipeline at all.
+fine-tune sharpens that partition. Empirically the probe drops by $0.031$ to
+$0.038$ wherever such pools form. We therefore report $\Pi$ as the primary
+metric and compare spaces and procedures by it directly. We deliberately do
+\emph{not} impose a purity threshold: purity is monotone in the cut
+(Section~\ref{sec:cut}), so any fixed level is a statement about the operating
+point rather than about the space, and no experiment in this paper branches on
+one. Where a purity is low enough that the subsequent clustering is
+partitioning background, we say so and give the number.
 
 % ===========================================================================
 \section{Algorithms}
@@ -372,9 +412,9 @@ Purity increases monotonically as $q$ shrinks, so there is no interior optimum
 and targeting a purity \emph{level} is the wrong objective. And the ceiling
 $\min(1, b/q)$ is a property of the cut alone: at $q = 0.05$ and $b = 0.01$ no
 scorer, however good, can exceed $\Pi = 0.20$. A threshold chosen without
-reference to $b$ can therefore cap purity near the gate independently of the
-representation --- and the widely used ``$95$th percentile of the reference''
-is such a threshold.
+reference to $b$ therefore caps purity independently of the representation
+--- and the widely used ``$95$th percentile of the reference'' is such a
+threshold.
 
 \paragraph{The rule.}
 Purity cannot be used to choose $q$, since computing it requires the novel
@@ -534,9 +574,9 @@ Table~\ref{tab:app_postdisc}), and is a no-op on the fifth. But in every
 cell, including the two whose round-1 pool purity was $0.06$, the images
 whose nearest anchor is a \emph{discovered} one are $100\%$ novel. The
 clustering step is noisy; the post-hoc nearest-anchor assignment is not. So
-the purity gate governs whether the \emph{loop} compounds, not whether the
+the round-1 purity governs whether the \emph{loop} compounds, not whether the
 anchors it planted sit on the novel class --- which is why a construction
-defined against those anchors can help below the gate, and why the LeJEPA
+defined against those anchors can help when the pool is poor, and why the LeJEPA
 cell above is not a counterexample to the anchors being right, only to the
 loop having needed them.
 
@@ -566,9 +606,11 @@ reason that only the draw-resampled tables make visible.
 
 \paragraph{The fine-tuning loop is backbone-dependent.} On galaxy10 --- the
 one dataset none of our backbones has seen --- the standard loop (encoder
-trains, distance pool) clears the purity gate on random single-holdout draws
-for $0/5$ classes with a DINO backbone, $2/5$ with LeJEPA and $5/5$ with
-VISReg (Table~\ref{tab:app_galaxy10_draws}). The archived alphabetical draw
+trains, distance pool) reaches a round-1 purity of only $0.02$--$0.04$ on
+random single-holdout draws with a DINO backbone, $0.03$--$0.07$ with LeJEPA
+and $0.05$--$0.09$ with VISReg, discovery from a $2\%$ injected sample
+(Table~\ref{tab:app_galaxy10_draws}; with the whole class present in the bank
+the same numbers are $0.09$--$0.29$). The archived alphabetical draw
 had reported purities of $0.46$--$0.50$ on every backbone; across five random
 classes the same arm is $0.13$--$0.19$. Whether ``discovery works on
 galaxy10'' depends on which galaxy morphology is novel and which backbone
@@ -577,8 +619,8 @@ embeds it, and no single-draw table can show that.
 \paragraph{The frozen density-ratio pool is not.} With the same parents
 frozen and the pool scored by the NP ratio, round-1 purity is $0.40$--$0.57$
 on every backbone, every objective and every held-out class, with no round-2
-collapse: $143$ of $144$ draw$\times$seed cells clear the gate
-(Table~\ref{tab:hardening}), and the one miss is at $0.10$. On the
+collapse on $143$ of $144$ draw$\times$seed cells
+(Table~\ref{tab:hardening}); the one miss is at $0.10$. On the
 leakage-free CIFAR-10 lineage the same construction clears it on $8/8$
 objectives ($0.26$--$0.55$) where the distance pool manages $3/8$
 (Table~\ref{tab:app_cifar10_pools}). It costs nothing in the probe --- the
@@ -587,8 +629,8 @@ fine-tuning run in Tables~\ref{tab:app_galaxy10_draws}
 and~\ref{tab:app_dtd_draws} shows: the collapse is the fine-tune destroying
 the pool, not the anchors. The construction does not even need the
 fine-tune: pooling the \emph{pretrained} trunk's features, with seen-class
-centroids as anchors and no training at all, clears the gate on $30/30$
-single-holdout draw cells on galaxy10 and DTD --- at $0.56$--$0.60$ on
+centroids as anchors and no training at all, reaches on all $30/30$
+single-holdout draw cells on galaxy10 and DTD --- $0.56$--$0.60$ on
 galaxy10, above the frozen fine-tuned head ($0.40$--$0.57$) and far above the
 fine-tuning loop ($0.13$--$0.29$; whole class present in the bank in every
 case), and at $0.26$ on DTD, above the fine-tuned
@@ -596,7 +638,7 @@ workhorse ($0.22$--$0.24$). Fine-tuning on the seen classes buys the probe
 and the multi-holdout regime; it does not buy single-holdout
 discoverability, and on galaxy10 it costs some. Where the base rate is low
 the same construction is marginal rather than dead --- flowers at $1/102$
-sits at $0.16$--$0.18$, at the gate on $12$ of $15$ draws --- and where the
+sits at $0.16$--$0.18$, marginal on every draw --- and where the
 novel class sits inside the seen manifold it is dead regardless of rate
 (aircraft at $1/100$: $0.01$; cars at $1/196$: $0.01$;
 Table~\ref{tab:app_frozen_np}). That ordering --- galaxy10, DTD, flowers,
@@ -625,6 +667,21 @@ in this paper are evaluation-mode numbers throughout.
 % docs/tables/*.tex.  Do not hand-edit them; re-run that script instead.
 % Each carries a machine-written coverage line, so a table that is missing
 % cells says so in its own caption.
+
+\paragraph{How to read the tables.}
+Four words recur and are worth fixing now. An \emph{objective} (or arm) is one
+training loss from the design cube of Section~\ref{sec:algorithms} --- SupCon,
+SupCon\,+\,SIGReg, and so on. A \emph{backbone} (or base) is the pretrained
+trunk the objective is fine-tuned on top of: DINO, LeJEPA or VISReg. A
+\emph{draw} is a choice of which class to hold out and treat as novel;
+re-drawing changes the problem, since some classes are far harder to find than
+others. A \emph{seed} is a re-run of the same training with different random
+initialisation and batch order, holding the draw fixed. A \emph{cell} is one
+(dataset, backbone) pair, inside which we compare objectives. Distinguishing
+draw from seed matters more than it may appear, and
+Section~\ref{sec:experiments} measures both: they turn out to differ by almost
+an order of magnitude, which determines how much of a single-run number can be
+believed.
 
 This campaign is reported while incomplete. Every table below states its own
 coverage, blanks are shown as ``--'' rather than dropped, and we mark which
@@ -673,25 +730,15 @@ $\text{sd}_{\text{draw}} = 0.174$, a factor of $8$. The caveat that survives
 is about which class you hold out, not which seed you ran. We attach it to
 every single-seed result rather than dropping it.
 
-Table~\ref{tab:draws} also carries a result we did not anticipate. On DTD
-only one objective clears the gate on every backbone: supervised distance-NPLM
-clears $5/5$ draws on LeJEPA and $0/5$ on DINO, while SupCon+SIGReg clears
-$15/15$ across DINO, LeJEPA and VISReg (Table~\ref{tab:app_dtd_draws}).
-Base-independence is a stronger and more useful property than winning on
-average, and it is not visible in any single-backbone table. The
-single-holdout DTD purity is $0.22$--$0.24$; the multi-holdout figure the
-same arm posts on the same dataset is $0.80$, and the two are different
-regimes rather than a discrepancy.
+Table~\ref{tab:draws} also carries a result we did not anticipate. Only one
+objective holds its purity across \emph{both} backbones. SupCon+SIGReg reaches
+$0.219$ on DINO and $0.225$ on LeJEPA, and its worst single draw ($0.193$)
+still exceeds every other objective's mean. Supervised distance-NPLM matches it
+on LeJEPA ($0.215$) and loses a factor of four on DINO ($0.051$) --- the same
+objective, the same data, the same code, differing only in the pretrained
+trunk. Base-independence is a stronger and more useful property than winning on
+average, and it is not visible in any single-backbone table.
 
-\paragraph{The archived draw was the favourable one.} Every headline number
-this campaign reported before it resampled holdouts was measured on the
-alphabetically last class. On galaxy10 that class sits at or above the
-\emph{top} of the random-draw range for tied-Mahalanobis on $17$ of $18$
-(objective, backbone) pairs and for purity on the arm that carried the
-claim (Table~\ref{tab:app_galaxy10_draws}). We do not think this was a
-selection effect --- the draw was fixed before any result existed --- but a
-reader comparing this paper with our earlier technical report will find the
-earlier numbers systematically higher, and this is why.
 
 \subsection{Constructions}
 
@@ -706,9 +753,9 @@ Table~\ref{tab:zero_training} runs the zero-training construction of
 Section~\ref{sec:frozen} --- pretrained features, seen-class centroids,
 density-ratio pool --- on every transfer dataset at single holdout, five
 draws each. It orders the datasets more sharply than any fine-tuned table:
-galaxy10 ($0.56$--$0.60$) and DTD ($0.26$) clear the gate on all $30$ cells
-and beat the best fine-tuned objective on the same draws; flowers sits at the
-gate ($0.16$--$0.18$, $12/15$); aircraft and cars are dead ($0.01$). Flowers
+galaxy10 ($0.56$--$0.60$) and DTD ($0.26$) beat the best fine-tuned objective
+on the same draws on all $30$ cells; flowers is marginal ($0.16$--$0.18$);
+aircraft and cars are dead ($0.01$). Flowers
 and aircraft have the same novel rate, so the rate is not what separates
 them: the pretrained trunk already places an unseen flower species away from
 the seen ones and an unseen aircraft variant among them. The base rate is
@@ -727,12 +774,13 @@ the pretrained trunk before any training is done.
 
 Table~\ref{tab:baserate} is a negative result about our own method.
 At a $1\%$ novel rate on clean CIFAR-100 banks, the label-free rule of
-Section~\ref{sec:cut} engages on $3$ of $20$ spaces, and where it engages
-the resulting purity is still below the gate. The spaces where it works share
-a structure --- an NPLM critic on a SIGReg marginal --- so the rule should be
-read as conditional on the scorer, not as a general-purpose procedure. The
-ceiling algebra says a $20\times$ enrichment is available at this rate; the
-estimator, not the representation, is what fails to reach it.
+Section~\ref{sec:cut} engages on $3$ of $20$ spaces, and where it engages the
+resulting purity is $0.046$ to $0.101$ --- an enrichment of $5$ to $10$ over
+the $1\%$ base rate, but far short of what the same cut admits. The spaces
+where it works share a structure --- an NPLM critic on a SIGReg marginal --- so
+the rule should be read as conditional on the scorer, not as a general-purpose
+procedure. The ceiling algebra says a $20\times$ enrichment is available at
+this rate; the estimator, not the representation, is what fails to reach it.
 
 \input{tables/objectives}
 \input{tables/draws}
@@ -804,6 +852,22 @@ and loses $0.035$ to it on every one of ten galaxy10 draws
 everywhere. The construction is no-cost; the objective is no-cost except on
 the one dataset the backbones had never seen.
 
+% TODO, but the content is already settled and should not be softened:
+%   - The rate floor. At b ~ 1% the pipeline as built reaches purity 0.03-0.10
+%     where it engages at all. Note honestly that the CEILING is 0.20 there,
+%     so this is a signal-efficiency limit and a clustering-detectability
+%     limit, NOT an information-theoretic one.
+%   - SIGReg does not help by making distance a log-likelihood. Forcing unit
+%     width is decorative; seen-class fidelity anti-correlates with novelty
+%     calibration. State the defensible claim instead.
+%   - The temperature basin is unreachable by any label-free or transductive
+%     selection: a landscape finding, not a recipe.
+%   - Repairing an identity is not the same as improving a space (five
+%     independent confirmations).
+%   - Optimising the representation THROUGH a fitted NP kernel destroys the
+%     separation it measures: the NP loss transfers as a form, not as an
+%     optimisation target.
+
 \appendix
 
 % ===========================================================================
@@ -817,7 +881,7 @@ in this paper are generated from the archived result files by a single script,
 and each carries a machine-written coverage line stating what is present and
 what is missing. Blanks are shown as ``--''.
 
-\paragraph{galaxy10, and the procedure that clears the gate.}
+\paragraph{galaxy10, and how much of the difficulty is the procedure.}
 galaxy10 carries more weight than any other dataset here, because no backbone
 we use has seen it: DINO, LeJEPA and VISReg were all pretrained on natural
 images, and galaxy morphology is genuinely out of that distribution. It is
@@ -827,14 +891,13 @@ Table~\ref{tab:galaxy} reports it under both discovery procedures on the same
 holdout draws. Under natural discovery --- a distance pool with the encoder
 fine-tuned and the whole held-out class present in the bank --- round-1 pool
 purity sits at $0.09$--$0.29$ across every objective and backbone, with sds
-that are frequently as large as the means: almost nothing clears the $0.15$
-gate, and no objective clears it reliably. Under the frozen-anchor
-density-ratio pool, with the same whole-class bank, the same objectives on
-the same draws reach $0.39$--$0.58$. In the paper's own regime --- discovery
-from a $2\%$ injected sample of the held-out class, the left block of the
-table --- the loop's purity falls further, to $0.01$--$0.09$; the frozen
-pool has not yet been measured at injected fractions, so that column has no
-counterpart.
+that are frequently as large as the means, so the objectives are not separated
+by this measurement at all. Under the frozen-anchor density-ratio pool, with
+the same whole-class bank, the same objectives on the same draws reach
+$0.39$--$0.58$. In the paper's own regime --- discovery from a $2\%$ injected
+sample of the held-out class, the left block of the table --- the loop's
+purity falls further, to $0.01$--$0.09$; the frozen pool has not yet been
+measured at injected fractions, so that column has no counterpart.
 
 That is a factor of three to five from changing the procedure and nothing
 else. It is the sharpest evidence in the paper for a claim we make throughout:

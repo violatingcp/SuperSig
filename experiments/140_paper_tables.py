@@ -46,6 +46,19 @@ PRETTY = {
 }
 
 
+CELL = {"cars_visreg": "cars / VISReg", "dtd_dino": "DTD / DINO",
+        "galaxy10_dino": "galaxy10 / DINO",
+        "galaxy10_lejepa": "galaxy10 / LeJEPA",
+        "galaxy10_visreg": "galaxy10 / VISReg"}
+CTOR = {"res": "SupCon", "res-nplm": "NPLM"}
+# how a construction reads in the residuals table (appendix)
+CHILD = {"res (residual)": "residual child (SupCon), bare",
+         "res (concat)": "residual child (SupCon), concat",
+         "res-nplm (residual)": "residual child (NPLM), bare",
+         "res-nplm (concat)": "residual child (NPLM), concat"}
+KIND = {"residual": "bare", "concat": "concat"}
+
+
 def esc(s):
     # `->` is not a text-mode glyph in OT1 (it prints as `-¿`); typeset it.
     return (str(s).replace("_", r"\_").replace("&", r"\&")
@@ -118,14 +131,22 @@ def t_objectives():
         "\n".join(rows),
         r"\textbf{Objectives on the leakage-free CIFAR-100 lineage} "
         r"(random init; the encoder never saw the held-out class). "
-        r"Probe and top-1 measure \emph{decodability}; Euclidean AUC, tied "
-        r"Mahalanobis and per-event power at $\alpha{=}0.05$ measure "
-        r"\emph{discoverability}. Adding SIGReg is a tie on probe and top-1 "
-        r"and wins every discoverability column -- at 100 classes; see "
-        r"Table~\ref{tab:app_cifar10_pre} for the few-class lineage.",
+        r"\emph{Decodable} columns: linear-probe AUC for the held-out class "
+        r"(trained \emph{with} its labels), top-1 accuracy on the seen classes, "
+        r"and nearest-anchor accuracy on the seen classes. "
+        r"\emph{Discoverable} columns: novelty-ranking AUC by Euclidean and "
+        r"by tied-Mahalanobis distance, and per-event detection power at a "
+        r"$5\%$ false-positive rate --- the last is $\approx0.05$ for a space "
+        r"carrying no usable signal, so $0.00$ means the space cannot flag an "
+        r"individual novel image at all. Adding SIGReg is a probe tie and a "
+        r"top-1 loss, and wins every discoverability column.",
         "tab:objectives", status,
         "llcccccc",
-        r"objective & sup. & probe & top-1 & acc & eucl & mahaT & per-ev \\")
+        r"& & \multicolumn{3}{c}{decodable} & "
+        r"\multicolumn{3}{c}{discoverable} \\"
+        "\n" r"\cmidrule(lr){3-5}\cmidrule(lr){6-8}" "\n"
+        r"objective & sup. & probe & top-1 & anchor & Eucl. & Maha. & "
+        r"per-event \\")
 
 
 # --------------------------------------------------------------- table 2 ---
@@ -245,88 +266,96 @@ def _msd(v, p=3):
 
 
 def t_draws():
-    """Single-holdout purity across holdout draws, both DTD bases.  The
-    paper columns are discovery from a 2% injected sample; the natural pass
-    (whole class present) is the labelled third column per base."""
+    """Single-holdout purity across holdout draws, both DTD bases: discovery
+    from a 2% injected sample (paper regime) with mean / sd / worst draw, and
+    the whole-class natural pass as a reference column."""
     cells = [("dtd", "dino"), ("dtd", "lejepa")]
-    inj = {c: _draw_purities_f(*c) for c in cells}
-    nat = {c: _draw_purities(*c) for c in cells}
+    data = {c: _draw_purities(*c) for c in cells}
+    dataf = {c: _draw_purities_f(*c, F_PAPER, DRAWS70[c[0]]) for c in cells}
     arms = ["simclr-ft", "sigreg-ssl-ft", "nplm-bil-ft", "supcon-ft",
             "ss-ft", "nplm-sup-ft"]
     rows, have = [], 0
     for a in arms:
         cs = []
         for c in cells:
-            v = list(inj[c].get(a, {}).values())
-            w = list(nat[c].get(a, {}).values())
-            if v:
+            v = list(data[c].get(a, {}).values())
+            vf = list(dataf[c].get(a, {}).values())
+            if vf:
                 have += 1
-                cs += [_msd(v), f"{sum(1 for x in v if x >= 0.15)}/{len(v)}"]
+                cs += [fnum(np.mean(vf)), fnum(np.std(vf, ddof=1), 3),
+                       fnum(min(vf))]
             else:
-                cs += ["--", "--"]
-            cs.append(_msd(w))
+                cs += ["--", "--", "--"]
+            cs.append(fnum(np.mean(v)) if v else "--")
         rows.append(" & ".join([PRETTY.get(a, esc(a))] + cs) + r" \\")
-    ndraw = max([len(v) for c in cells for v in inj[c].values()] or [0])
+    ndraw = max([len(v) for c in cells for v in dataf[c].values()] or [0])
     status = (f"DTD, {ndraw} holdout draws per base, single holdout; "
               f"{have}/{len(arms) * len(cells)} (arm, base) pairs present. "
-              r"Gate $=0.15$. Purity read from the run logs (POST grid at "
-              rf"$f={F_PAPER}$ and the natural pass).")
+              r"Purity read from the run logs (POST grid at "
+              rf"$f={F_PAPER}$; `whole' = the natural pass).")
     return _wrap(
         "\n".join(rows),
         r"\textbf{Pool purity is stable across holdout draws, and only one "
         r"objective is stable across \emph{backbones}.} Round-1 pool purity "
-        r"of discovery from a 2\% injected sample of the held-out class, "
-        r"mean $\pm$ sd over draws and the number of draws clearing the gate. "
-        r"The `whole' column is the natural pass, in which the whole "
-        r"held-out class is present in the unlabelled bank --- a different, "
-        r"easier regime, shown for reference only. "
-        r"SupCon+SIGReg clears $5/5$ on both backbones; supervised "
-        r"distance-NPLM clears $5/5$ on one and $0/5$ on the other.",
+        r"of discovery from a 2\% injected sample of the held-out class: "
+        r"mean $\pm$ sd over draws, with the worst draw. The `whole' column "
+        r"is the natural pass, in which the whole held-out class is present "
+        r"in the unlabelled bank --- a different, easier regime, shown for "
+        r"reference only. SupCon+SIGReg holds its purity on both backbones; "
+        r"supervised distance-NPLM matches it on LeJEPA and loses a factor "
+        r"of four on DINO.",
         "tab:draws", status,
-        "lcccccc",
-        r"& \multicolumn{3}{c}{DTD / DINO} & \multicolumn{3}{c}{DTD / LeJEPA} \\"
-        "\n" r"\cmidrule(lr){2-4}\cmidrule(lr){5-7}" "\n"
-        r"& \multicolumn{2}{c}{2\% injected} & whole & "
-        r"\multicolumn{2}{c}{2\% injected} & whole \\"
-        "\n" r"\cmidrule(lr){2-3}\cmidrule(lr){5-6}" "\n"
-        r"objective & purity & $\ge$gate & purity & purity & $\ge$gate & purity \\",
+        "lcccccccc",
+        r"& \multicolumn{4}{c}{DTD / DINO} & \multicolumn{4}{c}{DTD / LeJEPA} \\"
+        "\n" r"\cmidrule(lr){2-5}\cmidrule(lr){6-9}" "\n"
+        r"objective & mean & sd & min & whole & mean & sd & min & whole \\",
         size=r"\footnotesize")
 
 
 # --------------------------------------------------------------- table 3 ---
 def t_hardening():
-    """Frozen-NP headline: gate rate and the seed/draw variance split."""
+    """Frozen-NP headline: the seed/draw variance split.
+
+    NOTE: this reads ONLY the `*_variance` dicts.  The archived `*_gate`
+    dicts are byte-identical between r1 and r2 (exp 139 computed the
+    distribution summary once), so their min/median are not round-specific
+    and must not be tabulated per round.
+    """
     f = os.path.join(LOGS, "exp139", "hardening.json")
     if not os.path.exists(f):
         return None
     a = json.load(open(f))["analysis"]
-    rows = []
+    rows, n = [], None
     for rnd in ("r1", "r2"):
-        g, v = a.get(f"{rnd}_gate", {}), a.get(f"{rnd}_variance", {})
-        ci = g.get("ci") or [g.get("ci_lo"), g.get("ci_hi")]
+        v = a.get(f"{rnd}_variance", {})
+        if not v:
+            continue
+        n = a.get(f"{rnd}_gate", {}).get("n", n)
+        ss, sd = v.get("sd_within_seed"), v.get("sd_between_draw")
+        ratio = fnum(sd / ss, 1) + r"$\times$" if ss and sd else "--"
         rows.append(" & ".join([
-            rnd, f"{g.get('k', '--')}/{g.get('n', '--')}",
-            f"[{fnum(ci[0])}, {fnum(ci[1])}]",
-            fnum(g.get("min")), fnum(g.get("median")), fnum(g.get("mean")),
-            fnum(v.get("sd_seed")), fnum(v.get("sd_draw"))]) + r" \\")
-    v1 = a.get("r1_variance", {})
+            rnd, str(v.get("n_strata", "--")), fnum(v.get("grand_mean")),
+            fnum(ss), fnum(sd), ratio]) + r" \\")
+    if not rows:
+        return None
     status = (f"galaxy10, 3 backbones $\\times$ 3 objectives $\\times$ 5 draws "
-              f"$\\times$ 3 seeds ($+1$ archived) $= "
-              f"{a.get('r1_gate', {}).get('n', '?')}$ cells; variance "
-              f"stratified within (cell, objective), "
-              f"{v1.get('n_strata', '?')} strata, seed term measured.")
+              f"$\\times$ 3 seeds ($+1$ archived) $= {n}$ cells; variance "
+              f"stratified within (cell, objective). Round-level distribution "
+              f"summaries are not reported: the archive stores one summary for "
+              f"both rounds.")
     return _wrap(
         "\n".join(rows),
-        r"\textbf{The frozen-anchor result is reproducible, and the variance "
-        r"that matters is the holdout draw, not the seed.} Clopper--Pearson "
-        r"95\% interval on the fraction of cells above the $0.15$ gate. "
-        r"Seed-to-seed spread is $\sim$$1/8$ of draw-to-draw spread, so "
-        r"single-seed purities elsewhere in this paper carry a draw caveat "
-        r"and not a seed caveat.",
+        r"\textbf{The variance that matters is the holdout draw, not the "
+        r"seed.} One-way decomposition of frozen-anchor round-1 purity, "
+        r"stratified within (cell, objective) so the seed term is measured "
+        r"at fixed draw. Seed-to-seed spread is an eighth of draw-to-draw "
+        r"spread in both rounds, so the single-seed purities elsewhere in "
+        r"this paper carry a caveat about which class was held out and not "
+        r"about which seed was run.",
         "tab:hardening", status,
-        "lccccccc",
-        r"round & $\ge$gate & 95\% CI & min & median & mean & "
-        r"sd$_{\text{seed}}$ & sd$_{\text{draw}}$ \\")
+        "lccccc",
+        r"round & strata & mean $\Pi$ & sd$_{\text{seed}}$ & "
+        r"sd$_{\text{draw}}$ & ratio \\")
 
 
 # --------------------------------------------------------------- table 4 ---
@@ -347,11 +376,14 @@ def t_2x2():
             if r["missing"]:
                 n_missing += 1
                 rows.append(" & ".join(
-                    [esc(name), esc(r["obj"]), r["kind"]] + ["--"] * 7) + r" \\")
+                    [CELL.get(name, esc(name)),
+                     CTOR.get(r["obj"], esc(r["obj"])),
+                     KIND.get(r["kind"], r["kind"])] + ["--"] * 7) + r" \\")
                 continue
             rows.append(" & ".join([
-                esc(name), esc(r["obj"]), r["kind"],
-                fnum(r["A"]), fnum(r["B"]), fnum(r["C"]), fnum(r["D"]),
+                CELL.get(name, esc(name)),
+                CTOR.get(r["obj"], esc(r["obj"])),
+                KIND.get(r["kind"], r["kind"]), fnum(r["A"]), fnum(r["B"]), fnum(r["C"]), fnum(r["D"]),
                 f"{r['main_disc']:+.3f}", f"{r['main_ctor']:+.3f}",
                 rf"$\mathbf{{{r['interaction']:+.3f}}}$"
                 if r["interaction"] > 0.10 else f"{r['interaction']:+.3f}",
@@ -363,15 +395,22 @@ def t_2x2():
     return _wrap(
         "\n".join(rows),
         r"\textbf{Discovery $\times$ construction, per-event power at "
-        r"$\alpha{=}0.05$.} $A$ parent, $B$ $+$discovery, $C$ "
-        r"$+$construction, $D$ both; "
-        r"$\Delta_{\text{int}}=(D-C)-(B-A)$ is zero for an additive stack. "
-        r"Bold marks $\Delta_{\text{int}}>0.10$. The two largest \emph{totals} "
-        r"(galaxy10) are main effects, not interactions.",
+        r"$\alpha{=}0.05$.} Each row is one $2\times2$: $A$ is the parent "
+        r"space alone, $B$ the parent after the discovery loop, $C$ the "
+        r"construction built on the parent \emph{without} discovery, and $D$ "
+        r"both together. The two main effects are $B-A$ (discovery) and "
+        r"$C-A$ (construction). The residual child is trained under the loss in "
+        r"the second column and then either used alone (\emph{bare}) or "
+        r"concatenated with its parent (\emph{concat}). The interaction "
+        r"$\Delta_{\text{int}}=(D-C)-(B-A)$ is zero if the two simply add, "
+        r"and positive only if they do more together than apart. Bold marks "
+        r"$\Delta_{\text{int}}>0.10$. Note that the two largest \emph{totals} "
+        r"in the table (both galaxy10) have near-zero interaction: they are "
+        r"main effects, not composition.",
         "tab:2x2", status,
         "lllccccccc",
-        r"cell & ctor & variant & $A$ & $B$ & $C$ & $D$ & disc & ctor & "
-        r"$\Delta_{\text{int}}$ \\", size=r"\footnotesize")
+        r"cell & child loss & used as & $A$ & $B$ & $C$ & $D$ & "
+        r"$B{-}A$ & $C{-}A$ & $\Delta_{\text{int}}$ \\", size=r"\small")
 
 
 # --------------------------------------------------------------- table 5 ---
@@ -408,7 +447,8 @@ def t_baserate():
         r"\textbf{The label-free cut is objective-specific, not universal.} "
         r"Ratio of estimated to true novel base rate at $b{=}0.01$; the rule "
         r"engages only where an NPLM critic sits on a SIGReg marginal, and "
-        r"even then the resulting purity stays below the gate. Reported as a "
+        r"even then the resulting purity is only $0.046$--$0.101$ (against a "
+        r"base rate of $0.01$). Reported as a "
         r"limit of the rule, not of the representations.",
         "tab:baserate", status,
         "lcccc",
@@ -435,7 +475,8 @@ def t_residuals():
         for k in [x for x in d if x.startswith(stem + "->")]:
             c = d[k]
             rows.append(" & ".join([
-                "\\quad " + esc(k.split("->", 1)[1]),
+                "\\quad " + CHILD.get(k.split("->", 1)[1],
+                                      esc(k.split("->", 1)[1])),
                 fnum(c.get("probe")), f"{c.get('probe', 0) - p.get('probe', 0):+.3f}",
                 fnum(c.get("eucl")), f"{c.get('eucl', 0) - p.get('eucl', 0):+.3f}",
                 fnum(c.get("perevt"), 2)]) + r" \\")
@@ -448,7 +489,8 @@ def t_residuals():
         r"generally loses probe accuracy and the concatenation recovers it; "
         r"the detection gain is large and nearly free.",
         "tab:residuals", status, "lccccc",
-        r"space & probe & $\Delta$ & eucl & $\Delta$ & per-ev \\")
+        r"construction & probe & $\Delta$ & Eucl.\ AUC & $\Delta$ & "
+        r"per-event \\")
 
 
 def t_seeds():
@@ -497,7 +539,8 @@ def t_seeds():
                  r"seeds. Seed spread here is small, consistent with "
                  r"Table~\ref{tab:hardening}.",
                  "tab:seeds", status, "lccccc",
-                 r"space & probe pre & probe post & eucl & mahaT & $n$ \\")
+                 r"space & probe (pre) & probe (post) & Eucl.\ AUC & Maha. & "
+        r"seeds \\")
 
 
 _AGG = re.compile(r"^\|\s*([a-z0-9\-]+)\s*\|(.+)\|\s*$")

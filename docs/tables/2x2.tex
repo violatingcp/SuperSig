@@ -1,33 +1,33 @@
 % STATUS: 5 cells $\times$ 2 constructions $\times$ 2 variants; 20 complete, 0 lacking a pre-discovery child. One seed per cell.
 \begin{table}[t]
 \centering
-\footnotesize
+\small
 \begin{tabular}{lllccccccc}
 \toprule
-cell & ctor & variant & $A$ & $B$ & $C$ & $D$ & disc & ctor & $\Delta_{\text{int}}$ \\
+cell & child loss & used as & $A$ & $B$ & $C$ & $D$ & $B{-}A$ & $C{-}A$ & $\Delta_{\text{int}}$ \\
 \midrule
-cars\_visreg & res & residual & 0.223 & 0.171 & 0.073 & 0.066 & -0.052 & -0.150 & +0.045 \\
-cars\_visreg & res & concat & 0.223 & 0.171 & 0.228 & 0.174 & -0.052 & +0.005 & -0.002 \\
-cars\_visreg & res-nplm & residual & 0.223 & 0.171 & 0.256 & 0.284 & -0.052 & +0.033 & +0.080 \\
-cars\_visreg & res-nplm & concat & 0.223 & 0.171 & 0.263 & 0.282 & -0.052 & +0.040 & +0.070 \\
-dtd\_dino & res & residual & 0.040 & 0.068 & 0.022 & 0.253 & +0.028 & -0.018 & $\mathbf{+0.203}$ \\
-dtd\_dino & res & concat & 0.040 & 0.068 & 0.045 & 0.235 & +0.028 & +0.005 & $\mathbf{+0.163}$ \\
-dtd\_dino & res-nplm & residual & 0.040 & 0.068 & 0.113 & 0.087 & +0.028 & +0.073 & -0.053 \\
-dtd\_dino & res-nplm & concat & 0.040 & 0.068 & 0.077 & 0.130 & +0.028 & +0.037 & +0.025 \\
-galaxy10\_dino & res & residual & 0.021 & 0.037 & 0.018 & 0.014 & +0.015 & -0.003 & -0.020 \\
-galaxy10\_dino & res & concat & 0.021 & 0.037 & 0.021 & 0.018 & +0.015 & -0.001 & -0.018 \\
-galaxy10\_dino & res-nplm & residual & 0.021 & 0.037 & 0.281 & 0.299 & +0.015 & +0.259 & +0.003 \\
-galaxy10\_dino & res-nplm & concat & 0.021 & 0.037 & 0.091 & 0.142 & +0.015 & +0.069 & +0.036 \\
-galaxy10\_lejepa & res & residual & 0.007 & 0.196 & 0.001 & 0.002 & +0.190 & -0.005 & -0.189 \\
-galaxy10\_lejepa & res & concat & 0.007 & 0.196 & 0.001 & 0.012 & +0.190 & -0.005 & -0.179 \\
-galaxy10\_lejepa & res-nplm & residual & 0.007 & 0.196 & 0.009 & 0.021 & +0.190 & +0.002 & -0.177 \\
-galaxy10\_lejepa & res-nplm & concat & 0.007 & 0.196 & 0.008 & 0.206 & +0.190 & +0.001 & +0.008 \\
-galaxy10\_visreg & res & residual & 0.311 & 0.419 & 0.243 & 0.457 & +0.108 & -0.068 & $\mathbf{+0.107}$ \\
-galaxy10\_visreg & res & concat & 0.311 & 0.419 & 0.295 & 0.466 & +0.108 & -0.015 & +0.063 \\
-galaxy10\_visreg & res-nplm & residual & 0.311 & 0.419 & 0.333 & 0.471 & +0.108 & +0.022 & +0.030 \\
-galaxy10\_visreg & res-nplm & concat & 0.311 & 0.419 & 0.353 & 0.446 & +0.108 & +0.043 & -0.015 \\
+cars / VISReg & SupCon & bare & 0.223 & 0.171 & 0.073 & 0.066 & -0.052 & -0.150 & +0.045 \\
+cars / VISReg & SupCon & concat & 0.223 & 0.171 & 0.228 & 0.174 & -0.052 & +0.005 & -0.002 \\
+cars / VISReg & NPLM & bare & 0.223 & 0.171 & 0.256 & 0.284 & -0.052 & +0.033 & +0.080 \\
+cars / VISReg & NPLM & concat & 0.223 & 0.171 & 0.263 & 0.282 & -0.052 & +0.040 & +0.070 \\
+DTD / DINO & SupCon & bare & 0.040 & 0.068 & 0.022 & 0.253 & +0.028 & -0.018 & $\mathbf{+0.203}$ \\
+DTD / DINO & SupCon & concat & 0.040 & 0.068 & 0.045 & 0.235 & +0.028 & +0.005 & $\mathbf{+0.163}$ \\
+DTD / DINO & NPLM & bare & 0.040 & 0.068 & 0.113 & 0.087 & +0.028 & +0.073 & -0.053 \\
+DTD / DINO & NPLM & concat & 0.040 & 0.068 & 0.077 & 0.130 & +0.028 & +0.037 & +0.025 \\
+galaxy10 / DINO & SupCon & bare & 0.021 & 0.037 & 0.018 & 0.014 & +0.015 & -0.003 & -0.020 \\
+galaxy10 / DINO & SupCon & concat & 0.021 & 0.037 & 0.021 & 0.018 & +0.015 & -0.001 & -0.018 \\
+galaxy10 / DINO & NPLM & bare & 0.021 & 0.037 & 0.281 & 0.299 & +0.015 & +0.259 & +0.003 \\
+galaxy10 / DINO & NPLM & concat & 0.021 & 0.037 & 0.091 & 0.142 & +0.015 & +0.069 & +0.036 \\
+galaxy10 / LeJEPA & SupCon & bare & 0.007 & 0.196 & 0.001 & 0.002 & +0.190 & -0.005 & -0.189 \\
+galaxy10 / LeJEPA & SupCon & concat & 0.007 & 0.196 & 0.001 & 0.012 & +0.190 & -0.005 & -0.179 \\
+galaxy10 / LeJEPA & NPLM & bare & 0.007 & 0.196 & 0.009 & 0.021 & +0.190 & +0.002 & -0.177 \\
+galaxy10 / LeJEPA & NPLM & concat & 0.007 & 0.196 & 0.008 & 0.206 & +0.190 & +0.001 & +0.008 \\
+galaxy10 / VISReg & SupCon & bare & 0.311 & 0.419 & 0.243 & 0.457 & +0.108 & -0.068 & $\mathbf{+0.107}$ \\
+galaxy10 / VISReg & SupCon & concat & 0.311 & 0.419 & 0.295 & 0.466 & +0.108 & -0.015 & +0.063 \\
+galaxy10 / VISReg & NPLM & bare & 0.311 & 0.419 & 0.333 & 0.471 & +0.108 & +0.022 & +0.030 \\
+galaxy10 / VISReg & NPLM & concat & 0.311 & 0.419 & 0.353 & 0.446 & +0.108 & +0.043 & -0.015 \\
 \bottomrule
 \end{tabular}
-\caption{\textbf{Discovery $\times$ construction, per-event power at $\alpha{=}0.05$.} $A$ parent, $B$ $+$discovery, $C$ $+$construction, $D$ both; $\Delta_{\text{int}}=(D-C)-(B-A)$ is zero for an additive stack. Bold marks $\Delta_{\text{int}}>0.10$. The two largest \emph{totals} (galaxy10) are main effects, not interactions. \emph{Coverage:} 5 cells $\times$ 2 constructions $\times$ 2 variants; 20 complete, 0 lacking a pre-discovery child. One seed per cell.}
+\caption{\textbf{Discovery $\times$ construction, per-event power at $\alpha{=}0.05$.} Each row is one $2\times2$: $A$ is the parent space alone, $B$ the parent after the discovery loop, $C$ the construction built on the parent \emph{without} discovery, and $D$ both together. The two main effects are $B-A$ (discovery) and $C-A$ (construction). The residual child is trained under the loss in the second column and then either used alone (\emph{bare}) or concatenated with its parent (\emph{concat}). The interaction $\Delta_{\text{int}}=(D-C)-(B-A)$ is zero if the two simply add, and positive only if they do more together than apart. Bold marks $\Delta_{\text{int}}>0.10$. Note that the two largest \emph{totals} in the table (both galaxy10) have near-zero interaction: they are main effects, not composition. \emph{Coverage:} 5 cells $\times$ 2 constructions $\times$ 2 variants; 20 complete, 0 lacking a pre-discovery child. One seed per cell.}
 \label{tab:2x2}
 \end{table}
