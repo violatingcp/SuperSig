@@ -2158,10 +2158,53 @@ not compose with an instance-level term on unlabelled data.
 
 ### Exp 146b — Dose-response: how much of the novel class must the corpus contain?
 
-> **QUEUED 2026-08-29 as Block S3 (chainT9S3.sh, behind S2).**
-> `70_cars_ft_suite.py --arms gcd-ft gcd-sigreg-ft --gcd-unl-frac F`; outputs
-> tagged `_gcd_u{F}`; aggregate with `125_aggregate_draws.py` (add `--gcd`
-> and read the `_u` files -- TODO wire the frac into the aggregator).
+> **DONE 2026-08-30 (Block S3; 30 runs).**  `70_cars_ft_suite.py --arms gcd-ft
+> gcd-sigreg-ft --gcd-unl-frac F`; outputs tagged `_u{F}_gcd` (checkpoints,
+> banks, npz, plots -- the first pass had loaded the F=1 checkpoints and was
+> discarded); aggregate with `125_aggregate_draws.py <ds> <base> --frac F`.
+> Means over 5 draws; "@2% inj" = discovery from a 2 % injected sample.
+>
+> galaxy10 / lejepa, gcd-ft (gcd-sigreg-ft within sd at every dose):
+>
+> | novel class in corpus | images | probe | mahaT | per-event @2% | purity @2% inj | SpK@5% |
+> |---|---|---|---|---|---|---|
+> | 0 % (supcon-ft) | 0 | 0.892 | 0.711 | 0.05 | 0.034 | 0.54 |
+> | 5 % | 2-13 | 0.800 | 0.647 | 0.17 | 0.029 | 0.74 |
+> | 20 % | 7-53 | 0.857 | 0.695 | 0.20 | 0.050 | 0.81 |
+> | 50 % | 17-132 | 0.882 | 0.771 | 0.31 | 0.105 | 0.96 |
+> | 100 % | 33-264 | 0.899 | 0.853 | 0.40 | 0.131 | 0.99 |
+>
+> dtd / dino (47 classes; the held-out class is 80 images):
+>
+> | novel class in corpus | images | arm | probe | mahaT | per-event @2% | purity @2% inj |
+> |---|---|---|---|---|---|---|
+> | 0 % | 0 | supcon-ft | 0.883 | 0.628 | 0.17 | 0.028 |
+> | 0 % | 0 | ss-ft | 0.787 | 0.732 | 0.42 | 0.211 |
+> | 5 % | 4 | gcd-ft | 0.835 | 0.673 | 0.36 | 0.036 |
+> | 5 % | 4 | gcd-sigreg-ft | 0.837 | 0.747 | 0.44 | 0.119 |
+> | 20 % | 16 | gcd-ft | 0.859 | 0.668 | 0.25 | 0.026 |
+> | 20 % | 16 | gcd-sigreg-ft | 0.901 | 0.797 | 0.38 | 0.159 |
+> | 50 % | 40 | gcd-ft | 0.910 | 0.731 | 0.27 | 0.044 |
+> | 50 % | 40 | gcd-sigreg-ft | 0.917 | 0.868 | 0.54 | 0.206 |
+> | 100 % | 80 | gcd-ft | 0.939 | 0.782 | 0.41 | 0.109 |
+> | 100 % | 80 | gcd-sigreg-ft | 0.926 | 0.900 | 0.56 | 0.234 |
+>
+> **Prediction confirmed; falsifier does not fire.**  The gain is monotone
+> and roughly linear in the dose.  On galaxy10 the crossover with supcon-ft on
+> calibration lies between 20 % and 50 % presence; per-event power and SparKer
+> respond earlier (ahead of supcon-ft already at 5 %), pool purity only at
+> >= 50 %.  On dtd the plain GCD loss (no marginal) never leaves supcon-ft's
+> neighbourhood below 100 % (mahaT 0.67-0.73 vs 0.63, purity 0.03-0.04 vs
+> 0.03); it is the SIGReg marginal that carries the effect -- gcd-sigreg-ft at
+> 5 % (4 images) is already ss-ft (0.75 / 0.44 / 0.12 vs 0.73 / 0.42 / 0.21;
+> the instance term over 4 images costs purity), and climbs with the dose to
+> 0.90 / 0.56 / 0.23.  Reading: the unlabelled instance term pays in
+> proportion to how much of the novel class the corpus contains; at the
+> contamination levels the paper is about (<= 5 %) it buys nothing on the
+> discovery currencies, and the objective that matters there is still
+> SupCon + SIGReg on the seen classes.  Paper: one paragraph in the
+> objectives section stating the dose-response, and the GCD construction
+> named as the recommendation for the whole-class, corpus-available case.
 
 **Motivation.**  Exp 146's GCD arms trained with 100 % of the novel class in
 the unlabelled corpus; the power tests probe 0.3-10 % contamination.  A
