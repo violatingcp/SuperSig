@@ -35,7 +35,7 @@ OUT = os.path.join(REPO, "docs", "tables")
 
 # paper-facing names for the code's arm keys (docs/LOSSES.md is canonical)
 PRETTY = {
-    "gcd-ft": "GCD loss", "gcd-sigreg-ft": "GCD loss+SIGReg ($\\lambda{=}5$)",
+    "gcd-ft": "GCD", "gcd-sigreg-ft": "GCD+SIGReg",
     "simclr": "SimCLR", "visreg": "VISReg/LeJEPA", "nplm": "NPLM (unsup.)",
     "supcon": "SupCon", "supsig": "SupCon+SIGReg (repulse)",
     "nplmcw": "NPLM-dist.+classwise SIGReg", "ssig": r"\textbf{SupCon+SIGReg ($\lambda{=}5$)}",
@@ -776,8 +776,8 @@ def t_gcd_dose():
         r"neighbourhood below $100\%$ and it is the SIGReg marginal that "
         r"carries the effect.",
         "tab:gcd_dose", status, "llcccc",
-        r"novel class in corpus & objective & probe & mahaT & per-event & purity \\",
-        size=r"\small")
+        r"novel class & objective & probe & mahaT & per-event & purity \\",
+        size=r"\footnotesize")
 
 
 

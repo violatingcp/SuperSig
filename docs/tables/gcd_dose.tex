@@ -1,33 +1,33 @@
 % STATUS: 20 (dose, objective) rows; single holdout, 5 draws each, one seed; `0\%' rows are the archived labelled-only arms on the same draws; the GCD arms train on the whole corpus with the held-out images unlabelled, a random fraction of them kept per dose; per-event power and purity are the POST grid at $f=0.02$ (discovery from a 2\% injected sample).
 \begin{table}[t]
 \centering
-\small
+\footnotesize
 \begin{tabular}{llcccc}
 \toprule
-novel class in corpus & objective & probe & mahaT & per-event & purity \\
+novel class & objective & probe & mahaT & per-event & purity \\
 \midrule
 \multicolumn{6}{l}{\emph{galaxy10 / lejepa}} \\
 \quad 0\% & SupCon & 0.892$\pm$0.062 & 0.711$\pm$0.129 & 0.05$\pm$0.05 & 0.034$\pm$0.009 \\
 \quad 0\% & \textbf{SupCon+SIGReg ($\lambda{=}5$)} & 0.762$\pm$0.202 & 0.665$\pm$0.182 & 0.14$\pm$0.12 & 0.043$\pm$0.052 \\
-\quad 5\% & GCD loss & 0.800$\pm$0.150 & 0.647$\pm$0.033 & 0.17$\pm$0.25 & 0.029$\pm$0.008 \\
-\quad 5\% & GCD loss+SIGReg ($\lambda{=}5$) & 0.810$\pm$0.102 & 0.651$\pm$0.086 & 0.13$\pm$0.15 & 0.040$\pm$0.030 \\
-\quad 20\% & GCD loss & 0.857$\pm$0.100 & 0.695$\pm$0.076 & 0.19$\pm$0.28 & 0.050$\pm$0.057 \\
-\quad 20\% & GCD loss+SIGReg ($\lambda{=}5$) & 0.800$\pm$0.155 & 0.702$\pm$0.034 & 0.20$\pm$0.07 & 0.054$\pm$0.037 \\
-\quad 50\% & GCD loss & 0.882$\pm$0.110 & 0.771$\pm$0.099 & 0.31$\pm$0.30 & 0.105$\pm$0.094 \\
-\quad 50\% & GCD loss+SIGReg ($\lambda{=}5$) & 0.843$\pm$0.095 & 0.799$\pm$0.072 & 0.30$\pm$0.14 & 0.120$\pm$0.049 \\
-\quad 100\% & GCD loss & 0.899$\pm$0.098 & 0.853$\pm$0.064 & 0.40$\pm$0.29 & 0.131$\pm$0.086 \\
-\quad 100\% & GCD loss+SIGReg ($\lambda{=}5$) & 0.872$\pm$0.082 & 0.863$\pm$0.072 & 0.41$\pm$0.12 & 0.188$\pm$0.072 \\
+\quad 5\% & GCD & 0.800$\pm$0.150 & 0.647$\pm$0.033 & 0.17$\pm$0.25 & 0.029$\pm$0.008 \\
+\quad 5\% & GCD+SIGReg & 0.810$\pm$0.102 & 0.651$\pm$0.086 & 0.13$\pm$0.15 & 0.040$\pm$0.030 \\
+\quad 20\% & GCD & 0.857$\pm$0.100 & 0.695$\pm$0.076 & 0.19$\pm$0.28 & 0.050$\pm$0.057 \\
+\quad 20\% & GCD+SIGReg & 0.800$\pm$0.155 & 0.702$\pm$0.034 & 0.20$\pm$0.07 & 0.054$\pm$0.037 \\
+\quad 50\% & GCD & 0.882$\pm$0.110 & 0.771$\pm$0.099 & 0.31$\pm$0.30 & 0.105$\pm$0.094 \\
+\quad 50\% & GCD+SIGReg & 0.843$\pm$0.095 & 0.799$\pm$0.072 & 0.30$\pm$0.14 & 0.120$\pm$0.049 \\
+\quad 100\% & GCD & 0.899$\pm$0.098 & 0.853$\pm$0.064 & 0.40$\pm$0.29 & 0.131$\pm$0.086 \\
+\quad 100\% & GCD+SIGReg & 0.872$\pm$0.082 & 0.863$\pm$0.072 & 0.41$\pm$0.12 & 0.188$\pm$0.072 \\
 \multicolumn{6}{l}{\emph{dtd / dino}} \\
 \quad 0\% & SupCon & 0.883$\pm$0.044 & 0.628$\pm$0.086 & 0.16$\pm$0.15 & 0.028$\pm$0.014 \\
 \quad 0\% & \textbf{SupCon+SIGReg ($\lambda{=}5$)} & 0.787$\pm$0.041 & 0.732$\pm$0.060 & 0.42$\pm$0.11 & 0.211$\pm$0.017 \\
-\quad 5\% & GCD loss & 0.835$\pm$0.068 & 0.673$\pm$0.119 & 0.35$\pm$0.23 & 0.036$\pm$0.025 \\
-\quad 5\% & GCD loss+SIGReg ($\lambda{=}5$) & 0.837$\pm$0.114 & 0.747$\pm$0.070 & 0.44$\pm$0.19 & 0.119$\pm$0.018 \\
-\quad 20\% & GCD loss & 0.859$\pm$0.065 & 0.668$\pm$0.069 & 0.25$\pm$0.20 & 0.026$\pm$0.020 \\
-\quad 20\% & GCD loss+SIGReg ($\lambda{=}5$) & 0.901$\pm$0.059 & 0.797$\pm$0.093 & 0.38$\pm$0.23 & 0.159$\pm$0.046 \\
-\quad 50\% & GCD loss & 0.910$\pm$0.048 & 0.731$\pm$0.089 & 0.27$\pm$0.18 & 0.044$\pm$0.031 \\
-\quad 50\% & GCD loss+SIGReg ($\lambda{=}5$) & 0.917$\pm$0.038 & 0.868$\pm$0.062 & 0.53$\pm$0.19 & 0.206$\pm$0.039 \\
-\quad 100\% & GCD loss & 0.939$\pm$0.046 & 0.782$\pm$0.130 & 0.41$\pm$0.31 & 0.109$\pm$0.076 \\
-\quad 100\% & GCD loss+SIGReg ($\lambda{=}5$) & 0.926$\pm$0.048 & 0.900$\pm$0.097 & 0.56$\pm$0.23 & 0.234$\pm$0.039 \\
+\quad 5\% & GCD & 0.835$\pm$0.068 & 0.673$\pm$0.119 & 0.35$\pm$0.23 & 0.036$\pm$0.025 \\
+\quad 5\% & GCD+SIGReg & 0.837$\pm$0.114 & 0.747$\pm$0.070 & 0.44$\pm$0.19 & 0.119$\pm$0.018 \\
+\quad 20\% & GCD & 0.859$\pm$0.065 & 0.668$\pm$0.069 & 0.25$\pm$0.20 & 0.026$\pm$0.020 \\
+\quad 20\% & GCD+SIGReg & 0.901$\pm$0.059 & 0.797$\pm$0.093 & 0.38$\pm$0.23 & 0.159$\pm$0.046 \\
+\quad 50\% & GCD & 0.910$\pm$0.048 & 0.731$\pm$0.089 & 0.27$\pm$0.18 & 0.044$\pm$0.031 \\
+\quad 50\% & GCD+SIGReg & 0.917$\pm$0.038 & 0.868$\pm$0.062 & 0.53$\pm$0.19 & 0.206$\pm$0.039 \\
+\quad 100\% & GCD & 0.939$\pm$0.046 & 0.782$\pm$0.130 & 0.41$\pm$0.31 & 0.109$\pm$0.076 \\
+\quad 100\% & GCD+SIGReg & 0.926$\pm$0.048 & 0.900$\pm$0.097 & 0.56$\pm$0.23 & 0.234$\pm$0.039 \\
 \bottomrule
 \end{tabular}
 \caption{\textbf{Seeing the unlabelled novel images during representation learning is a dose, not a switch.} GCD's representation loss (SimCLR over every image, held-out ones included with masked labels, plus SupCon on the labelled ones, $0.65{:}0.35$; `+SIGReg' adds our marginal at $\lambda{=}5$) scored on our battery as a function of the fraction of the held-out class present in the training corpus. The gain in calibration, per-event power and pool purity is monotone in the dose and absent at the contamination levels this paper is about ($\le 5\%$); on DTD the plain GCD loss never leaves SupCon's neighbourhood below $100\%$ and it is the SIGReg marginal that carries the effect. \emph{Coverage:} 20 (dose, objective) rows; single holdout, 5 draws each, one seed; `0\%' rows are the archived labelled-only arms on the same draws; the GCD arms train on the whole corpus with the held-out images unlabelled, a random fraction of them kept per dose; per-event power and purity are the POST grid at $f=0.02$ (discovery from a 2\% injected sample).}
