@@ -519,10 +519,15 @@ def main():
                                                    seen).detach().float().to(DEVICE)
                     rpf = exp29.evaluate_space(tr_post, trl_post, te_post,
                                                tel_post, anch_f, seen, holdouts)
-                    torch.manual_seed(1000)
+                    _rng = torch.get_rng_state()          # the probe must not perturb
+                    _crng = torch.cuda.get_rng_state() if torch.cuda.is_available() else None
+                    torch.manual_seed(1000)                 # the battery's toy stream
                     pf, _, _ = exp29.linear_probe_novelty(tr_post, trl_post,
                                                           te_post, tel_post,
                                                           holdouts)
+                    torch.set_rng_state(_rng)
+                    if _crng is not None:
+                        torch.cuda.set_rng_state(_crng)
                     post_f[arm]["probe"].append(float(pf))
                     post_f[arm]["eucl"].append(rpf["eucl"])
                     post_f[arm]["mahaT"].append(rpf["maha_tied"])
