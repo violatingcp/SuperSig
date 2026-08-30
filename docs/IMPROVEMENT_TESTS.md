@@ -2270,12 +2270,12 @@ step function) is the true head-to-head with GCD's representation step.
 > **TIER 3 DONE 2026-08-30 (draws; cifar10 h{4,7,8,9}, cifar100 h{4,43,48,57}, shortlist
 > supcon / ssig / nplmsd / nplmcw; `136_aggregate.py <ds>`).**  Mean +- sd over 4 holdouts:
 >
-> | ds | arm | probe | top-1 | mahaT | per-event | frozen-np r1 | loop purity r1 (whole) | loop probe post |
+> | ds | arm | probe | top-1 | mahaT | per-event | frozen-np r1 | loop purity r1 (whole / 2 % inj) | loop probe post |
 > |---|---|---|---|---|---|---|---|---|
-> | C10 | supcon | 0.930+-0.017 | 0.892 | 0.587+-0.078 | 0.01 | 0.588+-0.031 | 0.018 | 0.923 |
-> | C10 | ssig | 0.912+-0.020 | 0.891 | 0.416+-0.040 | 0.02 | 0.392+-0.085 | 0.042 | 0.931 |
-> | C10 | nplmsd | 0.788+-0.079 | 0.815 | 0.685+-0.047 | 0.17 | 0.408+-0.046 | 0.320+-0.059 | 0.938 |
-> | C10 | **nplmcw** | **0.938+-0.018** | 0.891 | 0.624+-0.077 | **0.21** | 0.539+-0.032 | **0.430+-0.020** | **0.971** |
+> | C10 | supcon | 0.930+-0.017 | 0.892 | 0.587+-0.078 | 0.01 | 0.588+-0.031 | 0.018 / 0.003 | 0.923 |
+> | C10 | ssig | 0.912+-0.020 | 0.891 | 0.416+-0.040 | 0.02 | 0.392+-0.085 | 0.042 / 0.007 | 0.931 |
+> | C10 | nplmsd | 0.788+-0.079 | 0.815 | 0.685+-0.047 | 0.17 | 0.408+-0.046 | 0.320 / 0.082 | 0.938 |
+> | C10 | **nplmcw** | **0.938+-0.018** | 0.891 | 0.624+-0.077 | **0.21** | 0.539+-0.032 | **0.430+-0.020 / 0.123+-0.010** | **0.971** |
 > | C100 | supcon | 0.955+-0.020 | 0.604 | 0.447+-0.117 | 0.03 | 0.021 | 0.005 | 0.954 |
 > | C100 | ssig | 0.947+-0.019 | 0.596 | **0.549+-0.054** | 0.05 | 0.032 | 0.008 | 0.924 |
 > | C100 | nplmsd | 0.857+-0.045 | 0.255 | 0.484+-0.161 | 0.07 | 0.030 | 0.016 | 0.906 |
@@ -2286,7 +2286,8 @@ step function) is the true head-to-head with GCD's representation step.
 > but the draw sd (0.05-0.12) is comparable to the gap -- the dissociation is
 > a mean effect at n=4, not a per-draw guarantee; per-event power is small
 > for every scratch C100 space (<= 0.12).  C10: nplmcw is the champion on
-> every draw (purity 0.43 +- 0.02, the tightest cell in the study; per-event
+> every draw (whole-class purity 0.43 +- 0.02, the tightest cell in the study,
+> 0.12 +- 0.01 from a 2 % injected sample -- still 15x supcon's; per-event
 > 0.21; probe 0.94 -> 0.97 under the loop; top-1 tied with supcon), and ssig
 > loses calibration to supcon on every draw (0.42 vs 0.59) -- the few-class
 > pattern is not a holdout-4 accident.  The regime line reproduces across
