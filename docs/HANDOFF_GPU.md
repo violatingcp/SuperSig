@@ -291,6 +291,8 @@ the wins.
 
 ## Block L — Exp 136: the from-scratch CIFAR master grid
 
+> **DONE 2026-08-30 (all tiers; Tier 3 draws written up in IMPROVEMENT_TESTS exp 136).**
+
 ```bash
 python experiments/136_scratch_master.py --selftest
 # tier 1 (checkpoints exist)

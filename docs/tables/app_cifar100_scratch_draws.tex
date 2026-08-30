@@ -1,0 +1,22 @@
+% STATUS: cifar100 from scratch, single holdout, holdouts [4, 43, 48, 57] (the archived class plus random draws), one seed per draw; objectives with fewer than two draws omitted; injected-sample purity from the POST-grid logs (`--' = run predates it).
+\begin{landscape}
+\begin{table}[p]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{lccccccccc}
+\toprule
+& & \multicolumn{4}{c}{pre-discovery} & frozen & \multicolumn{3}{c}{loop} \\
+\cmidrule(lr){3-6}\cmidrule(lr){7-7}\cmidrule(lr){8-10}
+objective & draws & probe & top-1 & mahaT & per-ev & purity & purity 2\% & purity whole & probe post whole \\
+\midrule
+SupCon & 4 & 0.955$\pm$0.020 & 0.604$\pm$0.005 & 0.447$\pm$0.117 & 0.033$\pm$0.034 & 0.021$\pm$0.018 & 0.005$\pm$0.006 & 0.005$\pm$0.006 & 0.954$\pm$0.022 \\
+\textbf{SupCon+SIGReg ($\lambda{=}5$)} & 4 & 0.947$\pm$0.019 & 0.596$\pm$0.005 & 0.549$\pm$0.054 & 0.048$\pm$0.018 & 0.032$\pm$0.021 & 0.009$\pm$0.003 & 0.008$\pm$0.003 & 0.924$\pm$0.034 \\
+NPLM-dist. (sup.) & 4 & 0.857$\pm$0.045 & 0.255$\pm$0.003 & 0.484$\pm$0.161 & 0.068$\pm$0.048 & 0.030$\pm$0.031 & 0.016$\pm$0.012 & 0.016$\pm$0.013 & 0.906$\pm$0.041 \\
+NPLM-dist.+classwise SIGReg & 4 & 0.944$\pm$0.031 & 0.510$\pm$0.002 & 0.539$\pm$0.129 & 0.122$\pm$0.128 & 0.034$\pm$0.026 & 0.025$\pm$0.022 & 0.025$\pm$0.022 & 0.950$\pm$0.021 \\
+\bottomrule
+\end{tabular}
+\caption{\textbf{cifar100 from scratch, across holdout draws.} Pre-discovery probe, top-1, tied Mahalanobis and per-event power; frozen density-ratio pool purity; the fine-tuning loop's round-1 purity for discovery from a 2\% injected sample and, for reference, with the whole held-out class present in the bank, with the whole-class post probe. \emph{Coverage:} cifar100 from scratch, single holdout, holdouts [4, 43, 48, 57] (the archived class plus random draws), one seed per draw; objectives with fewer than two draws omitted; injected-sample purity from the POST-grid logs (`--' = run predates it).}
+\label{tab:app_cifar100_scratch_draws}
+\end{table}
+\end{landscape}

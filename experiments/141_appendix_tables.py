@@ -622,6 +622,55 @@ def t_gcd_benchmark():
                  r"method & CIFAR-10 & CIFAR-100 & Cars & Aircraft \\", wide=True)
 
 
+def t_scratch_draws(ds):
+    """Exp 136 Tier 3: the scratch shortlist across holdout draws (the archived
+    holdout plus the random draws), mean +- sd; loop purity in both regimes."""
+    files = sorted(f for f in glob.glob(os.path.join(LOGS, "exp136", f"master_{ds}*.json"))
+                   if re.fullmatch(rf".*master_{ds}(_h\d+)?\.json", f))
+    if len(files) < 2:
+        return None
+    per = {}
+    for f in files:
+        m = re.search(r"_h(\d+)\.json$", f); tag = f"_h{m.group(1)}" if m else ""
+        d = json.load(open(f)); inj = d68_injected(ds, tag)
+        for a, r in d.items():
+            q = per.setdefault(a, {k: [] for k in ("probe", "top1", "mahaT", "perevt", "frz", "pur", "purf", "probe_post")})
+            q["probe"].append(r["pre"]["probe"]); q["top1"].append(r["pre"]["top1"])
+            q["mahaT"].append(r["pre"]["mahaT"]); q["perevt"].append(r["pre"]["perevt"])
+            q["frz"].append(r["frozen"]["np|frozen"]["purity"][0])
+            d68 = r.get("discovery68") or {}
+            if d68.get("purity"):
+                q["pur"].append(d68["purity"][0])
+            if d68.get("probe_post") is not None:
+                q["probe_post"].append(d68["probe_post"])
+            if a in inj and "purity" in inj[a]:
+                q["purf"].append(inj[a]["purity"])
+    rows = []
+    for a in ("supcon", "ssig", "nplmsd", "nplmcw", "supsig", "simclr", "visreg", "nplm"):
+        if a not in per or len(per[a]["probe"]) < 2:
+            continue
+        q = per[a]
+        rows.append(" & ".join([PRETTY.get(a, esc(a)), str(len(q["probe"])), msd(q["probe"]), msd(q["top1"]),
+                                msd(q["mahaT"]), msd(q["perevt"]), msd(q["frz"]), msd(q["purf"]),
+                                msd(q["pur"]), msd(q["probe_post"])]) + r" \\")
+    if not rows:
+        return None
+    hs = [int((re.search(r"_h(\d+)\.json$", f) or [None, 4])[1]) for f in files]
+    status = (f"{ds} from scratch, single holdout, holdouts {sorted(hs)} (the archived class plus random draws), "
+              r"one seed per draw; objectives with fewer than two draws omitted; injected-sample purity from the "
+              r"POST-grid logs (`--' = run predates it).")
+    return _wrap("\n".join(rows),
+                 rf"\textbf{{{esc(ds)} from scratch, across holdout draws.}} Pre-discovery probe, top-1, tied "
+                 r"Mahalanobis and per-event power; frozen density-ratio pool purity; the fine-tuning loop's "
+                 r"round-1 purity for discovery from a 2\% injected sample and, for reference, with the whole "
+                 r"held-out class present in the bank, with the whole-class post probe.",
+                 f"tab:app_{ds}_scratch_draws", status, "lccccccccc",
+                 r"& & \multicolumn{4}{c}{pre-discovery} & frozen & \multicolumn{3}{c}{loop} \\"
+                 "\n" r"\cmidrule(lr){3-6}\cmidrule(lr){7-7}\cmidrule(lr){8-10}" "\n"
+                 r"objective & draws & probe & top-1 & mahaT & per-ev & purity & purity 2\% & purity whole & probe post whole \\",
+                 wide=True, size=r"\footnotesize")
+
+
 TABLES = [
     ("app_cifar10_pre", lambda: t_scratch_pre("cifar10")), ("app_cifar10_power", lambda: t_scratch_power("cifar10")),
     ("app_cifar10_pools", lambda: t_scratch_pools("cifar10")), ("app_cifar10_residuals", lambda: t_residuals_ds("cifar10")),
@@ -634,7 +683,8 @@ TABLES = [
     ("app_seeds_c100", t_seeds_c100), ("app_top1_galaxy", t_top1_galaxy),
     ("app_frozen_np", t_frozen_np_datasets), ("app_hub_residual_seeds", t_hub_residual_seeds),
     ("zero_training", t_zero_training),
-]
+    ("app_cifar10_scratch_draws", lambda: t_scratch_draws("cifar10")),
+    ("app_cifar100_scratch_draws", lambda: t_scratch_draws("cifar100"))]
 
 
 def selftest():

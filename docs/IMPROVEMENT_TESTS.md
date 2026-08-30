@@ -2267,6 +2267,32 @@ step function) is the true head-to-head with GCD's representation step.
 
 ### Exp 136 — The from-scratch CIFAR master grid (every metric, every space)
 
+> **TIER 3 DONE 2026-08-30 (draws; cifar10 h{4,7,8,9}, cifar100 h{4,43,48,57}, shortlist
+> supcon / ssig / nplmsd / nplmcw; `136_aggregate.py <ds>`).**  Mean +- sd over 4 holdouts:
+>
+> | ds | arm | probe | top-1 | mahaT | per-event | frozen-np r1 | loop purity r1 (whole) | loop probe post |
+> |---|---|---|---|---|---|---|---|---|
+> | C10 | supcon | 0.930+-0.017 | 0.892 | 0.587+-0.078 | 0.01 | 0.588+-0.031 | 0.018 | 0.923 |
+> | C10 | ssig | 0.912+-0.020 | 0.891 | 0.416+-0.040 | 0.02 | 0.392+-0.085 | 0.042 | 0.931 |
+> | C10 | nplmsd | 0.788+-0.079 | 0.815 | 0.685+-0.047 | 0.17 | 0.408+-0.046 | 0.320+-0.059 | 0.938 |
+> | C10 | **nplmcw** | **0.938+-0.018** | 0.891 | 0.624+-0.077 | **0.21** | 0.539+-0.032 | **0.430+-0.020** | **0.971** |
+> | C100 | supcon | 0.955+-0.020 | 0.604 | 0.447+-0.117 | 0.03 | 0.021 | 0.005 | 0.954 |
+> | C100 | ssig | 0.947+-0.019 | 0.596 | **0.549+-0.054** | 0.05 | 0.032 | 0.008 | 0.924 |
+> | C100 | nplmsd | 0.857+-0.045 | 0.255 | 0.484+-0.161 | 0.07 | 0.030 | 0.016 | 0.906 |
+> | C100 | nplmcw | 0.944+-0.031 | 0.510 | 0.539+-0.129 | **0.12+-0.13** | 0.034 | 0.025 | 0.950 |
+>
+> The Tier 1/2 verdicts survive the draws.  C100: ssig ties supcon on probe
+> and top-1 on every holdout and wins tied-Mahalanobis on the mean (+0.10),
+> but the draw sd (0.05-0.12) is comparable to the gap -- the dissociation is
+> a mean effect at n=4, not a per-draw guarantee; per-event power is small
+> for every scratch C100 space (<= 0.12).  C10: nplmcw is the champion on
+> every draw (purity 0.43 +- 0.02, the tightest cell in the study; per-event
+> 0.21; probe 0.94 -> 0.97 under the loop; top-1 tied with supcon), and ssig
+> loses calibration to supcon on every draw (0.42 vs 0.59) -- the few-class
+> pattern is not a holdout-4 accident.  The regime line reproduces across
+> draws: frozen-np purity 0.39-0.59 on every C10 arm, 0.02-0.03 on every C100
+> arm (dead).  Per-holdout tables: `tab:app_cifar{10,100}_scratch_draws`;
+> injected-sample loop purity is filled by Block S5's exp-68 re-pass.
 > **TIER 2 DONE 2026-08-28 (cifar10 h4, all 8 objectives).**  Prediction (i)
 > FAILS on C10: ssig loses to supcon on probe (0.884 vs 0.905) AND calibration
 > (mahaT 0.454 vs 0.552) while tying top-1 -- the dissociation is many-class

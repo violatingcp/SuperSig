@@ -13,7 +13,8 @@ import sys
 import numpy as np
 
 ds = sys.argv[1]
-files = sorted(glob.glob(f"logs/exp136/master_{ds}*.json"))
+files = sorted(f for f in glob.glob(f"logs/exp136/master_{ds}*.json")
+               if re.fullmatch(rf"logs/exp136/master_{ds}(_h\d+)?\.json", f))   # cifar10 must not match cifar100
 holds = [int((re.search(r"_h(\d+)\.json", f) or [None, 4])[1]) for f in files]
 ARMS = ["supcon", "ssig", "nplmsd", "nplmcw", "supsig", "simclr", "visreg", "nplm"]
 COLS = [("probe", lambda r: r["pre"]["probe"]), ("top1", lambda r: r["pre"]["top1"]),

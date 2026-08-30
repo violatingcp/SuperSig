@@ -1,0 +1,241 @@
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+exp136 [cifar10_h8] scratch master battery; holdout 8; arms=['supcon', 'ssig', 'nplmsd', 'nplmcw']; exp68 merged
+
+===== [cifar10_h8] supcon =====
+Using cache found in /home/pharris/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+  pre: probe=0.9464 top1=0.8910 acc=0.7152 eucl=0.5275 mahaT=0.4921 lid=0.6279 perevt=0.000
+    supcon-spk f=0.001: power=0.020 [0.003,0.064] (1/50)
+    supcon-spk f=0.003: power=0.060 [0.028,0.115] (3/50)
+    supcon-spk f=0.01: power=0.180 [0.124,0.251] (9/50)
+    supcon-spk f=0.02: power=0.740 [0.664,0.806] (37/50)
+    supcon-spk f=0.03: power=0.940 [0.885,0.972] (47/50)
+    supcon-spk f=0.1: power=1.000 [0.964,1.000] (50/50)
+    supcon-maha f=0.001: power=0.040 [0.014,0.090] (2/50)
+    supcon-maha f=0.003: power=0.000 [0.000,0.036] (0/50)
+    supcon-maha f=0.01: power=0.140 [0.090,0.207] (7/50)
+    supcon-maha f=0.02: power=0.220 [0.159,0.294] (11/50)
+    supcon-maha f=0.03: power=0.320 [0.249,0.399] (16/50)
+    supcon-maha f=0.1: power=0.940 [0.885,0.972] (47/50)
+    supcon-mmd f=0.001: power=0.040 [0.014,0.090] (2/50)
+    supcon-mmd f=0.003: power=0.080 [0.042,0.138] (4/50)
+    supcon-mmd f=0.01: power=0.200 [0.141,0.273] (10/50)
+    supcon-mmd f=0.02: power=0.760 [0.685,0.823] (38/50)
+    supcon-mmd f=0.03: power=0.880 [0.816,0.926] (44/50)
+    supcon-mmd f=0.1: power=1.000 [0.964,1.000] (50/50)
+  pre power @[0.001, 0.003, 0.01, 0.02, 0.03, 0.1]: spk [0.02, 0.06, 0.18, 0.74, 0.94, 1.0] maha [0.04, 0.0, 0.14, 0.22, 0.32, 0.94] mmd [0.04, 0.08, 0.2, 0.76, 0.88, 1.0]
+  [sigreg+proto] epoch 1/2  sigreg=1.7970  proto=50.6266  min_dist=11.89  mean_dist=46.57
+  [sigreg+proto] epoch 2/2  sigreg=1.8252  proto=46.6098  min_dist=13.16  mean_dist=46.30
+  round 1: pool=2250 purity=0.000 k-hat=4 anchors=4  margin=0.3509  mean-anchor=0.4432  8=0.443
+  [sigreg+proto] epoch 1/2  sigreg=2.0745  proto=49.1139  min_dist=12.89  mean_dist=52.75
+  [sigreg+proto] epoch 2/2  sigreg=2.0907  proto=46.2765  min_dist=12.99  mean_dist=52.55
+  round 2: pool=2251 purity=0.000 k-hat=4 anchors=8  margin=0.3035  mean-anchor=0.4426  8=0.443
+  frozen pool [dist frozen  ] purity r1=0.000 r2=0.000
+  [sigreg+proto] epoch 1/2  sigreg=2.6991  proto=93.3857  min_dist=12.23  mean_dist=46.21
+  [sigreg+proto] epoch 2/2  sigreg=2.5129  proto=79.4404  min_dist=13.11  mean_dist=45.49
+  round 1: pool=2250 purity=0.000 k-hat=4 anchors=4  margin=0.3878  mean-anchor=0.3747  8=0.375
+  [sigreg+proto] epoch 1/2  sigreg=1.8826  proto=42.8378  min_dist=12.99  mean_dist=45.91
+  [sigreg+proto] epoch 2/2  sigreg=1.7999  proto=36.1274  min_dist=13.08  mean_dist=45.46
+  round 2: pool=2250 purity=0.000 k-hat=4 anchors=8  margin=0.3680  mean-anchor=0.3304  8=0.330
+  frozen pool [dist bn-adapt] purity r1=0.000 r2=0.000
+  [sigreg+proto] epoch 1/2  sigreg=1.0170  proto=22.4608  min_dist=4.33  mean_dist=23.82
+  [sigreg+proto] epoch 2/2  sigreg=1.0388  proto=19.4316  min_dist=3.84  mean_dist=23.38
+  round 1: pool=5664 purity=0.603 k-hat=4 anchors=4  margin=0.8776  mean-anchor=0.9191  8=0.919
+    merged 8 -> 6 anchors
+  [sigreg+proto] epoch 1/2  sigreg=1.0037  proto=15.8806  min_dist=2.40  mean_dist=21.81
+  [sigreg+proto] epoch 2/2  sigreg=1.0352  proto=14.3612  min_dist=2.31  mean_dist=21.65
+  round 2: pool=5852 purity=0.616 k-hat=4 anchors=6  margin=0.9019  mean-anchor=0.7991  8=0.799
+  frozen pool [np   frozen  ] purity r1=0.603 r2=0.616
+  [sigreg+proto] epoch 1/2  sigreg=1.0624  proto=23.9794  min_dist=4.48  mean_dist=23.85
+  [sigreg+proto] epoch 2/2  sigreg=1.0550  proto=20.6469  min_dist=4.16  mean_dist=23.47
+  round 1: pool=5664 purity=0.603 k-hat=4 anchors=4  margin=0.9192  mean-anchor=0.8866  8=0.887
+    merged 8 -> 7 anchors
+  [sigreg+proto] epoch 1/2  sigreg=1.0735  proto=16.4892  min_dist=2.65  mean_dist=20.99
+  [sigreg+proto] epoch 2/2  sigreg=1.0915  proto=14.9855  min_dist=2.43  mean_dist=20.87
+  round 2: pool=5718 purity=0.607 k-hat=4 anchors=7  margin=0.9176  mean-anchor=0.8899  8=0.890
+  frozen pool [np   bn-adapt] purity r1=0.603 r2=0.607
+  legal cut n_min=10: ok=True q=0.0025 purity=0.902 n_novel=111 calib_out=1.16
+  legal cut n_min=30: ok=True q=0.0052 purity=0.881 n_novel=229 calib_out=1.16
+
+===== [cifar10_h8] ssig =====
+Using cache found in /home/pharris/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+  pre: probe=0.9323 top1=0.8861 acc=0.8756 eucl=0.3632 mahaT=0.3980 lid=0.5098 perevt=0.005
+    ssig-spk f=0.001: power=0.100 [0.058,0.162] (5/50)
+    ssig-spk f=0.003: power=0.040 [0.014,0.090] (2/50)
+    ssig-spk f=0.01: power=0.160 [0.107,0.229] (8/50)
+    ssig-spk f=0.02: power=0.180 [0.124,0.251] (9/50)
+    ssig-spk f=0.03: power=0.440 [0.362,0.520] (22/50)
+    ssig-spk f=0.1: power=1.000 [0.964,1.000] (50/50)
+    ssig-maha f=0.001: power=0.080 [0.042,0.138] (4/50)
+    ssig-maha f=0.003: power=0.060 [0.028,0.115] (3/50)
+    ssig-maha f=0.01: power=0.060 [0.028,0.115] (3/50)
+    ssig-maha f=0.02: power=0.060 [0.028,0.115] (3/50)
+    ssig-maha f=0.03: power=0.020 [0.003,0.064] (1/50)
+    ssig-maha f=0.1: power=0.060 [0.028,0.115] (3/50)
+    ssig-mmd f=0.001: power=0.080 [0.042,0.138] (4/50)
+    ssig-mmd f=0.003: power=0.080 [0.042,0.138] (4/50)
+    ssig-mmd f=0.01: power=0.360 [0.286,0.440] (18/50)
+    ssig-mmd f=0.02: power=0.960 [0.910,0.986] (48/50)
+    ssig-mmd f=0.03: power=1.000 [0.964,1.000] (50/50)
+    ssig-mmd f=0.1: power=1.000 [0.964,1.000] (50/50)
+  pre power @[0.001, 0.003, 0.01, 0.02, 0.03, 0.1]: spk [0.1, 0.04, 0.16, 0.18, 0.44, 1.0] maha [0.08, 0.06, 0.06, 0.06, 0.02, 0.06] mmd [0.08, 0.08, 0.36, 0.96, 1.0, 1.0]
+  [sigreg+proto] epoch 1/2  sigreg=0.1490  proto=3.9884  min_dist=3.64  mean_dist=11.09
+  [sigreg+proto] epoch 2/2  sigreg=0.1678  proto=4.1746  min_dist=4.57  mean_dist=11.99
+  round 1: pool=2300 purity=0.022 k-hat=4 anchors=4  margin=0.5347  mean-anchor=0.7713  8=0.771
+    merged 8 -> 7 anchors
+  [sigreg+proto] epoch 1/2  sigreg=0.2038  proto=5.2482  min_dist=4.19  mean_dist=12.18
+  [sigreg+proto] epoch 2/2  sigreg=0.2255  proto=5.0229  min_dist=5.11  mean_dist=12.91
+  round 2: pool=2379 purity=0.054 k-hat=4 anchors=7  margin=0.5841  mean-anchor=0.7925  8=0.792
+  frozen pool [dist frozen  ] purity r1=0.022 r2=0.054
+  [sigreg+proto] epoch 1/2  sigreg=0.1984  proto=4.1057  min_dist=3.65  mean_dist=11.07
+  [sigreg+proto] epoch 2/2  sigreg=0.2229  proto=4.2272  min_dist=4.57  mean_dist=11.93
+  round 1: pool=2300 purity=0.022 k-hat=4 anchors=4  margin=0.6027  mean-anchor=0.7559  8=0.756
+  [sigreg+proto] epoch 1/2  sigreg=0.2379  proto=3.6866  min_dist=4.03  mean_dist=11.99
+  [sigreg+proto] epoch 2/2  sigreg=0.2667  proto=3.5337  min_dist=4.98  mean_dist=12.64
+  round 2: pool=2543 purity=0.115 k-hat=4 anchors=8  margin=0.7078  mean-anchor=0.8920  8=0.892
+  frozen pool [dist bn-adapt] purity r1=0.022 r2=0.115
+  [sigreg+proto] epoch 1/2  sigreg=0.1760  proto=0.9075  min_dist=2.91  mean_dist=10.63
+  [sigreg+proto] epoch 2/2  sigreg=0.1964  proto=1.0181  min_dist=3.79  mean_dist=11.48
+  round 1: pool=3894 purity=0.422 k-hat=3 anchors=3  margin=0.8707  mean-anchor=0.9159  8=0.916
+    merged 7 -> 5 anchors
+  [sigreg+proto] epoch 1/2  sigreg=0.2286  proto=1.7484  min_dist=5.41  mean_dist=11.86
+  [sigreg+proto] epoch 2/2  sigreg=0.2579  proto=1.7994  min_dist=5.03  mean_dist=12.46
+  round 2: pool=3948 purity=0.430 k-hat=4 anchors=5  margin=0.8659  mean-anchor=0.9181  8=0.918
+  frozen pool [np   frozen  ] purity r1=0.422 r2=0.430
+  [sigreg+proto] epoch 1/2  sigreg=0.1849  proto=0.8091  min_dist=2.91  mean_dist=10.63
+  [sigreg+proto] epoch 2/2  sigreg=0.2028  proto=0.8953  min_dist=3.78  mean_dist=11.49
+  round 1: pool=3894 purity=0.422 k-hat=3 anchors=3  margin=0.8579  mean-anchor=0.9037  8=0.904
+    merged 7 -> 5 anchors
+  [sigreg+proto] epoch 1/2  sigreg=0.2247  proto=1.3565  min_dist=3.52  mean_dist=12.01
+  [sigreg+proto] epoch 2/2  sigreg=0.2542  proto=1.4466  min_dist=3.76  mean_dist=12.68
+  round 2: pool=4236 purity=0.469 k-hat=4 anchors=5  margin=0.8786  mean-anchor=0.9082  8=0.908
+  frozen pool [np   bn-adapt] purity r1=0.422 r2=0.469
+  legal cut n_min=10: ok=True q=0.0012 purity=0.700 n_novel=42 calib_out=1.00
+  legal cut n_min=30: ok=True q=0.0051 purity=0.618 n_novel=157 calib_out=1.00
+
+===== [cifar10_h8] nplmsd =====
+Using cache found in /home/pharris/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+  pre: probe=0.7073 top1=0.8270 acc=0.7906 eucl=0.6743 mahaT=0.6558 lid=0.5023 perevt=0.243
+    nplmsd-spk f=0.001: power=0.040 [0.014,0.090] (2/50)
+    nplmsd-spk f=0.003: power=0.040 [0.014,0.090] (2/50)
+    nplmsd-spk f=0.01: power=0.200 [0.141,0.273] (10/50)
+    nplmsd-spk f=0.02: power=0.540 [0.460,0.618] (27/50)
+    nplmsd-spk f=0.03: power=0.760 [0.685,0.823] (38/50)
+    nplmsd-spk f=0.1: power=1.000 [0.964,1.000] (50/50)
+    nplmsd-maha f=0.001: power=0.080 [0.042,0.138] (4/50)
+    nplmsd-maha f=0.003: power=0.060 [0.028,0.115] (3/50)
+    nplmsd-maha f=0.01: power=0.320 [0.249,0.399] (16/50)
+    nplmsd-maha f=0.02: power=0.820 [0.749,0.876] (41/50)
+    nplmsd-maha f=0.03: power=0.960 [0.910,0.986] (48/50)
+    nplmsd-maha f=0.1: power=1.000 [0.964,1.000] (50/50)
+    nplmsd-mmd f=0.001: power=0.040 [0.014,0.090] (2/50)
+    nplmsd-mmd f=0.003: power=0.040 [0.014,0.090] (2/50)
+    nplmsd-mmd f=0.01: power=0.140 [0.090,0.207] (7/50)
+    nplmsd-mmd f=0.02: power=0.620 [0.540,0.695] (31/50)
+    nplmsd-mmd f=0.03: power=0.960 [0.910,0.986] (48/50)
+    nplmsd-mmd f=0.1: power=1.000 [0.964,1.000] (50/50)
+  pre power @[0.001, 0.003, 0.01, 0.02, 0.03, 0.1]: spk [0.04, 0.04, 0.2, 0.54, 0.76, 1.0] maha [0.08, 0.06, 0.32, 0.82, 0.96, 1.0] mmd [0.04, 0.04, 0.14, 0.62, 0.96, 1.0]
+    merged 4 -> 1 anchors
+  [sigreg+proto] epoch 1/2  sigreg=0.8725  proto=0.9831  min_dist=1.04  mean_dist=5.06
+  [sigreg+proto] epoch 2/2  sigreg=0.8988  proto=1.3477  min_dist=1.38  mean_dist=6.06
+  round 1: pool=3743 purity=0.399 k-hat=4 anchors=1  margin=0.8359  mean-anchor=0.8070  8=0.807
+  [sigreg+proto] epoch 1/2  sigreg=0.9491  proto=2.9716  min_dist=3.21  mean_dist=7.60
+  [sigreg+proto] epoch 2/2  sigreg=1.0031  proto=3.6522  min_dist=4.28  mean_dist=8.57
+  round 2: pool=2516 purity=0.106 k-hat=1 anchors=2  margin=0.7202  mean-anchor=0.8435  8=0.844
+  frozen pool [dist frozen  ] purity r1=0.399 r2=0.106
+    merged 4 -> 1 anchors
+  [sigreg+proto] epoch 1/2  sigreg=0.8832  proto=0.9465  min_dist=1.04  mean_dist=5.06
+  [sigreg+proto] epoch 2/2  sigreg=0.9093  proto=1.3060  min_dist=1.38  mean_dist=6.06
+  round 1: pool=3743 purity=0.399 k-hat=4 anchors=1  margin=0.8672  mean-anchor=0.8350  8=0.835
+  [sigreg+proto] epoch 1/2  sigreg=0.9559  proto=2.9051  min_dist=3.22  mean_dist=7.61
+  [sigreg+proto] epoch 2/2  sigreg=1.0101  proto=3.5860  min_dist=4.28  mean_dist=8.58
+  round 2: pool=2571 purity=0.125 k-hat=1 anchors=2  margin=0.7185  mean-anchor=0.8660  8=0.866
+  frozen pool [dist bn-adapt] purity r1=0.399 r2=0.125
+    merged 2 -> 1 anchors
+  [sigreg+proto] epoch 1/2  sigreg=0.8864  proto=0.7863  min_dist=1.04  mean_dist=4.98
+  [sigreg+proto] epoch 2/2  sigreg=0.9096  proto=1.1221  min_dist=1.38  mean_dist=5.94
+  round 1: pool=3934 purity=0.428 k-hat=2 anchors=1  margin=0.7542  mean-anchor=0.7522  8=0.752
+    merged 4 -> 2 anchors
+  [sigreg+proto] epoch 1/2  sigreg=0.9434  proto=2.8133  min_dist=3.26  mean_dist=7.40
+  [sigreg+proto] epoch 2/2  sigreg=0.9934  proto=3.7950  min_dist=4.36  mean_dist=8.29
+  round 2: pool=3811 purity=0.410 k-hat=3 anchors=2  margin=0.7341  mean-anchor=0.7756  8=0.776
+  frozen pool [np   frozen  ] purity r1=0.428 r2=0.410
+    merged 2 -> 1 anchors
+  [sigreg+proto] epoch 1/2  sigreg=0.8964  proto=0.7637  min_dist=1.04  mean_dist=4.98
+  [sigreg+proto] epoch 2/2  sigreg=0.9196  proto=1.1163  min_dist=1.38  mean_dist=5.94
+  round 1: pool=3934 purity=0.428 k-hat=2 anchors=1  margin=0.7718  mean-anchor=0.7678  8=0.768
+    merged 3 -> 1 anchors
+  [sigreg+proto] epoch 1/2  sigreg=0.9651  proto=2.5423  min_dist=2.95  mean_dist=7.62
+  [sigreg+proto] epoch 2/2  sigreg=1.0094  proto=3.5313  min_dist=3.98  mean_dist=8.39
+  round 2: pool=3851 purity=0.416 k-hat=2 anchors=1  margin=0.7915  mean-anchor=0.8357  8=0.836
+  frozen pool [np   bn-adapt] purity r1=0.428 r2=0.416
+  legal cut n_min=10: ok=True q=0.0024 purity=0.882 n_novel=105 calib_out=1.08
+  legal cut n_min=30: ok=True q=0.0041 purity=0.872 n_novel=177 calib_out=1.08
+
+===== [cifar10_h8] nplmcw =====
+Using cache found in /home/pharris/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+  pre: probe=0.9545 top1=0.8877 acc=0.8820 eucl=0.6223 mahaT=0.6600 lid=0.4392 perevt=0.246
+    nplmcw-spk f=0.001: power=0.040 [0.014,0.090] (2/50)
+    nplmcw-spk f=0.003: power=0.020 [0.003,0.064] (1/50)
+    nplmcw-spk f=0.01: power=0.160 [0.107,0.229] (8/50)
+    nplmcw-spk f=0.02: power=0.700 [0.622,0.769] (35/50)
+    nplmcw-spk f=0.03: power=0.780 [0.706,0.841] (39/50)
+    nplmcw-spk f=0.1: power=1.000 [0.964,1.000] (50/50)
+    nplmcw-maha f=0.001: power=0.080 [0.042,0.138] (4/50)
+    nplmcw-maha f=0.003: power=0.060 [0.028,0.115] (3/50)
+    nplmcw-maha f=0.01: power=0.340 [0.268,0.419] (17/50)
+    nplmcw-maha f=0.02: power=0.760 [0.685,0.823] (38/50)
+    nplmcw-maha f=0.03: power=0.940 [0.885,0.972] (47/50)
+    nplmcw-maha f=0.1: power=1.000 [0.964,1.000] (50/50)
+    nplmcw-mmd f=0.001: power=0.060 [0.028,0.115] (3/50)
+    nplmcw-mmd f=0.003: power=0.060 [0.028,0.115] (3/50)
+    nplmcw-mmd f=0.01: power=0.160 [0.107,0.229] (8/50)
+    nplmcw-mmd f=0.02: power=0.700 [0.622,0.769] (35/50)
+    nplmcw-mmd f=0.03: power=0.980 [0.936,0.997] (49/50)
+    nplmcw-mmd f=0.1: power=1.000 [0.964,1.000] (50/50)
+  pre power @[0.001, 0.003, 0.01, 0.02, 0.03, 0.1]: spk [0.04, 0.02, 0.16, 0.7, 0.78, 1.0] maha [0.08, 0.06, 0.34, 0.76, 0.94, 1.0] mmd [0.06, 0.06, 0.16, 0.7, 0.98, 1.0]
+    merged 4 -> 1 anchors
+  [sigreg+proto] epoch 1/2  sigreg=0.8502  proto=0.3572  min_dist=3.57  mean_dist=4.84
+  [sigreg+proto] epoch 2/2  sigreg=0.9104  proto=0.3976  min_dist=4.88  mean_dist=6.26
+  round 1: pool=3986 purity=0.436 k-hat=4 anchors=1  margin=0.8871  mean-anchor=0.8593  8=0.859
+  [sigreg+proto] epoch 1/2  sigreg=0.9771  proto=1.6204  min_dist=5.88  mean_dist=7.82
+  [sigreg+proto] epoch 2/2  sigreg=1.0586  proto=0.8569  min_dist=7.72  mean_dist=8.98
+  round 2: pool=2370 purity=0.051 k-hat=1 anchors=2  margin=0.8095  mean-anchor=0.8828  8=0.883
+  frozen pool [dist frozen  ] purity r1=0.436 r2=0.051
+    merged 4 -> 1 anchors
+  [sigreg+proto] epoch 1/2  sigreg=0.8567  proto=0.3639  min_dist=3.56  mean_dist=4.84
+  [sigreg+proto] epoch 2/2  sigreg=0.9173  proto=0.4122  min_dist=4.84  mean_dist=6.26
+  round 1: pool=3986 purity=0.436 k-hat=4 anchors=1  margin=0.8947  mean-anchor=0.8837  8=0.884
+  [sigreg+proto] epoch 1/2  sigreg=0.9806  proto=1.6619  min_dist=5.85  mean_dist=7.81
+  [sigreg+proto] epoch 2/2  sigreg=1.0616  proto=0.8908  min_dist=7.66  mean_dist=8.98
+  round 2: pool=2342 purity=0.039 k-hat=1 anchors=2  margin=0.8127  mean-anchor=0.9085  8=0.909
+  frozen pool [dist bn-adapt] purity r1=0.436 r2=0.039
+    merged 2 -> 1 anchors
+  [sigreg+proto] epoch 1/2  sigreg=0.8609  proto=0.3292  min_dist=1.61  mean_dist=4.83
+  [sigreg+proto] epoch 2/2  sigreg=0.9186  proto=0.7497  min_dist=2.12  mean_dist=6.16
+  round 1: pool=5205 purity=0.568 k-hat=2 anchors=1  margin=0.6648  mean-anchor=0.8838  8=0.884
+    merged 2 -> 1 anchors
+  [sigreg+proto] epoch 1/2  sigreg=0.9878  proto=2.8420  min_dist=3.03  mean_dist=7.51
+  [sigreg+proto] epoch 2/2  sigreg=1.0119  proto=2.7189  min_dist=4.20  mean_dist=7.98
+  round 2: pool=4767 purity=0.528 k-hat=1 anchors=1  margin=0.9217  mean-anchor=0.8907  8=0.891
+  frozen pool [np   frozen  ] purity r1=0.568 r2=0.528
+    merged 2 -> 1 anchors
+  [sigreg+proto] epoch 1/2  sigreg=0.8652  proto=0.3122  min_dist=1.61  mean_dist=4.84
+  [sigreg+proto] epoch 2/2  sigreg=0.9228  proto=0.7244  min_dist=2.12  mean_dist=6.16
+  round 1: pool=5205 purity=0.568 k-hat=2 anchors=1  margin=0.6503  mean-anchor=0.8760  8=0.876
+    merged 2 -> 1 anchors
+  [sigreg+proto] epoch 1/2  sigreg=0.9926  proto=3.1002  min_dist=3.07  mean_dist=7.50
+  [sigreg+proto] epoch 2/2  sigreg=1.0170  proto=2.9595  min_dist=4.30  mean_dist=7.95
+  round 2: pool=4237 purity=0.469 k-hat=1 anchors=1  margin=0.8895  mean-anchor=0.8802  8=0.880
+  frozen pool [np   bn-adapt] purity r1=0.568 r2=0.469
+  legal cut n_min=10: ok=True q=0.0011 purity=0.909 n_novel=50 calib_out=1.37
+  legal cut n_min=30: ok=True q=0.0016 purity=0.926 n_novel=75 calib_out=1.37
+
+===== EXP136 MASTER [cifar10_h8] (holdout 8) =====
+  arm       probe   top1    acc   eucl  mahaT    lid  perevt spk@.02 mmd@.02 frz-np r1  legal  68 post 68 pur1
+  supcon    0.946  0.891  0.715  0.527  0.492  0.628   0.000    0.74    0.76     0.603  0.902    0.941   0.000
+  nplmcw    0.954  0.888  0.882  0.622  0.660  0.439   0.246    0.70    0.70     0.568  0.909    0.985   0.436
+  ssig      0.932  0.886  0.876  0.363  0.398  0.510   0.005    0.18    0.96     0.422  0.700    0.951   0.022
+  nplmsd    0.707  0.827  0.791  0.674  0.656  0.502   0.243    0.54    0.62     0.428  0.882    0.963   0.399
+wrote logs/exp136/master_cifar10_h8.json
+EXP136 DONE.
