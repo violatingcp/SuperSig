@@ -1,0 +1,856 @@
+/home/pharris/venv/lib64/python3.9/site-packages/networkx/utils/backends.py:135: RuntimeWarning: networkx backend defined more than once: nx-loopback
+  backends.update(_get_backends("networkx.backends"))
+exp70 [dtd_visreg_ft70_h1_d3] end-to-end ft suite, arms=['simclr-ft', 'sigreg-ssl-ft', 'nplm-bil-ft', 'supcon-ft', 'ss-ft', 'nplm-sup-ft'], ft_epochs=20, emb=100, holdouts 38-38 EXCLUDED from ft
+  ft corpus: 3680/3760 train images (holdout classes removed)
+
+===== [simclr-ft] (unsupervised) =====
+  loading /home/pharris/sigreg/SuperSig/checkpoints/dtd_ft_visreg_simclr-ft_seen_h1_d3.pt
+  [simclr-ft     ] probe=0.9634+-0.0043 acc=0.6076 supAUC=0.9510 eucl=0.4842 mahaT=0.5539 mahaPC=0.7666 lid=0.7246
+
+===== [sigreg-ssl-ft] (unsupervised) =====
+  loading /home/pharris/sigreg/SuperSig/checkpoints/dtd_ft_visreg_sigreg-ssl-ft_seen_h1_d3.pt
+  [sigreg-ssl-ft ] probe=0.9561+-0.0070 acc=0.6087 supAUC=0.9603 eucl=0.7175 mahaT=0.7760 mahaPC=0.8156 lid=0.7192
+
+===== [nplm-bil-ft] (unsupervised) =====
+  loading /home/pharris/sigreg/SuperSig/checkpoints/dtd_ft_visreg_nplm-bil-ft_seen_h1_d3.pt
+  [nplm-bil-ft   ] probe=0.8832+-0.0062 acc=0.5228 supAUC=0.9363 eucl=0.5937 mahaT=0.4481 mahaPC=0.5466 lid=0.5579
+
+===== [supcon-ft] (supervised) =====
+  loading /home/pharris/sigreg/SuperSig/checkpoints/dtd_ft_visreg_supcon-ft_seen_h1_d3.pt
+  [supcon-ft     ] probe=0.8825+-0.0022 acc=0.7587 supAUC=0.9841 eucl=0.7535 mahaT=0.6531 mahaPC=0.6550 lid=0.6244
+
+===== [ss-ft] (supervised) =====
+  loading /home/pharris/sigreg/SuperSig/checkpoints/dtd_ft_visreg_ss-ft_seen_h1_d3.pt
+  [ss-ft         ] probe=0.8843+-0.0040 acc=0.7815 supAUC=0.9841 eucl=0.8349 mahaT=0.8067 mahaPC=0.7779 lid=0.6912
+
+===== [nplm-sup-ft] (supervised) =====
+  loading /home/pharris/sigreg/SuperSig/checkpoints/dtd_ft_visreg_nplm-sup-ft_seen_h1_d3.pt
+  [nplm-sup-ft   ] probe=0.8341+-0.0052 acc=0.5875 supAUC=0.9556 eucl=0.6801 mahaT=0.6988 mahaPC=0.7592 lid=0.7022
+
+===== PRE table =====
+  arm                        probe     acc  supAUC    eucl   mahaT  mahaPC
+  simclr-ft          0.9634+-0.0043  0.6076  0.9510  0.4842  0.5539  0.7666
+  sigreg-ssl-ft      0.9561+-0.0070  0.6087  0.9603  0.7175  0.7760  0.8156
+  nplm-bil-ft        0.8832+-0.0062  0.5228  0.9363  0.5937  0.4481  0.5466
+  supcon-ft          0.8825+-0.0022  0.7587  0.9841  0.7535  0.6531  0.6550
+  ss-ft              0.8843+-0.0040  0.7815  0.9841  0.8349  0.8067  0.7779
+  nplm-sup-ft        0.8341+-0.0052  0.5875  0.9556  0.6801  0.6988  0.7592
+
+===== gaussianity (seen classes, test set) =====
+  metric                         simclr-ft sigreg-ssl-ft   nplm-bil-ft     supcon-ft         ss-ft   nplm-sup-ft
+  eig min (class cov)               -0.000        -0.000        -0.000        -0.000        -0.000        -0.000
+  eig max (class cov)               28.666        38.403         1.396        20.629        16.315         6.098
+  eig cond worst            28666492878848.038403148087296.01395993214976.020628769865728.016314637746176.06097865277440.0
+  class RMS min                      0.290         0.353         0.118         0.245         0.342         0.044
+  class RMS mean                     0.423         0.604         0.178         0.403         0.459         0.113
+  class RMS max                      0.593         0.751         0.213         0.607         0.605         0.250
+  max |corr| (worst class)           0.995         0.981         0.924         0.991         0.984         1.000
+  SW ratio mean                       2.13          2.74          1.48          2.36          2.57          6.64
+  SW ratio worst                      7.54         11.61          5.01          9.36         12.49         24.06
+  |skew| mean                        0.499         0.598         0.393         0.604         0.653         1.344
+  |ex-kurt| mean                     0.856         1.068         0.686         1.097         1.152         3.602
+  centroid dist min                   1.41          1.82          0.61          2.29          3.34          0.13
+  centroid dist mean                  4.87          8.56          1.73          9.71         10.43          4.30
+  separation (min d/RMS)              3.34          3.01          3.43          5.70          7.27          1.19
+
+===== PRE power batteries =====
+  [simclr-ft] per-event pre power=0.025
+  [simclr-ft] sparker (annealed)
+    pre-spk f=0.003: power=0.040 [0.014,0.090] (2/50)
+    pre-spk f=0.01: power=0.060 [0.028,0.115] (3/50)
+    pre-spk f=0.02: power=0.160 [0.107,0.229] (8/50)
+    pre-spk f=0.05: power=1.000 [0.964,1.000] (50/50)
+    pre-spk f=0.1: power=1.000 [0.964,1.000] (50/50)
+  [simclr-ft] maha
+    pre-maha f=0.003: power=0.080 [0.042,0.138] (4/50)
+    pre-maha f=0.01: power=0.160 [0.107,0.229] (8/50)
+    pre-maha f=0.02: power=0.220 [0.159,0.294] (11/50)
+    pre-maha f=0.05: power=0.720 [0.643,0.787] (36/50)
+    pre-maha f=0.1: power=0.980 [0.936,0.997] (49/50)
+  [simclr-ft] mmd
+    pre-mmd f=0.003: power=0.100 [0.058,0.162] (5/50)
+    pre-mmd f=0.01: power=0.120 [0.074,0.184] (6/50)
+    pre-mmd f=0.02: power=0.220 [0.159,0.294] (11/50)
+    pre-mmd f=0.05: power=0.820 [0.749,0.876] (41/50)
+    pre-mmd f=0.1: power=1.000 [0.964,1.000] (50/50)
+  [sigreg-ssl-ft] per-event pre power=0.175
+  [sigreg-ssl-ft] sparker (annealed)
+    pre-spk f=0.003: power=0.140 [0.090,0.207] (7/50)
+    pre-spk f=0.01: power=0.060 [0.028,0.115] (3/50)
+    pre-spk f=0.02: power=0.060 [0.028,0.115] (3/50)
+    pre-spk f=0.05: power=1.000 [0.964,1.000] (50/50)
+    pre-spk f=0.1: power=1.000 [0.964,1.000] (50/50)
+  [sigreg-ssl-ft] maha
+    pre-maha f=0.003: power=0.060 [0.028,0.115] (3/50)
+    pre-maha f=0.01: power=0.240 [0.177,0.315] (12/50)
+    pre-maha f=0.02: power=0.220 [0.159,0.294] (11/50)
+    pre-maha f=0.05: power=0.800 [0.727,0.859] (40/50)
+    pre-maha f=0.1: power=1.000 [0.964,1.000] (50/50)
+  [sigreg-ssl-ft] mmd
+    pre-mmd f=0.003: power=0.040 [0.014,0.090] (2/50)
+    pre-mmd f=0.01: power=0.060 [0.028,0.115] (3/50)
+    pre-mmd f=0.02: power=0.040 [0.014,0.090] (2/50)
+    pre-mmd f=0.05: power=0.900 [0.838,0.942] (45/50)
+    pre-mmd f=0.1: power=1.000 [0.964,1.000] (50/50)
+  [nplm-bil-ft] per-event pre power=0.075
+  [nplm-bil-ft] sparker (annealed)
+    pre-spk f=0.003: power=0.000 [0.000,0.036] (0/50)
+    pre-spk f=0.01: power=0.000 [0.000,0.036] (0/50)
+    pre-spk f=0.02: power=0.040 [0.014,0.090] (2/50)
+    pre-spk f=0.05: power=0.980 [0.936,0.997] (49/50)
+    pre-spk f=0.1: power=1.000 [0.964,1.000] (50/50)
+  [nplm-bil-ft] maha
+    pre-maha f=0.003: power=0.060 [0.028,0.115] (3/50)
+    pre-maha f=0.01: power=0.020 [0.003,0.064] (1/50)
+    pre-maha f=0.02: power=0.020 [0.003,0.064] (1/50)
+    pre-maha f=0.05: power=0.140 [0.090,0.207] (7/50)
+    pre-maha f=0.1: power=0.060 [0.028,0.115] (3/50)
+  [nplm-bil-ft] mmd
+    pre-mmd f=0.003: power=0.060 [0.028,0.115] (3/50)
+    pre-mmd f=0.01: power=0.000 [0.000,0.036] (0/50)
+    pre-mmd f=0.02: power=0.020 [0.003,0.064] (1/50)
+    pre-mmd f=0.05: power=0.420 [0.343,0.500] (21/50)
+    pre-mmd f=0.1: power=1.000 [0.964,1.000] (50/50)
+  [supcon-ft] per-event pre power=0.025
+  [supcon-ft] sparker (annealed)
+    pre-spk f=0.003: power=0.020 [0.003,0.064] (1/50)
+    pre-spk f=0.01: power=0.160 [0.107,0.229] (8/50)
+    pre-spk f=0.02: power=0.440 [0.362,0.520] (22/50)
+    pre-spk f=0.05: power=1.000 [0.964,1.000] (50/50)
+    pre-spk f=0.1: power=1.000 [0.964,1.000] (50/50)
+  [supcon-ft] maha
+    pre-maha f=0.003: power=0.040 [0.014,0.090] (2/50)
+    pre-maha f=0.01: power=0.060 [0.028,0.115] (3/50)
+    pre-maha f=0.02: power=0.120 [0.074,0.184] (6/50)
+    pre-maha f=0.05: power=0.180 [0.124,0.251] (9/50)
+    pre-maha f=0.1: power=0.520 [0.440,0.599] (26/50)
+  [supcon-ft] mmd
+    pre-mmd f=0.003: power=0.040 [0.014,0.090] (2/50)
+    pre-mmd f=0.01: power=0.240 [0.177,0.315] (12/50)
+    pre-mmd f=0.02: power=0.380 [0.305,0.460] (19/50)
+    pre-mmd f=0.05: power=1.000 [0.964,1.000] (50/50)
+    pre-mmd f=0.1: power=1.000 [0.964,1.000] (50/50)
+  [ss-ft] per-event pre power=0.300
+  [ss-ft] sparker (annealed)
+    pre-spk f=0.003: power=0.040 [0.014,0.090] (2/50)
+    pre-spk f=0.01: power=0.060 [0.028,0.115] (3/50)
+    pre-spk f=0.02: power=0.180 [0.124,0.251] (9/50)
+    pre-spk f=0.05: power=0.940 [0.885,0.972] (47/50)
+    pre-spk f=0.1: power=1.000 [0.964,1.000] (50/50)
+  [ss-ft] maha
+    pre-maha f=0.003: power=0.020 [0.003,0.064] (1/50)
+    pre-maha f=0.01: power=0.200 [0.141,0.273] (10/50)
+    pre-maha f=0.02: power=0.260 [0.194,0.336] (13/50)
+    pre-maha f=0.05: power=0.600 [0.520,0.676] (30/50)
+    pre-maha f=0.1: power=1.000 [0.964,1.000] (50/50)
+  [ss-ft] mmd
+    pre-mmd f=0.003: power=0.120 [0.074,0.184] (6/50)
+    pre-mmd f=0.01: power=0.240 [0.177,0.315] (12/50)
+    pre-mmd f=0.02: power=0.260 [0.194,0.336] (13/50)
+    pre-mmd f=0.05: power=1.000 [0.964,1.000] (50/50)
+    pre-mmd f=0.1: power=1.000 [0.964,1.000] (50/50)
+  [nplm-sup-ft] per-event pre power=0.050
+  [nplm-sup-ft] sparker (annealed)
+    pre-spk f=0.003: power=0.020 [0.003,0.064] (1/50)
+    pre-spk f=0.01: power=0.020 [0.003,0.064] (1/50)
+    pre-spk f=0.02: power=0.000 [0.000,0.036] (0/50)
+    pre-spk f=0.05: power=0.060 [0.028,0.115] (3/50)
+    pre-spk f=0.1: power=0.820 [0.749,0.876] (41/50)
+  [nplm-sup-ft] maha
+    pre-maha f=0.003: power=0.060 [0.028,0.115] (3/50)
+    pre-maha f=0.01: power=0.100 [0.058,0.162] (5/50)
+    pre-maha f=0.02: power=0.140 [0.090,0.207] (7/50)
+    pre-maha f=0.05: power=0.500 [0.421,0.579] (25/50)
+    pre-maha f=0.1: power=0.980 [0.936,0.997] (49/50)
+  [nplm-sup-ft] mmd
+    pre-mmd f=0.003: power=0.000 [0.000,0.036] (0/50)
+    pre-mmd f=0.01: power=0.080 [0.042,0.138] (4/50)
+    pre-mmd f=0.02: power=0.000 [0.000,0.036] (0/50)
+    pre-mmd f=0.05: power=0.200 [0.141,0.273] (10/50)
+    pre-mmd f=0.1: power=0.940 [0.885,0.972] (47/50)
+
+===== EXP70 PEREVENT PRE POWER =====
+  arm                 0.003     0.01     0.02     0.05      0.1
+  simclr-ft           0.025    0.025    0.025    0.025    0.025
+  sigreg-ssl-ft       0.175    0.175    0.175    0.175    0.175
+  nplm-bil-ft         0.075    0.075    0.075    0.075    0.075
+  supcon-ft           0.025    0.025    0.025    0.025    0.025
+  ss-ft               0.300    0.300    0.300    0.300    0.300
+  nplm-sup-ft         0.050    0.050    0.050    0.050    0.050
+  saved /home/pharris/sigreg/SuperSig/plots/exp70_perevent_power_pre_dtd_visreg_ft70_h1_d3.png
+
+===== EXP70 SPARKER PRE POWER =====
+  arm                 0.003     0.01     0.02     0.05      0.1
+  simclr-ft           0.040    0.060    0.160    1.000    1.000
+  sigreg-ssl-ft       0.140    0.060    0.060    1.000    1.000
+  nplm-bil-ft         0.000    0.000    0.040    0.980    1.000
+  supcon-ft           0.020    0.160    0.440    1.000    1.000
+  ss-ft               0.040    0.060    0.180    0.940    1.000
+  nplm-sup-ft         0.020    0.020    0.000    0.060    0.820
+  saved /home/pharris/sigreg/SuperSig/plots/exp70_sparker_power_pre_dtd_visreg_ft70_h1_d3.png
+
+===== EXP70 MAHA PRE POWER =====
+  arm                 0.003     0.01     0.02     0.05      0.1
+  simclr-ft           0.080    0.160    0.220    0.720    0.980
+  sigreg-ssl-ft       0.060    0.240    0.220    0.800    1.000
+  nplm-bil-ft         0.060    0.020    0.020    0.140    0.060
+  supcon-ft           0.040    0.060    0.120    0.180    0.520
+  ss-ft               0.020    0.200    0.260    0.600    1.000
+  nplm-sup-ft         0.060    0.100    0.140    0.500    0.980
+  saved /home/pharris/sigreg/SuperSig/plots/exp70_maha_power_pre_dtd_visreg_ft70_h1_d3.png
+
+===== EXP70 MMD PRE POWER =====
+  arm                 0.003     0.01     0.02     0.05      0.1
+  simclr-ft           0.100    0.120    0.220    0.820    1.000
+  sigreg-ssl-ft       0.040    0.060    0.040    0.900    1.000
+  nplm-bil-ft         0.060    0.000    0.020    0.420    1.000
+  supcon-ft           0.040    0.240    0.380    1.000    1.000
+  ss-ft               0.120    0.240    0.260    1.000    1.000
+  nplm-sup-ft         0.000    0.080    0.000    0.200    0.940
+  saved /home/pharris/sigreg/SuperSig/plots/exp70_mmd_power_pre_dtd_visreg_ft70_h1_d3.png
+
+----- natural discovery: simclr-ft -----
+  [sigreg+proto] epoch 1/5  sigreg=0.3815  proto=2.3953  min_dist=1.78  mean_dist=5.59
+  [sigreg+proto] epoch 2/5  sigreg=0.4166  proto=1.9729  min_dist=1.83  mean_dist=5.66
+  [sigreg+proto] epoch 3/5  sigreg=0.4090  proto=1.4350  min_dist=1.88  mean_dist=5.72
+  [sigreg+proto] epoch 4/5  sigreg=0.4153  proto=1.2848  min_dist=1.93  mean_dist=5.78
+  [sigreg+proto] epoch 5/5  sigreg=0.3972  proto=1.0621  min_dist=1.98  mean_dist=5.85
+  round 1: pool=184 purity=0.000 k-hat=4 anchors=4  margin=0.7736  mean-anchor=0.6293  38=0.629
+  [sigreg+proto] epoch 1/5  sigreg=0.3824  proto=1.4008  min_dist=2.03  mean_dist=6.08
+  [sigreg+proto] epoch 2/5  sigreg=0.3846  proto=1.1981  min_dist=2.09  mean_dist=6.15
+  [sigreg+proto] epoch 3/5  sigreg=0.3886  proto=0.9293  min_dist=2.14  mean_dist=6.21
+  [sigreg+proto] epoch 4/5  sigreg=0.3798  proto=0.8654  min_dist=2.20  mean_dist=6.28
+  [sigreg+proto] epoch 5/5  sigreg=0.3655  proto=0.8161  min_dist=2.26  mean_dist=6.34
+  round 2: pool=186 purity=0.011 k-hat=4 anchors=8  margin=0.7425  mean-anchor=0.6302  38=0.630
+  [simclr-ft] probe 0.9634 -> 0.9771  eucl 0.4842 -> 0.6213  mahaT 0.5539 -> 0.7194
+
+----- natural discovery: sigreg-ssl-ft -----
+  [sigreg+proto] epoch 1/5  sigreg=0.3265  proto=5.0144  min_dist=1.96  mean_dist=8.79
+  [sigreg+proto] epoch 2/5  sigreg=0.4980  proto=3.1408  min_dist=2.05  mean_dist=8.84
+  [sigreg+proto] epoch 3/5  sigreg=0.5720  proto=2.2691  min_dist=2.15  mean_dist=8.89
+  [sigreg+proto] epoch 4/5  sigreg=0.5922  proto=1.8384  min_dist=2.24  mean_dist=8.95
+  [sigreg+proto] epoch 5/5  sigreg=0.5841  proto=1.4270  min_dist=2.32  mean_dist=9.00
+  round 1: pool=192 purity=0.042 k-hat=4 anchors=4  margin=0.9244  mean-anchor=0.9193  38=0.919
+  [sigreg+proto] epoch 1/5  sigreg=0.5366  proto=2.0700  min_dist=2.41  mean_dist=9.06
+  [sigreg+proto] epoch 2/5  sigreg=0.5304  proto=1.7557  min_dist=2.50  mean_dist=9.12
+  [sigreg+proto] epoch 3/5  sigreg=0.5379  proto=1.3449  min_dist=2.59  mean_dist=9.17
+  [sigreg+proto] epoch 4/5  sigreg=0.5512  proto=1.2171  min_dist=2.67  mean_dist=9.23
+  [sigreg+proto] epoch 5/5  sigreg=0.5502  proto=1.0515  min_dist=2.74  mean_dist=9.29
+  round 2: pool=187 purity=0.016 k-hat=4 anchors=8  margin=0.8955  mean-anchor=0.7607  38=0.761
+  [sigreg-ssl-ft] probe 0.9561 -> 0.9715  eucl 0.7175 -> 0.7341  mahaT 0.7760 -> 0.7707
+
+----- natural discovery: nplm-bil-ft -----
+  [sigreg+proto] epoch 1/5  sigreg=0.6003  proto=2.3375  min_dist=0.54  mean_dist=1.87
+  [sigreg+proto] epoch 2/5  sigreg=0.5332  proto=1.7260  min_dist=0.63  mean_dist=1.93
+  [sigreg+proto] epoch 3/5  sigreg=0.5234  proto=1.5395  min_dist=0.70  mean_dist=2.00
+  [sigreg+proto] epoch 4/5  sigreg=0.4983  proto=1.4222  min_dist=0.77  mean_dist=2.06
+  [sigreg+proto] epoch 5/5  sigreg=0.4805  proto=1.2230  min_dist=0.83  mean_dist=2.13
+  round 1: pool=188 purity=0.021 k-hat=1 anchors=1  margin=0.6647  mean-anchor=0.9012  38=0.901
+  [sigreg+proto] epoch 1/5  sigreg=0.4946  proto=2.0552  min_dist=0.91  mean_dist=2.85
+  [sigreg+proto] epoch 2/5  sigreg=0.4621  proto=1.6910  min_dist=0.98  mean_dist=2.92
+  [sigreg+proto] epoch 3/5  sigreg=0.4695  proto=1.3376  min_dist=1.04  mean_dist=2.98
+  [sigreg+proto] epoch 4/5  sigreg=0.4612  proto=1.3456  min_dist=1.11  mean_dist=3.05
+  [sigreg+proto] epoch 5/5  sigreg=0.4537  proto=1.2821  min_dist=1.17  mean_dist=3.12
+  round 2: pool=184 purity=0.000 k-hat=4 anchors=5  margin=0.6421  mean-anchor=0.8198  38=0.820
+  [nplm-bil-ft] probe 0.8832 -> 0.9150  eucl 0.5937 -> 0.6372  mahaT 0.4481 -> 0.5551
+
+----- natural discovery: supcon-ft -----
+  [sigreg+proto] epoch 1/5  sigreg=0.5500  proto=1.7943  min_dist=3.64  mean_dist=11.42
+  [sigreg+proto] epoch 2/5  sigreg=0.5647  proto=0.7703  min_dist=3.70  mean_dist=11.47
+  [sigreg+proto] epoch 3/5  sigreg=0.5304  proto=0.6257  min_dist=3.76  mean_dist=11.53
+  [sigreg+proto] epoch 4/5  sigreg=0.5279  proto=0.7287  min_dist=3.82  mean_dist=11.58
+  [sigreg+proto] epoch 5/5  sigreg=0.5329  proto=0.5171  min_dist=3.88  mean_dist=11.64
+  round 1: pool=213 purity=0.136 k-hat=4 anchors=4  margin=0.8239  mean-anchor=0.9056  38=0.906
+  [sigreg+proto] epoch 1/5  sigreg=0.5268  proto=1.8242  min_dist=3.94  mean_dist=11.71
+  [sigreg+proto] epoch 2/5  sigreg=0.5474  proto=1.0305  min_dist=4.00  mean_dist=11.76
+  [sigreg+proto] epoch 3/5  sigreg=0.5356  proto=0.9699  min_dist=4.05  mean_dist=11.81
+  [sigreg+proto] epoch 4/5  sigreg=0.5364  proto=0.7563  min_dist=4.11  mean_dist=11.86
+  [sigreg+proto] epoch 5/5  sigreg=0.5295  proto=0.6642  min_dist=4.16  mean_dist=11.91
+  round 2: pool=184 purity=0.000 k-hat=4 anchors=8  margin=0.7771  mean-anchor=0.8881  38=0.888
+  [supcon-ft] probe 0.8825 -> 0.9267  eucl 0.7535 -> 0.7580  mahaT 0.6531 -> 0.7092
+
+----- natural discovery: ss-ft -----
+  [sigreg+proto] epoch 1/5  sigreg=0.4944  proto=1.4353  min_dist=2.89  mean_dist=12.22
+  [sigreg+proto] epoch 2/5  sigreg=0.5344  proto=0.7291  min_dist=2.96  mean_dist=12.28
+  [sigreg+proto] epoch 3/5  sigreg=0.5067  proto=0.5744  min_dist=3.03  mean_dist=12.34
+  [sigreg+proto] epoch 4/5  sigreg=0.4912  proto=0.5241  min_dist=3.10  mean_dist=12.39
+  [sigreg+proto] epoch 5/5  sigreg=0.4773  proto=0.4934  min_dist=3.17  mean_dist=12.45
+  round 1: pool=243 purity=0.243 k-hat=4 anchors=4  margin=0.8961  mean-anchor=0.9262  38=0.926
+    merged 8 -> 6 anchors
+  [sigreg+proto] epoch 1/5  sigreg=0.4748  proto=0.8604  min_dist=3.23  mean_dist=12.58
+  [sigreg+proto] epoch 2/5  sigreg=0.4542  proto=0.9717  min_dist=3.30  mean_dist=12.63
+  [sigreg+proto] epoch 3/5  sigreg=0.4685  proto=0.5440  min_dist=3.36  mean_dist=12.69
+  [sigreg+proto] epoch 4/5  sigreg=0.4611  proto=0.8097  min_dist=3.43  mean_dist=12.74
+  [sigreg+proto] epoch 5/5  sigreg=0.4613  proto=0.6894  min_dist=3.48  mean_dist=12.80
+  round 2: pool=194 purity=0.052 k-hat=4 anchors=6  margin=0.8738  mean-anchor=0.8665  38=0.866
+  [ss-ft] probe 0.8843 -> 0.7854  eucl 0.8349 -> 0.8104  mahaT 0.8067 -> 0.7385
+
+----- natural discovery: nplm-sup-ft -----
+  [sigreg+proto] epoch 1/5  sigreg=0.8503  proto=1.3179  min_dist=0.18  mean_dist=4.73
+  [sigreg+proto] epoch 2/5  sigreg=0.8300  proto=1.2287  min_dist=0.25  mean_dist=4.76
+  [sigreg+proto] epoch 3/5  sigreg=0.8073  proto=1.2716  min_dist=0.30  mean_dist=4.79
+  [sigreg+proto] epoch 4/5  sigreg=0.8030  proto=1.1563  min_dist=0.34  mean_dist=4.82
+  [sigreg+proto] epoch 5/5  sigreg=0.7908  proto=1.0358  min_dist=0.37  mean_dist=4.85
+  round 1: pool=196 purity=0.061 k-hat=2 anchors=2  margin=0.6389  mean-anchor=0.8023  38=0.802
+  [sigreg+proto] epoch 1/5  sigreg=0.7743  proto=1.1862  min_dist=0.48  mean_dist=5.16
+  [sigreg+proto] epoch 2/5  sigreg=0.7709  proto=1.2308  min_dist=0.59  mean_dist=5.19
+  [sigreg+proto] epoch 3/5  sigreg=0.7640  proto=1.1556  min_dist=0.67  mean_dist=5.23
+  [sigreg+proto] epoch 4/5  sigreg=0.7698  proto=1.0137  min_dist=0.74  mean_dist=5.27
+  [sigreg+proto] epoch 5/5  sigreg=0.7532  proto=1.0792  min_dist=0.80  mean_dist=5.31
+  round 2: pool=184 purity=0.000 k-hat=4 anchors=6  margin=0.5299  mean-anchor=0.7732  38=0.773
+  [nplm-sup-ft] probe 0.8341 -> 0.7275  eucl 0.6801 -> 0.7380  mahaT 0.6988 -> 0.6801
+
+===== POST grid, f=0.003 (11 injected) =====
+  [sigreg+proto] epoch 1/5  sigreg=0.3969  proto=2.5094  min_dist=1.78  mean_dist=5.59
+  [sigreg+proto] epoch 2/5  sigreg=0.4212  proto=1.6868  min_dist=1.83  mean_dist=5.66
+  [sigreg+proto] epoch 3/5  sigreg=0.4090  proto=1.4936  min_dist=1.88  mean_dist=5.72
+  [sigreg+proto] epoch 4/5  sigreg=0.4125  proto=1.1960  min_dist=1.93  mean_dist=5.78
+  [sigreg+proto] epoch 5/5  sigreg=0.3993  proto=0.9535  min_dist=1.98  mean_dist=5.85
+  round 1: pool=184 purity=0.000 k-hat=4 anchors=4  margin=0.7577  mean-anchor=0.5768  38=0.577
+  [sigreg+proto] epoch 1/5  sigreg=0.3828  proto=1.3937  min_dist=2.03  mean_dist=6.07
+  [sigreg+proto] epoch 2/5  sigreg=0.3866  proto=1.4028  min_dist=2.09  mean_dist=6.14
+  [sigreg+proto] epoch 3/5  sigreg=0.3888  proto=1.1870  min_dist=2.14  mean_dist=6.20
+  [sigreg+proto] epoch 4/5  sigreg=0.3939  proto=0.9727  min_dist=2.20  mean_dist=6.27
+  [sigreg+proto] epoch 5/5  sigreg=0.3994  proto=0.8178  min_dist=2.26  mean_dist=6.33
+  round 2: pool=184 purity=0.000 k-hat=3 anchors=7  margin=0.7541  mean-anchor=0.6017  38=0.602
+  [simclr-ft] post f=0.003: probe=0.9659 eucl=0.6323 mahaT=0.7199
+  [simclr-ft] per-event post f=0.003: power=0.175
+  [simclr-ft] sparker (post, annealed)
+    post-spk f=0.003: power=0.080 [0.042,0.138] (4/50)
+  [simclr-ft] maha (post)
+    post-maha f=0.003: power=0.120 [0.074,0.184] (6/50)
+  [simclr-ft] mmd (post)
+    post-mmd f=0.003: power=0.020 [0.003,0.064] (1/50)
+  [sigreg+proto] epoch 1/5  sigreg=0.3245  proto=4.9347  min_dist=1.96  mean_dist=8.77
+  [sigreg+proto] epoch 2/5  sigreg=0.4931  proto=3.2879  min_dist=2.05  mean_dist=8.82
+  [sigreg+proto] epoch 3/5  sigreg=0.5852  proto=2.1647  min_dist=2.14  mean_dist=8.87
+  [sigreg+proto] epoch 4/5  sigreg=0.5962  proto=1.9031  min_dist=2.23  mean_dist=8.92
+  [sigreg+proto] epoch 5/5  sigreg=0.5730  proto=1.6058  min_dist=2.31  mean_dist=8.98
+  round 1: pool=185 purity=0.005 k-hat=4 anchors=4  margin=0.9020  mean-anchor=0.8550  38=0.855
+  [sigreg+proto] epoch 1/5  sigreg=0.5373  proto=2.3234  min_dist=2.41  mean_dist=8.98
+  [sigreg+proto] epoch 2/5  sigreg=0.5127  proto=1.6115  min_dist=2.50  mean_dist=9.03
+  [sigreg+proto] epoch 3/5  sigreg=0.5353  proto=1.4185  min_dist=2.58  mean_dist=9.09
+  [sigreg+proto] epoch 4/5  sigreg=0.5192  proto=1.2444  min_dist=2.66  mean_dist=9.15
+  [sigreg+proto] epoch 5/5  sigreg=0.5117  proto=1.2312  min_dist=2.73  mean_dist=9.20
+  round 2: pool=184 purity=0.000 k-hat=4 anchors=8  margin=0.8557  mean-anchor=0.7855  38=0.786
+  [sigreg-ssl-ft] post f=0.003: probe=0.9687 eucl=0.7428 mahaT=0.7459
+  [sigreg-ssl-ft] per-event post f=0.003: power=0.375
+  [sigreg-ssl-ft] sparker (post, annealed)
+    post-spk f=0.003: power=0.020 [0.003,0.064] (1/50)
+  [sigreg-ssl-ft] maha (post)
+    post-maha f=0.003: power=0.120 [0.074,0.184] (6/50)
+  [sigreg-ssl-ft] mmd (post)
+    post-mmd f=0.003: power=0.080 [0.042,0.138] (4/50)
+  [sigreg+proto] epoch 1/5  sigreg=0.6079  proto=2.2399  min_dist=0.54  mean_dist=1.87
+  [sigreg+proto] epoch 2/5  sigreg=0.5324  proto=1.6763  min_dist=0.63  mean_dist=1.93
+  [sigreg+proto] epoch 3/5  sigreg=0.5146  proto=1.5896  min_dist=0.70  mean_dist=2.00
+  [sigreg+proto] epoch 4/5  sigreg=0.5182  proto=1.3825  min_dist=0.77  mean_dist=2.06
+  [sigreg+proto] epoch 5/5  sigreg=0.4849  proto=1.2430  min_dist=0.83  mean_dist=2.13
+  round 1: pool=185 purity=0.005 k-hat=1 anchors=1  margin=0.5940  mean-anchor=0.8018  38=0.802
+  [sigreg+proto] epoch 1/5  sigreg=0.4733  proto=1.7902  min_dist=0.91  mean_dist=2.96
+  [sigreg+proto] epoch 2/5  sigreg=0.4611  proto=1.4437  min_dist=0.98  mean_dist=3.03
+  [sigreg+proto] epoch 3/5  sigreg=0.4451  proto=1.4488  min_dist=1.04  mean_dist=3.10
+  [sigreg+proto] epoch 4/5  sigreg=0.4543  proto=1.4874  min_dist=1.11  mean_dist=3.17
+  [sigreg+proto] epoch 5/5  sigreg=0.4552  proto=1.2356  min_dist=1.17  mean_dist=3.23
+  round 2: pool=184 purity=0.000 k-hat=4 anchors=5  margin=0.6534  mean-anchor=0.8400  38=0.840
+  [nplm-bil-ft] post f=0.003: probe=0.8568 eucl=0.6022 mahaT=0.5542
+  [nplm-bil-ft] per-event post f=0.003: power=0.000
+  [nplm-bil-ft] sparker (post, annealed)
+    post-spk f=0.003: power=0.060 [0.028,0.115] (3/50)
+  [nplm-bil-ft] maha (post)
+    post-maha f=0.003: power=0.080 [0.042,0.138] (4/50)
+  [nplm-bil-ft] mmd (post)
+    post-mmd f=0.003: power=0.020 [0.003,0.064] (1/50)
+  [sigreg+proto] epoch 1/5  sigreg=0.5439  proto=1.1311  min_dist=3.65  mean_dist=11.55
+  [sigreg+proto] epoch 2/5  sigreg=0.5550  proto=0.8501  min_dist=3.71  mean_dist=11.61
+  [sigreg+proto] epoch 3/5  sigreg=0.5458  proto=0.7285  min_dist=3.77  mean_dist=11.66
+  [sigreg+proto] epoch 4/5  sigreg=0.5423  proto=0.6105  min_dist=3.83  mean_dist=11.72
+  [sigreg+proto] epoch 5/5  sigreg=0.5284  proto=0.5781  min_dist=3.89  mean_dist=11.77
+  round 1: pool=188 purity=0.021 k-hat=4 anchors=4  margin=0.8026  mean-anchor=0.8600  38=0.860
+  [sigreg+proto] epoch 1/5  sigreg=0.5322  proto=1.3290  min_dist=3.04  mean_dist=11.70
+  [sigreg+proto] epoch 2/5  sigreg=0.5437  proto=0.6960  min_dist=3.11  mean_dist=11.76
+  [sigreg+proto] epoch 3/5  sigreg=0.5259  proto=0.9325  min_dist=3.18  mean_dist=11.81
+  [sigreg+proto] epoch 4/5  sigreg=0.5244  proto=0.8137  min_dist=3.24  mean_dist=11.86
+  [sigreg+proto] epoch 5/5  sigreg=0.5187  proto=0.7680  min_dist=3.29  mean_dist=11.92
+  round 2: pool=184 purity=0.000 k-hat=3 anchors=7  margin=0.7526  mean-anchor=0.8218  38=0.822
+  [supcon-ft] post f=0.003: probe=0.7600 eucl=0.7581 mahaT=0.7024
+  [supcon-ft] per-event post f=0.003: power=0.175
+  [supcon-ft] sparker (post, annealed)
+    post-spk f=0.003: power=0.040 [0.014,0.090] (2/50)
+  [supcon-ft] maha (post)
+    post-maha f=0.003: power=0.080 [0.042,0.138] (4/50)
+  [supcon-ft] mmd (post)
+    post-mmd f=0.003: power=0.100 [0.058,0.162] (5/50)
+  [sigreg+proto] epoch 1/5  sigreg=0.4899  proto=0.7833  min_dist=2.91  mean_dist=12.30
+  [sigreg+proto] epoch 2/5  sigreg=0.4790  proto=1.0331  min_dist=2.98  mean_dist=12.36
+  [sigreg+proto] epoch 3/5  sigreg=0.4942  proto=0.6180  min_dist=3.06  mean_dist=12.41
+  [sigreg+proto] epoch 4/5  sigreg=0.5067  proto=0.7600  min_dist=3.13  mean_dist=12.47
+  [sigreg+proto] epoch 5/5  sigreg=0.5004  proto=0.4892  min_dist=3.20  mean_dist=12.53
+  round 1: pool=193 purity=0.047 k-hat=3 anchors=3  margin=0.8494  mean-anchor=0.8261  38=0.826
+    merged 7 -> 6 anchors
+  [sigreg+proto] epoch 1/5  sigreg=0.4816  proto=1.1414  min_dist=3.26  mean_dist=12.55
+  [sigreg+proto] epoch 2/5  sigreg=0.4691  proto=0.7120  min_dist=3.34  mean_dist=12.60
+  [sigreg+proto] epoch 3/5  sigreg=0.4684  proto=0.7487  min_dist=3.41  mean_dist=12.65
+  [sigreg+proto] epoch 4/5  sigreg=0.4504  proto=1.1005  min_dist=3.48  mean_dist=12.71
+  [sigreg+proto] epoch 5/5  sigreg=0.4872  proto=0.6897  min_dist=3.54  mean_dist=12.76
+  round 2: pool=187 purity=0.016 k-hat=4 anchors=6  margin=0.8229  mean-anchor=0.7902  38=0.790
+  [ss-ft] post f=0.003: probe=0.7116 eucl=0.8579 mahaT=0.8056
+  [ss-ft] per-event post f=0.003: power=0.200
+  [ss-ft] sparker (post, annealed)
+    post-spk f=0.003: power=0.100 [0.058,0.162] (5/50)
+  [ss-ft] maha (post)
+    post-maha f=0.003: power=0.100 [0.058,0.162] (5/50)
+  [ss-ft] mmd (post)
+    post-mmd f=0.003: power=0.120 [0.074,0.184] (6/50)
+  [sigreg+proto] epoch 1/5  sigreg=0.8522  proto=1.2861  min_dist=0.18  mean_dist=4.73
+  [sigreg+proto] epoch 2/5  sigreg=0.8327  proto=1.2034  min_dist=0.25  mean_dist=4.76
+  [sigreg+proto] epoch 3/5  sigreg=0.8162  proto=1.1624  min_dist=0.30  mean_dist=4.79
+  [sigreg+proto] epoch 4/5  sigreg=0.8000  proto=1.2356  min_dist=0.34  mean_dist=4.82
+  [sigreg+proto] epoch 5/5  sigreg=0.7850  proto=1.1417  min_dist=0.37  mean_dist=4.85
+  round 1: pool=185 purity=0.005 k-hat=2 anchors=2  margin=0.5917  mean-anchor=0.7836  38=0.784
+  [sigreg+proto] epoch 1/5  sigreg=0.7746  proto=1.2525  min_dist=0.48  mean_dist=5.20
+  [sigreg+proto] epoch 2/5  sigreg=0.7842  proto=1.1032  min_dist=0.59  mean_dist=5.24
+  [sigreg+proto] epoch 3/5  sigreg=0.7760  proto=1.0527  min_dist=0.67  mean_dist=5.28
+  [sigreg+proto] epoch 4/5  sigreg=0.7650  proto=1.0328  min_dist=0.74  mean_dist=5.32
+  [sigreg+proto] epoch 5/5  sigreg=0.7621  proto=1.1502  min_dist=0.80  mean_dist=5.36
+  round 2: pool=184 purity=0.000 k-hat=3 anchors=5  margin=0.4851  mean-anchor=0.7657  38=0.766
+  [nplm-sup-ft] post f=0.003: probe=0.5898 eucl=0.7108 mahaT=0.7021
+  [nplm-sup-ft] per-event post f=0.003: power=0.025
+  [nplm-sup-ft] sparker (post, annealed)
+    post-spk f=0.003: power=0.100 [0.058,0.162] (5/50)
+  [nplm-sup-ft] maha (post)
+    post-maha f=0.003: power=0.120 [0.074,0.184] (6/50)
+  [nplm-sup-ft] mmd (post)
+    post-mmd f=0.003: power=0.060 [0.028,0.115] (3/50)
+
+===== POST grid, f=0.01 (37 injected) =====
+  [sigreg+proto] epoch 1/5  sigreg=0.3815  proto=2.3953  min_dist=1.78  mean_dist=5.59
+  [sigreg+proto] epoch 2/5  sigreg=0.4166  proto=1.9729  min_dist=1.83  mean_dist=5.66
+  [sigreg+proto] epoch 3/5  sigreg=0.4090  proto=1.4350  min_dist=1.88  mean_dist=5.72
+  [sigreg+proto] epoch 4/5  sigreg=0.4153  proto=1.2848  min_dist=1.93  mean_dist=5.78
+  [sigreg+proto] epoch 5/5  sigreg=0.3972  proto=1.0622  min_dist=1.98  mean_dist=5.85
+  round 1: pool=184 purity=0.000 k-hat=4 anchors=4  margin=0.7736  mean-anchor=0.6293  38=0.629
+  [sigreg+proto] epoch 1/5  sigreg=0.3748  proto=1.3456  min_dist=2.03  mean_dist=6.02
+  [sigreg+proto] epoch 2/5  sigreg=0.3844  proto=1.1079  min_dist=2.09  mean_dist=6.09
+  [sigreg+proto] epoch 3/5  sigreg=0.3798  proto=1.1831  min_dist=2.14  mean_dist=6.15
+  [sigreg+proto] epoch 4/5  sigreg=0.3759  proto=0.8858  min_dist=2.20  mean_dist=6.22
+  [sigreg+proto] epoch 5/5  sigreg=0.3684  proto=0.8360  min_dist=2.26  mean_dist=6.28
+  round 2: pool=186 purity=0.011 k-hat=3 anchors=7  margin=0.6907  mean-anchor=0.5691  38=0.569
+  [simclr-ft] post f=0.01: probe=0.9715 eucl=0.6394 mahaT=0.7445
+  [simclr-ft] per-event post f=0.01: power=0.075
+  [simclr-ft] sparker (post, annealed)
+    post-spk f=0.01: power=0.140 [0.090,0.207] (7/50)
+  [simclr-ft] maha (post)
+    post-maha f=0.01: power=0.100 [0.058,0.162] (5/50)
+  [simclr-ft] mmd (post)
+    post-mmd f=0.01: power=0.060 [0.028,0.115] (3/50)
+  [sigreg+proto] epoch 1/5  sigreg=0.3275  proto=5.1949  min_dist=1.96  mean_dist=8.81
+  [sigreg+proto] epoch 2/5  sigreg=0.5045  proto=3.2678  min_dist=2.05  mean_dist=8.86
+  [sigreg+proto] epoch 3/5  sigreg=0.5824  proto=2.3859  min_dist=2.14  mean_dist=8.91
+  [sigreg+proto] epoch 4/5  sigreg=0.5702  proto=1.8058  min_dist=2.23  mean_dist=8.96
+  [sigreg+proto] epoch 5/5  sigreg=0.5601  proto=1.5125  min_dist=2.31  mean_dist=9.01
+  round 1: pool=189 purity=0.026 k-hat=4 anchors=4  margin=0.9206  mean-anchor=0.8642  38=0.864
+  [sigreg+proto] epoch 1/5  sigreg=0.5396  proto=2.3156  min_dist=2.40  mean_dist=9.00
+  [sigreg+proto] epoch 2/5  sigreg=0.5380  proto=1.7675  min_dist=2.49  mean_dist=9.06
+  [sigreg+proto] epoch 3/5  sigreg=0.5437  proto=1.3762  min_dist=2.58  mean_dist=9.11
+  [sigreg+proto] epoch 4/5  sigreg=0.5434  proto=1.2842  min_dist=2.66  mean_dist=9.17
+  [sigreg+proto] epoch 5/5  sigreg=0.5249  proto=1.0778  min_dist=2.74  mean_dist=9.23
+  round 2: pool=184 purity=0.000 k-hat=4 anchors=8  margin=0.8835  mean-anchor=0.7999  38=0.800
+  [sigreg-ssl-ft] post f=0.01: probe=0.9737 eucl=0.7353 mahaT=0.7732
+  [sigreg-ssl-ft] per-event post f=0.01: power=0.450
+  [sigreg-ssl-ft] sparker (post, annealed)
+    post-spk f=0.01: power=0.080 [0.042,0.138] (4/50)
+  [sigreg-ssl-ft] maha (post)
+    post-maha f=0.01: power=0.080 [0.042,0.138] (4/50)
+  [sigreg-ssl-ft] mmd (post)
+    post-mmd f=0.01: power=0.040 [0.014,0.090] (2/50)
+  [sigreg+proto] epoch 1/5  sigreg=0.5993  proto=2.2430  min_dist=0.54  mean_dist=1.87
+  [sigreg+proto] epoch 2/5  sigreg=0.5363  proto=1.7367  min_dist=0.63  mean_dist=1.93
+  [sigreg+proto] epoch 3/5  sigreg=0.5337  proto=1.4381  min_dist=0.70  mean_dist=2.00
+  [sigreg+proto] epoch 4/5  sigreg=0.5083  proto=1.3314  min_dist=0.77  mean_dist=2.06
+  [sigreg+proto] epoch 5/5  sigreg=0.4753  proto=1.2631  min_dist=0.83  mean_dist=2.13
+  round 1: pool=185 purity=0.005 k-hat=1 anchors=1  margin=0.6994  mean-anchor=0.8865  38=0.886
+  [sigreg+proto] epoch 1/5  sigreg=0.4726  proto=1.7081  min_dist=0.91  mean_dist=3.00
+  [sigreg+proto] epoch 2/5  sigreg=0.4463  proto=1.5704  min_dist=0.98  mean_dist=3.06
+  [sigreg+proto] epoch 3/5  sigreg=0.4575  proto=1.4546  min_dist=1.04  mean_dist=3.13
+  [sigreg+proto] epoch 4/5  sigreg=0.4448  proto=1.2951  min_dist=1.11  mean_dist=3.20
+  [sigreg+proto] epoch 5/5  sigreg=0.4351  proto=1.2654  min_dist=1.17  mean_dist=3.26
+  round 2: pool=184 purity=0.000 k-hat=4 anchors=5  margin=0.6195  mean-anchor=0.8111  38=0.811
+  [nplm-bil-ft] post f=0.01: probe=0.9036 eucl=0.6224 mahaT=0.5844
+  [nplm-bil-ft] per-event post f=0.01: power=0.000
+  [nplm-bil-ft] sparker (post, annealed)
+    post-spk f=0.01: power=0.080 [0.042,0.138] (4/50)
+  [nplm-bil-ft] maha (post)
+    post-maha f=0.01: power=0.080 [0.042,0.138] (4/50)
+  [nplm-bil-ft] mmd (post)
+    post-mmd f=0.01: power=0.040 [0.014,0.090] (2/50)
+  [sigreg+proto] epoch 1/5  sigreg=0.5437  proto=1.2148  min_dist=3.60  mean_dist=11.64
+  [sigreg+proto] epoch 2/5  sigreg=0.5418  proto=0.7219  min_dist=3.65  mean_dist=11.69
+  [sigreg+proto] epoch 3/5  sigreg=0.5364  proto=0.6081  min_dist=3.70  mean_dist=11.74
+  [sigreg+proto] epoch 4/5  sigreg=0.5388  proto=0.8660  min_dist=3.74  mean_dist=11.80
+  [sigreg+proto] epoch 5/5  sigreg=0.5517  proto=0.4383  min_dist=3.79  mean_dist=11.85
+  round 1: pool=198 purity=0.071 k-hat=4 anchors=4  margin=0.8141  mean-anchor=0.8542  38=0.854
+  [sigreg+proto] epoch 1/5  sigreg=0.5561  proto=1.4558  min_dist=3.42  mean_dist=11.95
+  [sigreg+proto] epoch 2/5  sigreg=0.5571  proto=1.0966  min_dist=3.43  mean_dist=12.00
+  [sigreg+proto] epoch 3/5  sigreg=0.5261  proto=1.2189  min_dist=3.44  mean_dist=12.06
+  [sigreg+proto] epoch 4/5  sigreg=0.5347  proto=0.7772  min_dist=3.44  mean_dist=12.11
+  [sigreg+proto] epoch 5/5  sigreg=0.5253  proto=0.6362  min_dist=3.45  mean_dist=12.16
+  round 2: pool=185 purity=0.005 k-hat=4 anchors=8  margin=0.7971  mean-anchor=0.8845  38=0.885
+  [supcon-ft] post f=0.01: probe=0.8632 eucl=0.6911 mahaT=0.6858
+  [supcon-ft] per-event post f=0.01: power=0.200
+  [supcon-ft] sparker (post, annealed)
+    post-spk f=0.01: power=0.080 [0.042,0.138] (4/50)
+  [supcon-ft] maha (post)
+    post-maha f=0.01: power=0.080 [0.042,0.138] (4/50)
+  [supcon-ft] mmd (post)
+    post-mmd f=0.01: power=0.100 [0.058,0.162] (5/50)
+  [sigreg+proto] epoch 1/5  sigreg=0.5040  proto=1.2401  min_dist=2.90  mean_dist=12.29
+  [sigreg+proto] epoch 2/5  sigreg=0.5412  proto=0.7440  min_dist=2.97  mean_dist=12.34
+  [sigreg+proto] epoch 3/5  sigreg=0.4948  proto=0.8302  min_dist=3.05  mean_dist=12.40
+  [sigreg+proto] epoch 4/5  sigreg=0.4777  proto=0.5317  min_dist=3.12  mean_dist=12.46
+  [sigreg+proto] epoch 5/5  sigreg=0.4708  proto=0.6414  min_dist=3.19  mean_dist=12.51
+  round 1: pool=209 purity=0.120 k-hat=3 anchors=3  margin=0.8689  mean-anchor=0.8720  38=0.872
+    merged 6 -> 4 anchors
+  [sigreg+proto] epoch 1/5  sigreg=0.4807  proto=1.1963  min_dist=3.12  mean_dist=12.52
+  [sigreg+proto] epoch 2/5  sigreg=0.4783  proto=0.8363  min_dist=3.19  mean_dist=12.57
+  [sigreg+proto] epoch 3/5  sigreg=0.4745  proto=0.8145  min_dist=3.27  mean_dist=12.63
+  [sigreg+proto] epoch 4/5  sigreg=0.4935  proto=0.6005  min_dist=3.33  mean_dist=12.68
+  [sigreg+proto] epoch 5/5  sigreg=0.4611  proto=0.6718  min_dist=3.40  mean_dist=12.74
+  round 2: pool=190 purity=0.032 k-hat=3 anchors=4  margin=0.8939  mean-anchor=0.8751  38=0.875
+  [ss-ft] post f=0.01: probe=0.7890 eucl=0.7937 mahaT=0.7581
+  [ss-ft] per-event post f=0.01: power=0.450
+  [ss-ft] sparker (post, annealed)
+    post-spk f=0.01: power=0.080 [0.042,0.138] (4/50)
+  [ss-ft] maha (post)
+    post-maha f=0.01: power=0.020 [0.003,0.064] (1/50)
+  [ss-ft] mmd (post)
+    post-mmd f=0.01: power=0.140 [0.090,0.207] (7/50)
+  [sigreg+proto] epoch 1/5  sigreg=0.8521  proto=1.2249  min_dist=0.18  mean_dist=4.73
+  [sigreg+proto] epoch 2/5  sigreg=0.8247  proto=1.2299  min_dist=0.25  mean_dist=4.76
+  [sigreg+proto] epoch 3/5  sigreg=0.7991  proto=1.2816  min_dist=0.30  mean_dist=4.79
+  [sigreg+proto] epoch 4/5  sigreg=0.7908  proto=1.1797  min_dist=0.34  mean_dist=4.82
+  [sigreg+proto] epoch 5/5  sigreg=0.7844  proto=1.1206  min_dist=0.37  mean_dist=4.85
+  round 1: pool=188 purity=0.021 k-hat=2 anchors=2  margin=0.5992  mean-anchor=0.7817  38=0.782
+  [sigreg+proto] epoch 1/5  sigreg=0.7793  proto=1.1864  min_dist=0.48  mean_dist=5.12
+  [sigreg+proto] epoch 2/5  sigreg=0.7793  proto=1.0769  min_dist=0.59  mean_dist=5.15
+  [sigreg+proto] epoch 3/5  sigreg=0.7674  proto=1.1718  min_dist=0.67  mean_dist=5.19
+  [sigreg+proto] epoch 4/5  sigreg=0.7594  proto=1.1499  min_dist=0.74  mean_dist=5.23
+  [sigreg+proto] epoch 5/5  sigreg=0.7488  proto=1.1033  min_dist=0.80  mean_dist=5.27
+  round 2: pool=184 purity=0.000 k-hat=3 anchors=5  margin=0.6358  mean-anchor=0.8903  38=0.890
+  [nplm-sup-ft] post f=0.01: probe=0.8260 eucl=0.7074 mahaT=0.7305
+  [nplm-sup-ft] per-event post f=0.01: power=0.025
+  [nplm-sup-ft] sparker (post, annealed)
+    post-spk f=0.01: power=0.060 [0.028,0.115] (3/50)
+  [nplm-sup-ft] maha (post)
+    post-maha f=0.01: power=0.080 [0.042,0.138] (4/50)
+  [nplm-sup-ft] mmd (post)
+    post-mmd f=0.01: power=0.020 [0.003,0.064] (1/50)
+
+===== POST grid, f=0.02 (75 injected) =====
+  [sigreg+proto] epoch 1/5  sigreg=0.3897  proto=2.4151  min_dist=1.78  mean_dist=5.59
+  [sigreg+proto] epoch 2/5  sigreg=0.4220  proto=2.1120  min_dist=1.83  mean_dist=5.66
+  [sigreg+proto] epoch 3/5  sigreg=0.4037  proto=1.5285  min_dist=1.88  mean_dist=5.72
+  [sigreg+proto] epoch 4/5  sigreg=0.4074  proto=1.2071  min_dist=1.93  mean_dist=5.78
+  [sigreg+proto] epoch 5/5  sigreg=0.3908  proto=1.0288  min_dist=1.98  mean_dist=5.85
+  round 1: pool=184 purity=0.000 k-hat=4 anchors=4  margin=0.8053  mean-anchor=0.6370  38=0.637
+  [sigreg+proto] epoch 1/5  sigreg=0.3940  proto=1.6387  min_dist=2.03  mean_dist=6.17
+  [sigreg+proto] epoch 2/5  sigreg=0.3908  proto=1.1916  min_dist=2.09  mean_dist=6.23
+  [sigreg+proto] epoch 3/5  sigreg=0.3965  proto=1.0336  min_dist=2.14  mean_dist=6.30
+  [sigreg+proto] epoch 4/5  sigreg=0.3895  proto=0.8076  min_dist=2.20  mean_dist=6.36
+  [sigreg+proto] epoch 5/5  sigreg=0.3706  proto=0.8394  min_dist=2.25  mean_dist=6.43
+  round 2: pool=186 purity=0.011 k-hat=4 anchors=8  margin=0.7139  mean-anchor=0.5626  38=0.563
+  [simclr-ft] post f=0.02: probe=0.9506 eucl=0.6499 mahaT=0.7253
+  [simclr-ft] per-event post f=0.02: power=0.100
+  [simclr-ft] sparker (post, annealed)
+    post-spk f=0.02: power=0.200 [0.141,0.273] (10/50)
+  [simclr-ft] maha (post)
+    post-maha f=0.02: power=0.220 [0.159,0.294] (11/50)
+  [simclr-ft] mmd (post)
+    post-mmd f=0.02: power=0.060 [0.028,0.115] (3/50)
+  [sigreg+proto] epoch 1/5  sigreg=0.3213  proto=5.0392  min_dist=1.96  mean_dist=8.80
+  [sigreg+proto] epoch 2/5  sigreg=0.5073  proto=2.9755  min_dist=2.05  mean_dist=8.85
+  [sigreg+proto] epoch 3/5  sigreg=0.5779  proto=2.3908  min_dist=2.14  mean_dist=8.90
+  [sigreg+proto] epoch 4/5  sigreg=0.5874  proto=1.7407  min_dist=2.23  mean_dist=8.95
+  [sigreg+proto] epoch 5/5  sigreg=0.5791  proto=1.6862  min_dist=2.32  mean_dist=9.01
+  round 1: pool=191 purity=0.037 k-hat=4 anchors=4  margin=0.8838  mean-anchor=0.9322  38=0.932
+  [sigreg+proto] epoch 1/5  sigreg=0.5496  proto=2.0519  min_dist=2.41  mean_dist=8.98
+  [sigreg+proto] epoch 2/5  sigreg=0.5461  proto=1.5696  min_dist=2.50  mean_dist=9.03
+  [sigreg+proto] epoch 3/5  sigreg=0.5519  proto=1.4210  min_dist=2.59  mean_dist=9.09
+  [sigreg+proto] epoch 4/5  sigreg=0.5461  proto=1.1557  min_dist=2.67  mean_dist=9.14
+  [sigreg+proto] epoch 5/5  sigreg=0.5439  proto=1.0343  min_dist=2.75  mean_dist=9.20
+  round 2: pool=189 purity=0.026 k-hat=4 anchors=8  margin=0.8955  mean-anchor=0.8655  38=0.865
+  [sigreg-ssl-ft] post f=0.02: probe=0.9612 eucl=0.7317 mahaT=0.7612
+  [sigreg-ssl-ft] per-event post f=0.02: power=0.375
+  [sigreg-ssl-ft] sparker (post, annealed)
+    post-spk f=0.02: power=0.340 [0.268,0.419] (17/50)
+  [sigreg-ssl-ft] maha (post)
+    post-maha f=0.02: power=0.200 [0.141,0.273] (10/50)
+  [sigreg-ssl-ft] mmd (post)
+    post-mmd f=0.02: power=0.180 [0.124,0.251] (9/50)
+  [sigreg+proto] epoch 1/5  sigreg=0.6000  proto=2.3238  min_dist=0.54  mean_dist=1.87
+  [sigreg+proto] epoch 2/5  sigreg=0.5465  proto=1.7598  min_dist=0.63  mean_dist=1.93
+  [sigreg+proto] epoch 3/5  sigreg=0.5149  proto=1.5001  min_dist=0.70  mean_dist=2.00
+  [sigreg+proto] epoch 4/5  sigreg=0.5026  proto=1.3072  min_dist=0.77  mean_dist=2.06
+  [sigreg+proto] epoch 5/5  sigreg=0.4976  proto=1.2668  min_dist=0.83  mean_dist=2.13
+  round 1: pool=188 purity=0.021 k-hat=1 anchors=1  margin=0.7115  mean-anchor=0.8987  38=0.899
+  [sigreg+proto] epoch 1/5  sigreg=0.5456  proto=2.5992  min_dist=0.91  mean_dist=3.05
+  [sigreg+proto] epoch 2/5  sigreg=0.4902  proto=1.9721  min_dist=0.98  mean_dist=3.11
+  [sigreg+proto] epoch 3/5  sigreg=0.4762  proto=1.6115  min_dist=1.04  mean_dist=3.18
+  [sigreg+proto] epoch 4/5  sigreg=0.4657  proto=1.4701  min_dist=1.11  mean_dist=3.25
+  [sigreg+proto] epoch 5/5  sigreg=0.4675  proto=1.4206  min_dist=1.17  mean_dist=3.31
+  round 2: pool=184 purity=0.000 k-hat=4 anchors=5  margin=0.5894  mean-anchor=0.8650  38=0.865
+  [nplm-bil-ft] post f=0.02: probe=0.9025 eucl=0.6826 mahaT=0.5919
+  [nplm-bil-ft] per-event post f=0.02: power=0.000
+  [nplm-bil-ft] sparker (post, annealed)
+    post-spk f=0.02: power=0.040 [0.014,0.090] (2/50)
+  [nplm-bil-ft] maha (post)
+    post-maha f=0.02: power=0.120 [0.074,0.184] (6/50)
+  [nplm-bil-ft] mmd (post)
+    post-mmd f=0.02: power=0.120 [0.074,0.184] (6/50)
+  [sigreg+proto] epoch 1/5  sigreg=0.5459  proto=1.5877  min_dist=3.57  mean_dist=11.51
+  [sigreg+proto] epoch 2/5  sigreg=0.5838  proto=1.1239  min_dist=3.60  mean_dist=11.56
+  [sigreg+proto] epoch 3/5  sigreg=0.5516  proto=0.8419  min_dist=3.64  mean_dist=11.61
+  [sigreg+proto] epoch 4/5  sigreg=0.5556  proto=0.5588  min_dist=3.69  mean_dist=11.66
+  [sigreg+proto] epoch 5/5  sigreg=0.5360  proto=0.5719  min_dist=3.74  mean_dist=11.72
+  round 1: pool=210 purity=0.124 k-hat=4 anchors=4  margin=0.8406  mean-anchor=0.8920  38=0.892
+    merged 8 -> 7 anchors
+  [sigreg+proto] epoch 1/5  sigreg=0.5477  proto=1.4072  min_dist=3.76  mean_dist=11.79
+  [sigreg+proto] epoch 2/5  sigreg=0.5572  proto=1.1419  min_dist=3.79  mean_dist=11.84
+  [sigreg+proto] epoch 3/5  sigreg=0.5568  proto=0.8034  min_dist=3.83  mean_dist=11.89
+  [sigreg+proto] epoch 4/5  sigreg=0.5717  proto=0.5444  min_dist=3.87  mean_dist=11.94
+  [sigreg+proto] epoch 5/5  sigreg=0.5467  proto=0.7623  min_dist=3.90  mean_dist=12.00
+  round 2: pool=184 purity=0.000 k-hat=4 anchors=7  margin=0.8168  mean-anchor=0.8822  38=0.882
+  [supcon-ft] post f=0.02: probe=0.9036 eucl=0.6648 mahaT=0.6132
+  [supcon-ft] per-event post f=0.02: power=0.200
+  [supcon-ft] sparker (post, annealed)
+    post-spk f=0.02: power=0.120 [0.074,0.184] (6/50)
+  [supcon-ft] maha (post)
+    post-maha f=0.02: power=0.160 [0.107,0.229] (8/50)
+  [supcon-ft] mmd (post)
+    post-mmd f=0.02: power=0.320 [0.249,0.399] (16/50)
+  [sigreg+proto] epoch 1/5  sigreg=0.5015  proto=1.3878  min_dist=2.60  mean_dist=12.21
+  [sigreg+proto] epoch 2/5  sigreg=0.5511  proto=0.7700  min_dist=2.69  mean_dist=12.26
+  [sigreg+proto] epoch 3/5  sigreg=0.5100  proto=0.7296  min_dist=2.77  mean_dist=12.32
+  [sigreg+proto] epoch 4/5  sigreg=0.4738  proto=0.3793  min_dist=2.85  mean_dist=12.37
+  [sigreg+proto] epoch 5/5  sigreg=0.4474  proto=0.4560  min_dist=2.93  mean_dist=12.43
+  round 1: pool=240 purity=0.233 k-hat=4 anchors=4  margin=0.9003  mean-anchor=0.9443  38=0.944
+    merged 8 -> 6 anchors
+  [sigreg+proto] epoch 1/5  sigreg=0.4657  proto=1.6062  min_dist=3.25  mean_dist=12.44
+  [sigreg+proto] epoch 2/5  sigreg=0.5062  proto=1.0261  min_dist=3.32  mean_dist=12.49
+  [sigreg+proto] epoch 3/5  sigreg=0.4986  proto=0.9822  min_dist=3.38  mean_dist=12.54
+  [sigreg+proto] epoch 4/5  sigreg=0.4943  proto=0.7507  min_dist=3.45  mean_dist=12.59
+  [sigreg+proto] epoch 5/5  sigreg=0.4885  proto=0.7581  min_dist=3.51  mean_dist=12.65
+  round 2: pool=187 purity=0.016 k-hat=4 anchors=6  margin=0.8803  mean-anchor=0.9084  38=0.908
+  [ss-ft] post f=0.02: probe=0.8392 eucl=0.8407 mahaT=0.7871
+  [ss-ft] per-event post f=0.02: power=0.525
+  [ss-ft] sparker (post, annealed)
+    post-spk f=0.02: power=0.380 [0.305,0.460] (19/50)
+  [ss-ft] maha (post)
+    post-maha f=0.02: power=0.160 [0.107,0.229] (8/50)
+  [ss-ft] mmd (post)
+    post-mmd f=0.02: power=0.220 [0.159,0.294] (11/50)
+  [sigreg+proto] epoch 1/5  sigreg=0.8506  proto=1.3081  min_dist=0.18  mean_dist=4.73
+  [sigreg+proto] epoch 2/5  sigreg=0.8288  proto=1.1860  min_dist=0.25  mean_dist=4.76
+  [sigreg+proto] epoch 3/5  sigreg=0.8144  proto=1.1095  min_dist=0.30  mean_dist=4.79
+  [sigreg+proto] epoch 4/5  sigreg=0.7965  proto=1.1057  min_dist=0.34  mean_dist=4.82
+  [sigreg+proto] epoch 5/5  sigreg=0.7821  proto=1.0969  min_dist=0.37  mean_dist=4.85
+  round 1: pool=196 purity=0.061 k-hat=2 anchors=2  margin=0.6061  mean-anchor=0.7765  38=0.777
+  [sigreg+proto] epoch 1/5  sigreg=0.7726  proto=1.1503  min_dist=0.48  mean_dist=5.10
+  [sigreg+proto] epoch 2/5  sigreg=0.7686  proto=1.2017  min_dist=0.59  mean_dist=5.14
+  [sigreg+proto] epoch 3/5  sigreg=0.7653  proto=1.1121  min_dist=0.67  mean_dist=5.18
+  [sigreg+proto] epoch 4/5  sigreg=0.7575  proto=1.1546  min_dist=0.74  mean_dist=5.22
+  [sigreg+proto] epoch 5/5  sigreg=0.7626  proto=1.0279  min_dist=0.80  mean_dist=5.26
+  round 2: pool=184 purity=0.000 k-hat=3 anchors=5  margin=0.5781  mean-anchor=0.7976  38=0.798
+  [nplm-sup-ft] post f=0.02: probe=0.7846 eucl=0.7455 mahaT=0.7784
+  [nplm-sup-ft] per-event post f=0.02: power=0.100
+  [nplm-sup-ft] sparker (post, annealed)
+    post-spk f=0.02: power=0.000 [0.000,0.036] (0/50)
+  [nplm-sup-ft] maha (post)
+    post-maha f=0.02: power=0.320 [0.249,0.399] (16/50)
+  [nplm-sup-ft] mmd (post)
+    post-mmd f=0.02: power=0.140 [0.090,0.207] (7/50)
+
+===== POST grid, f=0.05 (80 injected) =====
+  [sigreg+proto] epoch 1/5  sigreg=0.3894  proto=2.3248  min_dist=1.78  mean_dist=5.59
+  [sigreg+proto] epoch 2/5  sigreg=0.4205  proto=1.8530  min_dist=1.83  mean_dist=5.66
+  [sigreg+proto] epoch 3/5  sigreg=0.4004  proto=1.4986  min_dist=1.88  mean_dist=5.72
+  [sigreg+proto] epoch 4/5  sigreg=0.4025  proto=1.1546  min_dist=1.93  mean_dist=5.78
+  [sigreg+proto] epoch 5/5  sigreg=0.4007  proto=1.0652  min_dist=1.98  mean_dist=5.85
+  round 1: pool=184 purity=0.000 k-hat=4 anchors=4  margin=0.7684  mean-anchor=0.6868  38=0.687
+  [sigreg+proto] epoch 1/5  sigreg=0.3870  proto=1.5266  min_dist=2.03  mean_dist=6.21
+  [sigreg+proto] epoch 2/5  sigreg=0.3953  proto=1.3158  min_dist=2.09  mean_dist=6.28
+  [sigreg+proto] epoch 3/5  sigreg=0.3769  proto=1.1005  min_dist=2.15  mean_dist=6.34
+  [sigreg+proto] epoch 4/5  sigreg=0.3795  proto=1.0385  min_dist=2.20  mean_dist=6.41
+  [sigreg+proto] epoch 5/5  sigreg=0.3687  proto=0.8946  min_dist=2.26  mean_dist=6.47
+  round 2: pool=184 purity=0.000 k-hat=4 anchors=8  margin=0.7300  mean-anchor=0.5876  38=0.588
+  [simclr-ft] post f=0.05: probe=0.9560 eucl=0.6187 mahaT=0.7161
+  [simclr-ft] per-event post f=0.05: power=0.125
+  [simclr-ft] sparker (post, annealed)
+    post-spk f=0.05: power=1.000 [0.964,1.000] (50/50)
+  [simclr-ft] maha (post)
+    post-maha f=0.05: power=0.920 [0.862,0.958] (46/50)
+  [simclr-ft] mmd (post)
+    post-mmd f=0.05: power=0.720 [0.643,0.787] (36/50)
+  [sigreg+proto] epoch 1/5  sigreg=0.3336  proto=5.0959  min_dist=1.96  mean_dist=8.85
+  [sigreg+proto] epoch 2/5  sigreg=0.5077  proto=2.8587  min_dist=2.05  mean_dist=8.90
+  [sigreg+proto] epoch 3/5  sigreg=0.5663  proto=2.3449  min_dist=2.15  mean_dist=8.95
+  [sigreg+proto] epoch 4/5  sigreg=0.5856  proto=1.9996  min_dist=2.24  mean_dist=9.00
+  [sigreg+proto] epoch 5/5  sigreg=0.5801  proto=1.7193  min_dist=2.32  mean_dist=9.05
+  round 1: pool=192 purity=0.042 k-hat=4 anchors=4  margin=0.9021  mean-anchor=0.8104  38=0.810
+  [sigreg+proto] epoch 1/5  sigreg=0.5380  proto=2.3374  min_dist=2.41  mean_dist=9.10
+  [sigreg+proto] epoch 2/5  sigreg=0.4985  proto=1.8538  min_dist=2.50  mean_dist=9.16
+  [sigreg+proto] epoch 3/5  sigreg=0.5140  proto=1.4262  min_dist=2.58  mean_dist=9.21
+  [sigreg+proto] epoch 4/5  sigreg=0.5166  proto=1.2509  min_dist=2.66  mean_dist=9.27
+  [sigreg+proto] epoch 5/5  sigreg=0.5199  proto=1.3091  min_dist=2.74  mean_dist=9.33
+  round 2: pool=185 purity=0.005 k-hat=4 anchors=8  margin=0.9126  mean-anchor=0.7560  38=0.756
+  [sigreg-ssl-ft] post f=0.05: probe=0.9658 eucl=0.7358 mahaT=0.7355
+  [sigreg-ssl-ft] per-event post f=0.05: power=0.450
+  [sigreg-ssl-ft] sparker (post, annealed)
+    post-spk f=0.05: power=1.000 [0.964,1.000] (50/50)
+  [sigreg-ssl-ft] maha (post)
+    post-maha f=0.05: power=0.980 [0.936,0.997] (49/50)
+  [sigreg-ssl-ft] mmd (post)
+    post-mmd f=0.05: power=0.960 [0.910,0.986] (48/50)
+  [sigreg+proto] epoch 1/5  sigreg=0.6085  proto=2.2297  min_dist=0.54  mean_dist=1.87
+  [sigreg+proto] epoch 2/5  sigreg=0.5275  proto=1.7930  min_dist=0.63  mean_dist=1.93
+  [sigreg+proto] epoch 3/5  sigreg=0.5280  proto=1.4867  min_dist=0.70  mean_dist=2.00
+  [sigreg+proto] epoch 4/5  sigreg=0.5079  proto=1.3176  min_dist=0.77  mean_dist=2.06
+  [sigreg+proto] epoch 5/5  sigreg=0.4761  proto=1.2468  min_dist=0.83  mean_dist=2.13
+  round 1: pool=188 purity=0.021 k-hat=1 anchors=1  margin=0.6886  mean-anchor=0.8533  38=0.853
+  [sigreg+proto] epoch 1/5  sigreg=0.4846  proto=2.0008  min_dist=0.91  mean_dist=2.98
+  [sigreg+proto] epoch 2/5  sigreg=0.4561  proto=1.5142  min_dist=0.98  mean_dist=3.05
+  [sigreg+proto] epoch 3/5  sigreg=0.4574  proto=1.3507  min_dist=1.04  mean_dist=3.12
+  [sigreg+proto] epoch 4/5  sigreg=0.4358  proto=1.4007  min_dist=1.11  mean_dist=3.18
+  [sigreg+proto] epoch 5/5  sigreg=0.4489  proto=1.4305  min_dist=1.17  mean_dist=3.25
+  round 2: pool=184 purity=0.000 k-hat=4 anchors=5  margin=0.7285  mean-anchor=0.8813  38=0.881
+  [nplm-bil-ft] post f=0.05: probe=0.9135 eucl=0.6151 mahaT=0.5627
+  [nplm-bil-ft] per-event post f=0.05: power=0.025
+  [nplm-bil-ft] sparker (post, annealed)
+    post-spk f=0.05: power=0.980 [0.936,0.997] (49/50)
+  [nplm-bil-ft] maha (post)
+    post-maha f=0.05: power=0.400 [0.324,0.480] (20/50)
+  [nplm-bil-ft] mmd (post)
+    post-mmd f=0.05: power=0.720 [0.643,0.787] (36/50)
+  [sigreg+proto] epoch 1/5  sigreg=0.5363  proto=1.1359  min_dist=3.65  mean_dist=11.50
+  [sigreg+proto] epoch 2/5  sigreg=0.5483  proto=0.9383  min_dist=3.71  mean_dist=11.55
+  [sigreg+proto] epoch 3/5  sigreg=0.5506  proto=0.8225  min_dist=3.77  mean_dist=11.61
+  [sigreg+proto] epoch 4/5  sigreg=0.5381  proto=0.5718  min_dist=3.83  mean_dist=11.66
+  [sigreg+proto] epoch 5/5  sigreg=0.5294  proto=0.2776  min_dist=3.89  mean_dist=11.72
+  round 1: pool=213 purity=0.136 k-hat=3 anchors=3  margin=0.8361  mean-anchor=0.8969  38=0.897
+  [sigreg+proto] epoch 1/5  sigreg=0.5376  proto=1.8052  min_dist=3.94  mean_dist=11.74
+  [sigreg+proto] epoch 2/5  sigreg=0.5596  proto=1.5053  min_dist=3.99  mean_dist=11.79
+  [sigreg+proto] epoch 3/5  sigreg=0.5699  proto=1.0079  min_dist=4.05  mean_dist=11.84
+  [sigreg+proto] epoch 4/5  sigreg=0.5469  proto=0.9371  min_dist=4.10  mean_dist=11.90
+  [sigreg+proto] epoch 5/5  sigreg=0.5441  proto=0.9277  min_dist=4.16  mean_dist=11.95
+  round 2: pool=186 purity=0.011 k-hat=4 anchors=7  margin=0.8304  mean-anchor=0.8973  38=0.897
+  [supcon-ft] post f=0.05: probe=0.9214 eucl=0.7047 mahaT=0.6736
+  [supcon-ft] per-event post f=0.05: power=0.300
+  [supcon-ft] sparker (post, annealed)
+    post-spk f=0.05: power=1.000 [0.964,1.000] (50/50)
+  [supcon-ft] maha (post)
+    post-maha f=0.05: power=0.780 [0.706,0.841] (39/50)
+  [supcon-ft] mmd (post)
+    post-mmd f=0.05: power=0.960 [0.910,0.986] (48/50)
+  [sigreg+proto] epoch 1/5  sigreg=0.5072  proto=1.0820  min_dist=2.59  mean_dist=12.17
+  [sigreg+proto] epoch 2/5  sigreg=0.5238  proto=0.6901  min_dist=2.68  mean_dist=12.23
+  [sigreg+proto] epoch 3/5  sigreg=0.4886  proto=0.6406  min_dist=2.76  mean_dist=12.29
+  [sigreg+proto] epoch 4/5  sigreg=0.4957  proto=0.3989  min_dist=2.84  mean_dist=12.35
+  [sigreg+proto] epoch 5/5  sigreg=0.4645  proto=0.3832  min_dist=2.92  mean_dist=12.41
+  round 1: pool=243 purity=0.243 k-hat=4 anchors=4  margin=0.8886  mean-anchor=0.9103  38=0.910
+    merged 8 -> 7 anchors
+  [sigreg+proto] epoch 1/5  sigreg=0.4683  proto=1.8257  min_dist=3.00  mean_dist=12.48
+  [sigreg+proto] epoch 2/5  sigreg=0.5012  proto=1.0551  min_dist=3.08  mean_dist=12.53
+  [sigreg+proto] epoch 3/5  sigreg=0.4883  proto=0.7452  min_dist=3.15  mean_dist=12.58
+  [sigreg+proto] epoch 4/5  sigreg=0.4728  proto=0.8309  min_dist=3.22  mean_dist=12.63
+  [sigreg+proto] epoch 5/5  sigreg=0.4575  proto=0.5850  min_dist=3.29  mean_dist=12.69
+  round 2: pool=193 purity=0.047 k-hat=4 anchors=7  margin=0.8669  mean-anchor=0.8707  38=0.871
+  [ss-ft] post f=0.05: probe=0.6787 eucl=0.8522 mahaT=0.8236
+  [ss-ft] per-event post f=0.05: power=0.425
+  [ss-ft] sparker (post, annealed)
+    post-spk f=0.05: power=0.980 [0.936,0.997] (49/50)
+  [ss-ft] maha (post)
+    post-maha f=0.05: power=0.740 [0.664,0.806] (37/50)
+  [ss-ft] mmd (post)
+    post-mmd f=0.05: power=0.980 [0.936,0.997] (49/50)
+  [sigreg+proto] epoch 1/5  sigreg=0.8532  proto=1.2738  min_dist=0.18  mean_dist=4.73
+  [sigreg+proto] epoch 2/5  sigreg=0.8192  proto=1.3357  min_dist=0.25  mean_dist=4.76
+  [sigreg+proto] epoch 3/5  sigreg=0.8157  proto=1.1854  min_dist=0.30  mean_dist=4.79
+  [sigreg+proto] epoch 4/5  sigreg=0.8117  proto=1.0700  min_dist=0.34  mean_dist=4.82
+  [sigreg+proto] epoch 5/5  sigreg=0.7819  proto=1.1590  min_dist=0.37  mean_dist=4.85
+  round 1: pool=196 purity=0.061 k-hat=2 anchors=2  margin=0.6256  mean-anchor=0.7552  38=0.755
+  [sigreg+proto] epoch 1/5  sigreg=0.7766  proto=1.2811  min_dist=0.48  mean_dist=5.19
+  [sigreg+proto] epoch 2/5  sigreg=0.7816  proto=1.2101  min_dist=0.59  mean_dist=5.23
+  [sigreg+proto] epoch 3/5  sigreg=0.7836  proto=1.0607  min_dist=0.67  mean_dist=5.27
+  [sigreg+proto] epoch 4/5  sigreg=0.7772  proto=1.0449  min_dist=0.74  mean_dist=5.31
+  [sigreg+proto] epoch 5/5  sigreg=0.7681  proto=1.0724  min_dist=0.80  mean_dist=5.35
+  round 2: pool=184 purity=0.000 k-hat=4 anchors=6  margin=0.6757  mean-anchor=0.7749  38=0.775
+  [nplm-sup-ft] post f=0.05: probe=0.8624 eucl=0.7328 mahaT=0.7643
+  [nplm-sup-ft] per-event post f=0.05: power=0.075
+  [nplm-sup-ft] sparker (post, annealed)
+    post-spk f=0.05: power=0.920 [0.862,0.958] (46/50)
+  [nplm-sup-ft] maha (post)
+    post-maha f=0.05: power=0.480 [0.401,0.560] (24/50)
+  [nplm-sup-ft] mmd (post)
+    post-mmd f=0.05: power=0.400 [0.324,0.480] (20/50)
+
+===== EXP70 PEREVENT POST POWER =====
+  arm                 0.003     0.01     0.02     0.05
+  simclr-ft           0.175    0.075    0.100    0.125
+  sigreg-ssl-ft       0.375    0.450    0.375    0.450
+  nplm-bil-ft         0.000    0.000    0.000    0.025
+  supcon-ft           0.175    0.200    0.200    0.300
+  ss-ft               0.200    0.450    0.525    0.425
+  nplm-sup-ft         0.025    0.025    0.100    0.075
+  saved /home/pharris/sigreg/SuperSig/plots/exp70_perevent_power_post_dtd_visreg_ft70_h1_d3.png
+
+===== EXP70 SPARKER POST POWER =====
+  arm                 0.003     0.01     0.02     0.05
+  simclr-ft           0.080    0.140    0.200    1.000
+  sigreg-ssl-ft       0.020    0.080    0.340    1.000
+  nplm-bil-ft         0.060    0.080    0.040    0.980
+  supcon-ft           0.040    0.080    0.120    1.000
+  ss-ft               0.100    0.080    0.380    0.980
+  nplm-sup-ft         0.100    0.060    0.000    0.920
+  saved /home/pharris/sigreg/SuperSig/plots/exp70_sparker_power_post_dtd_visreg_ft70_h1_d3.png
+
+===== EXP70 MAHA POST POWER =====
+  arm                 0.003     0.01     0.02     0.05
+  simclr-ft           0.120    0.100    0.220    0.920
+  sigreg-ssl-ft       0.120    0.080    0.200    0.980
+  nplm-bil-ft         0.080    0.080    0.120    0.400
+  supcon-ft           0.080    0.080    0.160    0.780
+  ss-ft               0.100    0.020    0.160    0.740
+  nplm-sup-ft         0.120    0.080    0.320    0.480
+  saved /home/pharris/sigreg/SuperSig/plots/exp70_maha_power_post_dtd_visreg_ft70_h1_d3.png
+
+===== EXP70 MMD POST POWER =====
+  arm                 0.003     0.01     0.02     0.05
+  simclr-ft           0.020    0.060    0.060    0.720
+  sigreg-ssl-ft       0.080    0.040    0.180    0.960
+  nplm-bil-ft         0.020    0.040    0.120    0.720
+  supcon-ft           0.100    0.100    0.320    0.960
+  ss-ft               0.120    0.140    0.220    0.980
+  nplm-sup-ft         0.060    0.020    0.140    0.400
+  saved /home/pharris/sigreg/SuperSig/plots/exp70_mmd_power_post_dtd_visreg_ft70_h1_d3.png
+
+===== EXP70 SUMMARY [dtd_visreg_ft70_h1_d3] =====
+  [simclr-ft     ] probe=0.9634+-0.0043 acc=0.6076 eucl=0.4842 mahaT=0.5539  || post: probe=0.9771 eucl=0.6213 mahaT=0.7194
+          round 1: purity=0.000 anchors=4  margin=0.7736
+          round 2: purity=0.011 anchors=8  margin=0.7425
+  [sigreg-ssl-ft ] probe=0.9561+-0.0070 acc=0.6087 eucl=0.7175 mahaT=0.7760  || post: probe=0.9715 eucl=0.7341 mahaT=0.7707
+          round 1: purity=0.042 anchors=4  margin=0.9244
+          round 2: purity=0.016 anchors=8  margin=0.8955
+  [nplm-bil-ft   ] probe=0.8832+-0.0062 acc=0.5228 eucl=0.5937 mahaT=0.4481  || post: probe=0.9150 eucl=0.6372 mahaT=0.5551
+          round 1: purity=0.021 anchors=1  margin=0.6647
+          round 2: purity=0.000 anchors=5  margin=0.6421
+  [supcon-ft     ] probe=0.8825+-0.0022 acc=0.7587 eucl=0.7535 mahaT=0.6531  || post: probe=0.9267 eucl=0.7580 mahaT=0.7092
+          round 1: purity=0.136 anchors=4  margin=0.8239
+          round 2: purity=0.000 anchors=8  margin=0.7771
+  [ss-ft         ] probe=0.8843+-0.0040 acc=0.7815 eucl=0.8349 mahaT=0.8067  || post: probe=0.7854 eucl=0.8104 mahaT=0.7385
+          round 1: purity=0.243 anchors=4  margin=0.8961
+          round 2: purity=0.052 anchors=6  margin=0.8738
+  [nplm-sup-ft   ] probe=0.8341+-0.0052 acc=0.5875 eucl=0.6801 mahaT=0.6988  || post: probe=0.7275 eucl=0.7380 mahaT=0.6801
+          round 1: purity=0.061 anchors=2  margin=0.6389
+          round 2: purity=0.000 anchors=6  margin=0.5299
+saved /home/pharris/sigreg/SuperSig/plots/exp70_probe_dtd_visreg_ft70_h1_d3.png
+Done.
