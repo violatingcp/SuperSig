@@ -2295,6 +2295,15 @@ step function) is the true head-to-head with GCD's representation step.
 
 ### Exp 136 — The from-scratch CIFAR master grid (every metric, every space)
 
+> **INJECTED-REGIME RE-PASS DONE 2026-08-30 (Block S5): every exp-68 cell
+> re-run with the per-fraction post metrics (postf_*), master JSONs refreshed
+> (`136_refresh68.py`).**  Exp 68's discovery fine-tune and probe are GPU-
+> nondeterministic, so a re-passed cell is a new draw of the same run: post
+> probe / geometry move at the 0.01-0.05 level and the MC power estimates by
+> up to +-0.2 vs the previous archive (round-1 purity and the pretraining are
+> unchanged).  Each cell's archive is now one internally consistent run; the
+> h4 numbers quoted in the Tier 1/2 blocks below predate the re-pass and may
+> differ within that noise -- no verdict rests on a difference that small.
 > **TIER 3 DONE 2026-08-30 (draws; cifar10 h{4,7,8,9}, cifar100 h{4,43,48,57}, shortlist
 > supcon / ssig / nplmsd / nplmcw; `136_aggregate.py <ds>`).**  Mean +- sd over 4 holdouts:
 >

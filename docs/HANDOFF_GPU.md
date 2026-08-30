@@ -386,8 +386,7 @@ label -1.
 > **Status 2026-08-30:** Block S complete (exp 146 all datasets; exp 146b
 > dose-response 5/20/50 % on galaxy10-lejepa and dtd-dino, `--frac F` in the
 > aggregator).  Blocks S4/S4b re-passed the archived exp-70 draws with the
-> per-injected-fraction post metrics (`postf_*`); S5 does the same for exp 68
-> behind Block L.  Earlier status: galaxy10 x {dino,lejepa,visreg} x draws 0/3/5/7/8 DONE
+> per-injected-fraction post metrics (`postf_*`); S5 did the same for exp 68 (DONE 2026-08-30; exp 68 is GPU-nondeterministic, each cell re-archived as one consistent run).  Earlier status: galaxy10 x {dino,lejepa,visreg} x draws 0/3/5/7/8 DONE
 > (falsifier fires on lejepa/visreg -- see IMPROVEMENT_TESTS exp 146); dtd draws +
 > cars/aircraft/flowers running as `logs/chainT9S2.sh`.  GCD-only arm sets now
 > write `results_<tag>_gcd.npz` / `exp70_*_<tag>_gcd.png`; read them with

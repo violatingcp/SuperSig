@@ -10,10 +10,10 @@
 \cmidrule(lr){3-6}\cmidrule(lr){7-7}\cmidrule(lr){8-10}
 objective & draws & probe & top-1 & mahaT & per-ev & purity & purity 2\% & purity whole & probe post whole \\
 \midrule
-SupCon & 4 & 0.930$\pm$0.017 & 0.892$\pm$0.003 & 0.587$\pm$0.078 & 0.011$\pm$0.020 & 0.588$\pm$0.031 & 0.003$\pm$0.005 & 0.018$\pm$0.031 & 0.923$\pm$0.019 \\
-\textbf{SupCon+SIGReg ($\lambda{=}5$)} & 4 & 0.912$\pm$0.020 & 0.891$\pm$0.004 & 0.416$\pm$0.040 & 0.019$\pm$0.014 & 0.392$\pm$0.085 & 0.007$\pm$0.005 & 0.042$\pm$0.030 & 0.931$\pm$0.021 \\
-NPLM-dist. (sup.) & 4 & 0.788$\pm$0.079 & 0.815$\pm$0.013 & 0.685$\pm$0.047 & 0.165$\pm$0.057 & 0.408$\pm$0.046 & 0.082$\pm$0.018 & 0.320$\pm$0.059 & 0.938$\pm$0.032 \\
-NPLM-dist.+classwise SIGReg & 4 & 0.938$\pm$0.018 & 0.891$\pm$0.007 & 0.624$\pm$0.077 & 0.207$\pm$0.033 & 0.539$\pm$0.032 & 0.123$\pm$0.010 & 0.430$\pm$0.020 & 0.971$\pm$0.015 \\
+SupCon & 4 & 0.930$\pm$0.017 & 0.892$\pm$0.003 & 0.587$\pm$0.078 & 0.011$\pm$0.020 & 0.588$\pm$0.031 & 0.003$\pm$0.005 & 0.018$\pm$0.031 & 0.924$\pm$0.016 \\
+\textbf{SupCon+SIGReg ($\lambda{=}5$)} & 4 & 0.912$\pm$0.020 & 0.891$\pm$0.004 & 0.416$\pm$0.040 & 0.019$\pm$0.014 & 0.392$\pm$0.085 & 0.007$\pm$0.005 & 0.042$\pm$0.030 & 0.925$\pm$0.017 \\
+NPLM-dist. (sup.) & 4 & 0.788$\pm$0.079 & 0.815$\pm$0.013 & 0.685$\pm$0.047 & 0.165$\pm$0.057 & 0.408$\pm$0.046 & 0.082$\pm$0.018 & 0.320$\pm$0.059 & 0.937$\pm$0.032 \\
+NPLM-dist.+classwise SIGReg & 4 & 0.938$\pm$0.018 & 0.891$\pm$0.007 & 0.624$\pm$0.077 & 0.207$\pm$0.033 & 0.539$\pm$0.032 & 0.123$\pm$0.010 & 0.430$\pm$0.020 & 0.972$\pm$0.013 \\
 \bottomrule
 \end{tabular}
 \caption{\textbf{cifar10 from scratch, across holdout draws.} Pre-discovery probe, top-1, tied Mahalanobis and per-event power; frozen density-ratio pool purity; the fine-tuning loop's round-1 purity for discovery from a 2\% injected sample and, for reference, with the whole held-out class present in the bank, with the whole-class post probe. \emph{Coverage:} cifar10 from scratch, single holdout, holdouts [4, 7, 8, 9] (the archived class plus random draws), one seed per draw; objectives with fewer than two draws omitted; injected-sample purity from the POST-grid logs (`--' = run predates it).}

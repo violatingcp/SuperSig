@@ -1,10 +1,10 @@
-% STATUS: 8/8 objectives, from random init, 100-D, holdout 4 (single holdout, $b=0.10$), seed 0. `post' = the exp-68 fine-tuning loop (distance pool, 2 rounds), discovery from a 2\% injected sample; per-fraction post geometry present for 0/8 objectives (`--' otherwise; the whole-class natural pass is in the pools table). Residual concats: parents SupCon / SupCon+SIGReg / NPLM-dist.\ only (exp 137); discovery on scratch concats not run.
+% STATUS: 8/8 objectives, from random init, 100-D, holdout 4 (single holdout, $b=0.10$), seed 0. `post' = the exp-68 fine-tuning loop (distance pool, 2 rounds), discovery from a 2\% injected sample; per-fraction post geometry present for 8/8 objectives (`--' otherwise; the whole-class natural pass is in the pools table). Residual concats: parents SupCon / SupCon+SIGReg / NPLM-dist.\ only (exp 137); discovery on scratch concats not run.
 \begin{landscape}
 \begin{center}
 \footnotesize
 \setlength{\tabcolsep}{3pt}
 \begin{longtable}{lcccccccc}
-\caption{\textbf{CIFAR-10, leakage-free lineage: every (objective, construction) $\times$ (pre, post).} (A) Probe and per-event geometry. \emph{Coverage:} 8/8 objectives, from random init, 100-D, holdout 4 (single holdout, $b=0.10$), seed 0. `post' = the exp-68 fine-tuning loop (distance pool, 2 rounds), discovery from a 2\% injected sample; per-fraction post geometry present for 0/8 objectives (`--' otherwise; the whole-class natural pass is in the pools table). Residual concats: parents SupCon / SupCon+SIGReg / NPLM-dist.\ only (exp 137); discovery on scratch concats not run.}\label{tab:grid_cifar10_scratch_a}\\
+\caption{\textbf{CIFAR-10, leakage-free lineage: every (objective, construction) $\times$ (pre, post).} (A) Probe and per-event geometry. \emph{Coverage:} 8/8 objectives, from random init, 100-D, holdout 4 (single holdout, $b=0.10$), seed 0. `post' = the exp-68 fine-tuning loop (distance pool, 2 rounds), discovery from a 2\% injected sample; per-fraction post geometry present for 8/8 objectives (`--' otherwise; the whole-class natural pass is in the pools table). Residual concats: parents SupCon / SupCon+SIGReg / NPLM-dist.\ only (exp 137); discovery on scratch concats not run.}\label{tab:grid_cifar10_scratch_a}\\
 \toprule
 space & \multicolumn{2}{c}{probe} & \multicolumn{2}{c}{eucl} & \multicolumn{2}{c}{mahaT} & \multicolumn{2}{c}{per-event} \\
 \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}\cmidrule(lr){8-9}
@@ -20,35 +20,35 @@ space & \multicolumn{2}{c}{probe} & \multicolumn{2}{c}{eucl} & \multicolumn{2}{c
 \bottomrule
 \endfoot
 \multicolumn{9}{l}{\emph{SupCon}} \\
-\quad plain & 0.905 & -- & 0.514 & -- & 0.552 & -- & 0.000 & 0.003 \\
+\quad plain & 0.905 & 0.898 & 0.514 & 0.706 & 0.552 & 0.537 & 0.000 & 0.004 \\
 \quad +res concat & 0.939 & -- & 0.571 & -- & 0.567 & -- & 0.001 & -- \\
 \quad +res-nplm concat & 0.916 & -- & 0.576 & -- & 0.585 & -- & 0.000 & -- \\
 \multicolumn{9}{l}{\emph{SupCon+SIGReg ($\lambda$5)}} \\
-\quad plain & 0.884 & -- & 0.439 & -- & 0.454 & -- & 0.013 & 0.233 \\
+\quad plain & 0.884 & 0.921 & 0.439 & 0.689 & 0.454 & 0.363 & 0.013 & 0.270 \\
 \quad +res concat & 0.932 & -- & 0.407 & -- & 0.383 & -- & 0.016 & -- \\
 \quad +res-nplm concat & 0.919 & -- & 0.571 & -- & 0.544 & -- & 0.054 & -- \\
 \multicolumn{9}{l}{\emph{NPLM-dist.+cw SIGReg}} \\
-\quad plain & 0.921 & -- & 0.729 & -- & 0.559 & -- & 0.194 & 0.377 \\
+\quad plain & 0.921 & 0.928 & 0.729 & 0.661 & 0.559 & 0.488 & 0.194 & 0.381 \\
 \quad +res concat & -- & -- & -- & -- & -- & -- & -- & -- \\
 \quad +res-nplm concat & -- & -- & -- & -- & -- & -- & -- & -- \\
 \multicolumn{9}{l}{\emph{SupCon+SIGReg (repulse)}} \\
-\quad plain & 0.871 & -- & 0.667 & -- & 0.582 & -- & 0.121 & 0.219 \\
+\quad plain & 0.871 & 0.861 & 0.667 & 0.660 & 0.582 & 0.518 & 0.121 & 0.194 \\
 \quad +res concat & -- & -- & -- & -- & -- & -- & -- & -- \\
 \quad +res-nplm concat & -- & -- & -- & -- & -- & -- & -- & -- \\
 \multicolumn{9}{l}{\emph{NPLM-dist. (sup.)}} \\
-\quad plain & 0.719 & -- & 0.692 & -- & 0.659 & -- & 0.123 & 0.097 \\
+\quad plain & 0.719 & 0.900 & 0.692 & 0.556 & 0.659 & 0.501 & 0.123 & 0.097 \\
 \quad +res concat & 0.876 & -- & 0.378 & -- & 0.459 & -- & 0.017 & -- \\
 \quad +res-nplm concat & 0.842 & -- & 0.610 & -- & 0.543 & -- & 0.030 & -- \\
 \multicolumn{9}{l}{\emph{SimCLR}} \\
-\quad plain & 0.808 & -- & 0.227 & -- & 0.224 & -- & 0.003 & 0.019 \\
+\quad plain & 0.808 & 0.907 & 0.227 & 0.493 & 0.224 & 0.410 & 0.003 & 0.022 \\
 \quad +res concat & -- & -- & -- & -- & -- & -- & -- & -- \\
 \quad +res-nplm concat & -- & -- & -- & -- & -- & -- & -- & -- \\
 \multicolumn{9}{l}{\emph{VISReg/LeJEPA}} \\
-\quad plain & 0.832 & -- & 0.395 & -- & 0.377 & -- & 0.010 & 0.035 \\
+\quad plain & 0.832 & 0.882 & 0.395 & 0.472 & 0.377 & 0.363 & 0.010 & 0.017 \\
 \quad +res concat & -- & -- & -- & -- & -- & -- & -- & -- \\
 \quad +res-nplm concat & -- & -- & -- & -- & -- & -- & -- & -- \\
 \multicolumn{9}{l}{\emph{NPLM (unsup.)}} \\
-\quad plain & 0.799 & -- & 0.472 & -- & 0.468 & -- & 0.052 & 0.106 \\
+\quad plain & 0.799 & 0.845 & 0.472 & 0.498 & 0.468 & 0.462 & 0.052 & 0.068 \\
 \quad +res concat & -- & -- & -- & -- & -- & -- & -- & -- \\
 \quad +res-nplm concat & -- & -- & -- & -- & -- & -- & -- & -- \\
 \end{longtable}
