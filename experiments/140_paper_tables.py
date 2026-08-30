@@ -410,7 +410,7 @@ def t_2x2():
         "tab:2x2", status,
         "lllccccccc",
         r"cell & child loss & used as & $A$ & $B$ & $C$ & $D$ & "
-        r"$B{-}A$ & $C{-}A$ & $\Delta_{\text{int}}$ \\", size=r"\small")
+        r"$B{-}A$ & $C{-}A$ & $\Delta_{\text{int}}$ \\", size=r"\footnotesize")
 
 
 # --------------------------------------------------------------- table 5 ---
