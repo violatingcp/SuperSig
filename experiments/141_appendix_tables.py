@@ -671,6 +671,40 @@ def t_scratch_draws(ds):
                  wide=True, size=r"\footnotesize")
 
 
+def t_residuals_draws(ds):
+    """Exp 137 across holdout draws: every residual construction on the
+    scratch trunks, mean +- sd over the archived holdout plus the draws."""
+    files = sorted(f for f in glob.glob(os.path.join(LOGS, "exp137", f"residuals_{ds}*.json"))
+                   if re.fullmatch(rf".*residuals_{ds}(_h\d+)?\.json", f))
+    if len(files) < 2:
+        return None
+    per = {}
+    for f in files:
+        for k, v in json.load(open(f)).items():
+            q = per.setdefault(k, {m: [] for m in ("probe", "top1", "eucl", "mahaT", "perevt")})
+            for m in q:
+                if v.get(m) is not None:
+                    q[m].append(v[m])
+    rows = []
+    for par in [k for k in per if k.endswith("(parent)")]:
+        stem = par.replace(" (parent)", "")
+        rows.append(r"\multicolumn{7}{l}{\emph{parent: }" + PRETTY.get(stem, esc(stem)) + r"} \\")
+        for k in [par] + [x for x in per if x.startswith(stem + "->")]:
+            q = per[k]
+            lab = "(parent)" if k == par else esc(k.split("->", 1)[1])
+            rows.append(" & ".join(["\\quad " + lab, str(len(q["probe"])), msd(q["probe"]), msd(q["top1"]),
+                                    msd(q["eucl"]), msd(q["mahaT"]), msd(q["perevt"], 2)]) + r" \\")
+    hs = sorted(int((re.search(r"_h(\d+)\.json$", f) or [None, 4])[1]) for f in files)
+    tag = "CIFAR-10" if ds == "cifar10" else "CIFAR-100"
+    status = f"from-scratch {tag} trunks, single holdout, holdouts {hs}; seed 0 per holdout; mean $\\pm$ sd over holdouts."
+    return _wrap("\n".join(rows),
+                 rf"\textbf{{{tag} leakage-free lineage: the residual constructions across holdout draws.}} "
+                 r"Mean $\pm$ sd over the archived holdout and the random draws; the single-holdout "
+                 r"table above is the archived class alone.",
+                 f"tab:app_{ds}_residual_draws", status, "lcccccc",
+                 r"space & draws & probe & top-1 & eucl & mahaT & per-ev \\", size=r"\footnotesize")
+
+
 TABLES = [
     ("app_cifar10_pre", lambda: t_scratch_pre("cifar10")), ("app_cifar10_power", lambda: t_scratch_power("cifar10")),
     ("app_cifar10_pools", lambda: t_scratch_pools("cifar10")), ("app_cifar10_residuals", lambda: t_residuals_ds("cifar10")),
@@ -684,6 +718,8 @@ TABLES = [
     ("app_frozen_np", t_frozen_np_datasets), ("app_hub_residual_seeds", t_hub_residual_seeds),
     ("zero_training", t_zero_training),
     ("app_cifar10_scratch_draws", lambda: t_scratch_draws("cifar10")),
+    ("app_cifar10_residual_draws", lambda: t_residuals_draws("cifar10")),
+    ("app_cifar100_residual_draws", lambda: t_residuals_draws("cifar100")),
     ("app_cifar100_scratch_draws", lambda: t_scratch_draws("cifar100"))]
 
 

@@ -1971,6 +1971,34 @@ exp 76.  Pinned by `test_head_emb_honours_the_holdout_draw_tag`.
 
 ### Exp 137 — Residual / concat constructions on the scratch trunks
 
+> **DRAWS DONE 2026-08-30 (Block M; cifar10 h{4,7,8,9}, cifar100 h{4,43,48,57};
+> `tab:app_cifar{10,100}_residual_draws`).**  Mean +- sd over 4 holdouts, the
+> supcon parent and its plain-residual concat:
+>
+> | ds | space | probe | top-1 | eucl | mahaT | per-event |
+> |---|---|---|---|---|---|---|
+> | C10 | supcon | 0.930+-0.017 | 0.892 | 0.563+-0.116 | 0.587+-0.078 | 0.01 |
+> | C10 | supcon->res concat | **0.957+-0.014** | 0.896 | 0.646+-0.137 | 0.631+-0.063 | 0.12+-0.19 |
+> | C10 | supcon->res residual | 0.923 | 0.860 | **0.695+-0.054** | **0.646+-0.065** | **0.23+-0.21** |
+> | C10 | ssig->res concat | 0.949+-0.014 | 0.891 | 0.410 | 0.402 | 0.01 |
+> | C100 | supcon | 0.955+-0.020 | 0.604 | 0.463+-0.170 | 0.447+-0.117 | 0.03 |
+> | C100 | supcon->res concat | **0.963+-0.018** | 0.598 | 0.535+-0.066 | 0.457 | 0.05 |
+> | C100 | ssig->res concat | 0.959+-0.019 | 0.591 | **0.582+-0.067** | 0.499 | 0.05 |
+> | C100 | nplmsd->res residual | 0.892 | 0.251 | 0.619+-0.107 | **0.580+-0.116** | **0.11+-0.09** |
+>
+> The h4 verdicts hold across draws, with the C10 probe gain now a
+> per-holdout fact: supcon->res concat +0.027 +- 0.010 on C10 (every holdout
+> positive) and +0.008 on C100 (a tie, as at h4); no-cost holds everywhere
+> (concat top-1 within 0.006 of the parent on both datasets, every holdout).
+> What the residual buys on C10 is calibration and per-event power (bare
+> residual eucl +0.13, mahaT +0.06, per-event 0.01 -> 0.23) at a 0.03 top-1
+> cost; on C100 the bare residual's per-event gain is small (0.03 -> 0.05)
+> and the top-1 collapse (0.60 -> 0.34) makes the concat the only usable
+> form.  ssig's residual is harmful on C10 (mahaT 0.42 -> 0.40-0.44, per-event
+> flat) and neutral on C100 -- the SIGReg parent leaves nothing for the child
+> to pick up.  nplmsd is repaired by either child on both datasets.  Seeds
+> (exp 59 s1/s2 on the C100 champions) were part of this block and are in
+> `tab:app_seeds_c100`.
 > **cifar10 h4 DONE 2026-08-28.**  On the clean C10 supcon parent the concat is a
 > REAL two-currency gain: probe +0.034 (res), eucl +0.056/+0.062, mahaT
 > +0.015/+0.033, top-1 tie -- larger than the hub +0.016 and unlike clean C100's

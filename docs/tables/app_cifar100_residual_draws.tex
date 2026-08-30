@@ -1,0 +1,31 @@
+% STATUS: from-scratch CIFAR-100 trunks, single holdout, holdouts [4, 43, 48, 57]; seed 0 per holdout; mean $\pm$ sd over holdouts.
+\begin{table}[t]
+\centering
+\footnotesize
+\begin{tabular}{lcccccc}
+\toprule
+space & draws & probe & top-1 & eucl & mahaT & per-ev \\
+\midrule
+\multicolumn{7}{l}{\emph{parent: }SupCon} \\
+\quad (parent) & 4 & 0.955$\pm$0.020 & 0.604$\pm$0.005 & 0.463$\pm$0.170 & 0.447$\pm$0.117 & 0.03$\pm$0.03 \\
+\quad res (residual) & 4 & 0.925$\pm$0.036 & 0.341$\pm$0.009 & 0.538$\pm$0.132 & 0.473$\pm$0.119 & 0.05$\pm$0.03 \\
+\quad res (concat) & 4 & 0.963$\pm$0.018 & 0.598$\pm$0.004 & 0.535$\pm$0.066 & 0.457$\pm$0.077 & 0.05$\pm$0.03 \\
+\quad res-nplm (residual) & 4 & 0.929$\pm$0.036 & 0.477$\pm$0.023 & 0.483$\pm$0.216 & 0.464$\pm$0.120 & 0.10$\pm$0.16 \\
+\quad res-nplm (concat) & 4 & 0.963$\pm$0.018 & 0.599$\pm$0.005 & 0.484$\pm$0.219 & 0.446$\pm$0.135 & 0.07$\pm$0.11 \\
+\multicolumn{7}{l}{\emph{parent: }\textbf{SupCon+SIGReg ($\lambda{=}5$)}} \\
+\quad (parent) & 4 & 0.947$\pm$0.019 & 0.596$\pm$0.005 & 0.569$\pm$0.036 & 0.549$\pm$0.054 & 0.05$\pm$0.02 \\
+\quad res (residual) & 4 & 0.906$\pm$0.033 & 0.245$\pm$0.006 & 0.572$\pm$0.092 & 0.465$\pm$0.075 & 0.07$\pm$0.06 \\
+\quad res (concat) & 4 & 0.959$\pm$0.019 & 0.591$\pm$0.005 & 0.582$\pm$0.067 & 0.499$\pm$0.070 & 0.05$\pm$0.03 \\
+\quad res-nplm (residual) & 4 & 0.932$\pm$0.024 & 0.567$\pm$0.005 & 0.535$\pm$0.137 & 0.529$\pm$0.116 & 0.05$\pm$0.04 \\
+\quad res-nplm (concat) & 4 & 0.941$\pm$0.028 & 0.590$\pm$0.004 & 0.573$\pm$0.044 & 0.571$\pm$0.013 & 0.05$\pm$0.01 \\
+\multicolumn{7}{l}{\emph{parent: }NPLM-dist. (sup.)} \\
+\quad (parent) & 4 & 0.857$\pm$0.045 & 0.255$\pm$0.003 & 0.536$\pm$0.131 & 0.484$\pm$0.161 & 0.07$\pm$0.05 \\
+\quad res (residual) & 4 & 0.892$\pm$0.042 & 0.251$\pm$0.015 & 0.619$\pm$0.107 & 0.580$\pm$0.116 & 0.11$\pm$0.09 \\
+\quad res (concat) & 4 & 0.917$\pm$0.037 & 0.358$\pm$0.008 & 0.622$\pm$0.108 & 0.569$\pm$0.112 & 0.10$\pm$0.09 \\
+\quad res-nplm (residual) & 4 & 0.905$\pm$0.054 & 0.316$\pm$0.014 & 0.582$\pm$0.040 & 0.560$\pm$0.075 & 0.08$\pm$0.03 \\
+\quad res-nplm (concat) & 4 & 0.924$\pm$0.050 & 0.390$\pm$0.011 & 0.581$\pm$0.049 & 0.557$\pm$0.098 & 0.07$\pm$0.04 \\
+\bottomrule
+\end{tabular}
+\caption{\textbf{CIFAR-100 leakage-free lineage: the residual constructions across holdout draws.} Mean $\pm$ sd over the archived holdout and the random draws; the single-holdout table above is the archived class alone. \emph{Coverage:} from-scratch CIFAR-100 trunks, single holdout, holdouts [4, 43, 48, 57]; seed 0 per holdout; mean $\pm$ sd over holdouts.}
+\label{tab:app_cifar100_residual_draws}
+\end{table}

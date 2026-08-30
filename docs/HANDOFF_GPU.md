@@ -315,6 +315,8 @@ is the pre-Block-L exp-68 file.
 
 ## Block M — Exp 137 (scratch residuals) + exp 59 seeds
 
+> **DONE 2026-08-30** (all cells; draws written up in IMPROVEMENT_TESTS exp 137).
+
 ```bash
 python experiments/137_scratch_residuals.py --dataset cifar100          # parents exist
 python experiments/137_scratch_residuals.py --dataset cifar10 --holdout 8
