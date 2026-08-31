@@ -155,8 +155,9 @@ def t_objectives():
         r"by tied-Mahalanobis distance, and per-event detection power at a "
         r"$5\%$ false-positive rate --- the last is $\approx0.05$ for a space "
         r"carrying no usable signal, so $0.00$ means the space cannot flag an "
-        r"individual novel image at all. Adding SIGReg is a probe tie and a "
-        r"top-1 loss, and wins every discoverability column.",
+        r"individual novel image at all. Adding SIGReg is a tie on the probe and "
+        r"on top-1 (a gap within run-to-run variation), and wins every "
+        r"discoverability column.",
         "tab:objectives", status,
         "llcccccc",
         r"& & \multicolumn{3}{c}{decodable} & "
@@ -463,7 +464,8 @@ def t_baserate():
         "\n".join(rows),
         r"\textbf{The label-free cut is objective-specific, not universal.} "
         r"Ratio of estimated to true novel base rate at $b{=}0.01$; the rule "
-        r"engages only where an NPLM critic sits on a SIGReg marginal, and "
+        r"engages only on spaces whose scorer is an NPLM critic (the class-wise "
+        r"SIGReg arm and the NPLM residual children of SupCon), and "
         r"even then the resulting purity is only $0.046$--$0.101$ (against a "
         r"base rate of $0.01$). Reported as a "
         r"limit of the rule, not of the representations.",

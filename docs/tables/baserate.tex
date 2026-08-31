@@ -28,6 +28,6 @@ supsig\_cifar100 & 0.07 & 0.04 & no & -- \\
 VISReg\_cifar100 & 0.47 & 0.40 & no & -- \\
 \bottomrule
 \end{tabular}
-\caption{\textbf{The label-free cut is objective-specific, not universal.} Ratio of estimated to true novel base rate at $b{=}0.01$; the rule engages only where an NPLM critic sits on a SIGReg marginal, and even then the resulting purity is only $0.046$--$0.101$ (against a base rate of $0.01$). Reported as a limit of the rule, not of the representations. \emph{Coverage:} 20 spaces, clean CIFAR-100 banks, $b_{\text{true}}{=}0.01$; the rule engages on 3, and the best estimator is within $5\times$ on 8.}
+\caption{\textbf{The label-free cut is objective-specific, not universal.} Ratio of estimated to true novel base rate at $b{=}0.01$; the rule engages only on spaces whose scorer is an NPLM critic (the class-wise SIGReg arm and the NPLM residual children of SupCon), and even then the resulting purity is only $0.046$--$0.101$ (against a base rate of $0.01$). Reported as a limit of the rule, not of the representations. \emph{Coverage:} 20 spaces, clean CIFAR-100 banks, $b_{\text{true}}{=}0.01$; the rule engages on 3, and the best estimator is within $5\times$ on 8.}
 \label{tab:baserate}
 \end{table}
