@@ -6,17 +6,17 @@
 \toprule
 cell & metric & parent (100) & control (200) & concat (100+100) & concat$-$control & verdict \\
 \midrule
-cars-visreg & probe & 0.707 & 0.727$\pm$0.014 & 0.855 & +0.116 & concat \\
+cars-VISReg & probe & 0.707 & 0.727$\pm$0.014 & 0.855 & +0.116 & concat \\
  & eucl & 0.715 & 0.675$\pm$0.009 & 0.747 & +0.080 & concat \\
  & mahaT & 0.661 & 0.591$\pm$0.018 & 0.678 & +0.107 & concat \\
-galaxy10-dino & probe & 0.938 & 0.944 & 0.955 & +0.011 & TIE \\
+Galaxy10-DINO & probe & 0.938 & 0.944 & 0.955 & +0.011 & TIE \\
  & eucl & 0.666 & 0.652 & 0.559 & -0.092 & control \\
  & mahaT & 0.786 & 0.777 & 0.762 & -0.014 & TIE \\
-galaxy10-lejepa & probe & 0.910$\pm$0.007 & 0.917 & 0.971$\pm$0.004 & +0.058 & concat \\
+Galaxy10-LeJEPA & probe & 0.910$\pm$0.007 & 0.917 & 0.971$\pm$0.004 & +0.058 & concat \\
  & eucl & 0.690$\pm$0.036 & 0.734 & 0.372$\pm$0.063 & -0.446 & control \\
  & mahaT & 0.741$\pm$0.022 & 0.799 & 0.661$\pm$0.026 & -0.174 & control \\
 \bottomrule
 \end{tabular}
-\caption{\textbf{Width-matched control for the residual concat (exp 134a).} A same-width non-residual head recovers little of the flagship probe gain and loses geometry on cars/VISReg; on galaxy10 the probe gain is a tie on DINO. \emph{Coverage:} 3 cells; control = the parent objective with a 200-D head (no residual); concat = 100+100 residual concat; TIE unless the gap clears $\max(0.017, \text{sd}_a+\text{sd}_b)$.}
+\caption{\textbf{Width-matched control for the residual concat (exp 134a).} A same-width non-residual head recovers little of the flagship probe gain and loses geometry on cars/VISReg; on Galaxy10 the probe gain is a tie on DINO. \emph{Coverage:} 3 cells; control = the parent objective with a 200-D head (no residual); concat = 100+100 residual concat; TIE unless the gap clears $\max(0.017, \text{sd}_a+\text{sd}_b)$.}
 \label{tab:app_width}
 \end{table}

@@ -72,6 +72,21 @@ def fnum(x, p=3, dash="--"):
     return f"{x:.{p}f}"
 
 
+_DSNAMES = [(re.compile(r"(?<![_/\\A-Za-z0-9])" + a + r"(?![_A-Za-z0-9])"), b)
+            for a, b in (("cifar10", "CIFAR-10"), ("cifar100", "CIFAR-100"),
+                         ("galaxy10", "Galaxy10"), ("dtd", "DTD"),
+                         ("dino", "DINO"), ("lejepa", "LeJEPA"),
+                         ("visreg", "VISReg"))]
+
+
+def _dsnames(text):
+    """Dataset/backbone display casing in captions, coverage lines, headers
+    and row labels (never in \label/\ref/file paths, which the guards skip)."""
+    for pat, b in _DSNAMES:
+        text = pat.sub(b, text)
+    return text
+
+
 def _wrap(body, caption, label, status, colspec, header, long=False,
           wide=False, size=None):
     """`long=True` emits a longtable, which breaks across pages -- required
@@ -80,6 +95,7 @@ def _wrap(body, caption, label, status, colspec, header, long=False,
     into a landscape page (pdflscape) and drops to \scriptsize with a tight
     column gap -- for the grids that overflow the 5.5in text width.  `size`
     overrides the font size command (e.g. r"\footnotesize")."""
+    body, caption, status, header = (_dsnames(x) for x in (body, caption, status, header))
     sz = size or (r"\footnotesize" if wide else r"\small")
     setup = [sz] + ([r"\setlength{\tabcolsep}{3pt}"] if wide else [])
     pre = [r"\begin{landscape}"] if wide else []

@@ -59,13 +59,13 @@ finding it. On a supervised contrastive encoder trained with one class held
 out, a linear probe separates that class from the rest at an AUC of $0.94$,
 while the same space, asked to flag those examples without being told what to
 look for, flags none of them. Representation quality is routinely measured on
-the first side of this gap --- linear probes, $k$-NN, transfer --- and
+the first side of this gap --- linear probes, $k$-NN, transfer --- while
 scientific discovery lives entirely on the second. We study the standard
 open-world loop (score a corpus against a labelled reference, pool the most
 anomalous points, cluster the pool into candidate class anchors, adapt the
 representation) and take as the primary metric the fraction of that pool which
 is genuinely novel, since every later stage is downstream of it. We contribute
-four things. First, an algebra for the pool: purity is
+five things. First, an algebra for the pool: purity is
 $\Pi = \varepsilon_s b / q$ with a ceiling $\min(1, b/q)$ that depends on the
 pooling threshold alone, which separates ``the representation is bad'' from
 ``the threshold is bad'' --- questions the literature does not currently
@@ -74,16 +74,25 @@ from the same Neyman--Pearson density ratio that scores the corpus; it recovers
 the oracle threshold exactly on synthetic data, and where the scorer is too
 weak to support a choice it declines to pool and reports the refusal as an
 output. Third, evidence that ranking training objectives by discoverability is
-not the same as ranking them by probe accuracy: adding a sliced-isotropy
-regulariser to a supervised contrastive objective is a tie on the linear probe
-and costs $1.1$ points of top-1 accuracy, while raising novelty-detection AUC
-from $0.233$ to $0.620$. Fourth, a $2\times2$ decomposition of representation
-construction against the discovery loop, which finds the two to be substitutes
-more often than complements. Throughout we separate the $\sim$$1\%$ and
-$\sim$$10\%$ novelty regimes, which invert several conclusions; we report
-where the pipeline fails as carefully as where it works; and we rebuild every
-CIFAR result from random initialisation, because a hub-pretrained backbone has
-already seen the class it is being asked to discover.
+not the same as ranking them by probe accuracy: on a leakage-free
+hundred-class benchmark, adding a sliced-isotropy regulariser to a supervised
+contrastive objective ties the linear probe and supervised accuracy while
+raising novelty-detection AUC from $0.233$ to $0.620$ --- and the same
+addition is neutral to harmful at ten classes, so we state the dissociation
+as a many-class phenomenon. Fourth, a $2\times2$ decomposition of
+representation construction against the discovery loop, which finds the two
+to be substitutes more often than complements. Fifth, a construction that
+requires no training at all: the pretrained backbone, pooled by the density
+ratio against seen-class centroids, out-discovers every fine-tuned objective
+on the datasets where discovery works, so whether a corpus is discoverable
+can be read off before any training is done. Throughout we separate the
+$\sim$$1\%$ and $\sim$$10\%$ novelty regimes, which invert several
+conclusions; we report single-holdout results as spreads over the choice of
+held-out class, because that choice moves the numbers eight times more than
+the training seed; we report where the pipeline fails as carefully as where
+it works; and we rebuild every CIFAR result from random initialisation,
+because a hub-pretrained backbone has already seen the class it is being
+asked to discover.
 \end{abstract}
 
 % ===========================================================================
@@ -153,9 +162,9 @@ the representation worse than not running the loop at all.
   select the tightest cut that retains enough \emph{estimated} novel points to
   remain clusterable. The rule uses only the corpus and the labelled
   reference. On synthetic data with an exact critic it recovers the oracle cut
-  exactly; on real embeddings it raises pool purity from $0.232$ to $0.778$
-  where the scorer is strong, and refuses --- reporting that it has refused
-  --- where it is not.
+  exactly; on real embeddings it raises round-1 pool purity from $0.59$ to
+  $0.89$ on the strongest space where the scorer supports a choice, and
+  refuses --- reporting that it has refused --- where it does not.
 \item \textbf{A regime split, stated as a condition rather than a caveat.}
   Single-class novelty at a rate of $\sim$1\% and multi-class novelty at
   $\sim$10\% are different problems with different answers: which pooling
@@ -168,30 +177,48 @@ the representation worse than not running the loop at all.
   by discovery is not the ranking by probe. On a from-scratch CIFAR-100
   lineage, adding sliced-isotropy to a supervised contrastive objective is a
   tie on the linear probe ($0.937$ vs.\ $0.940$) and a tie on supervised top-1
-  ($0.597$ vs.\ $0.608$, inside the $0.017$ noise floor), while raising every
+  ($0.597$ vs.\ $0.608$, a gap within run-to-run variation), while raising every
   detection column --- Euclidean AUC $0.233 \to 0.620$, tied-Mahalanobis
-  $0.279 \to 0.602$. The same comparison on a from-scratch CIFAR-10 lineage
-  goes the other way on \emph{both} currencies (probe $0.884$ vs.\ $0.905$,
-  Mahalanobis $0.454$ vs.\ $0.552$): the dissociation is a many-class
-  phenomenon, and we state it as one. On the few-class lineage the objective
-  that holds both currencies is supervised distance-NPLM with a class-wise
-  marginal (probe $0.921$, top-1 tied with SupCon, Euclidean AUC $0.729$,
-  per-event $0.19$ against SupCon's $0.00$).
+  $0.279 \to 0.602$. Across four holdout draws the CIFAR-100 dissociation survives as a mean
+  effect --- tied Mahalanobis $+0.10$ with a draw spread of comparable size
+  --- so we state it as a property of the average, not of every draw. The
+  same comparison on a from-scratch CIFAR-10 lineage goes the other way on
+  \emph{both} currencies --- decodability and discoverability --- (probe $0.884$ vs.\ $0.905$, Mahalanobis $0.454$
+  vs.\ $0.552$), and does so on every one of four holdout draws: the
+  dissociation is a many-class phenomenon, and we state it as one. On the
+  few-class lineage the objective that holds both currencies, on every draw,
+  is the supervised distance New Physics Learning Machine (NPLM) with a
+  class-wise marginal (probe
+  $0.938 \pm 0.018$ over draws, top-1 tied with SupCon, per-event $0.21$
+  against SupCon's $0.01$); it is also the one leakage-free space whose
+  fine-tuning loop earns its keep, pooling at $0.43 \pm 0.02$ with the
+  whole held-out class present and $0.12 \pm 0.01$ from a $2\%$ injected
+  sample --- fifteen times SupCon's --- while raising the probe from
+  $0.94$ to $0.97$. The boundary of the shortlist is the corpus itself:
+  an instance-level term over the unlabelled corpus (the generalised
+  category discovery loss) becomes the best space we measure when the whole
+  novel class is present unlabelled, monotonically in that fraction, and
+  contributes nothing at the $\le 5\%$ contamination the rest of this
+  paper concerns (Table~\ref{tab:gcd_dose}).
 \item \textbf{Two constructions, and a decomposition of what they buy.} We
   study a residual decomposition --- train a second encoder on what the
   anchors fail to explain, then concatenate --- and frozen-space discovery,
-  in which only the anchors move. The residual's flagship gain survives a
+  in which only the anchors move. The residual's largest gain survives a
   width-matched control (a same-width non-residual head recovers $+0.02$ of a
-  $+0.15$ probe gain and loses geometry), and on clean CIFAR-10 it is a
-  two-currency gain over its parent. Frozen-space discovery with a
-  density-ratio pool is the one construction in the campaign that is both
-  backbone- and holdout-independent: round-1 purity is $0.40$--$0.57$ on $143/144$
-  galaxy10 draw$\times$seed cells (the one miss is at $0.10$), on $8/8$ clean
-  CIFAR-10 objectives, and on every random draw of DTD, where the fine-tuning
-  loop on the same parents clears it on $0/5$ to $5/5$ draws depending on the
-  backbone. It needs no training: the pretrained trunk alone, pooled by
-  density ratio, reaches $0.56$--$0.60$ purity on galaxy10 and $0.26$ on DTD
-  ($30/30$ draw cells), above every fine-tuned objective on both
+  $+0.15$ probe gain and loses geometry), and on leakage-free CIFAR-10 it is
+  a two-currency gain over its parent on every one of four holdout draws
+  (probe $+0.027 \pm 0.010$ with top-1 within $0.006$ of the parent
+  everywhere; on CIFAR-100 the probe gain is a tie and the calibration gain
+  is what survives). Frozen-space discovery with a density-ratio pool is the
+  one construction in the campaign that is both backbone- and
+  holdout-independent: round-1 purity is $0.39$--$0.58$ on $143$ of $144$
+  Galaxy10 draw$\times$seed cells (the single exception is at $0.10$),
+  $0.26$--$0.55$ on all eight leakage-free CIFAR-10 objectives, and $0.19$ or
+  better on every random draw of DTD, where the fine-tuning loop on the same
+  parents has a worst draw between $0.000$ and $0.210$ depending on the
+  backbone. It needs no training: the pretrained backbone alone, pooled by
+  the density ratio, reaches $0.56$--$0.60$ purity on Galaxy10 and $0.26$ on
+  DTD on all $30$ draw cells, above every fine-tuned objective on both
   (Table~\ref{tab:zero_training}). Because both constructions can be composed with the discovery
   loop, we report them in a $2\times2$ ablation (construction $\times$
   discovery) rather than as a single delta. The composition is superadditive
@@ -216,7 +243,15 @@ not hold (Section~\ref{sec:limits}). We do not claim the pipeline works
 everywhere. A substantial part of what follows is a characterisation of where
 it does not, and why --- in several cases the obstruction is the novel-class
 rate rather than anything about the representation, which is a limit no
-encoder can move.
+encoder can move. Nor is this a generalised category discovery method, and we
+do not compare against that benchmark: those systems fine-tune on the
+unlabelled corpus and are scored on a $K$-way partition with $K$ given, which
+is not the problem posed here. We do, however, score the generalised category
+discovery \emph{loss} under our own protocol
+(Section~\ref{sec:experiments}): it yields the best space we measure when the
+whole novel class is present unlabelled, its gain is monotone in that
+fraction, and it contributes nothing at the $\le 5\%$ contamination this
+paper is about.
 
 % ===========================================================================
 \section{Setup: discovery as a two-sample problem}
@@ -238,6 +273,25 @@ centroids to the anchor set; pseudo-label every pooled point by its nearest
 discovered anchor; and adapt the representation (or, in the frozen variant of
 Section~\ref{sec:constructions}, only the anchors) to the enlarged anchor set.
 The round repeats with the updated anchors.
+
+\paragraph{Vocabulary.}
+Six terms recur throughout. An \emph{objective} (in tables, an \emph{arm})
+is one training loss from the design cube of
+Section~\ref{sec:algorithms}. A \emph{backbone} is the pretrained encoder an
+objective is fine-tuned on top of (DINO, LeJEPA or VISReg), or the
+from-scratch network where no pretraining is used. A \emph{draw} is a choice
+of which class to hold out and treat as novel; re-drawing changes the
+problem, since some classes are far harder to find than others. A \emph{seed}
+is a re-run of the same training with a different random initialisation and
+batch order, holding the draw fixed. A \emph{cell} is one (dataset, backbone)
+pair, inside which objectives are compared. A \emph{lineage} is a family of
+encoders sharing a pretraining origin: \emph{leakage-free} encoders are
+trained from random initialisation, while \emph{hub-pretrained} encoders use
+public pretrained weights and may have seen the held-out class. We hold out
+either a single class (the \emph{single-holdout} regime,
+$b \approx 0.01$--$0.1$) or ten classes at once (the \emph{multi-holdout}
+regime, $b \approx 0.2$), and report the two separately because several
+conclusions invert between them.
 
 \paragraph{What we measure, and what the numbers mean.}
 Because this paper compares two kinds of quality that are usually not
@@ -268,7 +322,12 @@ $\approx \alpha$; a value at or under $0.05$ therefore means the space cannot
 flag an individual novel example at all, and the interesting question is
 whether a method crosses that floor rather than by how much it improves.
 Finally, \textbf{pool purity} $\Pi$ is defined below and is the metric this
-paper treats as primary.
+paper treats as primary. Alongside these per-event quantities we report
+\emph{dataset-level} two-sample power --- the probability that a kernel-based
+test (SparKer, Mahalanobis or maximum mean discrepancy) rejects the
+background-only hypothesis when a fraction $f$ of novel examples is injected
+into a background sample --- mainly in the appendix grids. We refer to this
+fixed suite of measurements as the \emph{battery}.
 
 \paragraph{Pool purity, and why everything is downstream of it.}
 Let $\Pi$ denote the fraction of $\pool$ that is truly novel. The pool feeds
@@ -278,7 +337,13 @@ nothing after it checks the work. At $\Pi \approx 0.01$ the clustering is not
 finding the novel class; it is partitioning background, and the subsequent
 fine-tune sharpens that partition. Empirically the probe drops by $0.031$ to
 $0.038$ wherever such pools form. We therefore report $\Pi$ as the primary
-metric and compare spaces and procedures by it directly. We deliberately do
+metric and compare spaces and procedures by it directly. Post-discovery
+quantities are reported in two regimes: the \emph{whole-class pass}, in
+which the entire held-out class is present unlabelled in the corpus the loop
+draws from, and the \emph{injected pass}, in which discovery starts from a
+small injected sample of the held-out class ($2\%$ of the corpus unless
+stated). The injected pass is the paper's operating regime; the whole-class
+pass is easier and is shown for reference. We deliberately do
 \emph{not} impose a purity threshold: purity is monotone in the cut
 (Section~\ref{sec:cut}), so any fixed level is a statement about the operating
 point rather than about the space, and no experiment in this paper branches on
@@ -309,8 +374,8 @@ arms we ran, three earn a place for discovery.
 
 \paragraph{SupCon\,+\,SIGReg (strong).}
 Supervised positives, cosine critic, softmax estimator, and a sliced
-isotropic-Gaussian regulariser at weight $\lambda = 5$. This is the discovery
-workhorse: it produces the highest pool purities we measure. Two points of
+isotropic-Gaussian regulariser at weight $\lambda = 5$. This is the default discovery
+objective throughout: it produces the highest pool purities we measure. Two points of
 care. First, $\lambda$ matters and is not a formality --- the same objective
 at the library default $\lambda = 1$ is a different algorithm and its numbers
 must not be pooled with these (Appendix~\ref{sec:naming}). Second, we make no
@@ -333,8 +398,9 @@ about relative likelihood rather than a statement only about rank. It is the
 strongest arm in the low-class-count regime and the most robust across
 pretraining backbones. Its class-wise-marginal variant (NPLM-dist.\,+\,classwise
 SIGReg) is the arm that holds both currencies on the leakage-free CIFAR-10
-lineage and the only supervised arm that the discovery loop improves on the
-leakage-free CIFAR-100 lineage (Appendix~\ref{sec:app_cifar}).
+lineage and the supervised arm that the discovery loop improves most on the
+leakage-free CIFAR-100 lineage ($+0.037$ probe;
+Appendix~\ref{sec:app_cifar}).
 
 \paragraph{SupCon (plain).}
 Supervised positives, cosine critic, softmax estimator, no marginal. Retained
@@ -371,7 +437,7 @@ Wilks log-likelihood ratio, and --- below --- as a \emph{pool scorer}. We
 parameterise $f$ as a small kernel ensemble with learnable centres and
 amplitudes and anneal the bandwidth from the median pairwise distance
 downwards; a fixed bandwidth is calibrated only for one embedding scale and
-goes blind when the geometry is rescaled.
+becomes uninformative when the geometry is rescaled.
 
 Equation~\ref{eq:calib} is also a free diagnostic, and we report it. A fitted
 critic need not satisfy it, and a value far from $1$ means the numbers built
@@ -385,7 +451,7 @@ ratio asks which points are over-represented relative to what the reference
 explains. These come apart, and the difference is decisive: a novel class is
 not a scatter of far-flung outliers but a \emph{dense clump} sitting where the
 reference has no mass. On a $100$-class benchmark the extreme distance tail is
-owned by background outliers, and tightening the distance threshold makes
+dominated by background outliers, and tightening the distance threshold makes
 purity \emph{worse} ($0.036 \to 0.002$), whereas tightening the ratio
 threshold makes it better ($0.214 \to 0.268$ with the encoder exactly frozen;
 an earlier archive that let BatchNorm statistics drift read $0.232 \to 0.358$,
@@ -493,7 +559,7 @@ that does not separate the classes it was given, and novelty is precisely
 variation of that kind. The residual target makes that discarded structure the
 only thing the child can see.
 
-\paragraph{On its own, the residual buys detection at no accuracy cost.}
+\paragraph{On its own, the residual adds detection at no accuracy cost.}
 On the from-scratch CIFAR-100 lineage, concatenating a residual onto a
 supervised contrastive parent moves Euclidean novelty AUC from $0.233$ to
 $0.521$ while the linear probe moves by $+0.0015$, a gain two orders of
@@ -508,18 +574,18 @@ The few-class lineage tells the complementary half. On from-scratch CIFAR-10
 the concatenation is a real gain on \emph{both} currencies over its SupCon
 parent (probe $+0.034$, Euclidean $+0.056$, tied-Mahalanobis $+0.015$, top-1
 tie), and the SupCon+SIGReg parent's NPLM-residual child is the
-best-calibrated clean CIFAR-10 space we measure (Euclidean AUC $0.758$,
-per-event $0.12$ against the parent's $0.01$). The residual buys probe where
+best-calibrated leakage-free CIFAR-10 space we measure (Euclidean AUC $0.758$,
+per-event $0.12$ against the parent's $0.01$). The residual adds probe where
 the parent already has geometry, and geometry where the parent already has
 the probe (Table~\ref{tab:app_cifar10_residuals}).
 
 \paragraph{The gain is not width.} The concatenation is two full encoders,
-so a referee should ask whether a single encoder of the same width would do
+so the natural control is whether a single encoder of the same width would do
 as well. It does not: on cars/VISReg a $200$-D SupCon head recovers $+0.02$ of
 the residual concat's $+0.15$ probe gain and \emph{loses} Euclidean AUC
 ($0.675$ vs.\ the parent's $0.715$) where the concat gains it ($0.747$); the
 concat beats the control by $+0.12$ probe, $+0.08$ Euclidean and $+0.11$
-Mahalanobis, each five times the noise floor. On galaxy10 the probe gain is
+Mahalanobis, each five times the run-to-run variation. On Galaxy10 the probe gain is
 real on LeJEPA ($+0.06$ over the control) and a tie on DINO ($+0.01$), and on
 both backbones the wider single head is the better \emph{geometry} space
 (Table~\ref{tab:app_width}). Width buys calibration cheaply; the residual
@@ -544,7 +610,7 @@ threshold crossing rather than an improvement.
 
 \paragraph{The interaction is real, and it is narrow.}
 On DTD with a DINO backbone, the residual construction gives
-$A = 0.040$, $B = 0.068$, $C = 0.023$, $D = 0.253$. Discovery alone is worth
+$A = 0.040$, $B = 0.068$, $C = 0.022$, $D = 0.253$. Discovery alone is worth
 $+0.028$; the construction alone is worth $-0.018$ --- it actively hurts ---
 and composed they reach $6\times$ nominal, an interaction of $+0.203$. The
 concatenation behaves the same way ($+0.163$). Neither ingredient does
@@ -552,7 +618,7 @@ anything alone. This is the strongest evidence we have that discovery and
 representation construction are not independent improvements.
 
 \paragraph{Two apparent replications are not replications.}
-The same protocol on galaxy10 produces the two largest raw gains in the
+The same protocol on Galaxy10 produces the two largest raw gains in the
 study, and the decomposition shows that neither is composition. With a DINO
 backbone the residual takes per-event power from $0.021$ to $0.299$, but
 $C = 0.281$ already: the construction does this \emph{by itself}, and the
@@ -568,9 +634,9 @@ informative --- cannot be what is happening there.
 Building the residual \emph{after} discovery makes the mechanism visible.
 Across five cells the after-discovery concat beats the before-discovery one
 on four (DTD/DINO: probe $0.845 \to 0.898$, Euclidean $+0.10$, per-event
-$0.05 \to 0.24$; galaxy10/VISReg: $+0.01$, $+0.13$, $+0.17$;
-Table~\ref{tab:app_postdisc}), and is a no-op on the fifth. But in every
-cell, including the two whose round-1 pool purity was $0.06$, the images
+$0.04 \to 0.23$; Galaxy10/VISReg: $+0.01$, $+0.13$, $+0.17$;
+Table~\ref{tab:app_postdisc}), and has no effect on the fifth. But in every
+cell, including the two whose round-1 pool purity was below $0.07$, the images
 whose nearest anchor is a \emph{discovered} one are $100\%$ novel. The
 clustering step is noisy; the post-hoc nearest-anchor assignment is not. So
 the round-1 purity governs whether the \emph{loop} compounds, not whether the
@@ -586,8 +652,8 @@ driven by interaction rather than by a main effect occur in a single cell with
 a single construction. We do not claim superadditivity as a general property.
 The claim the data supports is weaker and still useful: \emph{discovery and
 the residual are substitutes more often than complements.} Whichever of the
-two a cell is missing, one of them supplies it --- galaxy10/LeJEPA needed
-discovery, galaxy10/DINO needed the residual, DTD/DINO needed both --- and a
+two a cell is missing, one of them supplies it --- Galaxy10/LeJEPA needed
+discovery, Galaxy10/DINO needed the residual, DTD/DINO needed both --- and a
 practitioner who runs only one of them will, on most cells, capture most of
 the available gain. Every number in this subsection is a single seed; the
 interaction is a difference of differences and inherits the variance of both
@@ -603,59 +669,61 @@ representation moves; the loop's only output is an enlarged anchor set. This
 is the construction the campaign's single-holdout results converge on, for a
 reason that only the draw-resampled tables make visible.
 
-\paragraph{The fine-tuning loop is backbone-dependent.} On galaxy10 --- the
+\paragraph{The fine-tuning loop is backbone-dependent.} On Galaxy10 --- the
 one dataset none of our backbones has seen --- the standard loop (encoder
 trains, distance pool) reaches a round-1 purity of only $0.02$--$0.04$ on
 random single-holdout draws with a DINO backbone, $0.03$--$0.07$ with LeJEPA
 and $0.05$--$0.09$ with VISReg, discovery from a $2\%$ injected sample
-(Table~\ref{tab:app_galaxy10_draws}; with the whole class present in the bank
+(Table~\ref{tab:app_galaxy10_draws}; with the whole class present in the corpus
 the same numbers are $0.09$--$0.29$). The archived alphabetical draw
 had reported purities of $0.46$--$0.50$ on every backbone; across five random
 classes the same arm is $0.13$--$0.19$. Whether ``discovery works on
-galaxy10'' depends on which galaxy morphology is novel and which backbone
+Galaxy10'' depends on which galaxy morphology is novel and which backbone
 embeds it, and no single-draw table can show that.
 
 \paragraph{The frozen density-ratio pool is not.} With the same parents
 frozen and the pool scored by the NP ratio, round-1 purity is $0.40$--$0.57$
 on every backbone, every objective and every held-out class, with no round-2
 collapse on $143$ of $144$ draw$\times$seed cells
-(Table~\ref{tab:hardening}); the one miss is at $0.10$. On the
-leakage-free CIFAR-10 lineage the same construction clears it on $8/8$
-objectives ($0.26$--$0.55$) where the distance pool manages $3/8$
-(Table~\ref{tab:app_cifar10_pools}). It costs nothing in the probe --- the
+(Table~\ref{tab:hardening}); the single exception is at $0.10$. On the
+leakage-free CIFAR-10 lineage the same construction reaches $0.26$--$0.55$ on
+all eight objectives, where the distance pool spans $0.00$--$0.46$ with five
+objectives below $0.10$ (Table~\ref{tab:app_cifar10_pools}). It costs nothing in the probe --- the
 encoder does not move --- and it removes the round-2 collapse that every
 fine-tuning run in Tables~\ref{tab:app_galaxy10_draws}
 and~\ref{tab:app_dtd_draws} shows: the collapse is the fine-tune destroying
 the pool, not the anchors. The construction does not even need the
-fine-tune: pooling the \emph{pretrained} trunk's features, with seen-class
-centroids as anchors and no training at all, reaches on all $30/30$
-single-holdout draw cells on galaxy10 and DTD --- $0.56$--$0.60$ on
-galaxy10, above the frozen fine-tuned head ($0.40$--$0.57$) and far above the
-fine-tuning loop ($0.13$--$0.29$; whole class present in the bank in every
-case), and at $0.26$ on DTD, above the fine-tuned
-workhorse ($0.22$--$0.24$). Fine-tuning on the seen classes buys the probe
-and the multi-holdout regime; it does not buy single-holdout
-discoverability, and on galaxy10 it costs some. Where the base rate is low
+fine-tune: pooling the \emph{pretrained} backbone's features, with
+seen-class centroids as anchors and no training at all, reaches
+$0.56$--$0.60$ purity on Galaxy10 and $0.26$ on DTD on all $30$
+single-holdout draw cells --- above the frozen fine-tuned head
+($0.39$--$0.58$) and far above the fine-tuning loop ($0.04$--$0.09$ in the
+paper's injected regime; $0.13$--$0.29$ even with the whole held-out class
+present in the corpus), and above the fine-tuned default on DTD
+($0.21$--$0.22$ injected). Fine-tuning on the seen classes improves the probe
+and the multi-holdout regime; it does not improve single-holdout
+discoverability, and on Galaxy10 it reduces it. Where the base rate is low
 the same construction is marginal rather than dead --- flowers at $1/102$
 sits at $0.16$--$0.18$, marginal on every draw --- and where the
-novel class sits inside the seen manifold it is dead regardless of rate
+novel class sits inside the seen manifold the pool is indistinguishable
+from chance regardless of rate
 (aircraft at $1/100$: $0.01$; cars at $1/196$: $0.01$;
-Table~\ref{tab:app_frozen_np}). That ordering --- galaxy10, DTD, flowers,
+Table~\ref{tab:app_frozen_np}). That ordering --- Galaxy10, DTD, flowers,
 aircraft, cars --- is the regime boundary of Section~\ref{sec:experiments}
 stated on one construction.
 
-\paragraph{What ``frozen'' has to mean.} A trunk with BatchNorm keeps
+\paragraph{What ``frozen'' has to mean.} A backbone with BatchNorm keeps
 adapting its running statistics in training mode even with every weight
 frozen, and on the CIFAR ResNet those statistics absorbed the discovery
-corpus, novel points included. Setting the trunk to evaluation mode changes
+corpus, novel points included. Setting the backbone to evaluation mode changes
 the numbers: the round-2 rise of our earlier frozen archive
 ($0.358 \to 0.418$) disappears ($0.268 \to 0.237$), and a paired A/B on the
 same checkpoint attributes the round-2 rise entirely to the statistics
 adapting ($0.237 \to 0.299$ with adaptation, $\sim$$30\%$ embedding drift,
 no probe cost). That is a legitimate construction --- corpus-adaptive
-normalisation uses no labels --- and we name it as one; but it is not
+normalisation uses no labels --- and \emph{corpus-adaptive normalisation} is its name in the code archive; but it is not
 ``frozen'', and its transfer to LayerNorm backbones is a null result
-($-0.006$ round-2 purity across $45$ galaxy10 draw cells). The frozen numbers
+($-0.006$ round-2 purity across $45$ Galaxy10 draw cells). The frozen numbers
 in this paper are evaluation-mode numbers throughout.
 
 % ===========================================================================
@@ -668,25 +736,20 @@ in this paper are evaluation-mode numbers throughout.
 % cells says so in its own caption.
 
 \paragraph{How to read the tables.}
-Four words recur and are worth fixing now. An \emph{objective} (or arm) is one
-training loss from the design cube of Section~\ref{sec:algorithms} --- SupCon,
-SupCon\,+\,SIGReg, and so on. A \emph{backbone} (or base) is the pretrained
-trunk the objective is fine-tuned on top of: DINO, LeJEPA or VISReg. A
-\emph{draw} is a choice of which class to hold out and treat as novel;
-re-drawing changes the problem, since some classes are far harder to find than
-others. A \emph{seed} is a re-run of the same training with different random
-initialisation and batch order, holding the draw fixed. A \emph{cell} is one
-(dataset, backbone) pair, inside which we compare objectives. Distinguishing
+The vocabulary of Section~2 --- objective (arm), backbone, draw, seed, cell,
+and the single- versus multi-holdout and whole-class versus injected regimes
+--- is used without further comment from here on. Distinguishing
 draw from seed matters more than it may appear, and
 Section~\ref{sec:experiments} measures both: they turn out to differ by almost
 an order of magnitude, which determines how much of a single-run number can be
 believed.
 
-This campaign is reported while incomplete. Every table below states its own
+The campaign is complete as reported; residual gaps are listed at the end of
+this section. Every table below states its own
 coverage, blanks are shown as ``--'' rather than dropped, and we mark which
 claims rest on a single seed. Datasets are ordered by \emph{distance from
 pretraining} rather than alphabetically, because that ordering is what decides
-whether a result is evidence for discovery at all: galaxy10 was never seen by
+whether a result is evidence for discovery at all: Galaxy10 was never seen by
 any backbone we use, DTD is task-novel, cars/flowers/aircraft are fine-grained
 but in-domain, and the CIFAR cells exist in two lineages --- a from-scratch
 one that we report, and a hub-pretrained one whose encoder already saw the
@@ -706,42 +769,43 @@ encoder that was trained from random initialisation and never saw the class it
 is asked to find. It is also a \emph{many-class} measurement. The same eight
 objectives trained from scratch on CIFAR-10 (Table~\ref{tab:app_cifar10_pre})
 rank differently: there SupCon's own geometry is the better one, the isotropy
-term buys nothing on either currency, and the objective that carries both is
+term improves neither currency, and the objective that carries both is
 the class-wise-marginal distance-NPLM. Three datasets now agree on the shape:
-SIGReg earns the second currency where classes are many and near, and is
+SIGReg adds discoverability where classes are many and near, and is
 neutral-to-harmful where they are few and separable.
 
 \paragraph{Seeing the unlabelled corpus is a dose, not a switch.} Every
 objective above trains on the labelled classes only. The generalised
-category discovery literature trains instead on the whole corpus, held-out
+category discovery (GCD) literature trains instead on the whole corpus, held-out
 images included, with an instance-level term on the unlabelled ones
 (Vaze et al., 2022); scored on our battery under our protocol, that loss is
-the best-calibrated and highest-purity space we have on galaxy10 with a
-SIGReg-pretrained trunk (tied Mahalanobis $0.85$ vs.\ $0.71$ for SupCon on
+the best-calibrated and highest-purity space we have on Galaxy10 with a
+SIGReg-pretrained backbone (tied Mahalanobis $0.85$ vs.\ $0.71$ for SupCon on
 LeJEPA, per-event power $0.40$ vs.\ $0.05$) --- but only when the corpus
 contains the whole novel class. Table~\ref{tab:gcd_dose} varies that
 fraction: the gain is monotone in the dose, crosses SupCon between $20\%$
-and $50\%$ presence on galaxy10, and is absent at the $\le 5\%$
+and $50\%$ presence on Galaxy10, and is absent at the $\le 5\%$
 contamination this paper is about. On DTD the plain GCD loss never leaves
 SupCon's neighbourhood below full presence; the SIGReg marginal carries the
 effect there, and with four novel images in the corpus GCD+SIGReg is
 SupCon+SIGReg. At ten simultaneous novel classes (cars, aircraft, flowers)
-it ties or loses on every currency and costs $0.07$--$0.28$ in top-1. So the
+it ties or loses on nearly every currency --- winning only tied Mahalanobis
+on flowers --- and costs $0.04$--$0.28$ of top-1. So the
 transductive term is the right construction when the whole novel class is
 available unlabelled, and changes nothing in the small-sample regime.
 \input{tables/gcd_dose}
 
 \subsection{Stability: draws matter, seeds do not}
 
-Two variance questions decide how much of this campaign is quotable.
+Two variance questions decide how much of this campaign can be reported without qualification.
 
 The first is the holdout \emph{draw} --- which class is held out.
 Table~\ref{tab:draws} reports five draws per cell. Pool purity is stable
-across draws for the best objective (sd $0.007$--$0.014$) while the linear
+across draws for the best objective (sd $0.004$--$0.017$) while the linear
 probe over the same draws swings by more than $0.1$, so purity is the
 better-conditioned measurement of the two, not merely the more relevant one.
 
-The second is the \emph{seed}. We pre-registered this as a falsifier: if
+The second is the \emph{seed}. We specified this in advance as a falsification criterion: if
 seed-to-seed spread were comparable to draw-to-draw spread, every single-seed
 number in this paper would need a caveat. Table~\ref{tab:hardening} settles
 it on $144$ cells --- $\text{sd}_{\text{seed}} = 0.021$ against
@@ -751,11 +815,11 @@ every single-seed result rather than dropping it.
 
 Table~\ref{tab:draws} also carries a result we did not anticipate. Only one
 objective holds its purity across \emph{both} backbones. SupCon+SIGReg reaches
-$0.219$ on DINO and $0.225$ on LeJEPA, and its worst single draw ($0.193$)
+$0.211$ on DINO and $0.216$ on LeJEPA, and its worst single draw ($0.186$)
 still exceeds every other objective's mean. Supervised distance-NPLM matches it
-on LeJEPA ($0.215$) and loses a factor of four on DINO ($0.051$) --- the same
+on LeJEPA ($0.208$) and loses a factor of four on DINO ($0.049$) --- the same
 objective, the same data, the same code, differing only in the pretrained
-trunk. Base-independence is a stronger and more useful property than winning on
+backbone. Backbone-independence is a stronger and more useful property than winning on
 average, and it is not visible in any single-backbone table.
 
 
@@ -772,27 +836,28 @@ Table~\ref{tab:zero_training} runs the zero-training construction of
 Section~\ref{sec:frozen} --- pretrained features, seen-class centroids,
 density-ratio pool --- on every transfer dataset at single holdout, five
 draws each. It orders the datasets more sharply than any fine-tuned table:
-galaxy10 ($0.56$--$0.60$) and DTD ($0.26$) beat the best fine-tuned objective
+Galaxy10 ($0.56$--$0.60$) and DTD ($0.26$) beat the best fine-tuned objective
 on the same draws on all $30$ cells; flowers is marginal ($0.16$--$0.18$);
-aircraft and cars are dead ($0.01$). Flowers
+aircraft and cars sit at the base rate ($0.01$). Flowers
 and aircraft have the same novel rate, so the rate is not what separates
-them: the pretrained trunk already places an unseen flower species away from
+them: the pretrained backbone already places an unseen flower species away from
 the seen ones and an unseen aircraft variant among them. The base rate is
-necessary --- cars at $1/196$ is dead in both regimes --- but the boundary is
+necessary --- cars at $1/196$ sits at the base rate in both regimes --- but the boundary is
 set jointly by the rate and by where the novel class sits in the pretrained
 space, which is what the earlier on-/off-manifold split measured with local
 intrinsic dimension. Two consequences for practice: on the datasets where
 discovery works, fine-tuning on the seen classes is not what makes it work
-(on galaxy10 it lowers single-holdout purity from $0.60$ to $0.13$--$0.29$
-under the loop); and whether a new dataset is discoverable can be read off
-the pretrained trunk before any training is done.
+(on Galaxy10 it lowers single-holdout purity from $0.60$ to $0.04$--$0.09$
+in the paper's injected regime, and to $0.13$--$0.29$ even with the whole
+held-out class present); and whether a new dataset is discoverable can be
+read off the pretrained backbone before any training is done.
 
 \input{tables/zero_training}
 
 \subsection{Where the label-free cut does not reach}
 
 Table~\ref{tab:baserate} is a negative result about our own method.
-At a $1\%$ novel rate on clean CIFAR-100 banks, the label-free rule of
+At a $1\%$ novel rate on leakage-free CIFAR-100 feature banks, the label-free rule of
 Section~\ref{sec:cut} engages on $3$ of $20$ spaces, and where it engages the
 resulting purity is $0.046$ to $0.101$ --- an enrichment of $5$ to $10$ over
 the $1\%$ base rate, but far short of what the same cut admits. The spaces
@@ -827,11 +892,11 @@ calibration --- all fail on real embeddings, because the bias is not a
 uniform scale (it grows as the cut widens). Lowering the clusterability
 constant is the one intervention that helps, and it is a tuning constant we
 report with its sweep rather than a correction. And the floor is not purely
-a rate: at the same $1\%$, flowers is discoverable from the pretrained trunk
+a rate: at the same $1\%$, flowers is discoverable from the pretrained backbone
 and aircraft is not (Table~\ref{tab:zero_training}).
 
 \paragraph{SIGReg does not help by making distance a log-likelihood.}
-Forcing unit class-conditional width on demand is achievable and decorative:
+Forcing unit class-conditional width on demand is achievable and without downstream effect:
 the identity is satisfied, and nothing downstream improves. No space in the
 campaign reaches unit width class-conditionally (widths $0.13$--$0.79$), and
 seen-class fidelity to the identity \emph{anti}-correlates with novelty
@@ -850,12 +915,19 @@ property of the loss landscape, not as a recipe.
 
 \paragraph{The loop repairs weak spaces and damages strong ones.} On the
 leakage-free lineages the fine-tuning loop is probe-positive on every
-objective whose pre-probe is below $0.90$ and probe-negative on those above
+objective whose pre-discovery probe is below $0.90$ and probe-negative on those above
 $0.93$, and it pulls every space toward one middle geometry: on CIFAR-100 it
-raises SupCon's Euclidean AUC ($0.23 \to 0.37$) and lowers SupCon+SIGReg's
-($0.62 \to 0.45$) at pool purities of $0.00$--$0.02$. A pool that pure
+raises SupCon's Euclidean AUC ($0.23 \to 0.30$) and lowers SupCon+SIGReg's
+($0.62 \to 0.46$) at pool purities of $0.00$--$0.01$. A pool that empty
 cannot be what drives this; the fine-tune itself is a calibration repair,
-and it runs whether or not the pool contains anything.
+and it runs whether or not the pool contains anything. The one leakage-free
+exception locates the mechanism: on from-scratch CIFAR-10 with the class-wise
+marginal NPLM --- the only cell whose pool is substantially pure ($0.43$
+with the whole class present, $0.12$ from a $2\%$ injection) --- the loop
+raises an already-strong probe from $0.94$ to $0.97$ on every holdout draw.
+The rule is therefore not about the strength of the space but about what the
+pool supplies: an empty pool makes the fine-tune a calibration repair, and a
+pure one makes it discovery.
 
 \paragraph{The NP loss transfers as a form, not as a target.} Optimising the
 representation \emph{through} a fitted NP kernel destroys the separation it
@@ -866,26 +938,11 @@ learned content.
 
 \paragraph{No-cost is a dataset-dependent claim.} SupCon+SIGReg ties SupCon on
 supervised top-1 on both leakage-free CIFAR lineages ($-0.011$ and $+0.001$)
-and loses $0.035$ to it on every one of ten galaxy10 draws
+and loses $0.035$ to it on every one of ten Galaxy10 draws
 (Table~\ref{tab:app_top1_galaxy}). The residual concatenation ties its parent
-everywhere. The construction is no-cost; the objective is no-cost except on
+everywhere, including on every holdout draw of the leakage-free CIFAR
+lineages (top-1 within $0.006$). The construction is no-cost; the objective is no-cost except on
 the one dataset the backbones had never seen.
-
-% TODO, but the content is already settled and should not be softened:
-%   - The rate floor. At b ~ 1% the pipeline as built reaches purity 0.03-0.10
-%     where it engages at all. Note honestly that the CEILING is 0.20 there,
-%     so this is a signal-efficiency limit and a clustering-detectability
-%     limit, NOT an information-theoretic one.
-%   - SIGReg does not help by making distance a log-likelihood. Forcing unit
-%     width is decorative; seen-class fidelity anti-correlates with novelty
-%     calibration. State the defensible claim instead.
-%   - The temperature basin is unreachable by any label-free or transductive
-%     selection: a landscape finding, not a recipe.
-%   - Repairing an identity is not the same as improving a space (five
-%     independent confirmations).
-%   - Optimising the representation THROUGH a fitted NP kernel destroys the
-%     separation it measures: the NP loss transfers as a form, not as an
-%     optimisation target.
 
 \appendix
 
@@ -900,19 +957,23 @@ in this paper are generated from the archived result files by a single script,
 and each carries a machine-written coverage line stating what is present and
 what is missing. Blanks are shown as ``--''.
 
+
+Throughout the appendices, ``exp $N$'' refers to the numbered experiment
+index of the released code and log archive; the mapping from paper names to
+code names is Appendix~\ref{sec:naming}.
 \paragraph{galaxy10, and how much of the difficulty is the procedure.}
-galaxy10 carries more weight than any other dataset here, because no backbone
+Galaxy10 carries more weight than any other dataset here, because no backbone
 we use has seen it: DINO, LeJEPA and VISReg were all pretrained on natural
 images, and galaxy morphology is genuinely out of that distribution. It is
 also, for the same reason, the hardest cell in the study.
 
 Table~\ref{tab:galaxy} reports it under both discovery procedures on the same
 holdout draws. Under natural discovery --- a distance pool with the encoder
-fine-tuned and the whole held-out class present in the bank --- round-1 pool
+fine-tuned and the whole held-out class present in the corpus (the whole-class pass) --- round-1 pool
 purity sits at $0.09$--$0.29$ across every objective and backbone, with sds
 that are frequently as large as the means, so the objectives are not separated
 by this measurement at all. Under the frozen-anchor density-ratio pool, with
-the same whole-class bank, the same objectives on the same draws reach
+the same whole-class corpus, the same objectives on the same draws reach
 $0.39$--$0.58$. In the paper's own regime --- discovery from a $2\%$ injected
 sample of the held-out class, the left block of the table --- the loop's
 purity falls further, to $0.01$--$0.09$; the frozen pool has not yet been
@@ -921,7 +982,7 @@ measured at injected fractions, so that column has no counterpart.
 That is a factor of three to five from changing the procedure and nothing
 else. It is the sharpest evidence in the paper for a claim we make throughout:
 failures that present as properties of the representation are frequently
-properties of the pipeline wrapped around it. On galaxy10 specifically, the
+properties of the pipeline wrapped around it. On Galaxy10 specifically, the
 ordering of objectives under natural discovery is close to noise --- the sds
 overlap almost completely --- and the ordering under the frozen pool is both
 tighter and higher. We would not have found this by improving the encoder.
@@ -941,7 +1002,7 @@ measured, so the grids are also the coverage map of the campaign. The detail
 tables that follow each grid carry the remaining columns (accuracy, LID,
 pools, draws). This section keeps the cross-cutting tables.
 
-\paragraph{Constructions on the leakage-free trunks.}
+\paragraph{Constructions on the leakage-free backbones.}
 Table~\ref{tab:residuals} gives every construction on the from-scratch
 CIFAR-100 parents. The pattern behind the summary in
 Section~\ref{sec:constructions} is visible directly: the bare residual usually
@@ -954,7 +1015,7 @@ and~\ref{tab:app_postdisc}.
 \paragraph{Multi-seed cells.}
 Most cells in this campaign are single-seed, for cost reasons.
 Table~\ref{tab:seeds} reports one of the exceptions, three seeds on the
-CIFAR-10 champions. Seed spread there is small --- $\pm0.001$ on the best
+best-performing CIFAR-10 configurations. Seed spread there is small --- $\pm0.001$ on the best
 post-discovery probe and $\pm0.002$ on its Euclidean AUC --- which is
 consistent with the much larger variance decomposition of
 Table~\ref{tab:hardening}. Note also that the discovery loop \emph{reduces}
@@ -962,11 +1023,16 @@ the probe for \texttt{supcon+nplm} ($0.954 \to 0.930$) in all three seeds,
 which is the seeded version of a pattern we observe throughout: the loop
 repairs weak spaces and damages strong ones.
 
-\paragraph{Known gaps.} At the time of writing: the $2\times2$ of
+\paragraph{Known gaps.} The campaign is complete; what remains open is the
+following. The $2\times2$ of
 Table~\ref{tab:2x2} is single-seed throughout, and its one large interaction
 rests on a single cell; the multi-holdout regime is run only on the
-label-rich datasets; the leakage-free CIFAR lineages are one holdout each
-(the draw-resampled shortlist is running); flowers, cars and aircraft have no
+label-rich datasets; the leakage-free CIFAR shortlist and its residual
+constructions carry four holdout draws each
+(Tables~\ref{tab:app_cifar10_scratch_draws}
+and~\ref{tab:app_cifar100_scratch_draws}) while the remaining four
+objectives of the cube are one holdout each; the frozen density-ratio pool
+has not been measured at injected fractions; flowers, cars and aircraft have no
 single-holdout fine-tuned parents, so on those datasets the training-free
 construction of Tables~\ref{tab:zero_training} and~\ref{tab:app_frozen_np}
 is the only single-holdout evidence (it is also the strongest); and
@@ -995,8 +1061,12 @@ on the seen classes of each dataset (ResNet-20, $100$-D head, $200$ epochs,
 holdout class $4$), with the full battery on the frozen space, the frozen
 pools, the label-free cut, and the fine-tuning loop. CIFAR-10 holds out one
 class in ten ($b = 0.10$); CIFAR-100 one in a hundred ($b = 0.01$). Every
-number is seed $0$ at one holdout; the draw-resampled shortlist is
-running at the time of writing. Reading the two datasets side by side is the
+number is seed $0$; the shortlist objectives and the residual constructions
+additionally carry four holdout draws each
+(Tables~\ref{tab:app_cifar10_scratch_draws},
+\ref{tab:app_cifar100_scratch_draws},
+\ref{tab:app_cifar10_residual_draws}
+and~\ref{tab:app_cifar100_residual_draws}). Reading the two datasets side by side is the
 point: the objective ranking, the discoverability of the frozen space, and the
 response to the loop all flip between them. In the grids, ``post'' for a
 plain space is the fine-tuning loop of exp 68 (encoder trains, distance pool,
@@ -1030,11 +1100,12 @@ ablation, and the grids below make their coverage explicit: standalone arms
 and power from the proto fine-tune (exp 55) or the NPLM fine-tune (exp 58),
 but their post-discovery \emph{geometry} was never recorded; the $16{+}16$
 concats (exp 59) and the residual fine-tunes (exps 73/74) carry both. The
-multi-seed champions are Tables~\ref{tab:seeds} and~\ref{tab:app_seeds_c100},
+multi-seed configurations are Tables~\ref{tab:seeds} and~\ref{tab:app_seeds_c100},
 the five-seed residual concats Table~\ref{tab:app_hub_residual_seeds}. Their
-probe records ($0.983 \pm 0.000$ post-discovery on CIFAR-10; $0.951 \pm
+probe records ($0.983 \pm 0.001$ post-discovery on CIFAR-10; $0.951 \pm
 0.005$ on CIFAR-100) reproduce across seeds; their leakage-free counterparts
-are $0.950$ (NPLM-dist.+classwise SIGReg under the loop) and $0.949$
+are $0.954$ (NPLM-dist.+classwise SIGReg under the loop, whole-class pass)
+and $0.949$
 (SupCon+SIGReg residual concat).
 \input{tables/grid_cifar10_hub_a}
 \input{tables/grid_cifar10_hub_b}
@@ -1046,7 +1117,7 @@ are $0.950$ (NPLM-dist.+classwise SIGReg under the loop) and $0.949$
 \label{sec:app_galaxy}
 % ===========================================================================
 
-galaxy10 is the only dataset genuinely out of distribution for all three
+Galaxy10 is the only dataset genuinely out of distribution for all three
 backbones, and it carries the most weight. Every cell is single-holdout
 (one morphology of ten, $b \approx 0.1$) and resampled over five held-out
 classes $\{2, 3, 4, 5, 6\}$; the archived class-$9$ draw is reported only as a
@@ -1084,7 +1155,7 @@ is tabulated in Table~\ref{tab:app_postdisc}.
 % ===========================================================================
 
 DTD is task-novel to the backbones (textures) and is the dataset on which the
-discovery workhorse was chosen. Single holdout is one texture class of $47$
+default discovery objective was chosen. Single holdout is one texture class of $47$
 ($b \approx 0.02$), resampled over classes 8, 46, 38, 15 and 16;
 Table~\ref{tab:app_dtd_draws} gives all three backbones. The multi-holdout
 regime ($10$ classes held out, $b \approx 0.2$) is the one the earlier report
@@ -1110,17 +1181,22 @@ SupCon+SIGReg (strong) & \texttt{ss-ft}, \texttt{ssig} & same objective as the r
 SupCon+SIGReg (repulse) & \texttt{supsig} & the proto/repulse recipe; \emph{not} SupCon+SIGReg & -- \\
 NPLM-dist.\,+\,classwise SIGReg & \texttt{nplmcw}, \texttt{nplm\_dist\_sup\_cw} & supervised / distance / NPLM, class-wise marginal & 5 \\
 NPLM-dist.\ (sup.) & \texttt{nplmsd}, \texttt{nplm-sup-ft} & supervised / distance / NPLM, global marginal & 1 \\
+SupCon$+$NPLM concat & \texttt{supcon+nplm} & concatenation of a $16$-D SupCon head and a $16$-D NPLM head (hub lineage, exp 59) & -- \\
 \bottomrule
 \end{tabular}
 \end{center}
 
 \noindent The strong and weak SupCon+SIGReg variants are the same objective
 at different $\lambda$ (aux-term magnitudes $0.381$ vs.\ $0.066$ on a shared
-batch); the discovery workhorse is the strong one, and every exp-50-era
+batch); the paper default is the strong one, and every exp-50-era
 number is the weak one. \texttt{ss} and \texttt{ss-ft} share an abbreviation
 and are different algorithms, one unsupervised and one supervised. The
 from-scratch arms \texttt{ssig} and \texttt{nplmsd} compute numerically
 identical losses to their fine-tune twins \texttt{ss-ft} and
-\texttt{nplm-sup-ft}.
+\texttt{nplm-sup-ft}. A final source of collision: LeJEPA and VISReg name
+pretrained \emph{backbones} throughout this paper; where a training
+objective of the same family appears (the unsupervised arms of the design
+cube) we write it as an objective name (SimCLR+SIGReg), never by the
+backbone's name.
 
 \end{document}
