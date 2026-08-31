@@ -9,6 +9,14 @@ results to `logs/SUMMARY_TABLES.md` in the house style (`docs/METRICS.md`).**
 
 ---
 
+> **CAMPAIGN STATUS 2026-08-30: every block in this document (A-S, plus the
+> follow-ons S2-S5 and the exp-70/68 re-passes) has been RUN and WRITTEN UP.**
+> Per-experiment verdicts live in `docs/IMPROVEMENT_TESTS.md`; aggregated
+> numbers in `logs/SUMMARY_TABLES.md`; the paper tables regenerate via
+> `experiments/140_paper_tables.py` / `141_appendix_tables.py` /
+> `142_grid_tables.py`.  This document remains as the protocol reference for
+> re-running any cell.
+
 ## 0. Read first (5 minutes, prevents every known footgun)
 
 1. `supersig/holdouts.py` — the two env vars that control holdouts.
