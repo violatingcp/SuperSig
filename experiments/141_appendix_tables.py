@@ -486,7 +486,7 @@ def t_frozen_np_datasets():
                 for sc in ("dist", "np"):
                     v = per.get((ds, base, reg, sc), [])
                     r1 = [x[0] for x in v]; r2 = [x[1] for x in v if len(x) > 1]
-                    cells += [msd(r1), msd(r2), f"{sum(1 for x in r1 if x >= 0.15)}/{len(r1)}" if r1 else "--"]
+                    cells += [msd(r1), msd(r2), fnum(min(r1)) if r1 else "--"]
             if any(c != "--" for c in cells):
                 rows.append(" & ".join([esc(f"{ds}/{base}")] + cells) + r" \\")
     if not rows:
@@ -495,13 +495,14 @@ def t_frozen_np_datasets():
     status = (f"{n} cell files (multi-holdout default draw, and single-holdout draws 0--4); pretrained "
               r"ViT-B/16 features, identity head, anchors = seen centroids, no fine-tune.")
     return _wrap("\n".join(rows),
-                 r"\textbf{Frozen-trunk pooling with no training at all}, on the pretrained backbone "
-                 r"features: distance vs density-ratio pool, multi- vs single-holdout regime.",
+                 r"\textbf{Frozen-backbone pooling with no training at all}, on the pretrained backbone "
+                 r"features: distance vs density-ratio pool, multi- vs single-holdout regime; "
+                 r"round-1 and round-2 purity with the worst draw.",
                  "tab:app_frozen_np", status, "lcccccccccccc",
                  r"& \multicolumn{6}{c}{multi-holdout} & \multicolumn{6}{c}{single holdout (draws)} \\"
                  "\n" r"\cmidrule(lr){2-7}\cmidrule(lr){8-13}" "\n"
                  r"& \multicolumn{3}{c}{dist} & \multicolumn{3}{c}{np} & \multicolumn{3}{c}{dist} & \multicolumn{3}{c}{np} \\"
-                 "\n" r"cell & r1 & r2 & $\ge$g & r1 & r2 & $\ge$g & r1 & r2 & $\ge$g & r1 & r2 & $\ge$g \\",
+                 "\n" r"cell & r1 & r2 & min & r1 & r2 & min & r1 & r2 & min & r1 & r2 & min \\",
                  long=True, wide=True)
 
 

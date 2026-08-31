@@ -72,7 +72,7 @@ def fnum(x, p=3, dash="--"):
     return f"{x:.{p}f}"
 
 
-_DSNAMES = [(re.compile(r"(?<![_/\\A-Za-z0-9])" + a + r"(?![_A-Za-z0-9])"), b)
+_DSNAMES = [(re.compile(r"(?<![_\\A-Za-z0-9])" + a + r"(?![_A-Za-z0-9])"), b)
             for a, b in (("cifar10", "CIFAR-10"), ("cifar100", "CIFAR-100"),
                          ("galaxy10", "Galaxy10"), ("dtd", "DTD"),
                          ("dino", "DINO"), ("lejepa", "LeJEPA"),
