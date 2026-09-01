@@ -162,7 +162,8 @@ def run_discovery(backbone, means, *, base_ds, train_eval_loader, test_loader,
                   n_slices, rounds=2, ft_epochs=5, tau_quantile=0.95,
                   kmax=None, merge_dist=3.0, exempt_repulsion=True,
                   names=None, seed=0, pool_score="dist",
-                  cut_rule="quantile", n_min=None, bn_adapt=False):
+                  cut_rule="quantile", n_min=None, bn_adapt=False,
+                  on_refuse="fallback"):
     """
     Iterated anchor discovery.  `means` holds the trained class anchors
     (n_classes rows); returns (extended_means, history) where history is one
@@ -175,7 +176,13 @@ def run_discovery(backbone, means, *, base_ds, train_eval_loader, test_loader,
                             archived result exactly.
       "legal"               exps 128/129 -- pool = the tightest cut still
                             holding `n_min` ESTIMATED novel points, kmax from
-                            the same label-free weights.  Removes two
+                            the same label-free weights.  When the rule
+                            declines (estimated novelty < n_min), on_refuse
+                            decides: "fallback" (archived exps 128/129) pools
+                            the widest allowed cut q_max anyway; "skip"
+                            (exp 148, the paper's stated semantics) plants no
+                            anchors, runs no fine-tune, and ends the loop --
+                            the refusal is recorded in history[-1]["cut"].  Removes two
                             un-derived constants, one of which
                             (`len(holdouts)`) is oracle knowledge.  Requires
                             pool_score="np": the weights need a density ratio,
@@ -183,9 +190,11 @@ def run_discovery(backbone, means, *, base_ds, train_eval_loader, test_loader,
     """
     if cut_rule not in ("quantile", "legal"):
         raise ValueError(f"cut_rule={cut_rule!r} must be 'quantile' or 'legal'")
-    if cut_rule == "legal" and pool_score != "np":
-        raise ValueError("cut_rule='legal' needs pool_score='np': the novelty "
-                         "weights are defined from the density ratio")
+    if cut_rule == "legal" and pool_score not in ("np", "dist"):
+        raise ValueError("cut_rule='legal' needs pool_score='np' or 'dist': "
+                         "the novelty weights are defined from the density "
+                         "ratio (with 'dist' the ratio sets the cut size and "
+                         "kmax, and the distance score ranks the pool)")
     n_classes = means.size(0)
     cur_means = means.detach().clone()
     pooled = np.zeros(len(train_eval_loader.dataset), dtype=bool)
@@ -203,8 +212,25 @@ def run_discovery(backbone, means, *, base_ds, train_eval_loader, test_loader,
         else:
             s = torch.cdist(z, anchor_mat).min(1).values
         if cut_rule == "legal":
-            pool, cut_info = legal_pool(s.cpu().numpy(), is_seen_lab,
+            s_cut = (s if pool_score == "np"
+                     else np_pool_scores(z, is_seen_lab, seed=seed + r))
+            pool, cut_info = legal_pool(s_cut.cpu().numpy(), is_seen_lab,
                                         n_min=n_min or POOL_N_MIN)
+            if not cut_info["ok"] and on_refuse == "skip":
+                print(f"  round {r}: label-free cut DECLINED "
+                      f"({cut_info['reason']}); no anchors, no fine-tune")
+                history.append(dict(round=r, cut=cut_info, pool=0,
+                                    purity=float("nan"), khat=0,
+                                    n_anchors=int(cur_means.size(0) - n_classes),
+                                    margin=float("nan"), per_class={},
+                                    mean_pc=float("nan"), declined=True))
+                break
+            if pool_score != "np":
+                # derived cut size, distance-ranked pool (exp 148)
+                k = int(pool.sum())
+                pool = np.zeros(len(pool), dtype=bool)
+                pool[torch.topk(s, k).indices.cpu().numpy()] = True
+                cut_info["ranked_by"] = "dist"
             km = kmax or cut_info["kmax"]
         else:
             tau = torch.quantile(s[torch.as_tensor(is_seen_lab, device=DEVICE)],

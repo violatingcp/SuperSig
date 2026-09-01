@@ -1,0 +1,24 @@
+\documentclass[10pt]{article}
+\usepackage[letterpaper,landscape,margin=0.6in]{geometry}
+\usepackage{booktabs,amsmath,amssymb,caption}
+\captionsetup{font=small,labelfont=bf}
+\renewcommand{\floatpagefraction}{0.05}
+\begin{document}
+\section*{Sigma-currency tables (exps 146/148), CIFAR-10 leakage-free lineage --- generated \today}
+\noindent $f^\star(2\sigma)$ = smallest injected fraction at which the median expected significance of a dataset-level test reaches $2\sigma$ (200 null / 50 signal toys, $N_D{=}5000$); lower is better. Post tables: bold = best test per arm; $\dagger$ = the derived cut declined at some fraction below the crossing (the space is the frozen one there); purity `--' = declined at $f{=}0.03$; `($n$/6)' = arm still running.
+\input{tables/sigma_pre_cifar10}
+\clearpage
+\input{tables/sigma_post_cifar10_h4}
+\input{tables/sigma_post_cifar10_h4_legal}
+\input{tables/sigma_post_cifar10_h4_np_legal}
+\clearpage
+\input{tables/sigma_post_cifar10_h7}
+\input{tables/sigma_post_cifar10_h7_legal}
+\input{tables/sigma_post_cifar10_h7_np_legal}
+\clearpage
+\input{tables/sigma_post_cifar10_h8}
+\input{tables/sigma_post_cifar10_h8_legal}
+\input{tables/sigma_post_cifar10_h8_np_legal}
+\clearpage
+\input{tables/sigma_post_cifar10_h9}
+\end{document}

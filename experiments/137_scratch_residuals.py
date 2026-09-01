@@ -52,7 +52,7 @@ from supersig.train import collect_embeddings
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CKPT_DIR = os.path.join(REPO, "checkpoints")
-PARENTS = ["supcon", "ssig", "nplmsd"]
+PARENTS = ["supcon", "ssig", "nplmsd", "nplmcw"]
 OBJS = ["res", "res-nplm"]
 
 
@@ -177,8 +177,11 @@ def main():
                       f"  top1 {results[ck]['top1']-results[pk]['top1']:+.4f}"
                       f"  eucl {results[ck]['eucl']-results[pk]['eucl']:+.4f}"
                       f"  mahaT {results[ck]['mahaT']-results[pk]['mahaT']:+.4f}")
-    with open(os.path.join(args.out, f"residuals_{ds}{tag}.json"), "w") as fh:
-        json.dump(results, fh, indent=1, default=float)
+    rj = os.path.join(args.out, f"residuals_{ds}{tag}.json")
+    merged = json.load(open(rj)) if os.path.exists(rj) else {}
+    merged.update(results)                      # partial runs must not clobber
+    with open(rj, "w") as fh:
+        json.dump(merged, fh, indent=1, default=float)
     print("EXP137 DONE.")
 
 

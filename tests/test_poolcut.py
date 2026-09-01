@@ -94,9 +94,11 @@ def test_run_discovery_default_is_unchanged():
 
 
 def test_legal_rule_requires_a_density_ratio_scorer():
+    # 'np' ranks and cuts by the ratio; 'dist' ranks by distance with the
+    # ratio-derived cut size (exp 148); anything else has no novelty weights.
     from supersig.discovery import run_discovery
-    with pytest.raises(ValueError, match="needs pool_score='np'"):
+    with pytest.raises(ValueError, match="needs pool_score='np' or 'dist'"):
         run_discovery(None, None, base_ds=None, train_eval_loader=None,
                       test_loader=None, seen=[], holdouts={0},
                       dataset_name="x", rep_weight=0, sigreg_weight=0,
-                      n_slices=8, cut_rule="legal", pool_score="dist")
+                      n_slices=8, cut_rule="legal", pool_score="lid")
