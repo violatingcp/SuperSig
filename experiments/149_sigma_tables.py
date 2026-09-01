@@ -136,8 +136,11 @@ def post_fstar(e, t):
     if len(zf) < 2:
         return None, False
     f, _ = e146.f_star([k for k, _ in zf], [v for _, v in zf])
-    declined = any(not c.get("ok", True) for k, c in e.get("cut", {}).items()
-                   if float(k) < (f if np.isfinite(f) else 1.0))
+    # the crossing is attributed to the first grid fraction whose Z >= 2; if
+    # the cut had DECLINED at that fraction the space there is the frozen one
+    hit = next((k for k, v in zf if v >= 2.0), None)
+    cut = e.get("cut", {})
+    declined = (hit is not None and not cut.get(str(hit), {}).get("ok", True))
     return f, declined
 
 
@@ -190,7 +193,7 @@ def t_post(ds, h, tag, desc):
     status = (f"{ds.upper().replace('CIFAR', 'CIFAR-')} holdout {h}, {desc}; {n} arms; "
               r"each fraction scored in its own fine-tuned space (2 rounds); 200 null / 50 "
               r"signal toys, $N_D{=}5000$; purity = round-1 pool purity at $f{=}0.03$; "
-              r"$\dagger$ = the label-free cut declined at some fraction below the crossing "
+              r"$\dagger$ = the label-free cut had declined at the crossing fraction "
               r"(the space is then the frozen one at that fraction); purity `--' = declined at $f{=}0.03$; "
               r"an `($n$/$m$)' row is an arm still running.")
     cap = (rf"\textbf{{Post-discovery $f^\star(2\sigma)$ on the {desc}.}} The frozen-space "
@@ -204,6 +207,71 @@ def t_post(ds, h, tag, desc):
                 "lcc" + "c" * len(POST_TESTS), head, size="footnotesize")
 
 
+# ----------------------------------------------------------------- summary
+SUMMARY_VARIANTS = [("", "dist/95th"), ("_legal", "dist/derived"),
+                    ("_np_legal", "np/derived")]
+
+
+def t_summary(ds, holdouts):
+    """Per arm x draw: frozen SparKer f* vs the best post test per loop variant."""
+    rows, n_cells, n_win = [], 0, 0
+    parents = ["supcon", "ssig", "nplmsd", "nplmcw"]
+    any_data = False
+    for arm in parents:
+        block = []
+        for h in holdouts:
+            p146 = os.path.join(REPO, "logs", "exp146", f"minfrac_{ds}_h{h}.json")
+            frozen = None
+            if os.path.exists(p146):
+                j = json.load(open(p146))
+                e = j.get(f"{arm} (parent)") or j.get(f"{arm} (no residual)")
+                frozen = e["sparker"]["f2sigma"] if e else None
+            cells = []
+            for tag, _ in SUMMARY_VARIANTS:
+                r = load_suite(ds, h, tag)
+                e = r.get(arm) if r else None
+                if not e or len(e["z"].get("sparker", {})) < len(e.get("fractions", [])):
+                    cells.append("--")
+                    continue
+                any_data = True
+                best = (np.inf, None, False)
+                for t in POST_TESTS:
+                    f, dec = post_fstar(e, t)
+                    if f is not None and np.isfinite(f) and f < best[0]:
+                        best = (f, t, dec)
+                if best[1] is None:
+                    cells.append("$>0.1$")
+                    continue
+                n_cells += 1
+                # a crossing reached while the cut had declined is the FROZEN
+                # space's number, not the loop's: never counted as a win
+                win = (frozen is not None and np.isfinite(frozen)
+                       and best[0] < frozen and not best[2])
+                n_win += int(win)
+                txt = f"{best[0]:.3f} ({POST_HEAD[best[1]].replace(chr(92)+',', ' ')})"
+                txt += r"$^\dagger$" if best[2] else ""
+                cells.append(rf"\textbf{{{txt}}}" if win else txt)
+            block.append(" & ".join([PRETTY[arm] if h == holdouts[0] else "",
+                                     f"h{h}", fnum(frozen)] + cells) + r" \\")
+        rows += block + [r"\addlinespace"]
+    if not any_data:
+        return None
+    rows = rows[:-1]
+    status = (f"{ds.upper().replace('CIFAR', 'CIFAR-')}, four parents x draws "
+              f"{{{', '.join(str(h) for h in holdouts)}}}; {n_cells} complete (arm, draw, variant) "
+              f"cells, the loop beats the frozen space in {n_win}; $\\dagger$ = the derived cut had "
+              r"declined at the crossing fraction, so that number is the frozen space's and is not counted "
+              r"as a win; `--' = variant not run or still running.")
+    cap = (r"\textbf{Does the discovery loop beat the frozen space?} Frozen-space SparKer "
+           r"$f^\star(2\sigma)$ against the best post-discovery test (named in parentheses) under "
+           r"three loop variants: the campaign's distance pool with the 95th-percentile cut, the "
+           r"distance pool with the derived cut, and the density-ratio pool with the derived cut "
+           r"(the paper's construction). Bold = the loop wins on that draw.")
+    head = (r"arm & draw & frozen SparKer & " + " & ".join(d for _, d in SUMMARY_VARIANTS) + r" \\")
+    return wrap("\n".join(rows), cap, f"tab:sigma_summary_{ds}", status, "llcccc", head,
+                size="footnotesize")
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--dataset", default="cifar10")
@@ -212,7 +280,8 @@ def main():
     args = ap.parse_args()
     hs = [int(x) for x in args.holdouts.split(",")]
     os.makedirs(args.out, exist_ok=True)
-    tables = [(f"sigma_pre_{args.dataset}", lambda: t_pre(args.dataset, hs))]
+    tables = [(f"sigma_pre_{args.dataset}", lambda: t_pre(args.dataset, hs)),
+              (f"sigma_summary_{args.dataset}", lambda: t_summary(args.dataset, hs))]
     for h in hs:
         for tag, desc in VARIANTS:
             name = f"sigma_post_{args.dataset}_h{h}{tag}"

@@ -1,0 +1,32 @@
+% STATUS: CIFAR-10, four parents x draws {4, 7, 8, 9}; 48 complete (arm, draw, variant) cells, the loop beats the frozen space in 38; $\dagger$ = the derived cut had declined at the crossing fraction, so that number is the frozen space's and is not counted as a win; `--' = variant not run or still running.
+\begin{table}[t]
+\centering
+\footnotesize
+\begin{tabular}{llcccc}
+\toprule
+arm & draw & frozen SparKer & dist/95th & dist/derived & np/derived \\
+\midrule
+SupCon & h4 & 0.015 & 0.027 (MMD) & 0.014 (MMD)$^\dagger$ & 0.014 (MMD)$^\dagger$ \\
+ & h7 & 0.021 & 0.035 (SparKer (anch.)) & 0.033 (SparKer (anch.)) & \textbf{0.018 (SparKer)} \\
+ & h8 & 0.018 & \textbf{0.016 (Eucl. (anch.))} & \textbf{0.017 (MMD)} & \textbf{0.011 (Eucl. (anch.))} \\
+ & h9 & 0.018 & \textbf{0.008 (Eucl.)} & \textbf{0.011 (Eucl. (anch.))} & \textbf{0.009 (SparKer)} \\
+\addlinespace
+SupCon+SIGReg ($\lambda{=}5$) & h4 & 0.042 & \textbf{0.021 (Eucl. (anch.))} & \textbf{0.028 (MMD)} & \textbf{0.028 (Eucl.)} \\
+ & h7 & 0.034 & \textbf{0.021 (Eucl. (anch.))} & 0.036 (SparKer)$^\dagger$ & 0.036 (SparKer)$^\dagger$ \\
+ & h8 & 0.040 & \textbf{0.015 (MMD)} & \textbf{0.021 (MMD)} & \textbf{0.020 (Eucl. (anch.))} \\
+ & h9 & 0.032 & \textbf{0.016 (Eucl. (anch.))} & 0.026 (MMD)$^\dagger$ & 0.026 (MMD)$^\dagger$ \\
+\addlinespace
+NPLM-dist.\ (sup.) & h4 & 0.040 & \textbf{0.024 (Eucl. (anch.))} & \textbf{0.037 (Eucl. (anch.))} & \textbf{0.033 (Eucl. (anch.))} \\
+ & h7 & 0.029 & \textbf{0.022 (Eucl. (anch.))} & 0.039 (Eucl. (anch.)) & \textbf{0.021 (Eucl. (anch.))} \\
+ & h8 & 0.024 & \textbf{0.016 (SparKer (anch.))} & \textbf{0.015 (Eucl. (anch.))} & \textbf{0.016 (Eucl. (anch.))} \\
+ & h9 & 0.024 & \textbf{0.009 (SparKer (anch.))} & \textbf{0.020 (Eucl. (anch.))} & \textbf{0.020 (Eucl. (anch.))} \\
+\addlinespace
+NPLM-dist.+classwise SIGReg & h4 & 0.025 & \textbf{0.019 (Eucl. (anch.))} & \textbf{0.020 (Eucl. (anch.))} & \textbf{0.020 (Eucl. (anch.))} \\
+ & h7 & 0.029 & \textbf{0.018 (Eucl. (anch.))} & \textbf{0.027 (SparKer (anch.))} & \textbf{0.011 (Eucl. (anch.))} \\
+ & h8 & 0.024 & \textbf{0.015 (Eucl. (anch.))} & \textbf{0.012 (Eucl. (anch.))} & \textbf{0.009 (Eucl. (anch.))} \\
+ & h9 & 0.028 & \textbf{0.016 (Maha.)} & \textbf{0.020 (Eucl. (anch.))} & \textbf{0.020 (Eucl. (anch.))} \\
+\bottomrule
+\end{tabular}
+\caption{\textbf{Does the discovery loop beat the frozen space?} Frozen-space SparKer $f^\star(2\sigma)$ against the best post-discovery test (named in parentheses) under three loop variants: the campaign's distance pool with the 95th-percentile cut, the distance pool with the derived cut, and the density-ratio pool with the derived cut (the paper's construction). Bold = the loop wins on that draw. \emph{Coverage:} CIFAR-10, four parents x draws {4, 7, 8, 9}; 48 complete (arm, draw, variant) cells, the loop beats the frozen space in 38; $\dagger$ = the derived cut had declined at the crossing fraction, so that number is the frozen space's and is not counted as a win; `--' = variant not run or still running.}
+\label{tab:sigma_summary_cifar10}
+\end{table}

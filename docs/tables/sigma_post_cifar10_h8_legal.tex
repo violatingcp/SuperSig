@@ -1,4 +1,4 @@
-% STATUS: CIFAR-10 holdout 8, distance pool, derived cut; 4 arms; each fraction scored in its own fine-tuned space (2 rounds); 200 null / 50 signal toys, $N_D{=}5000$; purity = round-1 pool purity at $f{=}0.03$; $\dagger$ = the label-free cut declined at some fraction below the crossing (the space is then the frozen one at that fraction); purity `--' = declined at $f{=}0.03$; an `($n$/$m$)' row is an arm still running.
+% STATUS: CIFAR-10 holdout 8, distance pool, derived cut; 4 arms; each fraction scored in its own fine-tuned space (2 rounds); 200 null / 50 signal toys, $N_D{=}5000$; purity = round-1 pool purity at $f{=}0.03$; $\dagger$ = the label-free cut had declined at the crossing fraction (the space is then the frozen one at that fraction); purity `--' = declined at $f{=}0.03$; an `($n$/$m$)' row is an arm still running.
 \begin{table}[t]
 \centering
 \footnotesize
@@ -6,15 +6,15 @@
 \toprule
 arm & frozen SparKer & purity & Eucl. & Eucl.\,(anch.) & Maha. & MMD & SparKer & SparKer\,(anch.) \\
 \midrule
-SupCon & 0.018 & 0.00 & 0.052$^\dagger$ & $>0.1$$^\dagger$ & 0.038$^\dagger$ & \textbf{0.017$^\dagger$} & 0.031$^\dagger$ & 0.027$^\dagger$ \\
+SupCon & 0.018 & 0.00 & 0.052 & $>0.1$ & 0.038 & \textbf{0.017} & 0.031 & 0.027 \\
 \addlinespace
-SupCon+SIGReg ($\lambda{=}5$) & 0.040 & 0.01 & 0.024$^\dagger$ & 0.076$^\dagger$ & 0.062$^\dagger$ & \textbf{0.021$^\dagger$} & 0.029$^\dagger$ & 0.029$^\dagger$ \\
+SupCon+SIGReg ($\lambda{=}5$) & 0.040 & 0.01 & 0.024 & 0.076 & 0.062 & \textbf{0.021} & 0.029 & 0.029 \\
 \addlinespace
-NPLM-dist.\ (sup.) & 0.024 & 0.59 & 0.063$^\dagger$ & \textbf{0.015$^\dagger$} & 0.025$^\dagger$ & 0.023$^\dagger$ & 0.023$^\dagger$ & 0.017$^\dagger$ \\
+NPLM-dist.\ (sup.) & 0.024 & 0.59 & 0.063 & \textbf{0.015} & 0.025 & 0.023 & 0.023 & 0.017 \\
 \addlinespace
-NPLM-dist.+classwise SIGReg & 0.024 & -- & (2/6) & -- & -- & -- & -- & -- \\
+NPLM-dist.+classwise SIGReg & 0.024 & 0.55 & 0.042 & \textbf{0.012} & 0.039 & 0.036 & 0.035 & 0.021 \\
 \bottomrule
 \end{tabular}
-\caption{\textbf{Post-discovery $f^\star(2\sigma)$ on the distance pool, derived cut.} The frozen-space SparKer $f^\star$ is repeated for reference; bold marks the best post-discovery test per arm. \emph{Eucl.\,(anch.)} is the mean of $d_{\rm seen}-d_{\rm disc}$ and \emph{SparKer\,(anch.)} seeds the kernels at the discovered anchors; both consume the anchors discovery planted, the other four do not. \emph{Coverage:} CIFAR-10 holdout 8, distance pool, derived cut; 4 arms; each fraction scored in its own fine-tuned space (2 rounds); 200 null / 50 signal toys, $N_D{=}5000$; purity = round-1 pool purity at $f{=}0.03$; $\dagger$ = the label-free cut declined at some fraction below the crossing (the space is then the frozen one at that fraction); purity `--' = declined at $f{=}0.03$; an `($n$/$m$)' row is an arm still running.}
+\caption{\textbf{Post-discovery $f^\star(2\sigma)$ on the distance pool, derived cut.} The frozen-space SparKer $f^\star$ is repeated for reference; bold marks the best post-discovery test per arm. \emph{Eucl.\,(anch.)} is the mean of $d_{\rm seen}-d_{\rm disc}$ and \emph{SparKer\,(anch.)} seeds the kernels at the discovered anchors; both consume the anchors discovery planted, the other four do not. \emph{Coverage:} CIFAR-10 holdout 8, distance pool, derived cut; 4 arms; each fraction scored in its own fine-tuned space (2 rounds); 200 null / 50 signal toys, $N_D{=}5000$; purity = round-1 pool purity at $f{=}0.03$; $\dagger$ = the label-free cut had declined at the crossing fraction (the space is then the frozen one at that fraction); purity `--' = declined at $f{=}0.03$; an `($n$/$m$)' row is an arm still running.}
 \label{tab:sigma_post_cifar10_h8_legal}
 \end{table}
