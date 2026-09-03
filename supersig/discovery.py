@@ -41,7 +41,10 @@ def kmeans(X, k, iters=30, seed=0):
     idx = [int(torch.randint(len(X), (1,), generator=g))]
     for _ in range(k - 1):
         d2 = torch.cdist(X, X[idx]).min(1).values ** 2
-        idx.append(int(torch.multinomial((d2 / d2.sum()).cpu(), 1, generator=g)))
+        tot = d2.sum()
+        p = ((d2 / tot) if torch.isfinite(tot) and tot > 0
+             else torch.full((len(X),), 1.0 / len(X), device=d2.device))
+        idx.append(int(torch.multinomial(p.cpu(), 1, generator=g)))
     C = X[idx].clone()
     for _ in range(iters):
         a = torch.cdist(X, C).argmin(1)
@@ -55,7 +58,7 @@ def bic_select(X, kmax=4, seed=0):
     """Pick k by BIC under unit-variance Gaussians (the model's own likelihood)."""
     n, d = X.shape
     best = None
-    for k in range(1, kmax + 1):
+    for k in range(1, min(kmax, n) + 1):   # never more clusters than points
         C, a = kmeans(X, k, seed=seed + k)
         ll = -0.5 * ((X - C[a]) ** 2).sum().item() - 0.5 * n * d * math.log(2 * math.pi)
         bic = -2 * ll + k * d * math.log(n)
