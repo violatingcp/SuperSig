@@ -1,0 +1,31 @@
+% STATUS: Galaxy10 / VISREG, 14 spaces $\times$ 5 single-holdout draws (columns named by the held-out class); exp-150 battery, 200 null / 50 signal toys, $N_D{=}5000$, fractions $0.006$--$0.1$.  GCD arms trained on the unlabelled corpus with the novel images present (transductive).
+\begin{table}[t]
+\centering
+\footnotesize
+\begin{tabular}{lccccccccccccccccc}
+\toprule
+space & probe & per-ev. & \multicolumn{5}{c}{Maha.} & \multicolumn{5}{c}{MMD} & \multicolumn{5}{c}{SparKer} \\
+\cmidrule(lr){4-8}\cmidrule(lr){9-13}\cmidrule(lr){14-18}
+& & & c2 & c6 & c5 & c4 & c3 & c2 & c6 & c5 & c4 & c3 & c2 & c6 & c5 & c4 & c3 \\
+\midrule
+SupCon & 0.906 & 0.10 & $>$.1 & .065 & $>$.1 & .042 & $>$.1 & .019 & .031 & .034 & .029 & .019 & .031 & .047 & .065 & .021 & .030 \\
+SupCon+SIGReg ($\lambda{=}5$) & 0.823 & 0.09 & $>$.1 & .065 & $>$.1 & .029 & $>$.1 & .025 & .018 & .033 & .037 & .033 & .036 & .046 & .076 & .027 & .043 \\
+NPLM-dist.\ (sup.) & 0.738 & 0.13 & $>$.1 & .065 & $>$.1 & .019 & .052 & .024 & .065 & .043 & .028 & .029 & .032 & .040 & .094 & .017 & .024 \\
+SimCLR & 0.847 & 0.04 & .075 & .047 & $>$.1 & .031 & $>$.1 & .049 & .044 & .066 & .052 & .049 & .072 & .093 & .090 & .082 & $>$.1 \\
+SimCLR+SIGReg & 0.835 & 0.05 & $>$.1 & .090 & $>$.1 & .038 & $>$.1 & .040 & .026 & .044 & .070 & .046 & .069 & .091 & $>$.1 & .042 & .092 \\
+NPLM-bilinear & 0.672 & 0.06 & $>$.1 & .096 & $>$.1 & $>$.1 & $>$.1 & .044 & .033 & .034 & .059 & .034 & .069 & .063 & .047 & .097 & $>$.1 \\
+\addlinespace
+GCD (transductive) & 0.886 & 0.40 & .015 & .009 & .012 & .041 & .018 & .024 & .021 & .026 & .029 & .028 & .010 & .015 & .017 & .027 & .019 \\
+GCD+SIGReg (transd.) & 0.852 & 0.48 & .013 & .017 & .026 & .031 & .026 & .017 & .024 & .039 & .033 & .027 & .022 & .022 & .032 & .029 & .019 \\
+\addlinespace
+\quad SupCon $\to$ res (residual) & 0.930 & 0.06 & $>$.1 & .037 & $>$.1 & .043 & .037 & .016 & .025 & .035 & .036 & .036 & .026 & .087 & .082 & .047 & .043 \\
+\quad SupCon $\to$ res (concat) & 0.947 & 0.09 & $>$.1 & .040 & .084 & .031 & .042 & .019 & .026 & .034 & .026 & .025 & .025 & .045 & .063 & .028 & .029 \\
+\quad SupCon $\to$ res-nplm (residual) & 0.890 & 0.11 & $>$.1 & .052 & $>$.1 & .024 & .073 & .019 & .036 & .033 & .047 & .027 & .031 & .065 & .081 & .022 & .029 \\
+\quad SupCon $\to$ res-nplm (concat) & 0.923 & 0.12 & $>$.1 & .048 & $>$.1 & .033 & .075 & .018 & .035 & .033 & .029 & .024 & .029 & .049 & .071 & .023 & .029 \\
+\quad SupCon+SIGReg $\to$ res (residual) & 0.867 & 0.05 & $>$.1 & .056 & $>$.1 & .017 & .052 & .025 & .024 & .039 & .045 & .038 & .038 & .086 & .080 & .043 & .062 \\
+\quad SupCon+SIGReg $\to$ res (concat) & 0.888 & 0.09 & $>$.1 & .042 & $>$.1 & .019 & .036 & .021 & .021 & .033 & .040 & .029 & .029 & .043 & .052 & .030 & .037 \\
+\bottomrule
+\end{tabular}
+\caption{\textbf{Galaxy10 / visreg: pre-discovery $f^\star(2\sigma)$, every (space, draw) point.} `$>$.1' = the test never reached $2\sigma$ by $f{=}0.1$ on that draw. \emph{Coverage:} Galaxy10 / VISREG, 14 spaces $\times$ 5 single-holdout draws (columns named by the held-out class); exp-150 battery, 200 null / 50 signal toys, $N_D{=}5000$, fractions $0.006$--$0.1$.  GCD arms trained on the unlabelled corpus with the novel images present (transductive).}
+\label{tab:sigma_galaxy_pre_visreg}
+\end{table}

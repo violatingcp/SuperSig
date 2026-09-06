@@ -1,0 +1,36 @@
+% STATUS: Galaxy10 / lejepa, discovery mode: density-ratio pool, derived cut, $n_{\min}{=}5$, skip-on-refuse; head-only loop (2 rounds $\times$ 5 epochs) over the cached trunk banks; injection from the train bank (clamped at the holdout pool size); 200 null / 50 signal toys; 82 (test, draw) points.
+\begin{table}[t]
+\centering
+\footnotesize
+\begin{tabular}{lcccccc c}
+\toprule
+test & d0 & d3 & d5 & d7 & d8 & median \\
+\midrule
+\multicolumn{8}{l}{\emph{SupCon} --- engaged from d0: 0.01, d3: 0.02, d5: 0.01, d7: 0.01, d8: 0.02; median engaged purity 1.00} \\
+\quad Eucl. & .019 & .044 & .038 & .023 & .027 & .027 \\
+\quad Eucl.\,(anch.) & .010 & .020 & .018 & .014 & .020 & .018 \\
+\quad Maha. & .021 & .026 & .045 & .015 & .070 & .026 \\
+\quad MMD & .010 & .071 & .046 & .019 & .040 & .040 \\
+\quad SparKer & .010 & .047 & .044 & .028 & .026 & .028 \\
+\quad SparKer\,(anch.) & .010 & .036 & .042 & .025 & .025 & .025 \\
+\addlinespace
+\multicolumn{8}{l}{\emph{SupCon+SIGReg ($\lambda{=}5$)} --- engaged from d0: 0.01, d3: 0.02, d5: 0.01, d7: 0.01, d8: 0.02; median engaged purity 1.00} \\
+\quad Eucl. & .038 & .070 & .079 & .024 & .069 & .069 \\
+\quad Eucl.\,(anch.) & .010 & .020 & .016 & .014 & .020 & .016 \\
+\quad Maha. & .018 & .047 & .072 & .023 & .056 & .047 \\
+\quad MMD & .018 & .047 & .042 & .028 & .041 & .041 \\
+\quad SparKer & .017 & .062 & .084 & .019 & .043 & .043 \\
+\quad SparKer\,(anch.) & .010 & .052 & .069 & .018 & .028 & .028 \\
+\addlinespace
+\multicolumn{8}{l}{\emph{NPLM-dist.\ (sup.)} --- engaged from d0: never, d3: never, d5: 0.05, d7: 0.1, d8: 0.02; median engaged purity 0.59} \\
+\quad Eucl. & $>$.1 & .070$^\dagger$ & $>$.1 & .021$^\dagger$ & .029$^\dagger$ & .070 \\
+\quad Eucl.\,(anch.) & -- & -- & -- & -- & .020 & .020 \\
+\quad Maha. & $>$.1 & $>$.1 & $>$.1 & .021$^\dagger$ & .045 & .150 \\
+\quad MMD & .016$^\dagger$ & .052$^\dagger$ & .037 & .027$^\dagger$ & .027$^\dagger$ & .027 \\
+\quad SparKer & .029$^\dagger$ & .028$^\dagger$ & .088$^\dagger$ & .023$^\dagger$ & .028$^\dagger$ & .028 \\
+\quad SparKer\,(anch.) & -- & -- & -- & -- & .020 & .020 \\
+\bottomrule
+\end{tabular}
+\caption{\textbf{Galaxy10 / lejepa: post-discovery $f^\star(2\sigma)$, every (arm, test, draw) point.} $\dagger$ = the derived cut had declined at the crossing fraction (the space there is the frozen one); `$>$.1' = never reached $2\sigma$.  \emph{Eucl.\,(anch.)} and \emph{SparKer\,(anch.)} consume the discovered anchors. \emph{Coverage:} Galaxy10 / lejepa, discovery mode: density-ratio pool, derived cut, $n_{\min}{=}5$, skip-on-refuse; head-only loop (2 rounds $\times$ 5 epochs) over the cached trunk banks; injection from the train bank (clamped at the holdout pool size); 200 null / 50 signal toys; 82 (test, draw) points.}
+\label{tab:sigma_galaxy_post_lejepa}
+\end{table}

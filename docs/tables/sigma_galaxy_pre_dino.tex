@@ -1,0 +1,31 @@
+% STATUS: Galaxy10 / DINO, 14 spaces $\times$ 5 single-holdout draws (columns named by the held-out class); exp-150 battery, 200 null / 50 signal toys, $N_D{=}5000$, fractions $0.006$--$0.1$.  GCD arms trained on the unlabelled corpus with the novel images present (transductive).
+\begin{table}[t]
+\centering
+\footnotesize
+\begin{tabular}{lccccccccccccccccc}
+\toprule
+space & probe & per-ev. & \multicolumn{5}{c}{Maha.} & \multicolumn{5}{c}{MMD} & \multicolumn{5}{c}{SparKer} \\
+\cmidrule(lr){4-8}\cmidrule(lr){9-13}\cmidrule(lr){14-18}
+& & & c2 & c6 & c5 & c4 & c3 & c2 & c6 & c5 & c4 & c3 & c2 & c6 & c5 & c4 & c3 \\
+\midrule
+SupCon & 0.879 & 0.06 & $>$.1 & $>$.1 & .063 & .076 & $>$.1 & .031 & .029 & .025 & .042 & .037 & .078 & $>$.1 & $>$.1 & .049 & .083 \\
+SupCon+SIGReg ($\lambda{=}5$) & 0.804 & 0.04 & $>$.1 & .072 & .069 & $>$.1 & $>$.1 & .021 & .025 & .031 & .047 & .029 & $>$.1 & $>$.1 & $>$.1 & .079 & $>$.1 \\
+NPLM-dist.\ (sup.) & 0.775 & 0.10 & $>$.1 & $>$.1 & $>$.1 & .059 & $>$.1 & .037 & .023 & .029 & .038 & .037 & .054 & .086 & .070 & .038 & .048 \\
+SimCLR & 0.790 & 0.05 & $>$.1 & .066 & $>$.1 & $>$.1 & $>$.1 & .029 & .039 & .056 & .067 & .052 & .070 & .097 & $>$.1 & .066 & $>$.1 \\
+SimCLR+SIGReg & 0.801 & 0.04 & $>$.1 & .069 & $>$.1 & .076 & $>$.1 & .027 & .029 & .041 & .088 & .059 & .069 & .084 & $>$.1 & .059 & .091 \\
+NPLM-bilinear & 0.684 & 0.04 & $>$.1 & $>$.1 & .082 & $>$.1 & $>$.1 & .097 & .042 & .041 & .093 & $>$.1 & .081 & .089 & .079 & .083 & .089 \\
+\addlinespace
+GCD (transductive) & 0.821 & 0.07 & $>$.1 & .052 & .037 & .076 & $>$.1 & .019 & .025 & .031 & .040 & .028 & .059 & .087 & .085 & .069 & .092 \\
+GCD+SIGReg (transd.) & 0.831 & 0.12 & .084 & .066 & .056 & .073 & $>$.1 & .024 & .026 & .034 & .039 & .034 & .052 & $>$.1 & .096 & .066 & .098 \\
+\addlinespace
+\quad SupCon $\to$ res (residual) & 0.891 & 0.05 & $>$.1 & .080 & .062 & .097 & $>$.1 & .023 & .029 & .047 & .056 & .033 & .090 & .098 & .097 & .081 & .097 \\
+\quad SupCon $\to$ res (concat) & 0.903 & 0.06 & $>$.1 & $>$.1 & .063 & .074 & $>$.1 & .025 & .025 & .029 & .048 & .034 & .074 & $>$.1 & .098 & .073 & .092 \\
+\quad SupCon $\to$ res-nplm (residual) & 0.862 & 0.07 & $>$.1 & $>$.1 & .056 & .087 & $>$.1 & .024 & .024 & .036 & .039 & .032 & .077 & $>$.1 & $>$.1 & .047 & .092 \\
+\quad SupCon $\to$ res-nplm (concat) & 0.890 & 0.06 & $>$.1 & $>$.1 & .063 & .075 & $>$.1 & .029 & .026 & .027 & .042 & .033 & .048 & .093 & $>$.1 & .047 & .092 \\
+\quad SupCon+SIGReg $\to$ res (residual) & 0.852 & 0.06 & $>$.1 & .073 & .092 & $>$.1 & $>$.1 & .025 & .025 & .044 & .049 & .032 & .088 & $>$.1 & .096 & .082 & $>$.1 \\
+\quad SupCon+SIGReg $\to$ res (concat) & 0.869 & 0.05 & $>$.1 & .079 & .072 & .096 & $>$.1 & .021 & .025 & .036 & .047 & .033 & .089 & $>$.1 & $>$.1 & .075 & $>$.1 \\
+\bottomrule
+\end{tabular}
+\caption{\textbf{Galaxy10 / dino: pre-discovery $f^\star(2\sigma)$, every (space, draw) point.} `$>$.1' = the test never reached $2\sigma$ by $f{=}0.1$ on that draw. \emph{Coverage:} Galaxy10 / DINO, 14 spaces $\times$ 5 single-holdout draws (columns named by the held-out class); exp-150 battery, 200 null / 50 signal toys, $N_D{=}5000$, fractions $0.006$--$0.1$.  GCD arms trained on the unlabelled corpus with the novel images present (transductive).}
+\label{tab:sigma_galaxy_pre_dino}
+\end{table}
