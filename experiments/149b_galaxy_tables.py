@@ -482,12 +482,15 @@ def t_diffuse_vs_novel():
               r"archived 9).  cost = ratio of best-test $f^\star$, "
               r"smeared over novel.")
     cap = (r"\textbf{Same label, two anomaly types: class novelty vs.\ diffuse "
-           r"smear.}  In the discovery (fine-tuned) spaces the smeared sample "
-           r"needs $2$--$5\times$ more injected mass than the same class as "
-           r"genuine novelty, or is undetectable outright --- the diffuse shift "
-           r"is what these spaces are trained to absorb.  Only the raw "
-           r"pretrained trunk detects the smear as well as (or better than) "
-           r"class novelty.")
+           r"smear.}  The reduction is per test family, not blanket: the "
+           r"clustering-sensitive tests lose heavily on the smear (MMD censors "
+           r"on 8 of 9 fine-tuned rows; SparKer costs $1.5$--$2.4\times$ where "
+           r"both engage), while the mean-shift Mahalanobis often detects the "
+           r"smear \emph{cheaper} than novelty (costs down to $0.3\times$) "
+           r"--- but a mean-shift detection carries no class structure for an "
+           r"anchor to mean.  The raw pretrained trunk sees the smear "
+           r"$3$--$5\times$ better than it sees the same class as novelty "
+           r"(cost $0.2$--$0.3\times$): the systematics monitor.")
     return e149.wrap("\n".join(rows), cap, "tab:sigma_diffuse_vs_novel",
                      status, "l" + "c" * 7, head, size="footnotesize")
 
