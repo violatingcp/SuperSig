@@ -26,6 +26,8 @@ e146 = importlib.import_module("146_min_frac_2sigma")
 PRETTY = {
     "supcon": "SupCon", "ssig": r"SupCon+SIGReg ($\lambda{=}5$)",
     "nplmsd": "NPLM-dist.\\ (sup.)", "nplmcw": "NPLM-dist.+classwise SIGReg",
+    "simclr": "SimCLR", "visreg": "VISReg/LeJEPA", "nplm": "NPLM (unsup.)",
+    "supsig": "SupCon+SIGReg (repulse)",
 }
 CHILD = {"res": "res", "res-nplm": "res-nplm", "resnplm": "res-nplm"}
 POST_TESTS = ["eucl", "eucl-disc", "maha", "mmd", "sparker", "sparker-anch"]

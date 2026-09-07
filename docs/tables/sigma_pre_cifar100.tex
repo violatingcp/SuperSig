@@ -1,0 +1,46 @@
+% STATUS: CIFAR-100, leakage-free lineage, single holdout; draws {4, 43, 48, 57}; 20/24 spaces on every draw; 200 null / 50 signal toys per fraction, $N_D{=}5000$; median over draws, superscript = draws where the test never reached $2\sigma$ by $f{=}0.1$.
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{lccccc c}
+\toprule
+space & probe & per-ev. & \multicolumn{3}{c}{$f^\star(2\sigma)$, median over draws} & SparKer range \\
+\cmidrule(lr){4-6}
+& & & Maha. & MMD & SparKer & \\
+\midrule
+SupCon & 0.955 & 0.03 & $>0.1^{2}$ & 0.024 & 0.023 & 0.010--0.036 \\
+\quad $\to$ res (residual) & 0.925 & 0.05 & $>0.1^{3}$ & 0.025 & 0.028 & 0.023--0.030 \\
+\quad $\to$ res (concat) & 0.963 & 0.05 & $0.057^{1}$ & 0.024 & 0.018 & 0.017--0.026 \\
+\quad $\to$ res-nplm (residual) & 0.929 & 0.10 & $>0.1^{3}$ & 0.025 & 0.027 & 0.016--0.048 \\
+\quad $\to$ res-nplm (concat) & 0.963 & 0.07 & $>0.1^{3}$ & 0.023 & 0.022 & 0.010--0.030 \\
+\addlinespace
+SupCon+SIGReg ($\lambda{=}5$) & 0.947 & 0.05 & 0.055 & 0.022 & 0.023 & 0.014--0.026 \\
+\quad $\to$ res (residual) & 0.906 & 0.07 & $>0.1^{3}$ & 0.028 & 0.027 & 0.025--0.032 \\
+\quad $\to$ res (concat) & 0.959 & 0.05 & 0.056 & 0.020 & 0.019 & 0.016--0.026 \\
+\quad $\to$ res-nplm (residual) & 0.932 & 0.05 & $0.055^{1}$ & 0.022 & 0.024 & 0.016--0.027 \\
+\quad $\to$ res-nplm (concat) & 0.941 & 0.05 & 0.059 & 0.021 & 0.023 & 0.014--0.026 \\
+\addlinespace
+NPLM-dist.\ (sup.) & 0.857 & 0.07 & $>0.1^{2}$ & 0.025 & 0.034 & 0.017--0.046 \\
+\quad $\to$ res (residual) & 0.892 & 0.11 & $>0.1^{2}$ & 0.026 & 0.026 & 0.025--0.033 \\
+\quad $\to$ res (concat) & 0.917 & 0.10 & $>0.1^{3}$ & 0.026 & 0.028 & 0.026--0.041 \\
+\quad $\to$ res-nplm (residual) & 0.905 & 0.08 & $>0.1^{2}$ & 0.032 & 0.026 & 0.021--0.031 \\
+\quad $\to$ res-nplm (concat) & 0.924 & 0.07 & $>0.1^{2}$ & 0.028 & 0.025 & 0.022--0.029 \\
+\addlinespace
+NPLM-dist.+classwise SIGReg & 0.944 & 0.12 & $>0.1^{2}$ & 0.021 & 0.025 & 0.015--0.029 \\
+\quad $\to$ res (residual) & 0.911 & 0.06 & $>0.1^{3}$ & 0.025 & 0.027 & 0.024--0.030 \\
+\quad $\to$ res (concat) & 0.956 & 0.06 & $>0.1^{2}$ & 0.025 & 0.027 & 0.023--0.032 \\
+\quad $\to$ res-nplm (residual) & 0.878 & 0.04 & $>0.1^{3}$ & 0.027 & 0.027 & 0.026--0.030 \\
+\quad $\to$ res-nplm (concat) & 0.955 & 0.04 & $>0.1^{2}$ & 0.022 & 0.026 & 0.018--0.030 \\
+\addlinespace
+SimCLR & 0.799 & 0.01 & $>0.1^{1}$ & 0.046 & 0.052 & 0.052--0.052 \\
+\addlinespace
+VISReg/LeJEPA & 0.797 & 0.03 & $>0.1^{1}$ & 0.059 & 0.047 & 0.047--0.047 \\
+\addlinespace
+NPLM (unsup.) & 0.757 & 0.01 & $>0.1^{1}$ & 0.040 & 0.031 & 0.031--0.031 \\
+\addlinespace
+SupCon+SIGReg (repulse) & 0.823 & 0.00 & $>0.1^{1}$ & 0.031 & 0.029 & 0.029--0.029 \\
+\bottomrule
+\end{tabular}
+\caption{\textbf{Pre-discovery: minimum injected fraction for a $2\sigma$ dataset-level detection}, with and without the residual construction. $f^\star$ is the smallest fraction of the held-out class injected into a $5000$-point corpus at which the median expected significance of the test reaches $2\sigma$; lower is better. The probe (oracle) and per-event power are shown for reference; the last column is SparKer's range across draws. \emph{Coverage:} CIFAR-100, leakage-free lineage, single holdout; draws {4, 43, 48, 57}; 20/24 spaces on every draw; 200 null / 50 signal toys per fraction, $N_D{=}5000$; median over draws, superscript = draws where the test never reached $2\sigma$ by $f{=}0.1$.}
+\label{tab:sigma_pre_cifar100}
+\end{table}
