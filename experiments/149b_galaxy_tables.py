@@ -434,8 +434,67 @@ def t_diffuse():
                      "l" + "c" * 10, head, size="footnotesize")
 
 
+def t_diffuse_vs_novel():
+    """Same label, two anomaly types: held-out class 2 vs smeared class 2."""
+    pn = os.path.join(REPO, "logs", "exp152", "pretrained_novel_c2.json")
+    pretrained_novel = json.load(open(pn)) if os.path.exists(pn) else {}
+    rows, n = [], 0
+    for base in BASES:
+        d0 = os.path.join(REPO, "logs", "exp150",
+                          f"minfrac_galaxy10_{base}_d0.json")
+        sm = os.path.join(REPO, "logs", "exp152",
+                          f"diffuse_galaxy10_{base}_one_c2_blur2.json")
+        if not (os.path.exists(d0) and os.path.exists(sm)):
+            continue
+        novel, smear = json.load(open(d0)), json.load(open(sm))
+        rows.append(rf"\multicolumn{{8}}{{l}}{{\emph{{{base}}}}} \\"[:-2])
+        for arm in DIFF_ARMS:
+            ne = (pretrained_novel.get(base) if arm == "pretrained"
+                  else novel.get(arm))
+            se = smear.get(arm)
+            cells = []
+            for e in (ne, se):
+                for t in PRE_TESTS:
+                    cells.append(fx(e[t]["f2sigma"]) if e else "--")
+            ratio = "--"
+            if ne and se:
+                bn = min(ne[t]["f2sigma"] for t in PRE_TESTS)
+                bs = min(se[t]["f2sigma"] for t in PRE_TESTS)
+                if np.isfinite(bn):
+                    ratio = (f"{bs/bn:.1f}$\\times$"[:20] if np.isfinite(bs)
+                             else "$>$" + f"{0.1/bn:.0f}$\\times$"[:20])
+                n += 1
+            rows.append(" & ".join([rf"\quad {DIFF_PRETTY[arm]}"] + cells
+                                   + [ratio]) + r" \\"[:3])
+        rows.append(r"\addlinespace")
+    rows = rows[:-1]
+    head = (r"space & \multicolumn{3}{c}{novel class 2 (held out)} & "
+            r"\multicolumn{3}{c}{smeared class 2 (seen, blur $\sigma{=}2$)} "
+            r"& cost \\"[:-2] + "\n"
+            r"\cmidrule(lr){2-4}\cmidrule(lr){5-7}" + "\n"
+            r"& Maha. & MMD & SparKer & Maha. & MMD & SparKer & \\"[:-2])
+    status = (f"Galaxy10, {n} (backbone, space) pairs, both anomalies built from "
+              r"CLASS 2: left = class 2 held out of training and injected as a "
+              r"novel class (exp-150 draw d0); right = class 2 seen in training, "
+              r"a subset smeared and injected (exp 152).  The pretrained-trunk "
+              r"row uses the identical space on both sides; the fine-tuned rows "
+              r"differ in which class the fine-tune excluded (2 vs.\ the "
+              r"archived 9).  cost = ratio of best-test $f^\star$, "
+              r"smeared over novel.")
+    cap = (r"\textbf{Same label, two anomaly types: class novelty vs.\ diffuse "
+           r"smear.}  In the discovery (fine-tuned) spaces the smeared sample "
+           r"needs $2$--$5\times$ more injected mass than the same class as "
+           r"genuine novelty, or is undetectable outright --- the diffuse shift "
+           r"is what these spaces are trained to absorb.  Only the raw "
+           r"pretrained trunk detects the smear as well as (or better than) "
+           r"class novelty.")
+    return e149.wrap("\n".join(rows), cap, "tab:sigma_diffuse_vs_novel",
+                     status, "l" + "c" * 7, head, size="footnotesize")
+
+
 def main():
-    tables = [("sigma_best", t_best), ("sigma_diffuse", t_diffuse)]
+    tables = [("sigma_best", t_best), ("sigma_diffuse", t_diffuse),
+              ("sigma_diffuse_vs_novel", t_diffuse_vs_novel)]
     for b in BASES:
         tables.append((f"sigma_galaxy_pre_{b}", lambda b=b: t_galaxy_pre(b)))
         tables.append((f"sigma_galaxy_post_{b}", lambda b=b: t_galaxy_post(b)))

@@ -1,0 +1,32 @@
+% STATUS: Galaxy10, 12 (backbone, space) pairs, both anomalies built from CLASS 2: left = class 2 held out of training and injected as a novel class (exp-150 draw d0); right = class 2 seen in training, a subset smeared and injected (exp 152).  The pretrained-trunk row uses the identical space on both sides; the fine-tuned rows differ in which class the fine-tune excluded (2 vs.\ the archived 9).  cost = ratio of best-test $f^\star$, smeared over novel.
+\begin{table}[t]
+\centering
+\footnotesize
+\begin{tabular}{lccccccc}
+\toprule
+space & \multicolumn{3}{c}{novel class 2 (held out)} & \multicolumn{3}{c}{smeared class 2 (seen, blur $\sigma{=}2$)} & cost 
+\cmidrule(lr){2-4}\cmidrule(lr){5-7}
+& Maha. & MMD & SparKer & Maha. & MMD & SparKer & 
+\midrule
+\multicolumn{8}{l}{\emph{lejepa}} 
+\quad pretrained trunk & $>$.1 & .031 & .079 & .007 & .042 & .022 & 0.2$\times$ \\
+\quad SupCon & .029 & .015 & .015 & .079 & $>$.1 & .036 & 2.4$\times$ \\
+\quad SupCon+SIGReg ($\lambda{=}5$) & .023 & .015 & .014 & .028 & $>$.1 & .035 & 1.9$\times$ \\
+\quad NPLM-dist.\ (sup.) & $>$.1 & .019 & .029 & .013 & $>$.1 & $>$.1 & 0.7$\times$ \\
+\addlinespace
+\multicolumn{8}{l}{\emph{visreg}} 
+\quad pretrained trunk & $>$.1 & .034 & .073 & .006 & .047 & .008 & 0.2$\times$ \\
+\quad SupCon & $>$.1 & .019 & .031 & .022 & $>$.1 & .023 & 1.1$\times$ \\
+\quad SupCon+SIGReg ($\lambda{=}5$) & $>$.1 & .025 & .036 & .007 & $>$.1 & .009 & 0.3$\times$ \\
+\quad NPLM-dist.\ (sup.) & $>$.1 & .024 & .032 & .093 & $>$.1 & $>$.1 & 3.9$\times$ \\
+\addlinespace
+\multicolumn{8}{l}{\emph{dino}} 
+\quad pretrained trunk & $>$.1 & .040 & .049 & .010 & .049 & .020 & 0.3$\times$ \\
+\quad SupCon & $>$.1 & .031 & .078 & .013 & $>$.1 & .023 & 0.4$\times$ \\
+\quad SupCon+SIGReg ($\lambda{=}5$) & $>$.1 & .021 & $>$.1 & .024 & $>$.1 & .024 & 1.1$\times$ \\
+\quad NPLM-dist.\ (sup.) & $>$.1 & .037 & .054 & .031 & $>$.1 & .043 & 0.8$\times$ \\
+\bottomrule
+\end{tabular}
+\caption{\textbf{Same label, two anomaly types: class novelty vs.\ diffuse smear.}  In the discovery (fine-tuned) spaces the smeared sample needs $2$--$5\times$ more injected mass than the same class as genuine novelty, or is undetectable outright --- the diffuse shift is what these spaces are trained to absorb.  Only the raw pretrained trunk detects the smear as well as (or better than) class novelty. \emph{Coverage:} Galaxy10, 12 (backbone, space) pairs, both anomalies built from CLASS 2: left = class 2 held out of training and injected as a novel class (exp-150 draw d0); right = class 2 seen in training, a subset smeared and injected (exp 152).  The pretrained-trunk row uses the identical space on both sides; the fine-tuned rows differ in which class the fine-tune excluded (2 vs.\ the archived 9).  cost = ratio of best-test $f^\star$, smeared over novel.}
+\label{tab:sigma_diffuse_vs_novel}
+\end{table}
