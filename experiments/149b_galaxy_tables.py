@@ -227,7 +227,7 @@ def cifar_pre_best():
     return best
 
 
-def cifar_post_best():
+def cifar_post_best(ds="cifar10", holdouts=(4, 7, 8, 9)):
     best = (np.inf, None, None)
     for arm in ("supcon", "ssig", "nplmsd", "nplmcw",
                 "supcon-res", "supcon-resnplm", "ssig-res", "ssig-resnplm",
@@ -235,16 +235,16 @@ def cifar_post_best():
                 "nplmcw-resnplm"):
         for t in POST_TESTS:
             vals = []
-            for h in (4, 7, 8, 9):
+            for h in holdouts:
                 p = os.path.join(REPO, "logs", "exp148",
-                                 f"suite_cifar10_h{h}_np_legal.json")
+                                 f"suite_{ds}_h{h}_np_legal.json")
                 if not os.path.exists(p):
                     continue
                 e = json.load(open(p)).get(arm)
                 if not e:
                     continue
-                f, _ = post_fstar_draw(e, t)
-                if f is not None:
+                f, dec = post_fstar_draw(e, t)
+                if f is not None and not dec:     # declined = frozen number
                     vals.append(f if np.isfinite(f) else 0.15)
             if vals:
                 med = np.median(vals)
@@ -324,10 +324,13 @@ def cifar100_pre_best():
 def t_best():
     rows = []
     cm, cl, ct = cifar100_pre_best()
+    dm100, dl100, dt100 = cifar_post_best("cifar100", (4, 43, 48, 57))
     rows.append(" & ".join([
         "CIFAR-100 (scratch, 4 draws)",
         rf"{short(cl)} / {PRE_HEAD[ct]}", f"{cm:.3f}",
-        "discovery not run", "--", "--"]) + r" \\"[:3])
+        rf"{short(dl100)} / {POST_HEAD[dt100]}$^{{\rm e}}$", f"{dm100:.3f}",
+        rf"{cm/dm100:.1f}$\times$" if dm100 < cm else "frozen wins"])
+        + r" \\"[:3])
     pm, pl, pt = cifar_pre_best()
     qm, ql, qt = cifar_post_best()
     rows.append(" & ".join([
@@ -357,7 +360,10 @@ def t_best():
               r"discovery = np pool + derived cut ($n_{\min}{=}10$), Galaxy10 "
               r"discovery = np pool + derived cut ($n_{\min}{=}5$), both "
               r"skip-on-refuse; frozen candidates exclude the transductive GCD "
-              r"arms (shown separately).")
+              r"arms (shown separately).  Declined-cut crossings are excluded "
+              r"from the discovery medians; $^{\rm e}$ = CIFAR-100 medians "
+              r"cover the engaged draws only (the cut abstains on 33/48 "
+              r"cells at $b{=}0.01$).")
     cap = (r"\textbf{The chosen algorithm, per dataset: best frozen space vs.\ "
            r"best discovery pipeline in the same currency.}  Discovery wins "
            r"everywhere, always through an anchor-aware test; the transductive "

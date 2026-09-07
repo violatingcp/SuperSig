@@ -1,0 +1,32 @@
+% STATUS: CIFAR-100, four parents x draws {4, 43, 48, 57}; 16 complete (arm, draw, variant) cells, the loop beats the frozen space in 7; $\dagger$ = the derived cut had declined at the crossing fraction, so that number is the frozen space's and is not counted as a win; `--' = variant not run or still running.
+\begin{table}[t]
+\centering
+\footnotesize
+\begin{tabular}{llcccc}
+\toprule
+arm & draw & frozen SparKer & dist/95th & dist/derived & np/derived \\
+\midrule
+SupCon & h4 & 0.036 & -- & -- & \textbf{0.018 (MMD)} \\
+ & h43 & 0.023 & -- & -- & 0.023 (SparKer)$^\dagger$ \\
+ & h48 & 0.010 & -- & -- & 0.013 (SparKer)$^\dagger$ \\
+ & h57 & 0.024 & -- & -- & 0.027 (SparKer)$^\dagger$ \\
+\addlinespace
+SupCon+SIGReg ($\lambda{=}5$) & h4 & 0.026 & -- & -- & 0.016 (MMD)$^\dagger$ \\
+ & h43 & 0.022 & -- & -- & 0.021 (SparKer)$^\dagger$ \\
+ & h48 & 0.014 & -- & -- & \textbf{0.011 (Eucl. (anch.))} \\
+ & h57 & 0.024 & -- & -- & 0.019 (SparKer)$^\dagger$ \\
+\addlinespace
+NPLM-dist.\ (sup.) & h4 & 0.041 & -- & -- & 0.019 (MMD)$^\dagger$ \\
+ & h43 & 0.046 & -- & -- & 0.046 (MMD)$^\dagger$ \\
+ & h48 & 0.017 & -- & -- & \textbf{0.010 (SparKer (anch.))} \\
+ & h57 & 0.026 & -- & -- & \textbf{0.018 (SparKer)} \\
+\addlinespace
+NPLM-dist.+classwise SIGReg & h4 & 0.029 & -- & -- & \textbf{0.025 (SparKer (anch.))} \\
+ & h43 & 0.027 & -- & -- & 0.029 (SparKer)$^\dagger$ \\
+ & h48 & 0.015 & -- & -- & \textbf{0.008 (SparKer (anch.))} \\
+ & h57 & 0.023 & -- & -- & \textbf{0.010 (SparKer (anch.))} \\
+\bottomrule
+\end{tabular}
+\caption{\textbf{Does the discovery loop beat the frozen space?} Frozen-space SparKer $f^\star(2\sigma)$ against the best post-discovery test (named in parentheses) under three loop variants: the campaign's distance pool with the 95th-percentile cut, the distance pool with the derived cut, and the density-ratio pool with the derived cut (the paper's construction). Bold = the loop wins on that draw. \emph{Coverage:} CIFAR-100, four parents x draws {4, 43, 48, 57}; 16 complete (arm, draw, variant) cells, the loop beats the frozen space in 7; $\dagger$ = the derived cut had declined at the crossing fraction, so that number is the frozen space's and is not counted as a win; `--' = variant not run or still running.}
+\label{tab:sigma_summary_cifar100}
+\end{table}

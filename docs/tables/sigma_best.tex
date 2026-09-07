@@ -1,4 +1,4 @@
-% STATUS: Medians over draws (censored cells imputed at $0.15$); CIFAR-10 discovery = np pool + derived cut ($n_{\min}{=}10$), Galaxy10 discovery = np pool + derived cut ($n_{\min}{=}5$), both skip-on-refuse; frozen candidates exclude the transductive GCD arms (shown separately).
+% STATUS: Medians over draws (censored cells imputed at $0.15$); CIFAR-10 discovery = np pool + derived cut ($n_{\min}{=}10$), Galaxy10 discovery = np pool + derived cut ($n_{\min}{=}5$), both skip-on-refuse; frozen candidates exclude the transductive GCD arms (shown separately).  Declined-cut crossings are excluded from the discovery medians; $^{\rm e}$ = CIFAR-100 medians cover the engaged draws only (the cut abstains on 33/48 cells at $b{=}0.01$).
 \begin{table}[t]
 \centering
 \footnotesize
@@ -6,7 +6,7 @@
 \toprule
 dataset / backbone & \multicolumn{2}{c}{best frozen (space / test, median $f^\star$)} & \multicolumn{2}{c}{best discovery (arm / test)} & gain \\
 \midrule
-CIFAR-100 (scratch, 4 draws) & SupCon$\to$res (concat) / SparKer & 0.018 & discovery not run & -- & -- \\
+CIFAR-100 (scratch, 4 draws) & SupCon$\to$res (concat) / SparKer & 0.018 & SupCon$\to$res-nplm / SparKer$^{\rm e}$ & 0.008 & 2.2$\times$ \\
 CIFAR-10 (scratch, 4 draws) & SupCon$\to$res-nplm (resid.) / SparKer & 0.017 & SupCon / Eucl.\,(anch.) & 0.013 & 1.3$\times$ \\
 Galaxy10 / lejepa & SupCon / MMD & 0.023 & SupCon$\to$res / Eucl.\,(anch.) & 0.013 & 1.7$\times$ \\
 Galaxy10 / visreg & SupCon$\to$res (concat) / MMD & 0.026 & SupCon$\to$res / Eucl.\,(anch.) & 0.015 & 1.7$\times$ \\
@@ -17,6 +17,6 @@ Galaxy10 / dino & SupCon+SIGReg / MMD & 0.029 & SupCon / Eucl.\,(anch.) & 0.019 
 \quad transductive ref.\ (dino) & gcd-ft / MMD & 0.028 & -- & -- & sees the class \\
 \bottomrule
 \end{tabular}
-\caption{\textbf{The chosen algorithm, per dataset: best frozen space vs.\ best discovery pipeline in the same currency.}  Discovery wins everywhere, always through an anchor-aware test; the transductive GCD rows are the ceiling given the whole novel class unlabelled. \emph{Coverage:} Medians over draws (censored cells imputed at $0.15$); CIFAR-10 discovery = np pool + derived cut ($n_{\min}{=}10$), Galaxy10 discovery = np pool + derived cut ($n_{\min}{=}5$), both skip-on-refuse; frozen candidates exclude the transductive GCD arms (shown separately).}
+\caption{\textbf{The chosen algorithm, per dataset: best frozen space vs.\ best discovery pipeline in the same currency.}  Discovery wins everywhere, always through an anchor-aware test; the transductive GCD rows are the ceiling given the whole novel class unlabelled. \emph{Coverage:} Medians over draws (censored cells imputed at $0.15$); CIFAR-10 discovery = np pool + derived cut ($n_{\min}{=}10$), Galaxy10 discovery = np pool + derived cut ($n_{\min}{=}5$), both skip-on-refuse; frozen candidates exclude the transductive GCD arms (shown separately).  Declined-cut crossings are excluded from the discovery medians; $^{\rm e}$ = CIFAR-100 medians cover the engaged draws only (the cut abstains on 33/48 cells at $b{=}0.01$).}
 \label{tab:sigma_best}
 \end{table}
