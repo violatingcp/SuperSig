@@ -32,9 +32,13 @@ PRE_TESTS = ["maha", "mmd", "sparker"]
 PRE_HEAD = {"maha": "Maha.", "mmd": "MMD", "sparker": "SparKer"}
 POST_TESTS = e149.POST_TESTS
 POST_HEAD = e149.POST_HEAD
-ARMS = ["supcon-ft", "ss-ft", "nplm-sup-ft"]
+ARMS = ["supcon-ft", "supcon-ft_res", "supcon-ft_resnplm",
+        "ss-ft", "ss-ft_res", "nplm-sup-ft"]
 PRETTY_ARM = {"supcon-ft": "SupCon", "ss-ft": r"SupCon+SIGReg ($\lambda{=}5$)",
-              "nplm-sup-ft": "NPLM-dist.\\ (sup.)"}
+              "nplm-sup-ft": "NPLM-dist.\\ (sup.)",
+              "supcon-ft_res": r"SupCon $\to$ res (residual)",
+              "supcon-ft_resnplm": r"SupCon $\to$ res-nplm (residual)",
+              "ss-ft_res": r"SupCon+SIGReg $\to$ res (residual)"}
 PRETTY_SPACE = {
     "supcon-ft": "SupCon", "ss-ft": r"SupCon+SIGReg ($\lambda{=}5$)",
     "nplm-sup-ft": "NPLM-dist.\\ (sup.)", "simclr-ft": "SimCLR",
@@ -225,7 +229,10 @@ def cifar_pre_best():
 
 def cifar_post_best():
     best = (np.inf, None, None)
-    for arm in ("supcon", "ssig", "nplmsd", "nplmcw"):
+    for arm in ("supcon", "ssig", "nplmsd", "nplmcw",
+                "supcon-res", "supcon-resnplm", "ssig-res", "ssig-resnplm",
+                "nplmsd-res", "nplmsd-resnplm", "nplmcw-res",
+                "nplmcw-resnplm"):
         for t in POST_TESTS:
             vals = []
             for h in (4, 7, 8, 9):
@@ -282,6 +289,9 @@ def galaxy_post_best(base):
 
 
 def short(lab):
+    lab = (lab.replace("-ft_resnplm", "@RN@").replace("-ft_res", "@R@")
+           .replace("-resnplm", "@RN@").replace("-res", "@R@"))
+    lab = (lab.replace("@RN@", r"$\to$res-nplm").replace("@R@", r"$\to$res"))
     return (lab.replace(" (parent)", "").replace("(residual)", "(resid.)")
             .replace("->", r"$\to$").replace("nplm-sup-ft", "NPLM-dist.")
             .replace("supcon-ft", "SupCon").replace("ss-ft", "SupCon+SIGReg")
@@ -289,8 +299,35 @@ def short(lab):
             .replace("nplmsd", "NPLM-dist.").replace("nplmcw", "NPLM-cw"))
 
 
+def cifar100_pre_best():
+    data = {}
+    for h in (4, 43, 48, 57):
+        p = os.path.join(REPO, "logs", "exp146", f"minfrac_cifar100_h{h}.json")
+        if os.path.exists(p):
+            data[h] = json.load(open(p))
+    best = (np.inf, None, None)
+    for lab in data[4]:
+        for t in PRE_TESTS:
+            vals = []
+            for h in data:
+                e = data[h].get(lab)
+                if e:
+                    v = e[t]["f2sigma"]
+                    vals.append(v if np.isfinite(v) else 0.15)
+            if vals:
+                med = np.median(vals)
+                if med < best[0]:
+                    best = (med, lab, t)
+    return best
+
+
 def t_best():
     rows = []
+    cm, cl, ct = cifar100_pre_best()
+    rows.append(" & ".join([
+        "CIFAR-100 (scratch, 4 draws)",
+        rf"{short(cl)} / {PRE_HEAD[ct]}", f"{cm:.3f}",
+        "discovery not run", "--", "--"]) + r" \\"[:3])
     pm, pl, pt = cifar_pre_best()
     qm, ql, qt = cifar_post_best()
     rows.append(" & ".join([

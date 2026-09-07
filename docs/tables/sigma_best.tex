@@ -6,9 +6,10 @@
 \toprule
 dataset / backbone & \multicolumn{2}{c}{best frozen (space / test, median $f^\star$)} & \multicolumn{2}{c}{best discovery (arm / test)} & gain \\
 \midrule
+CIFAR-100 (scratch, 4 draws) & SupCon$\to$res (concat) / SparKer & 0.018 & discovery not run & -- & -- \\
 CIFAR-10 (scratch, 4 draws) & SupCon$\to$res-nplm (resid.) / SparKer & 0.017 & SupCon / Eucl.\,(anch.) & 0.013 & 1.3$\times$ \\
-Galaxy10 / lejepa & SupCon / MMD & 0.023 & SupCon+SIGReg / Eucl.\,(anch.) & 0.016 & 1.4$\times$ \\
-Galaxy10 / visreg & SupCon$\to$res (concat) / MMD & 0.026 & SupCon+SIGReg / Eucl.\,(anch.) & 0.017 & 1.5$\times$ \\
+Galaxy10 / lejepa & SupCon / MMD & 0.023 & SupCon$\to$res / Eucl.\,(anch.) & 0.013 & 1.7$\times$ \\
+Galaxy10 / visreg & SupCon$\to$res (concat) / MMD & 0.026 & SupCon$\to$res / Eucl.\,(anch.) & 0.015 & 1.7$\times$ \\
 Galaxy10 / dino & SupCon+SIGReg / MMD & 0.029 & SupCon / Eucl.\,(anch.) & 0.019 & 1.5$\times$ \\
 \addlinespace
 \quad transductive ref.\ (lejepa) & gcd-ft / Maha. & 0.013 & -- & -- & sees the class \\
