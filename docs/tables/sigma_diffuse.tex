@@ -1,0 +1,32 @@
+% STATUS: Galaxy10, 24 (backbone, space, mode) cells; smear = Gaussian blur $\sigma{=}2$\,px applied identically to $\le$1000 seen-class test images (source rows removed from the background pool); exp-146 toy battery.  \emph{out.\ AUC} = min-anchor-distance ROC of smeared vs.\ background; \emph{probe} = smeared-vs-clean linear AUC.
+\begin{table}[t]
+\centering
+\footnotesize
+\begin{tabular}{lcccccccccc}
+\toprule
+space & \multicolumn{5}{c}{one label (class 2)} & \multicolumn{5}{c}{all seen labels} \\
+\cmidrule(lr){2-6}\cmidrule(lr){7-11}
+& out.\ AUC & probe & Maha. & MMD & SparKer & out.\ AUC & probe & Maha. & MMD & SparKer \\
+\midrule
+\multicolumn{11}{l}{\emph{lejepa}} \\
+\quad pretrained trunk & 0.86 & 1.00 & .007 & .042 & .022 & 0.89 & 1.00 & .006 & .023 & .042 \\
+\quad SupCon & 0.69 & 0.99 & .079 & $>$.1 & .036 & 0.51 & 0.95 & .016 & .083 & $>$.1 \\
+\quad SupCon+SIGReg ($\lambda{=}5$) & 0.57 & 0.99 & .028 & $>$.1 & .035 & 0.57 & 0.94 & .031 & $>$.1 & .082 \\
+\quad NPLM-dist.\ (sup.) & 0.48 & 0.88 & .013 & $>$.1 & $>$.1 & 0.58 & 0.86 & .027 & $>$.1 & $>$.1 \\
+\addlinespace
+\multicolumn{11}{l}{\emph{visreg}} \\
+\quad pretrained trunk & 0.94 & 1.00 & .006 & .047 & .008 & 0.94 & 1.00 & .006 & .024 & .016 \\
+\quad SupCon & 0.52 & 1.00 & .022 & $>$.1 & .023 & 0.59 & 1.00 & .022 & .083 & .056 \\
+\quad SupCon+SIGReg ($\lambda{=}5$) & 0.84 & 1.00 & .007 & $>$.1 & .009 & 0.69 & 1.00 & .013 & $>$.1 & .037 \\
+\quad NPLM-dist.\ (sup.) & 0.35 & 0.77 & .093 & $>$.1 & $>$.1 & 0.62 & 0.64 & .068 & .086 & .088 \\
+\addlinespace
+\multicolumn{11}{l}{\emph{dino}} \\
+\quad pretrained trunk & 0.77 & 1.00 & .010 & .049 & .020 & 0.82 & 1.00 & .008 & .027 & .080 \\
+\quad SupCon & 0.61 & 1.00 & .013 & $>$.1 & .023 & 0.63 & 1.00 & .010 & .076 & .060 \\
+\quad SupCon+SIGReg ($\lambda{=}5$) & 0.68 & 1.00 & .024 & $>$.1 & .024 & 0.63 & 0.99 & .022 & .059 & .067 \\
+\quad NPLM-dist.\ (sup.) & 0.76 & 0.81 & .031 & $>$.1 & .043 & 0.63 & 0.69 & .063 & $>$.1 & .086 \\
+\bottomrule
+\end{tabular}
+\caption{\textbf{Diffuse-shift detection: a systematic smear of seen-class images instead of a novel class.}  The smear stays almost perfectly \emph{decodable} (probe $0.86$--$1.00$) but the fine-tuned discovery spaces barely see it as outlying; mean-shift Mahalanobis becomes the only reliable test there, while the raw pretrained trunk detects it at $f^\star{=}0.006$--$0.010$ everywhere --- the systematics monitor.  SparKer prefers the semi-clustered one-label smear in every engaged comparison: the kernel tests' class-novelty sharpness is a dependence on clusteredness. \emph{Coverage:} Galaxy10, 24 (backbone, space, mode) cells; smear = Gaussian blur $\sigma{=}2$\,px applied identically to $\le$1000 seen-class test images (source rows removed from the background pool); exp-146 toy battery.  \emph{out.\ AUC} = min-anchor-distance ROC of smeared vs.\ background; \emph{probe} = smeared-vs-clean linear AUC.}
+\label{tab:sigma_diffuse}
+\end{table}

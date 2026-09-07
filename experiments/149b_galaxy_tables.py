@@ -366,8 +366,70 @@ def t_best():
                      "lccccc", head, size="footnotesize")
 
 
+# ------------------------------------------------------------ diffuse shift
+DIFF_ARMS = ["pretrained", "supcon-ft", "ss-ft", "nplm-sup-ft"]
+DIFF_PRETTY = {"pretrained": "pretrained trunk", "supcon-ft": "SupCon",
+               "ss-ft": r"SupCon+SIGReg ($\lambda{=}5$)",
+               "nplm-sup-ft": "NPLM-dist.\\ (sup.)"}
+
+
+def t_diffuse():
+    rows, n = [], 0
+    for base in BASES:
+        data = {}
+        for m, tg in (("one", "one_c2_blur2"), ("all", "all_blur2")):
+            pth = os.path.join(REPO, "logs", "exp152",
+                               f"diffuse_galaxy10_{base}_{tg}.json")
+            if os.path.exists(pth):
+                data[m] = json.load(open(pth))
+        if not data:
+            continue
+        rows.append(rf"\multicolumn{{11}}{{l}}{{\emph{{{base}}}}} \\")
+        for arm in DIFF_ARMS:
+            cells = []
+            for m in ("one", "all"):
+                e = data.get(m, {}).get(arm)
+                if not e:
+                    cells += ["--"] * 5
+                    continue
+                n += 1
+                mt = e["metrics"]
+                cells += [f"{mt['auc_outlier']:.2f}",
+                          f"{mt['auc_smear_probe']:.2f}",
+                          fx(e["maha"]["f2sigma"]),
+                          fx(e["mmd"]["f2sigma"]),
+                          fx(e["sparker"]["f2sigma"])]
+            rows.append(" & ".join([rf"\quad {DIFF_PRETTY[arm]}"] + cells)
+                        + r" \\")
+        rows.append(r"\addlinespace")
+    rows = rows[:-1]
+    head = (r"space & \multicolumn{5}{c}{one label (class 2)} & "
+            r"\multicolumn{5}{c}{all seen labels} \\"
+            "\n" r"\cmidrule(lr){2-6}\cmidrule(lr){7-11}"
+            "\n" r"& out.\ AUC & probe & Maha. & MMD & SparKer & "
+            r"out.\ AUC & probe & Maha. & MMD & SparKer \\")
+    status = (f"Galaxy10, {n} (backbone, space, mode) cells; smear = Gaussian "
+              r"blur $\sigma{=}2$\,px applied identically to $\le$1000 "
+              r"seen-class test images (source rows removed from the "
+              r"background pool); exp-146 toy battery.  \emph{out.\ AUC} = "
+              r"min-anchor-distance ROC of smeared vs.\ background; "
+              r"\emph{probe} = smeared-vs-clean linear AUC.")
+    cap = (r"\textbf{Diffuse-shift detection: a systematic smear of seen-class "
+           r"images instead of a novel class.}  The smear stays almost "
+           r"perfectly \emph{decodable} (probe $0.86$--$1.00$) but the "
+           r"fine-tuned discovery spaces barely see it as outlying; "
+           r"mean-shift Mahalanobis becomes the only reliable test there, "
+           r"while the raw pretrained trunk detects it at "
+           r"$f^\star{=}0.006$--$0.010$ everywhere --- the systematics "
+           r"monitor.  SparKer prefers the semi-clustered one-label smear in "
+           r"every engaged comparison: the kernel tests' class-novelty "
+           r"sharpness is a dependence on clusteredness.")
+    return e149.wrap("\n".join(rows), cap, "tab:sigma_diffuse", status,
+                     "l" + "c" * 10, head, size="footnotesize")
+
+
 def main():
-    tables = [("sigma_best", t_best)]
+    tables = [("sigma_best", t_best), ("sigma_diffuse", t_diffuse)]
     for b in BASES:
         tables.append((f"sigma_galaxy_pre_{b}", lambda b=b: t_galaxy_pre(b)))
         tables.append((f"sigma_galaxy_post_{b}", lambda b=b: t_galaxy_post(b)))

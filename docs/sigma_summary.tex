@@ -90,6 +90,18 @@ why intervals are over draws.
   the residual-child pipeline reaches $f^\star{=}0.013$ --- \emph{equal to}
   the transductive GCD ceiling, without ever seeing an unlabelled novel
   image.
+\item \textbf{Diffuse shift is the measured boundary of interpretability}
+  (Table~\ref{tab:sigma_diffuse}).  A systematic blur of seen-class images is
+  almost perfectly decodable (probe $0.86$--$1.00$) yet the fine-tuned
+  discovery spaces barely register it: the density-ratio tests censor on most
+  cells and mean-shift Mahalanobis --- the loser on class novelty --- becomes
+  the only reliable detector, while the raw pretrained trunk sees the smear
+  at $f^\star{=}0.006$--$0.010$ everywhere.  SparKer prefers the one-label
+  (semi-clustered) smear in every engaged comparison: the kernel tests'
+  sharpness for class novelty is a dependence on clusteredness, and a shift
+  with no class structure is detectable but yields nothing an anchor could
+  mean.  Practical corollary: pair the discovery pipeline with a mean-shift
+  monitor on the frozen trunk.
 \item \textbf{The holdout draw dominates the uncertainty} everywhere
   (ranges span $3$--$5\times$ within a row; the loop amplifies draw
   variance $\sim$$5\times$), so single-draw numbers are never quoted without
@@ -132,4 +144,7 @@ why intervals are over draws.
 \clearpage
 \input{tables/sigma_galaxy_pre_dino}
 \input{tables/sigma_galaxy_post_dino}
+\clearpage
+\section*{Galaxy10: diffuse-shift boundary}
+\input{tables/sigma_diffuse}
 \end{document}
