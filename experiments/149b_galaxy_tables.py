@@ -447,7 +447,7 @@ def t_diffuse_vs_novel():
         if not (os.path.exists(d0) and os.path.exists(sm)):
             continue
         novel, smear = json.load(open(d0)), json.load(open(sm))
-        rows.append(rf"\multicolumn{{8}}{{l}}{{\emph{{{base}}}}} \\"[:-2])
+        rows.append(rf"\multicolumn{{8}}{{l}}{{\emph{{{base}}}}} \\")
         for arm in DIFF_ARMS:
             ne = (pretrained_novel.get(base) if arm == "pretrained"
                   else novel.get(arm))
@@ -470,9 +470,9 @@ def t_diffuse_vs_novel():
     rows = rows[:-1]
     head = (r"space & \multicolumn{3}{c}{novel class 2 (held out)} & "
             r"\multicolumn{3}{c}{smeared class 2 (seen, blur $\sigma{=}2$)} "
-            r"& cost \\"[:-2] + "\n"
+            r"& cost \\" + "\n"
             r"\cmidrule(lr){2-4}\cmidrule(lr){5-7}" + "\n"
-            r"& Maha. & MMD & SparKer & Maha. & MMD & SparKer & \\"[:-2])
+            r"& Maha. & MMD & SparKer & Maha. & MMD & SparKer & \\")
     status = (f"Galaxy10, {n} (backbone, space) pairs, both anomalies built from "
               r"CLASS 2: left = class 2 held out of training and injected as a "
               r"novel class (exp-150 draw d0); right = class 2 seen in training, "
