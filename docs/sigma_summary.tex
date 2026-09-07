@@ -7,7 +7,7 @@
 \captionsetup{font=small,labelfont=bf}
 \renewcommand{\floatpagefraction}{0.05}
 \title{Discovering new classes at $2\sigma$: the sigma-currency campaign\\
-\large exps 146--151, CIFAR-10 (leakage-free) and Galaxy10 --- summary and complete tables}
+\large exps 146--151: CIFAR-10, CIFAR-100 (leakage-free) and Galaxy10 --- summary and complete tables}
 \author{P.~C.~Harris}
 \begin{document}
 \maketitle
@@ -37,9 +37,11 @@ and an $n_{\min}$ sweep.  \emph{Galaxy10}: 14 spaces (6 fine-tuned
 objectives, 2 transductive GCD arms, 6 residual constructions) on three
 pretrained backbones, 5 holdout draws each, pre-discovery; discovery mode
 (density-ratio pool, derived cut, $n_{\min}{=}5$) on the three supervised
-arms.  Every cell is single-seed; the campaign's variance decomposition
-(seed spread an eighth of draw spread) is why intervals are over draws.
-CIFAR-100 (same from-scratch lineage) is running and will be appended.
+arms and the three cross-draw residual children.  \emph{CIFAR-100}
+(same from-scratch lineage, $b{=}0.01$): all 8 objectives plus 16 residual
+constructions, 4 draws, pre-discovery.  Every cell is single-seed; the
+campaign's variance decomposition (seed spread an eighth of draw spread) is
+why intervals are over draws.
 
 \section*{Findings}
 \begin{enumerate}
@@ -53,12 +55,17 @@ CIFAR-100 (same from-scratch lineage) is running and will be appended.
   (best or tied on 17/20 spaces, never censored); MMD leads on the Galaxy10
   transfer heads (essentially never censored there, while SparKer and
   Mahalanobis are censored on 1--4 of 5 draws for half the rows).
-\item \textbf{The residual construction does not set dataset-level records.}
-  Its one reproducible $f^\star$ win is on the SIGReg parent (CIFAR:
-  $0.037\to0.022$, every draw); elsewhere it is neutral on the median but
-  \emph{stabilising} --- fewer censored cells, tighter draw ranges
-  (Galaxy10 concats).  Its known wins remain the probe and per-event
-  currencies.
+\item \textbf{The residual construction earns a place, and its role scales
+  with class count and with discovery.}  Frozen, it is a stabiliser at 10
+  classes, and at 100 classes the concat sets the record
+  (SupCon$\to$res $0.018$ vs.\ parent $0.023$).  Through the discovery
+  loop, the \emph{contrastive} child of SupCon becomes the best pipeline on
+  2 of 3 Galaxy10 backbones ($0.013$/$0.015$ vs.\ parents'
+  $0.018$/$0.020$) and rescues the one CIFAR cell where the parent's
+  critic abstains entirely (holdout 4: child engages at purity
+  $0.2$--$0.4$ and reaches $0.015$).  The NPLM child ties its parent
+  throughout: it is the contrastive residual that recovers discarded
+  novelty.
 \item \textbf{Discovery pays only through the anchors it plants.}
   Anchor-blind tests \emph{degrade} after the fine-tuning loop on both
   datasets; the anchor-aware statistics convert the same loop into the best
@@ -76,12 +83,13 @@ CIFAR-100 (same from-scratch lineage) is running and will be appended.
   says: engage as small as the clustering bears ($n_{\min}{=}5$), at no
   purity cost.
 \item \textbf{The chosen algorithm} (Table~\ref{tab:sigma_best}): a
-  supervised contrastive space, the density-ratio pool with the derived
-  label-free cut, and the anchor-aware Euclidean statistic.  It wins on
-  every dataset/backbone (1.3--1.5$\times$ over the best frozen pipeline)
-  and on Galaxy10/LeJEPA it reaches $f^\star{=}0.016$ against the
-  transductive GCD ceiling of $0.013$ --- within $25\%$ of a method that is
-  handed the whole novel class unlabelled.
+  supervised contrastive space (or, best, its contrastive residual child),
+  the density-ratio pool with the derived label-free cut, and the
+  anchor-aware Euclidean statistic.  It wins on every dataset/backbone
+  (1.3--1.7$\times$ over the best frozen pipeline), and on Galaxy10/LeJEPA
+  the residual-child pipeline reaches $f^\star{=}0.013$ --- \emph{equal to}
+  the transductive GCD ceiling, without ever seeing an unlabelled novel
+  image.
 \item \textbf{The holdout draw dominates the uncertainty} everywhere
   (ranges span $3$--$5\times$ within a row; the loop amplifies draw
   variance $\sim$$5\times$), so single-draw numbers are never quoted without
