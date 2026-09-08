@@ -70,8 +70,8 @@ exp29 = importlib.import_module("29_residual_finetune")
 
 CKPT_DIR = os.path.join(REPO_DIR, "checkpoints")
 ARMS = ["simclr", "visreg", "nplm", "supcon", "supsig",
-        "nplmcw", "ssig", "nplmsd"]
-LABELED = {"supcon", "nplmcw", "ssig", "nplmsd"}
+        "nplmcw", "ssig", "nplmsd", "supconcw"]
+LABELED = {"supcon", "nplmcw", "ssig", "nplmsd", "supconcw"}
 
 
 def pretrain(arm, net, loader, epochs, ckpt, lam, tau, n_slices,
@@ -111,6 +111,14 @@ def pretrain(arm, net, loader, epochs, ckpt, lam, tau, n_slices,
                 a, _ = cw_fn(z, cls)
                 b = cw_lam * classwise_sigreg_loss(z, cls, cw_means,
                                                    n_slices=n_slices)
+            elif arm == "supconcw":
+                # SupCon interaction + CLASSWISE SIGReg (the untested cube
+                # corner, 2026-09-08): per-class isotropy on the SupCon critic.
+                z = net(torch.cat([v1, v2]))
+                cls = torch.cat([y, y])
+                a = supcon_loss(F.normalize(z, dim=1), cls, temp=0.1)
+                b = cw_lam * classwise_sigreg_loss(z, cls, cw_means,
+                                                   n_slices=n_slices)
             elif arm == "ssig":
                 z = net(torch.cat([v1, v2]))
                 a = supcon_loss(F.normalize(z, dim=1),
@@ -137,7 +145,7 @@ def pretrain(arm, net, loader, epochs, ckpt, lam, tau, n_slices,
                 total, parts = nplm_fn(z, torch.cat([inst, inst]))
                 a, b = total, parts["marginal"]
             loss = a + b if arm in ("visreg", "nplmcw", "ssig",
-                                    "nplmsd") else a
+                                    "nplmsd", "supconcw") else a
             loss.backward()
             opt.step()
             run_a += float(a) * v1.size(0)
@@ -224,7 +232,7 @@ def main():
                 print(f"  [supsig] checkpoint at epoch {done}", flush=True)
         else:
             cw_means = None
-            if arm == "nplmcw":
+            if arm in ("nplmcw", "supconcw"):
                 cw_means = make_anchors(cfg["pair_dist"] / math.sqrt(2.0),
                                         emb_dim=args.dim,
                                         n_classes=n_cls).detach()

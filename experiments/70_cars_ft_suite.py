@@ -79,6 +79,23 @@ def make_supcon_step(lam_sigreg, n_slices):
     return step
 
 
+def make_supcon_cw_step(lam_cw, n_slices, n_cls, emb_dim, pair_dist):
+    """SupCon interaction + CLASSWISE SIGReg toward fixed geometric anchors
+    (exp-67 supconcw twin on the transfer heads; 2026-09-08)."""
+    from supersig.losses import classwise_sigreg_loss, make_anchors
+    cw_means = make_anchors(pair_dist / 2.0 ** 0.5, emb_dim=emb_dim,
+                            n_classes=n_cls).detach().to(DEVICE)
+    def step(model, v1, v2, y):
+        x = torch.cat([v1, v2]).to(DEVICE, non_blocking=True)
+        yy = torch.cat([y, y]).to(DEVICE)
+        z = model(x).float()
+        con = supcon_loss(F.normalize(z, dim=1), yy, temp=0.1)
+        reg = lam_cw * classwise_sigreg_loss(z, yy, cw_means,
+                                             n_slices=n_slices)
+        return con, reg
+    return step
+
+
 def make_gcd_step(lam_sigreg, n_slices, lam_sup=0.35):
     """The GCD representation loss (Vaze et al. 2022): SimCLR (NT-Xent, temp
     0.5, instance positives) over EVERY image in the batch -- held-out images
@@ -154,13 +171,20 @@ def arm_specs(args):
         "ss-ft": (True, make_supcon_step(5.0, args.n_slices)),
         "nplm-sup-ft": (True, exp62.make_nplm_step(
             "supervised", "distance", args.lam, args.tau, args.n_slices)),
+        "supcon-cw-ft": (True, make_supcon_cw_step(
+            5.0, args.n_slices, 47 if DS == "dtd" else exp44.N_CLASSES[DS],
+            args.emb_dim, 5.0)),
     }
 
 
 COLORS = {"simclr-ft": "#0072b2", "sigreg-ssl-ft": "#666666",
           "nplm-bil-ft": "#e51e1e", "supcon-ft": "#eda100",
           "ss-ft": "#008300", "nplm-sup-ft": "#8c2d9e",
-          "gcd-ft": "#8b4513", "gcd-sigreg-ft": "#c71585"}
+          "gcd-ft": "#8b4513", "gcd-sigreg-ft": "#c71585",
+          "supcon-cw-ft": "#00a0a0"}
+# supcon-cw-ft is opt-in like the GCD arms: never in the default arm set,
+# so archived six-arm reruns stay byte-identical.
+OPT_IN_ARMS = {"supcon-cw-ft"}
 
 
 def eval_split(split, transform):
@@ -243,7 +267,8 @@ def main():
                     help="exp 146b: fraction of the held-out TRAIN images the GCD arms "
                          "see (unlabelled); 1.0 = whole class. Tags outputs _u{frac}.")
     ap.add_argument("--arms", nargs="+",
-                    default=[a for a in COLORS if a not in GCD_ARMS],   # GCD arms opt-in
+                    default=[a for a in COLORS
+                             if a not in GCD_ARMS and a not in OPT_IN_ARMS],
                     choices=list(COLORS))
     ap.add_argument("--ft-epochs", type=int, default=None)
     ap.add_argument("--batch-size", type=int, default=32)

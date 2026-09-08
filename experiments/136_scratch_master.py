@@ -58,7 +58,7 @@ from supersig.train import collect_embeddings
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CKPT_DIR = os.path.join(REPO, "checkpoints")
-ARMS = ["simclr", "visreg", "nplm", "supcon", "supsig", "nplmcw", "ssig", "nplmsd"]
+ARMS = ["simclr", "visreg", "nplm", "supcon", "supsig", "nplmcw", "ssig", "nplmsd", "supconcw"]
 LABELED = {"supcon", "supsig", "nplmcw", "ssig", "nplmsd"}
 STATS = ["perevent", "sparker", "maha", "mmd"]
 FRACS = {"cifar10": [0.001, 0.003, 0.01, 0.02, 0.03, 0.1],

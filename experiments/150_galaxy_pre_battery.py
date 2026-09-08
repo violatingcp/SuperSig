@@ -48,7 +48,7 @@ DATA, CKPT = os.path.join(REPO, "data"), os.path.join(REPO, "checkpoints")
 OUT = os.path.join(REPO, "logs", "exp150")
 DS, N_CLS = "galaxy10", 10
 FT_ARMS = ["supcon-ft", "ss-ft", "nplm-sup-ft", "simclr-ft",
-           "sigreg-ssl-ft", "nplm-bil-ft"]
+           "sigreg-ssl-ft", "nplm-bil-ft", "supcon-cw-ft"]
 GCD_ARMS = ["gcd-ft", "gcd-sigreg-ft"]
 RES_PARENTS = {"supcon-ft": ["res", "resnplm"], "ss-ft": ["res"]}
 

@@ -54,7 +54,8 @@ def space_list(ds, holdout=4):
                 rows.append((f"{parent}->{child} ({use})",
                              f"{parent}-{child}_({use})",
                              m137, f"{parent}->{child} ({use})"))
-    for arm in ("simclr", "visreg", "nplm", "supsig"):   # no residual children
+    for arm in ("simclr", "visreg", "nplm", "supsig",
+                "supconcw"):                             # no residual children
         rows.append((f"{arm} (parent)", arm, m136, arm))
     return rows
 
