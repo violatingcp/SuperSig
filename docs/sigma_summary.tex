@@ -101,7 +101,15 @@ why intervals are over draws.
   sharpness for class novelty is a dependence on clusteredness, and a shift
   with no class structure is detectable but yields nothing an anchor could
   mean.  Practical corollary: pair the discovery pipeline with a mean-shift
-  monitor on the frozen trunk.
+  monitor on the frozen trunk.  The on-manifold corner
+  (Table~\ref{tab:sigma_onmanifold}) is the mirror image: fine-grained
+  novelty (aircraft variants, car models) embeds \emph{inside} the seen
+  manifold --- distance ranking falls below chance, per-event power is dead,
+  pools starve --- yet the class is still a dense clump, so SparKer's local
+  kernels detect it ($f^\star{=}0.012$--$0.021$ on cars) while Mahalanobis
+  censors.  Clustered-off-manifold: anchors interpret.  Clustered-on-manifold:
+  locality detects, nothing anchors.  Diffuse: mean-shift detects, nothing
+  anchors.
 \item \textbf{The holdout draw dominates the uncertainty} everywhere
   (ranges span $3$--$5\times$ within a row; the loop amplifies draw
   variance $\sim$$5\times$), so single-draw numbers are never quoted without
@@ -154,4 +162,5 @@ why intervals are over draws.
 \section*{Galaxy10: diffuse-shift boundary}
 \input{tables/sigma_diffuse}
 \input{tables/sigma_diffuse_vs_novel}
+\input{tables/sigma_onmanifold}
 \end{document}

@@ -1,4 +1,4 @@
-% STATUS: Galaxy10 / LeJEPA, 14 spaces $\times$ 5 single-holdout draws (columns named by the held-out class); exp-150 battery, 200 null / 50 signal toys, $N_D{=}5000$, fractions $0.006$--$0.1$.  GCD arms trained on the unlabelled corpus with the novel images present (transductive).
+% STATUS: Galaxy10 / LeJEPA, 15 spaces $\times$ 5 single-holdout draws (columns named by the held-out class); exp-150 battery, 200 null / 50 signal toys, $N_D{=}5000$, fractions $0.006$--$0.1$.  GCD arms trained on the unlabelled corpus with the novel images present (transductive).
 \begin{table}[t]
 \centering
 \footnotesize
@@ -24,8 +24,9 @@ GCD+SIGReg (transd.) & 0.872 & 0.48 & .015 & .019 & .019 & .043 & .025 & .014 & 
 \quad SupCon $\to$ res-nplm (concat) & 0.931 & 0.09 & .070 & .034 & .070 & .034 & .052 & .015 & .042 & .031 & .026 & .024 & .023 & .063 & .073 & .031 & .041 \\
 \quad SupCon+SIGReg $\to$ res (residual) & 0.854 & 0.06 & $>$.1 & .043 & $>$.1 & .019 & .041 & .019 & .036 & .045 & .040 & .031 & .043 & .089 & .081 & .037 & .072 \\
 \quad SupCon+SIGReg $\to$ res (concat) & 0.855 & 0.09 & .031 & .063 & $>$.1 & .021 & .042 & .017 & .026 & .037 & .036 & .031 & .019 & .092 & .085 & .028 & .041 \\
+SupCon+classwise SIGReg ($\lambda{=}5$) & 0.810 & 0.05 & $>$.1 & .043 & $>$.1 & .068 & .070 & .027 & .036 & .039 & .031 & .052 & .066 & .052 & $>$.1 & .047 & .052 \\
 \bottomrule
 \end{tabular}
-\caption{\textbf{Galaxy10 / lejepa: pre-discovery $f^\star(2\sigma)$, every (space, draw) point.} `$>$.1' = the test never reached $2\sigma$ by $f{=}0.1$ on that draw. \emph{Coverage:} Galaxy10 / LeJEPA, 14 spaces $\times$ 5 single-holdout draws (columns named by the held-out class); exp-150 battery, 200 null / 50 signal toys, $N_D{=}5000$, fractions $0.006$--$0.1$.  GCD arms trained on the unlabelled corpus with the novel images present (transductive).}
+\caption{\textbf{Galaxy10 / lejepa: pre-discovery $f^\star(2\sigma)$, every (space, draw) point.} `$>$.1' = the test never reached $2\sigma$ by $f{=}0.1$ on that draw. \emph{Coverage:} Galaxy10 / LeJEPA, 15 spaces $\times$ 5 single-holdout draws (columns named by the held-out class); exp-150 battery, 200 null / 50 signal toys, $N_D{=}5000$, fractions $0.006$--$0.1$.  GCD arms trained on the unlabelled corpus with the novel images present (transductive).}
 \label{tab:sigma_galaxy_pre_lejepa}
 \end{table}

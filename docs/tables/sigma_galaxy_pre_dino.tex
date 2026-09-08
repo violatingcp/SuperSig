@@ -1,4 +1,4 @@
-% STATUS: Galaxy10 / DINO, 14 spaces $\times$ 5 single-holdout draws (columns named by the held-out class); exp-150 battery, 200 null / 50 signal toys, $N_D{=}5000$, fractions $0.006$--$0.1$.  GCD arms trained on the unlabelled corpus with the novel images present (transductive).
+% STATUS: Galaxy10 / DINO, 15 spaces $\times$ 5 single-holdout draws (columns named by the held-out class); exp-150 battery, 200 null / 50 signal toys, $N_D{=}5000$, fractions $0.006$--$0.1$.  GCD arms trained on the unlabelled corpus with the novel images present (transductive).
 \begin{table}[t]
 \centering
 \footnotesize
@@ -24,8 +24,9 @@ GCD+SIGReg (transd.) & 0.831 & 0.12 & .084 & .066 & .056 & .073 & $>$.1 & .024 &
 \quad SupCon $\to$ res-nplm (concat) & 0.890 & 0.06 & $>$.1 & $>$.1 & .063 & .075 & $>$.1 & .029 & .026 & .027 & .042 & .033 & .048 & .093 & $>$.1 & .047 & .092 \\
 \quad SupCon+SIGReg $\to$ res (residual) & 0.852 & 0.06 & $>$.1 & .073 & .092 & $>$.1 & $>$.1 & .025 & .025 & .044 & .049 & .032 & .088 & $>$.1 & .096 & .082 & $>$.1 \\
 \quad SupCon+SIGReg $\to$ res (concat) & 0.869 & 0.05 & $>$.1 & .079 & .072 & .096 & $>$.1 & .021 & .025 & .036 & .047 & .033 & .089 & $>$.1 & $>$.1 & .075 & $>$.1 \\
+SupCon+classwise SIGReg ($\lambda{=}5$) & 0.832 & 0.05 & $>$.1 & .059 & .077 & $>$.1 & $>$.1 & .021 & .023 & .039 & .049 & .077 & .096 & .096 & .087 & .070 & .073 \\
 \bottomrule
 \end{tabular}
-\caption{\textbf{Galaxy10 / dino: pre-discovery $f^\star(2\sigma)$, every (space, draw) point.} `$>$.1' = the test never reached $2\sigma$ by $f{=}0.1$ on that draw. \emph{Coverage:} Galaxy10 / DINO, 14 spaces $\times$ 5 single-holdout draws (columns named by the held-out class); exp-150 battery, 200 null / 50 signal toys, $N_D{=}5000$, fractions $0.006$--$0.1$.  GCD arms trained on the unlabelled corpus with the novel images present (transductive).}
+\caption{\textbf{Galaxy10 / dino: pre-discovery $f^\star(2\sigma)$, every (space, draw) point.} `$>$.1' = the test never reached $2\sigma$ by $f{=}0.1$ on that draw. \emph{Coverage:} Galaxy10 / DINO, 15 spaces $\times$ 5 single-holdout draws (columns named by the held-out class); exp-150 battery, 200 null / 50 signal toys, $N_D{=}5000$, fractions $0.006$--$0.1$.  GCD arms trained on the unlabelled corpus with the novel images present (transductive).}
 \label{tab:sigma_galaxy_pre_dino}
 \end{table}

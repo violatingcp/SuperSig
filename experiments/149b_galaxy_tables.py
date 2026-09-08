@@ -40,6 +40,7 @@ PRETTY_ARM = {"supcon-ft": "SupCon", "ss-ft": r"SupCon+SIGReg ($\lambda{=}5$)",
               "supcon-ft_resnplm": r"SupCon $\to$ res-nplm (residual)",
               "ss-ft_res": r"SupCon+SIGReg $\to$ res (residual)"}
 PRETTY_SPACE = {
+    "supcon-cw-ft": r"SupCon+classwise SIGReg ($\lambda{=}5$)",
     "supcon-ft": "SupCon", "ss-ft": r"SupCon+SIGReg ($\lambda{=}5$)",
     "nplm-sup-ft": "NPLM-dist.\\ (sup.)", "simclr-ft": "SimCLR",
     "sigreg-ssl-ft": "SimCLR+SIGReg", "nplm-bil-ft": "NPLM-bilinear",
@@ -495,9 +496,59 @@ def t_diffuse_vs_novel():
                      status, "l" + "c" * 7, head, size="footnotesize")
 
 
+def t_onmanifold():
+    """Aircraft/cars: the on-manifold corner in the sigma currency."""
+    rows, n = [], 0
+    for ds in ("aircraft", "cars"):
+        rows.append(rf"\multicolumn{{7}}{{l}}{{\emph{{{ds}}}}}" + r" \\")
+        for base in BASES + []:
+            pth = os.path.join(REPO, "logs", "exp153",
+                               f"minfrac_{ds}_{base}.json")
+            if not os.path.exists(pth):
+                continue
+            r = json.load(open(pth))
+            ents = [r[k] for k in sorted(r)]
+            n += len(ents)
+            probe = np.mean([e["metrics"]["probe"] for e in ents])
+            eucl = np.mean([e["metrics"]["eucl"] for e in ents])
+            pe = np.mean([e["metrics"]["perevt"] for e in ents])
+            cells = []
+            for t in PRE_TESTS:
+                vals = [e[t]["f2sigma"] for e in ents]
+                cens = sum(1 for v in vals if not np.isfinite(v))
+                med = np.median([v if np.isfinite(v) else 0.15 for v in vals])
+                body = f"{med:.3f}" if cens < len(vals) / 2 else "$>$.1"
+                cells.append(body + (rf"$^{{{cens}}}$" if cens else ""))
+            rows.append(" & ".join([rf"\quad {base}", f"{probe:.3f}",
+                                    f"{eucl:.3f}", f"{pe:.2f}"] + cells)
+                        + r" \\"[:3])
+        rows.append(r"\addlinespace")
+    rows = rows[:-1]
+    head = (r"dataset / backbone & probe & eucl AUC & per-ev. & "
+            r"Maha. & MMD & SparKer" + r" \\")
+    status = (f"Pretrained ViT-B/16 trunk (identity head), single holdout, 5 "
+              f"draws per (dataset, backbone), {n} cells; medians over draws, "
+              r"superscript = censored draws.  Held-out pools are tiny "
+              r"(aircraft $\sim$33 test images/class), so toys bootstrap "
+              r"them --- censoring here is conservative evidence.")
+    cap = (r"\textbf{The on-manifold corner: fine-grained novelty inside the "
+           r"seen manifold (aircraft variants, car models).}  The discovery "
+           r"machinery is blind --- min-anchor-distance ranks the novel class "
+           r"\emph{below} chance (eucl AUC $\sim$$0.47$ on cars), per-event "
+           r"power is dead, pools starve at the natural rate --- yet the "
+           r"novel class is still a dense clump, and SparKer's local kernels "
+           r"detect the injected mass at $f^\star{=}0.012$--$0.021$ on cars, "
+           r"every draw and backbone, while mean-shift Mahalanobis censors: "
+           r"the exact mirror of the diffuse case.  Detection survives; "
+           r"nothing pool-able or anchor-able comes with it.")
+    return e149.wrap("\n".join(rows), cap, "tab:sigma_onmanifold", status,
+                     "lccc ccc", head, size="footnotesize")
+
+
 def main():
     tables = [("sigma_best", t_best), ("sigma_diffuse", t_diffuse),
-              ("sigma_diffuse_vs_novel", t_diffuse_vs_novel)]
+              ("sigma_diffuse_vs_novel", t_diffuse_vs_novel),
+              ("sigma_onmanifold", t_onmanifold)]
     for b in BASES:
         tables.append((f"sigma_galaxy_pre_{b}", lambda b=b: t_galaxy_pre(b)))
         tables.append((f"sigma_galaxy_post_{b}", lambda b=b: t_galaxy_post(b)))

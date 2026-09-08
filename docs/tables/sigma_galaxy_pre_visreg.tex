@@ -1,4 +1,4 @@
-% STATUS: Galaxy10 / VISREG, 14 spaces $\times$ 5 single-holdout draws (columns named by the held-out class); exp-150 battery, 200 null / 50 signal toys, $N_D{=}5000$, fractions $0.006$--$0.1$.  GCD arms trained on the unlabelled corpus with the novel images present (transductive).
+% STATUS: Galaxy10 / VISREG, 15 spaces $\times$ 5 single-holdout draws (columns named by the held-out class); exp-150 battery, 200 null / 50 signal toys, $N_D{=}5000$, fractions $0.006$--$0.1$.  GCD arms trained on the unlabelled corpus with the novel images present (transductive).
 \begin{table}[t]
 \centering
 \footnotesize
@@ -24,8 +24,9 @@ GCD+SIGReg (transd.) & 0.852 & 0.48 & .013 & .017 & .026 & .031 & .026 & .017 & 
 \quad SupCon $\to$ res-nplm (concat) & 0.923 & 0.12 & $>$.1 & .048 & $>$.1 & .033 & .075 & .018 & .035 & .033 & .029 & .024 & .029 & .049 & .071 & .023 & .029 \\
 \quad SupCon+SIGReg $\to$ res (residual) & 0.867 & 0.05 & $>$.1 & .056 & $>$.1 & .017 & .052 & .025 & .024 & .039 & .045 & .038 & .038 & .086 & .080 & .043 & .062 \\
 \quad SupCon+SIGReg $\to$ res (concat) & 0.888 & 0.09 & $>$.1 & .042 & $>$.1 & .019 & .036 & .021 & .021 & .033 & .040 & .029 & .029 & .043 & .052 & .030 & .037 \\
+SupCon+classwise SIGReg ($\lambda{=}5$) & 0.898 & 0.07 & $>$.1 & .048 & $>$.1 & .042 & .070 & .023 & .031 & .052 & .042 & .028 & .041 & .069 & .089 & .047 & .059 \\
 \bottomrule
 \end{tabular}
-\caption{\textbf{Galaxy10 / visreg: pre-discovery $f^\star(2\sigma)$, every (space, draw) point.} `$>$.1' = the test never reached $2\sigma$ by $f{=}0.1$ on that draw. \emph{Coverage:} Galaxy10 / VISREG, 14 spaces $\times$ 5 single-holdout draws (columns named by the held-out class); exp-150 battery, 200 null / 50 signal toys, $N_D{=}5000$, fractions $0.006$--$0.1$.  GCD arms trained on the unlabelled corpus with the novel images present (transductive).}
+\caption{\textbf{Galaxy10 / visreg: pre-discovery $f^\star(2\sigma)$, every (space, draw) point.} `$>$.1' = the test never reached $2\sigma$ by $f{=}0.1$ on that draw. \emph{Coverage:} Galaxy10 / VISREG, 15 spaces $\times$ 5 single-holdout draws (columns named by the held-out class); exp-150 battery, 200 null / 50 signal toys, $N_D{=}5000$, fractions $0.006$--$0.1$.  GCD arms trained on the unlabelled corpus with the novel images present (transductive).}
 \label{tab:sigma_galaxy_pre_visreg}
 \end{table}
