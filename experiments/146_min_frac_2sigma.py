@@ -47,14 +47,14 @@ def space_list(ds, holdout=4):
     rows = []
     m136 = os.path.join("logs", "exp136", f"master_{ds}{htag}.json")
     m137 = os.path.join("logs", "exp137", f"residuals_{ds}{htag}.json")
-    for parent in ("supcon", "ssig", "nplmsd", "nplmcw"):
+    for parent in ("supcon", "ssig", "nplmsd", "nplmcw", "supsig"):
         rows.append((f"{parent} (parent)", parent, m136, parent))
         for child in ("res", "res-nplm"):
             for use in ("residual", "concat"):
                 rows.append((f"{parent}->{child} ({use})",
                              f"{parent}-{child}_({use})",
                              m137, f"{parent}->{child} ({use})"))
-    for arm in ("simclr", "visreg", "nplm", "supsig",
+    for arm in ("simclr", "visreg", "nplm",
                 "supconcw"):                             # no residual children
         rows.append((f"{arm} (parent)", arm, m136, arm))
     return rows

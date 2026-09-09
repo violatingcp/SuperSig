@@ -52,7 +52,7 @@ from supersig.train import collect_embeddings
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CKPT_DIR = os.path.join(REPO, "checkpoints")
-PARENTS = ["supcon", "ssig", "nplmsd", "nplmcw"]
+PARENTS = ["supcon", "ssig", "nplmsd", "nplmcw", "supsig"]
 OBJS = ["res", "res-nplm"]
 
 
