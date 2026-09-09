@@ -497,58 +497,107 @@ def t_diffuse_vs_novel():
 
 
 def t_onmanifold():
-    """Aircraft/cars: the on-manifold corner in the sigma currency."""
+    """Aircraft/cars, every (backbone, draw) point."""
     rows, n = [], 0
     for ds in ("aircraft", "cars"):
-        rows.append(rf"\multicolumn{{7}}{{l}}{{\emph{{{ds}}}}}" + r" \\")
-        for base in BASES + []:
+        holds = None
+        block = []
+        for base in BASES:
             pth = os.path.join(REPO, "logs", "exp153",
                                f"minfrac_{ds}_{base}.json")
             if not os.path.exists(pth):
                 continue
             r = json.load(open(pth))
-            ents = [r[k] for k in sorted(r)]
+            keys = sorted(r)
+            if holds is None:
+                holds = [r[k]["holdout"][0] for k in keys]
+            ents = [r[k] for k in keys]
             n += len(ents)
             probe = np.mean([e["metrics"]["probe"] for e in ents])
             eucl = np.mean([e["metrics"]["eucl"] for e in ents])
             pe = np.mean([e["metrics"]["perevt"] for e in ents])
             cells = []
             for t in PRE_TESTS:
-                vals = [e[t]["f2sigma"] for e in ents]
-                cens = sum(1 for v in vals if not np.isfinite(v))
-                med = np.median([v if np.isfinite(v) else 0.15 for v in vals])
-                body = f"{med:.3f}" if cens < len(vals) / 2 else "$>$.1"
-                cells.append(body + (rf"$^{{{cens}}}$" if cens else ""))
-            rows.append(" & ".join([rf"\quad {base}", f"{probe:.3f}",
-                                    f"{eucl:.3f}", f"{pe:.2f}"] + cells)
-                        + r" \\"[:3])
+                for e in ents:
+                    cells.append(fx(e[t]["f2sigma"]))
+            block.append(" & ".join([rf"\quad {base}", f"{probe:.3f}",
+                                     f"{eucl:.3f}", f"{pe:.2f}"] + cells)
+                         + r" \\")
+        hdr = ", ".join(f"d{i}=c{c}" for i, c in enumerate(holds or []))
+        rows.append(rf"\multicolumn{{19}}{{l}}{{\emph{{{ds}}} --- "
+                    rf"held-out classes {hdr}}}" + r" \\")
+        rows += block
         rows.append(r"\addlinespace")
     rows = rows[:-1]
-    head = (r"dataset / backbone & probe & eucl AUC & per-ev. & "
-            r"Maha. & MMD & SparKer" + r" \\")
-    status = (f"Pretrained ViT-B/16 trunk (identity head), single holdout, 5 "
-              f"draws per (dataset, backbone), {n} cells; medians over draws, "
-              r"superscript = censored draws.  Held-out pools are tiny "
-              r"(aircraft $\sim$33 test images/class), so toys bootstrap "
+    sub = " & ".join(f"d{i}" for i in range(5))
+    head = (r"backbone & probe & eucl & per-ev. & "
+            + " & ".join(rf"\multicolumn{{5}}{{c}}{{{PRE_HEAD[t]}}}"
+                         for t in PRE_TESTS) + r" \\" + "\n"
+            + r"\cmidrule(lr){5-9}\cmidrule(lr){10-14}\cmidrule(lr){15-19}"
+            + "\n" + r"& & & & " + " & ".join([sub] * 3) + r" \\")
+    status = (f"Pretrained ViT-B/16 trunk (identity head), single holdout, "
+              f"5 draws per (dataset, backbone), {n} cells, every point shown; "
+              r"probe/eucl/per-ev.\ are means over draws.  Held-out pools are "
+              r"tiny (aircraft $\sim$33 test images/class), so toys bootstrap "
               r"them --- censoring here is conservative evidence.")
-    cap = (r"\textbf{The on-manifold corner: fine-grained novelty inside the "
-           r"seen manifold (aircraft variants, car models).}  The discovery "
-           r"machinery is blind --- min-anchor-distance ranks the novel class "
-           r"\emph{below} chance (eucl AUC $\sim$$0.47$ on cars), per-event "
-           r"power is dead, pools starve at the natural rate --- yet the "
-           r"novel class is still a dense clump, and SparKer's local kernels "
-           r"detect the injected mass at $f^\star{=}0.012$--$0.021$ on cars, "
-           r"every draw and backbone, while mean-shift Mahalanobis censors: "
-           r"the exact mirror of the diffuse case.  Detection survives; "
-           r"nothing pool-able or anchor-able comes with it.")
+    cap = (r"\textbf{The on-manifold corner, every point: fine-grained novelty "
+           r"inside the seen manifold (aircraft variants, car models).}  The "
+           r"discovery machinery is blind --- min-anchor-distance ranks the "
+           r"novel class \emph{below} chance on cars (eucl AUC $\sim$$0.47$), "
+           r"per-event power is dead, pools starve at the natural rate --- yet "
+           r"the class is still a dense clump: SparKer detects it on every "
+           r"cars draw and backbone ($f^\star{=}0.012$--$0.021$) while "
+           r"mean-shift Mahalanobis censors, the exact mirror of the diffuse "
+           r"case.  Detection survives; nothing pool-able or anchor-able "
+           r"comes with it.")
     return e149.wrap("\n".join(rows), cap, "tab:sigma_onmanifold", status,
-                     "lccc ccc", head, size="footnotesize")
+                     "lccc" + "c" * 15, head, size="footnotesize")
+
+
+def t_failure2x2():
+    """The headline 2x2: anomaly shape x manifold position, all measured."""
+    rows = [
+        r"& \textbf{clustered novelty} & \textbf{diffuse shift} \\",
+        r"\midrule",
+        (r"\textbf{off-manifold} & everything works; anchors interpret. "
+         r"Best pipelines $f^\star{=}0.008$--$0.020$ "
+         r"(Tables~\ref{tab:sigma_best}, \ref{tab:sigma_galaxy_post_lejepa}) "
+         r"& detected only by the mean-shift monitor on the \emph{frozen "
+         r"trunk} ($f^\star{=}0.006$--$0.010$); head spaces nearly blind "
+         r"(Tables~\ref{tab:sigma_diffuse}, \ref{tab:sigma_diffuse_vs_novel}) \\"),
+        r"\addlinespace",
+        (r"\textbf{on-manifold} & SparKer's local kernels detect the clump "
+         r"($f^\star{=}0.012$--$0.039$) but distance ranking is below chance, "
+         r"pools starve, Mahalanobis censors: detection without anything to "
+         r"anchor (Table~\ref{tab:sigma_onmanifold}) & the doubly-hard "
+         r"corner, covered by both failure modes \\"),
+    ]
+    status = (r"Cells summarise Tables~\ref{tab:sigma_best}--"
+              r"\ref{tab:sigma_onmanifold}; the derived label-free cut "
+              r"abstains wherever estimated novel mass is below "
+              r"clusterability, which governs the boundary between cells.")
+    cap = (r"\textbf{Where discovery works, where only detection works, and "
+           r"where the method abstains: the failure $2\times2$, every cell "
+           r"measured in the $f^\star(2\sigma)$ currency.}  Locality "
+           r"(SparKer) detects clumps; mean-shift (Mahalanobis) detects "
+           r"smears; anchors interpret only what is both clustered and "
+           r"outlying --- and the pipeline reports when it cannot.")
+    head = r"& & \\[-2ex]"
+    body = "\n".join(rows)
+    return "\n".join([
+        "% STATUS: " + status,
+        r"\begin{table}[t]", r"\centering", r"\small",
+        r"\begin{tabular}{p{0.9in}p{3.6in}p{3.6in}}", r"\toprule",
+        body, r"\bottomrule", r"\end{tabular}",
+        r"\caption{" + cap + r" \emph{Coverage:} " + status + "}",
+        r"\label{tab:sigma_failure2x2}", r"\end{table}", ""])
 
 
 def main():
     tables = [("sigma_best", t_best), ("sigma_diffuse", t_diffuse),
               ("sigma_diffuse_vs_novel", t_diffuse_vs_novel),
-              ("sigma_onmanifold", t_onmanifold)]
+              ("sigma_onmanifold", t_onmanifold),
+              ("sigma_failure2x2", t_failure2x2)]
     for b in BASES:
         tables.append((f"sigma_galaxy_pre_{b}", lambda b=b: t_galaxy_pre(b)))
         tables.append((f"sigma_galaxy_post_{b}", lambda b=b: t_galaxy_post(b)))

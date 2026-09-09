@@ -1,0 +1,16 @@
+% STATUS: Cells summarise Tables~\ref{tab:sigma_best}--\ref{tab:sigma_onmanifold}; the derived label-free cut abstains wherever estimated novel mass is below clusterability, which governs the boundary between cells.
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{p{0.9in}p{3.6in}p{3.6in}}
+\toprule
+& \textbf{clustered novelty} & \textbf{diffuse shift} \\
+\midrule
+\textbf{off-manifold} & everything works; anchors interpret. Best pipelines $f^\star{=}0.008$--$0.020$ (Tables~\ref{tab:sigma_best}, \ref{tab:sigma_galaxy_post_lejepa}) & detected only by the mean-shift monitor on the \emph{frozen trunk} ($f^\star{=}0.006$--$0.010$); head spaces nearly blind (Tables~\ref{tab:sigma_diffuse}, \ref{tab:sigma_diffuse_vs_novel}) \\
+\addlinespace
+\textbf{on-manifold} & SparKer's local kernels detect the clump ($f^\star{=}0.012$--$0.039$) but distance ranking is below chance, pools starve, Mahalanobis censors: detection without anything to anchor (Table~\ref{tab:sigma_onmanifold}) & the doubly-hard corner, covered by both failure modes \\
+\bottomrule
+\end{tabular}
+\caption{\textbf{Where discovery works, where only detection works, and where the method abstains: the failure $2\times2$, every cell measured in the $f^\star(2\sigma)$ currency.}  Locality (SparKer) detects clumps; mean-shift (Mahalanobis) detects smears; anchors interpret only what is both clustered and outlying --- and the pipeline reports when it cannot. \emph{Coverage:} Cells summarise Tables~\ref{tab:sigma_best}--\ref{tab:sigma_onmanifold}; the derived label-free cut abstains wherever estimated novel mass is below clusterability, which governs the boundary between cells.}
+\label{tab:sigma_failure2x2}
+\end{table}
