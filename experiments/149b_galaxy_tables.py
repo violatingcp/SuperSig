@@ -554,6 +554,145 @@ def t_onmanifold():
                      "lccc" + "c" * 15, head, size="footnotesize")
 
 
+
+# ------------------------------------------------- discovery-mode boundaries
+def t_onmanifold_post():
+    """Exp 154: discovery mode + residuals on aircraft/cars (exp-70 heads)."""
+    P154 = {"supcon-ft": "SupCon", "ss-ft": r"SupCon+SIGReg ($\lambda{=}5$)",
+            "supcon-ft_res": r"\quad SupCon $\to$ res",
+            "supcon-ft_resnplm": r"\quad SupCon $\to$ res-nplm",
+            "ss-ft_res": r"\quad SupCon+SIGReg $\to$ res"}
+    order = ["supcon-ft", "supcon-ft_res", "supcon-ft_resnplm",
+             "ss-ft", "ss-ft_res"]
+    rows, n = [], 0
+    for ds in ("aircraft", "cars"):
+        rows.append(rf"\multicolumn{{12}}{{l}}{{\emph{{{ds}}} --- last 10 "
+                    r"classes held out (exp-70 split)} \\")
+        for base in BASES:
+            pth = os.path.join(REPO, "logs", "exp154",
+                               f"suite_{ds}_{base}_np_legal_nmin5.json")
+            if not os.path.exists(pth):
+                continue
+            r = json.load(open(pth))
+            rows.append(rf"\multicolumn{{12}}{{l}}{{\quad\emph{{{base}}}}} \\")
+            for arm in order:
+                e = r.get(arm)
+                if not e:
+                    continue
+                n += 1
+                pre = e["pre"]
+                fr = e["fractions"]
+                eng = [f for f in fr if e["cut"].get(str(f), {}).get("ok")]
+                engs = f"{eng[0]:g}" if eng else "never"
+                pur = (f"{e['purity1'][str(eng[0])]:.2f}" if eng else "--")
+                cells = [fx(pre[t]["f2sigma"]) for t in PRE_TESTS]
+                cells += [engs, pur]
+                for t in POST_TESTS:
+                    f_, dec = e149.post_fstar(e, t)
+                    cells.append(e149.fnum(f_)
+                                 + (r"$^\dagger$" if dec and f_ is not None
+                                    else ""))
+                rows.append(" & ".join([P154[arm]] + cells) + r" \\")
+            rows.append(r"\addlinespace")
+    while rows and rows[-1] == r"\addlinespace":
+        rows.pop()
+    head = (r"arm & \multicolumn{3}{c}{frozen $f^\star$} & eng.\ $f$ & pur. & "
+            r"\multicolumn{6}{c}{post-discovery $f^\star(2\sigma)$} \\"
+            "\n" r"\cmidrule(lr){2-4}\cmidrule(lr){7-12}" "\n"
+            r"& Maha. & MMD & SpK & & & "
+            + " & ".join(POST_HEAD[t] for t in POST_TESTS) + r" \\")
+    status = (f"Exp 154; {n} (dataset, backbone, arm) cells, fine-tuned "
+              r"exp-70 heads (10 of 100/196 classes held out --- the "
+              r"multi-holdout regime; never pool with the single-holdout "
+              r"Table~\ref{tab:sigma_onmanifold}), head-only loop, np pool + "
+              r"derived cut ($n_{\min}{=}5$), skip-on-refuse; injections "
+              r"clamp at the held-out train pool (cars: 432 rows, so "
+              r"$f{=}0.1$ realises $\sim$0.053).  $\dagger$ = cut declined "
+              r"at the crossing fraction (the frozen space's number).")
+    cap = (r"\textbf{Discovery mode on the on-manifold corner.}  The two "
+           r"datasets split: on \emph{aircraft} the derived cut declines at "
+           r"$f\le0.03$ and engages at $f{=}0.05$ with purity $0.54$--$1.00$ "
+           r"on every backbone (visreg res-nplm engages at $0.01$ and posts "
+           r"eucl-disc $0.017$); on \emph{cars} the parents' critics never "
+           r"engage on 2 of 3 backbones and only the res-nplm child pools "
+           r"anything --- and even where anchors appear, the post numbers do "
+           r"not beat the frozen SparKer, so discovery adds nothing beyond "
+           r"locality there.  Residual children are what softens the corner.")
+    return e149.wrap("\n".join(rows), cap, "tab:sigma_onmanifold_post",
+                     status, "l" + "c" * 11, head, size="footnotesize")
+
+
+def t_diffuse_post():
+    """Exp 155: discovery mode on the smeared-corpus diffuse shift."""
+    P = {"supcon-ft": "SupCon", "ss-ft": r"SupCon+SIGReg ($\lambda{=}5$)",
+         "supcon-ft_res": r"\quad SupCon $\to$ res",
+         "supcon-ft_resnplm": r"\quad SupCon $\to$ res-nplm",
+         "ss-ft_res": r"\quad SupCon+SIGReg $\to$ res"}
+    order = ["supcon-ft", "supcon-ft_res", "supcon-ft_resnplm",
+             "ss-ft", "ss-ft_res"]
+    rows, n = [], 0
+    for base in BASES:
+        for m, tg, mdesc in (("one", "one_c2_blur2", "one label (class 2)"),
+                             ("all", "all_blur2", "all seen labels")):
+            pth = os.path.join(REPO, "logs", "exp155",
+                               f"diffsuite_galaxy10_{base}_{tg}"
+                               f"_np_legal_nmin5.json")
+            if not os.path.exists(pth):
+                continue
+            r = json.load(open(pth))
+            rows.append(rf"\multicolumn{{10}}{{l}}{{\emph{{{base}}}, "
+                        rf"{mdesc}}} \\")
+            for arm in order:
+                e = r.get(arm)
+                if not e:
+                    continue
+                n += 1
+                fr = e["fractions"]
+                eng = [f for f in fr if e["cut"].get(str(f), {}).get("ok")]
+                engs = f"{eng[0]:g}" if eng else "never"
+                pur = (f"{e['purity1'][str(eng[0])]:.2f}" if eng else "--")
+                aucs = [v for v in (e["auc_out"].get(str(f)) for f in fr)
+                        if v is not None]
+                arng = (f"{min(aucs):.2f}--{max(aucs):.2f}" if aucs else "--")
+                cells = [engs, pur, arng]
+                for t in POST_TESTS:
+                    f_, dec = e149.post_fstar(e, t)
+                    cells.append(e149.fnum(f_)
+                                 + (r"$^\dagger$" if dec and f_ is not None
+                                    else ""))
+                rows.append(" & ".join([P[arm]] + cells) + r" \\")
+            rows.append(r"\addlinespace")
+    while rows and rows[-1] == r"\addlinespace":
+        rows.pop()
+    head = (r"arm & eng.\ $f$ & pur. & out.\ AUC (post) & "
+            + " & ".join(POST_HEAD[t] for t in POST_TESTS) + r" \\")
+    status = (f"Exp 155; {n} (backbone, mode, arm) cells.  A fraction $f$ of "
+              r"the seen train corpus is REPLACED by its blur-$\sigma{=}2$ "
+              r"smeared version (pseudo-labelled unlabelled-anomalous); the "
+              r"settled loop (np pool, derived cut, $n_{\min}{=}5$, "
+              r"skip-on-refuse) runs head-only; the signal pool is the "
+              r"exp-152 smeared test subset (same rng).  pur.\ = smeared "
+              r"fraction of the round-1 pool; out.\ AUC = post-loop "
+              r"min-anchor-distance ROC of smeared vs.\ background.")
+    cap = (r"\textbf{Discovery mode on the diffuse shift: the loop finds "
+           r"what the frozen space cannot see.}  Pre-discovery the smear is "
+           r"nearly invisible in these head spaces "
+           r"(Table~\ref{tab:sigma_diffuse}); with the loop, the "
+           r"density-ratio pool isolates the smeared events in every cell "
+           r"(engagement at $f{=}0.01$--$0.02$ in 29 of 30, pool purity "
+           r"frequently $1.00$ despite outlier AUC near chance), the "
+           r"fine-tune pulls the smear off the manifold (post outlier AUC up "
+           r"to $0.96$), and the anchor-aware and mean tests reach "
+           r"$f^\star{\approx}0.01$--$0.02$.  MMD stays the blind test.  The "
+           r"diffuse cell of the failure $2\times2$ is thus a "
+           r"\emph{frozen-space} boundary, not a pipeline one --- a "
+           r"mean-shift detection still carries no class semantics, but the "
+           r"anchors let the analyst inspect the isolated events.")
+    return e149.wrap("\n".join(rows), cap, "tab:sigma_diffuse_post",
+                     status, "l" + "c" * 9, head, size="footnotesize")
+
+
+
 def t_failure2x2():
     """The headline 2x2: anomaly shape x manifold position, all measured."""
     rows = [
@@ -564,12 +703,20 @@ def t_failure2x2():
          r"(Tables~\ref{tab:sigma_best}, \ref{tab:sigma_galaxy_post_lejepa}) "
          r"& detected only by the mean-shift monitor on the \emph{frozen "
          r"trunk} ($f^\star{=}0.006$--$0.010$); head spaces nearly blind "
-         r"(Tables~\ref{tab:sigma_diffuse}, \ref{tab:sigma_diffuse_vs_novel}) \\"),
+         r"(Tables~\ref{tab:sigma_diffuse}, \ref{tab:sigma_diffuse_vs_novel}); "
+         r"yet the \emph{discovery loop finds it}: the np pool isolates the "
+         r"smeared events in every cell (purity often $1.00$), the fine-tune "
+         r"pulls them off the manifold, and anchor-aware tests reach "
+         r"$f^\star{\approx}0.01$--$0.02$ (Table~\ref{tab:sigma_diffuse_post}) \\"),
         r"\addlinespace",
         (r"\textbf{on-manifold} & SparKer's local kernels detect the clump "
          r"($f^\star{=}0.012$--$0.039$) but distance ranking is below chance, "
          r"pools starve, Mahalanobis censors: detection without anything to "
-         r"anchor (Table~\ref{tab:sigma_onmanifold}) & the doubly-hard "
+         r"anchor (Table~\ref{tab:sigma_onmanifold}).  Fine-tuned heads + "
+         r"multi-holdout soften it: aircraft engages at $f{=}0.05$ (purity "
+         r"$0.54$--$1.00$); cars engages only through the res-nplm child, "
+         r"and discovery never beats frozen locality "
+         r"(Table~\ref{tab:sigma_onmanifold_post}) & the doubly-hard "
          r"corner, covered by both failure modes \\"),
     ]
     status = (r"Cells summarise Tables~\ref{tab:sigma_best}--"
@@ -597,6 +744,8 @@ def main():
     tables = [("sigma_best", t_best), ("sigma_diffuse", t_diffuse),
               ("sigma_diffuse_vs_novel", t_diffuse_vs_novel),
               ("sigma_onmanifold", t_onmanifold),
+              ("sigma_onmanifold_post", t_onmanifold_post),
+              ("sigma_diffuse_post", t_diffuse_post),
               ("sigma_failure2x2", t_failure2x2)]
     for b in BASES:
         tables.append((f"sigma_galaxy_pre_{b}", lambda b=b: t_galaxy_pre(b)))

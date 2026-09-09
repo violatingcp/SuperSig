@@ -1,4 +1,4 @@
-% STATUS: CIFAR-10 holdout 7, density-ratio pool, derived cut; 12 arms; each fraction scored in its own fine-tuned space (2 rounds); 200 null / 50 signal toys, $N_D{=}5000$; purity = round-1 pool purity at $f{=}0.03$; $\dagger$ = the label-free cut had declined at the crossing fraction (the space is then the frozen one at that fraction); purity `--' = declined at $f{=}0.03$; an `($n$/$m$)' row is an arm still running.
+% STATUS: CIFAR-10 holdout 7, density-ratio pool, derived cut; 13 arms; each fraction scored in its own fine-tuned space (2 rounds); 200 null / 50 signal toys, $N_D{=}5000$; purity = round-1 pool purity at $f{=}0.03$; $\dagger$ = the label-free cut had declined at the crossing fraction (the space is then the frozen one at that fraction); purity `--' = declined at $f{=}0.03$; an `($n$/$m$)' row is an arm still running.
 \begin{table}[t]
 \centering
 \footnotesize
@@ -21,8 +21,10 @@ NPLM-dist.\ (sup.) & 0.029 & 0.18 & 0.044 & \textbf{0.021} & 0.033 & 0.043 & 0.0
 NPLM-dist.+classwise SIGReg & 0.029 & 0.67 & 0.043 & \textbf{0.011} & 0.018 & 0.049 & 0.033 & 0.019 \\
 \quad $\to$ res (residual) & 0.039 & 0.22 & 0.036 & 0.030 & \textbf{0.023} & 0.068 & 0.029 & 0.030 \\
 \quad $\to$ res-nplm (residual) & 0.052 & -- & 0.068 & 0.050 & \textbf{0.026$^\dagger$} & 0.072 & 0.048 & 0.050 \\
+\addlinespace
+SupCon+classwise SIGReg ($\lambda{=}5$) & 0.067 & -- & \textbf{0.031$^\dagger$} & -- & 0.056$^\dagger$ & 0.071$^\dagger$ & 0.054$^\dagger$ & -- \\
 \bottomrule
 \end{tabular}
-\caption{\textbf{Post-discovery $f^\star(2\sigma)$ on the density-ratio pool, derived cut.} The frozen-space SparKer $f^\star$ is repeated for reference; bold marks the best post-discovery test per arm. \emph{Eucl.\,(anch.)} is the mean of $d_{\rm seen}-d_{\rm disc}$ and \emph{SparKer\,(anch.)} seeds the kernels at the discovered anchors; both consume the anchors discovery planted, the other four do not. \emph{Coverage:} CIFAR-10 holdout 7, density-ratio pool, derived cut; 12 arms; each fraction scored in its own fine-tuned space (2 rounds); 200 null / 50 signal toys, $N_D{=}5000$; purity = round-1 pool purity at $f{=}0.03$; $\dagger$ = the label-free cut had declined at the crossing fraction (the space is then the frozen one at that fraction); purity `--' = declined at $f{=}0.03$; an `($n$/$m$)' row is an arm still running.}
+\caption{\textbf{Post-discovery $f^\star(2\sigma)$ on the density-ratio pool, derived cut.} The frozen-space SparKer $f^\star$ is repeated for reference; bold marks the best post-discovery test per arm. \emph{Eucl.\,(anch.)} is the mean of $d_{\rm seen}-d_{\rm disc}$ and \emph{SparKer\,(anch.)} seeds the kernels at the discovered anchors; both consume the anchors discovery planted, the other four do not. \emph{Coverage:} CIFAR-10 holdout 7, density-ratio pool, derived cut; 13 arms; each fraction scored in its own fine-tuned space (2 rounds); 200 null / 50 signal toys, $N_D{=}5000$; purity = round-1 pool purity at $f{=}0.03$; $\dagger$ = the label-free cut had declined at the crossing fraction (the space is then the frozen one at that fraction); purity `--' = declined at $f{=}0.03$; an `($n$/$m$)' row is an arm still running.}
 \label{tab:sigma_post_cifar10_h7_np-legal}
 \end{table}

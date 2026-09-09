@@ -1,0 +1,54 @@
+% STATUS: Exp 155; 30 (backbone, mode, arm) cells.  A fraction $f$ of the seen train corpus is REPLACED by its blur-$\sigma{=}2$ smeared version (pseudo-labelled unlabelled-anomalous); the settled loop (np pool, derived cut, $n_{\min}{=}5$, skip-on-refuse) runs head-only; the signal pool is the exp-152 smeared test subset (same rng).  pur.\ = smeared fraction of the round-1 pool; out.\ AUC = post-loop min-anchor-distance ROC of smeared vs.\ background.
+\begin{table}[t]
+\centering
+\footnotesize
+\begin{tabular}{lccccccccc}
+\toprule
+arm & eng.\ $f$ & pur. & out.\ AUC (post) & Eucl. & Eucl.\,(anch.) & Maha. & MMD & SparKer & SparKer\,(anch.) \\
+\midrule
+\multicolumn{10}{l}{\emph{lejepa}, one label (class 2)} \\
+SupCon & 0.01 & 0.30 & 0.51--0.90 & 0.017 & 0.014 & 0.014 & 0.089 & 0.017 & 0.028 \\
+\quad SupCon $\to$ res & 0.02 & 0.70 & 0.39--0.48 & $>0.1$ & 0.020 & 0.038 & $>0.1$ & 0.045 & 0.046 \\
+\quad SupCon $\to$ res-nplm & 0.02 & 1.00 & 0.69--0.96 & 0.016 & 0.020 & 0.012 & 0.052 & 0.016 & 0.020 \\
+SupCon+SIGReg ($\lambda{=}5$) & 0.01 & 0.64 & 0.76--0.83 & 0.022 & 0.010 & 0.014 & $>0.1$ & 0.016 & 0.013 \\
+\quad SupCon+SIGReg $\to$ res & 0.02 & 0.60 & 0.34--0.54 & $>0.1$ & 0.020 & 0.046 & $>0.1$ & 0.044 & 0.045 \\
+\addlinespace
+\multicolumn{10}{l}{\emph{lejepa}, all seen labels} \\
+SupCon & 0.02 & 0.19 & 0.51--0.79 & 0.044 & 0.035 & 0.021$^\dagger$ & 0.081 & 0.045 & 0.040 \\
+\quad SupCon $\to$ res & 0.01 & 0.70 & 0.43--0.50 & $>0.1$ & 0.035 & 0.046 & $>0.1$ & $>0.1$ & 0.038 \\
+\quad SupCon $\to$ res-nplm & 0.01 & 0.86 & 0.86--0.94 & 0.012 & 0.021 & 0.010 & 0.029 & 0.018 & 0.019 \\
+SupCon+SIGReg ($\lambda{=}5$) & 0.02 & 1.00 & 0.57--0.66 & 0.048 & 0.020 & 0.024 & $>0.1$ & 0.049 & 0.040 \\
+\quad SupCon+SIGReg $\to$ res & 0.02 & 0.47 & 0.34--0.42 & $>0.1$ & 0.079 & 0.073 & $>0.1$ & 0.085 & 0.087 \\
+\addlinespace
+\multicolumn{10}{l}{\emph{visreg}, one label (class 2)} \\
+SupCon & 0.01 & 1.00 & 0.66--0.88 & 0.024 & 0.016 & 0.010 & $>0.1$ & 0.014 & 0.018 \\
+\quad SupCon $\to$ res & 0.01 & 1.00 & 0.42--0.62 & $>0.1$ & 0.016 & 0.015 & $>0.1$ & 0.017 & 0.017 \\
+\quad SupCon $\to$ res-nplm & 0.01 & 1.00 & 0.79--0.93 & 0.016 & 0.010 & 0.010 & 0.090 & 0.010 & 0.017 \\
+SupCon+SIGReg ($\lambda{=}5$) & 0.01 & 1.00 & 0.89--0.96 & 0.010 & 0.010 & 0.010 & 0.084 & 0.010 & 0.010 \\
+\quad SupCon+SIGReg $\to$ res & 0.02 & 1.00 & 0.49--0.64 & $>0.1$ & 0.020 & 0.016 & 0.089 & 0.019 & 0.020 \\
+\addlinespace
+\multicolumn{10}{l}{\emph{visreg}, all seen labels} \\
+SupCon & 0.01 & 0.57 & 0.72--0.82 & 0.024 & 0.018 & 0.012 & 0.059 & 0.026 & 0.028 \\
+\quad SupCon $\to$ res & 0.01 & 0.07 & 0.45--0.56 & $>0.1$ & 0.026 & 0.033 & 0.037 & 0.037 & 0.028 \\
+\quad SupCon $\to$ res-nplm & 0.01 & 0.15 & 0.66--0.81 & 0.024 & 0.028 & 0.016 & 0.086 & 0.027 & 0.047 \\
+SupCon+SIGReg ($\lambda{=}5$) & 0.01 & 1.00 & 0.79--0.86 & 0.019 & 0.015 & 0.010 & 0.056 & 0.026 & 0.027 \\
+\quad SupCon+SIGReg $\to$ res & 0.05 & 1.00 & 0.35--0.47 & $>0.1$ & 0.050 & 0.041 & 0.056 & 0.045 & 0.050 \\
+\addlinespace
+\multicolumn{10}{l}{\emph{dino}, one label (class 2)} \\
+SupCon & 0.02 & 1.00 & 0.61--0.89 & 0.026 & 0.020 & 0.013 & 0.046 & 0.016 & 0.020 \\
+\quad SupCon $\to$ res & 0.02 & 1.00 & 0.52--0.80 & 0.025 & 0.020 & 0.015 & 0.056 & 0.023 & 0.020 \\
+\quad SupCon $\to$ res-nplm & 0.02 & 1.00 & 0.55--0.86 & 0.042 & 0.020 & 0.015 & 0.050 & 0.019 & 0.028 \\
+SupCon+SIGReg ($\lambda{=}5$) & 0.02 & 1.00 & 0.68--0.75 & 0.041 & 0.020 & 0.016 & 0.079 & 0.018 & 0.020 \\
+\quad SupCon+SIGReg $\to$ res & 0.01 & 1.00 & 0.61--0.74 & 0.042 & 0.010 & 0.019 & $>0.1$ & 0.040 & 0.047 \\
+\addlinespace
+\multicolumn{10}{l}{\emph{dino}, all seen labels} \\
+SupCon & 0.01 & 0.39 & 0.82--0.93 & 0.024 & 0.015 & 0.010 & 0.025 & 0.028 & 0.026 \\
+\quad SupCon $\to$ res & 0.01 & 1.00 & 0.75--0.83 & 0.025 & 0.011 & 0.010 & 0.045 & 0.045 & 0.017 \\
+\quad SupCon $\to$ res-nplm & 0.01 & 1.00 & 0.65--0.89 & 0.059 & 0.054 & 0.010 & 0.087 & 0.095 & 0.059 \\
+SupCon+SIGReg ($\lambda{=}5$) & 0.01 & 1.00 & 0.70--0.77 & 0.034 & 0.012 & 0.015 & 0.038 & 0.044 & 0.017 \\
+\quad SupCon+SIGReg $\to$ res & 0.01 & 1.00 & 0.60--0.69 & 0.039 & 0.011 & 0.021 & 0.046 & 0.085 & 0.047 \\
+\bottomrule
+\end{tabular}
+\caption{\textbf{Discovery mode on the diffuse shift: the loop finds what the frozen space cannot see.}  Pre-discovery the smear is nearly invisible in these head spaces (Table~\ref{tab:sigma_diffuse}); with the loop, the density-ratio pool isolates the smeared events in every cell (engagement at $f{=}0.01$--$0.02$ in 29 of 30, pool purity frequently $1.00$ despite outlier AUC near chance), the fine-tune pulls the smear off the manifold (post outlier AUC up to $0.96$), and the anchor-aware and mean tests reach $f^\star{\approx}0.01$--$0.02$.  MMD stays the blind test.  The diffuse cell of the failure $2\times2$ is thus a \emph{frozen-space} boundary, not a pipeline one --- a mean-shift detection still carries no class semantics, but the anchors let the analyst inspect the isolated events. \emph{Coverage:} Exp 155; 30 (backbone, mode, arm) cells.  A fraction $f$ of the seen train corpus is REPLACED by its blur-$\sigma{=}2$ smeared version (pseudo-labelled unlabelled-anomalous); the settled loop (np pool, derived cut, $n_{\min}{=}5$, skip-on-refuse) runs head-only; the signal pool is the exp-152 smeared test subset (same rng).  pur.\ = smeared fraction of the round-1 pool; out.\ AUC = post-loop min-anchor-distance ROC of smeared vs.\ background.}
+\label{tab:sigma_diffuse_post}
+\end{table}

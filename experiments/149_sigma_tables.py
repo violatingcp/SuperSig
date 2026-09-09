@@ -28,6 +28,7 @@ PRETTY = {
     "nplmsd": "NPLM-dist.\\ (sup.)", "nplmcw": "NPLM-dist.+classwise SIGReg",
     "simclr": "SimCLR", "visreg": "VISReg/LeJEPA", "nplm": "NPLM (unsup.)",
     "supsig": "SupCon+SIGReg (repulse)",
+    "supconcw": r"SupCon+classwise SIGReg ($\lambda{=}5$)",
 }
 CHILD = {"res": "res", "res-nplm": "res-nplm", "resnplm": "res-nplm"}
 POST_TESTS = ["eucl", "eucl-disc", "maha", "mmd", "sparker", "sparker-anch"]
