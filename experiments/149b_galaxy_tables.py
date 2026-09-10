@@ -497,9 +497,9 @@ def t_diffuse_vs_novel():
 
 
 def t_onmanifold():
-    """Aircraft/cars, every (backbone, draw) point."""
+    """CUB/aircraft/cars, every (backbone, draw) point."""
     rows, n = [], 0
-    for ds in ("aircraft", "cars"):
+    for ds in ("cub", "aircraft", "cars"):
         holds = None
         block = []
         for base in BASES:
@@ -540,16 +540,20 @@ def t_onmanifold():
               r"probe/eucl/per-ev.\ are means over draws.  Held-out pools are "
               r"tiny (aircraft $\sim$33 test images/class), so toys bootstrap "
               r"them --- censoring here is conservative evidence.")
-    cap = (r"\textbf{The on-manifold corner, every point: fine-grained novelty "
-           r"inside the seen manifold (aircraft variants, car models).}  The "
-           r"discovery machinery is blind --- min-anchor-distance ranks the "
-           r"novel class \emph{below} chance on cars (eucl AUC $\sim$$0.47$), "
-           r"per-event power is dead, pools starve at the natural rate --- yet "
-           r"the class is still a dense clump: SparKer detects it on every "
-           r"cars draw and backbone ($f^\star{=}0.012$--$0.021$) while "
-           r"mean-shift Mahalanobis censors, the exact mirror of the diffuse "
-           r"case.  Detection survives; nothing pool-able or anchor-able "
-           r"comes with it.")
+    cap = (r"\textbf{The on-manifold corner, every point: the Semantic Shift "
+           r"Benchmark fine-grained triplet (CUB-200 birds, FGVC-Aircraft "
+           r"variants, Stanford car models), novelty inside the seen "
+           r"manifold.}  A \emph{spectrum}, not a single failure: on all three "
+           r"the probe is near-perfect ($0.88$--$0.99$) yet mean-shift "
+           r"Mahalanobis censors and per-event power is dead --- but locality "
+           r"survives, and how well tracks how separable the novel clump is.  "
+           r"CUB is the mildest (eucl AUC $0.55$--$0.63$, above chance; "
+           r"SparKer $f^\star{=}0.010$--$0.017$; even MMD engages), aircraft "
+           r"is intermediate (SparKer $0.026$--$0.036$), and cars is the "
+           r"hardest --- min-anchor-distance ranks the novel model \emph{below} "
+           r"chance (eucl AUC $\sim$$0.47$) yet SparKer still detects it "
+           r"($f^\star{=}0.013$--$0.019$).  Detection survives throughout; "
+           r"nothing pool-able or anchor-able comes with it.")
     return e149.wrap("\n".join(rows), cap, "tab:sigma_onmanifold", status,
                      "lccc" + "c" * 15, head, size="footnotesize")
 

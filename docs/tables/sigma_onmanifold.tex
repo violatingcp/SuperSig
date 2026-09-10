@@ -1,4 +1,4 @@
-% STATUS: Pretrained ViT-B/16 trunk (identity head), single holdout, 5 draws per (dataset, backbone), 30 cells, every point shown; probe/eucl/per-ev.\ are means over draws.  Held-out pools are tiny (aircraft $\sim$33 test images/class), so toys bootstrap them --- censoring here is conservative evidence.
+% STATUS: Pretrained ViT-B/16 trunk (identity head), single holdout, 5 draws per (dataset, backbone), 45 cells, every point shown; probe/eucl/per-ev.\ are means over draws.  Held-out pools are tiny (aircraft $\sim$33 test images/class), so toys bootstrap them --- censoring here is conservative evidence.
 \begin{table}[t]
 \centering
 \footnotesize
@@ -8,6 +8,11 @@ backbone & probe & eucl & per-ev. & \multicolumn{5}{c}{Maha.} & \multicolumn{5}{
 \cmidrule(lr){5-9}\cmidrule(lr){10-14}\cmidrule(lr){15-19}
 & & & & d0 & d1 & d2 & d3 & d4 & d0 & d1 & d2 & d3 & d4 & d0 & d1 & d2 & d3 & d4 \\
 \midrule
+\multicolumn{19}{l}{\emph{cub} --- held-out classes d0=c133, d1=c89, d2=c53, d3=c136, d4=c146} \\
+\quad lejepa & 0.945 & 0.581 & 0.12 & .023 & $>$.1 & $>$.1 & .014 & .029 & .041 & .017 & .017 & .087 & .040 & .017 & .008 & .016 & .020 & .015 \\
+\quad visreg & 0.936 & 0.550 & 0.11 & .026 & $>$.1 & $>$.1 & .014 & .022 & .039 & .017 & .017 & .087 & .037 & .018 & .008 & .018 & .017 & .016 \\
+\quad dino & 0.988 & 0.632 & 0.11 & .072 & $>$.1 & .023 & .009 & .034 & .015 & .017 & .009 & .029 & .018 & .010 & .006 & .010 & .016 & .012 \\
+\addlinespace
 \multicolumn{19}{l}{\emph{aircraft} --- held-out classes d0=c14, d1=c43, d2=c71, d3=c96, d4=c58} \\
 \quad lejepa & 0.917 & 0.580 & 0.08 & $>$.1 & .023 & $>$.1 & $>$.1 & .036 & .097 & .068 & .047 & .075 & .056 & .065 & .036 & .033 & .035 & .039 \\
 \quad visreg & 0.926 & 0.561 & 0.08 & $>$.1 & .021 & $>$.1 & $>$.1 & .040 & $>$.1 & .065 & .047 & .073 & .056 & .047 & .031 & .034 & .037 & .036 \\
@@ -19,6 +24,6 @@ backbone & probe & eucl & per-ev. & \multicolumn{5}{c}{Maha.} & \multicolumn{5}{
 \quad dino & 0.971 & 0.472 & 0.03 & .066 & $>$.1 & .079 & $>$.1 & $>$.1 & .038 & .035 & .029 & .021 & .021 & .014 & .018 & .013 & .012 & .013 \\
 \bottomrule
 \end{tabular}
-\caption{\textbf{The on-manifold corner, every point: fine-grained novelty inside the seen manifold (aircraft variants, car models).}  The discovery machinery is blind --- min-anchor-distance ranks the novel class \emph{below} chance on cars (eucl AUC $\sim$$0.47$), per-event power is dead, pools starve at the natural rate --- yet the class is still a dense clump: SparKer detects it on every cars draw and backbone ($f^\star{=}0.012$--$0.021$) while mean-shift Mahalanobis censors, the exact mirror of the diffuse case.  Detection survives; nothing pool-able or anchor-able comes with it. \emph{Coverage:} Pretrained ViT-B/16 trunk (identity head), single holdout, 5 draws per (dataset, backbone), 30 cells, every point shown; probe/eucl/per-ev.\ are means over draws.  Held-out pools are tiny (aircraft $\sim$33 test images/class), so toys bootstrap them --- censoring here is conservative evidence.}
+\caption{\textbf{The on-manifold corner, every point: the Semantic Shift Benchmark fine-grained triplet (CUB-200 birds, FGVC-Aircraft variants, Stanford car models), novelty inside the seen manifold.}  A \emph{spectrum}, not a single failure: on all three the probe is near-perfect ($0.88$--$0.99$) yet mean-shift Mahalanobis censors and per-event power is dead --- but locality survives, and how well tracks how separable the novel clump is.  CUB is the mildest (eucl AUC $0.55$--$0.63$, above chance; SparKer $f^\star{=}0.010$--$0.017$; even MMD engages), aircraft is intermediate (SparKer $0.026$--$0.036$), and cars is the hardest --- min-anchor-distance ranks the novel model \emph{below} chance (eucl AUC $\sim$$0.47$) yet SparKer still detects it ($f^\star{=}0.013$--$0.019$).  Detection survives throughout; nothing pool-able or anchor-able comes with it. \emph{Coverage:} Pretrained ViT-B/16 trunk (identity head), single holdout, 5 draws per (dataset, backbone), 45 cells, every point shown; probe/eucl/per-ev.\ are means over draws.  Held-out pools are tiny (aircraft $\sim$33 test images/class), so toys bootstrap them --- censoring here is conservative evidence.}
 \label{tab:sigma_onmanifold}
 \end{table}
