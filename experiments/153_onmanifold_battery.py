@@ -39,13 +39,13 @@ exp146 = importlib.import_module("146_min_frac_2sigma")
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = os.path.join(REPO, "data")
 OUT = os.path.join(REPO, "logs", "exp153")
-N_CLS = {"aircraft": 100, "cars": 196}
+N_CLS = {"aircraft": 100, "cars": 196, "cub": 200}
 
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--dataset", default="aircraft",
-                    choices=["aircraft", "cars"])
+                    choices=["aircraft", "cars", "cub"])
     ap.add_argument("--bases", default="dino,lejepa,visreg")
     ap.add_argument("--draws", default="0,1,2,3,4")
     ap.add_argument("--fractions", default="0.006,0.01,0.02,0.03,0.05,0.1")

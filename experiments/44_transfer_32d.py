@@ -53,6 +53,7 @@ PAPER = {  # dataset -> {method: acc}
     "galaxy10": {"MoCoV3": 73.1, "DINO": 72.8, "VISReg-B": 74.0},
 }
 N_CLASSES = {"aircraft": 100, "cars": 196, "flowers": 102, "galaxy10": 10,
+             "cub": 200,
              "food101": 101}
 
 
@@ -132,6 +133,37 @@ class HFCars(Dataset):
         return self.transform(img) if self.transform else img, y
 
 
+class HFCUB(Dataset):
+    """CUB-200-2011 via HF parquet (Donghyun99/CUB-200-2011); 200 bird
+    species, labels 0-199, train 5994 / test 5794.  Same record shape as
+    HFCars (image = {'bytes', 'path'}, integer label)."""
+
+    def __init__(self, split, transform):
+        import pandas as pd
+        from PIL import Image
+        from huggingface_hub import hf_hub_download, list_repo_files
+        repo = "Donghyun99/CUB-200-2011"
+        files = [f for f in list_repo_files(repo, repo_type="dataset")
+                 if f.endswith(".parquet") and split in f]
+        assert files, f"no parquet for split {split}"
+        self.df = pd.concat(
+            [pd.read_parquet(hf_hub_download(repo, f, repo_type="dataset"))
+             for f in sorted(files)], ignore_index=True)
+        self.img_col = [c for c in self.df.columns if "image" in c.lower()][0]
+        self.lab_col = [c for c in self.df.columns if "label" in c.lower()][0]
+        self.transform, self._Image = transform, Image
+
+    def __len__(self):
+        return len(self.df)
+
+    def __getitem__(self, i):
+        rec = self.df.iloc[i][self.img_col]
+        raw = rec["bytes"] if isinstance(rec, dict) else rec
+        img = self._Image.open(io.BytesIO(raw)).convert("RGB")
+        y = int(self.df.iloc[i][self.lab_col])
+        return self.transform(img) if self.transform else img, y
+
+
 def make_split(name, split, transform):
     """split in {'train','test'}; 'train' is the full training pool."""
     if name == "aircraft":
@@ -159,6 +191,8 @@ def make_split(name, split, transform):
     if name == "food101":
         return datasets.Food101(DATA_DIR, split=split, download=True,
                                 transform=transform)
+    if name == "cub":
+        return HFCUB(split, transform)
     raise ValueError(name)
 
 
