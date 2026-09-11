@@ -18,7 +18,7 @@ from sklearn.metrics import roc_auc_score
 from .config import DEVICE
 from .data import BalancedBatchSampler
 from .train import train_sigreg_hybrid, collect_embeddings
-from .poolcut import legal_pool, N_MIN as POOL_N_MIN
+from .poolcut import legal_pool, ssb_pool, N_MIN as POOL_N_MIN
 
 
 class PseudoDataset(Dataset):
@@ -191,9 +191,10 @@ def run_discovery(backbone, means, *, base_ds, train_eval_loader, test_loader,
                             pool_score="np": the weights need a density ratio,
                             not a distance.
     """
-    if cut_rule not in ("quantile", "legal"):
-        raise ValueError(f"cut_rule={cut_rule!r} must be 'quantile' or 'legal'")
-    if cut_rule == "legal" and pool_score not in ("np", "dist"):
+    if cut_rule not in ("quantile", "legal", "ssb"):
+        raise ValueError(f"cut_rule={cut_rule!r} must be "
+                         "'quantile', 'legal' or 'ssb'")
+    if cut_rule in ("legal", "ssb") and pool_score not in ("np", "dist"):
         raise ValueError("cut_rule='legal' needs pool_score='np' or 'dist': "
                          "the novelty weights are defined from the density "
                          "ratio (with 'dist' the ratio sets the cut size and "
@@ -214,11 +215,12 @@ def run_discovery(backbone, means, *, base_ds, train_eval_loader, test_loader,
             s = np_pool_scores(z, is_seen_lab, seed=seed + r)
         else:
             s = torch.cdist(z, anchor_mat).min(1).values
-        if cut_rule == "legal":
+        if cut_rule in ("legal", "ssb"):
             s_cut = (s if pool_score == "np"
                      else np_pool_scores(z, is_seen_lab, seed=seed + r))
-            pool, cut_info = legal_pool(s_cut.cpu().numpy(), is_seen_lab,
-                                        n_min=n_min or POOL_N_MIN)
+            cutter = legal_pool if cut_rule == "legal" else ssb_pool
+            pool, cut_info = cutter(s_cut.cpu().numpy(), is_seen_lab,
+                                    n_min=n_min or POOL_N_MIN)
             if not cut_info["ok"] and on_refuse == "skip":
                 print(f"  round {r}: label-free cut DECLINED "
                       f"({cut_info['reason']}); no anchors, no fine-tune")

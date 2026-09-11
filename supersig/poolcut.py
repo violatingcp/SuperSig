@@ -193,3 +193,63 @@ def label_free_kmax(w, n_min=N_MIN, k_floor=K_FLOOR, k_cap=K_CAP):
     """
     return int(np.clip(int(np.floor(float(np.sum(w)) / max(n_min, 1))),
                        k_floor, k_cap))
+
+
+def ssb_pool(scores, is_seen_lab, n_min=N_MIN, a=2.0, q_min=Q_MIN, q_max=Q_MAX):
+    """Significance-optimal pool cut: k* = argmax_k  s / (a/2 + sqrt(b)).
+
+    The alternative to `legal_pool` proposed 2026-09-10.  Faithful to the
+    counting-experiment definition: scan the density-ratio threshold; at each
+    corpus cut of size k,
+
+        n(k) = k                                (corpus points passing)
+        b(k) = N * frac_ref(score > threshold)  (background prediction: the
+                                                 reference pass-rate scaled to
+                                                 the corpus size)
+        s(k) = n(k) - b(k)                       (excess above background)
+
+    and select the k maximising the Punzi figure of merit s/(a/2 + sqrt(b))
+    (a=2 targets a 2-sigma discovery; the a/2 term regularises the b->0 tail
+    where a raw s/sqrt(b) would explode on a single background-free point).
+
+    Contrast with legal_pool, which takes the TIGHTEST k with estimated novel
+    count >= n_min (maximum purity) and DECLINES below that.  ssb_pool instead
+    sits at the significance optimum -- generally looser, lower purity -- and
+    engages whenever any positive excess exists (`ok=False` only when the
+    excess is non-positive at every cut, i.e. a pure-null curve).  Same
+    (corpus, seen-reference) inputs, so it is equally open-world legal; it
+    optimises the cut as if the pool were the test statistic, which it is not
+    (the pool seeds clustering) -- hence the head-to-head against legal.
+    """
+    scores = np.asarray(scores, dtype=np.float64)
+    is_seen_lab = np.asarray(is_seen_lab, dtype=bool)
+    n = len(scores)
+    ref = scores[is_seen_lab]
+    n_ref = len(ref)
+    if n == 0 or n_ref == 0:
+        return np.zeros(n, dtype=bool), dict(ok=False, reason="empty",
+                                             q=0.0, pool=0, s_hat=0.0,
+                                             b_hat=0.0, fom=0.0, kmax=K_FLOOR)
+    order = np.argsort(-scores)                       # corpus, descending
+    s_sorted = scores[order]
+    k = np.arange(1, n + 1, dtype=np.float64)          # n(k) = corpus passing
+    ref_sorted = np.sort(ref)                          # ascending
+    # reference points with score strictly greater than each corpus threshold
+    ref_above = n_ref - np.searchsorted(ref_sorted, s_sorted, side="right")
+    b = ref_above.astype(np.float64) * (n / n_ref)     # background prediction
+    s = k - b                                          # excess
+    fom = s / (a / 2.0 + np.sqrt(np.maximum(b, 0.0)))
+    # restrict the argmax to the same [q_min, q_max] window legal uses
+    lo = max(1, int(round(q_min * n)))
+    hi = max(lo, min(n, int(round(q_max * n))))
+    win = slice(lo - 1, hi)
+    kk = lo + int(np.argmax(fom[win]))                 # 1-indexed best k
+    best_s, best_b, best_fom = float(s[kk - 1]), float(b[kk - 1]), float(fom[kk - 1])
+    ok = best_s > 0.0
+    why = "ssb" if ok else "no positive excess at any cut"
+    kmax = int(np.clip(int(np.floor(max(best_s, 0.0) / max(n_min, 1))),
+                       K_FLOOR, K_CAP))
+    mask = np.zeros(n, dtype=bool)
+    mask[order[:kk]] = True
+    return mask, dict(ok=ok, reason=why, q=kk / n, pool=kk,
+                      s_hat=best_s, b_hat=best_b, fom=best_fom, kmax=kmax)

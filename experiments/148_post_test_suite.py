@@ -71,7 +71,7 @@ def main():
     ap.add_argument("--pool", default="dist", choices=["dist", "np"],
                     help="pool scorer for the discovery loop: distance to "
                          "anchors (campaign default) or the NP density ratio")
-    ap.add_argument("--cut", default="quantile", choices=["quantile", "legal"],
+    ap.add_argument("--cut", default="quantile", choices=["quantile", "legal", "ssb"],
                     help="pool cut: 95th percentile of seen scores (campaign "
                          "default) or the paper's label-free rule (needs --pool np)")
     ap.add_argument("--n-min", type=int, default=None,
