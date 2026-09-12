@@ -1,0 +1,45 @@
+{
+ "note": "BBE (best-bin MPE, Garg 2021) vs tv/mass/excess b_hat estimators; recovery = b_hat/b_true (1.0=perfect)",
+ "cifar10_b0.10_exp54": {
+  "nplm_bil_cw": {
+   "tv": 0.0,
+   "bbe": 0.85
+  },
+  "nplm_bilinear": {
+   "tv": 0.0,
+   "bbe": 0.89
+  },
+  "nplm_bil_sup_cw": {
+   "tv": 0.35,
+   "bbe": 0.77
+  },
+  "nplm_distance": {
+   "tv": 0.73,
+   "bbe": 0.88
+  },
+  "nplm_dist_sup_cw": {
+   "tv": 0.93,
+   "bbe": 0.97
+  },
+  "nplm_sup_dist": {
+   "tv": 0.91,
+   "bbe": 0.99
+  }
+ },
+ "cifar100_b0.01_complementarity": {
+  "tv": {
+   "median_recovery": 0.44,
+   "collapse_cells": 4
+  },
+  "bbe": {
+   "median_recovery": 0.46,
+   "collapse_cells": 5
+  },
+  "max_tv_bbe": {
+   "median_recovery": 0.7,
+   "collapse_cells": 0
+  },
+  "n_cells": 16
+ },
+ "verdict": "CIFAR-10 (b=0.10): BBE clear win, rescues weak spaces where tv=0. CIFAR-100 (b=0.01): mixed, but max(tv,bbe) fixes all false-abstentions -- estimators fail in different cells. Recommend b_hat=max(tv,bbe)."
+}

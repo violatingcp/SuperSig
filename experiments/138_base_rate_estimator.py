@@ -117,10 +117,56 @@ import json
 import numpy as np
 import torch
 
-ESTIMATORS = ("tv", "mass", "excess")
+ESTIMATORS = ("tv", "mass", "excess", "bbe")
 
 
 # -------------------------------------------------- (2) the three estimators
+
+def bbe_estimate(f, f_ref, delta=0.1, n_bins=200, qp_floor=1e-3):
+    """Best Bin Estimation of the base rate (Garg et al. 2021, NeurIPS).
+
+    We have a PURE sample of BACKGROUND (the reference f_ref) and a MIXTURE
+    (the corpus f) = (1-b)*background + b*novel.  BBE estimates the background
+    weight (1-b) and returns b = 1 - (1-b).
+
+    Score the BACKGROUND-likeness as s = -f (the critic's f is high for novel,
+    so background concentrates at LOW f = HIGH s).  For a threshold z let
+
+        q_p(z) = fraction of the pure background with s >= z   (top background bin)
+        q_u(z) = fraction of the corpus          with s >= z
+
+    In a bin where the novel component is absent, q_u/q_p -> (1-b).  BBE scans z,
+    SELECTS the bin minimising the DKW upper-confidence bound on that ratio
+    (which penalises noisy small-q_p bins), and REPORTS the point ratio there.
+    Unlike the TV sum it never averages over the overlap region, so it stays
+    exact whenever any background-clean bin exists, regardless of overlap
+    elsewhere -- the property that motivates trying it here.
+    """
+    s_pos = -np.asarray(f_ref, np.float64)
+    s_mix = -np.asarray(f, np.float64)
+    n_p, n_u = len(s_pos), len(s_mix)
+    if n_p == 0 or n_u == 0:
+        return 0.0
+    eps_p = float(np.sqrt(np.log(4.0 / delta) / (2.0 * n_p)))
+    eps_u = float(np.sqrt(np.log(4.0 / delta) / (2.0 * n_u)))
+    pos_sorted = np.sort(s_pos)
+    mix_sorted = np.sort(s_mix)
+    # candidate thresholds: quantiles of the background score from the top bins
+    qs = np.linspace(0.5, 0.999, n_bins)
+    zs = np.quantile(s_pos, qs)
+    best_ub, best_point = np.inf, 1.0
+    for z in zs:
+        qp = (n_p - np.searchsorted(pos_sorted, z, side="left")) / n_p
+        qu = (n_u - np.searchsorted(mix_sorted, z, side="left")) / n_u
+        if qp <= qp_floor:
+            continue
+        point = qu / qp
+        ub = (qu + eps_u) / max(qp - eps_p, 1e-12)   # DKW upper bound; selects bin
+        if ub < best_ub:
+            best_ub, best_point = ub, point
+    alpha_bg = float(min(max(best_point, 0.0), 1.0))   # estimated background weight
+    return float(max(0.0, 1.0 - alpha_bg))
+
 
 def b_hat(f, f_ref, which="tv", thresh=2.0, ref_q=0.99):
     """Label-free base-rate estimates.  `f` is the NP critic's log density ratio.
@@ -141,6 +187,8 @@ def b_hat(f, f_ref, which="tv", thresh=2.0, ref_q=0.99):
         t = float(np.quantile(f_ref, ref_q))
         p_c, p_r = float(np.mean(f > t)), float(np.mean(f_ref > t))
         return 0.0 if p_r >= 1.0 else float(max(0.0, (p_c - p_r) / (1.0 - p_r)))
+    if which == "bbe":
+        return bbe_estimate(f, f_ref)
     raise ValueError(which)
 
 
@@ -282,7 +330,7 @@ def _selftest():
     print("   -> a uniformly biased b_hat does not move the knee")
 
     print("\n2. THE THREE ESTIMATORS UNDER OVERLAP")
-    print(f"   {'overlap':>8s}{'sep':>6s}{'tv':>9s}{'mass':>9s}{'excess':>9s}"
+    print(f"   {'overlap':>8s}{'sep':>6s}{'tv':>9s}{'mass':>9s}{'excess':>9s}{'bbe':>9s}"
           f"   (true b = 0.020)")
     shrink = {}
     for ov in (0.0, 0.4, 0.7, 0.9):
