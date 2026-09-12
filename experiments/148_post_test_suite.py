@@ -74,6 +74,8 @@ def main():
     ap.add_argument("--cut", default="quantile", choices=["quantile", "legal", "ssb"],
                     help="pool cut: 95th percentile of seen scores (campaign "
                          "default) or the paper's label-free rule (needs --pool np)")
+    ap.add_argument("--b-est", default="tv", choices=["tv", "max_tv_bbe"],
+                    help="base-rate estimator for the legal cut gate")
     ap.add_argument("--n-min", type=int, default=None,
                     help="override the derived cut's clusterability constant "
                          "(default: supersig.poolcut.N_MIN = 10)")
@@ -82,7 +84,8 @@ def main():
     args = ap.parse_args()
     ptag = ("" if args.pool == "dist" else f"_{args.pool}") + \
            ("" if args.cut == "quantile" else f"_{args.cut}") + \
-           ("" if args.n_min is None else f"_nmin{args.n_min}")
+           ("" if args.n_min is None else f"_nmin{args.n_min}") + \
+           ("" if args.b_est == "tv" else "_maxbbe")
 
     ds = args.dataset
     cfg = recipe(ds, emb_dim=args.dim)
@@ -160,7 +163,8 @@ def main():
                 n_slices=cfg["n_slices"], rounds=args.rounds,
                 ft_epochs=ft_ep, names=None, seed=args.seed,
                 pool_score=args.pool, cut_rule=args.cut,
-                n_min=args.n_min, on_refuse="skip")
+                n_min=args.n_min, on_refuse="skip",
+                b_estimator=args.b_est)
             pur1 = float(hist[0]["purity"]) if hist else float("nan")
             c0 = hist[0].get("cut", {}) if hist else {}
             entry.setdefault("cut", {})[fk] = dict(

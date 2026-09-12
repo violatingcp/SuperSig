@@ -166,7 +166,7 @@ def run_discovery(backbone, means, *, base_ds, train_eval_loader, test_loader,
                   kmax=None, merge_dist=3.0, exempt_repulsion=True,
                   names=None, seed=0, pool_score="dist",
                   cut_rule="quantile", n_min=None, bn_adapt=False,
-                  on_refuse="fallback"):
+                  on_refuse="fallback", b_estimator="tv"):
     """
     Iterated anchor discovery.  `means` holds the trained class anchors
     (n_classes rows); returns (extended_means, history) where history is one
@@ -218,9 +218,13 @@ def run_discovery(backbone, means, *, base_ds, train_eval_loader, test_loader,
         if cut_rule in ("legal", "ssb"):
             s_cut = (s if pool_score == "np"
                      else np_pool_scores(z, is_seen_lab, seed=seed + r))
-            cutter = legal_pool if cut_rule == "legal" else ssb_pool
-            pool, cut_info = cutter(s_cut.cpu().numpy(), is_seen_lab,
-                                    n_min=n_min or POOL_N_MIN)
+            if cut_rule == "legal":
+                pool, cut_info = legal_pool(
+                    s_cut.cpu().numpy(), is_seen_lab,
+                    n_min=n_min or POOL_N_MIN, b_estimator=b_estimator)
+            else:
+                pool, cut_info = ssb_pool(s_cut.cpu().numpy(), is_seen_lab,
+                                          n_min=n_min or POOL_N_MIN)
             if not cut_info["ok"] and on_refuse == "skip":
                 print(f"  round {r}: label-free cut DECLINED "
                       f"({cut_info['reason']}); no anchors, no fine-tune")

@@ -139,11 +139,26 @@ def _null_expectation(k, n, w_ref):
     return float(_null_curve(np.array([k]), n, w_ref)[0])
 
 
-def legal_pool(scores, is_seen_lab, n_min=N_MIN, q_min=Q_MIN, q_max=Q_MAX):
+def legal_pool(scores, is_seen_lab, n_min=N_MIN, q_min=Q_MIN, q_max=Q_MAX,
+               b_estimator="tv"):
     """The label-free pool: tightest cut holding >= n_min ESTIMATED novel points.
 
     Returns (mask, info).  `info['ok']` is False when the estimated novelty
     cannot support a detectable cluster at any cut -- pool at q_max and say so.
+
+    b_estimator:
+      "tv" (default)     engage/cut on the TV-sum estimated-novelty curve --
+                         byte-identical to the archived behaviour.
+      "max_tv_bbe"       (2026-09-12) BBE (best-bin MPE) recovers novelty the
+                         TV-sum misses on weak/overlapping spaces where the sum
+                         shrinks to ~0 and the cut FALSELY declines.  Uses the
+                         exp-138 identity "a b_hat low by factor alpha == an
+                         n_min too large by alpha": with alpha = tv_total /
+                         max(tv_total, bbe_count), the effective threshold is
+                         n_min*alpha on the TV ranking.  When BBE finds no more
+                         than TV (alpha=1) this is exactly the "tv" rule, so it
+                         only ever LOOSENS the decline, and only when a second
+                         independent estimator agrees novelty is present.
     """
     scores = np.asarray(scores, dtype=np.float64)
     is_seen_lab = np.asarray(is_seen_lab, dtype=bool)
@@ -164,20 +179,32 @@ def legal_pool(scores, is_seen_lab, n_min=N_MIN, q_min=Q_MIN, q_max=Q_MAX):
     total = float(cw[-1]) if n else 0.0
     null_rate = float(np.mean(w_ref))
 
+    n_min_eff = float(n_min)
+    bbe_count = None
+    if b_estimator == "max_tv_bbe" and n:
+        bbe_count = float(bbe_estimate(scores, f_ref) * n)
+        denom = max(total, bbe_count, 1e-12)
+        n_min_eff = float(n_min) * (total / denom)   # low b_hat == large n_min
+    elif b_estimator not in ("tv", "max_tv_bbe"):
+        raise ValueError(f"b_estimator={b_estimator!r}")
+
     k_max_pts = max(1, int(round(q_max * n)))
     k_min_pts = max(1, int(round(q_min * n)))
-    if total < n_min:
+    if total < n_min_eff:
         k = k_max_pts
-        ok, why = False, f"estimated novelty {total:.1f} < n_min={n_min}"
+        ok, why = False, (f"estimated novelty {total:.1f} < n_min_eff="
+                          f"{n_min_eff:.2f}")
     else:
-        hit = np.searchsorted(cw, n_min) + 1          # tightest k with cw >= n_min
+        hit = np.searchsorted(cw, n_min_eff) + 1      # tightest k with cw >= n_min_eff
         k = int(np.clip(hit, k_min_pts, k_max_pts))
-        ok, why = True, "ok"
+        ok, why = True, ("ok" if b_estimator == "tv"
+                         else f"ok (max_tv_bbe, n_min_eff={n_min_eff:.2f})")
     mask = np.zeros(n, dtype=bool)
     mask[order[:k]] = True
     return mask, dict(ok=ok, reason=why, q=k / n, pool=k,
                       n_hat_pool=float(cw[min(k, n) - 1]) if n else 0.0,
                       n_hat_total=total,
+                      n_hat_bbe=bbe_count, n_min_eff=n_min_eff,
                       null_rate=null_rate,
                       kmax=label_free_kmax(
                           np.maximum(0.0, w - null_rate), n_min))
@@ -253,3 +280,48 @@ def ssb_pool(scores, is_seen_lab, n_min=N_MIN, a=2.0, q_min=Q_MIN, q_max=Q_MAX):
     mask[order[:kk]] = True
     return mask, dict(ok=ok, reason=why, q=kk / n, pool=kk,
                       s_hat=best_s, b_hat=best_b, fom=best_fom, kmax=kmax)
+
+def bbe_estimate(f, f_ref, delta=0.1, n_bins=200, qp_floor=1e-3):
+    """Best Bin Estimation of the base rate (Garg et al. 2021, NeurIPS).
+
+    We have a PURE sample of BACKGROUND (the reference f_ref) and a MIXTURE
+    (the corpus f) = (1-b)*background + b*novel.  BBE estimates the background
+    weight (1-b) and returns b = 1 - (1-b).
+
+    Score the BACKGROUND-likeness as s = -f (the critic's f is high for novel,
+    so background concentrates at LOW f = HIGH s).  For a threshold z let
+
+        q_p(z) = fraction of the pure background with s >= z   (top background bin)
+        q_u(z) = fraction of the corpus          with s >= z
+
+    In a bin where the novel component is absent, q_u/q_p -> (1-b).  BBE scans z,
+    SELECTS the bin minimising the DKW upper-confidence bound on that ratio
+    (which penalises noisy small-q_p bins), and REPORTS the point ratio there.
+    Unlike the TV sum it never averages over the overlap region, so it stays
+    exact whenever any background-clean bin exists, regardless of overlap
+    elsewhere -- the property that motivates trying it here.
+    """
+    s_pos = -np.asarray(f_ref, np.float64)
+    s_mix = -np.asarray(f, np.float64)
+    n_p, n_u = len(s_pos), len(s_mix)
+    if n_p == 0 or n_u == 0:
+        return 0.0
+    eps_p = float(np.sqrt(np.log(4.0 / delta) / (2.0 * n_p)))
+    eps_u = float(np.sqrt(np.log(4.0 / delta) / (2.0 * n_u)))
+    pos_sorted = np.sort(s_pos)
+    mix_sorted = np.sort(s_mix)
+    # candidate thresholds: quantiles of the background score from the top bins
+    qs = np.linspace(0.5, 0.999, n_bins)
+    zs = np.quantile(s_pos, qs)
+    best_ub, best_point = np.inf, 1.0
+    for z in zs:
+        qp = (n_p - np.searchsorted(pos_sorted, z, side="left")) / n_p
+        qu = (n_u - np.searchsorted(mix_sorted, z, side="left")) / n_u
+        if qp <= qp_floor:
+            continue
+        point = qu / qp
+        ub = (qu + eps_u) / max(qp - eps_p, 1e-12)   # DKW upper bound; selects bin
+        if ub < best_ub:
+            best_ub, best_point = ub, point
+    alpha_bg = float(min(max(best_point, 0.0), 1.0))   # estimated background weight
+    return float(max(0.0, 1.0 - alpha_bg))
