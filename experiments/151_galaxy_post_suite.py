@@ -77,7 +77,7 @@ def main():
     ap.add_argument("--draws", default="0,3,5,7,8")
     ap.add_argument("--fractions", default="0.01,0.02,0.03,0.05,0.1")
     ap.add_argument("--pool", default="np", choices=["dist", "np"])
-    ap.add_argument("--cut", default="legal", choices=["quantile", "legal"])
+    ap.add_argument("--cut", default="legal", choices=["quantile", "legal", "ssb"])
     ap.add_argument("--n-min", type=int, default=5)
     ap.add_argument("--rounds", type=int, default=2)
     ap.add_argument("--ft-epochs", type=int, default=None)
