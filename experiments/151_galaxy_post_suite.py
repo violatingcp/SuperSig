@@ -79,6 +79,7 @@ def main():
     ap.add_argument("--pool", default="np", choices=["dist", "np"])
     ap.add_argument("--cut", default="legal", choices=["quantile", "legal", "ssb"])
     ap.add_argument("--n-min", type=int, default=5)
+    ap.add_argument("--b-est", default="tv", choices=["tv", "max_tv_bbe"])
     ap.add_argument("--rounds", type=int, default=2)
     ap.add_argument("--ft-epochs", type=int, default=None)
     ap.add_argument("--n-slices", type=int, default=64)
@@ -95,7 +96,7 @@ def main():
     n_sig_toys = 10 if args.quick else 50
     steps = 60 if args.quick else args.steps
     ft_ep = args.ft_epochs or (1 if args.quick else 5)
-    ptag = f"_{args.pool}_{args.cut}_nmin{args.n_min}"
+    ptag = f"_{args.pool}_{args.cut}_nmin{args.n_min}" + ("" if args.b_est == "tv" else "_maxbbe")
     cfg = dict(n_classes=N_CLS, pair_dist=5.0)
     rep_weight = 20.0 * 45.0 / (N_CLS * (N_CLS - 1) / 2)   # exp 70
     os.makedirs(args.out, exist_ok=True)
@@ -154,7 +155,8 @@ def main():
                     n_slices=args.n_slices, rounds=args.rounds,
                     ft_epochs=ft_ep, names=None, seed=args.seed,
                     pool_score=args.pool, cut_rule=args.cut,
-                    n_min=args.n_min, on_refuse="skip")
+                    n_min=args.n_min, on_refuse="skip",
+                    b_estimator=args.b_est)
                 pur1 = float(hist[0]["purity"]) if hist else float("nan")
                 c0 = hist[0].get("cut", {}) if hist else {}
                 entry["cut"][fk] = dict(ok=bool(c0.get("ok", True)),
