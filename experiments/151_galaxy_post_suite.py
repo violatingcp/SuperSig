@@ -46,12 +46,13 @@ REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA, CKPT = os.path.join(REPO, "data"), os.path.join(REPO, "checkpoints")
 OUT = os.path.join(REPO, "logs", "exp151")
 DS, N_CLS = "galaxy10", 10
+EMB_TAG = ""   # set in main() from --emb-dim
 TESTS = ["eucl", "eucl-disc", "maha", "mmd", "sparker", "sparker-anch"]
 
 
 def load_arm(base, arm, draw):
     """(head module, Xtr, ytr, Xte, yte) for one (arm, draw), or None."""
-    tag = f"_h1_d{draw}"
+    tag = f"_h1_d{draw}{EMB_TAG}"
     bp = os.path.join(DATA, f"tf_feats_{DS}_{base}_ft70_{arm}{tag}.pt")
     ck = os.path.join(CKPT, f"{DS}_ft_{base}_{arm}_seen{tag}.pt")
     if not (os.path.exists(bp) and os.path.exists(ck)):
@@ -80,6 +81,7 @@ def main():
     ap.add_argument("--cut", default="legal", choices=["quantile", "legal", "ssb"])
     ap.add_argument("--n-min", type=int, default=5)
     ap.add_argument("--b-est", default="tv", choices=["tv", "max_tv_bbe"])
+    ap.add_argument("--emb-dim", type=int, default=100)
     ap.add_argument("--rounds", type=int, default=2)
     ap.add_argument("--ft-epochs", type=int, default=None)
     ap.add_argument("--n-slices", type=int, default=64)
@@ -96,7 +98,9 @@ def main():
     n_sig_toys = 10 if args.quick else 50
     steps = 60 if args.quick else args.steps
     ft_ep = args.ft_epochs or (1 if args.quick else 5)
-    ptag = f"_{args.pool}_{args.cut}_nmin{args.n_min}" + ("" if args.b_est == "tv" else "_maxbbe")
+    global EMB_TAG
+    EMB_TAG = "" if args.emb_dim == 100 else f"_e{args.emb_dim}"
+    ptag = f"_{args.pool}_{args.cut}_nmin{args.n_min}" + ("" if args.b_est == "tv" else "_maxbbe") + EMB_TAG
     cfg = dict(n_classes=N_CLS, pair_dist=5.0)
     rep_weight = 20.0 * 45.0 / (N_CLS * (N_CLS - 1) / 2)   # exp 70
     os.makedirs(args.out, exist_ok=True)

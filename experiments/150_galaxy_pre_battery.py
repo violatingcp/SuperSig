@@ -47,6 +47,7 @@ REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA, CKPT = os.path.join(REPO, "data"), os.path.join(REPO, "checkpoints")
 OUT = os.path.join(REPO, "logs", "exp150")
 DS, N_CLS = "galaxy10", 10
+EMB_TAG = ""   # set in main() from --emb-dim; "_e10" etc when !=100
 FT_ARMS = ["supcon-ft", "ss-ft", "nplm-sup-ft", "simclr-ft",
            "sigreg-ssl-ft", "nplm-bil-ft", "supcon-cw-ft"]
 GCD_ARMS = ["gcd-ft", "gcd-sigreg-ft"]
@@ -55,7 +56,7 @@ RES_PARENTS = {"supcon-ft": ["res", "resnplm"], "ss-ft": ["res"]}
 
 def head_embs(base, arm, draw, emb_dim_cache={}):
     """Load bank + checkpoint head for one arm; return (Htr, ytr, Hte, yte)."""
-    tag = f"_h1_d{draw}"
+    tag = f"_h1_d{draw}{EMB_TAG}"
     bp = os.path.join(DATA, f"tf_feats_{DS}_{base}_ft70_{arm}{tag}.pt")
     ck = os.path.join(CKPT, f"{DS}_ft_{base}_{arm}_seen{tag}.pt")
     if not (os.path.exists(bp) and os.path.exists(ck)):
@@ -104,6 +105,7 @@ def main():
     ap.add_argument("--base", default="dino",
                     choices=["dino", "lejepa", "visreg"])
     ap.add_argument("--draws", default="0,3,5,7,8")
+    ap.add_argument("--emb-dim", type=int, default=100)
     ap.add_argument("--arms", default=None,
                     help="comma subset of space labels (default all)")
     ap.add_argument("--seed", type=int, default=0)
@@ -115,6 +117,8 @@ def main():
     ap.add_argument("--quick", action="store_true")
     ap.add_argument("--out", default=OUT)
     args = ap.parse_args()
+    global EMB_TAG
+    EMB_TAG = "" if args.emb_dim == 100 else f"_e{args.emb_dim}"
 
     fracs = [float(x) for x in args.fractions.split(",")]
     n_null = 20 if args.quick else 200
@@ -126,7 +130,7 @@ def main():
         holdouts = holdout_set(DS, N_CLS, nh=1, draw=draw)
         seen = [c for c in range(N_CLS) if c not in holdouts]
         res_path = os.path.join(args.out,
-                                f"minfrac_{DS}_{args.base}_d{draw}.json")
+                                f"minfrac_{DS}_{args.base}_d{draw}{EMB_TAG}.json")
         results = (json.load(open(res_path)) if os.path.exists(res_path)
                    else {})
         for label, loader in space_list(args.base, draw):
