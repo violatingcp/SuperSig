@@ -158,7 +158,7 @@ def main():
             for nm, (a, b) in ((f"{key} (residual)", (rtr, rte)), (f"{key} (concat)", (ctr, cte))):
                 results[nm] = battery(nm, a, b, tr_lab, te_lab)
                 np.savez(os.path.join("logs", "exp136", "banks",
-                                      f"embs_{nm.replace(' ', '_').replace('->', '-')}_{ds}{tag}.npz"),
+                                      (f"embs_{nm.replace(' ', '_').replace('->', '-')}_{ds}{tag}" + ("" if args.dim==100 else f"_e{args.dim}") + ".npz")),
                          tr=a, tr_lab=tr_lab, te=b, te_lab=te_lab)
         del net; torch.cuda.empty_cache()
 
