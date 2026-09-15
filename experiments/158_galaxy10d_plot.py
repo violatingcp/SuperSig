@@ -91,7 +91,10 @@ def main():
                          f"{args.draw} (novel = class {list(hold)[0]})",
                          fontsize=11)
             fig.tight_layout(rect=[0, 0, 1, 0.96])
-            pdf.savefig(fig, dpi=140); plt.close(fig)
+            pdf.savefig(fig, dpi=140)
+            png = os.path.join(OUT, f"pca_{tag}_{arm}.png")
+            fig.savefig(png, dpi=140); plt.close(fig)
+            print(f"  wrote {png}")
     print(f"wrote {pdf_path} ({len(arms)} arms)")
 
     # overview: POST panels for the discovery-relevant arms, one grid
