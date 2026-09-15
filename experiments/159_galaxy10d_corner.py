@@ -21,12 +21,17 @@ import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-IN = os.path.join(REPO, "logs", "exp157")
+IN_GAL = os.path.join(REPO, "logs", "exp157")
+IN_C10 = os.path.join(REPO, "logs", "exp160")
 OUT = os.path.join(REPO, "plots")
-NAMES = {0: "disturbed", 1: "merging", 2: "round smooth",
-         3: "in-between", 4: "cigar smooth", 5: "barred spiral",
-         6: "tight spiral", 7: "loose spiral", 8: "edge-on no bulge",
-         9: "edge-on bulge"}
+NAMES_GAL = {0: "disturbed", 1: "merging", 2: "round smooth",
+             3: "in-between", 4: "cigar smooth", 5: "barred spiral",
+             6: "tight spiral", 7: "loose spiral", 8: "edge-on no bulge",
+             9: "edge-on bulge"}
+NAMES_C10 = {0: "airplane", 1: "automobile", 2: "bird", 3: "cat",
+             4: "deer", 5: "dog", 6: "frog", 7: "horse", 8: "ship",
+             9: "truck"}
+NAMES = NAMES_GAL   # rebound in main()
 
 
 def corner(Z, lab, seen, novel, anchors, title, per_seen=120, per_nov=600):
@@ -92,6 +97,8 @@ def corner(Z, lab, seen, novel, anchors, title, per_seen=120, per_nov=600):
 
 def main():
     ap = argparse.ArgumentParser()
+    ap.add_argument("--dataset", default="galaxy10",
+                    choices=["galaxy10", "cifar10"])
     ap.add_argument("--base", default="lejepa")
     ap.add_argument("--draw", type=int, default=0)
     ap.add_argument("--emb-dim", type=int, default=10)
@@ -100,9 +107,17 @@ def main():
     ap.add_argument("--state", default="post", choices=["pre", "post"])
     args = ap.parse_args()
     os.makedirs(OUT, exist_ok=True)
+    global NAMES
+    if args.dataset == "cifar10":
+        IN, NAMES = IN_C10, NAMES_C10
+        stub = f"viz_cifar10_h{args.draw}_e{args.emb_dim}"
+        pfx = f"cifar10_h{args.draw}_e{args.emb_dim}"
+    else:
+        IN, NAMES = IN_GAL, NAMES_GAL
+        stub = f"viz_galaxy10_{args.base}_d{args.draw}_e{args.emb_dim}"
+        pfx = f"galaxy10_{args.base}_d{args.draw}_e{args.emb_dim}"
     for arm in args.arms:
-        f = os.path.join(IN, f"viz_galaxy10_{args.base}_d{args.draw}_"
-                         f"e{args.emb_dim}_{arm}.npz")
+        f = os.path.join(IN, f"{stub}_{arm}.npz")
         if not os.path.exists(f):
             print(f"[miss] {arm}"); continue
         d = np.load(f)
@@ -110,13 +125,13 @@ def main():
         anchors = d["anchors"] if args.state == "post" else np.empty((0,
                                                         args.emb_dim))
         novel = int(d["holdout"][0])
-        title = (f"Galaxy10/{args.base} 10-D latent  --  {arm}  "
+        dsname = "CIFAR-10" if args.dataset == "cifar10" else f"Galaxy10/{args.base}"
+        title = (f"{dsname} 10-D latent  --  {arm}  "
                  f"({args.state.upper()}"
                  f"{' s/√b discovery' if args.state=='post' else '-discovery'})")
         fig = corner(Z, d["te_lab"], d["seen"].tolist(), novel, anchors,
                      title)
-        out = os.path.join(OUT, f"corner_galaxy10_{args.base}_d{args.draw}_"
-                           f"e{args.emb_dim}_{arm}_{args.state}.png")
+        out = os.path.join(OUT, f"corner_{pfx}_{arm}_{args.state}.png")
         fig.savefig(out, dpi=130); plt.close(fig)
         print(f"wrote {out}")
 

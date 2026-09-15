@@ -20,12 +20,17 @@ from matplotlib.backends.backend_pdf import PdfPages
 from sklearn.decomposition import PCA
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-IN = os.path.join(REPO, "logs", "exp157")
+IN_GAL = os.path.join(REPO, "logs", "exp157")
+IN_C10 = os.path.join(REPO, "logs", "exp160")
 OUT = os.path.join(REPO, "plots")
 GAL_NAMES = {0: "disturbed", 1: "merging", 2: "round smooth",
              3: "in-between smooth", 4: "cigar smooth", 5: "barred spiral",
              6: "unbarred tight spiral", 7: "unbarred loose spiral",
              8: "edge-on w/o bulge", 9: "edge-on w/ bulge"}
+C10_NAMES = {0: "airplane", 1: "automobile", 2: "bird", 3: "cat",
+             4: "deer", 5: "dog", 6: "frog", 7: "horse", 8: "ship",
+             9: "truck"}
+NAMES = GAL_NAMES   # rebound in main()
 
 
 def panel(ax, Z, lab, seen, hold, anchors, cents, title, rng, per=400):
@@ -44,7 +49,7 @@ def panel(ax, Z, lab, seen, hold, anchors, cents, title, rng, per=400):
     if len(idx) > per * 2:
         idx = rng.choice(idx, per * 2, replace=False)
     ax.scatter(P[idx, 0], P[idx, 1], s=8, c="#d62728", alpha=0.7,
-               linewidths=0, label=f"novel: {GAL_NAMES.get(h, h)}")
+               linewidths=0, label=f"novel: {NAMES.get(h, h)}")
     if C is not None:
         ax.scatter(C[:, 0], C[:, 1], s=70, marker="X", c="#1f77b4",
                    edgecolors="k", linewidths=0.6, label="seen centroids")
@@ -59,18 +64,26 @@ def panel(ax, Z, lab, seen, hold, anchors, cents, title, rng, per=400):
 
 def main():
     ap = argparse.ArgumentParser()
+    ap.add_argument("--dataset", default="galaxy10",
+                    choices=["galaxy10", "cifar10"])
     ap.add_argument("--base", default="lejepa")
     ap.add_argument("--draw", type=int, default=0)
     ap.add_argument("--emb-dim", type=int, default=10)
     ap.add_argument("--split", default="te", choices=["te", "tr"])
     args = ap.parse_args()
     os.makedirs(OUT, exist_ok=True)
+    global NAMES
     rng = np.random.default_rng(0)
-    files = sorted(glob.glob(os.path.join(
-        IN, f"viz_galaxy10_{args.base}_d{args.draw}_e{args.emb_dim}_*.npz")))
+    if args.dataset == "cifar10":
+        IN, NAMES = IN_C10, C10_NAMES
+        tag = f"cifar10_h{args.draw}_e{args.emb_dim}"
+        files = sorted(glob.glob(os.path.join(IN, f"viz_{tag}_*.npz")))
+    else:
+        IN, NAMES = IN_GAL, GAL_NAMES
+        tag = f"galaxy10_{args.base}_d{args.draw}_e{args.emb_dim}"
+        files = sorted(glob.glob(os.path.join(IN, f"viz_{tag}_*.npz")))
     if not files:
         print("no npz found"); return
-    tag = f"galaxy10_{args.base}_d{args.draw}_e{args.emb_dim}"
     pdf_path = os.path.join(OUT, f"viz_{tag}.pdf")
     arms = []
     with PdfPages(pdf_path) as pdf:
@@ -87,8 +100,9 @@ def main():
                   seen, hold, d["anchors"], d["seen_centroids"],
                   f"{arm}  POST s/√b  ({len(d['anchors'])} anchor"
                   f"{'s' if len(d['anchors'])!=1 else ''})", rng)
-            fig.suptitle(f"Galaxy10 / {args.base} / 10-D latent / draw "
-                         f"{args.draw} (novel = class {list(hold)[0]})",
+            dsn = "CIFAR-10" if args.dataset=="cifar10" else f"Galaxy10 / {args.base}"
+            fig.suptitle(f"{dsn} / 10-D latent (novel = class "
+                         f"{list(hold)[0]} {NAMES.get(list(hold)[0],'')})",
                          fontsize=11)
             fig.tight_layout(rect=[0, 0, 1, 0.96])
             pdf.savefig(fig, dpi=140)
@@ -110,8 +124,9 @@ def main():
               f"{arm}  ({len(d['anchors'])} anchor)", rng)
     for ax in axes.ravel()[len(key):]:
         ax.axis("off")
-    fig.suptitle(f"Galaxy10 / {args.base} 10-D latent, POST s/√b "
-                 f"discovery (novel = class {int(np.load(files[0])['holdout'][0])})",
+    dsn = "CIFAR-10" if args.dataset=="cifar10" else f"Galaxy10 / {args.base}"
+    fig.suptitle(f"{dsn} 10-D latent, POST s/√b discovery "
+                 f"(novel = class {int(np.load(files[0])['holdout'][0])})",
                  fontsize=13)
     fig.tight_layout(rect=[0, 0, 1, 0.97])
     ov = os.path.join(OUT, f"viz_{tag}_overview.png")

@@ -85,7 +85,8 @@ def main():
     ptag = ("" if args.pool == "dist" else f"_{args.pool}") + \
            ("" if args.cut == "quantile" else f"_{args.cut}") + \
            ("" if args.n_min is None else f"_nmin{args.n_min}") + \
-           ("" if args.b_est == "tv" else "_maxbbe")
+           ("" if args.b_est == "tv" else "_maxbbe") + \
+           ("" if args.dim == 100 else f"_e{args.dim}")
 
     ds = args.dataset
     cfg = recipe(ds, emb_dim=args.dim)
