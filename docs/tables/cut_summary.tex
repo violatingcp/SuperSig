@@ -1,0 +1,32 @@
+% STATUS: 15 (dataset, cut) rows; each aggregates all (arm, draw) cells (CIFAR: 16/12 arms $\times$ 4 draws; Galaxy: 7 arms $\times$ 5 draws).  \emph{engage} = cells with a finite $f^\star$; \emph{anchor-aware} = of those, how many are won by an anchor-using test (eucl-disc / sparker-anch) rather than a blind two-sample test; best/median over engaged cells.  np density-ratio pool, $n_{\min}{=}5$ throughout.
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{llcccc}
+\toprule
+dataset & cut & engage & anchor-aware & best $f^\star$ & median $f^\star$ \\
+\midrule
+\emph{CIFAR-10} & tight & 50/52 & 27/52 & 0.009 & 0.020 \\
+ & $s/\sqrt{b}$ & 52/52 & 42/52 & 0.008 & 0.017 \\
+ & $\max($tv,BBE$)$ & 52/52 & 40/52 & 0.007 & 0.018 \\
+\addlinespace
+\emph{CIFAR-100} & tight & 9/48 & 6/48 & 0.008 & 0.011 \\
+ & $s/\sqrt{b}$ & 48/48 & 25/48 & 0.009 & 0.019 \\
+ & $\max($tv,BBE$)$ & 47/48 & 24/48 & 0.009 & 0.019 \\
+\addlinespace
+\emph{Galaxy/lejepa} & tight & 32/35 & 30/35 & 0.010 & 0.020 \\
+ & $s/\sqrt{b}$ & 35/35 & 33/35 & 0.010 & 0.015 \\
+ & $\max($tv,BBE$)$ & 35/35 & 33/35 & 0.010 & 0.015 \\
+\addlinespace
+\emph{Galaxy/visreg} & tight & 34/35 & 28/35 & 0.010 & 0.020 \\
+ & $s/\sqrt{b}$ & 35/35 & 33/35 & 0.010 & 0.016 \\
+ & $\max($tv,BBE$)$ & 35/35 & 33/35 & 0.010 & 0.018 \\
+\addlinespace
+\emph{Galaxy/dino} & tight & 29/35 & 27/35 & 0.014 & 0.020 \\
+ & $s/\sqrt{b}$ & 35/35 & 32/35 & 0.012 & 0.019 \\
+ & $\max($tv,BBE$)$ & 35/35 & 35/35 & 0.013 & 0.021 \\
+\bottomrule
+\end{tabular}
+\caption{\textbf{The discovery-cut comparison.}  The tight cut is tightest \emph{where it fires} but abstains often (esp.\ on the residual children and the low-rate CIFAR-100 regime); $s/\sqrt{b}$ and $\max($tv,BBE$)$ both engage nearly everywhere and are statistically interchangeable, with $s/\sqrt{b}$ marginally ahead (more anchor-aware wins, equal or lower median $f^\star$) while being the simpler rule.  On the clean-pool datasets (CIFAR-10, Galaxy) essentially every detection is anchor-aware; only CIFAR-100's $b{=}0.01$ regime splits into $\sim$half anchor-aware, half blind. \emph{Coverage:} 15 (dataset, cut) rows; each aggregates all (arm, draw) cells (CIFAR: 16/12 arms $\times$ 4 draws; Galaxy: 7 arms $\times$ 5 draws).  \emph{engage} = cells with a finite $f^\star$; \emph{anchor-aware} = of those, how many are won by an anchor-using test (eucl-disc / sparker-anch) rather than a blind two-sample test; best/median over engaged cells.  np density-ratio pool, $n_{\min}{=}5$ throughout.}
+\label{tab:cut_summary}
+\end{table}

@@ -124,6 +124,49 @@ why intervals are over draws.
 \input{tables/sigma_summary_cifar10}
 \input{tables/sigma_best}
 \clearpage
+
+\section*{The discovery cut: tight vs.\ $s/\sqrt{b}$ vs.\ $\max($tv,BBE$)$}
+The settled pipeline's pool cut is the label-free \emph{tight} cut: it keeps
+the tightest threshold still holding $n_{\min}$ estimated-novel points, and
+\emph{declines} below that.  Exp 138 showed its base-rate estimate
+$\hat b$ (a TV-sum of density-ratio weights) is biased low on overlapping /
+low-rate spaces, so the cut over-abstains.  Two remedies were measured in the
+same $f^\star(2\sigma)$ currency: the significance-optimal Punzi cut
+$s/\sqrt{b}$ (which never abstains), and feeding the tight cut a less-biased
+$\hat b=\max($tv,\,BBE$)$ (BBE = best-bin mixture-proportion estimation,
+Garg et al.\ 2021), which only loosens the decline when a second, independent
+estimator confirms novelty.
+
+The verdict (Table~\ref{tab:cut_summary}, per-arm detail
+Tables~\ref{tab:cut_perarm_cifar10}--\ref{tab:cut_perarm_galaxy_lejepa}):
+\begin{itemize}
+\item \textbf{The tight cut is tightest where it fires but abstains often}
+  --- on CIFAR-100 it engages on only $9/48$ cells (declining every residual
+  child on every draw), and even on the clean datasets it leaves the weak arms
+  (nplm-sup-ft, the residual children) empty.  Where it does engage its
+  per-cell $f^\star$ is best (CIFAR-100 median $0.011$), but that covers a
+  minority of cases.
+\item \textbf{$s/\sqrt{b}$ and $\max($tv,BBE$)$ are statistically
+  interchangeable} --- near-identical engagement, anchor-aware rate, best and
+  median $f^\star$ on every dataset.  BBE was therefore a valuable
+  \emph{diagnostic} (it proved the tight cut's abstention is a $\hat b$-bias
+  artifact, not a true ``nothing here''), but its extra machinery buys nothing
+  over the simpler significance-optimal cut.
+\item \textbf{$s/\sqrt{b}$ wins-or-ties on median everywhere} and carries the
+  most anchor-aware (interpretable) discoveries.  On the clean-pool datasets
+  (CIFAR-10, Galaxy) essentially every detection is anchor-aware regardless of
+  cut; only CIFAR-100's $b{=}0.01$ regime splits into $\sim$half anchor-aware,
+  half blind-detection.
+\end{itemize}
+Recommendation: \textbf{$s/\sqrt{b}$ is the default cut} --- simplest (one
+rule, no second estimator), never abstains, and equal-or-better than both
+alternatives on the achievable $f^\star$; the tight cut is retained only when
+a guaranteed-pure, self-abstaining pool is specifically wanted.
+\input{tables/cut_summary}
+\input{tables/cut_perarm_cifar10}
+\input{tables/cut_perarm_cifar100}
+\input{tables/cut_perarm_galaxy_lejepa}
+\clearpage
 \section*{CIFAR-10: pre-discovery}
 \input{tables/sigma_pre_cifar10}
 \clearpage

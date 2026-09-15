@@ -1,0 +1,25 @@
+% STATUS: CIFAR-100: per-method best-$f^\star$ median\,[min--max] over 4 draws, three cuts; `$>$.1' = the method never reached $2\sigma$ by $f{=}0.1$ under that cut (the tight cut's blanks are its abstentions).
+\begin{table}[t]
+\centering
+\footnotesize
+\begin{tabular}{lccc}
+\toprule
+method & tight & $s/\sqrt{b}$ & $\max($tv,BBE$)$ \\
+\midrule
+SupCon & 0.018\,[0.018--0.018] & 0.019\,[0.011--0.024] & 0.018\,[0.012--0.025] \\
+SupCon+SIGReg & 0.011\,[0.011--0.011] & 0.019\,[0.015--0.024] & 0.015\,[0.015--0.025] \\
+NPLM-dist. & 0.014\,[0.010--0.018] & 0.018\,[0.015--0.029] & 0.019\,[0.016--0.031] \\
+NPLM+cw-SIGReg & 0.010\,[0.008--0.025] & 0.021\,[0.013--0.027] & 0.022\,[0.009--0.028] \\
+\quad SupCon $\to$ res & $>$.1 & 0.021\,[0.012--0.030] & 0.020\,[0.011--0.025] \\
+\quad SupCon $\to$ res-nplm & 0.008\,[0.008--0.008] & 0.021\,[0.009--0.025] & 0.021\,[0.009--0.025] \\
+\quad SupCon+SIGReg $\to$ res & $>$.1 & 0.018\,[0.015--0.025] & 0.019\,[0.014--0.027] \\
+\quad SupCon+SIGReg $\to$ res-nplm & 0.014\,[0.014--0.014] & 0.016\,[0.013--0.027] & 0.021\,[0.012--0.027] \\
+\quad NPLM-dist. $\to$ res & $>$.1 & 0.020\,[0.010--0.026] & 0.019\,[0.013--0.029] \\
+\quad NPLM-dist. $\to$ res-nplm & $>$.1 & 0.021\,[0.013--0.026] & 0.017\,[0.014--0.027] \\
+\quad NPLM+cw-SIGReg $\to$ res & $>$.1 & 0.021\,[0.016--0.034] & 0.023\,[0.016--0.026] \\
+\quad NPLM+cw-SIGReg $\to$ res-nplm & $>$.1 & 0.022\,[0.017--0.033] & 0.017\,[0.016--0.027] \\
+\bottomrule
+\end{tabular}
+\caption{\textbf{CIFAR-100: per-method $f^\star$ under the three cuts.}  The tight cut's $>$.1 rows are arms it declines on every draw --- overwhelmingly the residual children --- which $s/\sqrt{b}$ and $\max($tv,BBE$)$ recover. \emph{Coverage:} CIFAR-100: per-method best-$f^\star$ median\,[min--max] over 4 draws, three cuts; `$>$.1' = the method never reached $2\sigma$ by $f{=}0.1$ under that cut (the tight cut's blanks are its abstentions).}
+\label{tab:cut_perarm_cifar100}
+\end{table}
