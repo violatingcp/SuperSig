@@ -91,6 +91,9 @@ def t_galaxy_pre(base):
     data = pre_data(base)
     if not data:
         return None
+    T4 = ["eucl_ft", "maha", "mmd", "sparker"]      # eucl first
+    H4 = {"eucl_ft": "Eucl.", "maha": "Maha.", "mmd": "MMD",
+          "sparker": "SparKer"}
     labels, n = [], 0
     for d in data.values():
         for lab in d:
@@ -105,10 +108,10 @@ def t_galaxy_pre(base):
         pe = np.mean([data[d][lab]["metrics"]["perevt"] for d in data
                       if lab in data[d]])
         cells = []
-        for t in PRE_TESTS:
+        for t in T4:
             for d in DRAWS:
                 e = data.get(d, {}).get(lab)
-                cells.append(fx(e[t]["f2sigma"]) if e else "--")
+                cells.append(fx(e[t]["f2sigma"]) if (e and t in e) else "--")
         if lab.startswith("gcd-ft") or lab == "supcon-ft->res (residual)":
             rows.append(r"\addlinespace")
         rows.append(" & ".join([pretty_space(lab), f"{probe:.3f}",
@@ -121,13 +124,15 @@ def t_galaxy_pre(base):
             + "\n" + r"& & & " + " & ".join([hdr_draws] * 3).replace(
                 hdr_draws, hdr_draws, 3) + r" \\")
     # build the per-test draw header properly
+    cmr = "".join(rf"\cmidrule(lr){{{4+5*i}-{8+5*i}}}"
+                  for i in range(len(T4)))
     head = (r"space & probe & per-ev. & "
-            + " & ".join(rf"\multicolumn{{5}}{{c}}{{{PRE_HEAD[t]}}}"
-                         for t in PRE_TESTS) + r" \\"
-            + "\n" + r"\cmidrule(lr){4-8}\cmidrule(lr){9-13}\cmidrule(lr){14-18}"
+            + " & ".join(rf"\multicolumn{{5}}{{c}}{{{H4[t]}}}"
+                         for t in T4) + r" \\"
+            + "\n" + cmr
             + "\n" + r"& & & " + " & ".join(
                 " & ".join(f"c{holdmap.get(d, '?')}" for d in DRAWS)
-                for _ in PRE_TESTS) + r" \\")
+                for _ in T4) + r" \\")
     status = (f"Galaxy10 / {base.upper() if base != 'lejepa' else 'LeJEPA'}, "
               f"{n} spaces $\\times$ 5 single-holdout draws (columns named by the "
               r"held-out class); exp-150 battery, 200 null / 50 signal toys, "
@@ -137,7 +142,7 @@ def t_galaxy_pre(base):
            r"(space, draw) point.} `$>$.1' = the test never reached $2\sigma$ by "
            r"$f{=}0.1$ on that draw.")
     return e149.wrap("\n".join(rows), cap, f"tab:sigma_galaxy_pre_{base}",
-                     status, "lcc" + "c" * 15, head, size="footnotesize")
+                     status, "lcc" + "c" * 20, head, size="footnotesize")
 
 
 # ------------------------------------------------------------ galaxy post
