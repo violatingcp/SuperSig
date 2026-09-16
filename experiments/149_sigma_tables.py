@@ -96,7 +96,7 @@ def t_pre(ds, holdouts):
         probe = np.mean([e["metrics"]["probe"] for e in ents if e["metrics"].get("probe")])
         perev = np.mean([e["metrics"]["perevt"] for e in ents if e["metrics"].get("perevt") is not None])
         cells = []
-        for t in ("maha", "mmd", "sparker"):
+        for t in ("eucl", "maha", "mmd", "sparker"):
             fs = [e[t]["f2sigma"] for e in ents]
             fin = [f for f in fs if np.isfinite(f)]
             med = np.median([f if np.isfinite(f) else 0.15 for f in fs])
@@ -122,10 +122,10 @@ def t_pre(ds, holdouts):
            r"$5000$-point corpus at which the median expected significance of the "
            r"test reaches $2\sigma$; lower is better. The probe (oracle) and per-event "
            r"power are shown for reference; the last column is SparKer's range across draws.")
-    head = (r"space & probe & per-ev. & \multicolumn{3}{c}{$f^\star(2\sigma)$, median over draws} & SparKer range \\"
-            "\n" r"\cmidrule(lr){4-6}" "\n"
-            r"& & & Maha. & MMD & SparKer & \\")
-    return wrap("\n".join(rows), cap, f"tab:sigma_pre_{ds}", status, "lccccc c", head)
+    head = (r"space & probe & per-ev. & \multicolumn{4}{c}{$f^\star(2\sigma)$, median over draws} & SparKer range \\"
+            "\n" r"\cmidrule(lr){4-7}" "\n"
+            r"& & & Eucl. & Maha. & MMD & SparKer & \\")
+    return wrap("\n".join(rows), cap, f"tab:sigma_pre_{ds}", status, "lcccccc c", head)
 
 
 # -------------------------------------------------------------------- post
