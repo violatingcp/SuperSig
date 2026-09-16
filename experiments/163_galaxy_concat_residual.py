@@ -62,6 +62,7 @@ def main():
     ap.add_argument("--base", default="lejepa")
     ap.add_argument("--draw", type=int, default=0)
     ap.add_argument("--emb-dim", type=int, default=10)
+    ap.add_argument("--discover", default="residual", choices=["residual", "parent"])
     ap.add_argument("--pairs", default="supcon-ft:supcon-ft_res,"
                                        "ss-ft:ss-ft_res")
     ap.add_argument("--fractions", default="0.006,0.01,0.02,0.03,0.05,0.1")
@@ -83,8 +84,9 @@ def main():
     holdouts = holdout_set(DS, N_CLS, nh=1, draw=args.draw)
     seen = [c for c in range(N_CLS) if c not in holdouts]
     os.makedirs(args.out, exist_ok=True)
+    dtag = "" if args.discover == "residual" else "_discparent"
     res_path = os.path.join(args.out, f"concatres_{DS}_{args.base}_"
-                            f"d{args.draw}_e{args.emb_dim}.json")
+                            f"d{args.draw}_e{args.emb_dim}{dtag}.json")
     results = json.load(open(res_path)) if os.path.exists(res_path) else {}
 
     def z_of(fn, bg_t, sig_t, f, seed):
@@ -100,14 +102,28 @@ def main():
         pH, Xtr_p, ytr, Xte_p, yte = gp
         cH, Xtr_c, _, Xte_c, _ = gc
         tr_lab, te_lab = ytr.numpy(), yte.numpy()
-        P_tr, _ = collect_embeddings(pH, DataLoader(TensorDataset(Xtr_p, ytr),
+        # dH/dX = the head being fine-tuned by discovery; fH/fX = frozen head.
+        if args.discover == "parent":
+            dH, dXtr, dXte = pH, Xtr_p, Xte_p
+            fH, fXtr, fXte = cH, Xtr_c, Xte_c
+        else:
+            dH, dXtr, dXte = cH, Xtr_c, Xte_c
+            fH, fXtr, fXte = pH, Xtr_p, Xte_p
+        F_tr, _ = collect_embeddings(fH, DataLoader(TensorDataset(fXtr, ytr),
                                                     batch_size=512))
-        P_te, _ = collect_embeddings(pH, DataLoader(TensorDataset(Xte_p, yte),
+        F_te, _ = collect_embeddings(fH, DataLoader(TensorDataset(fXte, yte),
                                                     batch_size=512))
-        telc = DataLoader(TensorDataset(Xtr_c, ytr), batch_size=512)
-        tec = DataLoader(TensorDataset(Xte_c, yte), batch_size=512)
-        R0_tr, _ = collect_embeddings(cH, telc)
-        R0_te, _ = collect_embeddings(cH, tec)
+        telc = DataLoader(TensorDataset(dXtr, ytr), batch_size=512)
+        tec = DataLoader(TensorDataset(dXte, yte), batch_size=512)
+        R0_tr, _ = collect_embeddings(dH, telc)   # frozen discovery-head (pre)
+        R0_te, _ = collect_embeddings(dH, tec)
+        # keep parent-first concat order regardless of which is discovered
+        def cat(disc_tr, disc_te):
+            if args.discover == "parent":
+                return (np.concatenate([disc_tr, F_tr], 1),
+                        np.concatenate([disc_te, F_te], 1))
+            return (np.concatenate([F_tr, disc_tr], 1),
+                    np.concatenate([F_te, disc_te], 1))
         m = np.isin(tr_lab, seen)
         cents = exp28.class_centroids(R0_tr[m], tr_lab[m], seen)
         means0 = exp28.fill_means(cents, seen, cfg).detach()
@@ -130,9 +146,9 @@ def main():
             inj = rng.choice(sig_idx_all, size=min(n_inj, len(sig_idx_all)),
                              replace=False)
             sub_idx = np.concatenate([seen_idx, inj])
-            sub = TensorDataset(Xtr_c[sub_idx], ytr[sub_idx])
+            sub = TensorDataset(dXtr[sub_idx], ytr[sub_idx])
             sub_loader = DataLoader(sub, batch_size=512, shuffle=False)
-            bb = copy.deepcopy(cH)
+            bb = copy.deepcopy(dH)
             cur_means, hist = run_discovery(
                 bb, means0.clone(), base_ds=sub, train_eval_loader=sub_loader,
                 test_loader=tec, seen=seen, holdouts=holdouts,
@@ -156,19 +172,20 @@ def main():
                                   torch.as_tensor(A_res, dtype=torch.float32,
                                                   device=DEVICE)
                                   ).argmin(1).cpu().numpy()
-                A_concat = np.asarray(
-                    [np.concatenate([P_tr[asg == k].mean(0) if (asg == k).any()
-                                     else P_tr.mean(0), A_res[k]])
-                     for k in range(len(A_res))], np.float32)
-
+                fcent = np.asarray([F_tr[asg == k].mean(0) if (asg == k).any()
+                                    else F_tr.mean(0) for k in range(len(A_res))])
+                # concat anchor: parent-first order
+                if args.discover == "parent":
+                    A_concat = np.concatenate([A_res, fcent], 1).astype(np.float32)
+                else:
+                    A_concat = np.concatenate([fcent, A_res], 1).astype(np.float32)
+            cpre_tr, cpre_te = cat(R0_tr, R0_te)
+            cpost_tr, cpost_te = cat(Rp_tr, Rp_te)
             spaces = {
                 "resid": {"pre": (R0_tr, R0_te, None),
                           "post": (Rp_tr, Rp_te, A_res)},
-                "concat": {"pre": (np.concatenate([P_tr, R0_tr], 1),
-                                   np.concatenate([P_te, R0_te], 1), None),
-                           "post": (np.concatenate([P_tr, Rp_tr], 1),
-                                    np.concatenate([P_te, Rp_te], 1),
-                                    A_concat)}}
+                "concat": {"pre": (cpre_tr, cpre_te, None),
+                           "post": (cpost_tr, cpost_te, A_concat)}}
             for sp, st in spaces.items():
                 for state, (Ctr, Cte, A) in st.items():
                     _, det = exp162._prep(Ctr, tr_lab, Cte, te_lab, seen,
