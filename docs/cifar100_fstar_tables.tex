@@ -1,0 +1,88 @@
+\documentclass[10pt]{article}
+\usepackage[letterpaper,margin=0.6in]{geometry}
+\usepackage{booktabs,amsmath,amssymb,caption,graphicx}
+\captionsetup{font=small,labelfont=bf}
+\begin{document}
+Every value is $f^\star(2\sigma)$ (smallest injected fraction detected at $2\sigma$ median significance; lower is better), median over draws. Residual children indented; best test per row \textbf{bold}. `$>$.1' = never reached $2\sigma$.
+\clearpage\section*{CIFAR-100 (100 classes, $b{=}0.01$)}
+\begin{table}[t]
+\centering
+\footnotesize
+
+\begin{tabular}{lcccc}
+\toprule
+method & Eucl. & Maha. & MMD & SparKer \\
+\midrule
+SupCon & .042 & .068 & .024 & \textbf{.023} \\
+SupCon+SIGReg & .087 & .055 & \textbf{.022} & .023 \\
+NPLM-dist & .040 & .051 & \textbf{.025} & .034 \\
+NPLM+cwSIGReg & .034 & .039 & \textbf{.021} & .025 \\
+\quad SupCon $\to$ res & .052 & .041 & \textbf{.025} & .028 \\
+\quad SupCon $\to$ res-nplm & \textbf{.014} & .031 & .025 & .027 \\
+\quad SupCon $\to$ res & .047 & .040 & .028 & \textbf{.027} \\
+\quad SupCon $\to$ res-nplm & .035 & .040 & \textbf{.022} & .024 \\
+\quad NPLM-dist $\to$ res & .027 & .036 & \textbf{.026} & .026 \\
+\quad NPLM-dist $\to$ res-nplm & .082 & .038 & .032 & \textbf{.026} \\
+\quad NPLM $\to$ res & .042 & .031 & \textbf{.025} & .027 \\
+\quad NPLM $\to$ res-nplm & $>$.1 & .090 & \textbf{.027} & .027 \\
+\bottomrule
+\end{tabular}
+
+\caption{\textbf{CIFAR-100: pre-discovery (frozen) $f^\star$, median over draws.}}
+\label{tab:CIFAR-100pre}
+\end{table}
+
+\begin{table}[t]
+\centering
+\footnotesize
+
+\begin{tabular}{lcccccc}
+\toprule
+method & Eucl. & Eucl.(a) & Maha. & MMD & SparKer & SpK(a) \\
+\midrule
+SupCon & $>$.1 & .023 & $>$.1 & \textbf{.018} & .028 & .024 \\
+SupCon+SIGReg & .024 & \textbf{.011} & .044 & .017 & .016 & .016 \\
+NPLM-dist & .033 & .023 & .029 & .020 & .022 & \textbf{.016} \\
+NPLM+cwSIGReg & .030 & .034 & .025 & .016 & .016 & \textbf{.010} \\
+\quad SupCon $\to$ res & $>$.1 & $>$.1 & $>$.1 & $>$.1 & $>$.1 & $>$.1 \\
+\quad SupCon $\to$ res-nplm & .015 & .022 & .035 & .013 & \textbf{.008} & .016 \\
+\quad SupCon $\to$ res & $>$.1 & $>$.1 & $>$.1 & $>$.1 & $>$.1 & $>$.1 \\
+\quad SupCon $\to$ res-nplm & .025 & \textbf{.014} & .038 & .016 & .014 & .015 \\
+\quad NPLM-dist $\to$ res & $>$.1 & $>$.1 & $>$.1 & $>$.1 & $>$.1 & $>$.1 \\
+\quad NPLM-dist $\to$ res-nplm & $>$.1 & $>$.1 & $>$.1 & $>$.1 & $>$.1 & $>$.1 \\
+\quad NPLM $\to$ res & $>$.1 & $>$.1 & $>$.1 & $>$.1 & $>$.1 & $>$.1 \\
+\quad NPLM $\to$ res-nplm & $>$.1 & $>$.1 & $>$.1 & $>$.1 & $>$.1 & $>$.1 \\
+\bottomrule
+\end{tabular}
+
+\caption{\textbf{CIFAR-100: post-discovery $f^\star$, derived cut (np pool).} Eucl.(a)/SpK(a) = anchor-aware.}
+\label{tab:CIFAR-100leg}
+\end{table}
+
+\begin{table}[t]
+\centering
+\footnotesize
+
+\begin{tabular}{lcccccc}
+\toprule
+method & Eucl. & Eucl.(a) & Maha. & MMD & SparKer & SpK(a) \\
+\midrule
+SupCon & .027 & \textbf{.019} & .030 & .025 & .024 & .021 \\
+SupCon+SIGReg & .033 & .025 & .042 & .025 & \textbf{.021} & .021 \\
+NPLM-dist & .056 & \textbf{.022} & .027 & .022 & .031 & .033 \\
+NPLM+cwSIGReg & .030 & .029 & .035 & .029 & \textbf{.024} & .025 \\
+\quad SupCon $\to$ res & .066 & \textbf{.021} & .039 & .028 & .026 & .024 \\
+\quad SupCon $\to$ res-nplm & .025 & .032 & .029 & .024 & \textbf{.021} & .025 \\
+\quad SupCon $\to$ res & .053 & \textbf{.021} & .047 & .023 & .027 & .025 \\
+\quad SupCon $\to$ res-nplm & .030 & \textbf{.020} & .029 & .022 & .022 & .021 \\
+\quad NPLM-dist $\to$ res & .058 & \textbf{.021} & .051 & .023 & .025 & .025 \\
+\quad NPLM-dist $\to$ res-nplm & .037 & .038 & .022 & .022 & .026 & \textbf{.021} \\
+\quad NPLM $\to$ res & .040 & .027 & .036 & .028 & .027 & \textbf{.025} \\
+\quad NPLM $\to$ res-nplm & .031 & .032 & .040 & .032 & .026 & \textbf{.023} \\
+\bottomrule
+\end{tabular}
+
+\caption{\textbf{CIFAR-100: post-discovery $f^\star$, $s/\sqrt{b}$ cut.}}
+\label{tab:CIFAR-100ssb}
+\end{table}
+\end{document}

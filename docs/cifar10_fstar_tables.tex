@@ -1,99 +1,100 @@
 \documentclass[10pt]{article}
-\usepackage[letterpaper,margin=0.7in]{geometry}
-\usepackage{booktabs,amsmath,amssymb,caption}
+\usepackage[letterpaper,margin=0.6in]{geometry}
+\usepackage{booktabs,amsmath,amssymb,caption,graphicx}
 \captionsetup{font=small,labelfont=bf}
-\title{CIFAR-10 $f^\star(2\sigma)$ tables: pre- and post-discovery, both cuts}
-\author{}\date{}
-\begin{document}\maketitle
-Every value is $f^\star(2\sigma)$ --- the smallest injected fraction detected at $2\sigma$ median expected significance (lower is better) --- median over draws h4/7/8/9. Residual children indented. Best (lowest) test per row in \textbf{bold}.
+\begin{document}
+Every value is $f^\star(2\sigma)$ (smallest injected fraction detected at $2\sigma$ median significance; lower is better), median over draws. Residual children indented; best test per row \textbf{bold}. `$>$.1' = never reached $2\sigma$.
+\clearpage\section*{CIFAR-10 (10 classes, from-scratch)}
 \begin{table}[t]
 \centering
 \footnotesize
+
 \begin{tabular}{lcccc}
 \toprule
 method & Eucl. & Maha. & MMD & SparKer \\
 \midrule
-SupCon & $>$.1 & .0569 & .0199 & \textbf{.0176} \\
-SupCon+SIGReg & $>$.1 & $>$.1 & \textbf{.0308} & .0368 \\
-NPLM-dist & $>$.1 & .0383 & .0394 & \textbf{.0268} \\
-NPLM+cw-SIGReg & $>$.1 & .0318 & .0325 & \textbf{.0266} \\
-proto/MSE+cw-SIGReg & $>$.1 & .0592 & .0413 & \textbf{.0388} \\
-SupCon+cw-SIGReg & $>$.1 & .0480 & \textbf{.0334} & .0579 \\
-\addlinespace
-\quad SupCon $\to$ res & $>$.1 & .0225 & .0331 & \textbf{.0222} \\
-\quad SupCon $\to$ res-nplm & $>$.1 & .0230 & .0294 & \textbf{.0171} \\
-\quad SupCon $\to$ res & $>$.1 & \textbf{.0290} & .0442 & .0689 \\
-\quad SupCon $\to$ res-nplm & $>$.1 & .0439 & .0380 & \textbf{.0219} \\
-\quad NPLM-dist $\to$ res & $>$.1 & \textbf{.0412} & .0464 & .0457 \\
-\quad NPLM-dist $\to$ res-nplm & $>$.1 & .0484 & .0442 & \textbf{.0390} \\
-\quad NPLM $\to$ res & $>$.1 & \textbf{.0226} & .0371 & .0478 \\
-\quad NPLM $\to$ res-nplm & $>$.1 & \textbf{.0339} & .0361 & .0425 \\
-\quad proto/MSE $\to$ res & $>$.1 & .0615 & .0442 & \textbf{.0388} \\
-\quad proto/MSE $\to$ res-nplm & $>$.1 & .0529 & .0431 & \textbf{.0428} \\
+SupCon & .043 & .057 & .020 & \textbf{.018} \\
+SupCon+SIGReg & $>$.1 & $>$.1 & \textbf{.031} & .037 \\
+NPLM-dist & \textbf{.024} & .038 & .039 & .027 \\
+NPLM+cwSIGReg & \textbf{.022} & .032 & .033 & .027 \\
+proto/MSE+cwSIGReg & .046 & .059 & .041 & \textbf{.039} \\
+SupCon+cwSIGReg & .066 & .048 & \textbf{.033} & .058 \\
+\quad SupCon $\to$ res & .033 & .023 & .033 & \textbf{.022} \\
+\quad SupCon $\to$ res-nplm & .033 & .023 & .029 & \textbf{.017} \\
+\quad SupCon $\to$ res & $>$.1 & \textbf{.029} & .044 & .069 \\
+\quad SupCon $\to$ res-nplm & .025 & .044 & .038 & \textbf{.022} \\
+\quad NPLM-dist $\to$ res & .084 & \textbf{.041} & .046 & .046 \\
+\quad NPLM-dist $\to$ res-nplm & $>$.1 & .048 & .044 & \textbf{.039} \\
+\quad NPLM $\to$ res & $>$.1 & \textbf{.023} & .037 & .048 \\
+\quad NPLM $\to$ res-nplm & .045 & \textbf{.034} & .036 & .043 \\
+\quad proto/MSE $\to$ res & $>$.1 & .062 & .044 & \textbf{.039} \\
+\quad proto/MSE $\to$ res-nplm & .058 & .053 & \textbf{.043} & .043 \\
 \bottomrule
 \end{tabular}
-\caption{\textbf{CIFAR-10 pre-discovery (frozen) $f^\star(2\sigma)$, median over 4 draws.} Cut-independent. Euclidean is censored on every arm --- raw distance-to-centroid is a dead frozen novelty test.}
-\label{tab:c10pre}
+
+\caption{\textbf{CIFAR-10: pre-discovery (frozen) $f^\star$, median over draws.}}
+\label{tab:CIFAR-10pre}
 \end{table}
 
 \begin{table}[t]
 \centering
 \footnotesize
+
 \begin{tabular}{lcccccc}
 \toprule
 method & Eucl. & Eucl.(a) & Maha. & MMD & SparKer & SpK(a) \\
 \midrule
-SupCon & .0141 & \textbf{.0127} & .0158 & .0250 & .0168 & .0142 \\
-SupCon+SIGReg & .0373 & .0400 & .0636 & \textbf{.0343} & .0367 & .0425 \\
-NPLM-dist & .0446 & \textbf{.0207} & .0369 & .0358 & .0322 & .0247 \\
-NPLM+cw-SIGReg & .0436 & \textbf{.0154} & .0310 & .0444 & .0327 & .0203 \\
-proto/MSE+cw-SIGReg & \textbf{.0374} & .0500 & .0425 & .0610 & .0374 & .0650 \\
-SupCon+cw-SIGReg & .0406 & \textbf{.0300} & .0487 & .0351 & .0475 & .0500 \\
-\addlinespace
-\quad SupCon $\to$ res & .0168 & \textbf{.0146} & .0157 & .0303 & .0169 & .0183 \\
-\quad SupCon $\to$ res-nplm & .0210 & \textbf{.0176} & .0179 & .0287 & .0193 & .0189 \\
-\quad SupCon $\to$ res & .0528 & \textbf{.0300} & .0300 & .0417 & .0506 & .0463 \\
-\quad SupCon $\to$ res-nplm & .0386 & \textbf{.0167} & .0314 & .0325 & .0259 & .0192 \\
-\quad NPLM-dist $\to$ res & .0359 & .0300 & \textbf{.0284} & .0400 & .0370 & .0322 \\
-\quad NPLM-dist $\to$ res-nplm & .0857 & .0331 & .0581 & .0504 & \textbf{.0269} & .0445 \\
-\quad NPLM $\to$ res & .0398 & .0400 & \textbf{.0230} & .0440 & .0327 & .0400 \\
-\quad NPLM $\to$ res-nplm & .0709 & .0400 & \textbf{.0267} & .0434 & .0424 & .0400 \\
-\quad proto/MSE $\to$ res & .0297 & \textbf{.0200} & .0223 & .0457 & .0387 & .0259 \\
-\quad proto/MSE $\to$ res-nplm & .0284 & \textbf{.0235} & .0259 & .0455 & .0286 & .0290 \\
+SupCon & .014 & \textbf{.013} & .016 & .025 & .017 & .014 \\
+SupCon+SIGReg & .037 & .040 & .064 & \textbf{.034} & .037 & .042 \\
+NPLM-dist & .045 & \textbf{.021} & .037 & .036 & .032 & .025 \\
+NPLM+cwSIGReg & .044 & \textbf{.015} & .031 & .044 & .033 & .020 \\
+proto/MSE+cwSIGReg & \textbf{.037} & .050 & .043 & .061 & .037 & .065 \\
+SupCon+cwSIGReg & .041 & \textbf{.030} & .049 & .035 & .048 & .050 \\
+\quad SupCon $\to$ res & .017 & \textbf{.015} & .016 & .030 & .017 & .018 \\
+\quad SupCon $\to$ res-nplm & .021 & \textbf{.018} & .018 & .029 & .019 & .019 \\
+\quad SupCon $\to$ res & .053 & \textbf{.030} & .030 & .042 & .051 & .046 \\
+\quad SupCon $\to$ res-nplm & .039 & \textbf{.017} & .031 & .032 & .026 & .019 \\
+\quad NPLM-dist $\to$ res & .036 & .030 & \textbf{.028} & .040 & .037 & .032 \\
+\quad NPLM-dist $\to$ res-nplm & .086 & .033 & .058 & .050 & \textbf{.027} & .045 \\
+\quad NPLM $\to$ res & .040 & .040 & \textbf{.023} & .044 & .033 & .040 \\
+\quad NPLM $\to$ res-nplm & .071 & .040 & \textbf{.027} & .043 & .042 & .040 \\
+\quad proto/MSE $\to$ res & .030 & \textbf{.020} & .022 & .046 & .039 & .026 \\
+\quad proto/MSE $\to$ res-nplm & .028 & \textbf{.023} & .026 & .046 & .029 & .029 \\
 \bottomrule
 \end{tabular}
-\caption{\textbf{CIFAR-10 post-discovery $f^\star$, derived label-free cut (np pool), median over draws.} Eucl.(a)/SpK(a) are the anchor-aware tests. Blank median where the arm declines on most draws.}
-\label{tab:c10leg}
+
+\caption{\textbf{CIFAR-10: post-discovery $f^\star$, derived cut (np pool).} Eucl.(a)/SpK(a) = anchor-aware.}
+\label{tab:CIFAR-10leg}
 \end{table}
 
 \begin{table}[t]
 \centering
 \footnotesize
+
 \begin{tabular}{lcccccc}
 \toprule
 method & Eucl. & Eucl.(a) & Maha. & MMD & SparKer & SpK(a) \\
 \midrule
-SupCon & .0219 & \textbf{.0150} & .0195 & .0212 & .0174 & .0155 \\
-SupCon+SIGReg & .0257 & .0228 & .0301 & .0350 & .0244 & \textbf{.0221} \\
-NPLM-dist & .0293 & \textbf{.0193} & .0248 & .0415 & .0276 & .0344 \\
-NPLM+cw-SIGReg & .0222 & \textbf{.0141} & .0223 & .0477 & .0249 & .0201 \\
-proto/MSE+cw-SIGReg & .0276 & \textbf{.0251} & .0394 & .0349 & .0378 & .0354 \\
-SupCon+cw-SIGReg & .0310 & \textbf{.0249} & .0265 & .0325 & .0366 & .0423 \\
-\addlinespace
-\quad SupCon $\to$ res & .0175 & .0169 & \textbf{.0159} & .0312 & .0178 & .0179 \\
-\quad SupCon $\to$ res-nplm & .0207 & \textbf{.0164} & .0183 & .0243 & .0209 & .0190 \\
-\quad SupCon $\to$ res & .0216 & .0181 & \textbf{.0155} & .0385 & .0331 & .0394 \\
-\quad SupCon $\to$ res-nplm & .0174 & \textbf{.0156} & .0224 & .0289 & .0210 & .0168 \\
-\quad NPLM-dist $\to$ res & .0202 & \textbf{.0156} & .0184 & .0458 & .0256 & .0266 \\
-\quad NPLM-dist $\to$ res-nplm & .0532 & \textbf{.0177} & .0461 & .0400 & .0427 & .0415 \\
-\quad NPLM $\to$ res & .0191 & .0166 & \textbf{.0162} & .0402 & .0256 & .0256 \\
-\quad NPLM $\to$ res-nplm & .0225 & \textbf{.0153} & .0193 & .0329 & .0306 & .0291 \\
-\quad proto/MSE $\to$ res & \textbf{.0200} & .0223 & .0211 & .0514 & .0264 & .0238 \\
-\quad proto/MSE $\to$ res-nplm & .0283 & .0247 & .0267 & .0415 & .0277 & \textbf{.0243} \\
+SupCon & .022 & \textbf{.015} & .019 & .021 & .017 & .015 \\
+SupCon+SIGReg & .026 & .023 & .030 & .035 & .024 & \textbf{.022} \\
+NPLM-dist & .029 & \textbf{.019} & .025 & .041 & .028 & .034 \\
+NPLM+cwSIGReg & .022 & \textbf{.014} & .022 & .048 & .025 & .020 \\
+proto/MSE+cwSIGReg & .028 & \textbf{.025} & .039 & .035 & .038 & .035 \\
+SupCon+cwSIGReg & .031 & \textbf{.025} & .027 & .032 & .037 & .042 \\
+\quad SupCon $\to$ res & .018 & .017 & \textbf{.016} & .031 & .018 & .018 \\
+\quad SupCon $\to$ res-nplm & .021 & \textbf{.016} & .018 & .024 & .021 & .019 \\
+\quad SupCon $\to$ res & .022 & .018 & \textbf{.016} & .039 & .033 & .039 \\
+\quad SupCon $\to$ res-nplm & .017 & \textbf{.016} & .022 & .029 & .021 & .017 \\
+\quad NPLM-dist $\to$ res & .020 & \textbf{.016} & .018 & .046 & .026 & .027 \\
+\quad NPLM-dist $\to$ res-nplm & .053 & \textbf{.018} & .046 & .040 & .043 & .042 \\
+\quad NPLM $\to$ res & .019 & .017 & \textbf{.016} & .040 & .026 & .026 \\
+\quad NPLM $\to$ res-nplm & .022 & \textbf{.015} & .019 & .033 & .031 & .029 \\
+\quad proto/MSE $\to$ res & \textbf{.020} & .022 & .021 & .051 & .026 & .024 \\
+\quad proto/MSE $\to$ res-nplm & .028 & .025 & .027 & .041 & .028 & \textbf{.024} \\
 \bottomrule
 \end{tabular}
-\caption{\textbf{CIFAR-10 post-discovery $f^\star$, $s/\sqrt{b}$ cut (np pool + Punzi), median over draws.} Engages everywhere (fewer censored cells than the derived cut); the anchor-aware Euclidean on the SupCon family is best.}
-\label{tab:c10ssb}
-\end{table}
 
+\caption{\textbf{CIFAR-10: post-discovery $f^\star$, $s/\sqrt{b}$ cut.}}
+\label{tab:CIFAR-10ssb}
+\end{table}
 \end{document}
