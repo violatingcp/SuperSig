@@ -70,6 +70,7 @@ def main():
     ap.add_argument("--draw", type=int, default=0)
     ap.add_argument("--emb-dim", type=int, default=10)
     ap.add_argument("--split", default="te", choices=["te", "tr"])
+    ap.add_argument("--state", default="post", choices=["pre", "post"])
     args = ap.parse_args()
     os.makedirs(OUT, exist_ok=True)
     global NAMES
@@ -116,20 +117,29 @@ def main():
                        "supcon-ft_resnplm", "ss-ft_res")
            if any(a == x for x, _ in arms)]
     fig, axes = plt.subplots(2, 3, figsize=(15, 9.5))
+    post = args.state == "post"
     for ax, arm in zip(axes.ravel(), key):
-        d = np.load(os.path.join(
-            IN, f"viz_{tag}_{arm}.npz"))
-        panel(ax, d[f"{args.split}_post"], d[f"{args.split}_lab"], d["seen"],
-              d["holdout"], d["anchors"], d["seen_centroids"],
-              f"{arm}  ({len(d['anchors'])} anchor)", rng)
+        d = np.load(os.path.join(IN, f"viz_{tag}_{arm}.npz"))
+        if post:
+            Z = d[f"{args.split}_post"]; anc = d["anchors"]
+            cents = d["seen_centroids"]; ttl = f"{arm}  ({len(anc)} anchor)"
+        else:
+            Z = d[f"{args.split}"]; anc = np.empty((0, Z.shape[1]))
+            lab = d[f"{args.split}_lab"]
+            cents = np.stack([Z[lab == c].mean(0) for c in d["seen"]])
+            ttl = f"{arm}"
+        panel(ax, Z, d[f"{args.split}_lab"], d["seen"], d["holdout"], anc,
+              cents, ttl, rng)
     for ax in axes.ravel()[len(key):]:
         ax.axis("off")
     dsn = "CIFAR-10" if args.dataset=="cifar10" else f"Galaxy10 / {args.base}"
-    fig.suptitle(f"{dsn} 10-D latent, POST s/√b discovery "
+    sub = "POST s/\u221ab discovery" if post else "PRE-discovery"
+    fig.suptitle(f"{dsn} 10-D latent, {sub} "
                  f"(novel = class {int(np.load(files[0])['holdout'][0])})",
                  fontsize=13)
     fig.tight_layout(rect=[0, 0, 1, 0.97])
-    ov = os.path.join(OUT, f"viz_{tag}_overview.png")
+    ov = os.path.join(OUT, f"viz_{tag}_overview"
+                      + ("" if post else "_pre") + ".png")
     fig.savefig(ov, dpi=150); plt.close(fig)
     print(f"wrote {ov}")
 
