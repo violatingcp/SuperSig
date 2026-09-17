@@ -61,6 +61,8 @@ def main():
     ap.add_argument("--holdout", type=int, default=4)
     ap.add_argument("--pairs", default="supcon:supcon-res")
     ap.add_argument("--fractions", default="0.006,0.01,0.02,0.03,0.05,0.1")
+    ap.add_argument("--cut", default="ssb", choices=["quantile", "ssb"])
+    ap.add_argument("--n-min", type=int, default=5)
     ap.add_argument("--rounds", type=int, default=2)
     ap.add_argument("--ft-epochs", type=int, default=None)
     ap.add_argument("--seed", type=int, default=0)
@@ -89,7 +91,7 @@ def main():
     seen_idx = np.where(np.isin(base_t, seen))[0]
     sig_idx_all = np.where(np.isin(base_t, list(holdouts)))[0]
     res_path = os.path.join(args.out,
-                            f"exp28cat_{ds}_h{args.holdout}_e{args.dim}.json")
+                            f"exp28cat_{ds}_h{args.holdout}_e{args.dim}_{args.cut}.json")
     results = json.load(open(res_path)) if os.path.exists(res_path) else {}
 
     def z_of(fn, bg_t, sig_t, f, seed):
@@ -133,7 +135,8 @@ def main():
                 sup, trunk, means_sup.clone(), ssl_cents, base=sub,
                 dim=args.dim, train_eval_loader=sub_loader,
                 test_loader=test_loader, seen=seen, holdouts=holdouts,
-                cfg=cfg, rounds=args.rounds, ft_epochs=ft_ep, seed=args.seed)
+                cfg=cfg, rounds=args.rounds, ft_epochs=ft_ep, seed=args.seed,
+                cut=args.cut, n_min=args.n_min)
             cur_means, disc_ssl = out["cur_means"], out["disc_ssl"]
             entry["cut"][fk] = dict(pur=float(hist[0]["purity"]) if hist
                                     else float("nan"),

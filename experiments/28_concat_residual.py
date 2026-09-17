@@ -116,7 +116,8 @@ def fill_means(centroids, seen, cfg):
 def run_concat_discovery(sup, trunk, means_sup, ssl_cents, *, base, dim,
                          train_eval_loader, test_loader, seen, holdouts, cfg,
                          rounds=2, ft_epochs=5, tau_quantile=0.95, names=None,
-                         seed=0, conf_thresh=None, disc_sigma_end=None):
+                         seed=0, conf_thresh=None, disc_sigma_end=None,
+                         cut="quantile", n_min=5):
     """
     Discovery in the concatenated [sup ; ssl] space (exp-25 recipe): pool ->
     BIC k-means in concat -> pseudo-label -> fine-tune the SUP branch only ->
@@ -147,10 +148,18 @@ def run_concat_discovery(sup, trunk, means_sup, ssl_cents, *, base, dim,
         seen_anchors = torch.cat([cur_means[seen], ssl_cents], dim=1)
         anchor_mat = seen_anchors if disc_ssl is None else torch.cat(
             [seen_anchors, torch.cat([cur_means[n_classes:], disc_ssl], 1)])
-        dmin = torch.cdist(Zcat, anchor_mat).min(1).values
-        tau = torch.quantile(dmin[torch.as_tensor(is_seen_lab, device=DEVICE)],
-                             tau_quantile)
-        pool = (dmin > tau).cpu().numpy()
+        if cut == "ssb":
+            from supersig.discovery import np_pool_scores
+            from supersig.poolcut import ssb_pool
+            sc = np_pool_scores(Zcat, is_seen_lab, seed=seed + r)
+            pool, _ci = ssb_pool(sc.detach().cpu().numpy(), is_seen_lab,
+                                 n_min=n_min)
+        else:
+            dmin = torch.cdist(Zcat, anchor_mat).min(1).values
+            tau = torch.quantile(
+                dmin[torch.as_tensor(is_seen_lab, device=DEVICE)],
+                tau_quantile)
+            pool = (dmin > tau).cpu().numpy()
         purity = (~is_seen_lab[pool]).mean() if pool.any() else float("nan")
         km = max(4, len(holdouts) + 2)
         khat, centers, _ = bic_select(Zcat[torch.as_tensor(pool, device=DEVICE)],
