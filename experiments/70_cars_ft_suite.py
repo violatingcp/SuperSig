@@ -44,7 +44,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
 from supersig.config import DATA_DIR, DEVICE, REPO_DIR, plot_path
-from supersig.losses import sigreg_loss, supcon_loss
+from supersig.losses import sigreg_loss, supcon_loss, HybridContrastiveLoss
 from supersig.metrics import gaussianity_summary
 from supersig.discovery import run_discovery
 from supersig.train import collect_embeddings
@@ -75,6 +75,23 @@ def make_supcon_step(lam_sigreg, n_slices):
         con = supcon_loss(F.normalize(z, dim=1), yy, temp=0.1)
         reg = (lam_sigreg * sigreg_loss(z, n_slices=n_slices) if lam_sigreg
                else torch.zeros((), device=DEVICE))
+        return con, reg
+    return step
+
+
+def make_hybrid_ft_step(critic, lam_sigreg, tau, n_slices):
+    """SupCon softmax on a RAW-geometry critic (bilinear|distance; NO
+    F.normalize) + lam*SIGReg -- the exp-168 normalization-free arms, but with
+    the ViT trunk fine-tuned end-to-end (not head-only)."""
+    hyb = HybridContrastiveLoss(positives="supervised", critic=critic,
+                                estimator="softmax", marginal="none",
+                                tau=tau, n_slices=n_slices)
+    def step(model, v1, v2, y):
+        x = torch.cat([v1, v2]).to(DEVICE, non_blocking=True)
+        yy = torch.cat([y, y]).to(DEVICE)
+        z = model(x).float()
+        con = hyb.interaction(z, yy)
+        reg = lam_sigreg * sigreg_loss(z, n_slices=n_slices)
         return con, reg
     return step
 
@@ -174,6 +191,10 @@ def arm_specs(args):
         "supcon-cw-ft": (True, make_supcon_cw_step(
             5.0, args.n_slices, 47 if DS == "dtd" else exp44.N_CLASSES[DS],
             args.emb_dim, 5.0)),
+        "supconeucl-ft": (True, make_hybrid_ft_step(
+            "bilinear", 5.0, args.tau, args.n_slices)),
+        "supcondist-ft": (True, make_hybrid_ft_step(
+            "distance", 5.0, args.tau, args.n_slices)),
     }
 
 
@@ -181,10 +202,11 @@ COLORS = {"simclr-ft": "#0072b2", "sigreg-ssl-ft": "#666666",
           "nplm-bil-ft": "#e51e1e", "supcon-ft": "#eda100",
           "ss-ft": "#008300", "nplm-sup-ft": "#8c2d9e",
           "gcd-ft": "#8b4513", "gcd-sigreg-ft": "#c71585",
-          "supcon-cw-ft": "#00a0a0"}
+          "supcon-cw-ft": "#00a0a0", "supconeucl-ft": "#d55e00",
+          "supcondist-ft": "#cc79a7"}
 # supcon-cw-ft is opt-in like the GCD arms: never in the default arm set,
 # so archived six-arm reruns stay byte-identical.
-OPT_IN_ARMS = {"supcon-cw-ft"}
+OPT_IN_ARMS = {"supcon-cw-ft", "supconeucl-ft", "supcondist-ft"}
 
 
 def eval_split(split, transform):
